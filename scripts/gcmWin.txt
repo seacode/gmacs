@@ -1,0 +1,31 @@
+## code for creating the gcmWindow for R
+window name=gcmWin title="Generic Crab Model Viewer"
+
+grid 2 1
+#-----------------------------------------------------------------------------#
+grid 5 1 toptitle="Controls for plotting GCM results" sticky=W relief="sunken"\
+padx=5 pady=5
+
+	radio name=plotType value=catch text="Catch"              \
+	function=.mpdView mode=character sticky=W
+	
+	radio name=plotType value=cpue  text="CPUE fit"           \
+	function=.mpdView mode=character sticky=W
+	
+	radio name=plotType value=lenf  text="Length frequencies" \
+	function=.mpdView mode=character sticky=W
+	
+	radio name=plotType value=lenfr text="LF Residuals" \
+	function=.mpdView mode=character sticky=W
+	
+	radio name=plotType value=mmb  text="Mature male biomass" \
+	function=.mpdView mode=character sticky=W
+	
+
+#image file="kingcrab.gif" sticky="S" subsample=4
+
+grid 1 1 toptitle="Graphics options" sticky=W relief="sunken" padx=5 pady=5
+
+	button text="Save PDF" function=.savePDF sticky=W
+
+#-----------------------------------------------------------------------------#

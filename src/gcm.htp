@@ -1,0 +1,182 @@
+#if !defined(_GCM_)
+#  define _GCM_
+
+class model_data : public ad_comm{
+  init_adstring data_file;
+  init_adstring control_file;
+  int simFlag;
+  int rseed;
+  data_int syr;
+  data_int nyr;
+  data_int ngear;
+  data_int nbin;
+  data_number lm50;
+  data_number lm95;
+  dvector mx;
+  data_vector xbin;
+  data_vector wx;
+  data_int n_ct;
+  data_ivector n_ct_rows;
+  data_vector disc_mort;
+  data_3array catch_data;
+  dmatrix obs_ct;
+  dmatrix obs_ct_dis;
+  imatrix yrs_ct;
+  data_int n_q;
+  data_int n_it;
+  data_ivector n_it_rows;
+  data_3array it_data;
+  dmatrix obs_it;
+  dmatrix rwt_it;
+  imatrix yrs_it;
+  dmatrix fyr_it;
+  data_int n_lf;
+  data_ivector n_lf_rows;
+  data_3array lf_data;
+  d3_array obs_lf;
+  data_int eof;
+  data_int npar;
+  data_matrix theta_control;
+  dvector theta_ival;
+  dvector theta_lb;
+  dvector theta_ub;
+  ivector theta_phz;
+  ivector theta_prior;
+  data_ivector isel_type;
+  data_vector l_hat;
+  data_vector g_hat;
+  data_ivector l_nodes;
+  data_ivector yr_nodes;
+  data_ivector sel_phz;
+  data_vector sel_2nd_diff_wt;
+  data_vector sel_dome_wt;
+  ivector isel_npar;
+  ivector jsel_npar;
+  data_ivector isel_type_ret;
+  data_vector l_hat_ret;
+  data_vector g_hat_ret;
+  data_ivector l_nodes_ret;
+  data_ivector yr_nodes_ret;
+  data_ivector sel_phz_ret;
+  data_vector sel_2nd_diff_wt_ret;
+  data_vector sel_dome_wt_ret;
+  ivector isel_npar_ret;
+  ivector jsel_npar_ret;
+  data_int n_it_q;
+  data_ivector q_prior;
+  data_vector q_mu;
+  data_vector q_sd;
+  data_vector cntrl;
+  data_int eocf;
+  ~model_data();
+  model_data(int argc,char * argv[]);
+  friend class model_parameters;
+};
+
+class model_parameters : public model_data ,
+  public function_minimizer
+{
+public:
+  ~model_parameters();
+  void preliminary_calculations(void);
+  void set_runtime(void);
+  virtual void * mycast(void) {return (void*)this;}
+  static int mc_phase(void)
+  {
+    return initial_params::mc_phase;
+  }
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+  static prevariable current_feval(void)
+  {
+    return *objective_function_value::pobjfun;
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_bounded_number_vector theta;
+  param_init_bounded_vector log_fbar;
+  param_init_bounded_matrix log_ft_dev;
+  param_init_bounded_vector log_q;
+  param_init_bounded_vector log_sig;
+  param_init_bounded_dev_vector log_rt_dev;
+  param_init_bounded_dev_vector log_init_n_dev;
+  param_init_bounded_matrix_vector sel_par;
+  param_init_bounded_matrix_vector sel_par_ret;
+  param_number prior_function_value;
+  param_number likelihood_function_value;
+  objective_function_value f;
+  param_number log_rbar;
+  param_number rec_mu;
+  param_number rec_cv;
+  param_number log_init_n;
+  param_number m;
+  param_number a;
+  param_number b;
+  param_number beta;
+  param_vector x_rec;
+  param_vector rt;
+  param_vector q;
+  param_vector cpue_sig;
+  param_matrix LTM;
+  param_matrix Z;
+  param_matrix F;
+  param_matrix N;
+  param_matrix pred_ct;
+  param_matrix pred_ct_dis;
+  param_matrix epsilon;
+  param_matrix delta;
+  param_matrix pred_it;
+  param_matrix nu;
+  param_3array sel;
+  param_3array ret;
+  param_3array pred_lf;
+  param_3array eta;
+public:
+  virtual void userfunction(void);
+  virtual void report(void);
+  virtual void final_calcs(void);
+  model_parameters(int sz,int argc, char * argv[]);
+  virtual void initializationfunction(void){}
+  void initialize_parameters(void);
+  void calc_recruitment(void);
+  void calc_ltm(void);
+  void calc_selectivity(void);
+  void calc_selectivity_ret(void);
+  void calc_mortality(void);
+  void population_dynamics(void);
+  void catch_observations(void);
+  void catch_at_length(void);
+  void calc_relative_abundance(void);
+  void calc_objective_function(void);
+ dvariable dmvlogistic(const dmatrix o, const dvar_matrix& p, double& tau2);
+ dvariable drnorm(const dvector& o, const dvar_vector& p, const double& ns);
+ dvariable dnorm(const dvariable& x, const double& mu, const double& std);
+ dvariable dnorm(const dvariable& x, const double& mu, const dvariable& std);
+ dvariable dnorm(const dvar_vector& residual, const dvariable std);
+ dvariable dnorm(const dvar_vector& residual, const double std);
+ dvariable dlnorm(const dvariable& x, const double& mu, const double& std);
+ dvariable dbeta(const dvariable& x, const double a, const double b);
+ dvariable dgamma(const dvariable &x, const double a, const double b);
+ dvar_vector plogis(const dvector& x, const dvariable& mu, const dvariable& sd);
+ dvar_vector aplogis(const dvector& x, const dvariable& lam1, const dvariable & lam2);
+ dvector aplogis(const dvector& x, const double& lam1, const double& lam2);
+  void simulation_model(void);
+
+};
+#endif
