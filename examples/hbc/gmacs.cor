@@ -1,0 +1,4 @@
+ The logarithm of the determinant of the hessian = 15.7124
+ index   name         value      std.dev       1       2   
+     1   theta[2]   9.6344e+000 3.8735e-004   1.0000
+     2   sd_l_infty 3.6000e+001 0.0000e+000   0.0000  0.0000

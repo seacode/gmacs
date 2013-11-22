@@ -1,0 +1,4 @@
+#List Gmacs files in order: data.dat, control.ctl, growth.dat
+hbc.dat
+hbc.ctl
+hbc_growth.dat

@@ -1,0 +1,165 @@
+#if !defined(_GMACS_)
+#  define _GMACS_
+
+class model_data : public ad_comm{
+  init_adstring data_file;
+  init_adstring control_file;
+  init_adstring sizeTransition_file;
+  int SimFlag;
+  int rseed;
+  data_int syr;
+  data_int nyr;
+  data_number dt;
+  data_int ngear;
+  data_int nbin;
+  data_vector xbin;
+  int nx;
+  int nr;
+  dvector xmid;
+  data_imatrix dim_array;
+  ivector irow;
+  ivector ncol;
+  ivector jcol;
+  ivector fi_count;
+  data_matrix effort;
+  dvector mean_effort;
+  data_3array i_C;
+  data_3array i_M;
+  data_3array i_R;
+  d3_array C;
+  d3_array M;
+  d3_array R;
+  data_int eof;
+  dmatrix ct;
+  data_int nj;
+  data_int syr_L;
+  data_int nyr_L;
+  data_ivector jbin;
+  data_3array L;
+  data_int eof2;
+  data_int npar;
+  data_matrix theta_control;
+  dmatrix trans_theta_control;
+  dvector theta_ival;
+  dvector theta_lbnd;
+  dvector theta_ubnd;
+  ivector theta_phz;
+  ivector theta_prior;
+  data_ivector sel_type;
+  data_ivector sel_phz;
+  data_vector lx_ival;
+  data_vector gx_ival;
+  data_ivector x_nodes;
+  data_vector sel_pen1;
+  data_vector sel_pen2;
+  ivector isel_npar;
+  data_int nflags;
+  data_vector flag;
+  imatrix min_tag_j;
+  dvector true_Nt;
+  dvector true_Rt;
+  dvector true_Tt;
+  dmatrix true_fi;
+  ~model_data();
+  model_data(int argc,char * argv[]);
+  friend class model_parameters;
+};
+
+class model_parameters : public model_data ,
+  public function_minimizer
+{
+public:
+  ~model_parameters();
+  void preliminary_calculations(void);
+  void set_runtime(void);
+  virtual void * mycast(void) {return (void*)this;}
+  static int mc_phase(void)
+  {
+    return initial_params::mc_phase;
+  }
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+  static prevariable current_feval(void)
+  {
+    return *objective_function_value::pobjfun;
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_bounded_number_vector theta;
+  param_number log_ddot_r;
+  param_number log_bar_r;
+  param_number m_infty;
+  param_number l_infty;
+  param_number vbk;
+  param_number beta;
+  param_number mu_r;
+  param_number cv_r;
+  param_init_vector log_bar_f;
+  param_init_vector log_tau;
+  param_init_bounded_vector_vector sel_par;
+  param_init_bounded_dev_vector ddot_r_devs;
+  param_init_bounded_dev_vector bar_r_devs;
+  param_init_bounded_dev_vector l_infty_devs;
+  param_init_bounded_matrix bar_f_devs;
+  param_stddev_number sd_l_infty;
+  param_number prior_function_value;
+  param_number likelihood_function_value;
+  objective_function_value f;
+  param_number m_linf;
+  param_number fpen;
+  param_vector tau;
+  param_vector qk;
+  param_vector mx;
+  param_vector rx;
+  param_vector log_rt;
+  param_matrix fi;
+  param_matrix sx;
+  param_matrix N;
+  param_matrix T;
+  param_matrix A;
+  param_matrix hat_ct;
+  param_matrix delta;
+  param_3array Chat;
+  param_3array Mhat;
+  param_3array Rhat;
+  param_3array iP;
+public:
+  virtual void userfunction(void);
+  virtual void report(void);
+  virtual void final_calcs(void);
+  model_parameters(int sz,int argc, char * argv[]);
+  virtual void initializationfunction(void);
+ void runSimulationModel(const int& seed);
+  void initParameters(void);
+  void calcSizeTransitionMatrix(void);
+  void initializeModel(void);
+  void calcCaptureProbability(void);
+  void calcSurvivalAtLength(void);
+  void calcSelectivityAtLength(void);
+  void calcNumbersAtLength(void);
+  void calcObservations(void);
+  void calc_objective_function(void);
+ dvar_vector dgamma(const dvector& x, const dvariable& a, const dvariable& b);
+ dvariable dgamma(const prevariable& x, const double& a, const double& b);
+ dvar_vector posfun(const dvar_vector& x, const double& eps, dvariable& pen);
+ ivector match(const ivector& x, const ivector& table);
+ dvar_matrix calcLTM(dvector& x, const dvariable &linf, const dvariable &k, const dvariable &beta);
+
+};
+#endif
