@@ -1,4 +1,8 @@
-# Generalized Modeling for Alaskan Crab Stocks #
+# Gmacs Version 1.0 #
+
+Updated November 2013, by Athol Whitten
+
+## Generalized Modeling for Alaskan Crab Stocks ##
 
 This repository holds code and instructions for Gmacs (Generalized Modeling for Alaskan Crab Stocks), a generic size-based stock assessment model. 
 
