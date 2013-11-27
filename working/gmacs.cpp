@@ -21,9 +21,11 @@
 
 model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 {
+ ad_comm::change_datafile_name("starter.gm"); // Get filenames from starter
+ cout<<" Reading information from starter.gm"<<endl;
   data_file.allocate("data_file");
   control_file.allocate("control_file");
-  sizeTransition_file.allocate("sizeTransition_file");
+  size_trans_file.allocate("size_trans_file");
 		SimFlag = 0;
 		rseed   = 1;
 		int on,opt;
@@ -97,7 +99,7 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 				ct(k,i) = sum( C(k)(i) );
 			}
 		}
- ad_comm::change_datafile_name(sizeTransition_file);
+ ad_comm::change_datafile_name(size_trans_file);
   nj.allocate("nj");
   syr_L.allocate("syr_L");
   nyr_L.allocate("nyr_L");

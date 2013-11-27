@@ -14,6 +14,8 @@
 //   submodel, grow and survive numbers-at-length upto the time step samples
 //   were collected.  This will require transition matrix for dt and annual
 //   transition matrix.
+//
+//	-ADD Echoinput option, as per SS. To enable better testing and bug tracking.
 //  
 // =========================================================================================================
 
@@ -47,10 +49,16 @@ TOP_OF_MAIN_SECTION
 // =========================================================================================================
 
 DATA_SECTION
+	
+	// Read the Starter.gm file
+	!! ad_comm::change_datafile_name("starter.gm"); // Get filenames from starter
+	!! cout<<" Reading information from starter.gm"<<endl;
+
 	init_adstring data_file;
 	init_adstring control_file;
-	init_adstring sizeTransition_file;
+	init_adstring size_trans_file;
 	
+	// Simulation code: See SM for Details.
 	int SimFlag;
 	int rseed;
 	LOC_CALCS
@@ -69,6 +77,7 @@ DATA_SECTION
 		
 	END_CALCS
 	
+	// Read from the data file (*.dat)
 	!! ad_comm::change_datafile_name(data_file);
 	!! cout<<" TOP OF DATA_SECTION "<<endl;
 	
@@ -156,7 +165,7 @@ DATA_SECTION
 	END_CALCS
 	
 	// OPEN SIZE TRANSITION FILE //
-	!! ad_comm::change_datafile_name(sizeTransition_file);
+	!! ad_comm::change_datafile_name(size_trans_file);
 	init_int nj;  // number of size intervals
 	init_int syr_L;
 	init_int nyr_L;
@@ -312,7 +321,6 @@ PARAMETER_SECTION
 	objective_function_value f;
 	
 
-	
 	number m_linf;
 	number fpen;
 	vector tau(1,ngear);	// over-dispersion parameters >1.0
