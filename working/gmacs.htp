@@ -5,6 +5,7 @@ class model_data : public ad_comm{
   init_adstring data_file;
   init_adstring control_file;
   init_adstring size_trans_file;
+  data_int verbose;
   int SimFlag;
   int rseed;
   data_int syr;

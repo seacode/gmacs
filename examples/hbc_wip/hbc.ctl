@@ -39,9 +39,8 @@
 
 ## _________________________________________________________________________ ##
 ## nflags
-7
+6
 ## flags
-2			# 1) Verbose (1==on) (2==more detail)
 15.0		# 2) Minimum size (cm) of individual fish that can be tagged.
 0.100		# 3) Std deviation in total catch in first phase.
 0.050		# 4) Std deviation in total catch in last phase.

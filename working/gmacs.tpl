@@ -14,6 +14,9 @@
 //   submodel, grow and survive numbers-at-length upto the time step samples
 //   were collected.  This will require transition matrix for dt and annual
 //   transition matrix.
+//	
+//	-Calculate Reference Points (add routine for this)
+//	-Add forecast section (add routine for this)
 //
 //	-ADD Echoinput option, as per SS. To enable better testing and bug tracking.
 //  
@@ -50,13 +53,19 @@ TOP_OF_MAIN_SECTION
 
 DATA_SECTION
 	
+	// Create strings with version information
+	//!!version_info+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+	//!!version_short+="GMV1.00";
+
 	// Read the Starter.gm file
-	!! ad_comm::change_datafile_name("starter.gm"); // Get filenames from starter
+	!! ad_comm::change_datafile_name("starter.gm"); 
 	!! cout<<" Reading information from starter.gm"<<endl;
 
 	init_adstring data_file;
 	init_adstring control_file;
 	init_adstring size_trans_file;
+
+	init_int verbose
 	
 	// Simulation code: See SM for Details.
 	int SimFlag;
@@ -242,8 +251,8 @@ DATA_SECTION
 			{
 				for(j=1;j<=jcol(k);j++)
 				{
-					if( M(k)(i,j)>0 || xbin(j)>flag(2) )
-					//if( xbin(j)>flag(2) )
+					if( M(k)(i,j)>0 || xbin(j)>flag(1) )
+					//if( xbin(j)>flag(1) )
 					{
 						min_tag_j(k,i) = j;
 						break;
@@ -308,7 +317,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector ddot_r_devs(1,nx,-15,15,-2);
 	init_bounded_dev_vector bar_r_devs(syr+1,nyr,-15,15,-2);
 	!! int phz;
-	!! if(flag(5)==1) phz=3; else phz=-3;
+	!! if(flag(4)==1) phz=3; else phz=-3;
 	init_bounded_dev_vector l_infty_devs(syr,nyr-1,-5,5,phz);
 	
 	
@@ -369,7 +378,7 @@ PRELIMINARY_CALCS_SECTION
 // =========================================================================================================
 
 PROCEDURE_SECTION
-	if( flag(1) ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
 	fpen.initialize();
 	initParameters();  
 	calcSurvivalAtLength(); 
@@ -381,7 +390,7 @@ PROCEDURE_SECTION
 	calcObservations();
 	calc_objective_function();
 	sd_l_infty = l_infty;
-	if( flag(1) ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
 
 //	
 FUNCTION void runSimulationModel(const int& seed)
@@ -397,12 +406,12 @@ FUNCTION void runSimulationModel(const int& seed)
 	tmp_bar_r_devs.fill_randn(rng);
 	tmp_bar_f_devs.fill_randn(rng);
 	
-	double sig_r = flag(6);
+	double sig_r = flag(5);
 	ddot_r_devs = sig_r*tmp_ddot_r_devs;
 	bar_r_devs  = sig_r*tmp_bar_r_devs;
 	
 	/* Capture probabilities */
-	double sig_f = flag(7);
+	double sig_f = flag(6);
 	for(k=1;k<=ngear;k++)
 	{
 		bar_f_devs(k) = sig_f*tmp_bar_f_devs(k);
@@ -431,7 +440,7 @@ FUNCTION void runSimulationModel(const int& seed)
 			{
 				for(j=1;j<=nx;j++)
 				{
-					if(flag(7))
+					if(flag(6))
 					{
 						C(k)(i)(j) = randnegbinomial(1.e-5+C(k)(i)(j),2.0,rng);
 						M(k)(i)(j) = randnegbinomial(1.e-5+M(k)(i)(j),2.0,rng);
@@ -482,7 +491,7 @@ FUNCTION calcSizeTransitionMatrix
 	*/
 	int t,im;
 	dvariable linf;
-	switch(int(flag(5)))
+	switch(int(flag(4)))
 	{
 		case 0:
 			A = calcLTM(xmid,l_infty,vbk,beta);
@@ -688,8 +697,8 @@ FUNCTION calcNumbersAtLength
 		T(t+1) = elem_prod(T(t) + mt,mfexp(-mx)) * iP(t);
 	}
 	
-	if( flag(1)==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 //
 FUNCTION calcObservations
@@ -759,7 +768,7 @@ FUNCTION calcObservations
 		//}
 	}
 	
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 //
 FUNCTION calc_objective_function;
@@ -794,7 +803,7 @@ FUNCTION calc_objective_function;
 		
 		//pvec(3) = dnorm(log_bar_f,log(0.1108032),2.5);
 	}
-	if( flag(1) ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
+	if( verbose ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
 	
 	
 	/* PENALTIES TO INSURE DEV VECTORS HAVE A MEAN O */
@@ -903,7 +912,7 @@ FUNCTION calc_objective_function;
 		}
 	}
 	
-	if( flag(1) ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
+	if( verbose ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
 	if(fpen > 0) cout<<"Fpen = "<<fpen<<endl;
 	f  = sum(fvec); 
 	//f += sum(pvec); 

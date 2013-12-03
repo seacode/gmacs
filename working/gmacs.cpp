@@ -21,11 +21,12 @@
 
 model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 {
- ad_comm::change_datafile_name("starter.gm"); // Get filenames from starter
+ ad_comm::change_datafile_name("starter.gm"); 
  cout<<" Reading information from starter.gm"<<endl;
   data_file.allocate("data_file");
   control_file.allocate("control_file");
   size_trans_file.allocate("size_trans_file");
+  verbose.allocate("verbose");
 		SimFlag = 0;
 		rseed   = 1;
 		int on,opt;
@@ -156,8 +157,8 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 			{
 				for(j=1;j<=jcol(k);j++)
 				{
-					if( M(k)(i,j)>0 || xbin(j)>flag(2) )
-					//if( xbin(j)>flag(2) )
+					if( M(k)(i,j)>0 || xbin(j)>flag(1) )
+					//if( xbin(j)>flag(1) )
 					{
 						min_tag_j(k,i) = j;
 						break;
@@ -230,7 +231,7 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
   ddot_r_devs.allocate(1,nx,-15,15,-2,"ddot_r_devs");
   bar_r_devs.allocate(syr+1,nyr,-15,15,-2,"bar_r_devs");
  int phz;
- if(flag(5)==1) phz=3; else phz=-3;
+ if(flag(4)==1) phz=3; else phz=-3;
   l_infty_devs.allocate(syr,nyr-1,-5,5,phz,"l_infty_devs");
   bar_f_devs.allocate(1,ngear,1,fi_count,-5.0,5.0,-2,"bar_f_devs");
   sd_l_infty.allocate("sd_l_infty");
@@ -337,7 +338,7 @@ void model_parameters::preliminary_calculations(void)
 void model_parameters::userfunction(void)
 {
   f =0.0;
-	if( flag(1) ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
 	fpen.initialize();
 	initParameters();  
 	calcSurvivalAtLength(); 
@@ -349,7 +350,7 @@ void model_parameters::userfunction(void)
 	calcObservations();
 	calc_objective_function();
 	sd_l_infty = l_infty;
-	if( flag(1) ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
 }
 
 void model_parameters::runSimulationModel(const int& seed)
@@ -363,11 +364,11 @@ void model_parameters::runSimulationModel(const int& seed)
 	tmp_ddot_r_devs.fill_randn(rng);
 	tmp_bar_r_devs.fill_randn(rng);
 	tmp_bar_f_devs.fill_randn(rng);
-	double sig_r = flag(6);
+	double sig_r = flag(5);
 	ddot_r_devs = sig_r*tmp_ddot_r_devs;
 	bar_r_devs  = sig_r*tmp_bar_r_devs;
 	/* Capture probabilities */
-	double sig_f = flag(7);
+	double sig_f = flag(6);
 	for(k=1;k<=ngear;k++)
 	{
 		bar_f_devs(k) = sig_f*tmp_bar_f_devs(k);
@@ -392,7 +393,7 @@ void model_parameters::runSimulationModel(const int& seed)
 			{
 				for(j=1;j<=nx;j++)
 				{
-					if(flag(7))
+					if(flag(6))
 					{
 						C(k)(i)(j) = randnegbinomial(1.e-5+C(k)(i)(j),2.0,rng);
 						M(k)(i)(j) = randnegbinomial(1.e-5+M(k)(i)(j),2.0,rng);
@@ -443,7 +444,7 @@ void model_parameters::calcSizeTransitionMatrix(void)
 	*/
 	int t,im;
 	dvariable linf;
-	switch(int(flag(5)))
+	switch(int(flag(4)))
 	{
 		case 0:
 			A = calcLTM(xmid,l_infty,vbk,beta);
@@ -638,8 +639,8 @@ void model_parameters::calcNumbersAtLength(void)
 		}
 		T(t+1) = elem_prod(T(t) + mt,mfexp(-mx)) * iP(t);
 	}
-	if( flag(1)==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 }
 
@@ -701,7 +702,7 @@ void model_parameters::calcObservations(void)
 		//	T(t+1) = elem_prod(T(t),mfexp(-mx*dt))*iP(t) + Mtmp;
 		//}
 	}
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 }
 
@@ -737,7 +738,7 @@ void model_parameters::calc_objective_function(void)
 		}
 		//pvec(3) = dnorm(log_bar_f,log(0.1108032),2.5);
 	}
-	if( flag(1) ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
+	if( verbose ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
 	/* PENALTIES TO INSURE DEV VECTORS HAVE A MEAN O */
 	dvar_vector dev_pen(1,ngear);
 	for(k=1;k<=ngear;k++)
@@ -834,7 +835,7 @@ void model_parameters::calc_objective_function(void)
 			}
 		}
 	}
-	if( flag(1) ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
+	if( verbose ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
 	if(fpen > 0) cout<<"Fpen = "<<fpen<<endl;
 	f  = sum(fvec); 
 	//f += sum(pvec); 

@@ -1,0 +1,9 @@
+// Create strings with version information
+	//!!version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+	//!!version_short+="GMV1.00";
+
+	//!!echoinput<<version<<endl;
+	//!!echoinput<<data_file<<"  data file name";
+	//!!echoinput<<control_file<<"  control file name";
+	//!!echoinput<<size_trans_file<<"  size transition data file name";
+
