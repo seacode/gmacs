@@ -1,0 +1,3 @@
+pause
+gmacs.exe
+pause

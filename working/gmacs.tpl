@@ -57,34 +57,22 @@ DATA_SECTION
 	//!!version_info+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
 	//!!version_short+="GMV1.00";
 
+// =========================================================================================================
+
 	// Read the Starter.gm file
 	!! ad_comm::change_datafile_name("starter.gm"); 
 	!! cout<<" Reading information from starter.gm"<<endl;
 
+	// Read data, control, and size transition file names;
 	init_adstring data_file;
 	init_adstring control_file;
 	init_adstring size_trans_file;
 
+	// Read various option values;
 	init_int verbose
-	
-	// Simulation code: See SM for Details.
-	int SimFlag;
-	int rseed;
-	LOC_CALCS
-		SimFlag = 0;
-		rseed   = 1;
-		int on,opt;
-		//the following line checks for the "-SimFlag" command line option
-		//if it exists the if statement retreives the random number seed
-		//that is required for the simulation model
-		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
-		{
-			SimFlag = 1;
-			rseed   = atoi(ad_comm::argv[on+1]);
-			if(SimFlag) cout<<"In Simulation Mode\n";
-		}
-		
-	END_CALCS
+	init_int turn_off_phase
+
+// ---------------------------------------------------------------------------------------------------------
 	
 	// Read from the data file (*.dat)
 	!! ad_comm::change_datafile_name(data_file);
@@ -152,10 +140,8 @@ DATA_SECTION
 
 	
 	init_int eof;
-	!! if(eof!=999){cout<<"Error reading data\n eof = "<<eof<<endl; exit(1);}
+	!! if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
 	!! cout<<" - END OF READING DATA"<<endl;
-	
-	
 	
 	// colsums of Catch-at-length //
 	matrix ct(1,ngear,1,irow); 
@@ -172,8 +158,10 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
+
+// ---------------------------------------------------------------------------------------------------------
 	
-	// OPEN SIZE TRANSITION FILE //
+	// Read from the Size Transition file (*.dat) //
 	!! ad_comm::change_datafile_name(size_trans_file);
 	init_int nj;  // number of size intervals
 	init_int syr_L;
@@ -182,9 +170,10 @@ DATA_SECTION
 	init_3darray L(syr_L,nyr_L,1,nj-1,1,nj-1);
 	init_int eof2;
 	!! if(eof2!=999){cout<<"Error reading Size Transitions "<<eof2<<endl; ad_exit(1);}
+
+// ---------------------------------------------------------------------------------------------------------
 	
-	
-	// OPEN CONTROL FILE //
+	// Read from the Control file (*.ctl) //
 	!! ad_comm::change_datafile_name(control_file);
 	init_int npar
 	init_matrix theta_control(1,npar,1,7);
@@ -203,7 +192,7 @@ DATA_SECTION
 		theta_prior = ivector(trans_theta_control(5));
 	END_CALCS
 	
-	// SELECTIVITY PARAMS //
+	// Read Selectivity Parms //
 	init_ivector sel_type(1,ngear);
 	init_ivector sel_phz(1,ngear);
 	init_vector lx_ival(1,ngear);
@@ -261,7 +250,25 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
-	
+
+	// Simulation code: See SM for Details.
+	int SimFlag;
+	int rseed;
+	LOC_CALCS
+		SimFlag = 0;
+		rseed   = 1;
+		int on,opt;
+		//the following line checks for the "-SimFlag" command line option
+		//if it exists the if statement retreives the random number seed
+		//that is required for the simulation model
+		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
+		{
+			SimFlag = 1;
+			rseed   = atoi(ad_comm::argv[on+1]);
+			if(SimFlag) cout<<"In Simulation Mode\n";
+		}
+		
+	END_CALCS
 	
 	// Variables for Simulated Data
 	vector true_Nt(syr,nyr);
@@ -272,7 +279,49 @@ DATA_SECTION
 	!! cout<< " END OF DATA_SECTION \n"<<endl;
 
 // =========================================================================================================
-	
+// GENERAL CALCS SECTION
+
+	// Create count of active parameters and derived quantities
+	int par_count;
+	int active_count;
+	int active_parms;
+	ivector active_parm(1,npar);  //  Pointer from active list to the element of the full parameter list to get label (ADD THIS)
+
+	// Create dummy datum for use when max phase == 0
+	number dummy_datum;
+	int dummy_phase;
+	!! dummy_datum=1.;
+	!! if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
+
+	// Adjust the phases to negative if beyond turn_off_phase and find resultant max_phase
+	int max_phase;
+ 
+ 	LOC_CALCS
+  		cout<< " Adjust phases \n"<<endl;
+  		max_phase=1;
+  		active_count=0;
+  		active_parm(1,npar)=0;
+  		par_count=0;
+  
+		for(i=1;i<=npar;i++)
+		{ 
+		  	par_count++;
+		  	if(theta_phz(i) > turn_off_phase) theta_phz(i)=-1;
+		  	if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
+		  	if(theta_phz(i) >= 0)
+		  	{
+		  	  active_count++; active_parm(active_count)=par_count;
+		  	}
+		}
+
+		active_parms=active_count;
+	END_CALCS
+
+	!!cout<< "Number of active parameters is "<<active_parms<<endl;
+	!!cout<< "Maximum estimate phase is "<<max_phase<<endl;
+
+// =========================================================================================================
+
 PARAMETER_SECTION
 	init_bounded_number_vector theta(1,npar,theta_lbnd,theta_ubnd,theta_phz);
 	number log_ddot_r;

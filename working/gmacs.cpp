@@ -27,19 +27,7 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
   control_file.allocate("control_file");
   size_trans_file.allocate("size_trans_file");
   verbose.allocate("verbose");
-		SimFlag = 0;
-		rseed   = 1;
-		int on,opt;
-		//the following line checks for the "-SimFlag" command line option
-		//if it exists the if statement retreives the random number seed
-		//that is required for the simulation model
-		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
-		{
-			SimFlag = 1;
-			rseed   = atoi(ad_comm::argv[on+1]);
-			if(SimFlag) cout<<"In Simulation Mode\n";
-		}
-		
+  turn_off_phase.allocate("turn_off_phase");
  ad_comm::change_datafile_name(data_file);
  cout<<" TOP OF DATA_SECTION "<<endl;
   syr.allocate("syr");
@@ -87,7 +75,7 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
   M.allocate(1,ngear,1,irow,1,jcol);
   R.allocate(1,ngear,1,irow,1,jcol);
   eof.allocate("eof");
- if(eof!=999){cout<<"Error reading data\n eof = "<<eof<<endl; exit(1);}
+ if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
  cout<<" - END OF READING DATA"<<endl;
   ct.allocate(1,ngear,1,irow);
 		for(k=1;k<=ngear;k++)
@@ -166,11 +154,46 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 				}	
 			}
 		}
+		SimFlag = 0;
+		rseed   = 1;
+		int on,opt;
+		//the following line checks for the "-SimFlag" command line option
+		//if it exists the if statement retreives the random number seed
+		//that is required for the simulation model
+		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
+		{
+			SimFlag = 1;
+			rseed   = atoi(ad_comm::argv[on+1]);
+			if(SimFlag) cout<<"In Simulation Mode\n";
+		}
+		
   true_Nt.allocate(syr,nyr);
   true_Rt.allocate(syr,nyr);
   true_Tt.allocate(syr,nyr);
   true_fi.allocate(1,ngear,1,irow);
  cout<< " END OF DATA_SECTION \n"<<endl;
+  active_parm.allocate(1,npar);
+ dummy_datum=1.;
+ if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
+  		cout<< " Adjust phases \n"<<endl;
+  		max_phase=1;
+  		active_count=0;
+  		active_parm(1,npar)=0;
+  		par_count=0;
+  
+		for(i=1;i<=npar;i++)
+		{ 
+		  	par_count++;
+		  	if(theta_phz(i) > turn_off_phase) theta_phz(i)=-1;
+		  	if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
+		  	if(theta_phz(i) >= 0)
+		  	{
+		  	  active_count++; active_parm(active_count)=par_count;
+		  	}
+		}
+		active_parms=active_count;
+cout<< "Number of active parameters is "<<active_parms<<endl;
+cout<< "Maximum estimate phase is "<<max_phase<<endl;
 }
 
 model_parameters::model_parameters(int sz,int argc,char * argv[]) : 
@@ -322,7 +345,11 @@ void model_parameters::initializationfunction(void)
 void model_parameters::preliminary_calculations(void)
 {
 
+#if defined(USE_ADPVM)
+
   admaster_slave_variable_interface(*this);
+
+#endif
 	if(SimFlag)
 	{
 		cout<<"******************************"<<endl;
