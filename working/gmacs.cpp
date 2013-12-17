@@ -193,7 +193,7 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 		}
 		active_parms=active_count;
 cout<< "Number of active parameters is "<<active_parms<<endl;
-cout<< "Maximum estimate phase is "<<max_phase<<endl;
+cout<< "Maximum phase for estimation is "<<max_phase<<endl;
 }
 
 model_parameters::model_parameters(int sz,int argc,char * argv[]) : 
@@ -333,6 +333,7 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
   #ifndef NO_AD_INITIALIZE
     iP.initialize();
   #endif
+  dummy_parm.allocate(0,2,dummy_phase,"dummy_parm");
 }
 
 void model_parameters::initializationfunction(void)

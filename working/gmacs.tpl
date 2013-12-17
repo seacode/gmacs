@@ -318,7 +318,7 @@ DATA_SECTION
 	END_CALCS
 
 	!!cout<< "Number of active parameters is "<<active_parms<<endl;
-	!!cout<< "Maximum estimate phase is "<<max_phase<<endl;
+	!!cout<< "Maximum phase for estimation is "<<max_phase<<endl;
 
 // =========================================================================================================
 
@@ -375,17 +375,14 @@ PARAMETER_SECTION
 	
 	sdreport_number sd_l_infty;
 	
-	
 	objective_function_value f;
 	
-
 	number m_linf;
 	number fpen;
 	vector tau(1,ngear);	// over-dispersion parameters >1.0
 	vector qk(1,ngear);		// catchability of gear k
 	vector mx(1,nx);		// Mortality rate at length xmid
 	vector rx(1,nx);		// size pdf for new recruits
-	
 	
 	vector log_rt(syr+1,nyr);
 	matrix fi(1,ngear,1,irow);	// capture probability in period i.
@@ -395,13 +392,17 @@ PARAMETER_SECTION
 	matrix A(1,nx,1,nx);		// Size-transitin matrix (annual step)
 	//matrix P(1,nx,1,nx);		// Size-Transition Matrix for step dt
 	
-	// Predicted observations //
+	// Predicted observations
 	matrix hat_ct(1,ngear,1,irow);			// Predicted total catch
 	matrix delta(1,ngear,1,irow);			// residuals in total catch
 	3darray Chat(1,ngear,1,irow,1,jcol);	// Predicted catch-at-length
 	3darray Mhat(1,ngear,1,irow,1,jcol);	// Predicted new marks-at-length
 	3darray Rhat(1,ngear,1,irow,1,jcol);	// Predicted recaptures-at-length
 	3darray iP(syr,nyr,1,nx,1,nx);			// Size transition matrix for year i;
+
+	//  Create dummy parameter that will be estimated when turn_off_phase is set to 0
+  	init_bounded_number dummy_parm(0,2,dummy_phase)  //  Estimate in phase 0
+
 	
 // =========================================================================================================
 	

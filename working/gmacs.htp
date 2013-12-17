@@ -148,6 +148,7 @@ private:
   param_3array Mhat;
   param_3array Rhat;
   param_3array iP;
+  param_init_bounded_number dummy_parm;
 public:
   virtual void userfunction(void);
   virtual void report(void);
