@@ -14,17 +14,14 @@
 //   submodel, grow and survive numbers-at-length upto the time step samples
 //   were collected.  This will require transition matrix for dt and annual
 //   transition matrix.
-//  
-// =========================================================================================================
+//	
+//	-Calculate Reference Points (add routine for this)
+//	-Add forecast section (add routine for this)
+//
+//	=========================================================================================================
 
 GLOBALS_SECTION
-	/**
-	\def REPORT(object)
-	Prints name and value of \a object on ADMB report %ofstream file.
-	*/
-	#undef REPORT
-	#define REPORT(object) report << #object "\n" << object << endl;
-
+	
 	#include <admodel.h>
 	#include <time.h>
 	#include <contrib.h>
@@ -34,6 +31,27 @@ GLOBALS_SECTION
 	long hour,minute,second;
 	double elapsed_time;
 
+	// Define objects for report file, echoinput, etc.
+	/**
+	\def report(object)
+	Prints name and value of \a object on ADMB report %ofstream file.
+	*/
+	#undef REPORT
+	#define REPORT(object) report << #object "\n" << object << endl;
+
+	/**
+	\def echoinput(object)
+	Prints name and value of \a object on ADMB echoinput %ofstream file.
+	*/
+	#define echo(object) echoinput << #object "\n" << object << endl;
+
+	// Open output files using ofstream
+	ofstream echoinput("echoinput.gm");
+
+	// Define some adstring variables for use in output files
+	adstring version;
+	adstring version_short;
+	
 // =========================================================================================================
 
 TOP_OF_MAIN_SECTION
@@ -47,28 +65,32 @@ TOP_OF_MAIN_SECTION
 // =========================================================================================================
 
 DATA_SECTION
+	
+	// Create strings with version information
+	!!version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+	!!version_short+="Gmacs V1.00";
+
+	!! echo(version)
+
+	// Read the Starter.gm file
+	!! ad_comm::change_datafile_name("starter.gm"); 
+	!! cout<<" Reading information from starter.gm"<<endl;
+
+	// Read data, control, and size transition file names;
 	init_adstring data_file;
 	init_adstring control_file;
-	init_adstring sizeTransition_file;
+	init_adstring size_trans_file;
+
+	!! echo(data_file);
+	!! echo(control_file);
+
+	// Read various option values;
+	init_int verbose;
+	init_int turn_off_phase;
+
+// ---------------------------------------------------------------------------------------------------------
 	
-	int SimFlag;
-	int rseed;
-	LOC_CALCS
-		SimFlag = 0;
-		rseed   = 1;
-		int on,opt;
-		//the following line checks for the "-SimFlag" command line option
-		//if it exists the if statement retreives the random number seed
-		//that is required for the simulation model
-		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
-		{
-			SimFlag = 1;
-			rseed   = atoi(ad_comm::argv[on+1]);
-			if(SimFlag) cout<<"In Simulation Mode\n";
-		}
-		
-	END_CALCS
-	
+	// Read from the data file (*.dat)
 	!! ad_comm::change_datafile_name(data_file);
 	!! cout<<" TOP OF DATA_SECTION "<<endl;
 	
@@ -134,10 +156,8 @@ DATA_SECTION
 
 	
 	init_int eof;
-	!! if(eof!=999){cout<<"Error reading data\n eof = "<<eof<<endl; exit(1);}
+	!! if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
 	!! cout<<" - END OF READING DATA"<<endl;
-	
-	
 	
 	// colsums of Catch-at-length //
 	matrix ct(1,ngear,1,irow); 
@@ -154,9 +174,11 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
+
+// ---------------------------------------------------------------------------------------------------------
 	
-	// OPEN SIZE TRANSITION FILE //
-	!! ad_comm::change_datafile_name(sizeTransition_file);
+	// Read from the Size Transition file (*.dat) //
+	!! ad_comm::change_datafile_name(size_trans_file);
 	init_int nj;  // number of size intervals
 	init_int syr_L;
 	init_int nyr_L;
@@ -164,9 +186,10 @@ DATA_SECTION
 	init_3darray L(syr_L,nyr_L,1,nj-1,1,nj-1);
 	init_int eof2;
 	!! if(eof2!=999){cout<<"Error reading Size Transitions "<<eof2<<endl; ad_exit(1);}
+
+// ---------------------------------------------------------------------------------------------------------
 	
-	
-	// OPEN CONTROL FILE //
+	// Read from the Control file (*.ctl) //
 	!! ad_comm::change_datafile_name(control_file);
 	init_int npar
 	init_matrix theta_control(1,npar,1,7);
@@ -185,7 +208,7 @@ DATA_SECTION
 		theta_prior = ivector(trans_theta_control(5));
 	END_CALCS
 	
-	// SELECTIVITY PARAMS //
+	// Read Selectivity Parms //
 	init_ivector sel_type(1,ngear);
 	init_ivector sel_phz(1,ngear);
 	init_vector lx_ival(1,ngear);
@@ -233,8 +256,8 @@ DATA_SECTION
 			{
 				for(j=1;j<=jcol(k);j++)
 				{
-					if( M(k)(i,j)>0 || xbin(j)>flag(2) )
-					//if( xbin(j)>flag(2) )
+					if( M(k)(i,j)>0 || xbin(j)>flag(1) )
+					//if( xbin(j)>flag(1) )
 					{
 						min_tag_j(k,i) = j;
 						break;
@@ -243,7 +266,25 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
-	
+
+	// Simulation code: See SM for Details.
+	int SimFlag;
+	int rseed;
+	LOC_CALCS
+		SimFlag = 0;
+		rseed   = 1;
+		int on,opt;
+		//the following line checks for the "-SimFlag" command line option
+		//if it exists the if statement retreives the random number seed
+		//that is required for the simulation model
+		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
+		{
+			SimFlag = 1;
+			rseed   = atoi(ad_comm::argv[on+1]);
+			if(SimFlag) cout<<"In Simulation Mode\n";
+		}
+		
+	END_CALCS
 	
 	// Variables for Simulated Data
 	vector true_Nt(syr,nyr);
@@ -254,7 +295,49 @@ DATA_SECTION
 	!! cout<< " END OF DATA_SECTION \n"<<endl;
 
 // =========================================================================================================
-	
+// GENERAL CALCS SECTION
+
+	// Create count of active parameters and derived quantities
+	int par_count;
+	int active_count;
+	int active_parms;
+	ivector active_parm(1,npar);  //  Pointer from active list to the element of the full parameter list to get label (ADD THIS)
+
+	// Create dummy datum for use when max phase == 0
+	number dummy_datum;
+	int dummy_phase;
+	!! dummy_datum=1.;
+	!! if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
+
+	// Adjust the phases to negative if beyond turn_off_phase and find resultant max_phase
+	int max_phase;
+ 
+ 	LOC_CALCS
+  		cout<< " Adjust phases \n"<<endl;
+  		max_phase=1;
+  		active_count=0;
+  		active_parm(1,npar)=0;
+  		par_count=0;
+  
+		for(i=1;i<=npar;i++)
+		{ 
+		  	par_count++;
+		  	if(theta_phz(i) > turn_off_phase) theta_phz(i)=-1;
+		  	if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
+		  	if(theta_phz(i) >= 0)
+		  	{
+		  	  active_count++; active_parm(active_count)=par_count;
+		  	}
+		}
+
+		active_parms=active_count;
+	END_CALCS
+
+	!!cout<< "Number of active parameters is "<<active_parms<<endl;
+	!!cout<< "Maximum phase for estimation is "<<max_phase<<endl;
+
+// =========================================================================================================
+
 PARAMETER_SECTION
 	init_bounded_number_vector theta(1,npar,theta_lbnd,theta_ubnd,theta_phz);
 	number log_ddot_r;
@@ -299,7 +382,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector ddot_r_devs(1,nx,-15,15,-2);
 	init_bounded_dev_vector bar_r_devs(syr+1,nyr,-15,15,-2);
 	!! int phz;
-	!! if(flag(5)==1) phz=3; else phz=-3;
+	!! if(flag(4)==1) phz=3; else phz=-3;
 	init_bounded_dev_vector l_infty_devs(syr,nyr-1,-5,5,phz);
 	
 	
@@ -308,10 +391,7 @@ PARAMETER_SECTION
 	
 	sdreport_number sd_l_infty;
 	
-	
 	objective_function_value f;
-	
-
 	
 	number m_linf;
 	number fpen;
@@ -319,7 +399,6 @@ PARAMETER_SECTION
 	vector qk(1,ngear);		// catchability of gear k
 	vector mx(1,nx);		// Mortality rate at length xmid
 	vector rx(1,nx);		// size pdf for new recruits
-	
 	
 	vector log_rt(syr+1,nyr);
 	matrix fi(1,ngear,1,irow);	// capture probability in period i.
@@ -329,13 +408,17 @@ PARAMETER_SECTION
 	matrix A(1,nx,1,nx);		// Size-transitin matrix (annual step)
 	//matrix P(1,nx,1,nx);		// Size-Transition Matrix for step dt
 	
-	// Predicted observations //
+	// Predicted observations
 	matrix hat_ct(1,ngear,1,irow);			// Predicted total catch
 	matrix delta(1,ngear,1,irow);			// residuals in total catch
 	3darray Chat(1,ngear,1,irow,1,jcol);	// Predicted catch-at-length
 	3darray Mhat(1,ngear,1,irow,1,jcol);	// Predicted new marks-at-length
 	3darray Rhat(1,ngear,1,irow,1,jcol);	// Predicted recaptures-at-length
 	3darray iP(syr,nyr,1,nx,1,nx);			// Size transition matrix for year i;
+
+	//  Create dummy parameter that will be estimated when turn_off_phase is set to 0
+  	init_bounded_number dummy_parm(0,2,dummy_phase)  //  Estimate in phase 0
+
 	
 // =========================================================================================================
 	
@@ -361,7 +444,7 @@ PRELIMINARY_CALCS_SECTION
 // =========================================================================================================
 
 PROCEDURE_SECTION
-	if( flag(1) ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
 	fpen.initialize();
 	initParameters();  
 	calcSurvivalAtLength(); 
@@ -373,7 +456,7 @@ PROCEDURE_SECTION
 	calcObservations();
 	calc_objective_function();
 	sd_l_infty = l_infty;
-	if( flag(1) ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
 
 //	
 FUNCTION void runSimulationModel(const int& seed)
@@ -389,12 +472,12 @@ FUNCTION void runSimulationModel(const int& seed)
 	tmp_bar_r_devs.fill_randn(rng);
 	tmp_bar_f_devs.fill_randn(rng);
 	
-	double sig_r = flag(6);
+	double sig_r = flag(5);
 	ddot_r_devs = sig_r*tmp_ddot_r_devs;
 	bar_r_devs  = sig_r*tmp_bar_r_devs;
 	
 	/* Capture probabilities */
-	double sig_f = flag(7);
+	double sig_f = flag(6);
 	for(k=1;k<=ngear;k++)
 	{
 		bar_f_devs(k) = sig_f*tmp_bar_f_devs(k);
@@ -423,7 +506,7 @@ FUNCTION void runSimulationModel(const int& seed)
 			{
 				for(j=1;j<=nx;j++)
 				{
-					if(flag(7))
+					if(flag(6))
 					{
 						C(k)(i)(j) = randnegbinomial(1.e-5+C(k)(i)(j),2.0,rng);
 						M(k)(i)(j) = randnegbinomial(1.e-5+M(k)(i)(j),2.0,rng);
@@ -474,7 +557,7 @@ FUNCTION calcSizeTransitionMatrix
 	*/
 	int t,im;
 	dvariable linf;
-	switch(int(flag(5)))
+	switch(int(flag(4)))
 	{
 		case 0:
 			A = calcLTM(xmid,l_infty,vbk,beta);
@@ -680,8 +763,8 @@ FUNCTION calcNumbersAtLength
 		T(t+1) = elem_prod(T(t) + mt,mfexp(-mx)) * iP(t);
 	}
 	
-	if( flag(1)==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 //
 FUNCTION calcObservations
@@ -751,7 +834,7 @@ FUNCTION calcObservations
 		//}
 	}
 	
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 //
 FUNCTION calc_objective_function;
@@ -786,7 +869,7 @@ FUNCTION calc_objective_function;
 		
 		//pvec(3) = dnorm(log_bar_f,log(0.1108032),2.5);
 	}
-	if( flag(1) ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
+	if( verbose ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
 	
 	
 	/* PENALTIES TO INSURE DEV VECTORS HAVE A MEAN O */
@@ -895,7 +978,7 @@ FUNCTION calc_objective_function;
 		}
 	}
 	
-	if( flag(1) ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
+	if( verbose ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
 	if(fpen > 0) cout<<"Fpen = "<<fpen<<endl;
 	f  = sum(fvec); 
 	//f += sum(pvec); 

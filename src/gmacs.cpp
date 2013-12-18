@@ -1,9 +1,4 @@
-	/**
-	\def REPORT(object)
-	Prints name and value of \a object on ADMB report %ofstream file.
-	*/
-	#undef REPORT
-	#define REPORT(object) report << #object "\n" << object << endl;
+	
 	#include <admodel.h>
 	#include <time.h>
 	#include <contrib.h>
@@ -11,6 +6,24 @@
 	time_t start,finish;
 	long hour,minute,second;
 	double elapsed_time;
+	// Define objects for report file, echoinput, etc.
+	/**
+	\def report(object)
+	Prints name and value of \a object on ADMB report %ofstream file.
+	*/
+	#undef REPORT
+	#define REPORT(object) report << #object "\n" << object << endl;
+	/**
+	\def echoinput(object)
+	Prints name and value of \a object on ADMB echoinput %ofstream file.
+	*/
+	#define echo(object) echoinput << #object "\n" << object << endl;
+	// Open output files using ofstream
+	ofstream echoinput("echoinput.gm");
+	// Define some adstring variables for use in output files
+	adstring version;
+	adstring version_short;
+	
 #include <admodel.h>
 #include <contrib.h>
 
@@ -21,22 +34,18 @@
 
 model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 {
+version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+version_short+="Gmacs V1.00";
+ echo(version)
+ ad_comm::change_datafile_name("starter.gm"); 
+ cout<<" Reading information from starter.gm"<<endl;
   data_file.allocate("data_file");
   control_file.allocate("control_file");
-  sizeTransition_file.allocate("sizeTransition_file");
-		SimFlag = 0;
-		rseed   = 1;
-		int on,opt;
-		//the following line checks for the "-SimFlag" command line option
-		//if it exists the if statement retreives the random number seed
-		//that is required for the simulation model
-		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
-		{
-			SimFlag = 1;
-			rseed   = atoi(ad_comm::argv[on+1]);
-			if(SimFlag) cout<<"In Simulation Mode\n";
-		}
-		
+  size_trans_file.allocate("size_trans_file");
+ echo(data_file);
+ echo(control_file);
+  verbose.allocate("verbose");
+  turn_off_phase.allocate("turn_off_phase");
  ad_comm::change_datafile_name(data_file);
  cout<<" TOP OF DATA_SECTION "<<endl;
   syr.allocate("syr");
@@ -84,7 +93,7 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
   M.allocate(1,ngear,1,irow,1,jcol);
   R.allocate(1,ngear,1,irow,1,jcol);
   eof.allocate("eof");
- if(eof!=999){cout<<"Error reading data\n eof = "<<eof<<endl; exit(1);}
+ if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
  cout<<" - END OF READING DATA"<<endl;
   ct.allocate(1,ngear,1,irow);
 		for(k=1;k<=ngear;k++)
@@ -97,7 +106,7 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 				ct(k,i) = sum( C(k)(i) );
 			}
 		}
- ad_comm::change_datafile_name(sizeTransition_file);
+ ad_comm::change_datafile_name(size_trans_file);
   nj.allocate("nj");
   syr_L.allocate("syr_L");
   nyr_L.allocate("nyr_L");
@@ -154,8 +163,8 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 			{
 				for(j=1;j<=jcol(k);j++)
 				{
-					if( M(k)(i,j)>0 || xbin(j)>flag(2) )
-					//if( xbin(j)>flag(2) )
+					if( M(k)(i,j)>0 || xbin(j)>flag(1) )
+					//if( xbin(j)>flag(1) )
 					{
 						min_tag_j(k,i) = j;
 						break;
@@ -163,11 +172,46 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 				}	
 			}
 		}
+		SimFlag = 0;
+		rseed   = 1;
+		int on,opt;
+		//the following line checks for the "-SimFlag" command line option
+		//if it exists the if statement retreives the random number seed
+		//that is required for the simulation model
+		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
+		{
+			SimFlag = 1;
+			rseed   = atoi(ad_comm::argv[on+1]);
+			if(SimFlag) cout<<"In Simulation Mode\n";
+		}
+		
   true_Nt.allocate(syr,nyr);
   true_Rt.allocate(syr,nyr);
   true_Tt.allocate(syr,nyr);
   true_fi.allocate(1,ngear,1,irow);
  cout<< " END OF DATA_SECTION \n"<<endl;
+  active_parm.allocate(1,npar);
+ dummy_datum=1.;
+ if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
+  		cout<< " Adjust phases \n"<<endl;
+  		max_phase=1;
+  		active_count=0;
+  		active_parm(1,npar)=0;
+  		par_count=0;
+  
+		for(i=1;i<=npar;i++)
+		{ 
+		  	par_count++;
+		  	if(theta_phz(i) > turn_off_phase) theta_phz(i)=-1;
+		  	if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
+		  	if(theta_phz(i) >= 0)
+		  	{
+		  	  active_count++; active_parm(active_count)=par_count;
+		  	}
+		}
+		active_parms=active_count;
+cout<< "Number of active parameters is "<<active_parms<<endl;
+cout<< "Maximum phase for estimation is "<<max_phase<<endl;
 }
 
 model_parameters::model_parameters(int sz,int argc,char * argv[]) : 
@@ -228,7 +272,7 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
   ddot_r_devs.allocate(1,nx,-15,15,-2,"ddot_r_devs");
   bar_r_devs.allocate(syr+1,nyr,-15,15,-2,"bar_r_devs");
  int phz;
- if(flag(5)==1) phz=3; else phz=-3;
+ if(flag(4)==1) phz=3; else phz=-3;
   l_infty_devs.allocate(syr,nyr-1,-5,5,phz,"l_infty_devs");
   bar_f_devs.allocate(1,ngear,1,fi_count,-5.0,5.0,-2,"bar_f_devs");
   sd_l_infty.allocate("sd_l_infty");
@@ -307,6 +351,7 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
   #ifndef NO_AD_INITIALIZE
     iP.initialize();
   #endif
+  dummy_parm.allocate(0,2,dummy_phase,"dummy_parm");
 }
 
 void model_parameters::initializationfunction(void)
@@ -319,7 +364,11 @@ void model_parameters::initializationfunction(void)
 void model_parameters::preliminary_calculations(void)
 {
 
+#if defined(USE_ADPVM)
+
   admaster_slave_variable_interface(*this);
+
+#endif
 	if(SimFlag)
 	{
 		cout<<"******************************"<<endl;
@@ -335,7 +384,7 @@ void model_parameters::preliminary_calculations(void)
 void model_parameters::userfunction(void)
 {
   f =0.0;
-	if( flag(1) ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n TOP OF PROCEDURE_SECTION "<<endl;
 	fpen.initialize();
 	initParameters();  
 	calcSurvivalAtLength(); 
@@ -347,7 +396,7 @@ void model_parameters::userfunction(void)
 	calcObservations();
 	calc_objective_function();
 	sd_l_infty = l_infty;
-	if( flag(1) ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
+	if( verbose ) cout<<"\n END OF PROCEDURE_SECTION "<<endl;
 }
 
 void model_parameters::runSimulationModel(const int& seed)
@@ -361,11 +410,11 @@ void model_parameters::runSimulationModel(const int& seed)
 	tmp_ddot_r_devs.fill_randn(rng);
 	tmp_bar_r_devs.fill_randn(rng);
 	tmp_bar_f_devs.fill_randn(rng);
-	double sig_r = flag(6);
+	double sig_r = flag(5);
 	ddot_r_devs = sig_r*tmp_ddot_r_devs;
 	bar_r_devs  = sig_r*tmp_bar_r_devs;
 	/* Capture probabilities */
-	double sig_f = flag(7);
+	double sig_f = flag(6);
 	for(k=1;k<=ngear;k++)
 	{
 		bar_f_devs(k) = sig_f*tmp_bar_f_devs(k);
@@ -390,7 +439,7 @@ void model_parameters::runSimulationModel(const int& seed)
 			{
 				for(j=1;j<=nx;j++)
 				{
-					if(flag(7))
+					if(flag(6))
 					{
 						C(k)(i)(j) = randnegbinomial(1.e-5+C(k)(i)(j),2.0,rng);
 						M(k)(i)(j) = randnegbinomial(1.e-5+M(k)(i)(j),2.0,rng);
@@ -441,7 +490,7 @@ void model_parameters::calcSizeTransitionMatrix(void)
 	*/
 	int t,im;
 	dvariable linf;
-	switch(int(flag(5)))
+	switch(int(flag(4)))
 	{
 		case 0:
 			A = calcLTM(xmid,l_infty,vbk,beta);
@@ -636,8 +685,8 @@ void model_parameters::calcNumbersAtLength(void)
 		}
 		T(t+1) = elem_prod(T(t) + mt,mfexp(-mx)) * iP(t);
 	}
-	if( flag(1)==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Nt\n"<<rowsum(N)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 }
 
@@ -699,7 +748,7 @@ void model_parameters::calcObservations(void)
 		//	T(t+1) = elem_prod(T(t),mfexp(-mx*dt))*iP(t) + Mtmp;
 		//}
 	}
-	if( flag(1)==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
+	if( verbose==2 ) cout<<"Tt\n"<<rowsum(T)<<endl;
   }
 }
 
@@ -735,7 +784,7 @@ void model_parameters::calc_objective_function(void)
 		}
 		//pvec(3) = dnorm(log_bar_f,log(0.1108032),2.5);
 	}
-	if( flag(1) ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
+	if( verbose ) cout<<"Average fi = "<<mfexp(log_bar_f)<<endl;
 	/* PENALTIES TO INSURE DEV VECTORS HAVE A MEAN O */
 	dvar_vector dev_pen(1,ngear);
 	for(k=1;k<=ngear;k++)
@@ -832,7 +881,7 @@ void model_parameters::calc_objective_function(void)
 			}
 		}
 	}
-	if( flag(1) ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
+	if( verbose ) cout<<"Fvec\t"<<setprecision(4)<<fvec<<endl;
 	if(fpen > 0) cout<<"Fpen = "<<fpen<<endl;
 	f  = sum(fvec); 
 	//f += sum(pvec); 

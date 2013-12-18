@@ -4,9 +4,9 @@
 class model_data : public ad_comm{
   init_adstring data_file;
   init_adstring control_file;
-  init_adstring sizeTransition_file;
-  int SimFlag;
-  int rseed;
+  init_adstring size_trans_file;
+  data_int verbose;
+  data_int turn_off_phase;
   data_int syr;
   data_int nyr;
   data_number dt;
@@ -56,10 +56,19 @@ class model_data : public ad_comm{
   data_int nflags;
   data_vector flag;
   imatrix min_tag_j;
+  int SimFlag;
+  int rseed;
   dvector true_Nt;
   dvector true_Rt;
   dvector true_Tt;
   dmatrix true_fi;
+  int par_count;
+  int active_count;
+  int active_parms;
+  ivector active_parm;
+  double dummy_datum;
+  int dummy_phase;
+  int max_phase;
   ~model_data();
   model_data(int argc,char * argv[]);
   friend class model_parameters;
@@ -139,6 +148,7 @@ private:
   param_3array Mhat;
   param_3array Rhat;
   param_3array iP;
+  param_init_bounded_number dummy_parm;
 public:
   virtual void userfunction(void);
   virtual void report(void);
