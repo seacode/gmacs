@@ -1,9 +1,4 @@
-	/**
-	\def REPORT(object)
-	Prints name and value of \a object on ADMB report %ofstream file.
-	*/
-	#undef REPORT
-	#define REPORT(object) report << #object "\n" << object << endl;
+	
 	#include <admodel.h>
 	#include <time.h>
 	#include <contrib.h>
@@ -11,6 +6,24 @@
 	time_t start,finish;
 	long hour,minute,second;
 	double elapsed_time;
+	// Define objects for report file, echoinput, etc.
+	/**
+	\def report(object)
+	Prints name and value of \a object on ADMB report %ofstream file.
+	*/
+	#undef REPORT
+	#define REPORT(object) report << #object "\n" << object << endl;
+	/**
+	\def echoinput(object)
+	Prints name and value of \a object on ADMB echoinput %ofstream file.
+	*/
+	#define echo(object) echoinput << #object "\n" << object << endl;
+	// Open output files using ofstream
+	ofstream echoinput("echoinput.gm");
+	// Define some adstring variables for use in output files
+	adstring version;
+	adstring version_short;
+	
 #include <admodel.h>
 #include <contrib.h>
 
@@ -21,11 +34,16 @@
 
 model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 {
+version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+version_short+="Gmacs V1.00";
+ echo(version)
  ad_comm::change_datafile_name("starter.gm"); 
  cout<<" Reading information from starter.gm"<<endl;
   data_file.allocate("data_file");
   control_file.allocate("control_file");
   size_trans_file.allocate("size_trans_file");
+ echo(data_file);
+ echo(control_file);
   verbose.allocate("verbose");
   turn_off_phase.allocate("turn_off_phase");
  ad_comm::change_datafile_name(data_file);

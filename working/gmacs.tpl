@@ -18,18 +18,10 @@
 //	-Calculate Reference Points (add routine for this)
 //	-Add forecast section (add routine for this)
 //
-//	-ADD Echoinput option, as per SS. To enable better testing and bug tracking.
-//  
-// =========================================================================================================
+//	=========================================================================================================
 
 GLOBALS_SECTION
-	/**
-	\def REPORT(object)
-	Prints name and value of \a object on ADMB report %ofstream file.
-	*/
-	#undef REPORT
-	#define REPORT(object) report << #object "\n" << object << endl;
-
+	
 	#include <admodel.h>
 	#include <time.h>
 	#include <contrib.h>
@@ -39,6 +31,27 @@ GLOBALS_SECTION
 	long hour,minute,second;
 	double elapsed_time;
 
+	// Define objects for report file, echoinput, etc.
+	/**
+	\def report(object)
+	Prints name and value of \a object on ADMB report %ofstream file.
+	*/
+	#undef REPORT
+	#define REPORT(object) report << #object "\n" << object << endl;
+
+	/**
+	\def echoinput(object)
+	Prints name and value of \a object on ADMB echoinput %ofstream file.
+	*/
+	#define echo(object) echoinput << #object "\n" << object << endl;
+
+	// Open output files using ofstream
+	ofstream echoinput("echoinput.gm");
+
+	// Define some adstring variables for use in output files
+	adstring version;
+	adstring version_short;
+	
 // =========================================================================================================
 
 TOP_OF_MAIN_SECTION
@@ -54,10 +67,10 @@ TOP_OF_MAIN_SECTION
 DATA_SECTION
 	
 	// Create strings with version information
-	//!!version_info+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
-	//!!version_short+="GMV1.00";
+	!!version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+	!!version_short+="Gmacs V1.00";
 
-// =========================================================================================================
+	!! echo(version)
 
 	// Read the Starter.gm file
 	!! ad_comm::change_datafile_name("starter.gm"); 
@@ -68,9 +81,12 @@ DATA_SECTION
 	init_adstring control_file;
 	init_adstring size_trans_file;
 
+	!! echo(data_file);
+	!! echo(control_file);
+
 	// Read various option values;
-	init_int verbose
-	init_int turn_off_phase
+	init_int verbose;
+	init_int turn_off_phase;
 
 // ---------------------------------------------------------------------------------------------------------
 	
