@@ -73,14 +73,14 @@ DATA_SECTION
 	!!version_short+="Gmacs V1.00";
 
 	!! echoinput << version << endl;
-	!! echoinput << ctime(&start) <<endl;
+	!! echoinput << ctime(&start) << endl;
 
 // ---------------------------------------------------------------------------------------------------------
 // STARTER FILE
 
 	// Read the Starter.gm file
 	!! ad_comm::change_datafile_name("starter.gm"); 
-	!! cout<<" Reading information from starter.gm"<<endl;
+	!! cout << " Reading information from starter.gm" << endl;
 
 	// Read data, control, and size transition file names, then echo:
 	init_adstring data_file;
@@ -94,24 +94,26 @@ DATA_SECTION
 	init_int verbose;
 	init_int turn_off_phase;
 
-	!! echo(verbose, "dispaly detail");
+	!! echo(verbose, "display detail");
 	!! echo(turn_off_phase, "final phase");
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_starter;
-	!! if(eof_starter!=999){cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
-	!! cout<<" Finished reading starter file"<<endl;
-	!! echo(eof_starter," Finished reading starter file \n");
+
+	!! if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
+	!! cout << " Finished reading starter file" << endl;
+	!! echo(eof_starter," EOF: finished reading starter file \n");
 
 
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (MAIN)
 
-	// Read from the data file (*.dat)
+	// Open main data file (*.dat):
 	!! ad_comm::change_datafile_name(data_file);
-	!! cout<<" TOP OF DATA_SECTION "<<endl;
+	!! cout<<" Reading main data file" << endl;
+	!! echoinput << " \n Start reading main data file" << endl;
 	
-	// Read input data from data file //
+	// Read input data from main data file:
 	init_int syr;   	// first year
 	init_int nyr;   	// last year
 	init_number dt; 	// time-step
@@ -172,11 +174,12 @@ DATA_SECTION
 	3darray R(1,ngear,1,irow,1,jcol);	
 
 	
-	init_int eof;
-	!! if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
-	!! cout<<" - END OF READING DATA"<<endl;
+	init_int eof_data;
+	!! if(eof_data!=999) {cout << " Error reading data\n EOF = " << eof_data << endl; exit(1);}
+	!! cout << " Finished reading main data file" << endl;
+	!! echo(eof_data," EOF: finished reading main data file \n");
 	
-	// colsums of Catch-at-length //
+	// columns of Catch-at-length //
 	matrix ct(1,ngear,1,irow); 
 	
 	LOC_CALCS

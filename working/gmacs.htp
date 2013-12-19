@@ -30,7 +30,7 @@ class model_data : public ad_comm{
   d3_array C;
   d3_array M;
   d3_array R;
-  data_int eof;
+  data_int eof_data;
   dmatrix ct;
   data_int nj;
   data_int syr_L;

@@ -38,9 +38,9 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
 version_short+="Gmacs V1.00";
  echoinput << version << endl;
- echoinput << ctime(&start) <<endl;
+ echoinput << ctime(&start) << endl;
  ad_comm::change_datafile_name("starter.gm"); 
- cout<<" Reading information from starter.gm"<<endl;
+ cout << " Reading information from starter.gm" << endl;
   data_file.allocate("data_file");
   control_file.allocate("control_file");
   size_trans_file.allocate("size_trans_file");
@@ -48,14 +48,15 @@ version_short+="Gmacs V1.00";
  echo(control_file, "control file");
   verbose.allocate("verbose");
   turn_off_phase.allocate("turn_off_phase");
- echo(verbose, "dispaly detail");
+ echo(verbose, "display detail");
  echo(turn_off_phase, "final phase");
   eof_starter.allocate("eof_starter");
- if(eof_starter!=999){cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
- cout<<" Finished reading starter file"<<endl;
- echo(eof_starter," Finished reading starter file \n");
+ if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
+ cout << " Finished reading starter file" << endl;
+ echo(eof_starter," EOF: finished reading starter file \n");
  ad_comm::change_datafile_name(data_file);
- cout<<" TOP OF DATA_SECTION "<<endl;
+ cout<<" Reading main data file" << endl;
+ echoinput << " \n Start reading main data file" << endl;
   syr.allocate("syr");
   nyr.allocate("nyr");
   dt.allocate("dt");
@@ -100,9 +101,10 @@ version_short+="Gmacs V1.00";
   C.allocate(1,ngear,1,irow,1,jcol);
   M.allocate(1,ngear,1,irow,1,jcol);
   R.allocate(1,ngear,1,irow,1,jcol);
-  eof.allocate("eof");
- if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
- cout<<" - END OF READING DATA"<<endl;
+  eof_data.allocate("eof_data");
+ if(eof_data!=999) {cout << " Error reading data\n EOF = " << eof_data << endl; exit(1);}
+ cout << " Finished reading main data file" << endl;
+ echo(eof_data," EOF: finished reading main data file \n");
   ct.allocate(1,ngear,1,irow);
 		for(k=1;k<=ngear;k++)
 		{
