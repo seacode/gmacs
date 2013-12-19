@@ -15,8 +15,9 @@
 //   were collected.  This will require transition matrix for dt and annual
 //   transition matrix.
 //	
-//	-Calculate Reference Points (add routine for this)
-//	-Add forecast section (add routine for this)
+//	- Calculate Reference Points (add routine for this)
+//	- Add forecast section (add routine for this)
+//  - Add warning section: maybe use macro for warning(object,text)
 //
 //	=========================================================================================================
 
@@ -40,15 +41,16 @@ GLOBALS_SECTION
 	#define REPORT(object) report << #object "\n" << object << endl;
 
 	/**
-	\def echoinput(object)
+	\def echo(object)
 	Prints name and value of \a object on ADMB echoinput %ofstream file.
 	*/
-	#define echo(object) echoinput << #object "\n" << object << endl;
+	#define echo(object,text) echoinput << object << "\t" << text << endl;
 
 	// Open output files using ofstream
 	ofstream echoinput("echoinput.gm");
+	ofstream warning("warning");
 
-	// Define some adstring variables for use in output files
+	// Define some adstring variables for use in output files:
 	adstring version;
 	adstring version_short;
 	
@@ -66,30 +68,45 @@ TOP_OF_MAIN_SECTION
 
 DATA_SECTION
 	
-	// Create strings with version information
+	// Create strings with version information:
 	!!version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
 	!!version_short+="Gmacs V1.00";
 
-	!! echo(version)
+	!! echoinput << version << endl;
+	!! echoinput << ctime(&start) <<endl;
+
+// ---------------------------------------------------------------------------------------------------------
+// STARTER FILE
 
 	// Read the Starter.gm file
 	!! ad_comm::change_datafile_name("starter.gm"); 
 	!! cout<<" Reading information from starter.gm"<<endl;
 
-	// Read data, control, and size transition file names;
+	// Read data, control, and size transition file names, then echo:
 	init_adstring data_file;
 	init_adstring control_file;
 	init_adstring size_trans_file;
 
-	!! echo(data_file);
-	!! echo(control_file);
+	!! echo(data_file, "data file");
+	!! echo(control_file, "control file");
 
-	// Read various option values;
+	// Read various option values, then echo:
 	init_int verbose;
 	init_int turn_off_phase;
 
+	!! echo(verbose, "dispaly detail");
+	!! echo(turn_off_phase, "final phase");
+
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_starter;
+	!! if(eof_starter!=999){cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
+	!! cout<<" Finished reading starter file"<<endl;
+	!! echo(eof_starter," Finished reading starter file \n");
+
+
 // ---------------------------------------------------------------------------------------------------------
-	
+// DATA FILE (MAIN)
+
 	// Read from the data file (*.dat)
 	!! ad_comm::change_datafile_name(data_file);
 	!! cout<<" TOP OF DATA_SECTION "<<endl;
@@ -176,7 +193,8 @@ DATA_SECTION
 	END_CALCS
 
 // ---------------------------------------------------------------------------------------------------------
-	
+// DATA FILE (GROWTH)
+
 	// Read from the Size Transition file (*.dat) //
 	!! ad_comm::change_datafile_name(size_trans_file);
 	init_int nj;  // number of size intervals
@@ -188,7 +206,8 @@ DATA_SECTION
 	!! if(eof2!=999){cout<<"Error reading Size Transitions "<<eof2<<endl; ad_exit(1);}
 
 // ---------------------------------------------------------------------------------------------------------
-	
+// CONTROL FILE
+
 	// Read from the Control file (*.ctl) //
 	!! ad_comm::change_datafile_name(control_file);
 	init_int npar

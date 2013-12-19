@@ -14,13 +14,14 @@
 	#undef REPORT
 	#define REPORT(object) report << #object "\n" << object << endl;
 	/**
-	\def echoinput(object)
+	\def echo(object)
 	Prints name and value of \a object on ADMB echoinput %ofstream file.
 	*/
-	#define echo(object) echoinput << #object "\n" << object << endl;
+	#define echo(object,text) echoinput << object << "\t" << text << endl;
 	// Open output files using ofstream
 	ofstream echoinput("echoinput.gm");
-	// Define some adstring variables for use in output files
+	ofstream warning("warning");
+	// Define some adstring variables for use in output files:
 	adstring version;
 	adstring version_short;
 	
@@ -36,16 +37,23 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 {
 version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
 version_short+="Gmacs V1.00";
- echo(version)
+ echoinput << version << endl;
+ echoinput << ctime(&start) <<endl;
  ad_comm::change_datafile_name("starter.gm"); 
  cout<<" Reading information from starter.gm"<<endl;
   data_file.allocate("data_file");
   control_file.allocate("control_file");
   size_trans_file.allocate("size_trans_file");
- echo(data_file);
- echo(control_file);
+ echo(data_file, "data file");
+ echo(control_file, "control file");
   verbose.allocate("verbose");
   turn_off_phase.allocate("turn_off_phase");
+ echo(verbose, "dispaly detail");
+ echo(turn_off_phase, "final phase");
+  eof_starter.allocate("eof_starter");
+ if(eof_starter!=999){cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
+ cout<<" Finished reading starter file"<<endl;
+ echo(eof_starter," Finished reading starter file \n");
  ad_comm::change_datafile_name(data_file);
  cout<<" TOP OF DATA_SECTION "<<endl;
   syr.allocate("syr");
