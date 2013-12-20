@@ -1,0 +1,9 @@
+# Gmacs Starter File Version 1.02
+hbc.dat
+hbc.ctl
+growth.dat
+
+0	# Display detail on output screen (0==off, 1==on, 2==verbose)
+5	# Turn off estimation for parameters entering after this phase
+
+999 # Check number for end of file
