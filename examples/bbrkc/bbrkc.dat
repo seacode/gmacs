@@ -1,13 +1,16 @@
 # Gmacs Main Data File Version 1.02
 
-1989	#Start year
-2011	#End year
-1		#Time-step (years)
+1989	# Start year
+2011	# End year
+1		# Time-step (years)
 
-#Number of gears
-2
-#nbin
-45
+2		# Number of fishing fleets
+2		# Number of surveys
+
+2		# Number of gears
+
+45		# Number of size bins
+
 #xbin
 5 6 7 8 9
 10 11 12 13 14

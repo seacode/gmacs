@@ -1,10 +1,10 @@
-# Number of parameters = 5  Objective function value = 1.41762e+007  Maximum gradient component = 432433.
+# Number of parameters = 1  Objective function value = 1.41358e+007  Maximum gradient component = 0.00000
 # theta[1]:
-1.95437853837
+7.50000000000
 # theta[2]:
-4.44982913407
+7.50000000000
 # theta[3]:
-0.265062960936
+0.200000000000
 # theta[4]:
 36.0000000000
 # theta[5]:
@@ -12,9 +12,9 @@
 # theta[6]:
 0.750000000000
 # theta[7]:
-19.9822054403
+10.0000000000
 # theta[8]:
-0.588244284649
+0.200000000000
 # log_bar_f:
  -3.50000000000 -3.50000000000
 # log_tau:

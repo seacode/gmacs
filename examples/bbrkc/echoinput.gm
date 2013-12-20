@@ -1,13 +1,24 @@
 Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1
-Thu Dec 19 15:07:10 2013
+Thu Dec 19 18:11:46 2013
 
-hbc.dat	data file
-hbc.ctl	control file
+ Start reading starter file
+bbrkc.dat	data file
+bbrkc.ctl	control file
 0	display detail
-5	final phase
+0	final phase
 999	 EOF: finished reading starter file 
 
- 
  Start reading main data file
 999	 EOF: finished reading main data file 
+
+ Start reading size transition file
+999	 EOF: finished reading size transition file 
+
+ Start reading control file
+999	 EOF: finished reading control file 
+
+ Start reading forecast file
+1995	 BMSY start year
+2010	 BMSY end year
+999	 EOF: finished reading forecast file 
 
