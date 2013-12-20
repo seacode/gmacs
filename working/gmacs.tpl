@@ -18,6 +18,7 @@
 //	- Calculate Reference Points (add routine for this)
 //	- Add forecast section (add routine for this)
 //  - Add warning section: maybe use macro for warning(object,text)
+//  - Add section to write new data file (enable easy labelling after first model attempt)
 //
 //	=========================================================================================================
 
@@ -75,10 +76,11 @@ DATA_SECTION
 	!! echoinput << version << endl;
 	!! echoinput << ctime(&start) << endl;
 
+
 // ---------------------------------------------------------------------------------------------------------
 // STARTER FILE
 
-	// Read the Starter.gm file
+	// Open Starter file (starter.gm)
 	!! ad_comm::change_datafile_name("starter.gm"); 
 	!! cout << " Reading information from starter.gm" << endl;
 
@@ -110,10 +112,10 @@ DATA_SECTION
 
 	// Open main data file (*.dat):
 	!! ad_comm::change_datafile_name(data_file);
-	!! cout<<" Reading main data file" << endl;
-	!! echoinput << " \n Start reading main data file" << endl;
+	!! cout << " Reading main data file" << endl;
+	!! echoinput << " Start reading main data file" << endl;
 	
-	// Read input data from main data file:
+	// Read input from main data file:
 	init_int syr;   	// first year
 	init_int nyr;   	// last year
 	init_number dt; 	// time-step
@@ -173,12 +175,6 @@ DATA_SECTION
 	3darray M(1,ngear,1,irow,1,jcol);
 	3darray R(1,ngear,1,irow,1,jcol);	
 
-	
-	init_int eof_data;
-	!! if(eof_data!=999) {cout << " Error reading data\n EOF = " << eof_data << endl; exit(1);}
-	!! cout << " Finished reading main data file" << endl;
-	!! echo(eof_data," EOF: finished reading main data file \n");
-	
 	// columns of Catch-at-length //
 	matrix ct(1,ngear,1,irow); 
 	
@@ -195,24 +191,39 @@ DATA_SECTION
 		}
 	END_CALCS
 
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_data;
+
+	!! if(eof_data!=999) {cout << " Error reading main data file\n EOF = " << eof_data << endl; exit(1);}
+	!! cout << " Finished reading main data file" << endl;
+	!! echo(eof_data," EOF: finished reading main data file \n");
+
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
 
 	// Read from the Size Transition file (*.dat) //
 	!! ad_comm::change_datafile_name(size_trans_file);
+	
 	init_int nj;  // number of size intervals
 	init_int syr_L;
 	init_int nyr_L;
 	init_ivector jbin(1,nj);
 	init_3darray L(syr_L,nyr_L,1,nj-1,1,nj-1);
-	init_int eof2;
-	!! if(eof2!=999){cout<<"Error reading Size Transitions "<<eof2<<endl; ad_exit(1);}
+	
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_growth;
+
+	!! if(eof_growth!=999) {cout << " Error reading size transition matrix file\n EOF = " << eof_data << endl; exit(1);}
+	!! cout << " Finished reading size transition matrix file" << endl;
+	!! echo(eof_data," EOF: finished reading size transition matrix file \n");
+
 
 // ---------------------------------------------------------------------------------------------------------
 // CONTROL FILE
 
 	// Read from the Control file (*.ctl) //
 	!! ad_comm::change_datafile_name(control_file);
+	
 	init_int npar
 	init_matrix theta_control(1,npar,1,7);
 	matrix trans_theta_control(1,7,1,npar);
@@ -303,7 +314,7 @@ DATA_SECTION
 		{
 			SimFlag = 1;
 			rseed   = atoi(ad_comm::argv[on+1]);
-			if(SimFlag) cout<<"In Simulation Mode\n";
+			if(SimFlag) cout << "In Simulation Mode\n";
 		}
 		
 	END_CALCS
@@ -313,8 +324,36 @@ DATA_SECTION
 	vector true_Rt(syr,nyr);
 	vector true_Tt(syr,nyr);
 	matrix true_fi(1,ngear,1,irow);
+
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_control;
+
+	!! if(eof_control!=999) {cout << " Error reading control file\n EOF = " << eof_control << endl; exit(1);}
+	!! cout << " Finished reading control file" << endl;
+	!! echo(eof_data," EOF: finished reading control file \n");
+
+// ---------------------------------------------------------------------------------------------------------
+// FORECAST FILE
+
+	// Open forecast file (forecast.gm):
+	!! ad_comm::change_datafile_name("forecast.gm");
+	!! cout << " Reading forecast file" << endl;
+	!! echoinput << " Start reading forecast file" << endl;
 	
-	!! cout<< " END OF DATA_SECTION \n"<<endl;
+	init_int bmsy_start;
+	init_int bmsy_end;
+
+	!! echo(bmsy_start, " BMSY start year");
+	!! echo(bmsy_end, " BMSY end year");
+
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_forecast;
+
+	!! if(eof_forecast!=999) {cout << " Error reading forecast file\n EOF = " << eof_forecast << endl; exit(1);}
+	!! cout << " Finished reading forecast file" << endl;
+	!! echo(eof_data," EOF: finished reading forecast file \n");
+
+	!! cout << " Finished reading input files. \n" << endl;
 
 // =========================================================================================================
 // GENERAL CALCS SECTION

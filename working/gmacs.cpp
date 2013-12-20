@@ -55,8 +55,8 @@ version_short+="Gmacs V1.00";
  cout << " Finished reading starter file" << endl;
  echo(eof_starter," EOF: finished reading starter file \n");
  ad_comm::change_datafile_name(data_file);
- cout<<" Reading main data file" << endl;
- echoinput << " \n Start reading main data file" << endl;
+ cout << " Reading main data file" << endl;
+ echoinput << " Start reading main data file" << endl;
   syr.allocate("syr");
   nyr.allocate("nyr");
   dt.allocate("dt");
@@ -101,10 +101,6 @@ version_short+="Gmacs V1.00";
   C.allocate(1,ngear,1,irow,1,jcol);
   M.allocate(1,ngear,1,irow,1,jcol);
   R.allocate(1,ngear,1,irow,1,jcol);
-  eof_data.allocate("eof_data");
- if(eof_data!=999) {cout << " Error reading data\n EOF = " << eof_data << endl; exit(1);}
- cout << " Finished reading main data file" << endl;
- echo(eof_data," EOF: finished reading main data file \n");
   ct.allocate(1,ngear,1,irow);
 		for(k=1;k<=ngear;k++)
 		{
@@ -116,14 +112,20 @@ version_short+="Gmacs V1.00";
 				ct(k,i) = sum( C(k)(i) );
 			}
 		}
+  eof_data.allocate("eof_data");
+ if(eof_data!=999) {cout << " Error reading main data file\n EOF = " << eof_data << endl; exit(1);}
+ cout << " Finished reading main data file" << endl;
+ echo(eof_data," EOF: finished reading main data file \n");
  ad_comm::change_datafile_name(size_trans_file);
   nj.allocate("nj");
   syr_L.allocate("syr_L");
   nyr_L.allocate("nyr_L");
   jbin.allocate(1,nj,"jbin");
   L.allocate(syr_L,nyr_L,1,nj-1,1,nj-1,"L");
-  eof2.allocate("eof2");
- if(eof2!=999){cout<<"Error reading Size Transitions "<<eof2<<endl; ad_exit(1);}
+  eof_growth.allocate("eof_growth");
+ if(eof_growth!=999) {cout << " Error reading size transition matrix file\n EOF = " << eof_data << endl; exit(1);}
+ cout << " Finished reading size transition matrix file" << endl;
+ echo(eof_data," EOF: finished reading size transition matrix file \n");
  ad_comm::change_datafile_name(control_file);
   npar.allocate("npar");
   theta_control.allocate(1,npar,1,7,"theta_control");
@@ -192,14 +194,29 @@ version_short+="Gmacs V1.00";
 		{
 			SimFlag = 1;
 			rseed   = atoi(ad_comm::argv[on+1]);
-			if(SimFlag) cout<<"In Simulation Mode\n";
+			if(SimFlag) cout << "In Simulation Mode\n";
 		}
 		
   true_Nt.allocate(syr,nyr);
   true_Rt.allocate(syr,nyr);
   true_Tt.allocate(syr,nyr);
   true_fi.allocate(1,ngear,1,irow);
- cout<< " END OF DATA_SECTION \n"<<endl;
+  eof_control.allocate("eof_control");
+ if(eof_control!=999) {cout << " Error reading control file\n EOF = " << eof_control << endl; exit(1);}
+ cout << " Finished reading control file" << endl;
+ echo(eof_data," EOF: finished reading control file \n");
+ ad_comm::change_datafile_name("forecast.gm");
+ cout << " Reading forecast file" << endl;
+ echoinput << " Start reading forecast file" << endl;
+  bmsy_start.allocate("bmsy_start");
+  bmsy_end.allocate("bmsy_end");
+ echo(bmsy_start, " BMSY start year");
+ echo(bmsy_end, " BMSY end year");
+  eof_forecast.allocate("eof_forecast");
+ if(eof_forecast!=999) {cout << " Error reading forecast file\n EOF = " << eof_forecast << endl; exit(1);}
+ cout << " Finished reading forecast file" << endl;
+ echo(eof_data," EOF: finished reading forecast file \n");
+ cout << " Finished reading input files. \n" << endl;
   active_parm.allocate(1,npar);
  dummy_datum=1.;
  if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
