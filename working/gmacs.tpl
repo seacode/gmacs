@@ -104,7 +104,7 @@ DATA_SECTION
 	init_int eof_starter;
 
 	!! if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
-	!! cout << " Finished reading starter file" << endl;
+	!! cout << " Finished reading starter file \n" << endl;
 	!! echo(eof_starter," EOF: finished reading starter file \n");
 
 
@@ -117,16 +117,22 @@ DATA_SECTION
 	!! echoinput << " Start reading main data file" << endl;
 	
 	// Read input from main data file:
-	init_int syr;   	// first year
-	init_int nyr;   	// last year
+	
+	init_int styr;   	// start year
+	init_int endyr;   	// end year
 	init_number dt; 	// time-step
+	
+	init_int nfleet;	// number of fishing fleets
+	init_int nsurvery;	// number of surveys
+
 	init_int ngear; 	// number of gears
 	init_int nbin;		// number of length intervals
+
 	init_vector xbin(1,nbin);  //length-intervals (not mid-points)
 	
 	int nx;			//number of length bins (nbin-1)
 	int nr;			//number of rows in predicted arrays
-	!! nr = int((nyr-syr+1)/dt);
+	!! nr = int((endyr-styr+1)/dt);
 	!! nx = nbin;
 	vector xmid(1,nbin);
 	!! xmid = xbin + 0.5*(xbin(2)-xbin(1));
@@ -196,7 +202,7 @@ DATA_SECTION
 	init_int eof_data;
 
 	!! if(eof_data!=999) {cout << " Error reading main data file\n EOF = " << eof_data << endl; exit(1);}
-	!! cout << " Finished reading main data file" << endl;
+	!! cout << " Finished reading main data file \n" << endl;
 	!! echo(eof_data," EOF: finished reading main data file \n");
 
 // ---------------------------------------------------------------------------------------------------------
@@ -204,22 +210,22 @@ DATA_SECTION
 
 	// Open size transition file (*.dat) //
 	!! ad_comm::change_datafile_name(size_trans_file);
-	!! cout << " Reading growth data file" << endl;
-	!! echoinput << " Start reading growth data file" << endl;
+	!! cout << " Reading size transition file" << endl;
+	!! echoinput << " Start reading size transition file" << endl;
 	
 	// Read input from growth data file:
 	init_int nj;  // number of size intervals
-	init_int syr_L;
-	init_int nyr_L;
+	init_int styr_L;
+	init_int endyr_L;
 	init_ivector jbin(1,nj);
-	init_3darray L(syr_L,nyr_L,1,nj-1,1,nj-1);
+	init_3darray L(styr_L,endyr_L,1,nj-1,1,nj-1);
 	
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_growth;
 
-	!! if(eof_growth!=999) {cout << " Error reading size transition matrix file\n EOF = " << eof_data << endl; exit(1);}
-	!! cout << " Finished reading size transition matrix file" << endl;
-	!! echo(eof_data," EOF: finished reading size transition matrix file \n");
+	!! if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
+	!! cout << " Finished reading size transition file \n" << endl;
+	!! echo(eof_data," EOF: finished reading size transition file \n");
 
 
 // ---------------------------------------------------------------------------------------------------------
@@ -327,16 +333,16 @@ DATA_SECTION
 	END_CALCS
 	
 	// Variables for Simulated Data
-	vector true_Nt(syr,nyr);
-	vector true_Rt(syr,nyr);
-	vector true_Tt(syr,nyr);
+	vector true_Nt(styr,endyr);
+	vector true_Rt(styr,endyr);
+	vector true_Tt(styr,endyr);
 	matrix true_fi(1,ngear,1,irow);
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_control;
 
 	!! if(eof_control!=999) {cout << " Error reading control file\n EOF = " << eof_control << endl; exit(1);}
-	!! cout << " Finished reading control file" << endl;
+	!! cout << " Finished reading control file \n" << endl;
 	!! echo(eof_data," EOF: finished reading control file \n");
 
 // ---------------------------------------------------------------------------------------------------------
@@ -357,10 +363,10 @@ DATA_SECTION
 	init_int eof_forecast;
 
 	!! if(eof_forecast!=999) {cout << " Error reading forecast file\n EOF = " << eof_forecast << endl; exit(1);}
-	!! cout << " Finished reading forecast file" << endl;
+	!! cout << " Finished reading forecast file \n" << endl;
 	!! echo(eof_data," EOF: finished reading forecast file \n");
 
-	!! cout << " Successfuly read input files. \n" << endl;
+	!! cout << " Successfully read all input files. \n" << endl;
 
 // =========================================================================================================
 // GENERAL CALCS SECTION
@@ -381,7 +387,7 @@ DATA_SECTION
 	int max_phase;
  
  	LOC_CALCS
-  		cout<< " Adjust phases \n"<<endl;
+  		cout << " Adjust phases \n" << endl;
   		max_phase=1;
   		active_count=0;
   		active_parm(1,npar)=0;
@@ -401,8 +407,8 @@ DATA_SECTION
 		active_parms=active_count;
 	END_CALCS
 
-	!!cout<< "Number of active parameters is "<<active_parms<<endl;
-	!!cout<< "Maximum phase for estimation is "<<max_phase<<endl;
+	!!cout << "Number of active parameters is " << active_parms << endl;
+	!!cout << "Maximum phase for estimation is " << max_phase << endl << endl;
 
 // =========================================================================================================
 
@@ -448,10 +454,10 @@ PARAMETER_SECTION
 	END_CALCS
 	
 	init_bounded_dev_vector ddot_r_devs(1,nx,-15,15,-2);
-	init_bounded_dev_vector bar_r_devs(syr+1,nyr,-15,15,-2);
+	init_bounded_dev_vector bar_r_devs(styr+1,endyr,-15,15,-2);
 	!! int phz;
 	!! if(flag(4)==1) phz=3; else phz=-3;
-	init_bounded_dev_vector l_infty_devs(syr,nyr-1,-5,5,phz);
+	init_bounded_dev_vector l_infty_devs(styr,endyr-1,-5,5,phz);
 	
 	
 	//TODO Fix this so there is a dev vector for each gear, otherwise biased estimates of log_bar_f
@@ -468,11 +474,11 @@ PARAMETER_SECTION
 	vector mx(1,nx);		// Mortality rate at length xmid
 	vector rx(1,nx);		// size pdf for new recruits
 	
-	vector log_rt(syr+1,nyr);
+	vector log_rt(styr+1,endyr);
 	matrix fi(1,ngear,1,irow);	// capture probability in period i.
 	matrix sx(1,ngear,1,jcol);	// Selectivity at length xmid
-	matrix N(syr,nyr,1,nx);		// Numbers(time step, length bins)
-	matrix T(syr,nyr,1,nx);		// Marks-at-large (time step, length bins)
+	matrix N(styr,endyr,1,nx);		// Numbers(time step, length bins)
+	matrix T(styr,endyr,1,nx);		// Marks-at-large (time step, length bins)
 	matrix A(1,nx,1,nx);		// Size-transitin matrix (annual step)
 	//matrix P(1,nx,1,nx);		// Size-Transition Matrix for step dt
 	
@@ -482,7 +488,7 @@ PARAMETER_SECTION
 	3darray Chat(1,ngear,1,irow,1,jcol);	// Predicted catch-at-length
 	3darray Mhat(1,ngear,1,irow,1,jcol);	// Predicted new marks-at-length
 	3darray Rhat(1,ngear,1,irow,1,jcol);	// Predicted recaptures-at-length
-	3darray iP(syr,nyr,1,nx,1,nx);			// Size transition matrix for year i;
+	3darray iP(styr,endyr,1,nx,1,nx);			// Size transition matrix for year i;
 
 	//  Create dummy parameter that will be estimated when turn_off_phase is set to 0
   	init_bounded_number dummy_parm(0,2,dummy_phase)  //  Estimate in phase 0
@@ -597,9 +603,9 @@ FUNCTION void runSimulationModel(const int& seed)
 	true_fi = value(fi);
 	true_Nt = value(rowsum(N));
 	true_Tt = value(rowsum(T));
-	for(i=syr;i<=nyr;i++)
+	for(i=styr;i<=endyr;i++)
 	{
-		if(i==syr) true_Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
+		if(i==styr) true_Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
 		else       true_Rt(i) = value(mfexp(log_rt(i)));
 	}
 	
@@ -629,7 +635,7 @@ FUNCTION calcSizeTransitionMatrix
 	{
 		case 0:
 			A = calcLTM(xmid,l_infty,vbk,beta);
-			for(t=syr;t<nyr;t++)
+			for(t=styr;t<endyr;t++)
 			{
 				iP(t) = A;
 			}
@@ -641,7 +647,7 @@ FUNCTION calcSizeTransitionMatrix
 				A = calcLTM(xmid,l_infty,vbk,beta);
 			}
 			else
-			for(t=syr;t<nyr;t++)
+			for(t=styr;t<endyr;t++)
 			{
 				if(active(l_infty_devs))
 				{
@@ -653,11 +659,11 @@ FUNCTION calcSizeTransitionMatrix
 		break;
 		//
 		case 2: // use externally estimated Size transition matrices 
-			for(t=syr;t<nyr;t++)
+			for(t=styr;t<endyr;t++)
 			{
 				im = t;
-				if(t < syr_L) im = syr_L;
-				if(t > nyr_L) im = nyr_L;
+				if(t < styr_L) im = styr_L;
+				if(t > endyr_L) im = endyr_L;
 				iP(t) = L(im);
 			}
 		break;
@@ -687,7 +693,7 @@ FUNCTION initializeModel
 	ii = 0;
 	for(i=2;i<=nx;i++)
 	{
-		phi_X(i) = elem_prod(phi_X(i-1),mfexp(-mx)) * iP(syr);
+		phi_X(i) = elem_prod(phi_X(i-1),mfexp(-mx)) * iP(styr);
 		if( i==nx )
 		{
 			phi_X(i) = phi_X(i) + elem_div(phi_X(i),1.-mfexp(-mx));
@@ -696,7 +702,7 @@ FUNCTION initializeModel
 	
 	/* Initial numbers at length */
 	init_r = mfexp(log_ddot_r + ddot_r_devs);
-	N(syr)   = init_r * phi_X;
+	N(styr)   = init_r * phi_X;
 	
 	/* Annual recruitment */
 	log_rt = log_bar_r + bar_r_devs;
@@ -815,7 +821,7 @@ FUNCTION calcNumbersAtLength
 	i = 0;
 	dvariable rt;
 	dvector mt(1,nx);
-	for(t=syr;t<nyr;t++)
+	for(t=styr;t<endyr;t++)
 	{
 		/* TOTAL NUMBERS AT LARGE */
 		rt     = mfexp(log_rt(t+1));
@@ -867,7 +873,7 @@ FUNCTION calcObservations
 	zx = mx*dt;
 	ox = elem_div(1.0-mfexp(-zx),zx);
 	
-	for(t=syr;t<=nyr;t++)
+	for(t=styr;t<=endyr;t++)
 	{
 		Ntmp = N(t);
 		Ttmp = T(t);
@@ -896,7 +902,7 @@ FUNCTION calcObservations
 		}
 		
 		/* Survive and grow tags-at-large and add new tags */
-		//if( t < nyr )
+		//if( t < endyr )
 		//{
 		//	T(t+1) = elem_prod(T(t),mfexp(-mx*dt))*iP(t) + Mtmp;
 		//}
@@ -1117,8 +1123,8 @@ REPORT_SECTION
 	REPORT(log_bar_f  );
 	REPORT(tau        );
 	
-	ivector yr(syr,nyr);
-	yr.fill_seqadd(syr,1);
+	ivector yr(styr,endyr);
+	yr.fill_seqadd(styr,1);
 	REPORT(yr);
 	REPORT(ngear);
 	REPORT(irow);
@@ -1131,10 +1137,10 @@ REPORT_SECTION
 	
 	dvector Nt = value(rowsum(N));
 	dvector Tt = value(rowsum(T));
-	dvector Rt(syr,nyr);
-	for(i=syr;i<=nyr;i++)
+	dvector Rt(styr,endyr);
+	for(i=styr;i<=endyr;i++)
 	{
-		if(i==syr) Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
+		if(i==styr) Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
 		else       Rt(i) = value(mfexp(log_rt(i)));
 	}
 	REPORT(Nt);
@@ -1166,17 +1172,21 @@ REPORT_SECTION
 // =========================================================================================================
 
 FINAL_SECTION
+	
+	// Create final time stamp and determing runtime:
 	time(&finish);
 	elapsed_time=difftime(finish,start);
 	hour=long(elapsed_time)/3600;
 	minute=long(elapsed_time)%3600/60;
 	second=(long(elapsed_time)%3600)%60;
-	cout<<endl<<endl<<"*******************************************"<<endl;
-	cout<<"--Start time: "<<ctime(&start)<<endl;
-	cout<<"--Finish time: "<<ctime(&finish)<<endl;
-	cout<<"--Runtime: ";
-	cout<<hour<<" hours, "<<minute<<" minutes, "<<second<<" seconds"<<endl;
-	cout<<"*******************************************"<<endl;
+	
+	// Print runtime records to screen:
+	cout << endl << endl << "*******************************************" 	<< endl;
+	cout << 				"--Start time: "		<<	ctime(&start)		<< endl;
+	cout <<					"--Finish time: "		<< 	ctime(&finish)		<< endl;
+	cout <<					"--Runtime: ";
+	cout <<	hour <<" hours, "<<minute<<" minutes, "<<second<<" seconds"		<< endl;
+	cout <<					"*******************************************"	<< endl;
 
 // =========================================================================================================
 

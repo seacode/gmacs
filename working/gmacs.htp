@@ -8,9 +8,11 @@ class model_data : public ad_comm{
   data_int verbose;
   data_int turn_off_phase;
   data_int eof_starter;
-  data_int syr;
-  data_int nyr;
+  data_int styr;
+  data_int endyr;
   data_number dt;
+  data_int nfleet;
+  data_int nsurvery;
   data_int ngear;
   data_int nbin;
   data_vector xbin;
@@ -33,8 +35,8 @@ class model_data : public ad_comm{
   dmatrix ct;
   data_int eof_data;
   data_int nj;
-  data_int syr_L;
-  data_int nyr_L;
+  data_int styr_L;
+  data_int endyr_L;
   data_ivector jbin;
   data_3array L;
   data_int eof_growth;
