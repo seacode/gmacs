@@ -116,7 +116,7 @@ DATA_SECTION
 	!! cout << " Reading main data file" << endl;
 	!! echoinput << " Start reading main data file" << endl;
 	
-	// Read input from main data file:
+	// Read input from main data file (new version):
 	
 	init_int styr;   	// start year
 	init_int endyr;   	// end year
@@ -124,15 +124,22 @@ DATA_SECTION
 	
 	init_int nfleet;	// number of fishing fleets
 	init_int nsurvery;	// number of surveys
+	init_int nclass;	// number of size classes
+	init_int ndclass;	// number of size classes (in the data)
 
+	init_int nsex;		// number of sexes	
+
+	// READ INPUT FROM OLD DATAFILE, HBC EXAMPLE (LSMR):
+	init_int syr;   	// first year
+	init_int nyr;   	// last year
+	init_number dt; 	// time-step
 	init_int ngear; 	// number of gears
 	init_int nbin;		// number of length intervals
-
 	init_vector xbin(1,nbin);  //length-intervals (not mid-points)
 	
 	int nx;			//number of length bins (nbin-1)
 	int nr;			//number of rows in predicted arrays
-	!! nr = int((endyr-styr+1)/dt);
+	!! nr = int((nyr-syr+1)/dt);
 	!! nx = nbin;
 	vector xmid(1,nbin);
 	!! xmid = xbin + 0.5*(xbin(2)-xbin(1));
@@ -182,7 +189,12 @@ DATA_SECTION
 	3darray M(1,ngear,1,irow,1,jcol);
 	3darray R(1,ngear,1,irow,1,jcol);	
 
-	// columns of Catch-at-length //
+	
+	init_int eof;
+	!! if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
+	!! cout<<" - END OF READING DATA"<<endl;
+	
+	// colsums of Catch-at-length //
 	matrix ct(1,ngear,1,irow); 
 	
 	LOC_CALCS
@@ -197,14 +209,6 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
-
-	// Print EOF confirmation to screen and echoinput, warn otherwise:
-	init_int eof_data;
-
-	!! if(eof_data!=999) {cout << " Error reading main data file\n EOF = " << eof_data << endl; exit(1);}
-	!! cout << " Finished reading main data file \n" << endl;
-	!! echo(eof_data," EOF: finished reading main data file \n");
-
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
 

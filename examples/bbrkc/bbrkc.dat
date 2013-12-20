@@ -7,10 +7,28 @@
 2		# Number of fishing fleets
 2		# Number of surveys
 
-2		# Number of gears
+5		# Number of size classes
+20		# Number of size-classes in the data
 
-45		# Number of size bins
+2		# Number of sexes
 
+# Mean Length Vector (length n-size-classes)
+67.5	72.5	77.5	82.5	87.5	92.5	97.5	102.5	107.5	112.5	117.5	122.5	127.5	132.5	137.5	142.5	147.5	152.5	157.5	162.5
+
+# Mean Weight Vector (length n-size-classes)
+0.218	0.273	0.337	0.411	0.495	0.59	0.696	0.815	0.948	1.094	1.256	1.432	1.625	1.835	2.063	2.31	2.576	2.862	3.169	3.7
+
+
+#Data for HBC EXAMPLE:
+
+1989	#Start year
+2011	#End year
+1		#Time-step (years)
+
+#Number of gears
+2
+#nbin
+45
 #xbin
 5 6 7 8 9
 10 11 12 13 14
