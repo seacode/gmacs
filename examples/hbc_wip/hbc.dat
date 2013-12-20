@@ -1,6 +1,9 @@
 #Data for HBC 1989:2011
-#syr, nyr, dt
-1989 2011 1
+
+1989	#Start year
+2011	#End year
+1		#Time-step (years)
+
 #Number of gears
 2
 #nbin
