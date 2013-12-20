@@ -82,7 +82,8 @@ DATA_SECTION
 
 	// Open Starter file (starter.gm)
 	!! ad_comm::change_datafile_name("starter.gm"); 
-	!! cout << " Reading information from starter.gm" << endl;
+	!! cout << " Reading information from starter file" << endl;
+	!! echoinput << " Start reading starter file" << endl;
 
 	// Read data, control, and size transition file names, then echo:
 	init_adstring data_file;
@@ -201,9 +202,12 @@ DATA_SECTION
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
 
-	// Read from the Size Transition file (*.dat) //
+	// Open size transition file (*.dat) //
 	!! ad_comm::change_datafile_name(size_trans_file);
+	!! cout << " Reading growth data file" << endl;
+	!! echoinput << " Start reading growth data file" << endl;
 	
+	// Read input from growth data file:
 	init_int nj;  // number of size intervals
 	init_int syr_L;
 	init_int nyr_L;
@@ -221,9 +225,12 @@ DATA_SECTION
 // ---------------------------------------------------------------------------------------------------------
 // CONTROL FILE
 
-	// Read from the Control file (*.ctl) //
+	// Open control file (*.ctl) //
 	!! ad_comm::change_datafile_name(control_file);
+	!! cout << " Reading control file" << endl;
+	!! echoinput << " Start reading control file" << endl;
 	
+	// Read input from control file:
 	init_int npar
 	init_matrix theta_control(1,npar,1,7);
 	matrix trans_theta_control(1,7,1,npar);
@@ -353,7 +360,7 @@ DATA_SECTION
 	!! cout << " Finished reading forecast file" << endl;
 	!! echo(eof_data," EOF: finished reading forecast file \n");
 
-	!! cout << " Finished reading input files. \n" << endl;
+	!! cout << " Successfuly read input files. \n" << endl;
 
 // =========================================================================================================
 // GENERAL CALCS SECTION
