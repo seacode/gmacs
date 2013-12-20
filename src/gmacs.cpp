@@ -14,13 +14,14 @@
 	#undef REPORT
 	#define REPORT(object) report << #object "\n" << object << endl;
 	/**
-	\def echoinput(object)
+	\def echo(object)
 	Prints name and value of \a object on ADMB echoinput %ofstream file.
 	*/
-	#define echo(object) echoinput << #object "\n" << object << endl;
+	#define echo(object,text) echoinput << object << "\t" << text << endl;
 	// Open output files using ofstream
 	ofstream echoinput("echoinput.gm");
-	// Define some adstring variables for use in output files
+	ofstream warning("warning");
+	// Define some adstring variables for use in output files:
 	adstring version;
 	adstring version_short;
 	
@@ -36,25 +37,36 @@ model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 {
 version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
 version_short+="Gmacs V1.00";
- echo(version)
+ echoinput << version << endl;
+ echoinput << ctime(&start) << endl;
  ad_comm::change_datafile_name("starter.gm"); 
- cout<<" Reading information from starter.gm"<<endl;
+ cout << " Reading information from starter file" << endl;
+ echoinput << " Start reading starter file" << endl;
   data_file.allocate("data_file");
   control_file.allocate("control_file");
   size_trans_file.allocate("size_trans_file");
- echo(data_file);
- echo(control_file);
+ echo(data_file, "data file");
+ echo(control_file, "control file");
   verbose.allocate("verbose");
   turn_off_phase.allocate("turn_off_phase");
+ echo(verbose, "display detail");
+ echo(turn_off_phase, "final phase");
+  eof_starter.allocate("eof_starter");
+ if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
+ cout << " Finished reading starter file \n" << endl;
+ echo(eof_starter," EOF: finished reading starter file \n");
  ad_comm::change_datafile_name(data_file);
- cout<<" TOP OF DATA_SECTION "<<endl;
-  syr.allocate("syr");
-  nyr.allocate("nyr");
+ cout << " Reading main data file" << endl;
+ echoinput << " Start reading main data file" << endl;
+  styr.allocate("styr");
+  endyr.allocate("endyr");
   dt.allocate("dt");
+  nfleet.allocate("nfleet");
+  nsurvery.allocate("nsurvery");
   ngear.allocate("ngear");
   nbin.allocate("nbin");
   xbin.allocate(1,nbin,"xbin");
- nr = int((nyr-syr+1)/dt);
+ nr = int((endyr-styr+1)/dt);
  nx = nbin;
   xmid.allocate(1,nbin);
  xmid = xbin + 0.5*(xbin(2)-xbin(1));
@@ -92,9 +104,6 @@ version_short+="Gmacs V1.00";
   C.allocate(1,ngear,1,irow,1,jcol);
   M.allocate(1,ngear,1,irow,1,jcol);
   R.allocate(1,ngear,1,irow,1,jcol);
-  eof.allocate("eof");
- if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
- cout<<" - END OF READING DATA"<<endl;
   ct.allocate(1,ngear,1,irow);
 		for(k=1;k<=ngear;k++)
 		{
@@ -106,15 +115,25 @@ version_short+="Gmacs V1.00";
 				ct(k,i) = sum( C(k)(i) );
 			}
 		}
+  eof_data.allocate("eof_data");
+ if(eof_data!=999) {cout << " Error reading main data file\n EOF = " << eof_data << endl; exit(1);}
+ cout << " Finished reading main data file \n" << endl;
+ echo(eof_data," EOF: finished reading main data file \n");
  ad_comm::change_datafile_name(size_trans_file);
+ cout << " Reading size transition file" << endl;
+ echoinput << " Start reading size transition file" << endl;
   nj.allocate("nj");
-  syr_L.allocate("syr_L");
-  nyr_L.allocate("nyr_L");
+  styr_L.allocate("styr_L");
+  endyr_L.allocate("endyr_L");
   jbin.allocate(1,nj,"jbin");
-  L.allocate(syr_L,nyr_L,1,nj-1,1,nj-1,"L");
-  eof2.allocate("eof2");
- if(eof2!=999){cout<<"Error reading Size Transitions "<<eof2<<endl; ad_exit(1);}
+  L.allocate(styr_L,endyr_L,1,nj-1,1,nj-1,"L");
+  eof_growth.allocate("eof_growth");
+ if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
+ cout << " Finished reading size transition file \n" << endl;
+ echo(eof_data," EOF: finished reading size transition file \n");
  ad_comm::change_datafile_name(control_file);
+ cout << " Reading control file" << endl;
+ echoinput << " Start reading control file" << endl;
   npar.allocate("npar");
   theta_control.allocate(1,npar,1,7,"theta_control");
   trans_theta_control.allocate(1,7,1,npar);
@@ -182,18 +201,33 @@ version_short+="Gmacs V1.00";
 		{
 			SimFlag = 1;
 			rseed   = atoi(ad_comm::argv[on+1]);
-			if(SimFlag) cout<<"In Simulation Mode\n";
+			if(SimFlag) cout << "In Simulation Mode\n";
 		}
 		
-  true_Nt.allocate(syr,nyr);
-  true_Rt.allocate(syr,nyr);
-  true_Tt.allocate(syr,nyr);
+  true_Nt.allocate(styr,endyr);
+  true_Rt.allocate(styr,endyr);
+  true_Tt.allocate(styr,endyr);
   true_fi.allocate(1,ngear,1,irow);
- cout<< " END OF DATA_SECTION \n"<<endl;
+  eof_control.allocate("eof_control");
+ if(eof_control!=999) {cout << " Error reading control file\n EOF = " << eof_control << endl; exit(1);}
+ cout << " Finished reading control file \n" << endl;
+ echo(eof_data," EOF: finished reading control file \n");
+ ad_comm::change_datafile_name("forecast.gm");
+ cout << " Reading forecast file" << endl;
+ echoinput << " Start reading forecast file" << endl;
+  bmsy_start.allocate("bmsy_start");
+  bmsy_end.allocate("bmsy_end");
+ echo(bmsy_start, " BMSY start year");
+ echo(bmsy_end, " BMSY end year");
+  eof_forecast.allocate("eof_forecast");
+ if(eof_forecast!=999) {cout << " Error reading forecast file\n EOF = " << eof_forecast << endl; exit(1);}
+ cout << " Finished reading forecast file \n" << endl;
+ echo(eof_data," EOF: finished reading forecast file \n");
+ cout << " Successfully read all input files. \n" << endl;
   active_parm.allocate(1,npar);
  dummy_datum=1.;
  if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
-  		cout<< " Adjust phases \n"<<endl;
+  		cout << " Adjust phases \n" << endl;
   		max_phase=1;
   		active_count=0;
   		active_parm(1,npar)=0;
@@ -210,8 +244,8 @@ version_short+="Gmacs V1.00";
 		  	}
 		}
 		active_parms=active_count;
-cout<< "Number of active parameters is "<<active_parms<<endl;
-cout<< "Maximum phase for estimation is "<<max_phase<<endl;
+cout << "Number of active parameters is " << active_parms << endl;
+cout << "Maximum phase for estimation is " << max_phase << endl << endl;
 }
 
 model_parameters::model_parameters(int sz,int argc,char * argv[]) : 
@@ -270,10 +304,10 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
 			}
 		}
   ddot_r_devs.allocate(1,nx,-15,15,-2,"ddot_r_devs");
-  bar_r_devs.allocate(syr+1,nyr,-15,15,-2,"bar_r_devs");
+  bar_r_devs.allocate(styr+1,endyr,-15,15,-2,"bar_r_devs");
  int phz;
  if(flag(4)==1) phz=3; else phz=-3;
-  l_infty_devs.allocate(syr,nyr-1,-5,5,phz,"l_infty_devs");
+  l_infty_devs.allocate(styr,endyr-1,-5,5,phz,"l_infty_devs");
   bar_f_devs.allocate(1,ngear,1,fi_count,-5.0,5.0,-2,"bar_f_devs");
   sd_l_infty.allocate("sd_l_infty");
   f.allocate("f");
@@ -303,7 +337,7 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
   #ifndef NO_AD_INITIALIZE
     rx.initialize();
   #endif
-  log_rt.allocate(syr+1,nyr,"log_rt");
+  log_rt.allocate(styr+1,endyr,"log_rt");
   #ifndef NO_AD_INITIALIZE
     log_rt.initialize();
   #endif
@@ -315,11 +349,11 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
   #ifndef NO_AD_INITIALIZE
     sx.initialize();
   #endif
-  N.allocate(syr,nyr,1,nx,"N");
+  N.allocate(styr,endyr,1,nx,"N");
   #ifndef NO_AD_INITIALIZE
     N.initialize();
   #endif
-  T.allocate(syr,nyr,1,nx,"T");
+  T.allocate(styr,endyr,1,nx,"T");
   #ifndef NO_AD_INITIALIZE
     T.initialize();
   #endif
@@ -347,7 +381,7 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
   #ifndef NO_AD_INITIALIZE
     Rhat.initialize();
   #endif
-  iP.allocate(syr,nyr,1,nx,1,nx,"iP");
+  iP.allocate(styr,endyr,1,nx,1,nx,"iP");
   #ifndef NO_AD_INITIALIZE
     iP.initialize();
   #endif
@@ -459,9 +493,9 @@ void model_parameters::runSimulationModel(const int& seed)
 	true_fi = value(fi);
 	true_Nt = value(rowsum(N));
 	true_Tt = value(rowsum(T));
-	for(i=syr;i<=nyr;i++)
+	for(i=styr;i<=endyr;i++)
 	{
-		if(i==syr) true_Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
+		if(i==styr) true_Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
 		else       true_Rt(i) = value(mfexp(log_rt(i)));
 	}
   }
@@ -494,7 +528,7 @@ void model_parameters::calcSizeTransitionMatrix(void)
 	{
 		case 0:
 			A = calcLTM(xmid,l_infty,vbk,beta);
-			for(t=syr;t<nyr;t++)
+			for(t=styr;t<endyr;t++)
 			{
 				iP(t) = A;
 			}
@@ -506,7 +540,7 @@ void model_parameters::calcSizeTransitionMatrix(void)
 				A = calcLTM(xmid,l_infty,vbk,beta);
 			}
 			else
-			for(t=syr;t<nyr;t++)
+			for(t=styr;t<endyr;t++)
 			{
 				if(active(l_infty_devs))
 				{
@@ -518,11 +552,11 @@ void model_parameters::calcSizeTransitionMatrix(void)
 		break;
 		//
 		case 2: // use externally estimated Size transition matrices 
-			for(t=syr;t<nyr;t++)
+			for(t=styr;t<endyr;t++)
 			{
 				im = t;
-				if(t < syr_L) im = syr_L;
-				if(t > nyr_L) im = nyr_L;
+				if(t < styr_L) im = styr_L;
+				if(t > endyr_L) im = endyr_L;
 				iP(t) = L(im);
 			}
 		break;
@@ -549,7 +583,7 @@ void model_parameters::initializeModel(void)
 	ii = 0;
 	for(i=2;i<=nx;i++)
 	{
-		phi_X(i) = elem_prod(phi_X(i-1),mfexp(-mx)) * iP(syr);
+		phi_X(i) = elem_prod(phi_X(i-1),mfexp(-mx)) * iP(styr);
 		if( i==nx )
 		{
 			phi_X(i) = phi_X(i) + elem_div(phi_X(i),1.-mfexp(-mx));
@@ -557,7 +591,7 @@ void model_parameters::initializeModel(void)
 	}
 	/* Initial numbers at length */
 	init_r = mfexp(log_ddot_r + ddot_r_devs);
-	N(syr)   = init_r * phi_X;
+	N(styr)   = init_r * phi_X;
 	/* Annual recruitment */
 	log_rt = log_bar_r + bar_r_devs;
   }
@@ -671,7 +705,7 @@ void model_parameters::calcNumbersAtLength(void)
 	i = 0;
 	dvariable rt;
 	dvector mt(1,nx);
-	for(t=syr;t<nyr;t++)
+	for(t=styr;t<endyr;t++)
 	{
 		/* TOTAL NUMBERS AT LARGE */
 		rt     = mfexp(log_rt(t+1));
@@ -716,7 +750,7 @@ void model_parameters::calcObservations(void)
 	i=0;
 	zx = mx*dt;
 	ox = elem_div(1.0-mfexp(-zx),zx);
-	for(t=syr;t<=nyr;t++)
+	for(t=styr;t<=endyr;t++)
 	{
 		Ntmp = N(t);
 		Ttmp = T(t);
@@ -743,7 +777,7 @@ void model_parameters::calcObservations(void)
 			//}
 		}
 		/* Survive and grow tags-at-large and add new tags */
-		//if( t < nyr )
+		//if( t < endyr )
 		//{
 		//	T(t+1) = elem_prod(T(t),mfexp(-mx*dt))*iP(t) + Mtmp;
 		//}
@@ -957,8 +991,8 @@ void model_parameters::report()
 	REPORT(cv_r       );
 	REPORT(log_bar_f  );
 	REPORT(tau        );
-	ivector yr(syr,nyr);
-	yr.fill_seqadd(syr,1);
+	ivector yr(styr,endyr);
+	yr.fill_seqadd(styr,1);
 	REPORT(yr);
 	REPORT(ngear);
 	REPORT(irow);
@@ -969,10 +1003,10 @@ void model_parameters::report()
 	REPORT(delta);
 	dvector Nt = value(rowsum(N));
 	dvector Tt = value(rowsum(T));
-	dvector Rt(syr,nyr);
-	for(i=syr;i<=nyr;i++)
+	dvector Rt(styr,endyr);
+	for(i=styr;i<=endyr;i++)
 	{
-		if(i==syr) Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
+		if(i==styr) Rt(i) = value(mfexp(log_ddot_r+ddot_r_devs(nx)));
 		else       Rt(i) = value(mfexp(log_rt(i)));
 	}
 	REPORT(Nt);
@@ -1002,17 +1036,19 @@ void model_parameters::report()
 
 void model_parameters::final_calcs()
 {
+	// Create final time stamp and determing runtime:
 	time(&finish);
 	elapsed_time=difftime(finish,start);
 	hour=long(elapsed_time)/3600;
 	minute=long(elapsed_time)%3600/60;
 	second=(long(elapsed_time)%3600)%60;
-	cout<<endl<<endl<<"*******************************************"<<endl;
-	cout<<"--Start time: "<<ctime(&start)<<endl;
-	cout<<"--Finish time: "<<ctime(&finish)<<endl;
-	cout<<"--Runtime: ";
-	cout<<hour<<" hours, "<<minute<<" minutes, "<<second<<" seconds"<<endl;
-	cout<<"*******************************************"<<endl;
+	// Print runtime records to screen:
+	cout << endl << endl << "*******************************************" 	<< endl;
+	cout << 				"--Start time: "		<<	ctime(&start)		<< endl;
+	cout <<					"--Finish time: "		<< 	ctime(&finish)		<< endl;
+	cout <<					"--Runtime: ";
+	cout <<	hour <<" hours, "<<minute<<" minutes, "<<second<<" seconds"		<< endl;
+	cout <<					"*******************************************"	<< endl;
 }
 
 void model_parameters::set_runtime(void)

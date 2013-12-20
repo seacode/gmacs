@@ -1,0 +1,24 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="16">
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="5104" startPos="1" endPos="106" selMode="0" lang="R" encoding="-1" filename="C:\Dropbox\Github\gmacs\scripts\gmacs.r" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="5104" startPos="828" endPos="828" selMode="0" lang="R" encoding="-1" filename="C:\Dropbox\Github\gmacs\examples\hbc\read_hbc.r" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2232" startPos="1644" endPos="1644" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Projects\Cstar\Models\BBRKC\Models\bbrkc_new\bbrkc.dat" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="464" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Projects\Gmacs\Models\gcm\GenericCrabModel\Golden\GCM.dat" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="664" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Projects\Gmacs\Models\gcm\GenericCrabModel\Golden\GKCadak.ctl" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1256" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Github\cstar\examples\bbrkc\simple.dat" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1288" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Modelling\SS\V324F\Examples\Simple\simple.ctl" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="936" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Modelling\SS\V324F\Examples\Simple\simple.dat" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="896" startPos="718" endPos="718" selMode="0" lang="Scheme" encoding="-1" filename="C:\Dropbox\Modelling\SS\V324F\Examples\Simple\starter.ss" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1104" startPos="0" endPos="0" selMode="0" lang="Scheme" encoding="-1" filename="C:\Dropbox\Modelling\SS\V324F\Examples\Simple\forecast.ss" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="448" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Projects\Gmacs\Models\nprb\nprb.dat" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="824" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Projects\Gmacs\Models\nprb\nprb.ctl" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="800" startPos="0" endPos="0" selMode="0" lang="Normal Text" encoding="-1" filename="C:\Dropbox\Modelling\SS\V324F\Examples\Simple\echoinput.sso" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="648" startPos="191" endPos="191" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Github\gmacs\examples\hbc_wip\starter.gm" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="976" startPos="1258" endPos="1258" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Github\gmacs\examples\hbc_wip\hbc.ctl" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="952" startPos="0" endPos="0" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Github\gmacs\examples\hbc_wip\hbc.dat" />
+            <File firstVisibleLine="18" xOffset="0" scrollWidth="1352" startPos="1623" endPos="1623" selMode="0" lang="C++" encoding="-1" filename="C:\Dropbox\Fisheries\SESSF\Assessment\2013\PinkLing\Models\East\Agg_BC2\ling2013EB.ctl" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>
