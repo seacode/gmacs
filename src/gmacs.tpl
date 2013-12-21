@@ -120,7 +120,7 @@ DATA_SECTION
 	
 	init_int styr;   	// start year
 	init_int endyr;   	// end year
-	init_number dt; 	// time-step
+	init_number tstep; 	// time-step
 	
 	init_int nfleet;	// number of fishing fleets
 	init_int nsurvery;	// number of surveys
@@ -128,6 +128,8 @@ DATA_SECTION
 	init_int ndclass;	// number of size classes (in the data)
 
 	init_int nsex;		// number of sexes	
+
+	
 
 	// READ INPUT FROM OLD DATAFILE, HBC EXAMPLE (LSMR):
 	init_int syr;   	// first year
@@ -189,12 +191,7 @@ DATA_SECTION
 	3darray M(1,ngear,1,irow,1,jcol);
 	3darray R(1,ngear,1,irow,1,jcol);	
 
-	
-	init_int eof;
-	!! if(eof!=999){cout<<" Error reading data\n eof = "<<eof<<endl; exit(1);}
-	!! cout<<" - END OF READING DATA"<<endl;
-	
-	// colsums of Catch-at-length //
+	// Column sums of Catch-at-length //
 	matrix ct(1,ngear,1,irow); 
 	
 	LOC_CALCS
@@ -209,6 +206,14 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
+
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_data;
+	
+	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
+	!! cout << " Finished reading main data file \n" << endl;
+	!! echo(eof_data," EOF: finished reading main data file \n");
+
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
 
@@ -229,7 +234,7 @@ DATA_SECTION
 
 	!! if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
 	!! cout << " Finished reading size transition file \n" << endl;
-	!! echo(eof_data," EOF: finished reading size transition file \n");
+	!! echo(eof_growth," EOF: finished reading size transition file \n");
 
 
 // ---------------------------------------------------------------------------------------------------------

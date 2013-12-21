@@ -60,13 +60,19 @@ version_short+="Gmacs V1.00";
  echoinput << " Start reading main data file" << endl;
   styr.allocate("styr");
   endyr.allocate("endyr");
-  dt.allocate("dt");
+  tstep.allocate("tstep");
   nfleet.allocate("nfleet");
   nsurvery.allocate("nsurvery");
+  nclass.allocate("nclass");
+  ndclass.allocate("ndclass");
+  nsex.allocate("nsex");
+  syr.allocate("syr");
+  nyr.allocate("nyr");
+  dt.allocate("dt");
   ngear.allocate("ngear");
   nbin.allocate("nbin");
   xbin.allocate(1,nbin,"xbin");
- nr = int((endyr-styr+1)/dt);
+ nr = int((nyr-syr+1)/dt);
  nx = nbin;
   xmid.allocate(1,nbin);
  xmid = xbin + 0.5*(xbin(2)-xbin(1));
@@ -116,7 +122,7 @@ version_short+="Gmacs V1.00";
 			}
 		}
   eof_data.allocate("eof_data");
- if(eof_data!=999) {cout << " Error reading main data file\n EOF = " << eof_data << endl; exit(1);}
+ if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
  cout << " Finished reading main data file \n" << endl;
  echo(eof_data," EOF: finished reading main data file \n");
  ad_comm::change_datafile_name(size_trans_file);
@@ -130,7 +136,7 @@ version_short+="Gmacs V1.00";
   eof_growth.allocate("eof_growth");
  if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
  cout << " Finished reading size transition file \n" << endl;
- echo(eof_data," EOF: finished reading size transition file \n");
+ echo(eof_growth," EOF: finished reading size transition file \n");
  ad_comm::change_datafile_name(control_file);
  cout << " Reading control file" << endl;
  echoinput << " Start reading control file" << endl;
@@ -398,11 +404,7 @@ void model_parameters::initializationfunction(void)
 void model_parameters::preliminary_calculations(void)
 {
 
-#if defined(USE_ADPVM)
-
   admaster_slave_variable_interface(*this);
-
-#endif
 	if(SimFlag)
 	{
 		cout<<"******************************"<<endl;

@@ -20,3 +20,6 @@
 *.exe
 *.out
 *.app
+
+# Links
+*.lnk
