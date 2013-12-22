@@ -126,47 +126,66 @@ DATA_SECTION
 	!! echotxt(styr," start year");
 	!! echotxt(endyr, "end year");
 	
+	init_int nsex;		 // number of sexes	
 	init_int nfleet;	 // number of fishing fleets
 	init_int nsurvey;	 // number of surveys
 	init_int nclass;	 // number of size classes
 	init_int ndclass;	 // number of size classes (in the data)
-
+	
+	init_imatrix class_link(1,nclass,1,2);  // link between data size-classes and model size-classs
+	
+	!! echotxt(nsex, " number of sexes");
 	!! echotxt(nfleet, " number of fleets");
 	!! echotxt(nsurvey, " number of surveys")
 	!! echotxt(nclass, " number of size classes");
 	!! echotxt(ndclass, " number of size classes for data");
-
-	init_int nsex;		 // number of sexes	
+	
+	!! echo(class_link);
 
 	init_vector catch_units(-1,nfleet);   	// catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
 	init_vector catch_multi(-1,nfleet);	  	// additional catch scaling multipliers [1 for no effect]
 	init_vector survey_units(1,nsurvey);  	// survey units [1=biomass (tons);2=numbers]
   	init_vector survey_multi(1,nsurvey);  	// additional survey scaling multipliers [1 for no effect]
+  	init_int ncatch_obs; 					// number of catch entries to read
+	init_int nsurvey_obs;					// number of survey entries to read
+	init_number gamma;                      // time between survey and fishery (for projections)
+	
+	init_matrix catch_data(1,ncatch_obs,1,4);	 // catch data matrix, one line per ncatch_lines, includes year, season, and fleet specs
+	init_matrix survey_data(1,nsurvey_obs,1,5);	 // survey data matrix
 
   	!! echotxt(catch_units, " catch units");
 	!! echotxt(catch_multi, " catch multipliers");
 	!! echotxt(survey_units, " survey units");
 	!! echotxt(survey_multi, " survey multipliers")
-		
-	init_int lcomp_flag;				  	// length comp data for discard fleet (-1): total catch (1) or  discards (2)
-  	init_int ncatch;  						// number of catch entries to read
-	init_matrix catch_data(1,ncatch,1,4);	// catch data matrix, one line per ncatch_lines, includes year, season, and fleet specs
-
-	!! echotxt(lcomp_flag, "length comp data for discard fleet: flag for catch or discards");
-	!! echotxt(ncatch, "number of lines of catch data");
+	!! echotxt(ncatch_obs, " number of lines of catch data");
+	!! echotxt(nsurvey_obs, " number of lines of survey data")
+	!! echotxt(gamma, " gamma: time between survey and fishery");
+			
 	!! echo(catch_data);
+	!! echo(survey_data);
 
-	init_vector mlength(1,ndclass); // mean length vector
-	init_vector mweight(1,ndclass); // mean weight vector
-	init_vector fecund(1,ndclass);	// fecundity vector
+	init_vector discard_mort(-1,nfleet);	// discard mortality (one per fishery)
+	init_vector retention(styr,endyr);		// retention value for each year
+	init_vector nat_mort(styr,endyr);		// natural mortality pointer
+	
+	!! echo(discard_mort);
+	!! echo(retention);
+	!! echo(nat_mort);
 
-	!! echo(mlength);
-	!! echo(mweight);
-	!! echo(fecund);
+	init_vector mean_length(1,ndclass); 		// mean length vector
+	init_vector mean_weight(1,ndclass); 		// mean weight vector
+	init_vector fecundity(1,ndclass);			// fecundity vector
 
+	!! echo(mean_length);
+	!! echo(mean_weight);
+	!! echo(fecundity);
 
+	init_int lcomp_flag; // length comp data for discard fleet (-1): total catch (1) or  discards (2)
+  	
+  	!! echotxt(lcomp_flag, " length comp data for discard fleet: flag for catch or discards");
 
-
+  	// Data read in working to this point. Good progress. 
+  	// However, LSMR model (HBC) not working now. Why?
 
 	// OLD LSMR CODE BELOW
 	
