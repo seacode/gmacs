@@ -17,7 +17,8 @@
 	\def echo(object)
 	Prints name and value of \a object on ADMB echoinput %ofstream file.
 	*/
-	#define echo(object,text) echoinput << object << "\t" << text << endl;
+	#define echo(object) echoinput << #object << "\n" << object << endl;
+	#define echotxt(object,text) echoinput << object << "\t" << text << endl;
 	// Open output files using ofstream
 	ofstream echoinput("echoinput.gm");
 	ofstream warning("warning");
@@ -45,27 +46,45 @@ version_short+="Gmacs V1.00";
   data_file.allocate("data_file");
   control_file.allocate("control_file");
   size_trans_file.allocate("size_trans_file");
- echo(data_file, "data file");
- echo(control_file, "control file");
+ echotxt(data_file, "data file");
+ echotxt(control_file, "control file");
   verbose.allocate("verbose");
   turn_off_phase.allocate("turn_off_phase");
- echo(verbose, "display detail");
- echo(turn_off_phase, "final phase");
+ echotxt(verbose, "display detail");
+ echotxt(turn_off_phase, "final phase");
   eof_starter.allocate("eof_starter");
  if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
  cout << " Finished reading starter file \n" << endl;
- echo(eof_starter," EOF: finished reading starter file \n");
+ echotxt(eof_starter," EOF: finished reading starter file \n");
  ad_comm::change_datafile_name(data_file);
  cout << " Reading main data file" << endl;
  echoinput << " Start reading main data file" << endl;
   styr.allocate("styr");
   endyr.allocate("endyr");
   tstep.allocate("tstep");
+ echotxt(styr," start year");
+ echotxt(endyr, "end year");
   nfleet.allocate("nfleet");
-  nsurvery.allocate("nsurvery");
+  nsurvey.allocate("nsurvey");
   nclass.allocate("nclass");
   ndclass.allocate("ndclass");
+ echotxt(nfleet, " number of fleets");
+ echotxt(nsurvey, " number of surveys")
+ echotxt(nclass, " number of size classes");
+ echotxt(ndclass, " number of size classes for data");
   nsex.allocate("nsex");
+  catch_units.allocate(-1,nfleet,"catch_units");
+  catch_multi.allocate(-1,nfleet,"catch_multi");
+  survey_units.allocate(1,nsurvey,"survey_units");
+  survey_multi.allocate(1,nsurvey,"survey_multi");
+  lcomp_flag.allocate("lcomp_flag");
+  mlength.allocate(1,ndclass,"mlength");
+  mweight.allocate(1,ndclass,"mweight");
+  fecund.allocate(1,ndclass,"fecund");
+echotxt(catch_units, " catch units");
+ echo(mlength);
+ echo(mweight);
+ echo(fecund);
   syr.allocate("syr");
   nyr.allocate("nyr");
   dt.allocate("dt");
@@ -86,8 +105,8 @@ version_short+="Gmacs V1.00";
   fi_count.allocate(1,ngear);
   effort.allocate(1,ngear,1,irow,"effort");
   mean_effort.allocate(1,ngear);
-		/* Calculate mean effort for each gear, ignore 0*/
-		/* number of capture probability deviates fi_count(k) */
+		// Calculate mean effort for each gear, ignore 0
+		// number of capture probability deviates fi_count(k)
 		int i,k,n;
 		fi_count.initialize();
 		for(k=1;k<=ngear;k++)
@@ -124,7 +143,7 @@ version_short+="Gmacs V1.00";
   eof_data.allocate("eof_data");
  if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
  cout << " Finished reading main data file \n" << endl;
- echo(eof_data," EOF: finished reading main data file \n");
+ echotxt(eof_data," EOF: finished reading main data file \n");
  ad_comm::change_datafile_name(size_trans_file);
  cout << " Reading size transition file" << endl;
  echoinput << " Start reading size transition file" << endl;
@@ -136,7 +155,7 @@ version_short+="Gmacs V1.00";
   eof_growth.allocate("eof_growth");
  if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
  cout << " Finished reading size transition file \n" << endl;
- echo(eof_growth," EOF: finished reading size transition file \n");
+ echotxt(eof_growth," EOF: finished reading size transition file \n");
  ad_comm::change_datafile_name(control_file);
  cout << " Reading control file" << endl;
  echoinput << " Start reading control file" << endl;
@@ -217,18 +236,18 @@ version_short+="Gmacs V1.00";
   eof_control.allocate("eof_control");
  if(eof_control!=999) {cout << " Error reading control file\n EOF = " << eof_control << endl; exit(1);}
  cout << " Finished reading control file \n" << endl;
- echo(eof_data," EOF: finished reading control file \n");
+ echotxt(eof_data," EOF: finished reading control file \n");
  ad_comm::change_datafile_name("forecast.gm");
  cout << " Reading forecast file" << endl;
  echoinput << " Start reading forecast file" << endl;
   bmsy_start.allocate("bmsy_start");
   bmsy_end.allocate("bmsy_end");
- echo(bmsy_start, " BMSY start year");
- echo(bmsy_end, " BMSY end year");
+ echotxt(bmsy_start, " BMSY start year");
+ echotxt(bmsy_end, " BMSY end year");
   eof_forecast.allocate("eof_forecast");
  if(eof_forecast!=999) {cout << " Error reading forecast file\n EOF = " << eof_forecast << endl; exit(1);}
  cout << " Finished reading forecast file \n" << endl;
- echo(eof_data," EOF: finished reading forecast file \n");
+ echotxt(eof_data," EOF: finished reading forecast file \n");
  cout << " Successfully read all input files. \n" << endl;
   active_parm.allocate(1,npar);
  dummy_datum=1.;

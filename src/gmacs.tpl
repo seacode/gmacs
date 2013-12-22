@@ -45,7 +45,8 @@ GLOBALS_SECTION
 	\def echo(object)
 	Prints name and value of \a object on ADMB echoinput %ofstream file.
 	*/
-	#define echo(object,text) echoinput << object << "\t" << text << endl;
+	#define echo(object) echoinput << #object << "\n" << object << endl;
+	#define echotxt(object,text) echoinput << object << "\t" << text << endl;
 
 	// Open output files using ofstream
 	ofstream echoinput("echoinput.gm");
@@ -90,22 +91,22 @@ DATA_SECTION
 	init_adstring control_file;
 	init_adstring size_trans_file;
 
-	!! echo(data_file, "data file");
-	!! echo(control_file, "control file");
+	!! echotxt(data_file, "data file");
+	!! echotxt(control_file, "control file");
 
 	// Read various option values, then echo:
 	init_int verbose;
 	init_int turn_off_phase;
 
-	!! echo(verbose, "display detail");
-	!! echo(turn_off_phase, "final phase");
+	!! echotxt(verbose, "display detail");
+	!! echotxt(turn_off_phase, "final phase");
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_starter;
 
 	!! if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
 	!! cout << " Finished reading starter file \n" << endl;
-	!! echo(eof_starter," EOF: finished reading starter file \n");
+	!! echotxt(eof_starter," EOF: finished reading starter file \n");
 
 
 // ---------------------------------------------------------------------------------------------------------
@@ -118,19 +119,55 @@ DATA_SECTION
 	
 	// Read input from main data file (new version):
 	
-	init_int styr;   	// start year
-	init_int endyr;   	// end year
-	init_number tstep; 	// time-step
+	init_int styr;   	 // start year
+	init_int endyr;   	 // end year
+	init_number tstep; 	 // time-step
+
+	!! echotxt(styr," start year");
+	!! echotxt(endyr, "end year");
 	
-	init_int nfleet;	// number of fishing fleets
-	init_int nsurvery;	// number of surveys
-	init_int nclass;	// number of size classes
-	init_int ndclass;	// number of size classes (in the data)
+	init_int nfleet;	 // number of fishing fleets
+	init_int nsurvey;	 // number of surveys
+	init_int nclass;	 // number of size classes
+	init_int ndclass;	 // number of size classes (in the data)
 
-	init_int nsex;		// number of sexes	
+	!! echotxt(nfleet, " number of fleets");
+	!! echotxt(nsurvey, " number of surveys")
+	!! echotxt(nclass, " number of size classes");
+	!! echotxt(ndclass, " number of size classes for data");
 
+	init_int nsex;		 // number of sexes	
+
+	init_vector catch_units(-1,nfleet);   // catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
+	init_vector catch_multi(-1,nfleet);	  // additional catch scaling multipliers [1 for no effect]
+	init_vector survey_units(1,nsurvey);  // survey units [1=biomass (tons);2=numbers]
+  	init_vector survey_multi(1,nsurvey);  // additional survey scaling multipliers [1 for no effect]
+	
+	init_int lcomp_flag					  // length comp data for discard fleet (-1): total catch (1) or  discards (2)
+  
 	
 
+
+	init_vector mlength(1,ndclass); // mean length vector
+	init_vector mweight(1,ndclass); // mean weight vector
+	init_vector fecund(1,ndclass);	// fecundity vector
+
+	!!echotxt(catch_units, " catch units");
+
+	!! echo(mlength);
+	!! echo(mweight);
+	!! echo(fecund);
+
+
+
+
+
+
+
+
+
+	// OLD LSMR CODE BELOW
+	
 	// READ INPUT FROM OLD DATAFILE, HBC EXAMPLE (LSMR):
 	init_int syr;   	// first year
 	init_int nyr;   	// last year
@@ -162,8 +199,8 @@ DATA_SECTION
 	init_matrix effort(1,ngear,1,irow);
 	vector mean_effort(1,ngear);
 	LOC_CALCS
-		/* Calculate mean effort for each gear, ignore 0*/
-		/* number of capture probability deviates fi_count(k) */
+		// Calculate mean effort for each gear, ignore 0
+		// number of capture probability deviates fi_count(k)
 		int i,k,n;
 		fi_count.initialize();
 		for(k=1;k<=ngear;k++)
@@ -212,7 +249,7 @@ DATA_SECTION
 	
 	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
 	!! cout << " Finished reading main data file \n" << endl;
-	!! echo(eof_data," EOF: finished reading main data file \n");
+	!! echotxt(eof_data," EOF: finished reading main data file \n");
 
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
@@ -234,7 +271,7 @@ DATA_SECTION
 
 	!! if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
 	!! cout << " Finished reading size transition file \n" << endl;
-	!! echo(eof_growth," EOF: finished reading size transition file \n");
+	!! echotxt(eof_growth," EOF: finished reading size transition file \n");
 
 
 // ---------------------------------------------------------------------------------------------------------
@@ -352,7 +389,7 @@ DATA_SECTION
 
 	!! if(eof_control!=999) {cout << " Error reading control file\n EOF = " << eof_control << endl; exit(1);}
 	!! cout << " Finished reading control file \n" << endl;
-	!! echo(eof_data," EOF: finished reading control file \n");
+	!! echotxt(eof_data," EOF: finished reading control file \n");
 
 // ---------------------------------------------------------------------------------------------------------
 // FORECAST FILE
@@ -365,15 +402,15 @@ DATA_SECTION
 	init_int bmsy_start;
 	init_int bmsy_end;
 
-	!! echo(bmsy_start, " BMSY start year");
-	!! echo(bmsy_end, " BMSY end year");
+	!! echotxt(bmsy_start, " BMSY start year");
+	!! echotxt(bmsy_end, " BMSY end year");
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_forecast;
 
 	!! if(eof_forecast!=999) {cout << " Error reading forecast file\n EOF = " << eof_forecast << endl; exit(1);}
 	!! cout << " Finished reading forecast file \n" << endl;
-	!! echo(eof_data," EOF: finished reading forecast file \n");
+	!! echotxt(eof_data," EOF: finished reading forecast file \n");
 
 	!! cout << " Successfully read all input files. \n" << endl;
 

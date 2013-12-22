@@ -1,5 +1,5 @@
 Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1
-Thu Dec 19 18:11:46 2013
+Sat Dec 21 17:08:23 2013
 
  Start reading starter file
 bbrkc.dat	data file
@@ -9,6 +9,19 @@ bbrkc.ctl	control file
 999	 EOF: finished reading starter file 
 
  Start reading main data file
+1989	 start year
+2011	end year
+2	 number of fleets
+2	 number of surveys
+5	 number of size classes
+20	 number of size classes for data
+ 1 1 1 1	 catch units
+mlength
+ 67.5 72.5 77.5 82.5 87.5 92.5 97.5 102.5 107.5 112.5 117.5 122.5 127.5 132.5 137.5 142.5 147.5 152.5 157.5 162.5
+mweight
+ 0.218 0.273 0.337 0.411 0.495 0.59 0.696 0.815 0.948 1.094 1.256 1.432 1.625 1.835 2.063 2.31 2.576 2.862 3.169 3.7
+fecund
+ 0 0 0 0 0 0 0 0 0 0 0 1.432 1.625 1.835 2.063 2.31 2.576 2.862 3.169 3.7
 999	 EOF: finished reading main data file 
 
  Start reading size transition file
