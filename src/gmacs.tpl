@@ -138,29 +138,31 @@ DATA_SECTION
 
 	init_int nsex;		 // number of sexes	
 
-	init_vector catch_units(-1,nfleet);   // catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
-	init_vector catch_multi(-1,nfleet);	  // additional catch scaling multipliers [1 for no effect]
-	init_vector survey_units(1,nsurvey);  // survey units [1=biomass (tons);2=numbers]
-  	init_vector survey_multi(1,nsurvey);  // additional survey scaling multipliers [1 for no effect]
-	
-	init_int lcomp_flag					  // length comp data for discard fleet (-1): total catch (1) or  discards (2)
-  
-	
+	init_vector catch_units(-1,nfleet);   	// catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
+	init_vector catch_multi(-1,nfleet);	  	// additional catch scaling multipliers [1 for no effect]
+	init_vector survey_units(1,nsurvey);  	// survey units [1=biomass (tons);2=numbers]
+  	init_vector survey_multi(1,nsurvey);  	// additional survey scaling multipliers [1 for no effect]
 
+  	!! echotxt(catch_units, " catch units");
+	!! echotxt(catch_multi, " catch multipliers");
+	!! echotxt(survey_units, " survey units");
+	!! echotxt(survey_multi, " survey multipliers")
+		
+	init_int lcomp_flag;				  	// length comp data for discard fleet (-1): total catch (1) or  discards (2)
+  	init_int ncatch;  						// number of catch entries to read
+	init_matrix catch_data(1,ncatch,1,4);	// catch data matrix, one line per ncatch_lines, includes year, season, and fleet specs
+
+	!! echotxt(lcomp_flag, "length comp data for discard fleet: flag for catch or discards");
+	!! echotxt(ncatch, "number of lines of catch data");
+	!! echo(catch_data);
 
 	init_vector mlength(1,ndclass); // mean length vector
 	init_vector mweight(1,ndclass); // mean weight vector
 	init_vector fecund(1,ndclass);	// fecundity vector
 
-	!!echotxt(catch_units, " catch units");
-
 	!! echo(mlength);
 	!! echo(mweight);
 	!! echo(fecund);
-
-
-
-
 
 
 

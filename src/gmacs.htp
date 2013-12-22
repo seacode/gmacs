@@ -21,6 +21,8 @@ class model_data : public ad_comm{
   data_vector survey_units;
   data_vector survey_multi;
   data_int lcomp_flag;
+  data_int ncatch;
+  data_matrix catch_data;
   data_vector mlength;
   data_vector mweight;
   data_vector fecund;
