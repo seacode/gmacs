@@ -98,8 +98,8 @@ DATA_SECTION
 	init_int verbose;
 	init_int turn_off_phase;
 
-	!! echotxt(verbose, "display detail");
-	!! echotxt(turn_off_phase, "final phase");
+	!! echotxt(verbose, " display detail");
+	!! echotxt(turn_off_phase, " final phase");
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_starter;
@@ -142,16 +142,16 @@ DATA_SECTION
 	
 	!! echo(class_link);
 
-	init_vector catch_units(-1,nfleet);   	// catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
-	init_vector catch_multi(-1,nfleet);	  	// additional catch scaling multipliers [1 for no effect]
-	init_vector survey_units(1,nsurvey);  	// survey units [1=biomass (tons);2=numbers]
-  	init_vector survey_multi(1,nsurvey);  	// additional survey scaling multipliers [1 for no effect]
-  	init_int ncatch_obs; 					// number of catch entries to read
-	init_int nsurvey_obs;					// number of survey entries to read
-	init_number gamma;                      // time between survey and fishery (for projections)
+	init_vector catch_units(-1,nfleet);   			// catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
+	init_vector catch_multi(-1,nfleet);	  			// additional catch scaling multipliers [1 for no effect]
+	init_vector survey_units(1,nsurvey);  			// survey units [1=biomass (tons);2=numbers]
+  	init_vector survey_multi(1,nsurvey);  			// additional survey scaling multipliers [1 for no effect]
+  	init_int ncatch_obs; 							// number of catch lines to read
+	init_int nsurvey_obs;							// number of survey lines to read
+	init_number survey_time;                		// time between survey and fishery (for projections)
 	
-	init_matrix catch_data(1,ncatch_obs,1,4);	 // catch data matrix, one line per ncatch_lines, includes year, season, and fleet specs
-	init_matrix survey_data(1,nsurvey_obs,1,5);	 // survey data matrix
+	init_matrix catch_data(1,ncatch_obs,1,4);	 	// catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
+	init_matrix survey_data(1,nsurvey_obs,1,5);	 	// survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
 
   	!! echotxt(catch_units, " catch units");
 	!! echotxt(catch_multi, " catch multipliers");
@@ -159,30 +159,50 @@ DATA_SECTION
 	!! echotxt(survey_multi, " survey multipliers")
 	!! echotxt(ncatch_obs, " number of lines of catch data");
 	!! echotxt(nsurvey_obs, " number of lines of survey data")
-	!! echotxt(gamma, " gamma: time between survey and fishery");
+	!! echotxt(survey_time, " time between survey and fishery");
 			
 	!! echo(catch_data);
 	!! echo(survey_data);
 
-	init_vector discard_mort(-1,nfleet);	// discard mortality (one per fishery)
-	init_vector retention(styr,endyr);		// retention value for each year
-	init_vector nat_mort(styr,endyr);		// natural mortality pointer
-	
+	init_vector discard_mort(-1,nfleet);			// discard mortality (per fishery)
+	init_vector retention(styr,endyr);				// retention value for each year
+	init_matrix catch_time(0,nfleet,styr,endyr);	// timing of each fishery (as fraction of time-step)
+	init_matrix effort(0,nfleet,styr,endyr);		// effort by fishery
+	init_imatrix f_new(0,nfleet,0,4);				// alternative f estimators (overwrite others)
+
 	!! echo(discard_mort);
 	!! echo(retention);
-	!! echo(nat_mort);
+	!! echo(catch_time);
+	!! echo(effort);
+	!! echo(f_new);
 
+	init_vector nat_mort(styr,endyr);			// natural mortality pointer
 	init_vector mean_length(1,ndclass); 		// mean length vector
 	init_vector mean_weight(1,ndclass); 		// mean weight vector
 	init_vector fecundity(1,ndclass);			// fecundity vector
 
+	!! echo(nat_mort);
 	!! echo(mean_length);
 	!! echo(mean_weight);
 	!! echo(fecundity);
 
-	init_int lcomp_flag; // length comp data for discard fleet (-1): total catch (1) or  discards (2)
+	init_int lf_flag; 								// length comp data for discard fleet (-1): total catch (1) or  discards (2)
   	
-  	!! echotxt(lcomp_flag, " length comp data for discard fleet: flag for catch or discards");
+	init_int nlf_obs;								// number of length frequency lines to read	
+	init_matrix lf_data(1,nlf_obs,1,ndclass+5);		// length frequency data, one line per nlf_obs, requires year, season, fleet, sex, effective sample size, then data vector 
+
+	init_int nlfs_obs;								// number or survey length frequency lines to read
+	init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);	// survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
+
+  	!! echotxt(lf_flag, " length freq data for discard fleet: flag for catch or discards");
+
+  	!! echotxt(nlf_obs, " number of length freq lines to read");
+  	!! echo(lf_data);
+
+  	!! echotxt(nlfs_obs, " number of survey length freq lines to read");
+  	!! echo(lfs_data);
+  	
+
 
   	// Data read in working to this point. Good progress. 
   	// However, LSMR model (HBC) not working now. Why?
@@ -215,10 +235,10 @@ DATA_SECTION
 		jcol = ncol - 1;
 	END_CALCS
 	
-	// Read in effort data (number of sets) //
+	// Read in Effort data (number of sets) //
 	ivector fi_count(1,ngear);
-	init_matrix effort(1,ngear,1,irow);
-	vector mean_effort(1,ngear);
+	init_matrix Effort(1,ngear,1,irow);
+	vector mean_Effort(1,ngear);
 	LOC_CALCS
 		// Calculate mean effort for each gear, ignore 0
 		// number of capture probability deviates fi_count(k)
@@ -229,14 +249,14 @@ DATA_SECTION
 			n=0;
 			for(i=1;i<=irow(k);i++)
 			{
-				if(effort(k,i)>0)
+				if(Effort(k,i)>0)
 				{
-					mean_effort(k) += effort(k,i);
+					mean_Effort(k) += Effort(k,i);
 					n++;
 				}
 			}
 			fi_count(k)     = n;
-			mean_effort(k) /= n;
+			mean_Effort(k) /= n;
 		}
 	END_CALCS
 	
@@ -643,7 +663,7 @@ FUNCTION void runSimulationModel(const int& seed)
 	{
 		for(i=1;i<=irow(k);i++)
 		{
-			if(effort(k,i)>0)
+			if(Effort(k,i)>0)
 			{
 				for(j=1;j<=nx;j++)
 				{
@@ -778,7 +798,7 @@ FUNCTION initializeModel
 FUNCTION calcCaptureProbability		
   {
 	/* Catchability */
-	qk         = elem_div(mfexp(log_bar_f),mean_effort);
+	qk         = elem_div(mfexp(log_bar_f),mean_Effort);
 	
 	/* Capture probability at each time step. */
 	int i,k;
@@ -790,9 +810,9 @@ FUNCTION calcCaptureProbability
 	{
 		for(i=1;i<=irow(k);i++)
 		{
-			if( effort(k,i)>0 )
+			if( Effort(k,i)>0 )
 			{
-				fi(k,i) = qk(k)*effort(k,i)*mfexp(bar_f_devs(k)(ik(k)++));
+				fi(k,i) = qk(k)*Effort(k,i)*mfexp(bar_f_devs(k)(ik(k)++));
 			}
 		}
 	}
@@ -950,14 +970,14 @@ FUNCTION calcObservations
 		for(k=1;k<=ngear;k++)
 		{
 			
-			if( effort(k,i)>0 )
+			if( Effort(k,i)>0 )
 			{
 				ux           = 1.0 - mfexp(-fi(k,i)*sx(k));
 				Chat(k)(i)   = elem_prod(ux,Ntmp);
 				Mhat(k)(i)   = elem_prod(ux,Utmp);
 				Rhat(k)(i)   = elem_prod(ux,Ttmp);
 			}
-			//if( effort(k,i)>0 )
+			//if( Effort(k,i)>0 )
 			//{
 			//	lb           = min_tag_j(k,i);
 			//	ux           = 1.0 - mfexp(-fi(k,i)*sx(k));
@@ -1037,7 +1057,7 @@ FUNCTION calc_objective_function;
 	{
 		for(i=1;i<=irow(k);i++)
 		{
-			if( effort(k,i)>0 )
+			if( Effort(k,i)>0 )
 			{
 				for(j=1;j<=nx;j++)
 				{
@@ -1216,7 +1236,7 @@ REPORT_SECTION
 	
 	REPORT(log_rt);
 	REPORT(fi);
-	REPORT(effort);
+	REPORT(Effort);
 	REPORT(bar_f_devs);
 	
 	REPORT(N);

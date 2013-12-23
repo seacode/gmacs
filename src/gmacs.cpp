@@ -50,8 +50,8 @@ version_short+="Gmacs V1.00";
  echotxt(control_file, "control file");
   verbose.allocate("verbose");
   turn_off_phase.allocate("turn_off_phase");
- echotxt(verbose, "display detail");
- echotxt(turn_off_phase, "final phase");
+ echotxt(verbose, " display detail");
+ echotxt(turn_off_phase, " final phase");
   eof_starter.allocate("eof_starter");
  if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
  cout << " Finished reading starter file \n" << endl;
@@ -82,7 +82,7 @@ version_short+="Gmacs V1.00";
   survey_multi.allocate(1,nsurvey,"survey_multi");
   ncatch_obs.allocate("ncatch_obs");
   nsurvey_obs.allocate("nsurvey_obs");
-  gamma.allocate("gamma");
+  survey_time.allocate("survey_time");
   catch_data.allocate(1,ncatch_obs,1,4,"catch_data");
   survey_data.allocate(1,nsurvey_obs,1,5,"survey_data");
  echotxt(catch_units, " catch units");
@@ -91,23 +91,37 @@ version_short+="Gmacs V1.00";
  echotxt(survey_multi, " survey multipliers")
  echotxt(ncatch_obs, " number of lines of catch data");
  echotxt(nsurvey_obs, " number of lines of survey data")
- echotxt(gamma, " gamma: time between survey and fishery");
+ echotxt(survey_time, " time between survey and fishery");
  echo(catch_data);
  echo(survey_data);
   discard_mort.allocate(-1,nfleet,"discard_mort");
   retention.allocate(styr,endyr,"retention");
-  nat_mort.allocate(styr,endyr,"nat_mort");
+  catch_time.allocate(0,nfleet,styr,endyr,"catch_time");
+  effort.allocate(0,nfleet,styr,endyr,"effort");
+  f_new.allocate(0,nfleet,0,4,"f_new");
  echo(discard_mort);
  echo(retention);
+ echo(catch_time);
+ echo(effort);
+ echo(f_new);
+  nat_mort.allocate(styr,endyr,"nat_mort");
+  mean_length.allocate(1,ndclass,"mean_length");
+  mean_weight.allocate(1,ndclass,"mean_weight");
+  fecundity.allocate(1,ndclass,"fecundity");
  echo(nat_mort);
-  mlength.allocate(1,ndclass,"mlength");
-  mweight.allocate(1,ndclass,"mweight");
-  fecund.allocate(1,ndclass,"fecund");
- echo(mlength);
- echo(mweight);
- echo(fecund);
-  lcomp_flag.allocate("lcomp_flag");
- echotxt(lcomp_flag, " length comp data for discard fleet: flag for catch or discards");
+ echo(mean_length);
+ echo(mean_weight);
+ echo(fecundity);
+  lf_flag.allocate("lf_flag");
+  nlf_obs.allocate("nlf_obs");
+  lf_data.allocate(1,nlf_obs,1,ndclass+5,"lf_data");
+  nlfs_obs.allocate("nlfs_obs");
+  lfs_data.allocate(1,nlfs_obs,1,ndclass+5,"lfs_data");
+ echotxt(lf_flag, " length freq data for discard fleet: flag for catch or discards");
+ echotxt(nlf_obs, " number of length freq lines to read");
+ echo(lf_data);
+ echotxt(nlfs_obs, " number of survey length freq lines to read");
+ echo(lfs_data);
   syr.allocate("syr");
   nyr.allocate("nyr");
   dt.allocate("dt");
@@ -126,8 +140,8 @@ version_short+="Gmacs V1.00";
 		ncol = column(dim_array,2);
 		jcol = ncol - 1;
   fi_count.allocate(1,ngear);
-  effort.allocate(1,ngear,1,irow,"effort");
-  mean_effort.allocate(1,ngear);
+  Effort.allocate(1,ngear,1,irow,"Effort");
+  mean_Effort.allocate(1,ngear);
 		// Calculate mean effort for each gear, ignore 0
 		// number of capture probability deviates fi_count(k)
 		int i,k,n;
@@ -137,14 +151,14 @@ version_short+="Gmacs V1.00";
 			n=0;
 			for(i=1;i<=irow(k);i++)
 			{
-				if(effort(k,i)>0)
+				if(Effort(k,i)>0)
 				{
-					mean_effort(k) += effort(k,i);
+					mean_Effort(k) += Effort(k,i);
 					n++;
 				}
 			}
 			fi_count(k)     = n;
-			mean_effort(k) /= n;
+			mean_Effort(k) /= n;
 		}
   i_C.allocate(1,ngear,1,irow,1,ncol,"i_C");
   i_M.allocate(1,ngear,1,irow,1,ncol,"i_M");
@@ -513,7 +527,7 @@ void model_parameters::runSimulationModel(const int& seed)
 	{
 		for(i=1;i<=irow(k);i++)
 		{
-			if(effort(k,i)>0)
+			if(Effort(k,i)>0)
 			{
 				for(j=1;j<=nx;j++)
 				{
@@ -645,7 +659,7 @@ void model_parameters::calcCaptureProbability(void)
 {
   {
 	/* Catchability */
-	qk         = elem_div(mfexp(log_bar_f),mean_effort);
+	qk         = elem_div(mfexp(log_bar_f),mean_Effort);
 	/* Capture probability at each time step. */
 	int i,k;
 	ivector ik(1,ngear);
@@ -655,9 +669,9 @@ void model_parameters::calcCaptureProbability(void)
 	{
 		for(i=1;i<=irow(k);i++)
 		{
-			if( effort(k,i)>0 )
+			if( Effort(k,i)>0 )
 			{
-				fi(k,i) = qk(k)*effort(k,i)*mfexp(bar_f_devs(k)(ik(k)++));
+				fi(k,i) = qk(k)*Effort(k,i)*mfexp(bar_f_devs(k)(ik(k)++));
 			}
 		}
 	}
@@ -803,14 +817,14 @@ void model_parameters::calcObservations(void)
 		i++;
 		for(k=1;k<=ngear;k++)
 		{
-			if( effort(k,i)>0 )
+			if( Effort(k,i)>0 )
 			{
 				ux           = 1.0 - mfexp(-fi(k,i)*sx(k));
 				Chat(k)(i)   = elem_prod(ux,Ntmp);
 				Mhat(k)(i)   = elem_prod(ux,Utmp);
 				Rhat(k)(i)   = elem_prod(ux,Ttmp);
 			}
-			//if( effort(k,i)>0 )
+			//if( Effort(k,i)>0 )
 			//{
 			//	lb           = min_tag_j(k,i);
 			//	ux           = 1.0 - mfexp(-fi(k,i)*sx(k));
@@ -884,7 +898,7 @@ void model_parameters::calc_objective_function(void)
 	{
 		for(i=1;i<=irow(k);i++)
 		{
-			if( effort(k,i)>0 )
+			if( Effort(k,i)>0 )
 			{
 				for(j=1;j<=nx;j++)
 				{
@@ -1058,7 +1072,7 @@ void model_parameters::report()
 	REPORT(Rt);
 	REPORT(log_rt);
 	REPORT(fi);
-	REPORT(effort);
+	REPORT(Effort);
 	REPORT(bar_f_devs);
 	REPORT(N);
 	REPORT(T);
