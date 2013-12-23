@@ -95,13 +95,16 @@ DATA_SECTION
 	!! echotxt(control_file, "control file");
 
 	// Read various option values, then echo:
-	init_int verbose;						// display detail to screen
+	init_int verbose;						// display detail to screen (option 1/0)
 	init_int final_phase;					// stop estimation after this phase
-	init_int use_pin;						// use a .pin file to get initial parameters
+	init_int use_pin;						// use a .pin file to get initial parameters (option 1/0)
+	init_int read_growth;					// read growth transition matrix file (option 1/0)
 
 	!! echotxt(verbose, " display detail");
 	!! echotxt(final_phase, " final phase");
 	!! echotxt(use_pin, " use parameter in file (*.pin)");
+	!! echotxt(read_growth, " read growth transition matrix data file");
+
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_starter;
@@ -119,14 +122,15 @@ DATA_SECTION
 	!! cout << " Reading main data file" << endl;
 	!! echoinput << " Start reading main data file" << endl;
 	
-	// Read input from main data file (new version):
+	// Read input from main data file:
 	
 	init_int styr;   	 // start year
 	init_int endyr;   	 // end year
 	init_number tstep; 	 // time-step
 
-	!! echotxt(styr," start year");
-	!! echotxt(endyr, "end year");
+	!! echotxt(styr,  " start year");
+	!! echotxt(endyr, " end year");
+	!! echotxt(tstep, " time-step");
 	
 	init_int nsex;		 // number of sexes	
 	init_int nfleet;	 // number of fishing fleets
@@ -135,11 +139,11 @@ DATA_SECTION
 	init_int ndclass;	 // number of size classes (in the data)
 	
 	init_imatrix class_link(1,nclass,1,2);  // link between data size-classes and model size-classs
-	
-	!! echotxt(nsex, " number of sexes");
-	!! echotxt(nfleet, " number of fleets");
+	 
+	!! echotxt(nsex,    " number of sexes");
+	!! echotxt(nfleet,  " number of fleets");
 	!! echotxt(nsurvey, " number of surveys")
-	!! echotxt(nclass, " number of size classes");
+	!! echotxt(nclass,  " number of size classes");
 	!! echotxt(ndclass, " number of size classes for data");
 	
 	!! echo(class_link);
@@ -155,13 +159,13 @@ DATA_SECTION
 	init_matrix catch_data(1,ncatch_obs,1,4);	 	// catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
 	init_matrix survey_data(1,nsurvey_obs,1,5);	 	// survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
 
-  	!! echotxt(catch_units, " catch units");
-	!! echotxt(catch_multi, " catch multipliers");
+  	!! echotxt(catch_units,  " catch units");
+	!! echotxt(catch_multi,  " catch multipliers");
 	!! echotxt(survey_units, " survey units");
 	!! echotxt(survey_multi, " survey multipliers")
-	!! echotxt(ncatch_obs, " number of lines of catch data");
-	!! echotxt(nsurvey_obs, " number of lines of survey data")
-	!! echotxt(survey_time, " time between survey and fishery");
+	!! echotxt(ncatch_obs,   " number of lines of catch data");
+	!! echotxt(nsurvey_obs,  " number of lines of survey data")
+	!! echotxt(survey_time,  " time between survey and fishery");
 			
 	!! echo(catch_data);
 	!! echo(survey_data);
@@ -205,16 +209,8 @@ DATA_SECTION
   	!! echo(lfs_data);
   	
 
-	// Print EOF confirmation to screen and echoinput, warn otherwise:
-	init_int eof_data;
-	
-	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
-	!! cout << " Finished reading main data file \n" << endl;
-	!! echotxt(eof_data," EOF: finished reading main data file \n");
-
-
-  	// Data read in working now. Good progress. 
-  	// However, LSMR model (HBC) not working now. Why?
+ 	// Data read in working now. Good progress. 
+  	// However, LSMR model (HBC) not working. Why?
 
 	// OLD LSMR CODE BELOW
 	
@@ -293,6 +289,14 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
+
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_data;
+	
+	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
+	!! cout << " Finished reading main data file \n" << endl;
+	!! echotxt(eof_data," EOF: finished reading main data file \n");
+
 
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)

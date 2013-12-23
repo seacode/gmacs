@@ -51,9 +51,11 @@ version_short+="Gmacs V1.00";
   verbose.allocate("verbose");
   final_phase.allocate("final_phase");
   use_pin.allocate("use_pin");
+  read_growth.allocate("read_growth");
  echotxt(verbose, " display detail");
  echotxt(final_phase, " final phase");
  echotxt(use_pin, " use parameter in file (*.pin)");
+ echotxt(read_growth, " read growth transition matrix data file");
   eof_starter.allocate("eof_starter");
  if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
  cout << " Finished reading starter file \n" << endl;
@@ -64,18 +66,19 @@ version_short+="Gmacs V1.00";
   styr.allocate("styr");
   endyr.allocate("endyr");
   tstep.allocate("tstep");
- echotxt(styr," start year");
- echotxt(endyr, "end year");
+ echotxt(styr,  " start year");
+ echotxt(endyr, " end year");
+ echotxt(tstep, " time-step");
   nsex.allocate("nsex");
   nfleet.allocate("nfleet");
   nsurvey.allocate("nsurvey");
   nclass.allocate("nclass");
   ndclass.allocate("ndclass");
   class_link.allocate(1,nclass,1,2,"class_link");
- echotxt(nsex, " number of sexes");
- echotxt(nfleet, " number of fleets");
+ echotxt(nsex,    " number of sexes");
+ echotxt(nfleet,  " number of fleets");
  echotxt(nsurvey, " number of surveys")
- echotxt(nclass, " number of size classes");
+ echotxt(nclass,  " number of size classes");
  echotxt(ndclass, " number of size classes for data");
  echo(class_link);
   catch_units.allocate(-1,nfleet,"catch_units");
@@ -87,13 +90,13 @@ version_short+="Gmacs V1.00";
   survey_time.allocate("survey_time");
   catch_data.allocate(1,ncatch_obs,1,4,"catch_data");
   survey_data.allocate(1,nsurvey_obs,1,5,"survey_data");
- echotxt(catch_units, " catch units");
- echotxt(catch_multi, " catch multipliers");
+ echotxt(catch_units,  " catch units");
+ echotxt(catch_multi,  " catch multipliers");
  echotxt(survey_units, " survey units");
  echotxt(survey_multi, " survey multipliers")
- echotxt(ncatch_obs, " number of lines of catch data");
- echotxt(nsurvey_obs, " number of lines of survey data")
- echotxt(survey_time, " time between survey and fishery");
+ echotxt(ncatch_obs,   " number of lines of catch data");
+ echotxt(nsurvey_obs,  " number of lines of survey data")
+ echotxt(survey_time,  " time between survey and fishery");
  echo(catch_data);
  echo(survey_data);
   discard_mort.allocate(-1,nfleet,"discard_mort");
@@ -124,10 +127,6 @@ version_short+="Gmacs V1.00";
  echo(lf_data);
  echotxt(nlfs_obs, " number of survey length freq lines to read");
  echo(lfs_data);
-  eof_data.allocate("eof_data");
- if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
- cout << " Finished reading main data file \n" << endl;
- echotxt(eof_data," EOF: finished reading main data file \n");
   syr.allocate("syr");
   nyr.allocate("nyr");
   dt.allocate("dt");
@@ -183,6 +182,10 @@ version_short+="Gmacs V1.00";
 				ct(k,i) = sum( C(k)(i) );
 			}
 		}
+  eof_data.allocate("eof_data");
+ if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
+ cout << " Finished reading main data file \n" << endl;
+ echotxt(eof_data," EOF: finished reading main data file \n");
  ad_comm::change_datafile_name(size_trans_file);
  cout << " Reading size transition file" << endl;
  echoinput << " Start reading size transition file" << endl;
