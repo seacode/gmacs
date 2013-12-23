@@ -49,9 +49,11 @@ version_short+="Gmacs V1.00";
  echotxt(data_file, "data file");
  echotxt(control_file, "control file");
   verbose.allocate("verbose");
-  turn_off_phase.allocate("turn_off_phase");
+  final_phase.allocate("final_phase");
+  use_pin.allocate("use_pin");
  echotxt(verbose, " display detail");
- echotxt(turn_off_phase, " final phase");
+ echotxt(final_phase, " final phase");
+ echotxt(use_pin, " use parameter in file (*.pin)");
   eof_starter.allocate("eof_starter");
  if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
  cout << " Finished reading starter file \n" << endl;
@@ -117,11 +119,15 @@ version_short+="Gmacs V1.00";
   lf_data.allocate(1,nlf_obs,1,ndclass+5,"lf_data");
   nlfs_obs.allocate("nlfs_obs");
   lfs_data.allocate(1,nlfs_obs,1,ndclass+5,"lfs_data");
- echotxt(lf_flag, " length freq data for discard fleet: flag for catch or discards");
- echotxt(nlf_obs, " number of length freq lines to read");
+ echotxt(lf_flag,  " length freq data for discard fleet: flag for catch or discards");
+ echotxt(nlf_obs,  " number of length freq lines to read");
  echo(lf_data);
  echotxt(nlfs_obs, " number of survey length freq lines to read");
  echo(lfs_data);
+  eof_data.allocate("eof_data");
+ if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
+ cout << " Finished reading main data file \n" << endl;
+ echotxt(eof_data," EOF: finished reading main data file \n");
   syr.allocate("syr");
   nyr.allocate("nyr");
   dt.allocate("dt");
@@ -177,10 +183,6 @@ version_short+="Gmacs V1.00";
 				ct(k,i) = sum( C(k)(i) );
 			}
 		}
-  eof_data.allocate("eof_data");
- if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
- cout << " Finished reading main data file \n" << endl;
- echotxt(eof_data," EOF: finished reading main data file \n");
  ad_comm::change_datafile_name(size_trans_file);
  cout << " Reading size transition file" << endl;
  echoinput << " Start reading size transition file" << endl;
@@ -288,7 +290,7 @@ version_short+="Gmacs V1.00";
  cout << " Successfully read all input files. \n" << endl;
   active_parm.allocate(1,npar);
  dummy_datum=1.;
- if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
+ if(final_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
   		cout << " Adjust phases \n" << endl;
   		max_phase=1;
   		active_count=0;
@@ -298,7 +300,7 @@ version_short+="Gmacs V1.00";
 		for(i=1;i<=npar;i++)
 		{ 
 		  	par_count++;
-		  	if(theta_phz(i) > turn_off_phase) theta_phz(i)=-1;
+		  	if(theta_phz(i) > final_phase) theta_phz(i)=-1;
 		  	if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
 		  	if(theta_phz(i) >= 0)
 		  	{

@@ -6,7 +6,8 @@ class model_data : public ad_comm{
   init_adstring control_file;
   init_adstring size_trans_file;
   data_int verbose;
-  data_int turn_off_phase;
+  data_int final_phase;
+  data_int use_pin;
   data_int eof_starter;
   data_int styr;
   data_int endyr;
@@ -40,6 +41,7 @@ class model_data : public ad_comm{
   data_matrix lf_data;
   data_int nlfs_obs;
   data_matrix lfs_data;
+  data_int eof_data;
   data_int syr;
   data_int nyr;
   data_number dt;
@@ -63,7 +65,6 @@ class model_data : public ad_comm{
   d3_array M;
   d3_array R;
   dmatrix ct;
-  data_int eof_data;
   data_int nj;
   data_int styr_L;
   data_int endyr_L;

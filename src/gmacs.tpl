@@ -95,11 +95,13 @@ DATA_SECTION
 	!! echotxt(control_file, "control file");
 
 	// Read various option values, then echo:
-	init_int verbose;
-	init_int turn_off_phase;
+	init_int verbose;						// display detail to screen
+	init_int final_phase;					// stop estimation after this phase
+	init_int use_pin;						// use a .pin file to get initial parameters
 
 	!! echotxt(verbose, " display detail");
-	!! echotxt(turn_off_phase, " final phase");
+	!! echotxt(final_phase, " final phase");
+	!! echotxt(use_pin, " use parameter in file (*.pin)");
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_starter;
@@ -194,17 +196,24 @@ DATA_SECTION
 	init_int nlfs_obs;								// number or survey length frequency lines to read
 	init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);	// survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
 
-  	!! echotxt(lf_flag, " length freq data for discard fleet: flag for catch or discards");
+  	!! echotxt(lf_flag,  " length freq data for discard fleet: flag for catch or discards");
 
-  	!! echotxt(nlf_obs, " number of length freq lines to read");
+  	!! echotxt(nlf_obs,  " number of length freq lines to read");
   	!! echo(lf_data);
 
   	!! echotxt(nlfs_obs, " number of survey length freq lines to read");
   	!! echo(lfs_data);
   	
 
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_data;
+	
+	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
+	!! cout << " Finished reading main data file \n" << endl;
+	!! echotxt(eof_data," EOF: finished reading main data file \n");
 
-  	// Data read in working to this point. Good progress. 
+
+  	// Data read in working now. Good progress. 
   	// However, LSMR model (HBC) not working now. Why?
 
 	// OLD LSMR CODE BELOW
@@ -284,13 +293,6 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
-
-	// Print EOF confirmation to screen and echoinput, warn otherwise:
-	init_int eof_data;
-	
-	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
-	!! cout << " Finished reading main data file \n" << endl;
-	!! echotxt(eof_data," EOF: finished reading main data file \n");
 
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
@@ -462,15 +464,15 @@ DATA_SECTION
 	int par_count;
 	int active_count;
 	int active_parms;
-	ivector active_parm(1,npar);  //  Pointer from active list to the element of the full parameter list to get label (ADD THIS)
+	ivector active_parm(1,npar);  //  Pointer from active list to the element of the full parameter list to get label (TODO: ADD THIS)
 
 	// Create dummy datum for use when max phase == 0
 	number dummy_datum;
 	int dummy_phase;
 	!! dummy_datum=1.;
-	!! if(turn_off_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
+	!! if(final_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
 
-	// Adjust the phases to negative if beyond turn_off_phase and find resultant max_phase
+	// Adjust the phases to negative if beyond final_phase and find resultant max_phase
 	int max_phase;
  
  	LOC_CALCS
@@ -483,7 +485,7 @@ DATA_SECTION
 		for(i=1;i<=npar;i++)
 		{ 
 		  	par_count++;
-		  	if(theta_phz(i) > turn_off_phase) theta_phz(i)=-1;
+		  	if(theta_phz(i) > final_phase) theta_phz(i)=-1;
 		  	if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
 		  	if(theta_phz(i) >= 0)
 		  	{
@@ -577,7 +579,7 @@ PARAMETER_SECTION
 	3darray Rhat(1,ngear,1,irow,1,jcol);	// Predicted recaptures-at-length
 	3darray iP(styr,endyr,1,nx,1,nx);			// Size transition matrix for year i;
 
-	//  Create dummy parameter that will be estimated when turn_off_phase is set to 0
+	//  Create dummy parameter that will be estimated when final_phase is set to 0
   	init_bounded_number dummy_parm(0,2,dummy_phase)  //  Estimate in phase 0
 
 	
@@ -591,6 +593,7 @@ INITIALIZATION_SECTION
 // =========================================================================================================
 
 PRELIMINARY_CALCS_SECTION
+
 	if(SimFlag)
 	{
 		cout<<"******************************"<<endl;
