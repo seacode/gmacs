@@ -42,6 +42,13 @@ class model_data : public ad_comm{
   data_matrix lf_data;
   data_int nlfs_obs;
   data_matrix lfs_data;
+  data_int ncapture_obs;
+  data_int nmark_obs;
+  data_int nrecapture_obs;
+  data_matrix capture_data;
+  data_matrix mark_data;
+  data_matrix recapture_data;
+  data_int eof_data;
   data_int syr;
   data_int nyr;
   data_number dt;
@@ -64,8 +71,7 @@ class model_data : public ad_comm{
   d3_array C;
   d3_array M;
   d3_array R;
-  dmatrix ct;
-  data_int eof_data;
+  data_int eof_hbc;
   data_int nj;
   data_int styr_L;
   data_int endyr_L;

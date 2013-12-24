@@ -118,15 +118,36 @@ version_short+="Gmacs V1.00";
  echo(mean_weight);
  echo(fecundity);
   lf_flag.allocate("lf_flag");
+ echotxt(lf_flag,  " length freq data for discard fleet: flag for catch or discards");
   nlf_obs.allocate("nlf_obs");
   lf_data.allocate(1,nlf_obs,1,ndclass+5,"lf_data");
   nlfs_obs.allocate("nlfs_obs");
   lfs_data.allocate(1,nlfs_obs,1,ndclass+5,"lfs_data");
- echotxt(lf_flag,  " length freq data for discard fleet: flag for catch or discards");
  echotxt(nlf_obs,  " number of length freq lines to read");
  echo(lf_data);
  echotxt(nlfs_obs, " number of survey length freq lines to read");
  echo(lfs_data);
+  ncapture_obs.allocate("ncapture_obs");
+  nmark_obs.allocate("nmark_obs");
+  nrecapture_obs.allocate("nrecapture_obs");
+  capture_data.allocate(1,ncapture_obs,1,ndclass+3,"capture_data");
+  mark_data.allocate(1,nmark_obs,1,ndclass+3,"mark_data");
+  recapture_data.allocate(1,nrecapture_obs,1,ndclass+3,"recapture_data");
+ echotxt(ncapture_obs,   " number of capture data lines");
+ echotxt(nmark_obs,      " number of mark data lines");
+ echotxt(nrecapture_obs, " number of recapture data lines")
+ if(ncapture_obs>0) 
+ {
+ echo (capture_data);
+ echo (mark_data);
+ echo (recapture_data);
+ }
+  eof_data.allocate("eof_data");
+ if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
+ cout << " Finished reading main data file \n" << endl;
+ echotxt(eof_data," EOF: finished reading main data file \n");
+ ad_comm::change_datafile_name("hbc.dat");
+ cout << " Reading hbc.dat" << endl;
   syr.allocate("syr");
   nyr.allocate("nyr");
   dt.allocate("dt");
@@ -147,8 +168,8 @@ version_short+="Gmacs V1.00";
   fi_count.allocate(1,ngear);
   Effort.allocate(1,ngear,1,irow,"Effort");
   mean_Effort.allocate(1,ngear);
-		// Calculate mean effort for each gear, ignore 0
-		// number of capture probability deviates fi_count(k)
+		/* Calculate mean Effort for each gear, ignore 0*/
+		/* number of capture probability deviates fi_count(k) */
 		int i,k,n;
 		fi_count.initialize();
 		for(k=1;k<=ngear;k++)
@@ -171,21 +192,10 @@ version_short+="Gmacs V1.00";
   C.allocate(1,ngear,1,irow,1,jcol);
   M.allocate(1,ngear,1,irow,1,jcol);
   R.allocate(1,ngear,1,irow,1,jcol);
-  ct.allocate(1,ngear,1,irow);
-		for(k=1;k<=ngear;k++)
-		{
-			for(i=1;i<=irow(k);i++)
-			{
-				C(k)(i) = i_C(k)(i)(2,ncol(k)).shift(1);
-				M(k)(i) = i_M(k)(i)(2,ncol(k)).shift(1);
-				R(k)(i) = i_R(k)(i)(2,ncol(k)).shift(1);
-				ct(k,i) = sum( C(k)(i) );
-			}
-		}
-  eof_data.allocate("eof_data");
- if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
- cout << " Finished reading main data file \n" << endl;
- echotxt(eof_data," EOF: finished reading main data file \n");
+  eof_hbc.allocate("eof_hbc");
+ if(eof_hbc!=999) {cout << " Error reading hbc data file \n EOF = "<< eof_data << endl; exit(1);}
+ cout << " Finished reading hbc data file \n" << endl;
+ echotxt(eof_data," EOF: finished reading hbc data file \n");
  ad_comm::change_datafile_name(size_trans_file);
  cout << " Reading size transition file" << endl;
  echoinput << " Start reading size transition file" << endl;
@@ -465,7 +475,11 @@ void model_parameters::initializationfunction(void)
 void model_parameters::preliminary_calculations(void)
 {
 
+#if defined(USE_ADPVM)
+
   admaster_slave_variable_interface(*this);
+
+#endif
 	if(SimFlag)
 	{
 		cout<<"******************************"<<endl;

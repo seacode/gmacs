@@ -159,6 +159,8 @@ DATA_SECTION
 	init_matrix catch_data(1,ncatch_obs,1,4);	 	// catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
 	init_matrix survey_data(1,nsurvey_obs,1,5);	 	// survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
 
+	// Q: Some pre-processing of these data required. See simple.tpl for example.
+
   	!! echotxt(catch_units,  " catch units");
 	!! echotxt(catch_multi,  " catch multipliers");
 	!! echotxt(survey_units, " survey units");
@@ -176,16 +178,18 @@ DATA_SECTION
 	init_matrix effort(0,nfleet,styr,endyr);		// effort by fishery
 	init_imatrix f_new(0,nfleet,0,4);				// alternative f estimators (overwrite others)
 
+	// Q: More code for F overwrite (f_new) option needs to be included here. See simple.tpl for example.
+
 	!! echo(discard_mort);
 	!! echo(retention);
 	!! echo(catch_time);
 	!! echo(effort);
 	!! echo(f_new);
 
-	init_vector nat_mort(styr,endyr);			// natural mortality pointer
-	init_vector mean_length(1,ndclass); 		// mean length vector
-	init_vector mean_weight(1,ndclass); 		// mean weight vector
-	init_vector fecundity(1,ndclass);			// fecundity vector
+	init_vector nat_mort(styr,endyr);				// natural mortality pointer
+	init_vector mean_length(1,ndclass); 			// mean length vector
+	init_vector mean_weight(1,ndclass); 			// mean weight vector
+	init_vector fecundity(1,ndclass);				// fecundity vector
 
 	!! echo(nat_mort);
 	!! echo(mean_length);
@@ -194,27 +198,59 @@ DATA_SECTION
 
 	init_int lf_flag; 								// length comp data for discard fleet (-1): total catch (1) or  discards (2)
   	
+  	!! echotxt(lf_flag,  " length freq data for discard fleet: flag for catch or discards");
+
 	init_int nlf_obs;								// number of length frequency lines to read	
 	init_matrix lf_data(1,nlf_obs,1,ndclass+5);		// length frequency data, one line per nlf_obs, requires year, season, fleet, sex, effective sample size, then data vector 
 
 	init_int nlfs_obs;								// number or survey length frequency lines to read
 	init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);	// survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
 
-  	!! echotxt(lf_flag,  " length freq data for discard fleet: flag for catch or discards");
-
-  	!! echotxt(nlf_obs,  " number of length freq lines to read");
+   	!! echotxt(nlf_obs,  " number of length freq lines to read");
   	!! echo(lf_data);
 
   	!! echotxt(nlfs_obs, " number of survey length freq lines to read");
   	!! echo(lfs_data);
   	
+ 	init_int ncapture_obs;										// number of capture data lines to read		
+ 	init_int nmark_obs;											// number of mark data lines to read
+ 	init_int nrecapture_obs;									// number of recapture data lines to read
 
- 	// Data read in working now. Good progress. 
-  	// However, LSMR model (HBC) not working. Why?
+	init_matrix capture_data(1,ncapture_obs,1,ndclass+3);		// capture data, one line per ncapture_obs, requires years, fleet, sex, then data vector
+	init_matrix mark_data(1,nmark_obs,1,ndclass+3);				// mark data, one line per nmark_obs, requires years, fleet, sex, then data vector
+	init_matrix recapture_data(1,nrecapture_obs,1,ndclass+3);	// recapture data, one line per nrecapture_obs, requires years, fleet, sex, then data vector
 
-	// OLD LSMR CODE BELOW
+	!! echotxt(ncapture_obs,   " number of capture data lines");
+	!! echotxt(nmark_obs,      " number of mark data lines");
+	!! echotxt(nrecapture_obs, " number of recapture data lines")
+
+	// Q: This below should probably go into LOCAL_CALCS.
+
+	!! if(ncapture_obs>0) 
+	!! {
+		
+		!! echo (capture_data);
+		!! echo (mark_data);
+		!! echo (recapture_data);
+
+	!! }
 	
-	// READ INPUT FROM OLD DATAFILE, HBC EXAMPLE (LSMR):
+	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	init_int eof_data;
+	
+	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
+	!! cout << " Finished reading main data file \n" << endl;
+	!! echotxt(eof_data," EOF: finished reading main data file \n");
+
+	
+	//*************************************************************
+	// Retain HBC data for now, allow model to run and thus test.
+	//*************************************************************
+
+	// Open HBC data file (*.dat) //
+	!! ad_comm::change_datafile_name("hbc.dat");
+	!! cout << " Reading hbc.dat" << endl;
+	
 	init_int syr;   	// first year
 	init_int nyr;   	// last year
 	init_number dt; 	// time-step
@@ -240,13 +276,13 @@ DATA_SECTION
 		jcol = ncol - 1;
 	END_CALCS
 	
-	// Read in Effort data (number of sets) //
+	// Read in effort data (number of sets) //
 	ivector fi_count(1,ngear);
 	init_matrix Effort(1,ngear,1,irow);
 	vector mean_Effort(1,ngear);
 	LOC_CALCS
-		// Calculate mean effort for each gear, ignore 0
-		// number of capture probability deviates fi_count(k)
+		/* Calculate mean Effort for each gear, ignore 0*/
+		/* number of capture probability deviates fi_count(k) */
 		int i,k,n;
 		fi_count.initialize();
 		for(k=1;k<=ngear;k++)
@@ -274,51 +310,45 @@ DATA_SECTION
 	3darray M(1,ngear,1,irow,1,jcol);
 	3darray R(1,ngear,1,irow,1,jcol);	
 
-	// Column sums of Catch-at-length //
-	matrix ct(1,ngear,1,irow); 
+	init_int eof_hbc;
 	
-	LOC_CALCS
-		for(k=1;k<=ngear;k++)
-		{
-			for(i=1;i<=irow(k);i++)
-			{
-				C(k)(i) = i_C(k)(i)(2,ncol(k)).shift(1);
-				M(k)(i) = i_M(k)(i)(2,ncol(k)).shift(1);
-				R(k)(i) = i_R(k)(i)(2,ncol(k)).shift(1);
-				ct(k,i) = sum( C(k)(i) );
-			}
-		}
-	END_CALCS
-
-	// Print EOF confirmation to screen and echoinput, warn otherwise:
-	init_int eof_data;
-	
-	!! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
-	!! cout << " Finished reading main data file \n" << endl;
-	!! echotxt(eof_data," EOF: finished reading main data file \n");
-
+	!! if(eof_hbc!=999) {cout << " Error reading hbc data file \n EOF = "<< eof_data << endl; exit(1);}
+	!! cout << " Finished reading hbc data file \n" << endl;
+	!! echotxt(eof_data," EOF: finished reading hbc data file \n");
 
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
 
-	// Open size transition file (*.dat) //
-	!! ad_comm::change_datafile_name(size_trans_file);
-	!! cout << " Reading size transition file" << endl;
-	!! echoinput << " Start reading size transition file" << endl;
-	
-	// Read input from growth data file:
-	init_int nj;  // number of size intervals
-	init_int styr_L;
-	init_int endyr_L;
-	init_ivector jbin(1,nj);
-	init_3darray L(styr_L,endyr_L,1,nj-1,1,nj-1);
-	
-	// Print EOF confirmation to screen and echoinput, warn otherwise:
-	init_int eof_growth;
+	// Q: Make this section conditional on starter file: Must be done inside local calcs.
+	// This code requires updating to Gmacs flat format. 
 
-	!! if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
-	!! cout << " Finished reading size transition file \n" << endl;
-	!! echotxt(eof_growth," EOF: finished reading size transition file \n");
+	LOCAL_CALCS
+
+	if(read_growth==1)
+	{	
+
+		// Open size transition file (*.dat) //
+		!! ad_comm::change_datafile_name(size_trans_file);
+		!! cout << " Reading size transition file" << endl;
+		!! echoinput << " Start reading size transition file" << endl;
+		
+		// Read input from growth data file:
+		init_int nj;  // number of size intervals
+		init_int styr_L;
+		init_int endyr_L;
+		init_ivector jbin(1,nj);
+		init_3darray L(styr_L,endyr_L,1,nj-1,1,nj-1);
+		
+		// Print EOF confirmation to screen and echoinput, warn otherwise:
+		init_int eof_growth;
+
+		!! if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
+		!! cout << " Finished reading size transition file \n" << endl;
+		!! echotxt(eof_growth," EOF: finished reading size transition file \n");
+
+	}
+
+	END_CALCS
 
 
 // ---------------------------------------------------------------------------------------------------------
