@@ -1,5 +1,5 @@
 Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1
-Sun Dec 22 22:32:41 2013
+Mon Dec 23 13:32:54 2013
 
  Start reading starter file
 bbrkc.dat	data file
@@ -462,7 +462,12 @@ lfs_data
  2009 1 1 3 200 59.3332 29.9789 230.463 327.894 331.641 647.669 602.076 1407.13 2057.93 1878.05 1967.99 2047.31 2264.65 2989.14 1949.88 2054.18 1236 1018.03 926.223 1054.26
  2010 1 1 3 200 0 178.912 429.604 505.133 414.605 288.188 861.351 719.935 694.223 817.962 1444.69 1944.47 1617.71 1742.52 1966.96 1861.44 2265.87 1405.59 778.858 1070.8
  2011 1 1 3 200 176.662 212.092 605.699 991.542 818.277 669.764 813.909 730.431 883.797 640.644 876.032 983.291 782.362 1432.71 1332.25 1248.77 1172.57 991.056 560.078 798.863
+0	 number of capture data lines
+0	 number of mark data lines
+0	 number of recapture data lines
 999	 EOF: finished reading main data file 
+
+999	 EOF: finished reading hbc data file 
 
  Start reading size transition file
 999	 EOF: finished reading size transition file 
