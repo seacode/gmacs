@@ -19,6 +19,7 @@
 //	- Add forecast section (add routine for this)
 //  - Add warning section: maybe use macro for warning(object,text)
 //  - Add section to write new data file (enable easy labelling after first model attempt)
+//  - Look at numbers at length matrix...dimensioned by year, maturity, shell condition, sex-size bin 
 //
 //	=========================================================================================================
 
@@ -606,8 +607,8 @@ PARAMETER_SECTION
 	//matrix P(1,nx,1,nx);		// Size-Transition Matrix for step dt
 	
 	// Predicted observations
-	matrix hat_ct(1,ngear,1,irow);			// Predicted total catch
-	matrix delta(1,ngear,1,irow);			// residuals in total catch
+	matrix hat_ct(1,ngear,1,irow);			  // Predicted total catch
+	matrix delta(1,ngear,1,irow);			    // residuals in total catch
 	3darray Chat(1,ngear,1,irow,1,jcol);	// Predicted catch-at-length
 	3darray Mhat(1,ngear,1,irow,1,jcol);	// Predicted new marks-at-length
 	3darray Rhat(1,ngear,1,irow,1,jcol);	// Predicted recaptures-at-length
