@@ -149,8 +149,8 @@ DATA_SECTION
 	
 	!! echo(class_link);
 
-	init_vector catch_units(-1,nfleet);   			// catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
-	init_vector catch_multi(-1,nfleet);	  			// additional catch scaling multipliers [1 for no effect]
+	init_vector catch_units(1,nfleet);   			// catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
+	init_vector catch_multi(1,nfleet);	  			// additional catch scaling multipliers [1 for no effect]
 	init_vector survey_units(1,nsurvey);  			// survey units [1=biomass (tons);2=numbers]
   	init_vector survey_multi(1,nsurvey);  			// additional survey scaling multipliers [1 for no effect]
   	init_int ncatch_obs; 							// number of catch lines to read
@@ -173,11 +173,11 @@ DATA_SECTION
 	!! echo(catch_data);
 	!! echo(survey_data);
 
-	init_vector discard_mort(-1,nfleet);			// discard mortality (per fishery)
+	init_vector discard_mort(1,nfleet);				// discard mortality (per fishery)
 	init_vector retention(styr,endyr);				// retention value for each year
-	init_matrix catch_time(0,nfleet,styr,endyr);	// timing of each fishery (as fraction of time-step)
-	init_matrix effort(0,nfleet,styr,endyr);		// effort by fishery
-	init_imatrix f_new(0,nfleet,0,4);				// alternative f estimators (overwrite others)
+	init_matrix catch_time(1,nfleet,styr,endyr);	// timing of each fishery (as fraction of time-step)
+	init_matrix effort(1,nfleet,styr,endyr);		// effort by fishery
+	init_imatrix f_new(1,nfleet,0,4);				// alternative f estimators (overwrite others)
 
 	// Q: More code for F overwrite (f_new) option needs to be included here. See simple.tpl for example.
 
