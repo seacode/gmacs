@@ -1,10 +1,10 @@
 // =========================================================================================================
 //																			 
-// 	Gmacs: Generic size-based Modelling for Alaskan Crab Stocks.
+// 	Gmacs: Generalized Modelling for Alaskan Crab Stocks.
 //
 // 	Created by Athol Whitten, University of Washington 	
 // 	Info: https://github.com/awhitten/gmacs or write to whittena@uw.edu
-// 	Copyright (c) 2013. All rights reserved.
+// 	Copyright (c) 2014. All rights reserved.
 //
 // 	Acknowledgement: The format for this code, and many of the details,
 // 		were adapted from the 'LSMR' model by Steven Martell (2011).
@@ -72,8 +72,8 @@ TOP_OF_MAIN_SECTION
 DATA_SECTION
 	
 	// Create strings with version information:
-	!!version+="Gmacs_V1.00_2013/11/27_by_Athol_Whitten_(UW)_using_ADMB_11.1";
-	!!version_short+="Gmacs V1.00";
+	!!version+="Gmacs_V1.02_2014/01/02_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+	!!version_short+="Gmacs V1.01";
 
 	!! echoinput << version << endl;
 	!! echoinput << ctime(&start) << endl;
@@ -340,8 +340,7 @@ DATA_SECTION
 
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
-
-	// This section is conditional on starter file flag (read growth matrix data file).
+// This section is conditional on starter file flag (read growth matrix data file).
 	
 	// Declare objects to read in from growth data file:
 	int styr_growth;				// Start year for growth data
@@ -365,7 +364,6 @@ DATA_SECTION
  		  echotxt(styr_growth, " Start year for growth data");
  		  echotxt(endyr_growth, " End year for growth data");
  		  echotxt(ndclass_growth, " Number of growth data classes");
-
  		}
 
 	END_CALCS
