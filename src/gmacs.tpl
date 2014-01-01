@@ -177,15 +177,36 @@ DATA_SECTION
 	init_vector retention(styr,endyr);				// retention value for each year
 	init_matrix catch_time(1,nfleet,styr,endyr);	// timing of each fishery (as fraction of time-step)
 	init_matrix effort(1,nfleet,styr,endyr);		// effort by fishery
-	init_imatrix f_new(1,nfleet,0,4);				// alternative f estimators (overwrite others)
-
-	// Q: More code for F overwrite (f_new) option needs to be included here. See simple.tpl for example.
+	init_imatrix f_new(1,nfleet,1,5);				// alternative f estimators (overwrite others)
 
 	!! echo(discard_mort);
 	!! echo(retention);
 	!! echo(catch_time);
 	!! echo(effort);
 	!! echo(f_new);
+
+	// Overwrite F values with (f_new) optional values if applicable: 
+
+ 	int yr;
+ 	int fleet;
+ 	ivector ncatch_f(1,nfleet);
+ 
+ 	LOCAL_CALCS
+      
+      for (fleet=1; fleet<=nfleet; fleet++)
+       {
+        ncatch_f(fleet) = 0;
+        for (yr=styr; yr<=endyr; yr++) 
+         if (effort(fleet,yr) > 0) 
+          {
+           if (f_new(fleet,1) == 0 | yr < f_new(fleet,2) | yr > f_new(fleet,3))
+            ncatch_f(fleet) += 1;
+          }
+       }
+    
+	END_CALCS
+
+	!! echotxt(ncatch_f, " Number of F's (calculated)")
 
 	init_vector nat_mort(styr,endyr);				// natural mortality pointer
 	init_vector mean_length(1,ndclass); 			// mean length vector
@@ -225,16 +246,16 @@ DATA_SECTION
 	!! echotxt(nmark_obs,      " number of mark data lines");
 	!! echotxt(nrecapture_obs, " number of recapture data lines")
 
-	// Q: This below should probably go into LOCAL_CALCS.
+	LOCAL_CALCS
 
-	!! if(ncapture_obs>0) 
-	!! {
-		
-		!! echo (capture_data);
-		!! echo (mark_data);
-		!! echo (recapture_data);
+      if(ncapture_obs > 0) 
+	    {
+	      echo(capture_data);
+	      echo(mark_data);
+	      echo(recapture_data);
+	    }
 
-	!! }
+	END_CALCS
 	
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_data;
@@ -320,34 +341,58 @@ DATA_SECTION
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
 
-	// Q: Make this section conditional on starter file: Must be done inside local calcs.
-	// This code requires updating to Gmacs flat format. 
+	// This section is conditional on starter file flag (read growth matrix data file).
+	
+	// Declare objects to read in from growth data file:
+	int styr_growth;				// Start year for growth data
+	int endyr_growth;				// End year for growth data
+	int ndclass_growth;				// Number of data classes for growth data
 
 	LOCAL_CALCS
 
-	if(read_growth==1)
-	{	
+	  if(read_growth==1)
+		{	
+		  // Open size transition file (*.dat) //
+		  ad_comm::change_datafile_name(size_trans_file);
+	 	  cout << " Reading size transition file" << endl;
+		  echoinput << " Start reading size transition file" << endl;
 
-		// Open size transition file (*.dat) //
-		!! ad_comm::change_datafile_name(size_trans_file);
-		!! cout << " Reading size transition file" << endl;
-		!! echoinput << " Start reading size transition file" << endl;
+		  // Read input from growth data file:
+		  *(ad_comm::global_datafile) >> styr_growth;
+ 		  *(ad_comm::global_datafile) >> endyr_growth;
+ 		  *(ad_comm::global_datafile) >> ndclass_growth;
+
+ 		  echotxt(styr_growth, " Start year for growth data");
+ 		  echotxt(endyr_growth, " End year for growth data");
+ 		  echotxt(ndclass_growth, " Number of growth data classes");
+
+ 		}
+
+	END_CALCS
+	
+	// Declare objects dependent on previous objects:
+	ivector growth_bins(1,ndclass_growth);													// Vector of growth data bins (lower length of each bin)
+	3darray growth_data(styr_growth,endyr_growth,1,ndclass_growth-1,1,ndclass_growth-1);	// Array of year specific growth transition matrices	
+	
+	int eof_growth;					// Declare EOF check
+
+	LOCAL_CALCS
+
+	  if(read_growth==1)
+		{	
+		  *(ad_comm::global_datafile) >> growth_bins;
+ 		  *(ad_comm::global_datafile) >> growth_data;
+
+ 		  echo(growth_bins);
+ 		  echo(growth_data);
+
+ 		  *(ad_comm::global_datafile) >> eof_growth;
 		
-		// Read input from growth data file:
-		init_int nj;  // number of size intervals
-		init_int styr_L;
-		init_int endyr_L;
-		init_ivector jbin(1,nj);
-		init_3darray L(styr_L,endyr_L,1,nj-1,1,nj-1);
-		
-		// Print EOF confirmation to screen and echoinput, warn otherwise:
-		init_int eof_growth;
-
-		!! if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_data << endl; exit(1);}
-		!! cout << " Finished reading size transition file \n" << endl;
-		!! echotxt(eof_growth," EOF: finished reading size transition file \n");
-
-	}
+		  // Print EOF confirmation to screen and echoinput, warn otherwise:
+		  if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_growth << endl; exit(1);}
+		  cout << " Finished reading size transition file \n" << endl;
+		  echotxt(eof_growth," EOF: finished reading size transition file \n");
+		}
 
 	END_CALCS
 
@@ -787,9 +832,9 @@ FUNCTION calcSizeTransitionMatrix
 			for(t=styr;t<endyr;t++)
 			{
 				im = t;
-				if(t < styr_L) im = styr_L;
-				if(t > endyr_L) im = endyr_L;
-				iP(t) = L(im);
+				if(t < styr_growth) im = styr_growth;
+				if(t > endyr_growth) im = endyr_growth;
+				//iP(t) = growth_data(im);
 			}
 		break;
 	}
