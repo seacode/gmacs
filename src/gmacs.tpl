@@ -19,7 +19,7 @@
 //	- Add forecast section (add routine for this)
 //  - Add warning section: maybe use macro for warning(object,text)
 //  - Add section to write new data file (enable easy labelling after first model attempt)
-//  - Look at numbers at length matrix...dimensioned by year, maturity, shell condition, sex-size bin 
+//  - Look at numbers-at-length matrix...dimensioned by year, maturity, shell condition, sex-size bin 
 //
 //	=========================================================================================================
 
@@ -73,7 +73,7 @@ DATA_SECTION
 	
 	// Create strings with version information:
 	!!version+="Gmacs_V1.02_2014/01/02_by_Athol_Whitten_(UW)_using_ADMB_11.1";
-	!!version_short+="Gmacs V1.01";
+	!!version_short+="Gmacs V1.02";
 
 	!! echoinput << version << endl;
 	!! echoinput << ctime(&start) << endl;
@@ -185,7 +185,7 @@ DATA_SECTION
 	!! echo(effort);
 	!! echo(f_new);
 
-	// Overwrite F values with (f_new) optional values if applicable: 
+	// Determine which F values will be computed using effort (f_new) if applicable: 
 
  	int yr;
  	int fleet;
