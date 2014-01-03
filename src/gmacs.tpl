@@ -331,9 +331,9 @@ DATA_SECTION
 	!! cout << " Reading control file" << endl;
 	!! echoinput << " Start reading control file" << endl;
 	
-	// Possible to create an integer here and assign a value, so that it's easier to change later?
+	// Q: Is it possible to create an integer here and assign a value, so that it's easier to change later?
 	int ntheta;
-	!! ntheta << 2
+	!! ntheta = 2;
 	
 	// Read input from control file:
 	init_matrix theta_control(1,ntheta,1,13);		///> General parameter specifications matrix 
@@ -343,6 +343,7 @@ DATA_SECTION
 	vector theta_ubnd(1,ntheta);
 	ivector theta_phz(1,ntheta);
 	ivector theta_prior(1,ntheta);
+	
 	LOC_CALCS
 		trans_theta_control = trans(theta_control);
 		theta_ival = trans_theta_control(1);
@@ -351,7 +352,120 @@ DATA_SECTION
 		theta_phz  = ivector(trans_theta_control(4));
 		theta_prior = ivector(trans_theta_control(5));
 	END_CALCS
+
+	// Read in pointers for time-varying fishery and survey selectivity:
+	init_imatrix selex_fleet_pnt(0,nfleet,styr,endyr);
+	init_imatrix selex_survey_pnt(1,nsurvey,styr,endyr+1);
+
+	echo(selex_fleet_pnt);
+	echo(selex_survey_pnt);
+
+	// Determine number of selectivity fucntions to estimate, and number of patterns used:
+	// TODO: Check for ADMB max() function, this code below just loops through and finds the max number of a set of numbers.
+	int nselex;
+	int nselex_pat;
+
+	LOCAL_CALCS
 	
+		nselex = 0;
+		  for (fleet=0; fleet<=nfleet; fleet++)
+		    for (yr=styr; yr<=endyr; yr++)
+			  if (selex_fleet_pnt(fleet,yr) > nselex) nselex = selex_fleet_pnt(fleet,yr);
+		
+		nselex = 0;
+		  for (fleet=0; fleet<=nfleet; fleet++)
+		    for (yr=styr; yr<=endyr; yr++)
+		      if (selex_survey_pnt(fleet,yr) > nselex) nselex = selex_survey_pnt(fleet,yr);
+
+		nselex_pat = nselex;
+		echotxt(nselex_pat, " Total number of selectivity patterns");
+
+	END_CALCS
+
+	// Read in specifications for each selectivity:
+	// TODO: Check this, is there a 4 col matrix required or only 3 col?
+	matrix selex_type(1,nselex_pat,0,3);
+	
+	LOCAL_CALCS
+
+		nselex = 0;
+		 for (i=1; i<=nselex_pat; i++)
+		  {
+		   *(ad_comm::global_datafile) >> selex_type(i,0) >> selex_type(i,1) >> selex_type(i,2);
+		   if (selex_type(i,1) == 1) nselex += 2;
+		   if (selex_type(i,1) == 2) nselex += nclass;
+		   if (selex_type(i,1) == 3) nselex += 1;
+		  }
+
+		echotxt(nselex, " Total number of selectivity parameters");
+
+	END_CALCS
+
+	// TODO: For selex types, check Andre's document for what each type is. (If available, then extend to LSMR code below).
+
+	// PICK UP FROM HERE: See if possible to insert selex parms in matrix style rather than loop style read-in used below.
+							// Should be possible, as per LSMR style. See example. Or SS3 Example. 
+	
+	// Selectivity estimation specifications
+	vector SelexInit(1,NSelex);
+	vector SelexLow(1,NSelex);
+	vector SelexHi(1,NSelex);
+	ivector SelexPhase(1,NSelex);
+  
+	matrix SelexSpex(1,NSelex,1,4);
+
+	// Read in option for selectivity specified once [0], or by fleet [1]:
+	init_int selex_input;
+
+	// Selex type settings...
+	!!if (selex_input == 1)
+	!! {
+	!!  *(ad_comm::global_datafile) >> SelexSpex;    
+	!!  cout << SelexSpex << endl;
+	!!  SelexInit = column(SelexSpex,1);
+	!!  SelexLow = column(SelexSpex,2);
+	!!  SelexHi = column(SelexSpex,3);
+	!!  for (II=1;II<=NSelex;II++) SelexPhase(II) = int(SelexSpex(II,4));
+	!! }
+	!! if (selex_input == 0)
+	!!  {
+	!!   for (II=1;II<=Nclass+2;II++) 
+	!!   *(ad_comm::global_datafile) >> SelexSpex(II,1) >> SelexSpex(II,2) >> SelexSpex(II,3) >> SelexSpex(II,4);
+	!!   DIpnt = 0;
+	!!   for (II=1;II<=NSelexPat;II++)
+	!!    {
+	!!     if (selex_type(i,1) == 1)
+	!!      for (JJ=1;JJ<=2;JJ++)
+	!!       { 
+	!!        SelexInit(DIpnt+1) = SelexSpex(JJ,1);
+	!!        SelexLow(DIpnt+1) = SelexSpex(JJ,2);
+	!!        SelexHi(DIpnt+1) = SelexSpex(JJ,3);
+	!!        SelexPhase(DIpnt+1) = int(SelexSpex(JJ,4));
+	!!        DIpnt += 1;
+	!!       }
+	!!     if (selex_type(i,1) == 2)
+	!!      for (JJ=1;JJ<=Nclass;JJ++)
+	!!       { 
+	!!        SelexInit(DIpnt+1) = SelexSpex(2+JJ,1);
+	!!        SelexLow(DIpnt+1) = SelexSpex(2+JJ,2);
+	!!        SelexHi(DIpnt+1) = SelexSpex(2+JJ,3);
+	!!        SelexPhase(DIpnt+1) = int(SelexSpex(2+JJ,4));
+	!!        DIpnt += 1;
+	!!       }
+	!!     if (selex_type(i,1) == 3)
+	!!      for (JJ=1;JJ<=1;JJ++)
+	!!       { 
+	!!        SelexInit(DIpnt+1) = SelexSpex(JJ,1);
+	!!        SelexLow(DIpnt+1) = SelexSpex(JJ,2);
+	!!        SelexHi(DIpnt+1) = SelexSpex(JJ,3);
+	!!        SelexPhase(DIpnt+1) = int(SelexSpex(JJ,4));
+	!!        DIpnt += 1;
+	!!       }
+	!!    }
+	!!  }
+
+
+	// THIS FROM LSMR
 	// Read Selectivity Parms //
 	init_ivector sel_type(1,ngear);
 	init_ivector sel_phz(1,ngear);
@@ -655,13 +769,13 @@ PRELIMINARY_CALCS_SECTION
  Ipnt = 0;
  for (Jpnt=1;Jpnt<=NSelexPat;Jpnt++)
   {
-   SelexType(Jpnt,3) = Ipnt;
-   if (SelexType(Jpnt,1)==1) Last = 2;
-   if (SelexType(Jpnt,1)==2) Last = Nclass;
-   if (SelexType(Jpnt,1)==3) Last = 1;
+   selex_type(int,3) = Ipnt;
+   if (selex_type(int,1)==1) Last = 2;
+   if (selex_type(int,1)==2) Last = Nclass;
+   if (selex_type(int,1)==3) Last = 1;
    Ipnt += Last;
   } 
- CheckFile << SelexType << endl;
+ CheckFile << selex_type i endl;
    
  cout << "Completed Preliminary Calcs Section" << endl;
 
@@ -796,8 +910,8 @@ FUNCTION Set_selex
   // Produce all selectivities
   for (Ifleet=1;Ifleet<=NSelexPat;Ifleet++)
    {
-    Ipnt = SelexType(Ifleet,3);
-    if (SelexType(Ifleet,1) == 1)
+    Ipnt = selex_type(ileet,3);
+    if (selex_type(ileet,1) == 1)
      {
       SlopePar = SelexPar(Ipnt+2);
       Temp = -log(19.0)/SlopePar;
@@ -806,16 +920,16 @@ FUNCTION Set_selex
       Temp =  SelexAll(Ifleet,Nclass);
       for (Iclass=1;Iclass<=Nclass;Iclass++) SelexAll(Ifleet,Iclass) /= Temp;
      }
-    if (SelexType(Ifleet,1) == 2)
+    if (selex_type(ileet,1) == 2)
      {
       for (Iclass=1;Iclass<=Nclass;Iclass++)
        SelexAll(Ifleet,Iclass) = 1.0/(1.0+mfexp(SelexPar(Ipnt+Iclass)));
       Temp =  SelexAll(Ifleet,Nclass);
       for (Iclass=1;Iclass<=Nclass;Iclass++) SelexAll(Ifleet,Iclass) /= Temp;
      }
-    if (SelexType(Ifleet,1) == 3)
+    if (selex_type(ileet,1) == 3)
      {
-      Jpnt = SelexType(SelexType(Ifleet,2),3);
+      Jpnt = selex_type(ilex_type(ileet,2),3);
       SlopePar = SelexPar(Jpnt+2);
       Temp = -log(19.0)/SlopePar;
       for (Iclass=1;Iclass<=Nclass;Iclass++)
@@ -995,7 +1109,7 @@ FUNCTION ObjFunction
   // 2nd derivative penalty
   Penal = 0;
   for (Iselex=1;Iselex<=NSelexPat;Iselex++)
-   if (SelexType(Iselex,1) == 2)
+   if (selex_type(ielex,1) == 2)
     for (Iclass=2;Iclass<=Nclass-1;Iclass++)
      Penal += square(SelexAll(Iselex,Iclass-1)-2.0*SelexAll(Iselex,Iclass)+SelexAll(Iselex,Iclass+1));
   PriorVal(Jpnt+1) = Penal;   
