@@ -360,12 +360,12 @@ DATA_SECTION
 	echo(selex_fleet_pnt);
 	echo(selex_survey_pnt);
 
-	// Determine number of selectivity fucntions to estimate, and number of patterns used:
-	// TODO: Check for ADMB max() function, this code below just loops through and finds the max number of a set of numbers.
-	// Better still would be [R Style] to get length(unique(numbers)) ...
+	// Determine number of selectivity functions to estimate, and number of patterns used:
 
 	int nselex;
 	int nselex_pat;
+
+	// TODO: Should be able to use selex_survey_pnt.indexmax() below instead of loop. See PG: 192 ADMB Manual.
 
 	LOCAL_CALCS
 	
@@ -388,6 +388,7 @@ DATA_SECTION
 	// Read in specifications for each selectivity [first determine number of selex parameters]:
 	matrix selex_type(1,nselex_pat,1,4);
 	
+	// TODO: The selex_type matrix can probably be read in directly, then the loop over the columns should work the same.
 	LOCAL_CALCS
 
 		nselex = 0;
@@ -409,65 +410,71 @@ DATA_SECTION
 	vector selex_lbnd(1,nselex_par);
 	vector selex_ubnd(1,nselex_par);
 	ivector selex_phz(1,nselex_par);
-  
-	matrix selex_spex(1,nselex_par,1,4);
 
-	// Read in option for selectivity specified once [0], or by fleet [1]:
-	init_int selex_input;
+	init_matrix selex_spex(1,nselex_par,1,4);
 
-	// Read in selectivity parameter specifications [conditional on type]:
+	// Read in selectivity parameter specifications:
 	LOCAL_CALCS
 
-	  if (selex_input == 1)
-	   {
-	    *(ad_comm::global_datafile) >> selex_spex;    
-	  
-	    selex_init = column(selex_spex,1);
-	    selex_lbnd = column(selex_spex,2);
-	    selex_ubnd = column(selex_spex,3);
-	     for (i=1; i<=nselex_par; i++) selex_phz(i) = int(selex_spex(i,4)); // Q: Why not get phase specs as column(selex_spex,4)?
-	   }
-
-	 if (selex_input == 0) // Q: Does this code only work for the
-	  {
-	   for (i=1; i<=nclass+2; i++) 
-	   *(ad_comm::global_datafile) >> selex_spex(i,1) >> selex_spex(i,2) >> selex_spex(i,3) >> selex_spex(i,4);
-	   
-	   selpar = 0;
-	   
-	   for (i=1; i<=nselex_pat; i++)
-	    {
-	     if (selex_type(i,2) == 1)
-	      for (j=1; j<=2; j++)
-	       { 
-	        selex_init(selpar+1) = selex_spex(j,1);
-	        selex_lbnd(selpar+1) = selex_spex(j,2);
-	        selex_ubnd(selpar+1) = selex_spex(j,3);
-	        selex_phz(selpar+1) = int(selex_spex(j,4));
-	        selpar += 1;
-	       }
-	     if (selex_type(i,2) == 2)
-	      for (j=1; j<=nclass;j++)
-	       { 
-	        selex_init(selpar+1) = selex_spex(2+j,1);
-	        selex_lbnd(selpar+1) = selex_spex(2+j,2);
-	        selex_ubnd(selpar+1) = selex_spex(2+j,3);
-	        selex_phz(selpar+1) = int(selex_spex(2+j,4));
-	        selpar += 1;
-	       }
-	     if (selex_type(i,2) == 3)
-	      for (j=1;j<=1;j++)
-	       { 
-	        selex_init(selpar+1) = selex_spex(j,1);
-	        selex_lbnd(selpar+1) = selex_spex(j,2);
-	        selex_ubnd(selpar+1) = selex_spex(j,3);
-	        selex_phz(selpar+1) = int(selex_spex(j,4));
-	       selpar += 1;
-	       }
-	    }
-	  }
-
+	  selex_init = column(selex_spex,1);
+	  selex_lbnd = column(selex_spex,2);
+	  selex_ubnd = column(selex_spex,3);
+	  for (i=1; i<=nselex_par; i++) selex_phz(i) = int(selex_spex(i,4)); 
+	
 	END_CALCS
+
+	// PICK UP FROM HERE, ADD COMMENTS ABOVE, CHANGE TO GMACS FORMAT BELOW. 
+
+	// Read in pointers for time-varying fishery retention:
+	int NRetPars;
+	init_ivector FleetRetPnt(Yr1,Yr2);
+	cout << FleetRetPnt << endl;
+	NRetPars = 0;
+	for (DIyr=Yr1;DIyr<=Yr2;DIyr++)
+	if (FleetRetPnt(DIyr) > NRetPars) NRetPars = FleetRetPnt(DIyr);
+	NRetPars *= Nclass;
+	CheckFile << NRetPars << " Total retension parameters" << endl;
+
+	init_matrix RetainParSpex(1,NRetPars,1,4);                 // Initial values, etc. for RetainPar 
+  vector RetainParInit(1,NRetPars);
+  vector RetainParLow(1,NRetPars);
+  vector RetainParHi(1,NRetPars);
+  ivector RetainParPhase(1,NRetPars);
+  !! RetainParInit = column(RetainParSpex,1);
+  !! RetainParLow = column(RetainParSpex,2);
+  !! RetainParHi = column(RetainParSpex,3);
+  !! for (II=1;II<=NRetPars;II++) RetainParPhase(II) = int(RetainParSpex(II,4));
+  !! CheckFile << "Retained par Specs" << endl;
+
+  init_imatrix SurveyQPnt(1,Nsurvey,Yr1,Yr2+1);
+  !! CheckFile << "SurveyQPnt" << endl << SurveyQPnt << endl;
+  int NSurveyQ;
+  !! NSurveyQ = 0;
+  !! for (DIfleet=1;DIfleet<=Nsurvey;DIfleet++)
+  !!  for (DIyr=Yr1;DIyr<=Yr2+1;DIyr++)
+  !!   if (SurveyQPnt(DIfleet,DIyr) > NSurveyQ) NSurveyQ = SurveyQPnt(DIfleet,DIyr);
+  !! CheckFile << "NSurveyQ" << endl << NSurveyQ << endl;
+    
+  // Are any of surveys in a sub-area of the main survey area
+  init_int NsubSurveyFleets;
+  init_imatrix SubFltSpec(1,NsubSurveyFleets,1,2);
+    
+  init_matrix SurveyQSpex(1,NSurveyQ,1,6);
+  vector SurveyQInit(1,NSurveyQ);
+  vector SurveyQLow(1,NSurveyQ);
+  vector SurveyQHi(1,NSurveyQ);
+  vector SurveyQPMean(1,NSurveyQ);
+  vector SurveyQPSD(1,NSurveyQ);
+  ivector SurveyQPhase(1,NSurveyQ);
+  !! SurveyQInit = column(SurveyQSpex,1);
+  !! SurveyQLow = column(SurveyQSpex,2);
+  !! SurveyQHi = column(SurveyQSpex,3);
+  !! SurveyQPMean = column(SurveyQSpex,5);
+  !! SurveyQPSD = column(SurveyQSpex,6);
+  !! for (II=1;II<=NSurveyQ;II++) SurveyQPhase(II) = int(SurveyQSpex(II,4));
+  !! CheckFile << "SurveyQSpex" << endl << SurveyQSpex << endl;
+ 
+  
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_control;
