@@ -97,10 +97,10 @@ DATA_SECTION
 	!! echotxt(control_file, "control file");
 
 	// Read various option values, then echo:
-	init_int verbose;						// display detail to screen (option 1/0)
-	init_int final_phase;					// stop estimation after this phase
-	init_int use_pin;						// use a .pin file to get initial parameters (option 1/0)
-	init_int read_growth;					// read growth transition matrix file (option 1/0)
+	init_int verbose;						// Display detail to screen (option 1/0)
+	init_int final_phase;					// Stop estimation after this phase
+	init_int use_pin;						// Use a .pin file to get initial parameters (option 1/0)
+	init_int read_growth;					// Read growth transition matrix file (option 1/0)
 
 	!! echotxt(verbose, " display detail");
 	!! echotxt(final_phase, " final phase");
@@ -125,59 +125,82 @@ DATA_SECTION
 	!! echoinput << " Start reading main data file" << endl;
 	
 	// Read input from main data file:
-	init_int styr;   	 ///< start year
-	init_int endyr;   	 ///< end year
-	init_number tstep; 	 ///< time-step
+	init_int styr;   	 ///< Start year
+	init_int endyr;   	 ///< End year
+	init_number tstep; 	 ///< Time-step
 
-	!! echotxt(styr,  " start year");
-	!! echotxt(endyr, " end year");
-	!! echotxt(tstep, " time-step");
+	!! echotxt(styr,  " Start year");
+	!! echotxt(endyr, " End year");
+	!! echotxt(tstep, " Eime-step");
 	
-	init_int nsex;		 ///< number of sexes	
-	init_int nfleet;	 ///< number of fishing fleets
-	init_int nsurvey;	 ///< number of surveys
-	init_int nclass;	 ///< number of size classes
-	init_int ndclass;	 ///< number of size classes (in the data)
+	init_int nsex;		 ///< Number of sexes	
+	init_int nfleet;	 ///< Number of fishing fleets
+	init_int nsurvey;	 ///< Number of surveys
+	init_int nclass;	 ///< Number of size classes
+	init_int ndclass;	 ///< Number of size classes (in the data)
 	
-	init_imatrix class_link(1,nclass,1,2);  ///< link between data size-classes and model size-classs
+	init_imatrix class_link(1,nclass,1,2);  ///< Link between data size-classes and model size-classs
 	 
-	!! echotxt(nsex,    " number of sexes");
-	!! echotxt(nfleet,  " number of fleets");
-	!! echotxt(nsurvey, " number of surveys")
-	!! echotxt(nclass,  " number of size classes");
-	!! echotxt(ndclass, " number of size classes for data");
+	!! echotxt(nsex,    " Number of sexes");
+	!! echotxt(nfleet,  " Number of fleets");
+	!! echotxt(nsurvey, " Number of surveys")
+	!! echotxt(nclass,  " Number of size classes");
+	!! echotxt(ndclass, " Number of size classes for data");
 	
 	!! echo(class_link);
 
-	init_vector catch_units(1,nfleet);   			///< catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
-	init_vector catch_multi(1,nfleet);	  			///< additional catch scaling multipliers [1 for no effect]
-	init_vector survey_units(1,nsurvey);  			///< survey units [1=biomass (tons);2=numbers]
-  	init_vector survey_multi(1,nsurvey);  			///< additional survey scaling multipliers [1 for no effect]
-  	init_int ncatch_obs; 							///< number of catch lines to read
-	init_int nsurvey_obs;							///< number of survey lines to read
-	init_number survey_time;                		///< time between survey and fishery (for projections)
+	init_vector catch_units(1,nfleet);   			///< Catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
+	init_vector catch_multi(1,nfleet);	  			///< Additional catch scaling multipliers [1 for no effect]
+	init_vector survey_units(1,nsurvey);  			///< Survey units [1=biomass (tons);2=numbers]
+  	init_vector survey_multi(1,nsurvey);  			///< Additional survey scaling multipliers [1 for no effect]
+  	init_int ncatch_obs; 							///< Number of catch lines to read
+	init_int nsurvey_obs;							///< Number of survey lines to read
+	init_number survey_time;                		///< Time between survey and fishery (for projections)
 	
-	init_matrix catch_data(1,ncatch_obs,1,4);	 	///< catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
-	init_matrix survey_data(1,nsurvey_obs,1,5);	 	///< survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
+
+	// Read fleet specifications and determine number with catch retained or discarded etc:
+	init_imatrix fleet_control(1,nfleet,1,3);		///< Fleet control matrix
+
+	int nfleet_ret;									///< Number of fleets for retained catch data
+	int nfleet_dis;									///< Number of fleets for discarded catch data (with link to above retained catch)
+	int nfleet_byc;									///< Number of fleets for bycatch data only
+
+	LOCAL_CALCS
+
+	  nfleet_ret = 0;
+	  nfleet_dis = 0;
+	  nfleet_byc = 0;
+
+	  for (fleet=1; fleet<=nfleet; fleet++)
+	    {
+	  	  if(fleet_control(fleet,2)==1) nfleet_ret += 1
+	  	  if(fleet_control(fleet,2)==2) nfleet_dis += 1
+	  	  if(fleet_control(fleet,2)==3) nfleet_byc += 1
+	  	}
+
+	END_CALCS
+
+	init_matrix catch_data(1,ncatch_obs,1,4);	 	///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
+	init_matrix survey_data(1,nsurvey_obs,1,5);	 	///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
 
 	// Q: Some pre-processing of these data required. See simple.tpl for example.
 
-  	!! echotxt(catch_units,  " catch units");
-	!! echotxt(catch_multi,  " catch multipliers");
-	!! echotxt(survey_units, " survey units");
-	!! echotxt(survey_multi, " survey multipliers")
-	!! echotxt(ncatch_obs,   " number of lines of catch data");
-	!! echotxt(nsurvey_obs,  " number of lines of survey data")
-	!! echotxt(survey_time,  " time between survey and fishery");
+  	!! echotxt(catch_units,  " Catch units");
+	!! echotxt(catch_multi,  " Catch multipliers");
+	!! echotxt(survey_units, " Survey units");
+	!! echotxt(survey_multi, " Survey multipliers")
+	!! echotxt(ncatch_obs,   " Number of lines of catch data");
+	!! echotxt(nsurvey_obs,  " Number of lines of survey data")
+	!! echotxt(survey_time,  " Time between survey and fishery");
 			
 	!! echo(catch_data);
 	!! echo(survey_data);
 
-	init_vector discard_mort(1,nfleet);				///< discard mortality (per fishery)
-	init_vector retention(styr,endyr);				///< retention value for each year
-	init_matrix catch_time(1,nfleet,styr,endyr);	///< timing of each fishery (as fraction of time-step)
-	init_matrix effort(1,nfleet,styr,endyr);		///< effort by fishery
-	init_imatrix f_new(1,nfleet,1,5);				///< alternative f estimators (overwrite others)
+	init_vector discard_mort(1,nfleet);				///< Discard mortality (per fishery)
+	init_vector retention(styr,endyr);				///< Retention value for each year
+	init_matrix catch_time(1,nfleet,styr,endyr);	///< Timing of each fishery (as fraction of time-step)
+	init_matrix effort(1,nfleet,styr,endyr);		///< Effort by fishery
+	init_imatrix f_new(1,nfleet,1,5);				///< Alternative f estimators (overwrite others)
 
 	!! echo(discard_mort);
 	!! echo(retention);
@@ -208,43 +231,43 @@ DATA_SECTION
 
 	!! echotxt(ncatch_f, " Number of F's (calculated)")
 
-	init_vector nat_mort(styr,endyr);				///< natural mortality pointer
-	init_vector mean_length(1,ndclass); 			///< mean length vector
-	init_vector mean_weight(1,ndclass); 			///< mean weight vector
-	init_vector fecundity(1,ndclass);				///< fecundity vector
+	init_vector nat_mort(styr,endyr);				///< Natural mortality pointer
+	init_vector mean_length(1,ndclass); 			///< Mean length vector
+	init_vector mean_weight(1,ndclass); 			///< Mean weight vector
+	init_vector fecundity(1,ndclass);				///< Fecundity vector
 
 	!! echo(nat_mort);
 	!! echo(mean_length);
 	!! echo(mean_weight);
 	!! echo(fecundity);
 
-	init_int lf_flag; 								///< length comp data for discard fleet (-1): total catch (1) or  discards (2)
+	init_int lf_flag; 								///< Length comp data for discard fleet (-1): total catch (1) or  discards (2)
   	
-  	!! echotxt(lf_flag,  " length freq data for discard fleet: flag for catch or discards");
+  	!! echotxt(lf_flag,  " Length freq data for discard fleet: flag for catch or discards");
 
-	init_int nlf_obs;								///< number of length frequency lines to read	
-	init_matrix lf_data(1,nlf_obs,1,ndclass+5);		///< length frequency data, one line per nlf_obs, requires year, season, fleet, sex, effective sample size, then data vector 
+	init_int nlf_obs;								///< Number of length frequency lines to read	
+	init_matrix lf_data(1,nlf_obs,1,ndclass+5);		///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, effective sample size, then data vector 
 
-	init_int nlfs_obs;								///< number or survey length frequency lines to read
-	init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);	///< survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
+	init_int nlfs_obs;								///< Number or survey length frequency lines to read
+	init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);	///< Survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
 
-   	!! echotxt(nlf_obs,  " number of length freq lines to read");
+   	!! echotxt(nlf_obs,  " Number of length freq lines to read");
   	!! echo(lf_data);
 
-  	!! echotxt(nlfs_obs, " number of survey length freq lines to read");
+  	!! echotxt(nlfs_obs, " Number of survey length freq lines to read");
   	!! echo(lfs_data);
   	
- 	init_int ncapture_obs;										///< number of capture data lines to read		
- 	init_int nmark_obs;											///< number of mark data lines to read
- 	init_int nrecapture_obs;									///< number of recapture data lines to read
+ 	init_int ncapture_obs;										///< Number of capture data lines to read		
+ 	init_int nmark_obs;											///< Number of mark data lines to read
+ 	init_int nrecapture_obs;									///< Number of recapture data lines to read
 
-	init_matrix capture_data(1,ncapture_obs,1,ndclass+3);		///< capture data, one line per ncapture_obs, requires years, fleet, sex, then data vector
-	init_matrix mark_data(1,nmark_obs,1,ndclass+3);				///< mark data, one line per nmark_obs, requires years, fleet, sex, then data vector
-	init_matrix recapture_data(1,nrecapture_obs,1,ndclass+3);	///< recapture data, one line per nrecapture_obs, requires years, fleet, sex, then data vector
+	init_matrix capture_data(1,ncapture_obs,1,ndclass+3);		///< Capture data, one line per ncapture_obs, requires years, fleet, sex, then data vector
+	init_matrix mark_data(1,nmark_obs,1,ndclass+3);				///< Mark data, one line per nmark_obs, requires years, fleet, sex, then data vector
+	init_matrix recapture_data(1,nrecapture_obs,1,ndclass+3);	///< Recapture data, one line per nrecapture_obs, requires years, fleet, sex, then data vector
 
-	!! echotxt(ncapture_obs,   " number of capture data lines");
-	!! echotxt(nmark_obs,      " number of mark data lines");
-	!! echotxt(nrecapture_obs, " number of recapture data lines")
+	!! echotxt(ncapture_obs,   " Number of capture data lines");
+	!! echotxt(nmark_obs,      " Number of mark data lines");
+	!! echotxt(nrecapture_obs, " Number of recapture data lines")
 
 	// Echo capture, mark, and recapture data when appropriate:
 	LOCAL_CALCS
@@ -331,36 +354,57 @@ DATA_SECTION
 	!! cout << " Reading control file" << endl;
 	!! echoinput << " Start reading control file" << endl;
 	
-	// Q: Is it possible to create an integer here and assign a value, so that it's easier to change later?
+	// Specifiy number of general parameters to be read in:
 	int ntheta;
 	!! ntheta = 2;
 	
-	// Read input from control file:
-	init_matrix theta_control(1,ntheta,1,13);		///> General parameter specifications matrix 
-	matrix trans_theta_control(1,13,1,ntheta);
-	vector theta_init(1,ntheta);
-	vector theta_lbnd(1,ntheta);
-	vector theta_ubnd(1,ntheta);
-	ivector theta_phz(1,ntheta);
-	ivector theta_prior(1,ntheta);
-	
+	// Read general input from control file:
+	init_matrix theta_control(1,ntheta,1,13);		///< General parameter matrix, with specifications
+	matrix trans_theta_control(1,13,1,ntheta);		///< Transpose of general parameter matrix
+	vector theta_init(1,ntheta);					///< Vector of general parameter specs - initial values
+	vector theta_lbnd(1,ntheta);					///< Vector of general parameter specs - lower bound values
+	vector theta_ubnd(1,ntheta);					///< Vector of general parameter specs - upper bound values				
+	ivector theta_phz(1,ntheta);					///< Vector of general parameter specs - phase values
+	ivector theta_prior(1,ntheta);					///< Vector of general parameter specs - prior type
+	vector theta_pmean(1,ntheta);					///< Vector of general parameter specs - prior mean values
+	vector theta_psd(1,ntheta);						///< Vector of general parameter specs - prior s.d. values
+	ivector theta_cov(1,ntheta);					///< Vector of general parameter specs - covariate type
+	ivector theta_dev(1,ntheta);					///< Vector of general parameter specs - deviation type
+	vector theta_dsd(1,ntheta);						///< Vector of general parameter specs - deviation s.d.
+	ivector theta_dmin(1,ntheta);					///< Vector of general parameter specs - deviation min. year
+	ivector theta_dmax(1,ntheta);					///< Vector of general parameter specs - deviation max. year
+	ivector theta_blk(1,ntheta);					///< Vector of general parameter specs - block number (for time-varying paramters)
+
+	!! echo(theta_control);
+
+	// Fill matrices and vectors created above:
 	LOC_CALCS
+
 		trans_theta_control = trans(theta_control);
 		theta_init = trans_theta_control(1);
 		theta_lbnd = trans_theta_control(2);
 		theta_ubnd = trans_theta_control(3);
 		theta_phz  = ivector(trans_theta_control(4));
 		theta_prior = ivector(trans_theta_control(5));
+		theta_pmean = trans_theta_control(6);
+		theta_psd = trans_theta_control(7);
+		theta_cov = ivector(trans_theta_control(8));
+		theta_dev =	ivector(trans_theta_control(9));
+		theta_dsd = trans_theta_control(10);
+		theta_dmin = ivector(trans_theta_control(11));
+		theta_dmax = ivector(trans_theta_control(12));
+		theta_blk = ivector(trans_theta_control(13));
+	
 	END_CALCS
 
 	// Read in pointers for time-varying fishery and survey selectivity:
-	init_imatrix selex_fleet_pnt(1,nfleet,styr,endyr);
-	init_imatrix selex_survey_pnt(1,nsurvey,styr,endyr+1);
+	init_imatrix selex_fleet_pnt(1,nfleet,styr,endyr);						///< Pointers to blocks for time-varying fishing selectivity
+	init_imatrix selex_survey_pnt(1,nsurvey,styr,endyr+1);					///< Pointers to blocks for time-varying survey selectivity
 
-	echo(selex_fleet_pnt);
-	echo(selex_survey_pnt);
+	!! echo(selex_fleet_pnt);
+	!! echo(selex_survey_pnt);
 
-	// Determine number of selectivity functions to estimate, and number of patterns used:
+	// Determine number of different selectivity functions/patterns to estimate:
 
 	int nselex;
 	int nselex_pat;
@@ -385,8 +429,8 @@ DATA_SECTION
 	END_CALCS
 
 	// TODO: For selex types, check AEP BBRKC document for what each type is.
-	// Read in specifications for each selectivity [first determine number of selex parameters]:
-	matrix selex_type(1,nselex_pat,1,4);
+	// Read in specifications for each selectivity pattern and determine number of parameters to estimate:
+	matrix selex_type(1,nselex_pat,1,4);		///< Selectivity types for each fleet/survey by time-block
 	
 	// TODO: The selex_type matrix can probably be read in directly, then the loop over the columns should work the same.
 	LOCAL_CALCS
@@ -405,75 +449,107 @@ DATA_SECTION
 
 	END_CALCS
 
-	// Create objects for reading selectivity parameter specifications:
-	vector selex_init(1,nselex_par);
-	vector selex_lbnd(1,nselex_par);
-	vector selex_ubnd(1,nselex_par);
-	ivector selex_phz(1,nselex_par);
-
-	init_matrix selex_spex(1,nselex_par,1,4);
+	//TODO: Add more selectivity options above as necessary for next example models. See LSMR code for example.
 
 	// Read in selectivity parameter specifications:
+	init_matrix selex_control(1,nselex_par,1,4);		///< Selectivity parameter matrix, with specifications
+	matrix trans_selex_control(1,4,1,nselex_par);		///< Transpose of selectivity parameter matrix
+	vector selex_init(1,nselex_par);					///< Vector of selex parameter specs - initial values
+	vector selex_lbnd(1,nselex_par);					///< Vector of selex parameter specs - lower bounds
+	vector selex_ubnd(1,nselex_par);					///< Vector of selex parameter specs - upper bounds
+	ivector selex_phz(1,nselex_par);					///< Vector of selex parameter specs - phase values
+	
+	!! echo(selex_control);
+
+	// Fill matrices and vectors created above:
 	LOCAL_CALCS
 
-	  selex_init = column(selex_spex,1);
-	  selex_lbnd = column(selex_spex,2);
-	  selex_ubnd = column(selex_spex,3);
-	  for (i=1; i<=nselex_par; i++) selex_phz(i) = int(selex_spex(i,4)); 
+	  trans_selex_control = trans(selex_control);
+	  selex_init = trans_selex_control(1);
+	  selex_lbnd = trans_selex_control(2);
+	  selex_ubnd = trans_selex_control(3);
+	  selex_phz = ivector(trans_selex_control(4));
 	
 	END_CALCS
 
-	// PICK UP FROM HERE, ADD COMMENTS ABOVE, CHANGE TO GMACS FORMAT BELOW. 
-
 	// Read in pointers for time-varying fishery retention:
-	int NRetPars;
-	init_ivector FleetRetPnt(Yr1,Yr2);
-	cout << FleetRetPnt << endl;
-	NRetPars = 0;
-	for (DIyr=Yr1;DIyr<=Yr2;DIyr++)
-	if (FleetRetPnt(DIyr) > NRetPars) NRetPars = FleetRetPnt(DIyr);
-	NRetPars *= Nclass;
-	CheckFile << NRetPars << " Total retension parameters" << endl;
+	int nreten_pars;
+	init_imatrix reten_fleet_pnt(1,nfleet_ret,styr,endyr);
 
-	init_matrix RetainParSpex(1,NRetPars,1,4);                 // Initial values, etc. for RetainPar 
-  vector RetainParInit(1,NRetPars);
-  vector RetainParLow(1,NRetPars);
-  vector RetainParHi(1,NRetPars);
-  ivector RetainParPhase(1,NRetPars);
-  !! RetainParInit = column(RetainParSpex,1);
-  !! RetainParLow = column(RetainParSpex,2);
-  !! RetainParHi = column(RetainParSpex,3);
-  !! for (II=1;II<=NRetPars;II++) RetainParPhase(II) = int(RetainParSpex(II,4));
-  !! CheckFile << "Retained par Specs" << endl;
+	//TODO: Check if above row for retenion applies to discard fishery or to linked retained fishery:
+	
+	!! nreten_pars = reten_fleet_pnt.indexmax();
+	!! nreten_pars *= nclass;
 
-  init_imatrix SurveyQPnt(1,Nsurvey,Yr1,Yr2+1);
-  !! CheckFile << "SurveyQPnt" << endl << SurveyQPnt << endl;
-  int NSurveyQ;
-  !! NSurveyQ = 0;
-  !! for (DIfleet=1;DIfleet<=Nsurvey;DIfleet++)
-  !!  for (DIyr=Yr1;DIyr<=Yr2+1;DIyr++)
-  !!   if (SurveyQPnt(DIfleet,DIyr) > NSurveyQ) NSurveyQ = SurveyQPnt(DIfleet,DIyr);
-  !! CheckFile << "NSurveyQ" << endl << NSurveyQ << endl;
-    
-  // Are any of surveys in a sub-area of the main survey area
-  init_int NsubSurveyFleets;
-  init_imatrix SubFltSpec(1,NsubSurveyFleets,1,2);
-    
-  init_matrix SurveyQSpex(1,NSurveyQ,1,6);
-  vector SurveyQInit(1,NSurveyQ);
-  vector SurveyQLow(1,NSurveyQ);
-  vector SurveyQHi(1,NSurveyQ);
-  vector SurveyQPMean(1,NSurveyQ);
-  vector SurveyQPSD(1,NSurveyQ);
-  ivector SurveyQPhase(1,NSurveyQ);
-  !! SurveyQInit = column(SurveyQSpex,1);
-  !! SurveyQLow = column(SurveyQSpex,2);
-  !! SurveyQHi = column(SurveyQSpex,3);
-  !! SurveyQPMean = column(SurveyQSpex,5);
-  !! SurveyQPSD = column(SurveyQSpex,6);
-  !! for (II=1;II<=NSurveyQ;II++) SurveyQPhase(II) = int(SurveyQSpex(II,4));
-  !! CheckFile << "SurveyQSpex" << endl << SurveyQSpex << endl;
- 
+	//TODO: This code assumes only one type of retention function at the moment. Update as necessary.
+	
+	echotxt(nreten_pars, " Total number of retention parameters");
+
+	// Read in retention parameter specifications:
+	init_matrix reten_control(1,nreten_pars,1,4);     	///< Retention parameter matrix, with speciifications           
+  	matrix trans_reten_control(1,4,1,nreten_pars);		///< Transponse of retention parameter matrix		
+  	vector reten_init(1,nreten_pars);					///< Vector of retention parameter specs - initial values	
+  	vector reten_lbnd(1,nreten_pars);					///< Vector of retention parameter specs - lower bounds
+  	vector reten_ubnd(1,nreten_pars);					///< Vector of retention parameter specs - upper bounds			
+  	ivector reten_phz(1,nreten_pars);					///< Vector of retention parameter specs - phase values
+
+ 	!! echo(reten_control);
+
+	// Fill matrices and vectors created above:
+	LOCAL_CALCS
+
+	  trans_reten_control = trans(reten_control);
+	  reten_init = trans_reten_control(1);
+	  reten_lbnd = trans_reten_control(2);
+	  reten_ubnd = trans_reten_control(3);
+	  reten_phz = ivector(trans_reten_control(4));
+	
+	END_CALCS
+
+	// Read in pointers for time-varying survey catchability:
+	int nsurveyq_pars;
+	init_imatrix q_survey_pnt(1,nsurvey,styr,endyr+1);
+
+	!! nsurveyq_pars = q_survey_pnt.indexmax()
+
+	!! echo(q_survey_pnt);
+	!! echotxt(nsurveyq_pars, " Total number of retention parameters");
+
+  	// Read in flag for number of surveys in a sub-area of the main survey area:
+  	init_int nsubsurvey;
+ 	init_imatrix subsurvey(1,nsubsurvey,1,2);
+
+ 	!! echotxt(nsubsurvey, " Number of sub-surveys");
+ 	!! echo(subsurvey);
+
+	// Read in survey catchability parameter specifications:
+	init_matrix surveyq_control(1,nsurveyq_pars,1,4);     	///< Survey Q parameter matrix, with speciifications           
+  	matrix trans_surveyq_control(1,4,1,nsurveyq_pars);		///< Transponse of survey Q parameter matrix		
+  	vector surveyq_init(1,nsurveyq_pars);					///< Vector of survey Q parameter specs - initial values	
+  	vector surveyq_lbnd(1,nsurveyq_pars);					///< Vector of survey Q parameter specs - lower bounds
+  	vector surveyq_ubnd(1,nsurveyq_pars);					///< Vector of survey Q parameter specs - upper bounds			
+  	ivector surveyq_phz(1,nsurveyq_pars);					///< Vector of survey Q parameter specs - phase values
+  	ivector surveyq_prior(1,nsurveyq_pars);					///< Vector of survey Q parameter specs - prior types
+  	vector surveyq_pmean(1,nsurveyq_pars);					///< Vector of survey Q parameter specs - prior mean values
+  	vector surveyq_psd(1,nsurveyq_pars);					///< Vector of survey Q parameter specs - prior s.d. values
+
+ 	!! echo(surveyq_control);
+
+	// Fill matrices and vectors created above:
+	LOCAL_CALCS
+
+	  trans_surveyq_control = trans(surveyq_control);
+	  surveyq_init = trans_surveyq_control(1);
+	  surveyq_lbnd = trans_surveyq_control(2);
+	  surveyq_ubnd = trans_surveyq_control(3);
+	  surveyq_phz = ivector(trans_surveyq_control(4));
+	  surveyq_prior = ivector(trans_surveyq_control(5));
+	  surveyq_pmean = trans_surveyq_control(6);
+	  surveyq_psd = trans_surveyq_control(7);
+	
+	END_CALCS
+
+	// PICK UP FROM HERE: FINISH CONTROL FILES SPECS, Remember to place Madd section in general parameters matrix.
   
 
 	// Print EOF confirmation to screen and echoinput, warn otherwise:
