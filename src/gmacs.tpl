@@ -172,12 +172,12 @@ DATA_SECTION
 	  	  if(fleet_control(fleet,2)==1) nfleet_ret += 1
 	  	  if(fleet_control(fleet,2)==2) nfleet_dis += 1
 	  	  if(fleet_control(fleet,2)==3) nfleet_byc += 1
-	  	}
+	  	} 
 
 	END_CALCS
 
-	init_matrix catch_data(1,ncatch_obs,1,4);	 	///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
-	init_matrix survey_data(1,nsurvey_obs,1,5);	 	///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
+	init_matrix catch_data(1,ncatch_obs,1,5);	 	///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
+	init_matrix survey_data(1,nsurvey_obs,1,6);	 	///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
 
 	// Q: Some pre-processing of these data required. See simple.tpl for example.
 
@@ -195,7 +195,7 @@ DATA_SECTION
 	init_vector discard_mort(1,nfleet);				///< Discard mortality (per fishery)
 	init_vector retention(styr,endyr);				///< Retention value for each year
 	init_matrix catch_time(1,nfleet,styr,endyr);	///< Timing of each fishery (as fraction of time-step)
-	init_matrix effort(1,nfleet,styr,endyr);		///< Effort by fishery
+	init_matrix effort(1,nfleet,styr,endyr);		///< effort by fishery
 	init_imatrix f_new(1,nfleet,1,5);				///< Alternative f estimators (overwrite others)
 
 	!! echo(discard_mort);
@@ -241,14 +241,10 @@ DATA_SECTION
 
 	// TODO: These mean length and weight vectors probably have to be converted to be suitable for the nclass number of size-classes.
 
-	init_int lf_flag; 								///< Length comp data for discard fleet (-1): total catch (1) or  discards (2)
-  	
-  	!! echotxt(lf_flag,  " Length freq data for discard fleet: flag for catch or discards");
-
 	init_int nlf_obs;								///< Number of length frequency lines to read	
-	init_matrix lf_data(1,nlf_obs,1,ndclass+5);		///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, effective sample size, then data vector 
+	init_matrix lf_data(1,nlf_obs,1,ndclass+7);		///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
 
-	init_int nlfs_obs;								///< Number or survey length frequency lines to read
+	init_int nlfs_obs;								///< Number of survey length frequency lines to read
 	init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);	///< Survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
 
    	!! echotxt(nlf_obs,  " Number of length freq lines to read");
@@ -508,7 +504,7 @@ DATA_SECTION
 	int nreten_pars;
 	init_imatrix reten_fleet_pnt(1,nfleet_ret,styr,endyr);
 
-	//TODO: Check if above row for retenion applies to discard fishery or to linked retained fishery:
+	//TODO: Check if above row for retention applies to discard fishery or to linked retained fishery:
 	
 	!! nreten_pars = reten_fleet_pnt.indexmax();
 	!! nreten_pars *= nclass;
@@ -624,13 +620,14 @@ DATA_SECTION
 	END_CALCS
 
   	// Determine number of prior terms, and create objects to hold these values:
-  	// TODO: Seems like this section may have to be generalised further. See the data file for more.
   	int nprior_terms;
   	int nlike_terms;
   	
   	!! nprior_terms = (nfleet+1) + 5 + nsurveyq_pars + 1 + 1;	
   	!! nlike_terms = (nfleet+2)*2 + (nfleet+1) + (nsurvey)*2;
-  
+  	// TODO: Seems like this section may have to be generalised further. See the control file for more.
+  	
+
   	!! echotxt(nprior_terms, " Number of prior terms");
   	!! echotxt(nlike_terms, " Number of likelihood terms");
     
@@ -651,13 +648,16 @@ DATA_SECTION
 
 	// TODO: Check these extra objects below, and make them Gmacs format is required.
 
-  	3darray FleetObsLF(-1,Nfleet,1,maxFleetLF,1,Nclass)        // Catch/bycatch Lfs (by model classes)
-  	3darray SurveyObsLF(1,Nsurvey,1,maxSurveyLF,1,Nclass)      // Survey Lfs (by model classes)
+  	3darray FleetObsLF(-1,nfleet,1,maxFleetLF,1,nclass)        // Catch/bycatch Lfs (by model classes)
+  	3darray SurveyObsLF(1,nsurvey,1,maxSurveyLF,1,nclass)      // Survey Lfs (by model classes)
   
   	// Stuff related to the SR relationship
   	int IsB0;                                         // Constant recruitment?
   	int SR_rel;                                       // Form of SR_Relationship
-  
+
+  	// Exit here, to test read-in of data and control objects.
+  	!!exit(1);
+  	  
 
 // ---------------------------------------------------------------------------------------------------------
 // FORECAST FILE
@@ -727,95 +727,85 @@ DATA_SECTION
 	!!cout << "Number of active parameters is " << active_parms << endl;
 	!!cout << "Maximum phase for estimation is " << max_phase << endl << endl;
 
-	//TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
+	// TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
 
 // =========================================================================================================
 
 PARAMETER_SECTION
-	
-	// Initialize general parameters:
 
-	// TODO: Pick up from here and get PARAMETER_SECTION from Simple.tpl
+	// Initialize general parameter matrix:
+  	init_bounded_number_vector theta(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);						///< Vector of general parameters
+	
+  	// Initialize other parameter matrices:
+	init_bounded_number_vector madd(1,nmadd_pars,madd_lbnd,madd_ubnd,madd_phz);                     ///< Vector of increments in M parameters
+	init_bounded_number_vector gtrans(1,nclass-1,gtrans_lbnd,gtrans_ubnd,gtrans_phz);               ///< Vector of growth transition parameters
+	init_bounded_number_vector selex(1,nselex_par,selex_lbnd,selex_ubnd,selex_phz);                 ///< Vector of selectivity parameters
+	init_bounded_number_vector reten(1,nreten_pars,reten_lbnd,reten_ubnd,reten_phz)                 ///< Vector of retention parameters
+	init_bounded_number_vector surveyq(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz)       ///< Vector of survey Q parameters
+	init_bounded_number_vector lognin(1,nclass,lognin_lbnd,lognin_ubnd,lognin_phz)             		///< Vector of initial N parameters
+ 	
+ 	// Initialize predicted catch and recruitment parameters:
+  	init_bounded_vector_vector f_est(1,nfleet,1,ncatch_f,0,1,1);									///< Vector of predicted f values
+  	init_vector recdev(styr,endyr,1);                        										///< Vector of recruitment deviations
+  
+  	!! cout << "All parameters declared" << endl;
 
-	init_bounded_number_vector theta(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);
-	number log_ddot_r;
-	number log_bar_r;
-	number m_infty;
+  	matrix f_all(0,nfleet,styr,endyr);                        	// Fishing mortality by year  
 
-	//Variables for growth.
-	number l_infty;
-	number vbk;
-	number beta;
-	
-	//Variables for size distribution of new recruits
-	number mu_r;
-	number cv_r
-	
-	//Mean fishing mortality rates
-	init_vector log_bar_f(1,ngear,-2);
-	
-	//Overdispersion
-	init_vector log_tau(1,ngear,-5);
-	
-	//Selectivity parameters
-	init_bounded_vector_vector sel_par(1,ngear,1,isel_npar,-5.,5.,sel_phz);
-	LOC_CALCS
-		int k;
-		for(k=1;k<=ngear;k++)
-		{
-			if( sel_type(k)==1 )
-			{
-				sel_par(k,1) = log(lx_ival(k));
-				sel_par(k,2) = log(gx_ival(k));
-			}
-			if( sel_type(k)==2 )
-			{
-				sel_par(k,1) = log(lx_ival(k));
-				sel_par(k,2) = log(gx_ival(k));
-				sel_par(k,3) = -4.0;
-			}
-		}
-	END_CALCS
-	
-	init_bounded_dev_vector ddot_r_devs(1,nx,-15,15,-2);
-	init_bounded_dev_vector bar_r_devs(styr+1,endyr,-15,15,-2);
-	!! int phz;
-	!! if(flag(4)==1) phz=3; else phz=-3;
-	init_bounded_dev_vector l_infty_devs(styr,endyr-1,-5,5,phz);
-	
-	
-	//TODO Fix this so there is a dev vector for each gear, otherwise biased estimates of log_bar_f
-	init_bounded_matrix bar_f_devs(1,ngear,1,fi_count,-5.0,5.0,-2);
-	
-	sdreport_number sd_l_infty;
-	
-	objective_function_value f;
-	
-	number m_linf;
-	number fpen;
-	vector tau(1,ngear);	// over-dispersion parameters >1.0
-	vector qk(1,ngear);		// catchability of gear k
-	vector mx(1,nx);		// Mortality rate at length xmid
-	vector rx(1,nx);		// size pdf for new recruits
-	
-	vector log_rt(styr+1,endyr);
-	matrix fi(1,ngear,1,irow);	// capture probability in period i.
-	matrix sx(1,ngear,1,jcol);	// Selectivity at length xmid
-	matrix N(styr,endyr,1,nx);		// Numbers(time step, length bins)
-	matrix T(styr,endyr,1,nx);		// Marks-at-large (time step, length bins)
-	matrix A(1,nx,1,nx);		// Size-transitin matrix (annual step)
-	//matrix P(1,nx,1,nx);		// Size-Transition Matrix for step dt
-	
-	// Predicted observations
-	matrix hat_ct(1,ngear,1,irow);			  // Predicted total catch
-	matrix delta(1,ngear,1,irow);			    // residuals in total catch
-	3darray Chat(1,ngear,1,irow,1,jcol);	// Predicted catch-at-length
-	3darray Mhat(1,ngear,1,irow,1,jcol);	// Predicted new marks-at-length
-	3darray Rhat(1,ngear,1,irow,1,jcol);	// Predicted recaptures-at-length
-	3darray iP(styr,endyr,1,nx,1,nx);			// Size transition matrix for year i;
+	matrix N(styr,endyr+1,1,nclass);             				// Numbers-at-age Matrix
+	matrix S(styr,endyr,1,nclass);               				// Survival matrix
+	3darray SF(0,nfleet,styr,endyr,1,nclass);    				// Survival matrices (0=Pot; 1+ bycatch and discard)
+	matrix ExplRates(0,nfleet,styr,endyr);       				// Exploitation rates (0=Pot; 1+ bycatch and discard_
+	matrix Trans(1,nclass,1,nclass);          					// Size-transition matrix
+  
+	matrix RetCatMale(styr,endyr,1,nclass);               		// Male Retention
+	3darray FleetSelex(0,nfleet,styr,endyr,1,nclass)      	 	// Catch/bycatchSelectivity
+	3darray SelexSurvey(1,nsurvey,styr,endyr+1,1,nclass);   	// Survey selectivity
+ 	vector SurveyQ(1,nsurvey);                           		// Survey Q
+	matrix SelexAll(1,NSelexPat,1,nclass);               		// All selectivity pattern
+  
+	3darray CatFleet(-1,nfleet,styr,endyr,1,nclass);   	   		// Catches (numbers by class)
+	matrix CatFleetWghtPred(-1,nfleet,styr,endyr);     	   		// Predicted catch weights
+	matrix CatFleetNumPred(-1,nfleet,styr,endyr);       	   	// Predicted catch numbers
+  
 
-	//  Create dummy parameter that will be estimated when final_phase is set to 0
-  	init_bounded_number dummy_parm(0,2,dummy_phase)  //  Estimate in phase 0
+	3darray PredSurvey(1,nsurvey,styr,endyr+1,1,nclass);    		// Survey LF from the model
+	matrix PredSurveyWght(1,nsurvey,styr,endyr+1);          		// Predicted survey 
+	matrix PredSurveyNum(1,nsurvey,styr,endyr+1);           		// Predicted survey 
+	vector qEff(0,nfleet);                               			// effort q
+	vector M(styr,endyr);                       			   		// Natural mortality
+	vector Fdirect(styr,endyr);                 			   		// Fishing mortality
+  
+	// Initialize the components of the objective function:
+	vector prior_value(1,nprior_terms);       // Objective function prior values
+	vector like_value(1,nlike_terms);         // Objective function likelihood values
+	objective_function_value fobj;            // Objective function value to be minimised
+
+  
+
+  // Stuff related to the SR relationship
+  number Fmult;                             // Passed Fmultiplier
+  number MMBOut;                            // Mature male biomass
+  number F35;                               // F35%
+  number SBPR35;                            // SBPR35 (used to define BMSY)
+  number RecOut;                            // Recruitment  
+  number CatchOut;                          // Predicted catch
+  vector mbio(1,1000);                      // Future MMB
+  vector MortF(1,nfleet);                   // Other fleet Fs
+
+  number R0;                                // Virgin recruitment 
+  number Steep;                             // Stock-recruit steepness 
+  number MMB0;                              // Virgin MMB 
+  vector MMB(styr,endyr);                      // Mature male biomass
+  sdreport_vector LogMMB(styr,endyr);          // Mature male biomass (logged)
+  vector Recruits(styr,endyr);                 // Recruitments
+  sdreport_vector LogRecruits(styr,endyr);     // Recruitments
+  sdreport_vector LogRMMB(styr,endyr-Lag);     // Recruits-per-spawner
+
+	// TODO: See example for more complicated selectivity options from LSMR.tpl.
+
+	// Create dummy parameter that will be estimated when turn_off_phase is set to 0
+  	init_bounded_number dummy_parm(0,2,dummy_phase)  //  Dummy parameter estimated in phase 0 
 
 	
 // =========================================================================================================
@@ -828,11 +818,16 @@ INITIALIZATION_SECTION
 // =========================================================================================================
 
 PRELIMINARY_CALCS_SECTION
-  int Iyr,Iclass,Jclass,Ifleet,Isurv,j,Ipnt,Jpnt,Last,SelType;
+  
+// Initialize the dummy parameter as needed:
+  if(turn_off_phase<=0) {dummy_parm=0.5;} else {dummy_parm=1.0;}
+
+
+  int iyr,iclass,Jclass,ifleet,isurv,j,Ipnt,Jpnt,Last,SelType;
   float Total,NumSS,Scalar;
-  dvector TotalSS(-1,Nfleet);
-  dmatrix SSFStore(-1,Nfleet,1,maxFleetLF);
-  dmatrix SSSStore(1,Nsurvey,1,maxSurveyLF);
+  dvector TotalSS(-1,nfleet);
+  dmatrix SSFStore(-1,nfleet,1,maxFleetLF);
+  dmatrix SSSStore(1,nsurvey,1,maxSurveyLF);
   dvector SurvLFStore(1,NallClass);
 
   cout << "Started Preliminary Calcs Section" << endl;
@@ -848,63 +843,63 @@ PRELIMINARY_CALCS_SECTION
     for (j=1;j<=NRetPars;j++) RetainPar(j) = RetainParInit(j);
     for (j=1;j<=NSurveyQ;j++) LogSurveyQ(j) = SurveyQInit(j);
     for (j=1;j<=nclass;j++) logNinitial(j) = logNinitialInit(j);
-    for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
-     for (Iyr=1;Iyr<=NcatchF(Ifleet);Iyr++) FEst(Ifleet,Iyr) = 0.1;
-    for (Iyr=Yr1;Iyr<=Yr2;Iyr++) RecDev(Iyr) = 0; 
+    for (ifleet=0;ifleet<=nfleet;ifleet++)
+     for (iyr=1;iyr<=NcatchF(ifleet);iyr++) FEst(ifleet,iyr) = 0.1;
+    for (iyr=styr;iyr<=endyr;iyr++) RecDev(iyr) = 0; 
    }
   if (Diag == 1) cout << "PIN File specified" << endl; 
 
   Total = 0;
-  for (Iclass=1;Iclass<=NallClass;Iclass++)
+  for (iclass=1;iclass<=NallClass;iclass++)
    {
-    SurvLFStore(Iclass) = 0;
-    for (Iyr=1;Iyr<=NLFsurvey(1);Iyr++) SurvLFStore(Iclass) += SurveyLF(1,Iyr,Iclass);
-    Total += SurvLFStore(Iclass);
+    SurvLFStore(iclass) = 0;
+    for (iyr=1;iyr<=NLFsurvey(1);iyr++) SurvLFStore(iclass) += SurveyLF(1,iyr,iclass);
+    Total += SurvLFStore(iclass);
    }
   if (Diag == 1) cout << "Survey sample sizes stored" << endl; 
 
   CheckFile << "Class Length, Weight Fecundity" << endl;
-  for (Iclass=1;Iclass<=nclass;Iclass++)
+  for (iclass=1;iclass<=nclass;iclass++)
    {
-    Length(Iclass) = 0; Wght(Iclass) = 0; fecu(Iclass) = 0; Total = 0;
-    for (Jclass=ClassLink(Iclass,1);Jclass<=ClassLink(Iclass,2);Jclass++)
+    Length(iclass) = 0; Wght(iclass) = 0; fecu(iclass) = 0; Total = 0;
+    for (Jclass=ClassLink(iclass,1);Jclass<=ClassLink(iclass,2);Jclass++)
      {
-      Length(Iclass) += Length_inp(Jclass)*SurvLFStore(Jclass);
-      Wght(Iclass) += Wght_inp(Jclass)*SurvLFStore(Jclass);
-      fecu(Iclass) += fecu_inp(Jclass)*SurvLFStore(Jclass);
+      Length(iclass) += Length_inp(Jclass)*SurvLFStore(Jclass);
+      Wght(iclass) += Wght_inp(Jclass)*SurvLFStore(Jclass);
+      fecu(iclass) += fecu_inp(Jclass)*SurvLFStore(Jclass);
       Total += SurvLFStore(Jclass);
      }
-     Length(Iclass) /= Total;
-     Wght(Iclass) /= Total;
-     fecu(Iclass) /= Total;
-     CheckFile << Iclass << " " << Length(Iclass) << " " << Wght(Iclass) << " " << fecu(Iclass) << endl;
+     Length(iclass) /= Total;
+     Wght(iclass) /= Total;
+     fecu(iclass) /= Total;
+     CheckFile << iclass << " " << Length(iclass) << " " << Wght(iclass) << " " << fecu(iclass) << endl;
     }
   if (Diag == 1) cout << "Lengths and weights specified" << endl; 
   
   FleetObsLF.initialize();
-  for (Ifleet=-1;Ifleet<=Nfleet;Ifleet++)
+  for (ifleet=-1;ifleet<=nfleet;ifleet++)
    {
-    TotalSS(Ifleet) = 0; NumSS = 0;
-    for (Iyr=1;Iyr<=NLFfleet(Ifleet);Iyr++)
+    TotalSS(ifleet) = 0; NumSS = 0;
+    for (iyr=1;iyr<=NLFfleet(ifleet);iyr++)
      {
-      for (Iclass=1;Iclass<=nclass;Iclass++)
-       for (Jclass=ClassLink(Iclass,1);Jclass<=ClassLink(Iclass,2);Jclass++)
-        FleetObsLF(Ifleet,Iyr,Iclass) += FleetLF(Ifleet,Iyr,Jclass);
+      for (iclass=1;iclass<=nclass;iclass++)
+       for (Jclass=ClassLink(iclass,1);Jclass<=ClassLink(iclass,2);Jclass++)
+        FleetObsLF(ifleet,iyr,iclass) += FleetLF(ifleet,iyr,Jclass);
       Total = 0;
-      for (Iclass=1;Iclass<=nclass;Iclass++) Total += FleetObsLF(Ifleet,Iyr,Iclass);
-      SSFStore(Ifleet,Iyr) = Total;
-      TotalSS(Ifleet) += Total; NumSS += 1;
-      for (Iclass=1;Iclass<=nclass;Iclass++) FleetObsLF(Ifleet,Iyr,Iclass) /= Total;
+      for (iclass=1;iclass<=nclass;iclass++) Total += FleetObsLF(ifleet,iyr,iclass);
+      SSFStore(ifleet,iyr) = Total;
+      TotalSS(ifleet) += Total; NumSS += 1;
+      for (iclass=1;iclass<=nclass;iclass++) FleetObsLF(ifleet,iyr,iclass) /= Total;
      }
-    TotalSS(Ifleet) /= NumSS; 
+    TotalSS(ifleet) /= NumSS; 
    }
  Scalar = TotalSS(0);
- for (Ifleet=-1;Ifleet<=Nfleet;Ifleet++)
-  for (Iyr=1;Iyr<=NLFfleet(Ifleet);Iyr++) 
+ for (ifleet=-1;ifleet<=nfleet;ifleet++)
+  for (iyr=1;iyr<=NLFfleet(ifleet);iyr++) 
    {
-    SSFleetLF(Ifleet,Iyr) = 200*SSFStore(Ifleet,Iyr) / Scalar;
-    if (SSFleetLF(Ifleet,Iyr) > 200) SSFleetLF(Ifleet,Iyr) = 200;
-    if (SSFleetLF(Ifleet,Iyr) < 4) SSFleetLF(Ifleet,Iyr) = 4;
+    SSFleetLF(ifleet,iyr) = 200*SSFStore(ifleet,iyr) / Scalar;
+    if (SSFleetLF(ifleet,iyr) > 200) SSFleetLF(ifleet,iyr) = 200;
+    if (SSFleetLF(ifleet,iyr) < 4) SSFleetLF(ifleet,iyr) = 4;
    }  
  if (Diag == 1) cout << "Fishery effective sample sizes specified" << endl; 
     
@@ -912,17 +907,17 @@ PRELIMINARY_CALCS_SECTION
  CheckFile << FleetObsLF << endl;
   
  SurveyObsLF.initialize();
- for (Isurv=1;Isurv<=Nsurvey;Isurv++)
+ for (isurv=1;isurv<=nsurvey;isurv++)
   {
-   for (Iyr=1;Iyr<=NLFsurvey(Isurv);Iyr++)
+   for (iyr=1;iyr<=NLFsurvey(isurv);iyr++)
     {
-     for (Iclass=1;Iclass<=nclass;Iclass++)
-      for (Jclass=ClassLink(Iclass,1);Jclass<=ClassLink(Iclass,2);Jclass++)
-       SurveyObsLF(Isurv,Iyr,Iclass) += SurveyLF(Isurv,Iyr,Jclass);
+     for (iclass=1;iclass<=nclass;iclass++)
+      for (Jclass=ClassLink(iclass,1);Jclass<=ClassLink(iclass,2);Jclass++)
+       SurveyObsLF(isurv,iyr,iclass) += SurveyLF(isurv,iyr,Jclass);
      Total = 0;
-     for (Iclass=1;Iclass<=nclass;Iclass++) Total += SurveyObsLF(Isurv,Iyr,Iclass);
-     SSSStore(Isurv,Iyr) = Total;
-     for (Iclass=1;Iclass<=nclass;Iclass++) SurveyObsLF(Isurv,Iyr,Iclass) /= Total;
+     for (iclass=1;iclass<=nclass;iclass++) Total += SurveyObsLF(isurv,iyr,iclass);
+     SSSStore(isurv,iyr) = Total;
+     for (iclass=1;iclass<=nclass;iclass++) SurveyObsLF(isurv,iyr,iclass) /= Total;
     }
   } 
  if (Diag == 1) cout << "Survey effective sample sizes specified" << endl; 
@@ -945,41 +940,41 @@ PRELIMINARY_CALCS_SECTION
 // =========================================================================================================
 
 PROCEDURE_SECTION
- int i, Cnt, Ifleet, IY;
+ int i, Cnt, ifleet, IY;
   dvariable Ratio1,Ratio2,Delta;
   
   // Convert to Fs
-  for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
+  for (ifleet=0;ifleet<=nfleet;ifleet++)
    {
     Cnt = 0;
-    for (i=Yr1;i<=Yr2;i++)
+    for (i=styr;i<=endyr;i++)
      {
-      if (Effort(Ifleet,i) > 0)
+      if (effort(ifleet,i) > 0)
        {
-        if (FOverWrite(Ifleet,0) == 0 |i<FOverWrite(Ifleet,1) | i>FOverWrite(Ifleet,2))
-         { Cnt += 1; FAll(Ifleet,i) = FEst(Ifleet,Cnt); }
+        if (FOverWrite(ifleet,0) == 0 |i<FOverWrite(ifleet,1) | i>FOverWrite(ifleet,2))
+         { Cnt += 1; FAll(ifleet,i) = FEst(ifleet,Cnt); }
         else
-         FAll(Ifleet,i) = -100;
+         FAll(ifleet,i) = -100;
        }  
       else
-       FAll(Ifleet,i) = 0;
+       FAll(ifleet,i) = 0;
      }
    }  
   
   // Fill in missing values using a ratio estimator
-  for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
-   if (FOverWrite(Ifleet,0) > 0)
+  for (ifleet=0;ifleet<=nfleet;ifleet++)
+   if (FOverWrite(ifleet,0) > 0)
     {
      Ratio1 = 0; Ratio2 = 0;
-     for (i=FOverWrite(Ifleet,3);i<=FOverWrite(Ifleet,4);i++)
-      if (Effort(Ifleet,i) > 0)
+     for (i=FOverWrite(ifleet,3);i<=FOverWrite(ifleet,4);i++)
+      if (effort(ifleet,i) > 0)
        {
-        Ratio1 += -log(1.0-FAll(Ifleet,i))/Effort(Ifleet,i);
+        Ratio1 += -log(1.0-FAll(ifleet,i))/effort(ifleet,i);
         Ratio2 += 1;
        }
      Delta = Ratio1/Ratio2;
-     for (i=FOverWrite(Ifleet,1);i<=FOverWrite(Ifleet,2);i++)
-      FAll(Ifleet,i) = 1.0-mfexp(-Delta*Effort(Ifleet,i));
+     for (i=FOverWrite(ifleet,1);i<=FOverWrite(ifleet,2);i++)
+      FAll(ifleet,i) = 1.0-mfexp(-Delta*effort(ifleet,i));
         
     }  
 
@@ -1003,165 +998,161 @@ PROCEDURE_SECTION
 
   ObjFunction();
 
-  fout = 0;
-  for (i=1;i<=NPriorTerms;i++) fout += PriorVal(i)*PriorWeight(i);
-  for (i=1;i<=NLikeTerms;i++) fout += LikeVal(i)*DataWeight(i);
-  //cout << PriorVal << endl;
-  //cout << LikeVal << endl;
-  //cout << fout << endl;
-  // exit(1);
-
+  fobj = 0;
+  for (i=1;i<=NPriorTerms;i++) fobj += prior_value(i)*PriorWeight(i);
+  for (i=1;i<=NLikeTerms;i++) fobj += like_value(i)*DataWeight(i);
+  
   LogMMB = log(MMB);
   LogRecruits = log(Recruits);
-  for (IY=Yr1;IY<=Yr2-Lag;IY++)
+  for (IY=styr;IY<=endyr-Lag;IY++)
    LogRMMB(IY) = log(Recruits(IY+Lag)/MMB(IY));
 
 // --------------------------------------------------------------------
 
 FUNCTION Initial_size_structure
-  int Iclass;
+  int iclass;
 
   N.initialize();
-  for (Iclass=1;Iclass<=nclass;Iclass++)
-   N(Yr1,Iclass) = exp(logRbar)*exp(logNinitial(Iclass));
+  for (iclass=1;iclass<=nclass;iclass++)
+   N(styr,iclass) = exp(logRbar)*exp(logNinitial(iclass));
 
 // --------------------------------------------------------------------
 					
 FUNCTION Update_population
-  int Iyr,Iclass,Jclass;
+  int iyr,iclass,Jclass;
   dvariable MMBOut;
 
-  for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
+  for (iyr=styr;iyr<=endyr;iyr++)
    {
     // Allow animals to grow
-    for (Iclass=1;Iclass<=nclass;Iclass++)
+    for (iclass=1;iclass<=nclass;iclass++)
      for (Jclass=1;Jclass<=nclass;Jclass++)
-      N(Iyr+1,Iclass) += Trans(Jclass,Iclass)*N(Iyr,Jclass)*S(Iyr,Jclass);
+      N(iyr+1,iclass) += Trans(Jclass,iclass)*N(iyr,Jclass)*S(iyr,Jclass);
    
     // Add in recruitment
-    Recruits(Iyr) = mfexp(logRbar+RecDev(Iyr));
-    N(Iyr+1,1) += Recruits(Iyr);
+    Recruits(iyr) = mfexp(logRbar+RecDev(iyr));
+    N(iyr+1,1) += Recruits(iyr);
 
     MMBOut = 0;
-    for (Iclass=1;Iclass<=nclass;Iclass++) 
-     MMBOut += N(Iyr,Iclass)*fecu(Iclass)*(1-FleetSelex(0,Iyr,Iclass)*FAll(0,Iyr))*exp(-(tc(0,Iyr)+2/12)*M(Iyr));
-    MMB(Iyr) = MMBOut;
+    for (iclass=1;iclass<=nclass;iclass++) 
+     MMBOut += N(iyr,iclass)*fecu(iclass)*(1-FleetSelex(0,iyr,iclass)*FAll(0,iyr))*exp(-(tc(0,iyr)+2/12)*M(iyr));
+    MMB(iyr) = MMBOut;
    }
 
 // --------------------------------------------------------------------
 
 FUNCTION Set_growth
-  int Iclass,Jclass;
+  int iclass,Jclass;
   dvariable Total;
   
   Trans.initialize();
 
-  for (Iclass=1;Iclass<nclass;Iclass++)
+  for (iclass=1;iclass<nclass;iclass++)
    {
-    Total = (1+mfexp(TransPars(Iclass)));
-    Trans(Iclass,Iclass) = 1/Total;
-    Trans(Iclass,Iclass+1) =mfexp(TransPars(Iclass))/Total;
+    Total = (1+mfexp(TransPars(iclass)));
+    Trans(iclass,iclass) = 1/Total;
+    Trans(iclass,iclass+1) =mfexp(TransPars(iclass))/Total;
    }
   Trans(nclass,nclass) = 1;                 // Special case
 
 // --------------------------------------------------------------------
 
 FUNCTION Set_selex
-  int Iclass,Iyr,Isurv,Ifleet,Ipnt,Jpnt;
+  int iclass,iyr,isurv,ifleet,Ipnt,Jpnt;
   dvariable QQ,Temp,SlopePar;
     
   // Produce all selectivities
-  for (Ifleet=1;Ifleet<=nselex_pat;Ifleet++)
+  for (ifleet=1;ifleet<=nselex_pat;ifleet++)
    {
     Ipnt = selex_type(fleet,3);
     if (selex_type(fleet,1) == 1)
      {
       SlopePar = SelexPar(Ipnt+2);
       Temp = -log(19.0)/SlopePar;
-      for (Iclass=1;Iclass<=nclass;Iclass++)
-       SelexAll(Ifleet,Iclass) = 1.0/(1.0+mfexp(Temp*(Length(Iclass)-SelexPar(Ipnt+1))));
-      Temp =  SelexAll(Ifleet,nclass);
-      for (Iclass=1;Iclass<=nclass;Iclass++) SelexAll(Ifleet,Iclass) /= Temp;
+      for (iclass=1;iclass<=nclass;iclass++)
+       SelexAll(ifleet,iclass) = 1.0/(1.0+mfexp(Temp*(Length(iclass)-SelexPar(Ipnt+1))));
+      Temp =  SelexAll(ifleet,nclass);
+      for (iclass=1;iclass<=nclass;iclass++) SelexAll(ifleet,iclass) /= Temp;
      }
     if (selex_type(fleet,1) == 2)
      {
-      for (Iclass=1;Iclass<=nclass;Iclass++)
-       SelexAll(Ifleet,Iclass) = 1.0/(1.0+mfexp(SelexPar(Ipnt+Iclass)));
-      Temp =  SelexAll(Ifleet,nclass);
-      for (Iclass=1;Iclass<=nclass;Iclass++) SelexAll(Ifleet,Iclass) /= Temp;
+      for (iclass=1;iclass<=nclass;iclass++)
+       SelexAll(ifleet,iclass) = 1.0/(1.0+mfexp(SelexPar(Ipnt+iclass)));
+      Temp =  SelexAll(ifleet,nclass);
+      for (iclass=1;iclass<=nclass;iclass++) SelexAll(ifleet,iclass) /= Temp;
      }
     if (selex_type(fleet,1) == 3)
      {
       Jpnt = selex_type(ilex_type(fleet,2),3);
       SlopePar = SelexPar(Jpnt+2);
       Temp = -log(19.0)/SlopePar;
-      for (Iclass=1;Iclass<=nclass;Iclass++)
-       SelexAll(Ifleet,Iclass) = 1.0/(1.0+mfexp(Temp*(Length(Iclass)-SelexPar(Ipnt+1))));
-      Temp =  SelexAll(Ifleet,nclass);
-      for (Iclass=1;Iclass<=nclass;Iclass++) SelexAll(Ifleet,Iclass) /= Temp;
+      for (iclass=1;iclass<=nclass;iclass++)
+       SelexAll(ifleet,iclass) = 1.0/(1.0+mfexp(Temp*(Length(iclass)-SelexPar(Ipnt+1))));
+      Temp =  SelexAll(ifleet,nclass);
+      for (iclass=1;iclass<=nclass;iclass++) SelexAll(ifleet,iclass) /= Temp;
      }
    } 
 
   // Fishery and bycatch selectivity
-  for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
-   for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
+  for (ifleet=0;ifleet<=nfleet;ifleet++)
+   for (iyr=styr;iyr<=endyr;iyr++)
     {
-     Ipnt = FleetSelexPnt(Ifleet,Iyr);
-     for (Iclass=1;Iclass<=nclass;Iclass++)
-      FleetSelex(Ifleet,Iyr,Iclass) = SelexAll(Ipnt,Iclass) ;
+     Ipnt = FleetSelexPnt(ifleet,iyr);
+     for (iclass=1;iclass<=nclass;iclass++)
+      FleetSelex(ifleet,iyr,iclass) = SelexAll(Ipnt,iclass) ;
     }  
   
   // Retention in the pot fishery
-  for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-   for (Iclass=1;Iclass<=nclass;Iclass++)
+  for (iyr=styr;iyr<=endyr;iyr++)
+   for (iclass=1;iclass<=nclass;iclass++)
     {
-     Ipnt = (FleetRetPnt(Iyr)-1)*nclass;
-     RetCatMale(Iyr,Iclass) = (1-hg(Iyr))/(1.0+mfexp(RetainPar(Ipnt+Iclass)));
+     Ipnt = (FleetRetPnt(iyr)-1)*nclass;
+     RetCatMale(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(RetainPar(Ipnt+iclass)));
     } 
 
   // Survey selectivity
-  for (Isurv=1;Isurv<=Nsurvey;Isurv++)
-   for (Iyr=Yr1;Iyr<=Yr2+1;Iyr++)
+  for (isurv=1;isurv<=nsurvey;isurv++)
+   for (iyr=styr;iyr<=endyr+1;iyr++)
     {
-     Ipnt = SurveyQPnt(Isurv,Iyr);
+     Ipnt = SurveyQPnt(isurv,iyr);
      QQ = exp(LogSurveyQ(Ipnt));
-     Ipnt = SurveySelexPnt(Isurv,Iyr);
-     for (Iclass=1;Iclass<=nclass;Iclass++)
-      SelexSurvey(Isurv,Iyr,Iclass) = QQ*SelexAll(Ipnt,Iclass);
+     Ipnt = SurveySelexPnt(isurv,iyr);
+     for (iclass=1;iclass<=nclass;iclass++)
+      SelexSurvey(isurv,iyr,iclass) = QQ*SelexAll(Ipnt,iclass);
     }  
    
   // Nest one survey within another
   for (Ipnt=1;Ipnt <=NsubSurveyFleets;Ipnt++)
-   for (Iyr=Yr1;Iyr<=Yr2+1;Iyr++)
-    for (Iclass=1;Iclass<=nclass;Iclass++)
-     SelexSurvey(SubFltSpec(Ipnt,1),Iyr,Iclass) *= SelexSurvey(SubFltSpec(Ipnt,2),Iyr,Iclass);
+   for (iyr=styr;iyr<=endyr+1;iyr++)
+    for (iclass=1;iclass<=nclass;iclass++)
+     SelexSurvey(SubFltSpec(Ipnt,1),iyr,iclass) *= SelexSurvey(SubFltSpec(Ipnt,2),iyr,iclass);
 
 // --------------------------------------------------------------------
 
 FUNCTION Set_survival;
-  int Iyr,Iclass,Ifleet;
+  int iyr,iclass,ifleet;
 
   // Specify M
   M = M0;
-  for (Iyr=Yr1;Iyr<=Yr2;Iyr++) if (Mpnt(Iyr)>1) M(Iyr) += Mm(Mpnt(Iyr)); 
+  for (iyr=styr;iyr<=endyr;iyr++) if (Mpnt(iyr)>1) M(iyr) += Mm(Mpnt(iyr)); 
   
-  for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-   for (Iclass=1;Iclass<=nclass;Iclass++)
+  for (iyr=styr;iyr<=endyr;iyr++)
+   for (iclass=1;iclass<=nclass;iclass++)
     {
-     S(Iyr,Iclass) = mfexp(-M(Iyr));
-     for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
+     S(iyr,iclass) = mfexp(-M(iyr));
+     for (ifleet=0;ifleet<=nfleet;ifleet++)
       {
-       SF(Ifleet,Iyr,Iclass) = (1-FleetSelex(Ifleet,Iyr,Iclass)*FAll(Ifleet,Iyr));
-       ExplRates(Ifleet,Iyr) = FAll(Ifleet,Iyr);
-       S(Iyr,Iclass) *= SF(Ifleet,Iyr,Iclass);
+       SF(ifleet,iyr,iclass) = (1-FleetSelex(ifleet,iyr,iclass)*FAll(ifleet,iyr));
+       ExplRates(ifleet,iyr) = FAll(ifleet,iyr);
+       S(iyr,iclass) *= SF(ifleet,iyr,iclass);
       } 
-     Fdirect(Iyr) = FleetSelex(0,Iyr,nclass)*FAll(0,Iyr);
+     Fdirect(iyr) = FleetSelex(0,iyr,nclass)*FAll(0,iyr);
     }
 
 // --------------------------------------------------------------------
 
 FUNCTION Get_Catch_Pred;
-  int Iyr,Iclass,Ifleet;
+  int iyr,iclass,ifleet;
   dvariable S1,S2;
   dvariable SurvNo;                              // Numbers at fishery
   
@@ -1169,194 +1160,200 @@ FUNCTION Get_Catch_Pred;
   CatFleetWghtPred.initialize();
   CatFleetNumPred.initialize();
   
-  for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-   for (Iclass=1;Iclass<=nclass;Iclass++)
+  for (iyr=styr;iyr<=endyr;iyr++)
+   for (iclass=1;iclass<=nclass;iclass++)
     {
-     SurvNo = N(Iyr,Iclass)*mfexp(-tc(0,Iyr)*M(Iyr));
-     S1 = SF(0,Iyr,Iclass);
-     CatFleet(0,Iyr,Iclass) = SurvNo*(1-S1)*RetCatMale(Iyr,Iclass);
-     CatFleet(-1,Iyr,Iclass) = SurvNo*(1-S1)*(1-RetCatMale(Iyr,Iclass));
+     SurvNo = N(iyr,iclass)*mfexp(-tc(0,iyr)*M(iyr));
+     S1 = SF(0,iyr,iclass);
+     CatFleet(0,iyr,iclass) = SurvNo*(1-S1)*RetCatMale(iyr,iclass);
+     CatFleet(-1,iyr,iclass) = SurvNo*(1-S1)*(1-RetCatMale(iyr,iclass));
      SurvNo *= S1;
-     for (Ifleet=1;Ifleet<=Nfleet;Ifleet++)
+     for (ifleet=1;ifleet<=nfleet;ifleet++)
       {
-       S2 = SF(Ifleet,Iyr,Iclass);
-       CatFleet(Ifleet,Iyr,Iclass) = SurvNo*(1-S2);
+       S2 = SF(ifleet,iyr,iclass);
+       CatFleet(ifleet,iyr,iclass) = SurvNo*(1-S2);
        SurvNo *= S2;
       }
       
      // Accumulate totals 
-     for (Ifleet=-1; Ifleet<=Nfleet;Ifleet++)
+     for (ifleet=-1; ifleet<=nfleet;ifleet++)
       {
-       CatFleetWghtPred(Ifleet,Iyr) += CatFleet(Ifleet,Iyr,Iclass) * Wght(Iclass);
-       CatFleetNumPred(Ifleet,Iyr) += CatFleet(Ifleet,Iyr,Iclass);
+       CatFleetWghtPred(ifleet,iyr) += CatFleet(ifleet,iyr,iclass) * Wght(iclass);
+       CatFleetNumPred(ifleet,iyr) += CatFleet(ifleet,iyr,iclass);
       } 
       
     }
    
   // Special case for fleet -1
   if (DiscardsOrTotal == 1)
-   for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-    for (Iclass=1;Iclass<=nclass;Iclass++)
-     CatFleet(-1,Iyr,Iclass) = CatFleet(-1,Iyr,Iclass) + CatFleet(0,Iyr,Iclass);
+   for (iyr=styr;iyr<=endyr;iyr++)
+    for (iclass=1;iclass<=nclass;iclass++)
+     CatFleet(-1,iyr,iclass) = CatFleet(-1,iyr,iclass) + CatFleet(0,iyr,iclass);
   
 // =====================================================================
 
 FUNCTION Get_Survey
-  int Iyr,Iclass,Isurv;
+  int iyr,iclass,isurv;
   
-  for (Isurv=1;Isurv<=Nsurvey;Isurv++)
-   for (Iyr=Yr1;Iyr<=Yr2+1;Iyr++)
-    for (Iclass=1;Iclass<=nclass;Iclass++)
-     PredSurvey(Isurv,Iyr,Iclass) = N(Iyr,Iclass)*SelexSurvey(Isurv,Iyr,Iclass);
+  for (isurv=1;isurv<=nsurvey;isurv++)
+   for (iyr=styr;iyr<=endyr+1;iyr++)
+    for (iclass=1;iclass<=nclass;iclass++)
+     PredSurvey(isurv,iyr,iclass) = N(iyr,iclass)*SelexSurvey(isurv,iyr,iclass);
     
   PredSurveyNum.initialize();
   PredSurveyWght.initialize();
-  for (Isurv=1;Isurv<=Nsurvey;Isurv++)
-   for (Iyr=Yr1;Iyr<=Yr2+1;Iyr++)
-    for (Iclass=1;Iclass<=nclass;Iclass++)
+  for (isurv=1;isurv<=nsurvey;isurv++)
+   for (iyr=styr;iyr<=endyr+1;iyr++)
+    for (iclass=1;iclass<=nclass;iclass++)
      {
-      PredSurveyWght(Isurv,Iyr) += PredSurvey(Isurv,Iyr,Iclass)*Wght(Iclass);
-      PredSurveyNum(Isurv,Iyr) += PredSurvey(Isurv,Iyr,Iclass);
+      PredSurveyWght(isurv,iyr) += PredSurvey(isurv,iyr,iclass)*Wght(iclass);
+      PredSurveyNum(isurv,iyr) += PredSurvey(isurv,iyr,iclass);
      }
   
 
 // =====================================================================
 
-FUNCTION ObjFunction
-  int Iyr,Icnt,Iclass,Ifleet,Isurv,Jpnt,Iselex;
-  dvariable Incc,Incd,Total,Error,Penal;
-  dvariable MeanF, nn;
+FUNCTION calc_objective_function
   
-  Incc = 0.00001;
-  Incd = 0.0001;
+  int iyr,icnt,iclass,ifleet,isurv,jpnt,iselex;
+  dvariable incc,incd,total,error,penal;
+  dvariable meanf, nn;
+  
+  incc = 0.00001;
+  incd = 0.0001;
 
-  PriorVal.initialize(); 
-  LikeVal.initialize();
+  prior_value.initialize(); 
+  like_value.initialize();
   
   // PRIORS
   //================================================================================
   
   // Prior on F-devs 
-  for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
+  for (ifleet=0; ifleet<=nfleet; ifleet++)
    {
     MeanF = 0; nn = 0;
-    for (Iyr=Yr1;Iyr<=Yr2;Iyr++) 
-     if (Effort(Ifleet,Iyr) > 0) { MeanF += FAll(Ifleet,Iyr); nn+= 1; }
+    for (iyr=styr; iyr<=endyr; iyr++) 
+     if (effort(ifleet,iyr) > 0) { MeanF += f_all(ifleet,iyr); nn+= 1; }
     MeanF /= nn;
-    for (Iyr=Yr1;Iyr<=Yr2;Iyr++) 
-     if (Effort(Ifleet,Iyr) > 0) PriorVal(Ifleet+1) += square(FAll(Ifleet,Iyr)-MeanF);
+    for (iyr=styr;iyr<=endyr;iyr++) 
+     if (effort(ifleet,iyr) > 0) prior_value(ifleet+1) += square(FAll(ifleet,iyr)-MeanF);
     } 
-  Jpnt = Nfleet+1;
+  Jpnt = nfleet+1;
   
   // Prior on Rec Devs
-  for (Iyr=Yr1;Iyr<=Yr2;Iyr++) PriorVal(Jpnt+1) += square(RecDev(Iyr));
+  for (iyr=styr;iyr<=endyr;iyr++) prior_value(Jpnt+1) += square(RecDev(iyr));
     
   // penalties on parameters
-  PriorVal(Jpnt+2) = sum(square(TransPars));
-  for (Ifleet=1;Ifleet<=NSelex;Ifleet++)
-   if (selex_phz(Ifleet) > 0)
-    PriorVal(Jpnt+3) += square(SelexPar(Ifleet));
-  PriorVal(Jpnt+4) = sum(square(RetainPar));
-  PriorVal(Jpnt+5) = 0;
+  prior_value(Jpnt+2) = sum(square(TransPars));
+  for (ifleet=1;ifleet<=nselex;ifleet++)
+   if (selex_phz(ifleet) > 0)
+    prior_value(Jpnt+3) += square(SelexPar(ifleet));
+  prior_value(Jpnt+4) = sum(square(RetainPar));
+  prior_value(Jpnt+5) = 0;
   
   // q - prior
-  for (Isurv=1;Isurv<=NSurveyQ;Isurv++)
-   if (SurveyQPSD(Isurv) > 0)
-     PriorVal(Jpnt+5+Isurv) = square(exp(LogSurveyQ(Isurv))-SurveyQPMean(Isurv))/(2.0*square(SurveyQPSD(Isurv)));
+  for (isurv=1;isurv<=NSurveyQ;isurv++)
+   if (SurveyQPSD(isurv) > 0)
+     prior_value(Jpnt+5+isurv) = square(exp(LogSurveyQ(isurv))-SurveyQPMean(isurv))/(2.0*square(SurveyQPSD(isurv)));
   Jpnt = Jpnt+5+NSurveyQ;
   
   // M-prior
-  PriorVal(Jpnt+1) = square(M0-MPriorMean)/(2.0*square(MPriorSD));
+  prior_value(Jpnt+1) = square(M0-MPriorMean)/(2.0*square(MPriorSD));
   Jpnt += 1;
 
   // 2nd derivative penalty
   Penal = 0;
   for (Iselex=1;Iselex<=nselex_pat;Iselex++)
    if (selex_type(ielex,1) == 2)
-    for (Iclass=2;Iclass<=nclass-1;Iclass++)
-     Penal += square(SelexAll(Iselex,Iclass-1)-2.0*SelexAll(Iselex,Iclass)+SelexAll(Iselex,Iclass+1));
-  PriorVal(Jpnt+1) = Penal;   
+    for (iclass=2;iclass<=nclass-1;iclass++)
+     Penal += square(SelexAll(Iselex,iclass-1)-2.0*SelexAll(Iselex,iclass)+SelexAll(Iselex,iclass+1));
+  prior_value(Jpnt+1) = Penal;   
       
   // DATA COMPONENTS
   //================================================================================
 
   // Likelihood for Catches
-  for (Ifleet=-1;Ifleet<=Nfleet;Ifleet++)
-   for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-    if (CatchAndDiscard(Ifleet,Iyr) > 0)
+  for (ifleet=-1;ifleet<=nfleet;ifleet++)
+   for (iyr=styr;iyr<=endyr;iyr++)
+    if (CatchAndDiscard(ifleet,iyr) > 0)
      {
-      if(CatchUnit(Ifleet) == 1)
-       LikeVal(Ifleet+2) += square(log((CatFleetWghtPred(Ifleet,Iyr)+Incd)/(CatchAndDiscard(Ifleet,Iyr)+Incd)));
+      if(CatchUnit(ifleet) == 1)
+       like_value(ifleet+2) += square(log((CatFleetWghtPred(ifleet,iyr)+incd)/(CatchAndDiscard(ifleet,iyr)+incd)));
       else
-       LikeVal(Ifleet+2) += square(log((CatFleetNumPred(Ifleet,Iyr)+Incd)/(CatchAndDiscard(Ifleet,Iyr)+Incd)));
+       like_value(ifleet+2) += square(log((CatFleetNumPred(ifleet,iyr)+incd)/(CatchAndDiscard(ifleet,iyr)+incd)));
      }  
-  Jpnt = Nfleet+2;
+  Jpnt = nfleet+2;
  
   // Survey indices 
-  for (Isurv=1;Isurv<=Nsurvey;Isurv++)
-   for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-    if (SurveyEst(Isurv,Iyr,1) > 0)
+  for (isurv=1;isurv<=nsurvey;isurv++)
+   for (iyr=styr;iyr<=endyr;iyr++)
+    if (SurveyEst(isurv,iyr,1) > 0)
      {
-      if(SurveyUnit(Isurv) == 1)
-       LikeVal(Jpnt+Isurv) += 0.5*square(log((SurveyEst(Isurv,Iyr,1)+Incd)/(PredSurveyWght(Isurv,Iyr)+Incd)))/square(SurveyEst(Isurv,Iyr,2));
+      if(SurveyUnit(isurv) == 1)
+       like_value(Jpnt+isurv) += 0.5*square(log((SurveyEst(isurv,iyr,1)+incd)/(PredSurveyWght(isurv,iyr)+incd)))/square(SurveyEst(isurv,iyr,2));
       else 
-       LikeVal(Jpnt+Isurv) += 0.5*square(log((SurveyEst(Isurv,Iyr,1)+Incd)/(PredSurveyNum(Isurv,Iyr)+Incd)))/square(SurveyEst(Isurv,Iyr,2));
+       like_value(Jpnt+isurv) += 0.5*square(log((SurveyEst(isurv,iyr,1)+incd)/(PredSurveyNum(isurv,iyr)+incd)))/square(SurveyEst(isurv,iyr,2));
       }  
-   Jpnt = Jpnt + Nsurvey;   
+   Jpnt = Jpnt + nsurvey;   
   
-  // Effort indices
+  // effort indices
   qEff.initialize();
-  for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
+  for (ifleet=0;ifleet<=nfleet;ifleet++)
    {
     nn= 0;
-    for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-     if (Effort(Ifleet,Iyr) > 0) 
+    for (iyr=styr;iyr<=endyr;iyr++)
+     if (effort(ifleet,iyr) > 0) 
       {
-       if (FOverWrite(Ifleet,0) == 0 |Iyr<FOverWrite(Ifleet,1) | Iyr>FOverWrite(Ifleet,2))
-        { nn += 1; qEff(Ifleet) += log((Effort(Ifleet,Iyr)+Incd)/(ExplRates(Ifleet,Iyr)+Incd)); }
+       if (FOverWrite(ifleet,0) == 0 |iyr<FOverWrite(ifleet,1) | iyr>FOverWrite(ifleet,2))
+        { nn += 1; qEff(ifleet) += log((effort(ifleet,iyr)+incd)/(ExplRates(ifleet,iyr)+incd)); }
       }  
-    qEff(Ifleet) = mfexp(qEff(Ifleet)/nn); 
-    for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
-     if (Effort(Ifleet,Iyr) > 0)
-      if (FOverWrite(Ifleet,0) == 0 |Iyr<FOverWrite(Ifleet,1) | Iyr>FOverWrite(Ifleet,2))
-       LikeVal(Jpnt+Ifleet+1) += square(log((Effort(Ifleet,Iyr)+Incd)/(qEff(Ifleet)*(ExplRates(Ifleet,Iyr)+Incd))));
+    qEff(ifleet) = mfexp(qEff(ifleet)/nn); 
+    for (iyr=styr;iyr<=endyr;iyr++)
+     if (effort(ifleet,iyr) > 0)
+      if (FOverWrite(ifleet,0) == 0 |iyr<FOverWrite(ifleet,1) | iyr>FOverWrite(ifleet,2))
+       like_value(Jpnt+ifleet+1) += square(log((effort(ifleet,iyr)+incd)/(qEff(ifleet)*(ExplRates(ifleet,iyr)+incd))));
    }  
-  Jpnt = Jpnt + (Nfleet+1); 
+  Jpnt = Jpnt + (nfleet+1); 
 
   // Catch LFs
-  for (Ifleet=-1;Ifleet<=Nfleet;Ifleet++)
-   for (Icnt=1;Icnt<=NLFfleet(Ifleet);Icnt++)
+  for (ifleet=-1;ifleet<=nfleet;ifleet++)
+   for (Icnt=1;Icnt<=NLFfleet(ifleet);Icnt++)
     {
-     Iyr = YrFleetLF(Ifleet,Icnt);
+     iyr = YrFleetLF(ifleet,Icnt);
      Total = 0;
-     for (Iclass=1;Iclass<=nclass;Iclass++) Total += CatFleet(Ifleet,Iyr,Iclass);
-     for (Iclass=1;Iclass<=nclass;Iclass++) CatFleet(Ifleet,Iyr,Iclass) /= Total;
-     for (Iclass=1;Iclass<=nclass;Iclass++)
-      if (FleetObsLF(Ifleet,Icnt,Iclass) > 0)
+     for (iclass=1;iclass<=nclass;iclass++) Total += CatFleet(ifleet,iyr,iclass);
+     for (iclass=1;iclass<=nclass;iclass++) CatFleet(ifleet,iyr,iclass) /= Total;
+     for (iclass=1;iclass<=nclass;iclass++)
+      if (FleetObsLF(ifleet,Icnt,iclass) > 0)
        {
-        Error = (CatFleet(Ifleet,Iyr,Iclass)+Incc)/(FleetObsLF(Ifleet,Icnt,Iclass)+Incc);
-        LikeVal(Jpnt+2+Ifleet) += -1*SSFleetLF(Ifleet,Icnt)*FleetObsLF(Ifleet,Icnt,Iclass)*log(Error);
+        Error = (CatFleet(ifleet,iyr,iclass)+incc)/(FleetObsLF(ifleet,Icnt,iclass)+incc);
+        like_value(Jpnt+2+ifleet) += -1*SSFleetLF(ifleet,Icnt)*FleetObsLF(ifleet,Icnt,iclass)*log(Error);
        }
     } 
-   Jpnt = Jpnt + (Nfleet+2);
+   Jpnt = Jpnt + (nfleet+2);
      
   // Survey LF
-  for (Isurv=1;Isurv<=Nsurvey;Isurv++)
-   for (Icnt=1;Icnt<=NLFsurvey(Isurv);Icnt++)
+  for (isurv=1;isurv<=nsurvey;isurv++)
+   for (Icnt=1;Icnt<=NLFsurvey(isurv);Icnt++)
     {
-     Iyr = YrSurveyLF(Isurv,Icnt);
+     iyr = YrSurveyLF(isurv,Icnt);
      Total = 0;
-     for (Iclass=1;Iclass<=nclass;Iclass++) Total += PredSurvey(Isurv,Iyr,Iclass);
-     for (Iclass=1;Iclass<=nclass;Iclass++) PredSurvey(Isurv,Iyr,Iclass) /= Total;
-     for (Iclass=1;Iclass<=nclass;Iclass++)
-      if (SurveyObsLF(Isurv,Icnt,Iclass) > 0)
+     for (iclass=1;iclass<=nclass;iclass++) Total += PredSurvey(isurv,iyr,iclass);
+     for (iclass=1;iclass<=nclass;iclass++) PredSurvey(isurv,iyr,iclass) /= Total;
+     for (iclass=1;iclass<=nclass;iclass++)
+      if (SurveyObsLF(isurv,Icnt,iclass) > 0)
        {
-        Error = (PredSurvey(Isurv,Iyr,Iclass)+Incc)/(SurveyObsLF(Isurv,Icnt,Iclass)+Incc);
-        LikeVal(Jpnt+Isurv) += -1*SSSurveyLF(Isurv,Icnt)*SurveyObsLF(Isurv,Icnt,Iclass)*log(Error);
+        Error = (PredSurvey(isurv,iyr,iclass)+incc)/(SurveyObsLF(isurv,Icnt,iclass)+incc);
+        like_value(Jpnt+isurv) += -1*SSSurveyLF(isurv,Icnt)*SurveyObsLF(isurv,Icnt,iclass)*log(Error);
        }
     } 
- // cout << PriorVal << endl;
- // cout << LikeVal << endl;  
+ // cout << prior_value << endl;
+ // cout << like_value << endl;  
+
+ // TODO: Include dummy phase in above Objective Function Calc: For like_value
+
+       obj_fun += square(dummy_datum-dummy_parm);
+//   cout<<" obj_fun dummy "<<obj_fun<<endl;
                                                     
  // =====================================================================
 
@@ -1503,38 +1500,38 @@ FUNCTION ProjConstF
  dvariable AveRec,MMB,S1,SurvNo,CatRetTmp,Term1,Term2,TheMort;
  dvar_vector SF1F(1,nclass),SF2F(1,nclass),SF3F(1,nclass),SF(1,nclass);
  dvar_matrix NFut(1,100,1,nclass);
- int iy,Iclass,Jclass,FutYr,Ifleet;
+ int iy,iclass,Jclass,FutYr,ifleet;
 
  NFut.initialize();
 
  // Mortality due to other fleets
- for (Ifleet=1;Ifleet<=Nfleet;Ifleet++)
+ for (ifleet=1;ifleet<=nfleet;ifleet++)
   {
    TheMort = 0;
-   for (iy=Yr2-4;iy<=Yr2;iy++) TheMort += FAll(Ifleet, iy);
-   MortF(Ifleet) = TheMort / 5;
+   for (iy=endyr-4;iy<=endyr;iy++) TheMort += FAll(ifleet, iy);
+   MortF(ifleet) = TheMort / 5;
   }
  
  if (IsB0 == -1) { MortF.initialize(); }
  
  // Average recruitment
  AveRec = 0;
- for (iy=Yr2-4;iy<=Yr2;iy++) AveRec += mfexp(logRbar+RecDev(iy));
+ for (iy=endyr-4;iy<=endyr;iy++) AveRec += mfexp(logRbar+RecDev(iy));
  AveRec /= 5;
  AveRec = 1;
 
  // Survival
- for (Iclass=1;Iclass<=nclass;Iclass++)
+ for (iclass=1;iclass<=nclass;iclass++)
   {
-   SF1F(Iclass) = 1-FleetSelex(0,Yr2,Iclass)*Fmult;
-   SF(Iclass) = mfexp(-M(Yr2))*SF1F(Iclass);
-   for (Ifleet=1;Ifleet<=Nfleet;Ifleet++)
-    SF(Iclass) *= (1- FleetSelex(Ifleet,Yr2,Iclass)*MortF(Ifleet));
+   SF1F(iclass) = 1-FleetSelex(0,endyr,iclass)*Fmult;
+   SF(iclass) = mfexp(-M(endyr))*SF1F(iclass);
+   for (ifleet=1;ifleet<=nfleet;ifleet++)
+    SF(iclass) *= (1- FleetSelex(ifleet,endyr,iclass)*MortF(ifleet));
   }
  
  // Copy Ns (irrelevant)
- for (Iclass=1;Iclass<=nclass;Iclass++) NFut(1,Iclass) = N(Yr2+1,Iclass);
- for (Iclass=1;Iclass<=nclass;Iclass++) NFut(1,Iclass) = 1;
+ for (iclass=1;iclass<=nclass;iclass++) NFut(1,iclass) = N(endyr+1,iclass);
+ for (iclass=1;iclass<=nclass;iclass++) NFut(1,iclass) = 1;
 
  for (FutYr=1;FutYr<=99;FutYr++)
   {
@@ -1565,26 +1562,26 @@ FUNCTION ProjConstF
   
    // Compute catch
    CatchOut = 0;
-   for (Iclass=1;Iclass<=nclass;Iclass++)
+   for (iclass=1;iclass<=nclass;iclass++)
     {
-     S1 = 0.9999*SF1F(Iclass);
-     SurvNo = NFut(FutYr,Iclass)*mfexp(-gamma*M(Yr2));
-     CatRetTmp = SurvNo*(1-S1)*RetCatMale(Yr2-5,Iclass);
-     CatchOut += CatRetTmp* Wght(Iclass);
+     S1 = 0.9999*SF1F(iclass);
+     SurvNo = NFut(FutYr,iclass)*mfexp(-gamma*M(endyr));
+     CatRetTmp = SurvNo*(1-S1)*RetCatMale(endyr-5,iclass);
+     CatchOut += CatRetTmp* Wght(iclass);
     }
  
    // Allow animals to grow
-   for (Iclass=1;Iclass<=nclass;Iclass++)
+   for (iclass=1;iclass<=nclass;iclass++)
     for (Jclass=1;Jclass<=nclass;Jclass++)
-     NFut(FutYr+1,Iclass) += Trans(Jclass,Iclass)*NFut(FutYr,Jclass)*SF(Jclass);
+     NFut(FutYr+1,iclass) += Trans(Jclass,iclass)*NFut(FutYr,Jclass)*SF(Jclass);
    
    // Add in recruitment
    NFut(FutYr+1,1) += RecOut;
 
    // Compute MMB
    MMBOut = 0;
-   for (Iclass=1;Iclass<=nclass;Iclass++) 
-    MMBOut += NFut(FutYr,Iclass)*fecu(Iclass)*(1-FleetSelex(0,Yr2,Iclass)*Fmult)*mfexp(-(gamma+2.0/12.0)*M(Yr2));
+   for (iclass=1;iclass<=nclass;iclass++) 
+    MMBOut += NFut(FutYr,iclass)*fecu(iclass)*(1-FleetSelex(0,endyr,iclass)*Fmult)*mfexp(-(gamma+2.0/12.0)*M(endyr));
    mbio(FutYr) = MMBOut;
   }
 
@@ -1645,7 +1642,7 @@ REPORT_SECTION
 	
 	REPORT(log_rt);
 	REPORT(fi);
-	REPORT(Effort);
+	REPORT(effort);
 	REPORT(bar_f_devs);
 	
 	REPORT(N);
