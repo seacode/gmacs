@@ -6,15 +6,11 @@
 // 	Info: https://github.com/awhitten/gmacs or write to whittena@uw.edu
 // 	Copyright (c) 2014. All rights reserved.
 //
-// 	Acknowledgement: The format for this code, and many of the details,
-// 		were adapted from the 'LSMR' model by Steven Martell (2011).
+// 	Acknowledgement: The format of this code, and many of the details,
+// 	were adapted from code developed for the NPFMC by Andre Punt (2012), and on the 
+//	'LSMR' model by Steven Martell (2011).
 //
 // 	TO DO LIST:
-//  -Model numbers-at-length on an annual time step, then in the observation
-//   submodel, grow and survive numbers-at-length upto the time step samples
-//   were collected.  This will require transition matrix for dt and annual
-//   transition matrix.
-//	
 //	- Calculate Reference Points (add routine for this)
 //	- Add forecast section (add routine for this)
 //  - Add warning section: maybe use macro for warning(object,text)
@@ -131,7 +127,7 @@ DATA_SECTION
 
 	!! echotxt(styr,  " Start year");
 	!! echotxt(endyr, " End year");
-	!! echotxt(tstep, " Eime-step");
+	!! echotxt(tstep, " Time-step");
 	
 	init_int nsex;		 ///< Number of sexes	
 	init_int nfleet;	 ///< Number of fishing fleets
@@ -208,6 +204,9 @@ DATA_SECTION
 	!! echo(effort);
 	!! echo(f_new);
 
+	// TODO: Check if al neccessary components from Simple example have been read in. 
+	// 		Highgrading vs. Retention, which is best? Retention function is distinct from the highgrading vector, so maybe change name and data input point.
+
 	// Determine which F values will be computed using effort (f_new) if applicable: 
 
  	int yr;
@@ -231,7 +230,6 @@ DATA_SECTION
 
 	!! echotxt(ncatch_f, " Number of F's (calculated)")
 
-	init_vector nat_mort(styr,endyr);				///< Natural mortality pointer
 	init_vector mean_length(1,ndclass); 			///< Mean length vector
 	init_vector mean_weight(1,ndclass); 			///< Mean weight vector
 	init_vector fecundity(1,ndclass);				///< Fecundity vector
@@ -240,6 +238,8 @@ DATA_SECTION
 	!! echo(mean_length);
 	!! echo(mean_weight);
 	!! echo(fecundity);
+
+	// TODO: These mean length and weight vectors probably have to be converted to be suitable for the nclass number of size-classes.
 
 	init_int lf_flag; 								///< Length comp data for discard fleet (-1): total catch (1) or  discards (2)
   	
@@ -345,7 +345,6 @@ DATA_SECTION
 
 	END_CALCS
 
-
 // ---------------------------------------------------------------------------------------------------------
 // CONTROL FILE
 
@@ -397,6 +396,40 @@ DATA_SECTION
 	
 	END_CALCS
 
+	// Read in specifications relating to recruitment:
+	init_int sr_lag;                                       		///< Lag to recruitment
+  	init_int sr_type;                                 			///< Form of stock recruitment relationship
+
+	// Read in pointers for time-varying natural mortality:
+	init_vector nat_mort_pnt(styr,endyr);						///< Pointers to blocks for time-varying natural mortality
+
+	int nmadd_pars;												///< Number of M additional parameters
+	!! nmadd_pars = nat_mort_pnt.indexmax();									 
+
+	!! echo(nat_mort_pnt);
+	!! echotxt(nmadd_pars, " Total number of additional natural mortality parameters");
+	
+   	// Read in naturaly mortality parameter specifications:
+	init_matrix madd_control(1,nmadd_pars,1,4);     			///< Natural mort. parameter matrix, with speciifications           
+  	matrix trans_madd_control(1,4,1,nmadd_pars);				///< Transponse of natural mort. parameter matrix		
+  	vector madd_init(1,nmadd_pars);								///< Vector of natural mort. parameter specs - initial values	
+  	vector madd_lbnd(1,nmadd_pars);								///< Vector of natural mort. parameter specs - lower bounds
+  	vector madd_ubnd(1,nmadd_pars);								///< Vector of natural mort. parameter specs - upper bounds			
+  	ivector madd_phz(1,nmadd_pars);								///< Vector of natural mort. parameter specs - phase values
+
+ 	!! echo(madd_control);
+
+	// Fill matrices and vectors created above:
+	LOCAL_CALCS
+
+	  trans_madd_control = trans(madd_control);
+	  madd_init = trans_madd_control(1);
+	  madd_lbnd = trans_madd_control(2);
+	  madd_ubnd = trans_madd_control(3);
+	  madd_phz = ivector(trans_madd_control(4));
+	
+	END_CALCS
+
 	// Read in pointers for time-varying fishery and survey selectivity:
 	init_imatrix selex_fleet_pnt(1,nfleet,styr,endyr);						///< Pointers to blocks for time-varying fishing selectivity
 	init_imatrix selex_survey_pnt(1,nsurvey,styr,endyr+1);					///< Pointers to blocks for time-varying survey selectivity
@@ -405,7 +438,6 @@ DATA_SECTION
 	!! echo(selex_survey_pnt);
 
 	// Determine number of different selectivity functions/patterns to estimate:
-
 	int nselex;
 	int nselex_pat;
 
@@ -549,15 +581,83 @@ DATA_SECTION
 	
 	END_CALCS
 
-	// PICK UP FROM HERE: FINISH CONTROL FILES SPECS, Remember to place Madd section in general parameters matrix.
-  
+	// Read in initial N parameter specifications:
+	init_matrix lognin_control(1,nclass,1,4);				///< Initial N parameter matrix, with specifications
+	matrix trans_lognin_control(1,4,1,nclass);				///< Transpose of initial N parameter matrix
+	vector lognin_init(1,nclass);							///< Vector of initial N parameter specs - initial values
+	vector lognin_lbnd(1,nclass);							///< Vector of initial N parameter specs - lower bounds
+	vector lognin_ubnd(1,nclass);							///< Vector of initial N parameter specs - upper bounds
+	ivector lognin_phz(1,nclass);							///< Vector of initial N parameter specs - phase values
+	
+	!! echo(lognin_control);
 
-	// Print EOF confirmation to screen and echoinput, warn otherwise:
+	// Fill matrices and vectors created above:
+	LOCAL_CALCS
+
+	  trans_lognin_control = trans(lognin_control);
+	  lognin_init = trans_lognin_control(1);
+	  lognin_lbnd = trans_lognin_control(2);
+	  lognin_ubnd = trans_lognin_control(3);
+	  lognin_phz = ivector(trans_lognin_control(4));
+	
+	END_CALCS
+
+	// Read in selectivity parameter specifications:
+	init_matrix gtrans_control(1,nclass-1,1,4);				///< Growth transition parameter matrix, with specifications
+	matrix trans_gtrans_control(1,4,1,nclass-1);			///< Transpose of initial N parameter matrix
+	vector gtrans_init(1,nclass-1);							///< Vector of growth trans. parameter specs - initial values
+	vector gtrans_lbnd(1,nclass-1);							///< Vector of growth trans. parameter specs - lower bounds
+	vector gtrans_ubnd(1,nclass-1);							///< Vector of growth trans. parameter specs - upper bounds
+	ivector gtrans_phz(1,nclass-1);							///< Vector of growth trans. parameter specs - phase values
+	
+	!! echo(gtrans_control);
+
+	// Fill matrices and vectors created above:
+	LOCAL_CALCS
+
+	  trans_gtrans_control = trans(gtrans_control);
+	  gtrans_init = trans_gtrans_control(1);
+	  gtrans_lbnd = trans_gtrans_control(2);
+	  gtrans_ubnd = trans_gtrans_control(3);
+	  gtrans_phz = ivector(trans_gtrans_control(4));
+	
+	END_CALCS
+
+  	// Determine number of prior terms, and create objects to hold these values:
+  	// TODO: Seems like this section may have to be generalised further. See the data file for more.
+  	int nprior_terms;
+  	int nlike_terms;
+  	
+  	!! nprior_terms = (nfleet+1) + 5 + nsurveyq_pars + 1 + 1;	
+  	!! nlike_terms = (nfleet+2)*2 + (nfleet+1) + (nsurvey)*2;
+  
+  	!! echotxt(nprior_terms, " Number of prior terms");
+  	!! echotxt(nlike_terms, " Number of likelihood terms");
+    
+  	// Read in prior and data re-weighting values:	
+
+  	init_vector prior_weight(1,nprior_terms);             		///< Weights on the priors
+  	init_vector data_weight(1,nlike_terms);               		///< Weights on the data
+
+  	!! echo(prior_weight);
+  	!! echo(data_weight);
+
+  	// Print EOF confirmation to screen and echoinput, warn otherwise:
 	init_int eof_control;
 
 	!! if(eof_control!=999) {cout << " Error reading control file\n EOF = " << eof_control << endl; exit(1);}
 	!! cout << " Finished reading control file \n" << endl;
 	!! echotxt(eof_data," EOF: finished reading control file \n");
+
+	// TODO: Check these extra objects below, and make them Gmacs format is required.
+
+  	3darray FleetObsLF(-1,Nfleet,1,maxFleetLF,1,Nclass)        // Catch/bycatch Lfs (by model classes)
+  	3darray SurveyObsLF(1,Nsurvey,1,maxSurveyLF,1,Nclass)      // Survey Lfs (by model classes)
+  
+  	// Stuff related to the SR relationship
+  	int IsB0;                                         // Constant recruitment?
+  	int SR_rel;                                       // Form of SR_Relationship
+  
 
 // ---------------------------------------------------------------------------------------------------------
 // FORECAST FILE
@@ -589,7 +689,10 @@ DATA_SECTION
 	int par_count;
 	int active_count;
 	int active_parms;
-	ivector active_parm(1,ntheta);  //  Pointer from active list to the element of the full parameter list to get label (TODO: ADD THIS)
+	ivector active_parm(1,ntheta);  //  Pointer from active list to the element of the full parameter list to get label
+
+	// TODO: Add active_parm pointer list for labelling active parameters in report.gm output file.
+	// TODO: Extend this code below to sort through other parameter lists (anything with *_phz).
 
 	// Create dummy datum for use when max phase == 0
 	number dummy_datum;
@@ -624,11 +727,16 @@ DATA_SECTION
 	!!cout << "Number of active parameters is " << active_parms << endl;
 	!!cout << "Maximum phase for estimation is " << max_phase << endl << endl;
 
-	//TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'
+	//TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
 
 // =========================================================================================================
 
 PARAMETER_SECTION
+	
+	// Initialize general parameters:
+
+	// TODO: Pick up from here and get PARAMETER_SECTION from Simple.tpl
+
 	init_bounded_number_vector theta(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);
 	number log_ddot_r;
 	number log_bar_r;
