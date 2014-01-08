@@ -54,7 +54,6 @@ GLOBALS_SECTION
   adstring version_short;
   
 // =========================================================================================================
-
 TOP_OF_MAIN_SECTION
   time(&start);
   arrmblsize = 50000000;
@@ -214,22 +213,18 @@ DATA_SECTION
    ivector ncatch_f(1,nfleet);
  
  LOCAL_CALCS
-      
-      for (fleet=1; fleet<=nfleet; fleet++)
-       {
-        ncatch_f(fleet) = 0;
-        for (yr=styr; yr<=endyr; yr++) 
-         if (effort(fleet,yr) > 0) 
-          {
-           if (f_new(fleet,1) == 0 | yr < f_new(fleet,2) | yr > f_new(fleet,3))
-            ncatch_f(fleet) += 1;
-          }
-       }
-    
+  for (fleet=1; fleet<=nfleet; fleet++)
+   {
+    ncatch_f(fleet) = 0;
+    for (yr=styr; yr<=endyr; yr++) 
+     if (effort(fleet,yr) > 0) 
+      {
+       if (f_new(fleet,1) == 0 | yr < f_new(fleet,2) | yr > f_new(fleet,3))
+        ncatch_f(fleet) += 1;
+      }
+   }
  END_CALCS
-
   !! echotxt(ncatch_f, " Number of F's (calculated)")
-
   init_vector mean_length(1,ndclass);       ///< Mean length vector
   init_vector mean_weight(1,ndclass);       ///< Mean weight vector
   init_vector fecundity(1,ndclass);        ///< Fecundity vector
@@ -246,12 +241,12 @@ DATA_SECTION
   init_int nlfs_obs;                ///< Number of survey length frequency lines to read
   init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);  ///< Survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
 
-     !! echotxt(nlf_obs,  " Number of length freq lines to read");
-    !! echo(lf_data);
+  !! echotxt(nlf_obs,  " Number of length freq lines to read");
+  !! echo(lf_data);
 
-    !! echotxt(nlfs_obs, " Number of survey length freq lines to read");
-    !! echo(lfs_data);
-    
+  !! echotxt(nlfs_obs, " Number of survey length freq lines to read");
+  !! echo(lfs_data);
+  
    init_int ncapture_obs;                    ///< Number of capture data lines to read    
    init_int nmark_obs;                      ///< Number of mark data lines to read
    init_int nrecapture_obs;                  ///< Number of recapture data lines to read
@@ -266,14 +261,12 @@ DATA_SECTION
 
   // Echo capture, mark, and recapture data when appropriate:
  LOCAL_CALCS
-
-      if(ncapture_obs > 0) 
-      {
-        echo(capture_data);
-        echo(mark_data);
-        echo(recapture_data);
-      }
-
+  if(ncapture_obs > 0) 
+  {
+    echo(capture_data);
+    echo(mark_data);
+    echo(recapture_data);
+  }
  END_CALCS
   
   // Print EOF confirmation to screen and echoinput, warn otherwise:
@@ -373,7 +366,6 @@ DATA_SECTION
 
   // Fill matrices and vectors created above:
  LOC_CALCS
-
     trans_theta_control = trans(theta_control);
     theta_init = trans_theta_control(1);
     theta_lbnd = trans_theta_control(2);
@@ -388,7 +380,6 @@ DATA_SECTION
     theta_dmin = ivector(trans_theta_control(11));
     theta_dmax = ivector(trans_theta_control(12));
     theta_blk = ivector(trans_theta_control(13));
-  
  END_CALCS
 
   // Read in specifications relating to recruitment:
@@ -416,7 +407,6 @@ DATA_SECTION
 
   // Fill matrices and vectors created above:
  LOCAL_CALCS
-
     trans_madd_control = trans(madd_control);
     madd_init = trans_madd_control(1);
     madd_lbnd = trans_madd_control(2);
@@ -440,11 +430,10 @@ DATA_SECTION
   // TODO: Should be able to use selex_survey_pnt.indexmax() below instead of loop. See PG: 192 ADMB Manual.
 
  LOCAL_CALCS
-  
-    nselex = 0;
-      for (fleet=0; fleet<=nfleet_act; fleet++)
-        for (yr=styr; yr<=endyr; yr++)
-        if (selex_fleet_pnt(fleet,yr) > nselex) nselex = selex_fleet_pnt(fleet,yr);
+  nselex = 0;
+    for (fleet=0; fleet<=nfleet_act; fleet++)
+      for (yr=styr; yr<=endyr; yr++)
+      if (selex_fleet_pnt(fleet,yr) > nselex) nselex = selex_fleet_pnt(fleet,yr);
     
     nselex = 0;
       for (fleet=0; fleet<=nfleet_act; fleet++)
@@ -463,18 +452,16 @@ DATA_SECTION
   // TODO: The selex_type matrix can probably be read in directly, then the loop over the columns should work the same.
  LOCAL_CALCS
 
-    nselex = 0;
-     for (int i=1; i<=nselex_pat; i++)
-      {
-       *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
-       if (selex_type(i,2) == 1) nselex += 2;
-       if (selex_type(i,2) == 2) nselex += nclass;
-       if (selex_type(i,2) == 3) nselex += 1;
-      }
-
-    nselex_par = nselex;
-    echotxt(nselex_par, " Total number of selectivity parameters");
-
+  nselex = 0;
+  for (int i=1; i<=nselex_pat; i++)
+  {
+    *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
+    if (selex_type(i,2) == 1) nselex += 2;
+    if (selex_type(i,2) == 2) nselex += nclass;
+    if (selex_type(i,2) == 3) nselex += 1;
+  }
+  nselex_par = nselex;
+  echotxt(nselex_par, " Total number of selectivity parameters");
  END_CALCS
 
   //TODO: Add more selectivity options above as necessary for next example models. See LSMR code for example.
@@ -513,23 +500,21 @@ DATA_SECTION
 
   // Read in retention parameter specifications:
   init_matrix reten_control(1,nreten_pars,1,4);       ///< Retention parameter matrix, with speciifications           
-    matrix trans_reten_control(1,4,1,nreten_pars);    ///< Transponse of retention parameter matrix    
-    vector reten_init(1,nreten_pars);          ///< Vector of retention parameter specs - initial values  
-    vector reten_lbnd(1,nreten_pars);          ///< Vector of retention parameter specs - lower bounds
-    vector reten_ubnd(1,nreten_pars);          ///< Vector of retention parameter specs - upper bounds      
-    ivector reten_phz(1,nreten_pars);          ///< Vector of retention parameter specs - phase values
+  matrix trans_reten_control(1,4,1,nreten_pars);    ///< Transponse of retention parameter matrix    
+  vector reten_init(1,nreten_pars);          ///< Vector of retention parameter specs - initial values  
+  vector reten_lbnd(1,nreten_pars);          ///< Vector of retention parameter specs - lower bounds
+  vector reten_ubnd(1,nreten_pars);          ///< Vector of retention parameter specs - upper bounds      
+  ivector reten_phz(1,nreten_pars);          ///< Vector of retention parameter specs - phase values
 
-   !! echo(reten_control);
+  !! echo(reten_control);
 
   // Fill matrices and vectors created above:
  LOCAL_CALCS
-
-    trans_reten_control = trans(reten_control);
-    reten_init = trans_reten_control(1);
-    reten_lbnd = trans_reten_control(2);
-    reten_ubnd = trans_reten_control(3);
-    reten_phz = ivector(trans_reten_control(4));
-  
+  trans_reten_control = trans(reten_control);
+  reten_init = trans_reten_control(1);
+  reten_lbnd = trans_reten_control(2);
+  reten_ubnd = trans_reten_control(3);
+  reten_phz = ivector(trans_reten_control(4));
  END_CALCS
 
   // Read in pointers for time-varying survey catchability:
@@ -542,11 +527,11 @@ DATA_SECTION
   !! echotxt(nsurveyq_pars, " Total number of retention parameters");
 
     // Read in flag for number of surveys in a sub-area of the main survey area:
-    init_int nsubsurvey;
-   init_imatrix subsurvey(1,nsubsurvey,1,2);
+  init_int nsubsurvey;
+  init_imatrix subsurvey(1,nsubsurvey,1,2);
 
-   !! echotxt(nsubsurvey, " Number of sub-surveys");
-   !! echo(subsurvey);
+  !! echotxt(nsubsurvey, " Number of sub-surveys");
+  !! echo(subsurvey);
 
   // Read in survey catchability parameter specifications:
   init_matrix surveyq_control(1,nsurveyq_pars,1,4);       ///< Survey Q parameter matrix, with speciifications           
@@ -700,39 +685,34 @@ DATA_SECTION
   int max_phase;
  
  LOC_CALCS
-      cout << " Adjust phases \n" << endl;
-      max_phase=1;
-      active_count=0;
-      active_parm(1,ntheta)=0;
-      par_count=0;
+  cout << " Adjust phases \n" << endl;
+  max_phase=1;
+  active_count=0;
+  active_parm(1,ntheta)=0;
+  par_count=0;
   
-    for(i=1; i<=ntheta; i++)
-    { 
-        par_count++;
-        if(theta_phz(i) > final_phase) theta_phz(i)=-1;
-        if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
-        if(theta_phz(i) >= 0)
-        {
-          active_count++; active_parm(active_count)=par_count;
-        }
-    }
-
-    active_parms=active_count;
+  for(i=1; i<=ntheta; i++)
+  { 
+    par_count++;
+    if(theta_phz(i) > final_phase) theta_phz(i)=-1;
+    if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
+    if(theta_phz(i) >= 0)
+      active_count++; active_parm(active_count)=par_count;
+  }
+  active_parms=active_count;
  END_CALCS
-
   !!cout << "Number of active parameters is " << active_parms << endl;
   !!cout << "Maximum phase for estimation is " << max_phase << endl << endl;
 
   // TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
 
 // =========================================================================================================
-
 PARAMETER_SECTION
-
+  // Create dummy parameter that will be estimated when turn_off_phase is set to 0
+    init_bounded_number dummy_parm(0,2,dummy_phase)  //  Dummy parameter estimated in phase 0 
   // Initialize general parameter matrix:
-    init_bounded_number_vector theta_parms(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);          ///< Vector of general parameters
-  
-    // Initialize other parameter matrices:
+  init_bounded_number_vector theta_parms(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);          ///< Vector of general parameters
+  // Initialize other parameter matrices:
   init_bounded_number_vector madd_parms(1,nmadd_pars,madd_lbnd,madd_ubnd,madd_phz);                   ///< Vector of increments in nat_mort parameters
   init_bounded_number_vector gtrans_parms(1,nclass-1,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
   init_bounded_number_vector selex_parms(1,nselex_par,selex_lbnd,selex_ubnd,selex_phz);               ///< Vector of selectivity parameters
@@ -740,79 +720,70 @@ PARAMETER_SECTION
   init_bounded_number_vector surveyq_parms(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz);    ///< Vector of survey Q parameters
   init_bounded_number_vector lognin_parms(1,nclass,lognin_lbnd,lognin_ubnd,lognin_phz);               ///< Vector of initial N parameters
    
-   // Initialize predicted catch and recruitment parameters:
-    init_bounded_vector_vector f_est(1,nfleet,1,ncatch_f,0,1,1);                    ///< Vector of predicted f values
-    init_vector recdev(styr,endyr,1);                                              ///< Vector of recruitment deviations
-  
-    !! cout << "All parameters declared" << endl;
-    !! check << "All parameters declared" << endl;
+  // Initialize predicted catch and recruitment parameters:
+  init_bounded_vector_vector f_est(1,nfleet,1,ncatch_f,0,1,1);                    ///< Vector of predicted f values
+  init_vector recdev(styr,endyr,1);                                              ///< Vector of recruitment deviations
+  !! cout << "All parameters declared" << endl;
+  !! check << "All parameters declared" << endl;
 
-    // Create model vectors, matrices, and arrays:
-    matrix f_all(1,nfleet_act,styr,endyr);                      ///< Fishing mortality matrix 
+  // Create model vectors, matrices, and arrays:
+  matrix f_all(1,nfleet_act,styr,endyr);                      ///< Fishing mortality matrix 
 
   matrix N(styr,endyr+1,1,nclass);                     ///< Numbers-at-age matrix
-  matrix surv(styr,endyr,1,nclass);                     ///< Survival matrix (general)
-  3darray surv_fleet(1,nfleet_act,styr,endyr,1,nclass);      ///< Survival matrices (one for each distinct fishery)
+  matrix surv(styr,endyr,1,nclass);                    ///< Survival matrix (general)
+  3darray surv_fleet(1,nfleet_act,styr,endyr,1,nclass);///< Survival matrices (one for each distinct fishery)
   matrix exprate(0,nfleet,styr,endyr);                 ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                    ///< Size-transition matrix
   
-  matrix reten(styr,endyr,1,nclass);                     ///< Male retention matrix 
+  matrix reten(styr,endyr,1,nclass);                   ///< Male retention matrix 
   // TODO: The above matrix was retain_males in old code. Should this be sex-distinct?
 
-  3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);     ///< Distinct fishery selectivity array
-  3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);     ///< Survey selectivity array
-   vector surveyq(1,nsurvey);                               ///< Survey Q vector
-  matrix selex_all(1,NSelexPat,1,nclass);                   ///< All selectivity matrix
+  3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass); ///< Distinct fishery selectivity array
+  3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass); ///< Survey selectivity array
+  vector surveyq(1,nsurvey);                             ///< Survey Q vector
+  matrix selex_all(1,NSelexPat,1,nclass);                ///< All selectivity matrix
   
-  3darray catch_fleet(1,nfleet,styr,endyr,1,nclass);          ///< Catches (numbers by class)
-  matrix catch_fleet_wt_pred(-1,nfleet,styr,endyr);            ///< Predicted catch weights
-  matrix catch_fleet_num_pred(-1,nfleet,styr,endyr);         ///< Predicted catch numbers
+  3darray catch_fleet(1,nfleet,styr,endyr,1,nclass);     ///< Catches (numbers by class)
+  matrix catch_fleet_wt_pred(-1,nfleet,styr,endyr);      ///< Predicted catch weights
+  matrix catch_fleet_num_pred(-1,nfleet,styr,endyr);     ///< Predicted catch numbers
   
-  3darray survey(1,nsurvey,styr,endyr+1,1,nclass);        ///< Survey LF from the model
-  matrix survey_wt_pred(1,nsurvey,styr,endyr+1);            ///< Predicted survey weights
-  matrix survey_num_pred(1,nsurvey,styr,endyr+1);             ///< Predicted survey numbers
-  vector q_effort(1,nfleet_act);                              ///< Effort q
-  vector nat_mort(styr,endyr);                             ///< Natural mortality
-  vector f_direct(styr,endyr);                            ///< Fishing mortality
+  3darray survey(1,nsurvey,styr,endyr+1,1,nclass);       ///< Survey LF from the model
+  matrix survey_wt_pred(1,nsurvey,styr,endyr+1);         ///< Predicted survey weights
+  matrix survey_num_pred(1,nsurvey,styr,endyr+1);        ///< Predicted survey numbers
+  vector q_effort(1,nfleet_act);                         ///< Effort q
+  vector nat_mort(styr,endyr);                           ///< Natural mortality
+  vector f_direct(styr,endyr);                           ///< Fishing mortality
   
   // Initialize the components of the objective function:
   vector prior_value(1,nprior_terms);                 ///< Objective function prior values
   vector like_value(1,nlike_terms);                   ///< Objective function likelihood values
   objective_function_value fobj;                      ///< Objective function value to be minimised
 
-    // Stuff related to the SR relationship
-  number f_multi;                                 ///< Passed F multiplier
-  number mbio_out;                                ///< Predicted mature male biomass (MMB)
-  number f_35;                                     ///< F35
-  number sbpr_35;                                  ///< SBPR35 (used to define BMSY)
-  number rec_out;                                  ///< Predicted recruitment  
-  number catch_out;                                ///< Predicted catch
-  vector mbio_proj(1,1000);                       ///< Future MMB (projected)
-  vector f_mort(1,nfleet_byc);                  ///< Bycatch (kill) fleet Fs
+  // Stuff related to the SR relationship
+  number f_multi;                              ///< Passed F multiplier
+  number mbio_out;                             ///< Predicted mature male biomass (MMB)
+  number f_35;                                 ///< F35
+  number sbpr_35;                              ///< SBPR35 (used to define BMSY)
+  number rec_out;                              ///< Predicted recruitment  
+  number catch_out;                            ///< Predicted catch
+  vector mbio_proj(1,1000);                    ///< Future MMB (projected)
+  vector f_mort(1,nfleet_byc);                 ///< Bycatch (kill) fleet Fs
 
-  number rec_zero;                                ///< Virgin recruitment 
-  number steep;                                   ///< Stock-recruit steepness 
-  number mbio_zero;                               ///< Virgin MMB 
-  vector mbio(styr,endyr);                        ///< Mature male biomass (MMB)
-  sdreport_vector logmbio(styr,endyr);            ///< Log of MMB
-  vector recruits(styr,endyr);                    ///< Recruitment vector
-  sdreport_vector logrecruits(styr,endyr);        ///< Log of recruitment vector
-  sdreport_vector logrecmbio(styr,endyr-sr_lag);    ///< Log of recruits-per-spawner
+  number rec_zero;                             ///< Virgin recruitment 
+  number steep;                                ///< Stock-recruit steepness 
+  number mbio_zero;                            ///< Virgin MMB 
+  vector mbio(styr,endyr);                     ///< Mature male biomass (MMB)
+  sdreport_vector logmbio(styr,endyr);         ///< Log of MMB
+  vector recruits(styr,endyr);                 ///< Recruitment vector
+  sdreport_vector logrecruits(styr,endyr);     ///< Log of recruitment vector
+  sdreport_vector logrecmbio(styr,endyr-sr_lag); ///< Log of recruits-per-spawner
 
   // TODO: See example for more complicated selectivity options from LSMR.tpl.
 
-  // Create dummy parameter that will be estimated when turn_off_phase is set to 0
-    init_bounded_number dummy_parm(0,2,dummy_phase)  //  Dummy parameter estimated in phase 0 
-
-  
 // =========================================================================================================
-
 PRELIMINARY_CALCS_SECTION
-  
 // Initialize the dummy parameter as needed:
   if(turn_off_phase<=0) {dummy_parm=0.5;} else {dummy_parm=1.0;}
-
-
   int iyr,iclass,Jclass,ifleet,isurv,j,Ipnt,Jpnt,Last,SelType;
   float Total,NumSS,Scalar;
   dvector TotalSS(-1,nfleet);
