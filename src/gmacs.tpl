@@ -214,15 +214,15 @@ DATA_SECTION
  
  LOCAL_CALCS
   for (fleet=1; fleet<=nfleet; fleet++)
-   {
+  {
     ncatch_f(fleet) = 0;
     for (yr=styr; yr<=endyr; yr++) 
-     if (effort(fleet,yr) > 0) 
+      if (effort(fleet,yr) > 0) 
       {
-       if (f_new(fleet,1) == 0 | yr < f_new(fleet,2) | yr > f_new(fleet,3))
-        ncatch_f(fleet) += 1;
+        if (f_new(fleet,1) == 0 | yr < f_new(fleet,2) | yr > f_new(fleet,3))
+          ncatch_f(fleet) += 1;
       }
-   }
+  }
  END_CALCS
   !! echotxt(ncatch_f, " Number of F's (calculated)")
   init_vector mean_length(1,ndclass);       ///< Mean length vector
@@ -288,49 +288,45 @@ DATA_SECTION
 
  LOCAL_CALCS
 
-    if(read_growth==1)
-    {  
-      // Open size transition file (*.dat) //
-      ad_comm::change_datafile_name(size_trans_file);
-       cout << " Reading size transition file" << endl;
-      echoinput << " Start reading size transition file" << endl;
+  if(read_growth==1)
+  {  
+    // Open size transition file (*.dat) //
+    ad_comm::change_datafile_name(size_trans_file);
+    cout << " Reading size transition file" << endl;
+    echoinput << " Start reading size transition file" << endl;
+    // Read input from growth data file:
+    *(ad_comm::global_datafile) >> styr_growth;
+    *(ad_comm::global_datafile) >> endyr_growth;
+    *(ad_comm::global_datafile) >> ndclass_growth;
 
-      // Read input from growth data file:
-      *(ad_comm::global_datafile) >> styr_growth;
-       *(ad_comm::global_datafile) >> endyr_growth;
-       *(ad_comm::global_datafile) >> ndclass_growth;
-
-       echotxt(styr_growth, " Start year for growth data");
-       echotxt(endyr_growth, " End year for growth data");
-       echotxt(ndclass_growth, " Number of growth data classes");
-     }
-
+    echotxt(styr_growth, " Start year for growth data");
+    echotxt(endyr_growth, " End year for growth data");
+    echotxt(ndclass_growth, " Number of growth data classes");
+  }
  END_CALCS
   
   // Declare objects dependent on previous objects:
   ivector growth_bins(1,ndclass_growth);                          ///< Vector of growth data bins (lower length of each bin)
   3darray growth_data(styr_growth,endyr_growth,1,ndclass_growth-1,1,ndclass_growth-1);  ///< Array of year specific growth transition matrices  
-  
   int eof_growth;    // Declare EOF check
 
  LOCAL_CALCS
 
-    if(read_growth==1)
-    {  
-      *(ad_comm::global_datafile) >> growth_bins;
-       *(ad_comm::global_datafile) >> growth_data;
+  if(read_growth==1)
+  {  
+    *(ad_comm::global_datafile) >> growth_bins;
+    *(ad_comm::global_datafile) >> growth_data;
 
-       echo(growth_bins);
-       echo(growth_data);
+    echo(growth_bins);
+    echo(growth_data);
 
-       *(ad_comm::global_datafile) >> eof_growth;
+    *(ad_comm::global_datafile) >> eof_growth;
     
-      // Print EOF confirmation to screen and echoinput, warn otherwise:
-      if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_growth << endl; exit(1);}
-      cout << " Finished reading size transition file \n" << endl;
-      echotxt(eof_growth," EOF: finished reading size transition file \n");
-    }
-
+    // Print EOF confirmation to screen and echoinput, warn otherwise:
+    if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_growth << endl; exit(1);}
+    cout << " Finished reading size transition file \n" << endl;
+    echotxt(eof_growth," EOF: finished reading size transition file \n");
+  }
  END_CALCS
 
 // ---------------------------------------------------------------------------------------------------------
