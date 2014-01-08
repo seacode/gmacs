@@ -768,7 +768,7 @@ PARAMETER_SECTION
 
   3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);     ///< Distinct fishery selectivity array
   3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);     ///< Survey selectivity array
-   vector surveyq(1,nsurvey);                               ///< Survey Q vector
+  vector surveyq(1,nsurvey);                               ///< Survey Q vector
   matrix selex_all(1,NSelexPat,1,nclass);                   ///< All selectivity matrix
   
   3darray catch_fleet(1,nfleet,styr,endyr,1,nclass);          ///< Catches (numbers by class)
@@ -1349,8 +1349,8 @@ FUNCTION calc_objective_function
 
  // TODO: Include dummy phase in above Objective Function Calc: For like_value
 
-       obj_fun += square(dummy_datum-dummy_parm);
-//   cout<<" obj_fun dummy "<<obj_fun<<endl;
+	fobj += square(dummy_datum-dummy_parm);
+
                                                     
  // =====================================================================
 
@@ -1582,20 +1582,6 @@ FUNCTION ProjConstF
    mbio_proj(FutYr) = mbio_out;
   }
 
-FUNCTION initParameters
-  {
-  /* Leading parameters */
-  log_ddot_r = theta(1);
-  log_bar_r  = theta(2);  
-  m_infty    = theta(3);
-  l_infty    = theta(4);
-  vbk        = theta(5);
-  beta       = theta(6);
-  mu_r       = theta(7);
-  cv_r       = theta(8);
-  }
-//
-
 
 // =========================================================================================================
 
@@ -1663,7 +1649,7 @@ REPORT_SECTION
 
 FINAL_SECTION
   
-  // Create final time stamp and determe runtime:
+  // Create final time stamp and determine runtime:
   time(&finish);
   elapsed_time=difftime(finish,start);
   hour=long(elapsed_time)/3600;
