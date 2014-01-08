@@ -19,9 +19,7 @@
 //  - Add simulation option, see LSMR model for demonstration 
 //
 //  =========================================================================================================
-
 GLOBALS_SECTION
-  
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
@@ -66,20 +64,15 @@ TOP_OF_MAIN_SECTION
   gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
 
 // =========================================================================================================
-
 DATA_SECTION
-  
   // Create strings with version information:
   !!version+="Gmacs_V1.02_2014/01/02_by_Athol_Whitten_(UW)_using_ADMB_11.1";
   !!version_short+="Gmacs V1.02";
 
   !! echoinput << version << endl;
   !! echoinput << ctime(&start) << endl;
-
-
 // ---------------------------------------------------------------------------------------------------------
 // STARTER FILE
-
   // Open Starter file (starter.gm)
   !! ad_comm::change_datafile_name("starter.gm"); 
   !! cout << " Reading information from starter file" << endl;
@@ -111,11 +104,8 @@ DATA_SECTION
   !! if(eof_starter!=999) {cout << " Error reading starter file \n EOF = "<< eof_starter << endl; exit(1);}
   !! cout << " Finished reading starter file \n" << endl;
   !! echotxt(eof_starter," EOF: finished reading starter file \n");
-
-
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (MAIN)
-
   // Open main data file (*.dat):
   !! ad_comm::change_datafile_name(data_file);
   !! cout << " Reading main data file" << endl;
@@ -164,20 +154,26 @@ DATA_SECTION
   int nfleet_act;                  ///< Number of active distinct fleets
 
  LOCAL_CALCS
-
     nfleet_ret = 0;
     nfleet_dis = 0;
     nfleet_byc = 0;
 
     for (fleet=1; fleet<=nfleet; fleet++)
+    {
+      switch (fleet_control(fleet,2)) 
       {
-        if(fleet_control(fleet,2)==1) nfleet_ret += 1
-        if(fleet_control(fleet,2)==2) nfleet_dis += 1
-        if(fleet_control(fleet,2)==3) nfleet_byc += 1
+        case 1 : 
+          nfleet_ret += 1;
+          break;
+        case 2 : 
+          nfleet_dis += 1;
+          break;
+        case 3 : 
+          nfleet_byc += 1;
+          break;
       } 
-
+    } 
     nfleet_act = nfleet_ret + nfleet_byc;    ///< Determine number of active distinct fleets
-
  END_CALCS
 
   init_matrix catch_data(1,ncatch_obs,1,5);     ///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
@@ -185,7 +181,7 @@ DATA_SECTION
 
   // Q: Some pre-processing of these data required. See simple.tpl for example.
 
-    !! echotxt(catch_units,  " Catch units");
+  !! echotxt(catch_units,  " Catch units");
   !! echotxt(catch_multi,  " Catch multipliers");
   !! echotxt(survey_units, " Survey units");
   !! echotxt(survey_multi, " Survey multipliers")
@@ -439,6 +435,7 @@ DATA_SECTION
   // Determine number of different selectivity functions/patterns to estimate:
   int nselex;
   int nselex_pat;
+  int nselex_par;
 
   // TODO: Should be able to use selex_survey_pnt.indexmax() below instead of loop. See PG: 192 ADMB Manual.
 
@@ -467,7 +464,7 @@ DATA_SECTION
  LOCAL_CALCS
 
     nselex = 0;
-     for (i=1; i<=nselex_pat; i++)
+     for (int i=1; i<=nselex_pat; i++)
       {
        *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
        if (selex_type(i,2) == 1) nselex += 2;
@@ -494,13 +491,11 @@ DATA_SECTION
 
   // Fill matrices and vectors created above:
  LOCAL_CALCS
-
     trans_selex_control = trans(selex_control);
     selex_init = trans_selex_control(1);
     selex_lbnd = trans_selex_control(2);
     selex_ubnd = trans_selex_control(3);
     selex_phz = ivector(trans_selex_control(4));
-  
  END_CALCS
 
   // Read in pointers for time-varying fishery retention:
@@ -541,7 +536,7 @@ DATA_SECTION
   int nsurveyq_pars;
   init_imatrix q_survey_pnt(1,nsurvey,styr,endyr+1);
 
-  !! nsurveyq_pars = q_survey_pnt.indexmax()
+  !! nsurveyq_pars = q_survey_pnt.indexmax();
 
   !! echo(q_survey_pnt);
   !! echotxt(nsurveyq_pars, " Total number of retention parameters");
@@ -592,7 +587,6 @@ DATA_SECTION
 
   // Fill matrices and vectors created above:
  LOCAL_CALCS
-
     trans_lognin_control = trans(lognin_control);
     lognin_init = trans_lognin_control(1);
     lognin_lbnd = trans_lognin_control(2);
@@ -613,7 +607,6 @@ DATA_SECTION
 
   // Fill matrices and vectors created above:
  LOCAL_CALCS
-
     trans_gtrans_control = trans(gtrans_control);
     gtrans_init = trans_gtrans_control(1);
     gtrans_lbnd = trans_gtrans_control(2);
@@ -931,100 +924,84 @@ PRELIMINARY_CALCS_SECTION
    Ipnt += Last;
   } 
  CheckFile << selex_type i endl;
-   
  cout << "Completed Preliminary Calcs Section" << endl;
 
 // =========================================================================================================
-
 PROCEDURE_SECTION
- int i, Cnt, ifleet, IY;
+  int i, Cnt, ifleet, IY;
   dvariable Ratio1,Ratio2,Delta;
-  
-  // Convert to Fs
-  for (ifleet=0;ifleet<=nfleet;ifleet++)
-   {
-    Cnt = 0;
-    for (i=styr;i<=endyr;i++)
-     {
-      if (effort(ifleet,i) > 0)
-       {
-        if (FOverWrite(ifleet,0) == 0 |i<FOverWrite(ifleet,1) | i>FOverWrite(ifleet,2))
-         { Cnt += 1; FAll(ifleet,i) = FEst(ifleet,Cnt); }
-        else
-         FAll(ifleet,i) = -100;
-       }  
-      else
-       FAll(ifleet,i) = 0;
-     }
-   }  
-  
-  // Fill in missing values using a ratio estimator
-  for (ifleet=0;ifleet<=nfleet;ifleet++)
-   if (FOverWrite(ifleet,0) > 0)
-    {
-     Ratio1 = 0; Ratio2 = 0;
-     for (i=FOverWrite(ifleet,3);i<=FOverWrite(ifleet,4);i++)
-      if (effort(ifleet,i) > 0)
-       {
-        Ratio1 += -log(1.0-FAll(ifleet,i))/effort(ifleet,i);
-        Ratio2 += 1;
-       }
-     Delta = Ratio1/Ratio2;
-     for (i=FOverWrite(ifleet,1);i<=FOverWrite(ifleet,2);i++)
-      FAll(ifleet,i) = 1.0-mfexp(-Delta*effort(ifleet,i));
-        
-    }  
-
-  // Set the growth matrix
+  Set_effort();
   Set_growth();
-
-  // Set the selectivity patterns
   Set_selex();
-  
-  // Set the initial size structure
   Initial_size_structure();
-
-  // Specify survival rates
   Set_survival();
-  
-  // Population dynamics
   Update_population(); 
-
   Get_Catch_Pred();
   Get_Survey();
+  calc_objective_function();
 
-  ObjFunction();
-
-  fobj = 0;
-  for (i=1;i<=NPriorTerms;i++) fobj += prior_value(i)*PriorWeight(i);
-  for (i=1;i<=NLikeTerms;i++) fobj += like_value(i)*DataWeight(i);
-  
   logmbio = log(mbio);
   logrecruits = log(recruits);
   for (IY=styr;IY<=endyr-Lag;IY++)
    LogRMMB(IY) = log(recruits(IY+Lag)/mbio(IY));
 
 // --------------------------------------------------------------------
+FUNCTION Set_effort
+  // Convert to Fs
+  for (ifleet=0;ifleet<=nfleet;ifleet++)
+  {
+    Cnt = 0;
+    for (i=styr;i<=endyr;i++)
+    {
+      if (effort(ifleet,i) > 0)
+      {
+        if (FOverWrite(ifleet,0) == 0 |i<FOverWrite(ifleet,1) | i>FOverWrite(ifleet,2))
+          { Cnt += 1; FAll(ifleet,i) = FEst(ifleet,Cnt); }
+        else
+         FAll(ifleet,i) = -100;
+      }  
+      else
+        FAll(ifleet,i) = 0;
+    }
+  }  
+  
+  // Fill in missing values using a ratio estimator
+  for (ifleet=0;ifleet<=nfleet;ifleet++)
+    if (FOverWrite(ifleet,0) > 0)
+    {
+     Ratio1 = 0; Ratio2 = 0;
+     for (i=FOverWrite(ifleet,3);i<=FOverWrite(ifleet,4);i++)
+     {
+       if (effort(ifleet,i) > 0)
+       {
+        Ratio1 += -log(1.0-FAll(ifleet,i))/effort(ifleet,i);
+        Ratio2 += 1;
+       }
+     }
+     Delta = Ratio1/Ratio2;
+     for (i=FOverWrite(ifleet,1);i<=FOverWrite(ifleet,2);i++)
+       FAll(ifleet,i) = 1.0-mfexp(-Delta*effort(ifleet,i));
+    }  
 
+// --------------------------------------------------------------------
 FUNCTION Initial_size_structure
   int iclass;
 
   N.initialize();
   for (iclass=1;iclass<=nclass;iclass++)
-   N(styr,iclass) = exp(logRbar)*exp(logNinitial(iclass));
+    N(styr,iclass) = mfexp(logRbar)*mfexp(logNinitial(iclass));
 
 // --------------------------------------------------------------------
-          
 FUNCTION Update_population
   int iyr,iclass,Jclass;
   dvariable mbio_out;
 
   for (iyr=styr;iyr<=endyr;iyr++)
-   {
+  {
     // Allow animals to grow
     for (iclass=1;iclass<=nclass;iclass++)
-     for (Jclass=1;Jclass<=nclass;Jclass++)
-      N(iyr+1,iclass) += strans(Jclass,iclass)*N(iyr,Jclass)*S(iyr,Jclass);
+      for (Jclass=1;Jclass<=nclass;Jclass++)
+        N(iyr+1,iclass) += strans(Jclass,iclass)*N(iyr,Jclass)*S(iyr,Jclass);
    
     // Add in recruitment
     recruits(iyr) = mfexp(logRbar+RecDev(iyr));
@@ -1032,12 +1009,11 @@ FUNCTION Update_population
 
     mbio_out = 0;
     for (iclass=1;iclass<=nclass;iclass++) 
-     mbio_out += N(iyr,iclass)*fecu(iclass)*(1-selex_fleet(0,iyr,iclass)*FAll(0,iyr))*exp(-(tc(0,iyr)+2/12)*nat_mort(iyr));
+      mbio_out += N(iyr,iclass)*fecu(iclass)*(1-selex_fleet(0,iyr,iclass)*FAll(0,iyr))*exp(-(tc(0,iyr)+2/12)*nat_mort(iyr));
     mbio(iyr) = mbio_out;
    }
 
 // --------------------------------------------------------------------
-
 FUNCTION Set_growth
   int iclass,Jclass;
   dvariable Total;
@@ -1045,11 +1021,11 @@ FUNCTION Set_growth
   strans.initialize();
 
   for (iclass=1;iclass<nclass;iclass++)
-   {
+  {
     Total = (1+mfexp(TransPars(iclass)));
     strans(iclass,iclass) = 1/Total;
     strans(iclass,iclass+1) =mfexp(TransPars(iclass))/Total;
-   }
+  }
   strans(nclass,nclass) = 1;                 // Special case
 
 // --------------------------------------------------------------------
@@ -1063,18 +1039,18 @@ FUNCTION Set_selex
    {
     Ipnt = selex_type(fleet,3);
     if (selex_type(fleet,1) == 1)
-     {
+    {
       SlopePar = SelexPar(Ipnt+2);
       Temp = -log(19.0)/SlopePar;
       for (iclass=1;iclass<=nclass;iclass++)
        selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(Temp*(Length(iclass)-SelexPar(Ipnt+1))));
       Temp =  selex_all(ifleet,nclass);
       for (iclass=1;iclass<=nclass;iclass++) selex_all(ifleet,iclass) /= Temp;
-     }
+    }
     if (selex_type(fleet,1) == 2)
-     {
+    {
       for (iclass=1;iclass<=nclass;iclass++)
-       selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(SelexPar(Ipnt+iclass)));
+        selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(SelexPar(Ipnt+iclass)));
       Temp =  selex_all(ifleet,nclass);
       for (iclass=1;iclass<=nclass;iclass++) selex_all(ifleet,iclass) /= Temp;
      }
@@ -1283,13 +1259,13 @@ FUNCTION calc_objective_function
  
   // Survey indices 
   for (isurv=1;isurv<=nsurvey;isurv++)
-   for (iyr=styr;iyr<=endyr;iyr++)
-    if (SurveyEst(isurv,iyr,1) > 0)
+    for (iyr=styr;iyr<=endyr;iyr++)
+      if (SurveyEst(isurv,iyr,1) > 0)
      {
       if(SurveyUnit(isurv) == 1)
-       like_value(Jpnt+isurv) += 0.5*square(log((SurveyEst(isurv,iyr,1)+incd)/(survey_wt_pred(isurv,iyr)+incd)))/square(SurveyEst(isurv,iyr,2));
+         like_value(Jpnt+isurv) += 0.5*square(log((SurveyEst(isurv,iyr,1)+incd)/(survey_wt_pred(isurv,iyr)+incd)))/square(SurveyEst(isurv,iyr,2));
       else 
-       like_value(Jpnt+isurv) += 0.5*square(log((SurveyEst(isurv,iyr,1)+incd)/(survey_num_pred(isurv,iyr)+incd)))/square(SurveyEst(isurv,iyr,2));
+        like_value(Jpnt+isurv) += 0.5*square(log((SurveyEst(isurv,iyr,1)+incd)/(survey_num_pred(isurv,iyr)+incd)))/square(SurveyEst(isurv,iyr,2));
       }  
    Jpnt = Jpnt + nsurvey;   
   
@@ -1344,6 +1320,10 @@ FUNCTION calc_objective_function
         like_value(Jpnt+isurv) += -1*SSSurveyLF(isurv,Icnt)*SurveyObsLF(isurv,Icnt,iclass)*log(Error);
        }
     } 
+  for (i=1;i<=NPriorTerms;i++) 
+    fobj += prior_value(i)*PriorWeight(i);
+  for (i=1;i<=NLikeTerms;i++) 
+    fobj += like_value(i)*DataWeight(i);
  // cout << prior_value << endl;
  // cout << like_value << endl;  
 
@@ -1492,7 +1472,6 @@ FUNCTION Get_Steepness
   }
 
 // =====================================================================
-
 FUNCTION ProjConstF
  dvariable AveRec,mbio,S1,SurvNo,CatRetTmp,Term1,Term2,TheMort;
  dvar_vector SF1F(1,nclass),SF2F(1,nclass),SF3F(1,nclass),surv_fleet(1,nclass);
