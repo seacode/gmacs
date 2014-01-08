@@ -164,20 +164,26 @@ DATA_SECTION
   int nfleet_act;                  ///< Number of active distinct fleets
 
  LOCAL_CALCS
-
     nfleet_ret = 0;
     nfleet_dis = 0;
     nfleet_byc = 0;
 
     for (fleet=1; fleet<=nfleet; fleet++)
+    {
+      switch (fleet_control(fleet,2)) 
       {
-        if(fleet_control(fleet,2)==1) nfleet_ret += 1
-        if(fleet_control(fleet,2)==2) nfleet_dis += 1
-        if(fleet_control(fleet,2)==3) nfleet_byc += 1
+        case 1 : 
+          nfleet_ret += 1;
+          break;
+        case 2 : 
+          nfleet_dis += 1;
+          break;
+        case 3 : 
+          nfleet_byc += 1;
+          break;
       } 
-
+    } 
     nfleet_act = nfleet_ret + nfleet_byc;    ///< Determine number of active distinct fleets
-
  END_CALCS
 
   init_matrix catch_data(1,ncatch_obs,1,5);     ///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
@@ -185,7 +191,7 @@ DATA_SECTION
 
   // Q: Some pre-processing of these data required. See simple.tpl for example.
 
-    !! echotxt(catch_units,  " Catch units");
+  !! echotxt(catch_units,  " Catch units");
   !! echotxt(catch_multi,  " Catch multipliers");
   !! echotxt(survey_units, " Survey units");
   !! echotxt(survey_multi, " Survey multipliers")
@@ -439,6 +445,7 @@ DATA_SECTION
   // Determine number of different selectivity functions/patterns to estimate:
   int nselex;
   int nselex_pat;
+  int nselex_par;
 
   // TODO: Should be able to use selex_survey_pnt.indexmax() below instead of loop. See PG: 192 ADMB Manual.
 
@@ -467,7 +474,7 @@ DATA_SECTION
  LOCAL_CALCS
 
     nselex = 0;
-     for (i=1; i<=nselex_pat; i++)
+     for (int i=1; i<=nselex_pat; i++)
       {
        *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
        if (selex_type(i,2) == 1) nselex += 2;
@@ -541,7 +548,7 @@ DATA_SECTION
   int nsurveyq_pars;
   init_imatrix q_survey_pnt(1,nsurvey,styr,endyr+1);
 
-  !! nsurveyq_pars = q_survey_pnt.indexmax()
+  !! nsurveyq_pars = q_survey_pnt.indexmax();
 
   !! echo(q_survey_pnt);
   !! echotxt(nsurveyq_pars, " Total number of retention parameters");
