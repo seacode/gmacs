@@ -699,6 +699,9 @@ PARAMETER_SECTION
   // Initialize general parameter matrix:
   init_bounded_number_vector theta_parms(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);          ///< Vector of general parameters
   
+  number logRbar;
+  number M;
+
   // Initialize other parameter matrices:
   init_bounded_number_vector madd_parms(1,nmadd_pars,madd_lbnd,madd_ubnd,madd_phz);                   ///< Vector of increments in nat_mort parameters
   init_bounded_number_vector gtrans_parms(1,nclass-1,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
@@ -785,35 +788,43 @@ PRELIMINARY_CALCS_SECTION
   cout << "Started preliminary calcs section" << endl;
   cout << "Verbose option = " << verbose << endl;
 
-  // If option selected to use pin file, then get initial parameters: 
-  // TODO: Check this, could values from pin file be used directly?
-  if (use_pin==1) 
-   {
-    for (j=1; j<=ntheta; j++) theta_parms(j) = theta_init(j);
-    for (j=1; j<=nmadd_pars; j++) madd_parms(j) = madd_init(j);  
-    for (j=1; j<=nclass-1; j++) gtrans_parms(j) = gtrans_init(j);
-    for (j=1; j<=nselex_pars; j++) selex_parms(j) = selex_init(j);
-    for (j=1; j<=nreten_pars; j++) reten_parms(j) = reten_init(j);
-    for (j=1; j<=nsurveyq_pars; j++) surveyq_parms(j) = surveyq_init(j);
-    for (j=1; j<=nclass; j++) lognin_parms(j) = lognin_init(j);
+  // Set the initial  values of parameters
+  for (j=1; j<=ntheta; j++) theta_parms(j) = theta_init(j);
+  for (j=1; j<=nmadd_pars; j++) madd_parms(j) = madd_init(j);  
+  for (j=1; j<=nclass-1; j++) gtrans_parms(j) = gtrans_init(j);
+  for (j=1; j<=nselex_pars; j++) selex_parms(j) = selex_init(j);
+  for (j=1; j<=nreten_pars; j++) reten_parms(j) = reten_init(j);
+  for (j=1; j<=nsurveyq_pars; j++) surveyq_parms(j) = surveyq_init(j);
+  for (j=1; j<=nclass; j++) lognin_parms(j) = lognin_init(j);
     
-    for (ifleet=1; ifleet<=nfleet_act; ifleet++)
-     for (iyr=1; iyr<=ncatch_f(ifleet); iyr++) f_est(ifleet,iyr) = 0.1;
-    for (iyr=styr; iyr<=endyr; iyr++) recdev(iyr) = 0; 
-   }
-  if (verbose == 1) cout << "PIN file specified and used for initial parameters" << endl;
+  for (ifleet=1; ifleet<=nfleet_act; ifleet++)
+   for (iyr=1; iyr<=ncatch_f(ifleet); iyr++) f_est(ifleet,iyr) = 0.1;
+  for (iyr=styr; iyr<=endyr; iyr++) recdev(iyr) = 0; 
+
+
 
   // TODO: Sections here require looping through fleet and survey specific data. Work out best method for this.
 
 
 // =========================================================================================================
 PROCEDURE_SECTION
-
+  
+  Get_parameters();
   Set_effort();
   Set_growth();
+  Initial_size_structure();
 
   like_value.initialize();
   fobj += square(dummy_datum-dummy_parm);
+
+// --------------------------------------------------------------------
+FUNCTION Get_parameters
+  
+  logRbar = theta_parms(1);
+  M = theta_parms(2);
+
+  echo(logRbar);
+  echo(M);
 
 // --------------------------------------------------------------------
 FUNCTION Set_effort
@@ -856,6 +867,7 @@ FUNCTION Set_effort
        f_all(ifleet,iyear) = 1.0-mfexp(-delta*effort(ifleet,iyear));
     }
 
+
 // --------------------------------------------------------------------
 FUNCTION Set_growth
   int iclass, jclass;
@@ -871,6 +883,16 @@ FUNCTION Set_growth
   }
   
   strans(nclass,nclass) = 1;  // Special case
+
+
+// --------------------------------------------------------------------
+FUNCTION Initial_size_structure
+  int iclass;
+
+  N.initialize();
+  for (iclass=1;iclass<=nclass;iclass++)
+    N(styr,iclass) = mfexp(logRbar)*mfexp(lognin_parms(iclass));
+
 
 // =========================================================================================================
 REPORT_SECTION
