@@ -236,15 +236,17 @@ DATA_SECTION
   
   !! echotxt(ncatch_f, " Number of F's (calculated)")
   
-  init_vector mean_length(1,ndclass);       ///< Mean length vector
-  init_vector mean_weight(1,ndclass);       ///< Mean weight vector
-  init_vector fecundity(1,ndclass);         ///< Fecundity vector
+  init_vector mean_length(1,ndclass);       ///< Mean length vector input
+  init_vector mean_weight(1,ndclass);       ///< Mean weight vector input
+  init_vector fecundity_inp(1,ndclass);     ///< Fecundity vector input
+
+  vector length(1,nclass);                  ///< Length vector (mm) for model
+  vector weight(1,nclass);                  ///< Weight (kg) vector for model
+  vector fecundity(1,nclass);               ///< Fecundity (kg) vector for model
 
   !! echo(mean_length);
   !! echo(mean_weight);
   !! echo(fecundity);
-
-  // TODO: These mean length and weight vectors probably have to be converted to be suitable for the nclass number of size-classes.
 
   init_int nlf_obs;                                 ///< Number of length frequency lines to read  
   init_matrix lf_data(1,nlf_obs,1,ndclass+7);       ///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
@@ -720,8 +722,8 @@ PARAMETER_SECTION
   matrix f_all(1,nfleet_act,styr,endyr);                      ///< Fishing mortality matrix 
 
   matrix N(styr,endyr+1,1,nclass);                            ///< Numbers-at-age matrix
-  matrix surv(styr,endyr,1,nclass);                           ///< Survival matrix (general)
-  3darray surv_fleet(1,nfleet_act,styr,endyr,1,nclass);       ///< Survival matrices (one for each distinct fishery)
+  matrix S(styr,endyr,1,nclass);                              ///< Survival matrix (general)
+  3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
   matrix exprate(0,nfleet,styr,endyr);                        ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
   
@@ -777,8 +779,8 @@ PRELIMINARY_CALCS_SECTION
   if(final_phase<=0) {dummy_parm=0.5;} else {dummy_parm=1.0;}
 
   // Create required counters and objects:
-  int iyr,iclass,jclass,ifleet,isurv,j,Ipnt,Jpnt,Last,SelType;
-  float total,num_ss,scalar;
+  int iyr, iclass, jclass, ifleet, isurv, j, ipnt, jpnt, last, iselex;
+  float total, num_ss, scalar;
   
   dvector total_ss(1,nfleet);
   dmatrix ss_fleet_store(1,nfleet,1,nlf_obs);
@@ -801,7 +803,26 @@ PRELIMINARY_CALCS_SECTION
    for (iyr=1; iyr<=ncatch_f(ifleet); iyr++) f_est(ifleet,iyr) = 0.1;
   for (iyr=styr; iyr<=endyr; iyr++) recdev(iyr) = 0; 
 
-
+  // Format length, weight, and fecundity vectors to model size-classes:
+  checkfile << "Class Length, Weight, and Fecundity" << endl;
+  
+  for (iclass=1; iclass<=nclass; iclass++)
+   {
+    length(iclass) = 0; weight(iclass) = 0; fecundity(iclass) = 0; total = 0;
+    for (jclass=class_link(iclass,1);jclass<=class_link(iclass,2);jclass++)
+     {
+      length(iclass) += mean_length(jclass)*surv_lf_store(jclass);
+      weight(iclass) += mean_weight(jclass)*surv_lf_store(jclass);
+      fecundity(iclass) += fecundity_inp(jclass)*surv_lf_store(jclass);
+      total += surv_lf_store(jclass);
+     }
+     length(iclass) /= total;
+     weight(iclass) /= total;
+     fecundity(iclass) /= total;
+     checkfile << iclass << " " << length(iclass) << " " << weight(iclass) << " " << fecundity(iclass) << endl;
+    }
+  if (verbose == 1) cout << "Lengths, weights, and fecundity specified" << endl; 
+  
 
   // TODO: Sections here require looping through fleet and survey specific data. Work out best method for this.
 
