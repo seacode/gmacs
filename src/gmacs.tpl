@@ -48,7 +48,7 @@ GLOBALS_SECTION
   \def check(object)
   Prints name and value of \a object on ADMB check %ofstream file.
   */
-  #define check(object) check << #object << "\n" << object << endl;
+  #define check(object) checkfile << #object << "\n" << object << endl;
 
   // Open output files using ofstream
   ofstream echoinput("echoinput.gm");
@@ -103,7 +103,6 @@ DATA_SECTION
   !! echotxt(use_pin, " use parameter in file (*.pin)");
   !! echotxt(read_growth, " read growth transition matrix data file");
 
-
   // Print EOF confirmation to screen and echoinput, warn otherwise:
   init_int eof_starter;
 
@@ -119,23 +118,23 @@ DATA_SECTION
   !! echoinput << " Start reading main data file" << endl;
 
   //Initialize some counters:
-  int ii;
+  int i;
   int yr;
   int fleet;
   
   // Read input from main data file:
-  init_int styr;      ///< Start year
-  init_int endyr;      ///< End year
+  init_int styr;        ///< Start year
+  init_int endyr;       ///< End year
   init_number tstep;    ///< Time-step
 
   !! echotxt(styr,  " Start year");
   !! echotxt(endyr, " End year");
   !! echotxt(tstep, " Time-step");
   
-  init_int nsex;     ///< Number of sexes  
-  init_int nfleet;   ///< Number of fishing fleets
+  init_int nsex;      ///< Number of sexes  
+  init_int nfleet;    ///< Number of fishing fleets
   init_int nsurvey;   ///< Number of surveys
-  init_int nclass;   ///< Number of size classes
+  init_int nclass;    ///< Number of size classes
   init_int ndclass;   ///< Number of size classes (in the data)
   
   init_imatrix class_link(1,nclass,1,2);  ///< Link between data size-classes and model size-classs
@@ -220,10 +219,10 @@ DATA_SECTION
 
   // Determine which F values will be computed using effort (f_new) if applicable: 
 
-  ivector ncatch_f(1,nfleet);
+  ivector ncatch_f(1,nfleet_act);
  
  LOCAL_CALCS
-  for (fleet=1; fleet<=nfleet; fleet++)
+  for (fleet=1; fleet<=nfleet_act; fleet++)
   {
     ncatch_f(fleet) = 0;
     for (yr=styr; yr<=endyr; yr++) 
@@ -259,13 +258,6 @@ DATA_SECTION
   !! echotxt(nlfs_obs, " Number of survey length freq lines to read");
   !! echo(lfs_data);
   
-  // Extract information from LF data frames:
-
-
-
-
-
-
   init_int ncapture_obs;                           ///< Number of capture data lines to read    
   init_int nmark_obs;                              ///< Number of mark data lines to read
   init_int nrecapture_obs;                         ///< Number of recapture data lines to read
@@ -454,12 +446,12 @@ DATA_SECTION
   // TODO: The selex_type matrix can probably be read in directly, then the loop over the columns should work the same.
  LOCAL_CALCS
   nselex = 0;
-  for (ii=1; ii<=nselex_pats; ii++)
+  for (i=1; i<=nselex_pats; i++)
   {
-    *(ad_comm::global_datafile) >> selex_type(ii,1) >> selex_type(ii,2) >> selex_type(ii,3);
-    if (selex_type(ii,2) == 1) nselex += 2;
-    if (selex_type(ii,2) == 2) nselex += nclass;
-    if (selex_type(ii,2) == 3) nselex += 1;
+    *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
+    if (selex_type(i,2) == 1) nselex += 2;
+    if (selex_type(i,2) == 2) nselex += nclass;
+    if (selex_type(i,2) == 3) nselex += 1;
   }
   nselex_pars = nselex;
   echotxt(nselex_pars, " Total number of selectivity parameters");
@@ -670,7 +662,7 @@ DATA_SECTION
   // Create dummy datum for use when max phase == 0
   number dummy_datum;
   int dummy_phase;
-  !! dummy_datum=1.;
+  !! dummy_datum = 1;
   !! if(final_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
 
   // Adjust the phases to negative if beyond final_phase and find resultant max_phase
@@ -683,12 +675,12 @@ DATA_SECTION
   active_parm(1,ntheta)=0;
   par_count=0;
   
-  for(ii=1; ii<=ntheta; ii++)
+  for(i=1; i<=ntheta; i++)
   { 
     par_count++;
-    if(theta_phz(ii) > final_phase) theta_phz(ii)=-1;
-    if(theta_phz(ii) > max_phase) max_phase=theta_phz(ii);
-    if(theta_phz(ii) >= 0)
+    if(theta_phz(i) > final_phase) theta_phz(i)=-1;
+    if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
+    if(theta_phz(i) >= 0)
       active_count++; active_parm(active_count)=par_count;
   }
   active_parms=active_count;
@@ -811,21 +803,81 @@ PRELIMINARY_CALCS_SECTION
    }
   if (verbose == 1) cout << "PIN file specified and used for initial parameters" << endl;
 
+  // TODO: Sections here require looping through fleet and survey specific data. Work out best method for this.
 
-
-  // Exit here, to test code up to this point.
-  exit(1);
 
 // =========================================================================================================
 PROCEDURE_SECTION
 
+  Set_effort();
+  Set_growth();
+
   like_value.initialize();
   fobj += square(dummy_datum-dummy_parm);
 
+// --------------------------------------------------------------------
+FUNCTION Set_effort
+  // Convert to Fs
+  int count, ifleet, iyear;
+  dvariable ratio, ratio_2, delta;
+
+  for (ifleet=1; ifleet<=nfleet_act; ifleet++)
+  {
+    count = 0;
+    for (iyear=styr; iyear<=endyr; iyear++)
+    {
+      if (effort(ifleet,iyear) > 0)
+      {
+        if (f_new(ifleet,0) == 0 |iyear<f_new(ifleet,1) | iyear>f_new(ifleet,2))
+          { count += 1; f_all(ifleet,iyear) = f_est(ifleet,count); }
+        else
+         f_all(ifleet,iyear) = -100;
+      }  
+      else
+        f_all(ifleet,iyear) = 0;
+    }
+  }  
+  
+  // Fill in missing values using a ratio estimator:
+  for (ifleet=0; ifleet<=nfleet; ifleet++)
+    if (f_new(ifleet,0) > 0)
+    {
+     ratio = 0; ratio_2 = 0;
+     for (iyear=f_new(ifleet,3); iyear<=f_new(ifleet,4); iyear++)
+     {
+       if (effort(ifleet,iyear) > 0)
+       {
+        ratio += -log(1.0-f_all(ifleet,iyear))/effort(ifleet,iyear);
+        ratio_2 += 1;
+       }
+     }
+     delta = ratio/ratio_2;
+     for (iyear=f_new(ifleet,1); iyear<=f_new(ifleet,2); iyear++)
+       f_all(ifleet,iyear) = 1.0-mfexp(-delta*effort(ifleet,iyear));
+    }
+
+// --------------------------------------------------------------------
+FUNCTION Set_growth
+  int iclass, jclass;
+  dvariable total;
+  
+  strans.initialize();
+
+  for (iclass=1; iclass<nclass; iclass++)
+  {
+    total = (1+mfexp(gtrans_parms(iclass)));
+    strans(iclass,iclass) = 1/total;
+    strans(iclass,iclass+1) =mfexp(gtrans_parms(iclass))/total;
+  }
+  
+  strans(nclass,nclass) = 1;  // Special case
+
 // =========================================================================================================
 REPORT_SECTION
- REPORT(dummy_parm);
 
+  // Exit here, to test code up to this point.
+  exit(1);
+  
 // =========================================================================================================
 
 FINAL_SECTION
