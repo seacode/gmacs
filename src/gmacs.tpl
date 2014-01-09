@@ -44,9 +44,15 @@ GLOBALS_SECTION
   #define echo(object) echoinput << #object << "\n" << object << endl;
   #define echotxt(object,text) echoinput << object << "\t" << text << endl;
 
+  /**
+  \def check(object)
+  Prints name and value of \a object on ADMB check %ofstream file.
+  */
+  #define check(object) check << #object << "\n" << object << endl;
+
   // Open output files using ofstream
   ofstream echoinput("echoinput.gm");
-  ofstream checkfile("check.gm");
+  ofstream checkfile("checkfile.gm");
   ofstream warning("warning.gm");
 
   // Define some adstring variables for use in output files:
@@ -88,9 +94,9 @@ DATA_SECTION
 
   // Read various option values, then echo:
   init_int verbose;            // Display detail to screen (option 1/0)
-  init_int final_phase;          // Stop estimation after this phase
+  init_int final_phase;        // Stop estimation after this phase
   init_int use_pin;            // Use a .pin file to get initial parameters (option 1/0)
-  init_int read_growth;          // Read growth transition matrix file (option 1/0)
+  init_int read_growth;        // Read growth transition matrix file (option 1/0)
 
   !! echotxt(verbose, " display detail");
   !! echotxt(final_phase, " final phase");
@@ -199,9 +205,9 @@ DATA_SECTION
 
   init_vector discard_mort(1,nfleet);           ///< Discard mortality (per fishery)
   init_vector retention(styr,endyr);            ///< Retention value for each year
-  init_matrix catch_time(1,nfleet,styr,endyr);  ///< Timing of each fishery (as fraction of time-step)
-  init_matrix effort(1,nfleet,styr,endyr);      ///< effort by fishery
-  init_imatrix f_new(1,nfleet,1,5);             ///< Alternative f estimators (overwrite others)
+  init_matrix catch_time(1,nfleet_act,styr,endyr);  ///< Timing of each fishery (as fraction of time-step)
+  init_matrix effort(1,nfleet_act,styr,endyr);      ///< effort by fishery
+  init_imatrix f_new(1,nfleet_act,1,5);             ///< Alternative f estimators (overwrite others)
 
   !! echo(discard_mort);
   !! echo(retention);
@@ -253,9 +259,16 @@ DATA_SECTION
   !! echotxt(nlfs_obs, " Number of survey length freq lines to read");
   !! echo(lfs_data);
   
-   init_int ncapture_obs;                           ///< Number of capture data lines to read    
-   init_int nmark_obs;                              ///< Number of mark data lines to read
-   init_int nrecapture_obs;                         ///< Number of recapture data lines to read
+  // Extract information from LF data frames:
+
+
+
+
+
+
+  init_int ncapture_obs;                           ///< Number of capture data lines to read    
+  init_int nmark_obs;                              ///< Number of mark data lines to read
+  init_int nrecapture_obs;                         ///< Number of recapture data lines to read
 
   init_matrix capture_data(1,ncapture_obs,1,ndclass+3);         ///< Capture data, one line per ncapture_obs, requires years, fleet, sex, then data vector
   init_matrix mark_data(1,nmark_obs,1,ndclass+3);               ///< Mark data, one line per nmark_obs, requires years, fleet, sex, then data vector
@@ -428,39 +441,39 @@ DATA_SECTION
 
   // Determine number of different selectivity functions/patterns to estimate:
   int nselex;
-  int nselex_pat;
-  int nselex_par;
+  int nselex_pats;
+  int nselex_pars;
 
-  !! nselex_pat = max(selex_survey_pnt);
-  !! echotxt(nselex_pat, " Total number of selectivity patterns");
+  !! nselex_pats = max(selex_survey_pnt);
+  !! echotxt(nselex_pats, " Total number of selectivity patterns");
 
   // TODO: For selex types, check AEP BBRKC document for what each type is.
   // Read in specifications for each selectivity pattern and determine number of parameters to estimate:
-  matrix selex_type(1,nselex_pat,1,4);    ///< Selectivity types for each fleet/survey by time-block
+  matrix selex_type(1,nselex_pats,1,4);    ///< Selectivity types for each fleet/survey by time-block
   
   // TODO: The selex_type matrix can probably be read in directly, then the loop over the columns should work the same.
  LOCAL_CALCS
   nselex = 0;
-  for (ii=1; ii<=nselex_pat; ii++)
+  for (ii=1; ii<=nselex_pats; ii++)
   {
     *(ad_comm::global_datafile) >> selex_type(ii,1) >> selex_type(ii,2) >> selex_type(ii,3);
     if (selex_type(ii,2) == 1) nselex += 2;
     if (selex_type(ii,2) == 2) nselex += nclass;
     if (selex_type(ii,2) == 3) nselex += 1;
   }
-  nselex_par = nselex;
-  echotxt(nselex_par, " Total number of selectivity parameters");
+  nselex_pars = nselex;
+  echotxt(nselex_pars, " Total number of selectivity parameters");
  END_CALCS
 
   //TODO: Add more selectivity options above as necessary for next example models. See LSMR code for example.
 
   // Read in selectivity parameter specifications:
-  init_matrix selex_control(1,nselex_par,1,4);      ///< Selectivity parameter matrix, with specifications
-  matrix trans_selex_control(1,4,1,nselex_par);     ///< Transpose of selectivity parameter matrix
-  vector selex_init(1,nselex_par);                  ///< Vector of selex parameter specs - initial values
-  vector selex_lbnd(1,nselex_par);                  ///< Vector of selex parameter specs - lower bounds
-  vector selex_ubnd(1,nselex_par);                  ///< Vector of selex parameter specs - upper bounds
-  ivector selex_phz(1,nselex_par);                  ///< Vector of selex parameter specs - phase values
+  init_matrix selex_control(1,nselex_pars,1,4);      ///< Selectivity parameter matrix, with specifications
+  matrix trans_selex_control(1,4,1,nselex_pars);     ///< Transpose of selectivity parameter matrix
+  vector selex_init(1,nselex_pars);                  ///< Vector of selex parameter specs - initial values
+  vector selex_lbnd(1,nselex_pars);                  ///< Vector of selex parameter specs - lower bounds
+  vector selex_ubnd(1,nselex_pars);                  ///< Vector of selex parameter specs - upper bounds
+  ivector selex_phz(1,nselex_pars);                  ///< Vector of selex parameter specs - phase values
   
   !! echo(selex_control);
 
@@ -613,7 +626,7 @@ DATA_SECTION
   // TODO: Check these extra objects below, and make them Gmacs format if required.
 
   //3darray FleetObsLF(1,nfleet,1,maxFleetLF,1,nclass)        // Catch/bycatch Lfs (by model classes)
-  //3darray SurveyObsLF(1,nsurvey,1,maxSurveyLF,1,nclass)      // Survey Lfs (by model classes)
+  //3darray SurveyObsLF(1,nsurvey,1,maxSurveyLF,1,nclass)     // Survey Lfs (by model classes)
   
   // Stuff related to the SR relationship
   int IsB0;                                         // Constant recruitment?
@@ -685,14 +698,11 @@ DATA_SECTION
 
   // TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
 
-  // Exit here, to test read-in of data and control objects.
-  !!exit(1);
-
 // =========================================================================================================
 PARAMETER_SECTION
   
   // Create dummy parameter that will be estimated when final_phase is set to 0
-  init_bounded_number dummy_parm(0,2,dummy_phase)  //  Dummy parameter estimated in phase 0 
+  init_bounded_number dummy_parm(0,2,dummy_phase);  //  Dummy parameter estimated in phase 0 
   
   // Initialize general parameter matrix:
   init_bounded_number_vector theta_parms(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);          ///< Vector of general parameters
@@ -700,7 +710,7 @@ PARAMETER_SECTION
   // Initialize other parameter matrices:
   init_bounded_number_vector madd_parms(1,nmadd_pars,madd_lbnd,madd_ubnd,madd_phz);                   ///< Vector of increments in nat_mort parameters
   init_bounded_number_vector gtrans_parms(1,nclass-1,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
-  init_bounded_number_vector selex_parms(1,nselex_par,selex_lbnd,selex_ubnd,selex_phz);               ///< Vector of selectivity parameters
+  init_bounded_number_vector selex_parms(1,nselex_pars,selex_lbnd,selex_ubnd,selex_phz);               ///< Vector of selectivity parameters
   init_bounded_number_vector reten_parms(1,nreten_pars,reten_lbnd,reten_ubnd,reten_phz);              ///< Vector of retention parameters
   init_bounded_number_vector surveyq_parms(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz);    ///< Vector of survey Q parameters
   init_bounded_number_vector lognin_parms(1,nclass,lognin_lbnd,lognin_ubnd,lognin_phz);               ///< Vector of initial N parameters
@@ -726,7 +736,7 @@ PARAMETER_SECTION
   3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);      ///< Distinct fishery selectivity array
   3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
   vector surveyq(1,nsurvey);                                  ///< Survey Q vector
-  matrix selex_all(1,nselex_pat,1,nclass);                    ///< All selectivity matrix
+  matrix selex_all(1,nselex_pats,1,nclass);                    ///< All selectivity matrix
 
   3darray catch_fleet(1,nfleet,styr,endyr,1,nclass);          ///< Catches (numbers by class)
   matrix catch_fleet_wt_pred(-1,nfleet,styr,endyr);           ///< Predicted catch weights
@@ -766,15 +776,49 @@ PARAMETER_SECTION
   // TODO: See example for more complicated selectivity options from LSMR.tpl.
 
 // =========================================================================================================
-// Dummy version of PRELIM_CALCS_SEC for testing model and read-in section.
 PRELIMINARY_CALCS_SECTION
-  
+
   // Initialize the dummy parameter as needed:
   if(final_phase<=0) {dummy_parm=0.5;} else {dummy_parm=1.0;}
 
+  // Create required counters and objects:
+  int iyr,iclass,jclass,ifleet,isurv,j,Ipnt,Jpnt,Last,SelType;
+  float total,num_ss,scalar;
+  
+  dvector total_ss(1,nfleet);
+  dmatrix ss_fleet_store(1,nfleet,1,nlf_obs);
+  dmatrix ss_survey_store(1,nsurvey,1,nlfs_obs);
+  dvector surv_lf_store(1,ndclass);
+
+  cout << "Started preliminary calcs section" << endl;
+  cout << "Verbose option = " << verbose << endl;
+
+  // If option selected to use pin file, then get initial parameters: 
+  // TODO: Check this, could values from pin file be used directly?
+  if (use_pin==1) 
+   {
+    for (j=1; j<=ntheta; j++) theta_parms(j) = theta_init(j);
+    for (j=1; j<=nmadd_pars; j++) madd_parms(j) = madd_init(j);  
+    for (j=1; j<=nclass-1; j++) gtrans_parms(j) = gtrans_init(j);
+    for (j=1; j<=nselex_pars; j++) selex_parms(j) = selex_init(j);
+    for (j=1; j<=nreten_pars; j++) reten_parms(j) = reten_init(j);
+    for (j=1; j<=nsurveyq_pars; j++) surveyq_parms(j) = surveyq_init(j);
+    for (j=1; j<=nclass; j++) lognin_parms(j) = lognin_init(j);
+    
+    for (ifleet=1; ifleet<=nfleet_act; ifleet++)
+     for (iyr=1; iyr<=ncatch_f(ifleet); iyr++) f_est(ifleet,iyr) = 0.1;
+    for (iyr=styr; iyr<=endyr; iyr++) recdev(iyr) = 0; 
+   }
+  if (verbose == 1) cout << "PIN file specified and used for initial parameters" << endl;
+
+
+
+  // Exit here, to test code up to this point.
+  exit(1);
+
 // =========================================================================================================
-// Dummy version of PROC_SECT for testing model and read-in section.
 PROCEDURE_SECTION
+
   like_value.initialize();
   fobj += square(dummy_datum-dummy_parm);
 
