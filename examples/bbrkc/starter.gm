@@ -7,6 +7,6 @@ growth.dat
 #0	# Show diagnostics on screen (maybe merge this with display detail option above)
 4	# Turn off estimation for parameters entering after this phase
 0 	# Use PIN file to get starting parameters (0 no, 1 yes)
-1	# Read growth transition matrix data file (0 no, 1 yes)
+0	# Read growth transition matrix data file (0 no, 1 yes)
 
 999 # EOF check.
