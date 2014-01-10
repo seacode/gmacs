@@ -19,11 +19,12 @@
 //  - Add simulation option, see LSMR model for demonstration 
 //
 //  =========================================================================================================
+
+//  =========================================================================================================
 GLOBALS_SECTION
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
-  // #include <C:/Dropbox/Github/cstar/src/cstar.hpp>
 
   time_t start,finish;
   long hour,minute,second;
@@ -118,10 +119,13 @@ DATA_SECTION
   !! echoinput << " Start reading main data file" << endl;
 
   //Initialize some counters:
-  int i;
+  int i; 
   int j;
-  int yr;
-  int fleet;
+  int iyr;
+  int iclass;
+  int jclass;
+  int ifleet;
+  int isurvey;
   int last;
   
   // Read input from main data file:
@@ -170,9 +174,9 @@ DATA_SECTION
     nfleet_dis = 0;
     nfleet_byc = 0;
 
-    for (fleet=1; fleet<=nfleet; fleet++)
+    for (ifleet=1; ifleet<=nfleet; ifleet++)
     {
-      switch (fleet_control(fleet,2)) 
+      switch (fleet_control(ifleet,2)) 
       {
         case 1 : 
           nfleet_ret += 1;
@@ -192,6 +196,7 @@ DATA_SECTION
   init_matrix survey_data(1,nsurvey_obs,1,6);     ///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
 
   // Q: Some pre-processing of these data required. See simple.tpl for example.
+  // TODO: Multiply these catch and survey data by multipliers provided. Simple.tpl Line 56+
 
   !! echotxt(catch_units,  " Catch units");
   !! echotxt(catch_multi,  " Catch multipliers");
@@ -207,7 +212,7 @@ DATA_SECTION
   init_vector discard_mort(1,nfleet);               ///< Discard mortality (per fishery)
   init_vector hg(styr,endyr);                       ///< Retention value for each year (highgrading)
   init_matrix catch_time(1,nfleet_act,styr,endyr);  ///< Timing of each fishery (as fraction of time-step)
-  init_matrix effort(1,nfleet_act,styr,endyr);      ///< effort by fishery
+  init_matrix effort(1,nfleet_act,styr,endyr);      ///< Effort by fishery
   init_imatrix f_new(1,nfleet_act,1,5);             ///< Alternative f estimators (overwrite others)
 
   !! echo(discard_mort);
@@ -216,52 +221,159 @@ DATA_SECTION
   !! echo(effort);
   !! echo(f_new);
 
-  // TODO: Check if all neccessary components from Simple example have been read in. 
-  //     Highgrading vs. Retention, which is best? Retention function is distinct from the highgrading vector, so maybe change name and data input point.
-
   // Determine which F values will be computed using effort (f_new) if applicable: 
 
   ivector ncatch_f(1,nfleet_act);
  
  LOCAL_CALCS
-  for (fleet=1; fleet<=nfleet_act; fleet++)
+  for (ifleet=1; ifleet<=nfleet_act; ifleet++)
   {
-    ncatch_f(fleet) = 0;
-    for (yr=styr; yr<=endyr; yr++) 
-      if (effort(fleet,yr) > 0) 
+    ncatch_f(ifleet) = 0;
+    for (iyr=styr; iyr<=endyr; iyr++) 
+      if (effort(ifleet,iyr) > 0) 
       {
-        if (f_new(fleet,1) == 0 | yr < f_new(fleet,2) | yr > f_new(fleet,3))
-          ncatch_f(fleet) += 1;
+        if (f_new(ifleet,1) == 0 | iyr < f_new(ifleet,2) | iyr > f_new(ifleet,3))
+          ncatch_f(ifleet) += 1;
       }
   }
  END_CALCS
   
   !! echotxt(ncatch_f, " Number of F's (calculated)")
   
+  // Read in the length frequency data:
+  init_int nlf_obs;                                 ///< Number of length frequency lines to read for fishing fleets 
+  init_matrix lf_data(1,nlf_obs,1,ndclass+7);       ///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
+  ivector nlf_fleet(1,nfleet)     ;                 ///< Number of years of lf data per fleet
+ 
+ LOC_CALCS 
+  nlf_fleet.initialize();
+  for (i=1; i<=nlf_obs; i++) 
+  {
+    nlf_fleet(int(lf_data(i,3)))++ ;
+  }
+ END_CALCS
+  
+  imatrix yr_fleet_lf(1,nfleet,1,nlf_fleet);                ///< Years with lf data, by fleet
+  matrix ss_fleet_lf(1,nfleet,1,nlf_fleet);                 ///< Effective sample sizes, by fleet
+  3darray fleet_lf(1,nfleet,1,nlf_fleet,1,ndclass);         ///< Length-frequency data (ndclass), by fleet (can be ragged array)
+  3darray fleet_lf_obs(1,nfleet,1,nlf_fleet,1,nclass);      ///< Length-frequency data (nclass), by fleet (can be ragged array)
+ 
+ LOC_CALCS 
+  ivector iobs_fl(1,nfleet);                                ///< Counter for number of obs within each fleet
+  iobs_fl.initialize();
+  for (i=1; i<=nlf_obs; i++) 
+  {
+    ifleet = int(lf_data(i,3));
+    iobs_fl(ifleet)++;
+    yr_fleet_lf(ifleet,iobs_fl(ifleet)) = (lf_data(i,1));
+    ss_fleet_lf(ifleet,iobs_fl(ifleet)) = lf_data(i,7);
+    
+    for (iclass=1; iclass<=nclass; iclass++)
+      fleet_lf_obs(ifleet,iobs_fl(ifleet),iclass) = sum(lf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));
+      fleet_lf(ifleet,iobs_fl(ifleet),iclass) = lf_data(i)(8,(ndclass+7)).shift(1);
+  }
+ END_CALCS
+
+  !! echotxt(nlf_obs,  " Number of length freq lines to read");
+  !! echo(lf_data);
+  !! echo(nlf_fleet);
+  !! echo(yr_fleet_lf);
+  !! echo(ss_fleet_lf);
+  !! echo(fleet_lf_obs);
+  
+  // Read in survey length frequency data:
+  init_int nlfs_obs;                                ///< Number of survey length frequency lines to read
+  init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);     ///< Survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
+  ivector nlf_survey(1,nsurvey);                    ///< Number of years of survey lf data per survey
+
+ LOC_CALCS 
+  nlf_survey.initialize();
+  for (i=1; i<=nlfs_obs; i++) 
+  {
+    nlf_survey(int(lfs_data(i,3)))++ ;
+  }
+ END_CALCS
+  
+  imatrix yr_survey_lf(1,nsurvey,1,nlf_survey);                ///< Years with lf data, by survey
+  matrix ss_survey_lf(1,nsurvey,1,nlf_survey);                 ///< Effective sample sizes, by survey
+  3darray survey_lf(1,nsurvey,1,nlf_survey,1,ndclass);         ///< Length-frequency data (ndclass), by survey (can be ragged array)
+  3darray survey_lf_obs(1,nsurvey,1,nlf_survey,1,nclass);      ///< Length-frequency data (nclass), by survey (can be ragged array)
+ 
+ LOC_CALCS 
+  ivector iobs_sv(1,nsurvey);                                  ///< Counter for number of obs within each survey
+  iobs_sv.initialize();
+  for (i=1; i<=nlfs_obs; i++) 
+  {
+    isurvey = int(lfs_data(i,3));
+    iobs_sv(isurvey)++;
+    yr_survey_lf(isurvey,iobs_sv(isurvey)) = (lfs_data(i,1));
+    ss_survey_lf(isurvey,iobs_sv(isurvey)) = lfs_data(i,5);
+    
+    for (iclass=1; iclass<=nclass; iclass++)
+      survey_lf_obs(isurvey,iobs_sv(isurvey),iclass) = sum(lfs_data(i)(5+class_link(iclass,1),5+class_link(iclass,2)));
+      survey_lf(isurvey,iobs_sv(isurvey),iclass) = lfs_data(i)(6,(ndclass+5)).shift(1);
+  }
+ END_CALCS
+
+  !! echotxt(nlfs_obs, " Number of survey length freq lines to read");
+  !! echo(lfs_data);
+  !! echo(nlf_survey);
+  !! echo(yr_survey_lf);
+  !! echo(ss_survey_lf);
+  !! echo(survey_lf_obs);
+  
+  // Read in length, weight, fecundity vectors, then calculate equivalent vectors with nclass number of size-classes:
   init_vector mean_length(1,ndclass);       ///< Mean length vector input
   init_vector mean_weight(1,ndclass);       ///< Mean weight vector input
   init_vector fecundity_inp(1,ndclass);     ///< Fecundity vector input
-
-  vector length(1,nclass);                  ///< Length vector (mm) for model
-  vector weight(1,nclass);                  ///< Weight (kg) vector for model
-  vector fecundity(1,nclass);               ///< Fecundity (kg) vector for model
 
   !! echo(mean_length);
   !! echo(mean_weight);
   !! echo(fecundity);
 
-  init_int nlf_obs;                                 ///< Number of length frequency lines to read  
-  init_matrix lf_data(1,nlf_obs,1,ndclass+7);       ///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
+  // Format length, weight, and fecundity vectors to model size-classes:
+  vector length(1,nclass);                  ///< Length vector (mm) for model
+  vector weight(1,nclass);                  ///< Weight (kg) vector for model
+  vector fecundity(1,nclass);               ///< Fecundity (kg) vector for model
 
-  init_int nlfs_obs;                                ///< Number of survey length frequency lines to read
-  init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);     ///< Survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
+  vector surv_lf_store(1,ndclass);         ///< Survey lf total by data class
 
-  !! echotxt(nlf_obs,  " Number of length freq lines to read");
-  !! echo(lf_data);
-
-  !! echotxt(nlfs_obs, " Number of survey length freq lines to read");
-  !! echo(lfs_data);
+  !! checkfile << "Class length, weight, and fecundity" << endl;
   
+ // TODO: Check surv_lf_store loop over nlfs_obs; only loops over first survey in simple.tpl (only first survey has data)
+ LOCAL_CALCS
+  int total;
+  total = 0;
+  for (iclass=1; iclass<=ndclass; iclass++)
+   {
+    surv_lf_store(iclass) = 0;
+    for (iyr=1; iyr<=nlfs_obs; iyr++) surv_lf_store(iclass) += survey_lf(1,iyr,iclass);
+    total += surv_lf_store(iclass);
+   }
+  if (verbose == 1) cout << "Survey sample sizes stored" << endl; // CHECK: WTF? Not storing sample sizes.
+
+  for (iclass=1; iclass<=nclass; iclass++)
+   {
+    length(iclass) = 0; 
+    weight(iclass) = 0; 
+    fecundity(iclass) = 0; 
+    total = 0;
+    for (jclass=class_link(iclass,1); jclass<=class_link(iclass,2); jclass++)
+     {
+      length(iclass) += mean_length(jclass)*surv_lf_store(jclass);
+      weight(iclass) += mean_weight(jclass)*surv_lf_store(jclass);
+      fecundity(iclass) += fecundity_inp(jclass)*surv_lf_store(jclass);
+      total += surv_lf_store(jclass);
+     }
+     length(iclass) /= total;
+     weight(iclass) /= total;
+     fecundity(iclass) /= total;
+     checkfile << iclass << " " << length(iclass) << " " << weight(iclass) << " " << fecundity(iclass) << endl;
+    }
+  if (verbose == 1) cout << " Lengths, weights, and fecundity specified" << endl;
+ END_CALCS
+
+  // Read in capture, mark, recapture data:
   init_int ncapture_obs;                           ///< Number of capture data lines to read    
   init_int nmark_obs;                              ///< Number of mark data lines to read
   init_int nrecapture_obs;                         ///< Number of recapture data lines to read
@@ -274,7 +386,7 @@ DATA_SECTION
   !! echotxt(nmark_obs,      " Number of mark data lines");
   !! echotxt(nrecapture_obs, " Number of recapture data lines")
 
-  // Echo capture, mark, and recapture data when appropriate:
+  // Echo capture, mark, recapture data when appropriate:
  LOCAL_CALCS
   if(ncapture_obs > 0) 
   {
@@ -378,19 +490,19 @@ DATA_SECTION
   // Fill matrices and vectors created above:
  LOC_CALCS
     trans_theta_control = trans(theta_control);
-    theta_init = trans_theta_control(1);
-    theta_lbnd = trans_theta_control(2);
-    theta_ubnd = trans_theta_control(3);
-    theta_phz  = ivector(trans_theta_control(4));
-    theta_prior = ivector(trans_theta_control(5));
-    theta_pmean = trans_theta_control(6);
-    theta_psd = trans_theta_control(7);
-    theta_cov = ivector(trans_theta_control(8));
-    theta_dev =  ivector(trans_theta_control(9));
-    theta_dsd = trans_theta_control(10);
-    theta_dmin = ivector(trans_theta_control(11));
-    theta_dmax = ivector(trans_theta_control(12));
-    theta_blk = ivector(trans_theta_control(13));
+    theta_init          = trans_theta_control(1);
+    theta_lbnd          = trans_theta_control(2);
+    theta_ubnd          = trans_theta_control(3);
+    theta_phz           = ivector(trans_theta_control(4));
+    theta_prior         = ivector(trans_theta_control(5));
+    theta_pmean         = trans_theta_control(6);
+    theta_psd           = trans_theta_control(7);
+    theta_cov           = ivector(trans_theta_control(8));
+    theta_dev           =  ivector(trans_theta_control(9));
+    theta_dsd           = trans_theta_control(10);
+    theta_dmin          = ivector(trans_theta_control(11));
+    theta_dmax          = ivector(trans_theta_control(12));
+    theta_blk           = ivector(trans_theta_control(13));
  END_CALCS
 
   // Read in specifications relating to recruitment:
@@ -559,13 +671,13 @@ DATA_SECTION
   // Fill matrices and vectors created above:
  LOCAL_CALCS
     trans_surveyq_control = trans(surveyq_control);
-    surveyq_init = trans_surveyq_control(1);
-    surveyq_lbnd = trans_surveyq_control(2);
-    surveyq_ubnd = trans_surveyq_control(3);
-    surveyq_phz = ivector(trans_surveyq_control(4));
-    surveyq_prior = ivector(trans_surveyq_control(5));
-    surveyq_pmean = trans_surveyq_control(6);
-    surveyq_psd = trans_surveyq_control(7);  
+    surveyq_init          = trans_surveyq_control(1);
+    surveyq_lbnd          = trans_surveyq_control(2);
+    surveyq_ubnd          = trans_surveyq_control(3);
+    surveyq_phz           = ivector(trans_surveyq_control(4));
+    surveyq_prior         = ivector(trans_surveyq_control(5));
+    surveyq_pmean         = trans_surveyq_control(6);
+    surveyq_psd           = trans_surveyq_control(7);  
  END_CALCS
 
   // Read in initial N parameter specifications:
@@ -581,10 +693,10 @@ DATA_SECTION
   // Fill matrices and vectors created above:
  LOCAL_CALCS
     trans_lognin_control = trans(lognin_control);
-    lognin_init = trans_lognin_control(1);
-    lognin_lbnd = trans_lognin_control(2);
-    lognin_ubnd = trans_lognin_control(3);
-    lognin_phz = ivector(trans_lognin_control(4));  
+    lognin_init          = trans_lognin_control(1);
+    lognin_lbnd          = trans_lognin_control(2);
+    lognin_ubnd          = trans_lognin_control(3);
+    lognin_phz           = ivector(trans_lognin_control(4));  
  END_CALCS
 
   // Read in selectivity parameter specifications:
@@ -769,8 +881,8 @@ PARAMETER_SECTION
   vector surveyq(1,nsurvey);                                  ///< Survey Q vector
   matrix selex_all(1,nselex_pats,1,nclass);                    ///< All selectivity matrix
 
-  3darray catch_fleet(1,nfleet,styr,endyr,1,nclass);          ///< Catches (numbers by class)
-  matrix catch_fleet_wt_pred(-1,nfleet,styr,endyr);           ///< Predicted catch weights
+  3darray fleet_lf_pred(1,nfleet,1,nlf_fleet,1,nclass);       ///< Predicted catches numbers by class)
+  matrix catch_fleet_biom_pred(-1,nfleet,styr,endyr);           ///< Predicted catch weights
   matrix catch_fleet_num_pred(-1,nfleet,styr,endyr);          ///< Predicted catch numbers
   
   3darray survey(1,nsurvey,styr,endyr+1,1,nclass);            ///< Survey LF from the model
@@ -812,19 +924,16 @@ PRELIMINARY_CALCS_SECTION
   // Initialize the dummy parameter as needed:
   if(final_phase<=0) {dummy_parm=0.5;} else {dummy_parm=1.0;}
 
-  // Create required counters and objects:
-  int iyr, iclass, jclass, ifleet, isurv, j, ipnt, jpnt, iselex;
-  float total, num_ss, scalar;
-  
   dvector total_ss(1,nfleet);
   dmatrix ss_fleet_store(1,nfleet,1,nlf_obs);
   dmatrix ss_survey_store(1,nsurvey,1,nlfs_obs);
-  dvector surv_lf_store(1,ndclass);
 
   cout << " Started preliminary calcs section \n" << endl;
   cout << " Verbose option = " << verbose << "\n" << endl;
 
   // Set the initial  values of parameters
+  int j;
+
   for (j=1; j<=ntheta; j++) theta_parms(j) = theta_init(j);
   for (j=1; j<=nmadd_pars; j++) madd_parms(j) = madd_init(j);  
   for (j=1; j<=nclass-1; j++) gtrans_parms(j) = gtrans_init(j);
@@ -834,32 +943,10 @@ PRELIMINARY_CALCS_SECTION
   for (j=1; j<=nclass; j++) lognin_parms(j) = lognin_init(j);
     
   for (ifleet=1; ifleet<=nfleet_act; ifleet++)
-   for (iyr=1; iyr<=ncatch_f(ifleet); iyr++) f_est(ifleet,iyr) = 0.1;
-  for (iyr=styr; iyr<=endyr; iyr++) recdev(iyr) = 0; 
+    for (iyr=1; iyr<=ncatch_f(ifleet); iyr++) f_est(ifleet,iyr) = 0.1;
+  recdev.initialize();
 
-  // Format length, weight, and fecundity vectors to model size-classes:
-  checkfile << "Class length, weight, and fecundity" << endl;
-  
-  for (iclass=1; iclass<=nclass; iclass++)
-   {
-    length(iclass) = 0; weight(iclass) = 0; fecundity(iclass) = 0; total = 0;
-    for (jclass=class_link(iclass,1);jclass<=class_link(iclass,2);jclass++)
-     {
-      length(iclass) += mean_length(jclass)*surv_lf_store(jclass);
-      weight(iclass) += mean_weight(jclass)*surv_lf_store(jclass);
-      fecundity(iclass) += fecundity_inp(jclass)*surv_lf_store(jclass);
-      total += surv_lf_store(jclass);
-     }
-     length(iclass) /= total;
-     weight(iclass) /= total;
-     fecundity(iclass) /= total;
-     checkfile << iclass << " " << length(iclass) << " " << weight(iclass) << " " << fecundity(iclass) << endl;
-    }
-  if (verbose == 1) cout << " Lengths, weights, and fecundity specified" << endl; 
-  
-  cout << " Completed Preliminary Calcs Section \n" << endl;
-
-  // TODO: Sections here require looping through fleet and survey specific data. Work out best method for this.
+  // TODO: Sections here require looping through fleet and survey specific data. See if completed now with new code.
 
 
 // =========================================================================================================
@@ -954,8 +1041,8 @@ FUNCTION Set_selectivity
   // TODO: Check the ipnt pointer is correct here; inherits 0 from selex_type for fleet 1, could be made to be 1 if required in selex_type setup.
   for (ifleet=1; ifleet<=nselex_pats; ifleet++)
   {
-    ipnt = selex_type(fleet,4);
-    if (selex_type(fleet,2) == 1)
+    ipnt = selex_type(ifleet,4);
+    if (selex_type(ifleet,2) == 1)
     {
       slope_par = selex_parms(ipnt+2);
       temp = -log(19.0)/slope_par;
@@ -964,32 +1051,32 @@ FUNCTION Set_selectivity
       temp =  selex_all(ifleet,nclass);
       for (iclass=1;iclass<=nclass;iclass++) selex_all(ifleet,iclass) /= temp;
     }
-    if (selex_type(fleet,2) == 2)
+    if (selex_type(ifleet,2) == 2)
     {
       for (iclass=1; iclass<=nclass; iclass++)
         selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(selex_parms(ipnt+iclass)));
       temp =  selex_all(ifleet,nclass);
       for (iclass=1; iclass<=nclass; iclass++) selex_all(ifleet,iclass) /= temp;
     }
-    if (selex_type(fleet,2) == 3)
+    if (selex_type(ifleet,2) == 3)
     {
-      jpnt = selex_type(selex_type(fleet,2),4);
+      jpnt = selex_type(selex_type(ifleet,2),4);
       slope_par = selex_parms(jpnt+2);
       temp = -log(19.0)/slope_par;
       for (iclass=1; iclass<=nclass; iclass++)
-       selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(temp*(length(iclass)-selex_parms(ipnt+1))));
+        selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(temp*(length(iclass)-selex_parms(ipnt+1))));
       temp =  selex_all(ifleet,nclass);
       for (iclass=1; iclass<=nclass; iclass++) selex_all(ifleet,iclass) /= temp;
     }
   } 
 
   // Fishery and bycatch selectivity
-  for (ifleet=0; ifleet<=nfleet; ifleet++)
+  for (ifleet=1; ifleet<=nfleet_act; ifleet++)
    for (iyr=styr; iyr<=endyr; iyr++)
     {
      ipnt = selex_fleet_pnt(ifleet,iyr);
      for (iclass=1; iclass<=nclass; iclass++)
-      selex_fleet(ifleet,iyr,iclass) = selex_all(ipnt,iclass) ;
+       selex_fleet(ifleet,iyr,iclass) = selex_all(ipnt,iclass) ;
     }  
   
   // Retention in the pot fishery
@@ -1026,13 +1113,16 @@ REPORT_SECTION
   check(f_all);
   check(strans);
   check(N);
+  check(selex_survey);
+  check(selex_fleet);
+  check(reten);
 
-  // Exit here, to test code up to this point.
   exit(1);
   
 // =========================================================================================================
 
 FINAL_SECTION
+  // Exit here, to test code up to this point.
   
   // Create final time stamp and determine runtime:
   time(&finish);
