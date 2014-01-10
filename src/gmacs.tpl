@@ -993,12 +993,13 @@ FUNCTION Set_selectivity
     }  
   
   // Retention in the pot fishery
-  for (iyr=styr; iyr<=endyr; iyr++)
-   for (iclass=1; iclass<=nclass; iclass++)
-    {
-     ipnt = (reten_fleet_pnt(iyr)-1)*nclass;
-     reten(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(reten_parms(ipnt+iclass)));
-    } 
+  for (ifleet=1; ifleet<=nfleet_ret; ifleet++)
+    for (iyr=styr; iyr<=endyr; iyr++)
+      for (iclass=1; iclass<=nclass; iclass++)
+      {
+        ipnt = (reten_fleet_pnt(ifleet,iyr)-1)*nclass;
+        reten(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(reten_parms(ipnt+iclass)));
+      } 
 
   // Survey selectivity
   for (isurv=1; isurv<=nsurvey; isurv++)
