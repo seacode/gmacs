@@ -119,8 +119,10 @@ DATA_SECTION
 
   //Initialize some counters:
   int i;
+  int j;
   int yr;
   int fleet;
+  int last;
   
   // Read input from main data file:
   init_int styr;        ///< Start year
@@ -202,14 +204,14 @@ DATA_SECTION
   !! echo(catch_data);
   !! echo(survey_data);
 
-  init_vector discard_mort(1,nfleet);           ///< Discard mortality (per fishery)
-  init_vector retention(styr,endyr);            ///< Retention value for each year
+  init_vector discard_mort(1,nfleet);               ///< Discard mortality (per fishery)
+  init_vector hg(styr,endyr);                       ///< Retention value for each year (highgrading)
   init_matrix catch_time(1,nfleet_act,styr,endyr);  ///< Timing of each fishery (as fraction of time-step)
   init_matrix effort(1,nfleet_act,styr,endyr);      ///< effort by fishery
   init_imatrix f_new(1,nfleet_act,1,5);             ///< Alternative f estimators (overwrite others)
 
   !! echo(discard_mort);
-  !! echo(retention);
+  !! echo(hg);
   !! echo(catch_time);
   !! echo(effort);
   !! echo(f_new);
@@ -456,7 +458,20 @@ DATA_SECTION
     if (selex_type(i,2) == 3) nselex += 1;
   }
   nselex_pars = nselex;
+  echo(selex_type);
   echotxt(nselex_pars, " Total number of selectivity parameters");
+
+  // Fill last column of selex_type matrix, for use in Set_selex function.
+  i = 0;
+  for (j=1; j<=nselex_pats; j++)
+   {
+    selex_type(j,4) = i;
+    if (selex_type(j,2)==1) last = 2;
+    if (selex_type(j,2)==2) last = nclass;
+    if (selex_type(j,2)==3) last = 1;
+    i += last;
+   }
+  check(selex_type);
  END_CALCS
 
   //TODO: Add more selectivity options above as necessary for next example models. See LSMR code for example.
@@ -514,11 +529,11 @@ DATA_SECTION
 
   // Read in pointers for time-varying survey catchability:
   int nsurveyq_pars;
-  init_imatrix q_survey_pnt(1,nsurvey,styr,endyr+1);
+  init_imatrix surveyq_pnt(1,nsurvey,styr,endyr+1);
 
-  !! nsurveyq_pars = max(q_survey_pnt);
+  !! nsurveyq_pars = max(surveyq_pnt);
 
-  !! echo(q_survey_pnt);
+  !! echo(surveyq_pnt);
   !! echotxt(nsurveyq_pars, " Total number of survey Q patterns");
 
   // Read in flag for number of surveys in a sub-area of the main survey area:
@@ -656,10 +671,9 @@ DATA_SECTION
   int par_count;
   int active_count;
   int active_parms;
-  ivector active_parm(1,ntheta);  //  Pointer from active list to the element of the full parameter list to get label
+  ivector active_parm(0,ntheta);  //  Pointer from active list to the element of the full parameter list to get label
 
-  // TODO: Add active_parm pointer list for labelling active parameters in report.gm output file.
-  // TODO: Extend this code below to sort through other parameter lists (anything with *_phz).
+  // TODO: Add active_parm pointer list for labelling active parameters in report file.
 
   // Create dummy datum for use when max phase == 0
   number dummy_datum;
@@ -667,16 +681,16 @@ DATA_SECTION
   !! dummy_datum = 1;
   !! if(final_phase<=0) {dummy_phase=0;} else {dummy_phase=-6;}
 
-  // Adjust the phases to negative if beyond final_phase and find resultant max_phase
+  // Adjust the phases to negative if beyond final_phase and find resultant max_phase:
   int max_phase;
  
  LOC_CALCS
-  cout << " Adjust phases \n" << endl;
+  cout << " Count parameters and get max phase, adjust phases if required" << endl;
   max_phase=1;
   active_count=0;
-  active_parm(1,ntheta)=0;
   par_count=0;
-  
+  active_parm(0,ntheta)=0;
+    
   for(i=1; i<=ntheta; i++)
   { 
     par_count++;
@@ -687,8 +701,14 @@ DATA_SECTION
   }
   active_parms=active_count;
  END_CALCS
-  !!cout << "Number of active parameters is " << active_parms << endl;
-  !!cout << "Maximum phase for estimation is " << max_phase << endl << endl;
+  !! cout << " Number of active parameters is " << active_parms << endl;
+  !! cout << " Maximum phase for estimation is " << max_phase << "\n" << endl;
+
+  !! check (theta_phz);
+  !! check (ntheta);
+  !! check (par_count); 
+  !! check (active_parm);
+  !! check (active_parms);
 
   // TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
 
@@ -697,6 +717,8 @@ PARAMETER_SECTION
   
   // Create dummy parameter that will be estimated when final_phase is set to 0
   init_bounded_number dummy_parm(0,2,dummy_phase);  //  Dummy parameter estimated in phase 0 
+
+  !! check(dummy_parm);
   
   // Initialize general parameter matrix:
   init_bounded_number_vector theta_parms(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);          ///< Vector of general parameters
@@ -704,19 +726,31 @@ PARAMETER_SECTION
   number logRbar;
   number M;
 
+  !! check(theta_parms);
+
   // Initialize other parameter matrices:
   init_bounded_number_vector madd_parms(1,nmadd_pars,madd_lbnd,madd_ubnd,madd_phz);                   ///< Vector of increments in nat_mort parameters
   init_bounded_number_vector gtrans_parms(1,nclass-1,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
-  init_bounded_number_vector selex_parms(1,nselex_pars,selex_lbnd,selex_ubnd,selex_phz);               ///< Vector of selectivity parameters
+  init_bounded_number_vector selex_parms(1,nselex_pars,selex_lbnd,selex_ubnd,selex_phz);              ///< Vector of selectivity parameters
   init_bounded_number_vector reten_parms(1,nreten_pars,reten_lbnd,reten_ubnd,reten_phz);              ///< Vector of retention parameters
   init_bounded_number_vector surveyq_parms(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz);    ///< Vector of survey Q parameters
   init_bounded_number_vector lognin_parms(1,nclass,lognin_lbnd,lognin_ubnd,lognin_phz);               ///< Vector of initial N parameters
    
+  !! check(madd_parms);
+  !! check(gtrans_parms);
+  !! check(selex_parms);
+  !! check(reten_parms);
+  !! check(surveyq_parms);
+  !! check(lognin_parms);
+
+  !! check(ncatch_f);
+
   // Initialize predicted catch and recruitment parameters:
-  init_bounded_vector_vector f_est(1,nfleet,1,ncatch_f,0,1,1);                    ///< Vector of predicted f values
-  init_vector recdev(styr,endyr,1);                                              ///< Vector of recruitment deviations
-  !! cout << "All parameters declared" << endl;
-  !! checkfile << "All parameters declared" << endl;
+  init_bounded_vector_vector f_est(1,nfleet_act,1,ncatch_f,0,1,1);         ///< Vector of predicted f values
+  init_vector recdev(styr,endyr,1);                                        ///< Vector of recruitment deviations
+  
+  !! cout << " All parameters declared \n" << endl;
+  !! checkfile << " All parameters declared" << endl;
 
   // Create model vectors, matrices, and arrays:
   matrix f_all(1,nfleet_act,styr,endyr);                      ///< Fishing mortality matrix 
@@ -779,7 +813,7 @@ PRELIMINARY_CALCS_SECTION
   if(final_phase<=0) {dummy_parm=0.5;} else {dummy_parm=1.0;}
 
   // Create required counters and objects:
-  int iyr, iclass, jclass, ifleet, isurv, j, ipnt, jpnt, last, iselex;
+  int iyr, iclass, jclass, ifleet, isurv, j, ipnt, jpnt, iselex;
   float total, num_ss, scalar;
   
   dvector total_ss(1,nfleet);
@@ -787,8 +821,8 @@ PRELIMINARY_CALCS_SECTION
   dmatrix ss_survey_store(1,nsurvey,1,nlfs_obs);
   dvector surv_lf_store(1,ndclass);
 
-  cout << "Started preliminary calcs section" << endl;
-  cout << "Verbose option = " << verbose << endl;
+  cout << " Started preliminary calcs section \n" << endl;
+  cout << " Verbose option = " << verbose << "\n" << endl;
 
   // Set the initial  values of parameters
   for (j=1; j<=ntheta; j++) theta_parms(j) = theta_init(j);
@@ -804,7 +838,7 @@ PRELIMINARY_CALCS_SECTION
   for (iyr=styr; iyr<=endyr; iyr++) recdev(iyr) = 0; 
 
   // Format length, weight, and fecundity vectors to model size-classes:
-  checkfile << "Class Length, Weight, and Fecundity" << endl;
+  checkfile << "Class length, weight, and fecundity" << endl;
   
   for (iclass=1; iclass<=nclass; iclass++)
    {
@@ -821,8 +855,9 @@ PRELIMINARY_CALCS_SECTION
      fecundity(iclass) /= total;
      checkfile << iclass << " " << length(iclass) << " " << weight(iclass) << " " << fecundity(iclass) << endl;
     }
-  if (verbose == 1) cout << "Lengths, weights, and fecundity specified" << endl; 
+  if (verbose == 1) cout << " Lengths, weights, and fecundity specified" << endl; 
   
+  cout << " Completed Preliminary Calcs Section \n" << endl;
 
   // TODO: Sections here require looping through fleet and survey specific data. Work out best method for this.
 
@@ -834,6 +869,7 @@ PROCEDURE_SECTION
   Set_effort();
   Set_growth();
   Initial_size_structure();
+  Set_selectivity();
 
   like_value.initialize();
   fobj += square(dummy_datum-dummy_parm);
@@ -843,9 +879,6 @@ FUNCTION Get_parameters
   
   logRbar = theta_parms(1);
   M = theta_parms(2);
-
-  echo(logRbar);
-  echo(M);
 
 // --------------------------------------------------------------------
 FUNCTION Set_effort
@@ -860,7 +893,7 @@ FUNCTION Set_effort
     {
       if (effort(ifleet,iyear) > 0)
       {
-        if (f_new(ifleet,0) == 0 |iyear<f_new(ifleet,1) | iyear>f_new(ifleet,2))
+        if (f_new(ifleet,1) == 0 | iyear < f_new(ifleet,2) | iyear > f_new(ifleet,3))
           { count += 1; f_all(ifleet,iyear) = f_est(ifleet,count); }
         else
          f_all(ifleet,iyear) = -100;
@@ -869,13 +902,13 @@ FUNCTION Set_effort
         f_all(ifleet,iyear) = 0;
     }
   }  
-  
+
   // Fill in missing values using a ratio estimator:
-  for (ifleet=0; ifleet<=nfleet; ifleet++)
-    if (f_new(ifleet,0) > 0)
+  for (ifleet=1; ifleet<=nfleet_act; ifleet++)
+    if (f_new(ifleet,1) > 0)
     {
      ratio = 0; ratio_2 = 0;
-     for (iyear=f_new(ifleet,3); iyear<=f_new(ifleet,4); iyear++)
+     for (iyear=f_new(ifleet,4); iyear<=f_new(ifleet,5); iyear++)
      {
        if (effort(ifleet,iyear) > 0)
        {
@@ -884,10 +917,9 @@ FUNCTION Set_effort
        }
      }
      delta = ratio/ratio_2;
-     for (iyear=f_new(ifleet,1); iyear<=f_new(ifleet,2); iyear++)
+     for (iyear=f_new(ifleet,2); iyear<=f_new(ifleet,3); iyear++)
        f_all(ifleet,iyear) = 1.0-mfexp(-delta*effort(ifleet,iyear));
     }
-
 
 // --------------------------------------------------------------------
 FUNCTION Set_growth
@@ -900,11 +932,10 @@ FUNCTION Set_growth
   {
     total = (1+mfexp(gtrans_parms(iclass)));
     strans(iclass,iclass) = 1/total;
-    strans(iclass,iclass+1) =mfexp(gtrans_parms(iclass))/total;
+    strans(iclass,iclass+1) = mfexp(gtrans_parms(iclass))/total;
   }
   
-  strans(nclass,nclass) = 1;  // Special case
-
+  strans(nclass,nclass) = 1;  // Special case for final diagonal entry.
 
 // --------------------------------------------------------------------
 FUNCTION Initial_size_structure
@@ -914,9 +945,86 @@ FUNCTION Initial_size_structure
   for (iclass=1;iclass<=nclass;iclass++)
     N(styr,iclass) = mfexp(logRbar)*mfexp(lognin_parms(iclass));
 
+// --------------------------------------------------------------------
+FUNCTION Set_selectivity
+  int iclass, iyr, isurv, ifleet, ipnt, jpnt;
+  dvariable qq, temp, slope_par;
+    
+  // Produce all selectivities:
+  // TODO: Check the ipnt pointer is correct here; inherits 0 from selex_type for fleet 1, could be made to be 1 if required in selex_type setup.
+  for (ifleet=1; ifleet<=nselex_pats; ifleet++)
+  {
+    ipnt = selex_type(fleet,4);
+    if (selex_type(fleet,2) == 1)
+    {
+      slope_par = selex_parms(ipnt+2);
+      temp = -log(19.0)/slope_par;
+      for (iclass=1; iclass<=nclass; iclass++)
+       selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(temp*(length(iclass)-selex_parms(ipnt+1))));
+      temp =  selex_all(ifleet,nclass);
+      for (iclass=1;iclass<=nclass;iclass++) selex_all(ifleet,iclass) /= temp;
+    }
+    if (selex_type(fleet,2) == 2)
+    {
+      for (iclass=1; iclass<=nclass; iclass++)
+        selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(selex_parms(ipnt+iclass)));
+      temp =  selex_all(ifleet,nclass);
+      for (iclass=1; iclass<=nclass; iclass++) selex_all(ifleet,iclass) /= temp;
+    }
+    if (selex_type(fleet,2) == 3)
+    {
+      jpnt = selex_type(selex_type(fleet,2),4);
+      slope_par = selex_parms(jpnt+2);
+      temp = -log(19.0)/slope_par;
+      for (iclass=1; iclass<=nclass; iclass++)
+       selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(temp*(length(iclass)-selex_parms(ipnt+1))));
+      temp =  selex_all(ifleet,nclass);
+      for (iclass=1; iclass<=nclass; iclass++) selex_all(ifleet,iclass) /= temp;
+    }
+  } 
+
+  // Fishery and bycatch selectivity
+  for (ifleet=0; ifleet<=nfleet; ifleet++)
+   for (iyr=styr; iyr<=endyr; iyr++)
+    {
+     ipnt = selex_fleet_pnt(ifleet,iyr);
+     for (iclass=1; iclass<=nclass; iclass++)
+      selex_fleet(ifleet,iyr,iclass) = selex_all(ipnt,iclass) ;
+    }  
+  
+  // Retention in the pot fishery
+  for (iyr=styr; iyr<=endyr; iyr++)
+   for (iclass=1; iclass<=nclass; iclass++)
+    {
+     ipnt = (reten_fleet_pnt(iyr)-1)*nclass;
+     reten(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(reten_parms(ipnt+iclass)));
+    } 
+
+  // Survey selectivity
+  for (isurv=1; isurv<=nsurvey; isurv++)
+   for (iyr=styr; iyr<=endyr+1; iyr++)
+    {
+     ipnt = surveyq_pnt(isurv,iyr);
+     qq = exp(surveyq_parms(ipnt));
+     ipnt = selex_survey_pnt(isurv,iyr);
+     for (iclass=1; iclass<=nclass; iclass++)
+      selex_survey(isurv,iyr,iclass) = qq*selex_all(ipnt,iclass);
+    }  
+   
+  // Nest one survey within another
+  for (ipnt=1; ipnt<=nsubsurvey; ipnt++)
+   for (iyr=styr; iyr<=endyr+1; iyr++)
+    for (iclass=1; iclass<=nclass; iclass++)
+     selex_survey(subsurvey(ipnt,1),iyr,iclass) *= selex_survey(subsurvey(ipnt,2),iyr,iclass);
 
 // =========================================================================================================
 REPORT_SECTION
+
+  check(logRbar);
+  check(M);
+  check(f_all);
+  check(strans);
+  check(N);
 
   // Exit here, to test code up to this point.
   exit(1);
