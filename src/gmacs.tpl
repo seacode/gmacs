@@ -1,23 +1,23 @@
-// =========================================================================================================
-//                                       
+// =========================================================================================================                                   
 //   Gmacs: Generalized Modelling for Alaskan Crab Stocks.
 //
-//   Created by Athol Whitten, University of Washington   
+//   Authors: Athol Whitten, University of Washington   
+//            Jim Ianelli, NOAA Alaskan Fisheries Science Centre
+//
 //   Info: https://github.com/awhitten/gmacs or write to whittena@uw.edu
 //   Copyright (c) 2014. All rights reserved.
 //
 //   Acknowledgement: The format of this code, and many of the details,
-//   were adapted from code developed for the NPFMC by Andre Punt (2012), and on the 
-//  'LSMR' model by Steven Martell (2011).
+//   were adapted from code developed for the NPFMC by Andre Punt (2012), 
+//   and on the 'LSMR' model by Steven Martell (2011).
 //
 //   TO DO LIST:
-//  - Calculate Reference Points (add routine for this)
-//  - Add forecast section (add routine for this)
-//  - Add warning section: maybe use macro for warning(object,text)
+//  - Look at numbers-at-length matrix...dimensioned by year, maturity, shell condition, sex, size bin
+//  - Add routine to calculate reference points
+//  - Add forecast routine
+//  - Add warning section: use macro for warning(object,text)
 //  - Add section to write new data file (enable easy labelling after first model attempt)
-//  - Look at numbers-at-length matrix...dimensioned by year, maturity, shell condition, sex-size bin
 //  - Add simulation option, see LSMR model for demonstration 
-//
 //  =========================================================================================================
 
 //  =========================================================================================================
