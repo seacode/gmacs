@@ -870,7 +870,7 @@ PARAMETER_SECTION
   matrix N(styr,endyr+1,1,nclass);                            ///< Numbers-at-age matrix
   matrix S(styr,endyr,1,nclass);                              ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
-  matrix exprate(0,nfleet,styr,endyr);                        ///< Exploitation rate matrix
+  matrix exp_rate(0,nfleet,styr,endyr);                        ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
   
   matrix reten(styr,endyr,1,nclass);                          ///< Male retention matrix 
@@ -882,11 +882,11 @@ PARAMETER_SECTION
   matrix selex_all(1,nselex_pats,1,nclass);                    ///< All selectivity matrix
 
   3darray fleet_lf_pred(1,nfleet,1,nlf_fleet,1,nclass);       ///< Predicted catches (numbers) by class
-  matrix catch_fleet_biom_pred(-1,nfleet,styr,endyr);         ///< Predicted catch weights
-  matrix catch_fleet_num_pred(-1,nfleet,styr,endyr);          ///< Predicted catch numbers
+  matrix catch_biom_pred(-1,nfleet,styr,endyr);         ///< Predicted catch weights
+  matrix catch_num_pred(-1,nfleet,styr,endyr);          ///< Predicted catch numbers
   
   3darray survey(1,nsurvey,styr,endyr+1,1,nclass);            ///< Survey LF from the model
-  matrix survey_wt_pred(1,nsurvey,styr,endyr+1);              ///< Predicted survey weights
+  matrix survey_biom_pred(1,nsurvey,styr,endyr+1);              ///< Predicted survey weights
   matrix survey_num_pred(1,nsurvey,styr,endyr+1);             ///< Predicted survey numbers
   vector q_effort(1,nfleet_act);                              ///< Effort q
   vector M(styr,endyr);                                       ///< Natural mortality
@@ -950,6 +950,7 @@ PROCEDURE_SECTION
   Initial_size_structure();
   Set_selectivity();
   Set_survival();
+  Update_population(); 
 
   like_value.initialize();
   fobj += square(dummy_datum-dummy_parm);
@@ -1109,11 +1110,36 @@ FUNCTION Set_survival
      for (ifleet=1; ifleet<=nfleet_act; ifleet++)
       {
        S_fleet(ifleet,iyr,iclass) = (1-selex_fleet(ifleet,iyr,iclass)*f_all(ifleet,iyr));
-       exprate(ifleet,iyr) = f_all(ifleet,iyr);
+       exp_rate(ifleet,iyr) = f_all(ifleet,iyr);
        S(iyr,iclass) *= S_fleet(ifleet,iyr,iclass);
       } 
      f_direct(iyr) = selex_fleet(1,iyr,nclass)*f_all(1,iyr); // FIX: This may have to loop over fleet as well?
     }
+
+// --------------------------------------------------------------------
+FUNCTION Update_population
+  int iyr, iclass, jclass;
+  dvariable mbio_out;
+
+  for (iyr=styr; iyr<=endyr; iyr++)
+  {
+    // Grow individuals for one time-step:
+    for (iclass=1; iclass<=nclass; iclass++)
+      for (jclass=1; jclass<=nclass; jclass++)
+        N(iyr+1,iclass) += strans(jclass,iclass)*N(iyr,jclass)*S(iyr,jclass);
+   
+    // Add recruitment for next year:
+    recruits(iyr) = mfexp(logRbar+recdev(iyr));
+    N(iyr+1,1) += recruits(iyr);
+
+    mbio_out = 0;
+    for (iclass=1; iclass<=nclass; iclass++) 
+      mbio_out += N(iyr,iclass)*fecundity(iclass)*(1-selex_fleet(1,iyr,iclass)*f_all(1,iyr))*exp(-(catch_time(1,iyr)+2/12)*M(iyr));
+    mbio(iyr) = mbio_out;
+   }
+
+   // TODO: Check why only selex_fleet(1) is used for mbio_calc.
+   // TODO: Check 2/12 here in mbio calculation, is this a timing fraction that needs to be generalised?
 
 // =========================================================================================================
 REPORT_SECTION
@@ -1129,8 +1155,12 @@ REPORT_SECTION
 
   check(S);
   check(S_fleet);
-  check(exprate);
+  check(exp_rate);
   check(f_direct);
+
+  check(recruits);
+  check(N);
+  check(mbio);
 
   exit(1);
   
