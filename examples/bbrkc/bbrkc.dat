@@ -134,7 +134,7 @@
 1993	1	4	1	0.0384672
 
 # Survey data (adundance indices)
-# Year, Season, Survey, Obs, Err
+# Year, Season, Survey, Sex, Obs, CV
 1968	1	1	1	49.98149876	0.2
 1969	1	1	1	45.98887874	0.2
 1970	1	1	1	28.49876378	0.2
