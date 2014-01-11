@@ -201,21 +201,25 @@ DATA_SECTION
   matrix catch_num_obs(1,nfleet,styr,endyr) ;
 
   init_matrix survey_data(1,nsurvey_obs,1,6);     ///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
-  vector nobs_survey(1,nsurvey);
+  ivector nobs_survey(1,nsurvey);
  LOC_CALCS
   // Fishery data
   catch_biom_obs.initialize();
   catch_num_obs.initialize();
   for (int i=1;i<=ncatch_obs;i++)
   {
-    catch_biom_obs(catch_data(i,1),catch_data(i,3)) = catch_data(i,5);
-    catch_num_obs(catch_data(i,1),catch_data(i,3))  = catch_data(i,5);
+    catch_biom_obs(catch_data(i,3),catch_data(i,1)) = catch_data(i,5);
+    catch_num_obs(catch_data(i,3),catch_data(i,1))  = catch_data(i,5);
   }
+  // survey data
+  nobs_survey.initialize();
   for (i=1;i<=nsurvey_obs;i++)
   {
     nobs_survey(survey_data(i,3))++;
   }
+  check(nobs_survey);
  END_CALCS
+  imatrix yr_survey(1,nsurvey,1,nobs_survey) ;
   matrix survey_biom_obs(1,nsurvey,1,nobs_survey) ;
   matrix survey_num_obs(1,nsurvey,1,nobs_survey) ;
   matrix survey_var(1,nsurvey,1,nobs_survey) ;
@@ -229,6 +233,7 @@ DATA_SECTION
   {
     int isrv=survey_data(i,3);
     iobs_sv(isrv)++;
+    yr_survey(isrv,iobs_sv(isrv)) = survey_data(i,1);
     if (survey_units(isrv)==1)
       survey_biom_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
     else 
@@ -912,7 +917,7 @@ PARAMETER_SECTION
   matrix N(styr,endyr+1,1,nclass);                            ///< Numbers-at-age matrix
   matrix S(styr,endyr,1,nclass);                              ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
-  matrix exp_rate(0,nfleet,styr,endyr);                       ///< Exploitation rate matrix
+  matrix exp_rate(1,nfleet,styr,endyr);                       ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
   
   matrix reten(styr,endyr,1,nclass);                          ///< Male retention matrix 
@@ -924,12 +929,12 @@ PARAMETER_SECTION
   matrix selex_all(1,nselex_pats,1,nclass);                   ///< All selectivity matrix
 
   3darray fleet_lf_pred(1,nfleet,1,nlf_fleet,1,nclass);       ///< Predicted catches (numbers) by class
-  matrix catch_biom_pred(-1,nfleet,styr,endyr);               ///< Predicted catch weights
-  matrix catch_num_pred(-1,nfleet,styr,endyr);                ///< Predicted catch numbers
+  matrix catch_biom_pred(1,nfleet,styr,endyr);               ///< Predicted catch weights
+  matrix catch_num_pred(1,nfleet,styr,endyr);                ///< Predicted catch numbers
   
-  3darray survey_lf_pred(1,nsurvey,styr,endyr+1,1,nclass);    ///< Survey LF from the model
-  matrix survey_biom_pred(1,nsurvey,styr,endyr+1);            ///< Predicted survey weights
-  matrix survey_num_pred(1,nsurvey,styr,endyr+1);             ///< Predicted survey numbers
+  3darray survey_lf_pred(1,nsurvey,1,nlf_survey,1,nclass);    ///< Survey LF from the model
+  matrix survey_biom_pred(1,nsurvey,1,nobs_survey);            ///< Predicted survey weights
+  matrix survey_num_pred(1,nsurvey,1,nobs_survey);             ///< Predicted survey numbers
   vector q_effort(1,nfleet_act);                              ///< Effort q
   vector M(styr,endyr);                                       ///< Natural mortality
   vector f_direct(styr,endyr);                                ///< Fishing mortality
@@ -1145,7 +1150,7 @@ FUNCTION Set_survival
   for (iyr=styr; iyr<=endyr; iyr++) if (M_pnt(iyr)>1) M(iyr) += Madd_parms(M_pnt(iyr)); 
   
   for (iyr=styr; iyr<=endyr; iyr++)
-   for (iclass=1; iclass<=nclass; iclass++)
+    for (iclass=1; iclass<=nclass; iclass++)
     {
      S(iyr,iclass) = mfexp(-M(iyr));
      for (ifleet=1; ifleet<=nfleet_act; ifleet++)
@@ -1229,20 +1234,20 @@ FUNCTION Get_Likes
     ilike++; ///< Increment the likelihood index
     double nn= 0;
     // TODO: figure out how effort is used
-    for (styr=Yr1;styr<=endyr;styr++)
-      if (Effort(Ifleet,styr) > 0) 
+    for (iyr=Yr1;iyr<=endyr;iyr++)
+      if (Effort(Ifleet,iyr) > 0) 
       {
-        if (FOverWrite(Ifleet,0) == 0 |styr<FOverWrite(Ifleet,1) | styr>FOverWrite(Ifleet,2))
+        if (FOverWrite(Ifleet,0) == 0 |iyr<FOverWrite(Ifleet,1) | iyr>FOverWrite(Ifleet,2))
         { 
           nn++ ; 
-          qEff(Ifleet) += log((Effort(Ifleet,styr)+Incd)/(ExplRates(Ifleet,styr)+Incd)); 
+          qEff(Ifleet) += log((Effort(Ifleet,iyr)+Incd)/(ExplRates(Ifleet,iyr)+Incd)); 
         }
       }  
     qEff(Ifleet) = mfexp(qEff(Ifleet)/nn); 
-    for (styr=Yr1;styr<=endyr;styr++)
-     if (Effort(Ifleet,styr) > 0)
-      if (FOverWrite(Ifleet,0) == 0 |styr<FOverWrite(Ifleet,1) | styr>FOverWrite(Ifleet,2))
-       like_val(ilike) += square(log((Effort(Ifleet,styr)+Incd)/(qEff(Ifleet)*(ExplRates(Ifleet,styr)+Incd))));
+    for (iyr=Yr1;iyr<=endyr;iyr++)
+     if (Effort(Ifleet,iyr) > 0)
+      if (FOverWrite(Ifleet,0) == 0 |iyr<FOverWrite(Ifleet,1) | iyr>FOverWrite(Ifleet,2))
+       like_val(ilike) += square(log((Effort(Ifleet,iyr)+Incd)/(qEff(Ifleet)*(ExplRates(Ifleet,iyr)+Incd))));
    }  
     */
 
@@ -1257,26 +1262,15 @@ FUNCTION Get_Likes
         like_val(ilike) += 0.5*square(log((survey_biom_obs(isrv,i)+incd)/(survey_biom_pred(isrv,i)+incd))) /(survey_var(isrv,i));
       else 
         like_val(ilike) += 0.5*square(log((survey_num_obs(isrv,i)+incd)/(survey_num_pred(isrv,i)+incd))) /(survey_var(isrv,i));
-      }  
-  }
-     
+    }  
   // Survey LF
-  for (isrv=1;isrv<=nsurvey;isrv++)
-  {
-   ilike++; 
-   for (i=1;i<=nlf_survey(isrv);i++)
-   {
-      dvar_vector phat = survey_lf_pred(ifl,i)/sum(survey_lf_pred(ifl,i));
-      dvector pobs     = survey_lf_obs(ifl,i)/sum(survey_lf_obs(ifl,i)); // this should probably be done once in beginning
-      like_val(ilike)  += -ss_survey_lf(ifl,i)*pobs*log(phat);
-      /*
-      for (Iclass=1;Iclass<=Nclass;Iclass++)
-      if (SurveyObsLF(isrv,Icnt,Iclass) > 0) // Jim says this seems to imply that a zero means no data...UNTRUE
-       {
-        Error = (PredSurvey(isrv,styr,Iclass)+Incc)/(SurveyObsLF(isrv,Icnt,Iclass)+Incc);
-        like_val(ilike) += -1*SSSurveyLF(isrv,Icnt)*SurveyObsLF(isrv,Icnt,Iclass)*log(Error);
-       }
-      */
+    ilike++; 
+    for (i=1;i<=nlf_survey(isrv);i++)
+    {
+      dvar_vector phat = survey_lf_pred(isrv,i)/sum(survey_lf_pred(isrv,i));
+      dvector pobs     = survey_lf_obs(isrv,i) /sum(survey_lf_obs(isrv,i)); // this should probably be done once in beginning
+      like_val(ilike)  -= ss_survey_lf(isrv,i)*pobs*log(phat);
+      /* for(Iclass=1;Iclass<=Nclass;Iclass++) if (SurveyObsLF(isrv,Icnt,Iclass) > 0) // Jim says this seems to imply that a zero means no data...UNTRUE{ Error = (PredSurvey(isrv,iyr,Iclass)+Incc)/(SurveyObsLF(isrv,Icnt,Iclass)+Incc); like_val(ilike) += -1*SSSurveyLF(isrv,Icnt)*SurveyObsLF(isrv,Icnt,Iclass)*log(Error); } */
     } 
   } 
                                                     
@@ -1286,7 +1280,9 @@ FUNCTION Get_Priors
   double nn = 0;
   dvariable mean_F=0;
   // Prior on F-devs 
-  for (int ifl=1;ifl<=nfleet;ifl++)
+  /*
+  */
+  for (int ifl=1;ifl<=nfleet_act;ifl++)
   {
     iprior++;
     mean_F = 0; nn = 0;
@@ -1294,7 +1290,7 @@ FUNCTION Get_Priors
     {
       if (effort(ifl,iyr) > 0) 
       { 
-        mean_F += f_all(ifl,styr); 
+        mean_F += f_all(ifl,iyr); 
         nn++; 
       }
       mean_F /= nn;
@@ -1351,56 +1347,56 @@ FUNCTION Get_Catch_Pred;
   catch_num_pred.initialize();
   N_tmp.initialize();
   
-  for (int styr=styr;styr<=endyr;styr++)
+  for (int iyr=styr;iyr<=endyr;iyr++)
   {
     // Need to loop over number of directred fisheries (presently fixed at 1) fleet control matrix
-    N_tmp = N(styr)*mfexp(-catch_time(1,styr)*M(styr));
+    N_tmp = N(iyr)*mfexp(-catch_time(1,iyr)*M(iyr));
     for (int ifl=1;ifl<=nfleet_act;ifl++)
     {
-      S1 = S_fleet(ifl,styr);
+      S1 = S_fleet(ifl,iyr);
       // Main retained fishery
       if (fleet_control(ifl,2)==1) 
-        fleet_lf_pred(ifl,styr) = elem_prod(N_tmp , elem_prod((1.-S1),reten(styr)));
+        fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),reten(iyr)));
       if (fleet_control(ifl, 2)==2) // Discard fishery
-        fleet_lf_pred(ifl,styr) = elem_prod(N_tmp , elem_prod((1.-S1),(1.-reten(styr))));
+        fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),(1.-reten(iyr))));
       if (fleet_control(ifl, 2)==3) // Main retained fishery
-        fleet_lf_pred(ifl,styr) = elem_prod(N_tmp , (1.-S1));
+        fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , (1.-S1));
       N_tmp = elem_prod(N_tmp,S1);
     }
      // Accumulate totals 
-     catch_biom_pred(styr) = fleet_lf_pred(ifl,styr) * weight;
-     catch_num_pred(styr) = sum(fleet_lf_pred(ifl,styr) );
+     catch_biom_pred(iyr) = fleet_lf_pred(ifl,iyr) * weight;
+     catch_num_pred(iyr) = sum(fleet_lf_pred(ifl,iyr) );
   } 
 
      /*
    for (Iclass=1;Iclass<=Nclass;Iclass++)
     {
-     SurvNo = N(styr,Iclass)*mfexp(-tc(0,styr)*M(styr));
-     S1 = SF(0,styr,Iclass);
-     CatFleet(0,styr,Iclass) = SurvNo*(1-S1)*RetCatMale(styr,Iclass);
-     CatFleet(-1,styr,Iclass) = SurvNo*(1-S1)*(1-RetCatMale(styr,Iclass));
+     SurvNo = N(iyr,Iclass)*mfexp(-tc(0,iyr)*M(iyr));
+     S1 = SF(0,iyr,Iclass);
+     CatFleet(0,iyr,Iclass) = SurvNo*(1-S1)*RetCatMale(iyr,Iclass);
+     CatFleet(-1,iyr,Iclass) = SurvNo*(1-S1)*(1-RetCatMale(iyr,Iclass));
      SurvNo *= S1;
      for (Ifleet=1;Ifleet<=Nfleet;Ifleet++)
       {
-       S2 = SF(Ifleet,styr,Iclass);
-       CatFleet(Ifleet,styr,Iclass) = SurvNo*(1-S2);
+       S2 = SF(Ifleet,iyr,Iclass);
+       CatFleet(Ifleet,iyr,Iclass) = SurvNo*(1-S2);
        SurvNo *= S2;
       }
       
      // Accumulate totals 
      for (Ifleet=-1; Ifleet<=Nfleet;Ifleet++)
       {
-       CatFleetWghtPred(Ifleet,styr) += CatFleet(Ifleet,styr,Iclass) * Wght(Iclass);
-       CatFleetNumPred(Ifleet,styr) += CatFleet(Ifleet,styr,Iclass);
+       CatFleetWghtPred(Ifleet,iyr) += CatFleet(Ifleet,iyr,Iclass) * Wght(Iclass);
+       CatFleetNumPred(Ifleet,iyr) += CatFleet(Ifleet,iyr,Iclass);
       } 
       
     }
    
   // Special case for fleet -1
   if (DiscardsOrTotal == 1)
-   for (styr=Yr1;styr<=endyr;styr++)
+   for (iyr=Yr1;iyr<=endyr;iyr++)
     for (Iclass=1;Iclass<=Nclass;Iclass++)
-     CatFleet(-1,styr,Iclass) = CatFleet(-1,styr,Iclass) + CatFleet(0,styr,Iclass);
+     CatFleet(-1,iyr,Iclass) = CatFleet(-1,iyr,Iclass) + CatFleet(0,iyr,Iclass);
      */
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Survey
@@ -1411,11 +1407,16 @@ FUNCTION Get_Survey
   {
     for (int i=1;i<=nlf_survey(isrv);i++)
     {
-      int styr                  = yr_survey_lf(isrv,i);
-      survey_lf_pred(isrv,i)   = N(styr)*selex_survey(isrv,styr); // note use if styr here...t
-      survey_biom_pred(isrv,i) = survey_lf_pred(isrv,i) * weight;
-      survey_num_pred(isrv,i)  = sum(survey_lf_pred(isrv,i));
+      int iyr                  = yr_survey_lf(isrv,i);
+      survey_lf_pred(isrv,i)   = elem_prod(N(iyr),selex_survey(isrv,iyr)); // note use if iyr here...t
       survey_lf_pred(isrv,i)  /= sum(survey_lf_pred(isrv,i));
+    }
+    for (int i=1;i<=nobs_survey(isrv);i++)
+    {
+      int iyr                  = yr_survey(isrv,i);
+      dvar_vector N_tmp        = elem_prod(N(iyr),selex_survey(isrv,iyr)); // note use if iyr here...t
+      survey_biom_pred(isrv,i) = N_tmp * weight;
+      survey_num_pred(isrv,i)  = sum(N_tmp);
     }
   }
   /*
@@ -1423,11 +1424,11 @@ FUNCTION Get_Survey
   PredSurveyNum.initialize();
   PredSurveyWght.initialize();
   for (Isurv=1;Isurv<=Nsurvey;Isurv++)
-   for (styr=Yr1;styr<=endyr+1;styr++)
+   for (iyr=Yr1;iyr<=endyr+1;iyr++)
     for (Iclass=1;Iclass<=Nclass;Iclass++)
      {
-      PredSurveyWght(Isurv,styr) += PredSurvey(Isurv,styr,Iclass)*Wght(Iclass);
-      PredSurveyNum(Isurv,styr) += PredSurvey(Isurv,styr,Iclass);
+      PredSurveyWght(Isurv,iyr) += PredSurvey(Isurv,iyr,Iclass)*Wght(Iclass);
+      PredSurveyNum(Isurv,iyr) += PredSurvey(Isurv,iyr,Iclass);
      }
   */
 
