@@ -1141,6 +1141,8 @@ PROCEDURE_SECTION
   Get_Catch_Pred();
   ObjFunction();
 
+  check(logRbar);
+  check(theta_parms);
 
 // --------------------------------------------------------------------
 FUNCTION Set_effort
