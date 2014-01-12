@@ -72,13 +72,13 @@ TOP_OF_MAIN_SECTION
 // =========================================================================================================
 DATA_SECTION
   // Create strings with version information:
-  !!version+="Gmacs_V1.02_2014/01/02_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+  !!version+="Gmacs_V1.03_2014/01/11_using_ADMB_11.1";
   !!version_short+="Gmacs V1.02";
-
   !! echoinput << version << endl;
   !! echoinput << ctime(&start) << endl;
-  number incc 
-  number incd 
+  
+  number incc; 
+  number incd;
   !! incc = 0.00001; ///< some constant for likelihoods
   !! incd = 0.0001;  ///< som other constant used
 
@@ -197,39 +197,64 @@ DATA_SECTION
  END_CALCS
 
   init_matrix catch_data(1,ncatch_obs,1,5);       ///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
-  matrix catch_biom_obs(1,nfleet,styr,endyr) ;
-  matrix catch_num_obs(1,nfleet,styr,endyr) ;
+  matrix catch_biom_obs(1,nfleet,styr,endyr);     ///< Catch observations (biomass), per fleet
+  matrix catch_num_obs(1,nfleet,styr,endyr);      ///< Catch observations (numbers), per fleet
 
-  init_matrix survey_data(1,nsurvey_obs,1,6);     ///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
-  ivector nobs_survey(1,nsurvey);
- LOC_CALCS
-  // Fishery data
+ LOCAL_CALCS
   catch_biom_obs.initialize();
   catch_num_obs.initialize();
-  for (int i=1;i<=ncatch_obs;i++)
+  
+  for (int i=1; i<=ncatch_obs; i++)
   {
     catch_biom_obs(catch_data(i,3),catch_data(i,1)) = catch_data(i,5);
     catch_num_obs(catch_data(i,3),catch_data(i,1))  = catch_data(i,5);
   }
-  // survey data
+
+  check(catch_biom_obs);
+  check(catch_num_obs);
+  
+  for (ifleet=1; ifleet<=nfleet; ifleet++)
+  {
+    for (iyr=styr; iyr<=endyr; iyr++)
+    { 
+     catch_biom_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
+     catch_num_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
+    }
+  }
+ END_CALCS
+
+  !! echotxt(catch_units,  " Catch units");
+  !! echotxt(catch_multi,  " Catch multipliers");
+  !! echotxt(ncatch_obs,   " Number of lines of catch data");
+  !! echo(catch_data);
+
+  init_matrix survey_data(1,nsurvey_obs,1,6);       ///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, sex, observation, and error
+  ivector nobs_survey(1,nsurvey);                   ///< Number of observations, per survey
+
+ LOCAL_CALCS
   nobs_survey.initialize();
-  for (i=1;i<=nsurvey_obs;i++)
+  for (i=1; i<=nsurvey_obs; i++)
   {
     nobs_survey(survey_data(i,3))++;
   }
-  check(nobs_survey);
  END_CALCS
-  imatrix yr_survey(1,nsurvey,1,nobs_survey) ;
-  matrix survey_biom_obs(1,nsurvey,1,nobs_survey) ;
-  matrix survey_num_obs(1,nsurvey,1,nobs_survey) ;
-  matrix survey_var(1,nsurvey,1,nobs_survey) ;
- LOC_CALCS
+
+  !! check(nobs_survey);
+  
+  imatrix yr_survey(1,nsurvey,1,nobs_survey);       ///< Years with survey data, per survey
+  matrix survey_biom_obs(1,nsurvey,1,nobs_survey);  ///< Survey observations (biomass), per survey
+  matrix survey_num_obs(1,nsurvey,1,nobs_survey);   ///< Survey observation (numbers), per survey
+  matrix survey_var(1,nsurvey,1,nobs_survey);       ///< Survey variance values (input CV), per survey
+ 
+ LOCAL_CALCS
   survey_var.initialize();
   survey_biom_obs.initialize();
   survey_num_obs.initialize();
-  ivector iobs_sv(1,nsurvey);                                  ///< Counter for number of obs within each survey
+  
+  ivector iobs_sv(1,nsurvey);       ///< Counter for number of obs. for each survey
   iobs_sv.initialize();
-  for (i=1;i<=nsurvey_obs;i++)
+
+  for (i=1; i<=nsurvey_obs; i++)
   {
     int isrv=survey_data(i,3);
     iobs_sv(isrv)++;
@@ -238,23 +263,33 @@ DATA_SECTION
       survey_biom_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
     else 
       survey_num_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
-    survey_var(isrv,iobs_sv(isrv)) = log(1+square(survey_data(i,6))); // for likelihood, compute input variance here ASSUMES CV input
+    survey_var(isrv,iobs_sv(isrv)) = log(1+square(survey_data(i,6)));
+  }  
+  
+  for (isurvey=1; isurvey<=nsurvey; isurvey++)  
+  {
+    for (i=1; i<=nobs_survey(isurvey); i++)
+    { 
+      survey_biom_obs(isurvey,i) *= survey_multi(isurvey);
+      survey_num_obs(isurvey,i) *= survey_multi(isurvey);
+    }
   }
-
  END_CALCS
+
+ !! check(yr_survey);
+ !! check(survey_biom_obs);
+ !! check(survey_num_obs);
+ !! check(survey_var);
+
+  // Note: For likelihood, compute input survey variance here (assumes data file input values are CVs)
 
   // Q: Some pre-processing of these data required. See simple.tpl for example.
   // TODO: Multiply these catch and survey data by multipliers provided. Simple.tpl Line 56+
 
-  !! echotxt(catch_units,  " Catch units");
-  !! echotxt(catch_multi,  " Catch multipliers");
   !! echotxt(survey_units, " Survey units");
-  !! echotxt(survey_multi, " Survey multipliers")
-  !! echotxt(ncatch_obs,   " Number of lines of catch data");
-  !! echotxt(nsurvey_obs,  " Number of lines of survey data")
+  !! echotxt(survey_multi, " Survey multipliers");
   !! echotxt(survey_time,  " Time between survey and fishery");
-      
-  !! echo(catch_data);
+  !! echotxt(nsurvey_obs,  " Number of lines of survey data");
   !! echo(survey_data);
 
   init_vector discard_mort(1,nfleet);               ///< Discard mortality (per fishery)
@@ -270,7 +305,6 @@ DATA_SECTION
   !! echo(f_new);
 
   // Determine which F values will be computed using effort (f_new) if applicable: 
-
   ivector ncatch_f(1,nfleet_act);
  
  LOCAL_CALCS
@@ -377,7 +411,7 @@ DATA_SECTION
 
   !! echo(mean_length);
   !! echo(mean_weight);
-  !! echo(fecundity);
+  !! echo(fecundity_inp);
 
   // Format length, weight, and fecundity vectors to model size-classes:
   vector length(1,nclass);                  ///< Length vector (mm) for model
@@ -917,7 +951,7 @@ PARAMETER_SECTION
   matrix N(styr,endyr+1,1,nclass);                            ///< Numbers-at-age matrix
   matrix S(styr,endyr,1,nclass);                              ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
-  matrix exp_rate(1,nfleet,styr,endyr);                       ///< Exploitation rate matrix
+  matrix exp_rate(1,nfleet_act,styr,endyr);                   ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
   
   matrix reten(styr,endyr,1,nclass);                          ///< Male retention matrix 
@@ -1252,7 +1286,7 @@ FUNCTION Get_Likes
     */
 
   // Survey indices 
-  // !!    SurveyEst(DIfleet,DIyr,2) = sqrt(log(square(SurveyEst(DIfleet,DIyr,2))+1.0));
+  // !!    SurveyEst(DIfleet,iyr,2) = sqrt(log(square(SurveyEst(DIfleet,iyr,2))+1.0));
   for (int isrv=1;isrv<=nsurvey;isrv++)
   {
     ilike++; ///< Increment the likelihood index
