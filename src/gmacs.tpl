@@ -46,6 +46,13 @@ GLOBALS_SECTION
   #define echotxt(object,text) echoinput << object << "\t" << text << endl;
 
   /**
+  \def writeR(object)
+  Prints name and value of \a object on ADMB echoinput %ofstream file.
+  */
+  #define writeR(object) R_out << #object << "\n" << object << endl;
+  
+
+  /**
   \def check(object)
   Prints name and value of \a object on ADMB check %ofstream file.
   */
@@ -55,10 +62,16 @@ GLOBALS_SECTION
   ofstream echoinput("echoinput.gm");
   ofstream checkfile("checkfile.gm");
   ofstream warning("warning.gm");
+  ofstream R_out("gmacs_r.rep");
 
   // Define some adstring variables for use in output files:
   adstring version;
   adstring version_short;
+  adstring_array fleet_names;
+  adstring_array survey_names;
+  adstring_array like_names;
+  adstring_array prior_names;
+
   
 // =========================================================================================================
 TOP_OF_MAIN_SECTION
@@ -146,6 +159,62 @@ DATA_SECTION
   init_int nsurvey;     ///< Number of surveys
   init_int nclass;      ///< Number of size classes
   init_int ndclass;     ///< Number of size classes (in the data)
+
+  imatrix iname_flt(1,nfleet,1,2);
+  imatrix iname_srv(1,nfleet,1,2);
+  init_adstring name_read_flt;
+  init_adstring name_read_srv;
+ LOCAL_CALCS
+   // convert read in strings of fishery and survey names to a string array (so they can be indexed)
+   // TODO Need to figure a way to return an error if not formatted properly
+  int k;
+  for(k=1;k<=nfleet;k++) 
+  {
+    iname_flt(k,1)=1; 
+    iname_flt(k,2)=1;
+  }    // set whole array to equal 1 in case not enough names are read
+  adstring_array CRLF;   // blank to terminate lines (not sure why this is needed...)
+  CRLF+="";
+  k=1;
+  for(i=1;i<=strlen(name_read_flt);i++)
+  {
+    if(adstring(name_read_flt(i))==adstring(":")) 
+    {
+      iname_flt(k,2)=i-1; 
+      k++;  
+      iname_flt(k,1)=i+1;
+    }
+  }
+  iname_flt(nfleet,2)=strlen(name_read_flt);
+  for(k=1;k<=nfleet;k++)
+  {
+    fleet_names += name_read_flt(iname_flt(k,1),iname_flt(k,2))+CRLF(1);
+  }
+  for(k=1;k<=nsurvey;k++) 
+  {
+    iname_srv(k,1)=1; 
+    iname_srv(k,2)=1;
+  }    // set whole array to equal 1 in case not enough names are read
+  // Read in survey names
+  k=1;
+  for(i=1;i<=strlen(name_read_srv);i++)
+  {
+    if(adstring(name_read_srv(i))==adstring(":")) 
+    {
+      iname_srv(k,2)=i-1; 
+      k++;  
+      iname_srv(k,1)=i+1;
+    }
+  }
+  iname_srv(nsurvey,2)=strlen(name_read_srv);
+  for(k=1;k<=nsurvey;k++)
+  {
+    survey_names += name_read_srv(iname_srv(k,1),iname_srv(k,2))+CRLF(1);
+  }
+  // Macro doesn't work perfectly for printing these out...unsure why
+  echotxt(fleet_names,  "Fleetnames");
+  echotxt(survey_names, "Surveynames");
+ END_CALCS
   
   init_imatrix class_link(1,nclass,1,2);  ///< Link between data size-classes and model size-classs
    
@@ -166,7 +235,7 @@ DATA_SECTION
   init_number survey_time;                  ///< Time between survey and fishery (for projections)  
 
   // Read fleet specifications and determine number with catch retained or discarded etc:
-  init_imatrix fleet_control(1,nfleet,1,3);    ///< Fleet control matrix
+  init_imatrix fleet_control(1,nfleet,1,2);    ///< Fleet control matrix
 
   int nfleet_ret;                  ///< Number of fleets for retained catch data
   int nfleet_dis;                  ///< Number of fleets for discarded catch data (with link to above retained catch)
@@ -180,7 +249,7 @@ DATA_SECTION
 
     for (ifleet=1; ifleet<=nfleet; ifleet++)
     {
-      switch (fleet_control(ifleet,2)) 
+      switch (fleet_control(ifleet,1)) 
       {
         case 1 : 
           nfleet_ret += 1;
@@ -213,7 +282,7 @@ DATA_SECTION
   }
   // survey data
   nobs_survey.initialize();
-  for (i=1;i<=nsurvey_obs;i++)
+  for (int i=1;i<=nsurvey_obs;i++)
   {
     nobs_survey(survey_data(i,3))++;
   }
@@ -229,7 +298,7 @@ DATA_SECTION
   survey_num_obs.initialize();
   ivector iobs_sv(1,nsurvey);                                  ///< Counter for number of obs within each survey
   iobs_sv.initialize();
-  for (i=1;i<=nsurvey_obs;i++)
+  for (int i=1;i<=nsurvey_obs;i++)
   {
     int isrv=survey_data(i,3);
     iobs_sv(isrv)++;
@@ -239,8 +308,16 @@ DATA_SECTION
     else 
       survey_num_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
     survey_var(isrv,iobs_sv(isrv)) = log(1+square(survey_data(i,6))); // for likelihood, compute input variance here ASSUMES CV input
+  }  
+  
+  for (isurvey=1; isurvey<=nsurvey; isurvey++)  
+  {
+    for (int i=1; i<=nobs_survey(isurvey); i++)
+    { 
+      survey_biom_obs(isurvey,i) *= survey_multi(isurvey);
+      survey_num_obs(isurvey,i)  *= survey_multi(isurvey);
+    }
   }
-
  END_CALCS
 
   // Q: Some pre-processing of these data required. See simple.tpl for example.
@@ -263,14 +340,25 @@ DATA_SECTION
   init_matrix effort(1,nfleet_act,styr,endyr);      ///< Effort by fishery
   init_imatrix f_new(1,nfleet_act,1,5);             ///< Alternative f estimators (overwrite others)
 
-  !! echo(discard_mort);
-  !! echo(hg);
-  !! echo(catch_time);
-  !! echo(effort);
-  !! echo(f_new);
+ LOC_CALCS
+  echo(discard_mort);
+  echo(hg);
+  echo(catch_time);
+  echo(effort);
+  echo(f_new);
+  check(catch_biom_obs);
+  check(catch_num_obs);
+  for (ifleet=1; ifleet<=nfleet; ifleet++)
+  {
+    for (iyr=styr; iyr<=endyr; iyr++)
+    { 
+     catch_biom_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
+     catch_num_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
+    }
+  }
+ END_CALCS
 
   // Determine which F values will be computed using effort (f_new) if applicable: 
-
   ivector ncatch_f(1,nfleet_act);
  
  LOCAL_CALCS
@@ -295,7 +383,7 @@ DATA_SECTION
  
  LOC_CALCS 
   nlf_fleet.initialize();
-  for (i=1; i<=nlf_obs; i++) 
+  for (int i=1; i<=nlf_obs; i++) 
   {
     nlf_fleet(int(lf_data(i,3)))++ ;
   }
@@ -309,7 +397,7 @@ DATA_SECTION
  LOC_CALCS 
   ivector iobs_fl(1,nfleet);                                ///< Counter for number of obs within each fleet
   iobs_fl.initialize();
-  for (i=1; i<=nlf_obs; i++) 
+  for (int i=1; i<=nlf_obs; i++) 
   {
     ifleet = int(lf_data(i,3));
     iobs_fl(ifleet)++;
@@ -336,7 +424,7 @@ DATA_SECTION
 
  LOC_CALCS 
   nlf_survey.initialize();
-  for (i=1; i<=nlfs_obs; i++) 
+  for (int i=1; i<=nlfs_obs; i++) 
   {
     nlf_survey(int(lfs_data(i,3)))++ ;
   }
@@ -349,7 +437,7 @@ DATA_SECTION
  
  LOC_CALCS 
   iobs_sv.initialize();
-  for (i=1; i<=nlfs_obs; i++) 
+  for (int i=1; i<=nlfs_obs; i++) 
   {
     isurvey = int(lfs_data(i,3));
     iobs_sv(isurvey)++;
@@ -377,7 +465,7 @@ DATA_SECTION
 
   !! echo(mean_length);
   !! echo(mean_weight);
-  !! echo(fecundity);
+  !! echo(fecundity_inp);
 
   // Format length, weight, and fecundity vectors to model size-classes:
   vector length(1,nclass);                  ///< Length vector (mm) for model
@@ -610,7 +698,7 @@ DATA_SECTION
   // TODO: The selex_type matrix can probably be read in directly, then the loop over the columns should work the same.
  LOCAL_CALCS
   nselex = 0;
-  for (i=1; i<=nselex_pats; i++)
+  for (int i=1; i<=nselex_pats; i++)
   {
     *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
     if (selex_type(i,2) == 1) nselex += 2;
@@ -622,15 +710,15 @@ DATA_SECTION
   echotxt(nselex_pars, " Total number of selectivity parameters");
 
   // Fill last column of selex_type matrix, for use in Set_selex function.
-  i = 0;
+  int i = 0;
   for (j=1; j<=nselex_pats; j++)
-   {
+  {
     selex_type(j,4) = i;
     if (selex_type(j,2)==1) last = 2;
     if (selex_type(j,2)==2) last = nclass;
     if (selex_type(j,2)==3) last = 1;
     i += last;
-   }
+  }
   check(selex_type);
  END_CALCS
 
@@ -653,6 +741,7 @@ DATA_SECTION
     selex_lbnd = trans_selex_control(2);
     selex_ubnd = trans_selex_control(3);
     selex_phz = ivector(trans_selex_control(4));
+    echo(selex_phz);
  END_CALCS
 
   // Read in pointers for time-varying fishery retention:
@@ -661,7 +750,7 @@ DATA_SECTION
 
   //TODO: Check if above row for retention applies to discard fishery or to linked retained fishery:
   
-  !! nreten_pars = reten_fleet_pnt.indexmax();
+  !! nreten_pars = max(reten_fleet_pnt);
   !! nreten_pars *= nclass;
 
   //TODO: This code assumes only one type of retention function at the moment. Update as necessary.
@@ -767,18 +856,79 @@ DATA_SECTION
  END_CALCS
 
   // Determine number of prior terms, and create objects to hold these values:
-  int nprior_terms;
-  int nlike_terms;
-    
-  !! nprior_terms = (nfleet_act) + 1 + nfleet + nsurveyq_pars + 1 + 1;  
+  int nprior_terms; ///< Number of terms in the prior components
+  int nlike_terms; ///< Number of terms in the likelihood components
+  !! nprior_terms = (nfleet_act) + 1 + 3 + nsurveyq_pars + 1 + 1;  
   !! nlike_terms = (nfleet)*2+ (nfleet_act) + (nsurvey)*2;
+    
+  vector mn_offset(1,nlike_terms);        ///< offset for multinomial
+ LOCAL_CALCS
   // TODO: Check this section works in the general sense when applying to other species.
     
-  !! echotxt(nprior_terms, " Number of prior terms");
-  !! echotxt(nlike_terms, " Number of likelihood terms");
+  echotxt(nprior_terms, " Number of prior terms");
+  echotxt(nlike_terms, " Number of likelihood terms");
+  mn_offset.initialize();
+
+  // Fill in names of likelihood and prior components
+  int ilike=0;
+  for (int ifl=1;ifl<=nfleet;ifl++)
+  {
+    ilike++; 
+    // fleet_names += name_read_flt(iname_flt(k,1),iname_flt(k,2))+CRLF(1);
+    like_names  += fleet_names(ifl)+"_catch"+CRLF(1);
+  }
+   // Catch LFs-----------------------
+  for (int ifl=1;ifl<=nfleet;ifl++)
+  {
+    ilike++; 
+    for (int i=1;i<=nlf_fleet(ifl);i++)
+    {
+      dvector pobs      = incc + fleet_lf_obs(ifl,i)/sum(fleet_lf_obs);
+              pobs     /= sum(incc + pobs);
+      mn_offset(ilike) -= ss_fleet_lf(ifl,i)*pobs*log(pobs);
+    //   if (i==1)
+    //   {
+    //     ilike++; 
+    //     like_names += fleet_names(ifl)+"_LF"+CRLF(1);
+    //   }
+    } 
+    like_names += fleet_names(ifl)+"_LF"+CRLF(1);
+  } 
+  // Effort indices-----------------------
+  for (int ifl=1;ifl<=nfleet_act;ifl++)
+  {
+    ilike++; ///< Increment the likelihood index
+    like_names += "Fish_effort"+CRLF(1);
+  } 
+  // Survey indices 
+  for (int isrv=1;isrv<=nsurvey;isrv++)
+  {
+    ilike++; ///< Increment the likelihood index
+    like_names += survey_names(isrv)+"_Index"+CRLF(1);
+    ilike++; 
+    like_names += survey_names(isrv)+"_LF"+CRLF(1);
+    // Survey LF
+    for (int i=1;i<=nlf_survey(isrv);i++)
+    {
+      dvector pobs      = incc + survey_lf_obs(isrv,i)/sum(survey_lf_obs(isrv,i));
+              pobs     /= sum(incc + pobs);
+      mn_offset(ilike) -= ss_survey_lf(isrv,i)*pobs*log(pobs);
+    }
+    //   if (i==1)
+    //   if (i==1)
+    //   {
+    //     ilike++; 
+    //     like_names += survey_names(isrv)+"_LF"+CRLF(1);
+    //   }
+    // } 
+  } 
+  cout<<like_names<<endl;
+  echo(mn_offset);
+  echo(like_names);
+
+ END_CALCS
     
   // Read in prior and data re-weighting values:  
-
   init_vector prior_weight(1,nprior_terms);                 ///< Weights on the priors
   init_vector data_weight(1,nlike_terms);                   ///< Weights on the data
 
@@ -851,7 +1001,7 @@ DATA_SECTION
   par_count=0;
   active_parm(0,ntheta)=0;
     
-  for(i=1; i<=ntheta; i++)
+  for(int i=1; i<=ntheta; i++)
   { 
     par_count++;
     if(theta_phz(i) > final_phase) theta_phz(i)=-1;
@@ -860,16 +1010,26 @@ DATA_SECTION
       active_count++; active_parm(active_count)=par_count;
   }
   active_parms=active_count;
- END_CALCS
-  !! cout << " Number of active parameters is " << active_parms << endl;
-  !! cout << " Maximum phase for estimation is " << max_phase << "\n" << endl;
+  cout << " Number of active parameters is " << active_parms << endl;
+  cout << " Maximum phase for estimation is " << max_phase << "\n" << endl;
 
-  !! check (theta_phz);
-  !! check (ntheta);
-  !! check (par_count); 
-  !! check (active_parm);
-  !! check (active_parms);
+  check (theta_phz);
+  check (ntheta);
+  check (par_count); 
+  check (active_parm);
+  check (active_parms);
+ END_CALCS
   // TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
+
+INITIALIZATION_SECTION
+  theta_parms  theta_init
+  Madd_parms madd_init;  
+  gtrans_parms gtrans_init;
+  selex_parms selex_init;
+  reten_parms reten_init;
+  surveyq_parms surveyq_init;
+  lognin_parms lognin_init;
+  f_est  0.001;
 
 // =========================================================================================================
 PARAMETER_SECTION
@@ -905,8 +1065,8 @@ PARAMETER_SECTION
   !! check(ncatch_f);
 
   // Initialize predicted catch and recruitment parameters:
-  init_bounded_vector_vector f_est(1,nfleet_act,1,ncatch_f,0,1,1);         ///< Vector of predicted f values
-  init_vector recdev(styr,endyr,1);                                        ///< Vector of recruitment deviations
+  init_bounded_vector_vector f_est(1,nfleet_act,1,ncatch_f,0,1,2);         ///< Vector of predicted f values
+  init_bounded_dev_vector recdev(styr,endyr,-10,10,1);                                        ///< Vector of recruitment deviations
   
   !! cout << " All parameters declared \n" << endl;
   !! checkfile << " All parameters declared" << endl;
@@ -917,7 +1077,7 @@ PARAMETER_SECTION
   matrix N(styr,endyr+1,1,nclass);                            ///< Numbers-at-age matrix
   matrix S(styr,endyr,1,nclass);                              ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
-  matrix exp_rate(1,nfleet,styr,endyr);                       ///< Exploitation rate matrix
+  matrix exp_rate(1,nfleet_act,styr,endyr);                       ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
   
   matrix reten(styr,endyr,1,nclass);                          ///< Male retention matrix 
@@ -928,7 +1088,7 @@ PARAMETER_SECTION
   vector surveyq(1,nsurvey);                                  ///< Survey Q vector
   matrix selex_all(1,nselex_pats,1,nclass);                   ///< All selectivity matrix
 
-  3darray fleet_lf_pred(1,nfleet,1,nlf_fleet,1,nclass);       ///< Predicted catches (numbers) by class
+  3darray fleet_lf_pred(1,nfleet,styr,endyr,1,nclass);       ///< Predicted catches (numbers) by class
   matrix catch_biom_pred(1,nfleet,styr,endyr);               ///< Predicted catch weights
   matrix catch_num_pred(1,nfleet,styr,endyr);                ///< Predicted catch numbers
   
@@ -951,7 +1111,7 @@ PARAMETER_SECTION
   number sbpr_35;                                             ///< SBPR35 (used to define BMSY)
   number rec_out;                                             ///< Predicted recruitment  
   number catch_out;                                           ///< Predicted catch
-  vector mbio_proj(1,1000);                                   ///< Future MMB (projected)
+  vector mbio_proj(1,100);                                   ///< Future MMB (projected)
   vector f_mort(1,nfleet_byc);                                ///< Bycatch (kill) fleet Fs
 
   number rec_zero;                                            ///< Virgin recruitment 
@@ -966,32 +1126,10 @@ PARAMETER_SECTION
   // TODO: See example for more complicated selectivity options from LSMR.tpl.
 
 // =========================================================================================================
-PRELIMINARY_CALCS_SECTION
-
-  // Initialize the dummy parameter as needed:
-  if(final_phase<=0) {dummy_parm=0.5;} else {dummy_parm=1.0;}
-
-  // Set the initial values of parameters:
-  int j;
-
-  for (j=1; j<=ntheta; j++) theta_parms(j) = theta_init(j);
-  for (j=1; j<=nMadd_parms; j++) Madd_parms(j) = madd_init(j);  
-  for (j=1; j<=nclass-1; j++) gtrans_parms(j) = gtrans_init(j);
-  for (j=1; j<=nselex_pars; j++) selex_parms(j) = selex_init(j);
-  for (j=1; j<=nreten_pars; j++) reten_parms(j) = reten_init(j);
-  for (j=1; j<=nsurveyq_pars; j++) surveyq_parms(j) = surveyq_init(j);
-  for (j=1; j<=nclass; j++) lognin_parms(j) = lognin_init(j);
-    
-  for (ifleet=1; ifleet<=nfleet_act; ifleet++)
-    for (iyr=1; iyr<=ncatch_f(ifleet); iyr++) f_est(ifleet,iyr) = 0.1;
-  recdev.initialize();
-
-  logRbar = theta_parms(1);
-  M0 = theta_parms(2);
-
-// =========================================================================================================
 PROCEDURE_SECTION
-  fobj += square(dummy_datum-dummy_parm);
+  fobj    += square(dummy_datum-dummy_parm);
+  logRbar = theta_parms(1);
+  M0      = theta_parms(2);
   
   Set_effort();
   Set_growth();
@@ -999,7 +1137,10 @@ PROCEDURE_SECTION
   Set_selectivity();
   Set_survival();
   Update_population(); 
+  Get_Survey();
+  Get_Catch_Pred();
   ObjFunction();
+
 
 // --------------------------------------------------------------------
 FUNCTION Set_effort
@@ -1015,7 +1156,10 @@ FUNCTION Set_effort
       if (effort(ifleet,iyear) > 0)
       {
         if (f_new(ifleet,1) == 0 | iyear < f_new(ifleet,2) | iyear > f_new(ifleet,3))
-          { count += 1; f_all(ifleet,iyear) = f_est(ifleet,count); }
+        { 
+          count++; 
+          f_all(ifleet,iyear) = f_est(ifleet,count); 
+        }
         else
          f_all(ifleet,iyear) = -100;
       }  
@@ -1026,21 +1170,23 @@ FUNCTION Set_effort
 
   // Fill in missing values using a ratio estimator:
   for (ifleet=1; ifleet<=nfleet_act; ifleet++)
-    if (f_new(ifleet,1) > 0)
+  {
+    if (f_new(ifleet,1) > 0) // not used for BBRKC case...
     {
-     ratio = 0; ratio_2 = 0;
-     for (iyear=f_new(ifleet,4); iyear<=f_new(ifleet,5); iyear++)
-     {
-       if (effort(ifleet,iyear) > 0)
-       {
-        ratio += -log(1.0-f_all(ifleet,iyear))/effort(ifleet,iyear);
-        ratio_2 += 1;
-       }
-     }
-     delta = ratio/ratio_2;
-     for (iyear=f_new(ifleet,2); iyear<=f_new(ifleet,3); iyear++)
-       f_all(ifleet,iyear) = 1.0-mfexp(-delta*effort(ifleet,iyear));
+      ratio = 0; ratio_2 = 0;
+      for (iyear=f_new(ifleet,4); iyear<=f_new(ifleet,5); iyear++)
+      {
+        if (effort(ifleet,iyear) > 0)
+        {
+          ratio += -log(1.0-f_all(ifleet,iyear))/effort(ifleet,iyear);
+          ratio_2 += 1;
+        }
+      }
+      delta = ratio/ratio_2;
+      for (iyear=f_new(ifleet,2); iyear<=f_new(ifleet,3); iyear++)
+        f_all(ifleet,iyear) = 1.0-mfexp(-delta*effort(ifleet,iyear));
     }
+  }
 
 // --------------------------------------------------------------------
 FUNCTION Set_growth
@@ -1060,11 +1206,8 @@ FUNCTION Set_growth
 
 // --------------------------------------------------------------------
 FUNCTION Initial_size_structure
-  int iclass;
-
   N.initialize();
-  for (iclass=1;iclass<=nclass;iclass++)
-    N(styr,iclass) = mfexp(logRbar)*mfexp(lognin_parms(iclass));
+  N(styr) = mfexp(logRbar)*mfexp(lognin_parms);
 
 // --------------------------------------------------------------------
 FUNCTION Set_selectivity
@@ -1094,9 +1237,9 @@ FUNCTION Set_selectivity
     }
     if (selex_type(ifleet,2) == 3)
     {
-      jpnt = selex_type(selex_type(ifleet,2),4);
+      jpnt      = selex_type(selex_type(ifleet,2),4);
       slope_par = selex_parms(jpnt+2);
-      temp = -log(19.0)/slope_par;
+      temp      = -log(19.0)/slope_par;
       for (iclass=1; iclass<=nclass; iclass++)
         selex_all(ifleet,iclass) = 1.0/(1.0+mfexp(temp*(length(iclass)-selex_parms(ipnt+1))));
       temp =  selex_all(ifleet,nclass);
@@ -1106,11 +1249,11 @@ FUNCTION Set_selectivity
 
   // Fishery and bycatch selectivity
   for (ifleet=1; ifleet<=nfleet_act; ifleet++)
-   for (iyr=styr; iyr<=endyr; iyr++)
+    for (iyr=styr; iyr<=endyr; iyr++)
     {
-     ipnt = selex_fleet_pnt(ifleet,iyr);
-     for (iclass=1; iclass<=nclass; iclass++)
-       selex_fleet(ifleet,iyr,iclass) = selex_all(ipnt,iclass) ;
+      ipnt = selex_fleet_pnt(ifleet,iyr);
+      for (iclass=1; iclass<=nclass; iclass++)
+        selex_fleet(ifleet,iyr,iclass) = selex_all(ipnt,iclass) ;
     }  
   
   // Retention in the pot fishery
@@ -1138,7 +1281,9 @@ FUNCTION Set_selectivity
    for (iyr=styr; iyr<=endyr+1; iyr++)
     for (iclass=1; iclass<=nclass; iclass++)
      selex_survey(subsurvey(ipnt,1),iyr,iclass) *= selex_survey(subsurvey(ipnt,2),iyr,iclass);
-
+     
+  //check(selex_fleet);
+  // check(selex_survey);
 // --------------------------------------------------------------------
 FUNCTION Set_survival
   int iyr,iclass,ifleet;
@@ -1150,18 +1295,19 @@ FUNCTION Set_survival
   for (iyr=styr; iyr<=endyr; iyr++) if (M_pnt(iyr)>1) M(iyr) += Madd_parms(M_pnt(iyr)); 
   
   for (iyr=styr; iyr<=endyr; iyr++)
+  {
     for (iclass=1; iclass<=nclass; iclass++)
     {
-     S(iyr,iclass) = mfexp(-M(iyr));
-     for (ifleet=1; ifleet<=nfleet_act; ifleet++)
+      S(iyr,iclass) = mfexp(-M(iyr));
+      for (ifleet=1; ifleet<=nfleet_act; ifleet++)
       {
-       S_fleet(ifleet,iyr,iclass) = (1-selex_fleet(ifleet,iyr,iclass)*f_all(ifleet,iyr));
-       exp_rate(ifleet,iyr) = f_all(ifleet,iyr);
-       S(iyr,iclass) *= S_fleet(ifleet,iyr,iclass);
+        S_fleet(ifleet,iyr,iclass) = (1.-selex_fleet(ifleet,iyr,iclass)*f_all(ifleet,iyr));
+        exp_rate(ifleet,iyr) = f_all(ifleet,iyr);
+        S(iyr,iclass) *= S_fleet(ifleet,iyr,iclass);
       } 
-     f_direct(iyr) = selex_fleet(1,iyr,nclass)*f_all(1,iyr); // FIX: This may have to loop over fleet as well?
+      f_direct(iyr) = selex_fleet(1,iyr,nclass)*f_all(1,iyr); // FIX: This may have to loop over fleet as well?
     }
-
+  }
 // --------------------------------------------------------------------
 FUNCTION Update_population
   int iyr, iclass, jclass;
@@ -1193,8 +1339,9 @@ FUNCTION ObjFunction
   like_val.initialize();
   Get_Likes();
   Get_Priors();
- // cout << prior_val << endl;
- // cout << like_val << endl;  
+  fobj = sum(like_val) + sum(prior_val);
+
+ // if (verbose==1) for(int ilike=1;ilike<=nlike_terms;ilike++) cout << like_names(ilike)<<" "<<like_val(ilike) << endl;
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Likes
@@ -1204,55 +1351,58 @@ FUNCTION Get_Likes
   for (int ifl=1;ifl<=nfleet;ifl++)
   {
     ilike++; ///< Increment the likelihood index
+    // Note that these don't have a variance term associated--assumes fixed CV of 0.05...
     if(catch_units(ifl) == 1)
-      like_val(ilike) += norm2(log((catch_biom_pred(ifl)+incd)-log(catch_biom_obs(ifl)+incd)));
+      like_val(ilike) += data_weight(ilike) *norm2(log(catch_biom_pred(ifl)+incd)-log(catch_biom_obs(ifl)+incd));
     else
-      like_val(ilike) += norm2(log((catch_num_pred(ifl)+incd)-log(catch_num_obs(ifl)+incd)));
+      like_val(ilike) += data_weight(ilike) *norm2(log(catch_num_pred(ifl)+incd)-log(catch_num_obs(ifl)+incd));
   }
  
   // Catch LFs-----------------------
-  for (ifl=1;ifl<=nfleet;ifl++)
+  for (int ifl=1;ifl<=nfleet;ifl++)
   {
     ilike++; ///< Increment the likelihood index
     for (int i=1;i<=nlf_fleet(ifl);i++)
     {
-      dvar_vector phat = fleet_lf_pred(ifl,i)/sum(fleet_lf_pred(ifl,i));
-      dvector pobs     = fleet_lf_obs(ifl,i)/sum(fleet_lf_obs(ifl,i)); // this should probably be done once in beginning
-      // Andre's version waste time w/ constants
-      //dvariable Error  = elem_div((phat+Incc),(pobs+Incc));
-      // like_val(ilike)  += -ss_fleet_lf(ifl,i)*pobs*log(Error);
-      // ignores constant, vector x vector returns a scalar
-      like_val(ilike)  += -ss_fleet_lf(ifl,i)*pobs*log(phat);
+      int iyr = yr_fleet_lf(ifl,i);
+      dvar_vector phat  = incc + fleet_lf_pred(ifl,iyr)/sum(fleet_lf_pred(ifl,iyr));
+                  phat /= sum(phat);
+      dvector pobs      = incc + fleet_lf_obs(ifl,i)/sum(fleet_lf_obs(ifl,i));
+              pobs     /= sum(pobs);
+      // cout << iyr<< " "<< ifl<<" " <<pobs<<" "<<phat<<endl;
+      // cout << iyr<< " "<< ifl<<" " << ss_fleet_lf(ifl,i)*pobs*log(phat)<<endl;
+      // cout<<iyr<<" "<<ifl<<" "<<phat<<" "<<pobs<<endl;
+      like_val(ilike)  -= ss_fleet_lf(ifl,i)*pobs*log(phat);
     } 
+    like_val(ilike) -= mn_offset(ilike);
+    like_val(ilike) *= data_weight(ilike);
   } 
 
   // Effort indices-----------------------
-  /*
   q_effort.initialize();
-  for (ifl=1;ifl<=nfleet;ifl++)
+  for (int ifl=1;ifl<=nfleet_act;ifl++)
   {
     ilike++; ///< Increment the likelihood index
     double nn= 0;
     // TODO: figure out how effort is used
-    for (iyr=Yr1;iyr<=endyr;iyr++)
-      if (Effort(Ifleet,iyr) > 0) 
+    for (iyr=styr;iyr<=endyr;iyr++)
+      if (effort(ifl,iyr) > 0) 
       {
-        if (FOverWrite(Ifleet,0) == 0 |iyr<FOverWrite(Ifleet,1) | iyr>FOverWrite(Ifleet,2))
+        if (f_new(ifl,1) == 0 | iyr<f_new(ifl,2) | iyr>f_new(ifl,3))
         { 
           nn++ ; 
-          qEff(Ifleet) += log((Effort(Ifleet,iyr)+Incd)/(ExplRates(Ifleet,iyr)+Incd)); 
+          q_effort(ifl) += log((effort(ifl,iyr)+incd)/(exp_rate(ifl,iyr)+incd)); 
         }
       }  
-    qEff(Ifleet) = mfexp(qEff(Ifleet)/nn); 
-    for (iyr=Yr1;iyr<=endyr;iyr++)
-     if (Effort(Ifleet,iyr) > 0)
-      if (FOverWrite(Ifleet,0) == 0 |iyr<FOverWrite(Ifleet,1) | iyr>FOverWrite(Ifleet,2))
-       like_val(ilike) += square(log((Effort(Ifleet,iyr)+Incd)/(qEff(Ifleet)*(ExplRates(Ifleet,iyr)+Incd))));
-   }  
-    */
+    q_effort(ifl) = mfexp(q_effort(ifl)/nn); 
+    for (iyr=styr;iyr<=endyr;iyr++)
+     if (effort(ifl,iyr) > 0)
+      if (f_new(ifl,1) == 0 | iyr<f_new(ifl,2) | iyr > f_new(ifl,3))
+       like_val(ilike) += square(log((effort(ifl,iyr)+incd)/(q_effort(ifl)*(exp_rate(ifl,iyr)+incd))));
+    like_val(ilike) *= data_weight(ilike);
+  }  
 
   // Survey indices 
-  // !!    SurveyEst(DIfleet,DIyr,2) = sqrt(log(square(SurveyEst(DIfleet,DIyr,2))+1.0));
   for (int isrv=1;isrv<=nsurvey;isrv++)
   {
     ilike++; ///< Increment the likelihood index
@@ -1263,15 +1413,21 @@ FUNCTION Get_Likes
       else 
         like_val(ilike) += 0.5*square(log((survey_num_obs(isrv,i)+incd)/(survey_num_pred(isrv,i)+incd))) /(survey_var(isrv,i));
     }  
+    like_val(ilike) *= data_weight(ilike);
+
   // Survey LF
     ilike++; 
-    for (i=1;i<=nlf_survey(isrv);i++)
+    for (int i=1;i<=nlf_survey(isrv);i++)
     {
-      dvar_vector phat = survey_lf_pred(isrv,i)/sum(survey_lf_pred(isrv,i));
-      dvector pobs     = survey_lf_obs(isrv,i) /sum(survey_lf_obs(isrv,i)); // this should probably be done once in beginning
+      dvar_vector phat  = incc + survey_lf_pred(isrv,i)/sum(survey_lf_pred(isrv,i));
+                  phat /= sum(phat);
+      dvector pobs      = incc + survey_lf_obs(isrv,i)/sum(survey_lf_obs(isrv,i));
+              pobs     /= sum(pobs); 
       like_val(ilike)  -= ss_survey_lf(isrv,i)*pobs*log(phat);
       /* for(Iclass=1;Iclass<=Nclass;Iclass++) if (SurveyObsLF(isrv,Icnt,Iclass) > 0) // Jim says this seems to imply that a zero means no data...UNTRUE{ Error = (PredSurvey(isrv,iyr,Iclass)+Incc)/(SurveyObsLF(isrv,Icnt,Iclass)+Incc); like_val(ilike) += -1*SSSurveyLF(isrv,Icnt)*SurveyObsLF(isrv,Icnt,Iclass)*log(Error); } */
     } 
+    like_val(ilike) -= mn_offset(ilike);
+    like_val(ilike) *= data_weight(ilike);
   } 
                                                     
 // ---------------------------------------------------------------------------------------------------------
@@ -1280,8 +1436,6 @@ FUNCTION Get_Priors
   double nn = 0;
   dvariable mean_F=0;
   // Prior on F-devs 
-  /*
-  */
   for (int ifl=1;ifl<=nfleet_act;ifl++)
   {
     iprior++;
@@ -1299,12 +1453,14 @@ FUNCTION Get_Priors
       if (effort(ifl,iyr) > 0) 
         prior_val(iprior) += square(f_all(ifl,iyr)-mean_F);
   } 
+  prior_val(iprior) *= prior_weight(iprior);
   iprior++;
   // Prior on Rec Devs
   for (i=styr;i<=endyr;i++) 
   {
     prior_val(iprior) += square(recdev(i));
   }
+  prior_val(iprior) *= prior_weight(iprior);
   iprior++;
     
   // penalties on parameters
@@ -1313,29 +1469,33 @@ FUNCTION Get_Priors
   for (int i=1;i<=nselex_pars;i++)
     if (selex_phz(i) > 0)
       prior_val(iprior) += square(selex_parms(i));
+  prior_val(iprior) *= prior_weight(iprior);
   iprior++;
   prior_val(iprior) = sum(square(reten_parms));
+  prior_val(iprior) *= prior_weight(iprior);
   iprior++;
   
   // q - prior
   for (int isrv=1;isrv<=nsurveyq_pars;isrv++)
+  {
     if (surveyq_psd(isrv) > 0)
       prior_val(iprior) = square(mfexp(surveyq_parms(isrv))-surveyq_pmean(isrv))/(2.0*square(surveyq_psd(isrv)));
-  iprior++;
-  
+    prior_val(iprior) *= prior_weight(iprior);
+    iprior++;
+  }
+
   // M-prior
-  // prior_val(iprior) = square(M0-MPriorMean)/(2.0*square(MPriorSD));
-  // prior_val(iprior) = square(theta-MPriorMean)/(2.0*square(MPriorSD));
-  // iprior++;
+  prior_val(iprior) = square(M0-theta_pmean(2))/(2.0*square(theta_psd(2)));
+  prior_val(iprior) *= prior_weight(iprior);
+  iprior++;
+
   // 2nd derivative penalty
-  /*
-  Penal = 0;
-  for (Iselex=1;Iselex<=NSelexPat;Iselex++)
-   if (SelexType(Iselex,1) == 2)
-    for (Iclass=2;Iclass<=Nclass-1;Iclass++)
-     Penal += square(SelexAll(Iselex,Iclass-1)-2.0*SelexAll(Iselex,Iclass)+SelexAll(Iselex,Iclass+1));
-  prior_val(iprior) = Penal;   
-  */
+  dvariable penal = 0;
+  for (int isel=1;isel<=nselex_pats;isel++)
+   if (selex_type(isel,1) == 2)
+    penal = norm2(first_difference(first_difference(selex_all(isel))));
+  prior_val(iprior) = penal;   
+  prior_val(iprior) *= prior_weight(iprior);
   
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Catch_Pred;
@@ -1351,22 +1511,39 @@ FUNCTION Get_Catch_Pred;
   {
     // Need to loop over number of directred fisheries (presently fixed at 1) fleet control matrix
     N_tmp = N(iyr)*mfexp(-catch_time(1,iyr)*M(iyr));
-    for (int ifl=1;ifl<=nfleet_act;ifl++)
+      // cout<<iyr<<" "<< reten(iyr)<< " AfterFish ";
+    int ifl_act;
+    for (int ifl=1;ifl<=nfleet;ifl++)
     {
-      S1 = S_fleet(ifl,iyr);
-      // Main retained fishery
-      if (fleet_control(ifl,2)==1) 
-        fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),reten(iyr)));
-      if (fleet_control(ifl, 2)==2) // Discard fishery
-        fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),(1.-reten(iyr))));
-      if (fleet_control(ifl, 2)==3) // Main retained fishery
-        fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , (1.-S1));
+      switch (fleet_control(ifleet,1)) 
+      {
+        case 1 : // Main retained fishery
+          ifl_act = fleet_control(ifleet,2);
+          S1 = S_fleet(ifl_act,iyr);
+          fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),reten(iyr)));
+          break;
+        case 2 : // Discard fishery
+          ifl_act = fleet_control(ifleet,2);
+          S1 = S_fleet(ifl_act,iyr);
+          fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),(1.-reten(iyr))));
+          break;
+        case 3 : // fishery w/ no discard component
+          ifl_act = fleet_control(ifleet,2);
+          S1 = S_fleet(ifl_act,iyr);
+          fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , (1.-S1));
+          break;
+      }
       N_tmp = elem_prod(N_tmp,S1);
+      // cout<<S1<< endl;
+      // Accumulate totals 
+      catch_biom_pred(ifl,iyr) = fleet_lf_pred(ifl,iyr) * weight;
+      catch_num_pred(ifl,iyr)  = sum(fleet_lf_pred(ifl,iyr) );
+      // cout<<iyr<<" "<<ifl<<" "<<fleet_lf_pred(ifl,iyr)<< endl;
+      // if (verbose) cout <<"Catch Pred "<< ifl<<" "<< iyr<<" "<< catch_biom_pred(ifl,iyr)<<" "<<catch_biom_obs(ifl,iyr)<<endl;
     }
-     // Accumulate totals 
-     catch_biom_pred(iyr) = fleet_lf_pred(ifl,iyr) * weight;
-     catch_num_pred(iyr) = sum(fleet_lf_pred(ifl,iyr) );
+    // if (verbose) cout <<"NPred "<< " "<< iyr<<" "<< N_tmp <<endl;
   } 
+  // check(S_fleet);
 
      /*
    for (Iclass=1;Iclass<=Nclass;Iclass++)
@@ -1434,7 +1611,37 @@ FUNCTION Get_Survey
 
 // =========================================================================================================
 REPORT_SECTION
+  if (last_phase())
+  {
+    ivector years(styr,endyr);
+    years.fill_seqadd(styr,1);
+    writeR(years);
+    writeR(M);
+    writeR(nfleet);
+    writeR(yr_survey);
+    writeR(fleet_names);
+    writeR(catch_biom_pred);
+    writeR(catch_num_obs);
+    writeR(nlf_fleet);
+    writeR(fleet_lf_pred);
+    writeR(fleet_lf_obs);
+    writeR(nsurvey);
+    writeR(yr_survey_lf)
+    writeR(survey_num_pred)
+    writeR(survey_num_obs)
+    writeR(survey_biom_pred)
+    writeR(survey_biom_obs)
+    writeR(nlf_survey);
+    writeR(survey_names);
+    writeR(survey_lf_obs);
+    writeR(survey_lf_pred);
+    writeR(yr_survey_lf);
+  }
 
+  check(like_val);
+  check(like_names);
+  check(data_weight);
+  check(prior_weight);
   check(logRbar);
   check(M);
   check(f_all);
@@ -1453,7 +1660,6 @@ REPORT_SECTION
   check(N);
   check(mbio);
 
-  exit(1);
   
 // =========================================================================================================
 
