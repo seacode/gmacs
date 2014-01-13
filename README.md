@@ -2,7 +2,7 @@
 
 Updated January 2014, by Athol Whitten
 
-**Note:** Current source files are under active development and will not compile. An updated and compilable source will be available at the end of the week (January 10th).
+**Note:** Current source files are under active development and may not compile. Updates are currently being posted regularly.
 
 ## Generalized Modeling for Alaskan Crab Stocks ##
 
