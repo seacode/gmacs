@@ -1,0 +1,294 @@
+#if !defined(_GMACS_)
+#  define _GMACS_
+
+class model_data : public ad_comm{
+  double incc;
+  double incd;
+  init_adstring data_file;
+  init_adstring control_file;
+  init_adstring size_trans_file;
+  data_int verbose;
+  data_int final_phase;
+  data_int use_pin;
+  data_int read_growth;
+  data_int eof_starter;
+  int i;
+  int j;
+  int iyr;
+  int iclass;
+  int jclass;
+  int ifleet;
+  int isurvey;
+  int last;
+  data_int styr;
+  data_int endyr;
+  data_number tstep;
+  data_int nsex;
+  data_int nfleet;
+  data_int nsurvey;
+  data_int nclass;
+  data_int ndclass;
+  data_imatrix class_link;
+  data_vector catch_units;
+  data_vector catch_multi;
+  data_vector survey_units;
+  data_vector survey_multi;
+  data_int ncatch_obs;
+  data_int nsurvey_obs;
+  data_number survey_time;
+  data_imatrix fleet_control;
+  int nfleet_ret;
+  int nfleet_dis;
+  int nfleet_byc;
+  int nfleet_act;
+  data_matrix catch_data;
+  dmatrix catch_biom_obs;
+  dmatrix catch_num_obs;
+  data_matrix survey_data;
+  ivector nobs_survey;
+  imatrix yr_survey;
+  dmatrix survey_biom_obs;
+  dmatrix survey_num_obs;
+  dmatrix survey_var;
+  data_vector discard_mort;
+  data_vector hg;
+  data_matrix catch_time;
+  data_matrix effort;
+  data_imatrix f_new;
+  ivector ncatch_f;
+  data_int nlf_obs;
+  data_matrix lf_data;
+  ivector nlf_fleet;
+  imatrix yr_fleet_lf;
+  dmatrix ss_fleet_lf;
+  d3_array fleet_lf;
+  d3_array fleet_lf_obs;
+  data_int nlfs_obs;
+  data_matrix lfs_data;
+  ivector nlf_survey;
+  imatrix yr_survey_lf;
+  dmatrix ss_survey_lf;
+  d3_array survey_lf;
+  d3_array survey_lf_obs;
+  data_vector mean_length;
+  data_vector mean_weight;
+  data_vector fecundity_inp;
+  dvector length;
+  dvector weight;
+  dvector fecundity;
+  dvector surv_lf_store;
+  data_int ncapture_obs;
+  data_int nmark_obs;
+  data_int nrecapture_obs;
+  data_matrix capture_data;
+  data_matrix mark_data;
+  data_matrix recapture_data;
+  data_int eof_data;
+  int styr_growth;
+  int endyr_growth;
+  int ndclass_growth;
+  ivector growth_bins;
+  d3_array growth_data;
+  int eof_growth;
+  int ntheta;
+  data_matrix theta_control;
+  dmatrix trans_theta_control;
+  dvector theta_init;
+  dvector theta_lbnd;
+  dvector theta_ubnd;
+  ivector theta_phz;
+  ivector theta_prior;
+  dvector theta_pmean;
+  dvector theta_psd;
+  ivector theta_cov;
+  ivector theta_dev;
+  dvector theta_dsd;
+  ivector theta_dmin;
+  ivector theta_dmax;
+  ivector theta_blk;
+  data_int sr_lag;
+  data_int sr_type;
+  data_vector M_pnt;
+  int nMadd_parms;
+  data_matrix madd_control;
+  dmatrix trans_madd_control;
+  dvector madd_init;
+  dvector madd_lbnd;
+  dvector madd_ubnd;
+  ivector madd_phz;
+  data_imatrix selex_fleet_pnt;
+  data_imatrix selex_survey_pnt;
+  int nselex;
+  int nselex_pats;
+  int nselex_pars;
+  dmatrix selex_type;
+  data_matrix selex_control;
+  dmatrix trans_selex_control;
+  dvector selex_init;
+  dvector selex_lbnd;
+  dvector selex_ubnd;
+  ivector selex_phz;
+  int nreten_pars;
+  data_imatrix reten_fleet_pnt;
+  data_matrix reten_control;
+  dmatrix trans_reten_control;
+  dvector reten_init;
+  dvector reten_lbnd;
+  dvector reten_ubnd;
+  ivector reten_phz;
+  int nsurveyq_pars;
+  data_imatrix surveyq_pnt;
+  data_int nsubsurvey;
+  data_imatrix subsurvey;
+  data_matrix surveyq_control;
+  dmatrix trans_surveyq_control;
+  dvector surveyq_init;
+  dvector surveyq_lbnd;
+  dvector surveyq_ubnd;
+  ivector surveyq_phz;
+  ivector surveyq_prior;
+  dvector surveyq_pmean;
+  dvector surveyq_psd;
+  data_matrix lognin_control;
+  dmatrix trans_lognin_control;
+  dvector lognin_init;
+  dvector lognin_lbnd;
+  dvector lognin_ubnd;
+  ivector lognin_phz;
+  data_matrix gtrans_control;
+  dmatrix trans_gtrans_control;
+  dvector gtrans_init;
+  dvector gtrans_lbnd;
+  dvector gtrans_ubnd;
+  ivector gtrans_phz;
+  int nprior_terms;
+  int nlike_terms;
+  data_vector prior_weight;
+  data_vector data_weight;
+  data_int eof_control;
+  int IsB0;
+  int SR_rel;
+  data_int bmsy_start;
+  data_int bmsy_end;
+  data_int eof_forecast;
+  int par_count;
+  int active_count;
+  int active_parms;
+  ivector active_parm;
+  double dummy_datum;
+  int dummy_phase;
+  int max_phase;
+  ~model_data();
+  model_data(int argc,char * argv[]);
+  friend class model_parameters;
+};
+
+class model_parameters : public model_data ,
+  public function_minimizer
+{
+public:
+  ~model_parameters();
+  void preliminary_calculations(void);
+  void set_runtime(void);
+  virtual void * mycast(void) {return (void*)this;}
+  static int mc_phase(void)
+  {
+    return initial_params::mc_phase;
+  }
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+  static prevariable current_feval(void)
+  {
+    return *objective_function_value::pobjfun;
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_bounded_number dummy_parm;
+  param_init_bounded_number_vector theta_parms;
+  param_number logRbar;
+  param_number M0;
+  param_init_bounded_number_vector Madd_parms;
+  param_init_bounded_number_vector gtrans_parms;
+  param_init_bounded_number_vector selex_parms;
+  param_init_bounded_number_vector reten_parms;
+  param_init_bounded_number_vector surveyq_parms;
+  param_init_bounded_number_vector lognin_parms;
+  param_init_bounded_vector_vector f_est;
+  param_init_vector recdev;
+  param_matrix f_all;
+  param_matrix N;
+  param_matrix S;
+  param_3array S_fleet;
+  param_matrix exp_rate;
+  param_matrix strans;
+  param_matrix reten;
+  param_3array selex_fleet;
+  param_3array selex_survey;
+  param_vector surveyq;
+  param_matrix selex_all;
+  param_3array fleet_lf_pred;
+  param_matrix catch_biom_pred;
+  param_matrix catch_num_pred;
+  param_3array survey_lf_pred;
+  param_matrix survey_biom_pred;
+  param_matrix survey_num_pred;
+  param_vector q_effort;
+  param_vector M;
+  param_vector f_direct;
+  param_vector prior_val;
+  param_vector like_val;
+  param_number prior_function_value;
+  param_number likelihood_function_value;
+  objective_function_value fobj;
+  param_number f_multi;
+  param_number mbio_out;
+  param_number f_35;
+  param_number sbpr_35;
+  param_number rec_out;
+  param_number catch_out;
+  param_vector mbio_proj;
+  param_vector f_mort;
+  param_number rec_zero;
+  param_number steep;
+  param_number mbio_zero;
+  param_vector mbio;
+  param_stddev_vector logmbio;
+  param_vector recruits;
+  param_stddev_vector logrecruits;
+  param_stddev_vector logrecmbio;
+public:
+  virtual void userfunction(void);
+  virtual void report(void);
+  virtual void final_calcs(void);
+  model_parameters(int sz,int argc, char * argv[]);
+  virtual void initializationfunction(void){}
+  void Set_effort(void);
+  void Set_growth(void);
+  void Initial_size_structure(void);
+  void Set_selectivity(void);
+  void Set_survival(void);
+  void Update_population(void);
+  void ObjFunction(void);
+  void Get_Likes(void);
+  void Get_Priors(void);
+  void Get_Catch_Pred(void);
+  void Get_Survey(void);
+
+};
+#endif

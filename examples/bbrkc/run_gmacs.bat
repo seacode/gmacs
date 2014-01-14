@@ -1,3 +1,3 @@
 pause
-gmacs.exe
+gmacs.exe -nox -nohess
 pause

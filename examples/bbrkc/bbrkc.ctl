@@ -46,7 +46,6 @@
 
 # Specifications for Selectivity (Fishing Fleets) parameters
 # Init, Lower, Upper, Phase
-
 # Block 1: 1968-72 for Fleet 2
 46.0517019 -100 1000 -1
  0.0       -100 1000 1  
@@ -113,17 +112,18 @@
 -100.0      -1000 1000 -1
 -100.0      -1000 1000 -1
 
+
 # Time-varying fishery retention
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
    1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 
 # Specifications for the retained probability (one parm per size-class, per fleet)
 # Init, Lower, Upper, Phase
- 0 -100 1000 3
- 0 -100 1000 3
- 0 -100 1000 3
- 0 -100 1000 3
- 0 -100 1000 3
+ 0 -100 1000  3
+ 0 -100 1000  3
+ 0 -100 1000  3
+ 0 -100 1000  3
+ 0 -100 1000  3
 
 # Time-varying Q
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10 11
@@ -161,7 +161,7 @@
 # Rec_devs
 1.0000 
 # Parameters
-0.0001 0.0001 0.0001 0.0001 
+0.0001 0.0001 0.0001 
 # Survey Q
 1.000 1.000 1.000
 # Prior on M
@@ -173,12 +173,12 @@
 # (2) Data 
 # Catch: PotDisc, PotRet, Trawl, Tanner 
 10.00  100.00   10.00   10.00
-# Survey: NMFS, BSFRF 
-1.000  1.000  
-# Effort: PotRet, Trawl, Tanner
-0.000  0.000  10.000
 # LF: PotDisc, PotRet, Trawl, Tanner
 0.100  1.000  0.100  0.100      
+# Effort: PotRet, Trawl, Tanner
+0.000  0.000  10.000
+# Survey: NMFS, BSFRF 
+1.000  1.000  
 # Survey-LF: NMFS, BSFRF
 1.00   1.00
 
