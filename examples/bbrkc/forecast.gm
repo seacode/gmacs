@@ -1,6 +1,0 @@
-# Gmacs Forecast File Version 1.02
-
-1995 2010		# Start and end years for BMSY calculation
-#1 				# BMSY option [1 is Tier 3, 0 is other].
-
-999 # EOF check.
