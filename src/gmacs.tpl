@@ -40,21 +40,21 @@ GLOBALS_SECTION
 
   /**
   \def echo(object)
-  Prints name and value of \a object on echoinput %ofstream file.
+  Prints name and value of \a object on ADMB echoinput %ofstream file.
   */
   #define echo(object) echoinput << #object << "\n" << object << endl;
   #define echotxt(object,text) echoinput << object << "\t" << text << endl;
 
   /**
   \def writeR(object)
-  Prints name and value of \a object on writeR %ofstream output file.
+  Prints name and value of \a object on ADMB echoinput %ofstream file.
   */
   #define writeR(object) R_out << #object << "\n" << object << endl;
   
 
   /**
   \def check(object)
-  Prints name and value of \a object on checkfile %ofstream output file.
+  Prints name and value of \a object on ADMB check %ofstream file.
   */
   #define check(object) checkfile << #object << "\n" << object << endl;
 
@@ -85,15 +85,15 @@ TOP_OF_MAIN_SECTION
 // =========================================================================================================
 DATA_SECTION
   // Create strings with version information:
-  !!version+="Gmacs_V1.04_2014/01/13_by_Athol_Whitten_and_Jim_Ianelli_(UW)_using_ADMB_11.1";
-  !!version_short+="Gmacs V1.04";
+  !!version+="Gmacs_V1.02_2014/01/02_by_Athol_Whitten_(UW)_using_ADMB_11.1";
+  !!version_short+="Gmacs V1.02";
+
   !! echoinput << version << endl;
   !! echoinput << ctime(&start) << endl;
-
   number incc 
   number incd 
-  !! incc = 0.00001; ///< A constant for likelihoods
-  !! incd = 0.0001;  ///< Another constant for likelihoods etc.
+  !! incc = 0.00001; ///< some constant for likelihoods
+  !! incd = 0.0001;  ///< som other constant used
 
 // ---------------------------------------------------------------------------------------------------------
 // STARTER FILE
@@ -324,6 +324,9 @@ DATA_SECTION
   check(survey_var);
  END_CALCS
 
+  // Q: Some pre-processing of these data required. See simple.tpl for example.
+  // TODO: Multiply these catch and survey data by multipliers provided. Simple.tpl Line 56+
+
   !! echotxt(catch_units,  " Catch units");
   !! echotxt(catch_multi,  " Catch multipliers");
   !! echotxt(survey_units, " Survey units");
@@ -407,7 +410,7 @@ DATA_SECTION
     
     for (iclass=1; iclass<=nclass; iclass++)
       fleet_lf_obs(ifleet,iobs_fl(ifleet),iclass) = sum(lf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));
-    // NOTE, simple.tpl had down-weighted sample sizes w/in the code...
+    // NOTE, other model had down-weighted sample sizes w/in the code...
   }
  END_CALCS
 
@@ -1077,20 +1080,20 @@ PARAMETER_SECTION
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
   
   matrix reten(styr,endyr,1,nclass);                          ///< Male retention matrix 
-  // TODO: The above matrix was retain_males in old code. Should be sex-distinct in next version of model?
+  // TODO: The above matrix was retain_males in old code. Should this be sex-distinct?
 
   3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);      ///< Distinct fishery selectivity array
   3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
   vector surveyq(1,nsurvey);                                  ///< Survey Q vector
   matrix selex_all(1,nselex_pats,1,nclass);                   ///< All selectivity matrix
 
-  3darray fleet_lf_pred(1,nfleet,styr,endyr,1,nclass);        ///< Predicted catches (numbers) by class
-  matrix catch_biom_pred(1,nfleet,styr,endyr);                ///< Predicted catch weights
-  matrix catch_num_pred(1,nfleet,styr,endyr);                 ///< Predicted catch numbers
+  3darray fleet_lf_pred(1,nfleet,styr,endyr,1,nclass);       ///< Predicted catches (numbers) by class
+  matrix catch_biom_pred(1,nfleet,styr,endyr);               ///< Predicted catch weights
+  matrix catch_num_pred(1,nfleet,styr,endyr);                ///< Predicted catch numbers
   
   3darray survey_lf_pred(1,nsurvey,1,nlf_survey,1,nclass);    ///< Survey LF from the model
-  matrix survey_biom_pred(1,nsurvey,1,nobs_survey);           ///< Predicted survey weights
-  matrix survey_num_pred(1,nsurvey,1,nobs_survey);            ///< Predicted survey numbers
+  matrix survey_biom_pred(1,nsurvey,1,nobs_survey);            ///< Predicted survey weights
+  matrix survey_num_pred(1,nsurvey,1,nobs_survey);             ///< Predicted survey numbers
   vector q_effort(1,nfleet_act);                              ///< Effort q
   vector M(styr,endyr);                                       ///< Natural mortality
   vector f_direct(styr,endyr);                                ///< Fishing mortality
@@ -1102,22 +1105,22 @@ PARAMETER_SECTION
   number sbpr_35;                                             ///< SBPR35 (used to define BMSY)
   number rec_out;                                             ///< Predicted recruitment  
   number catch_out;                                           ///< Predicted catch
-  // vector mbio_proj(1,100);                                 ///< Future MMB (projected)
-  // vector f_mort(1,nfleet_byc);                             ///< Bycatch (kill) fleet Fs
+  // vector mbio_proj(1,100);                                   ///< Future MMB (projected)
+  // vector f_mort(1,nfleet_byc);                                ///< Bycatch (kill) fleet Fs
 
-  // number rec_zero;                                         ///< Virgin recruitment 
-  // number steep;                                            ///< Stock-recruit steepness 
+  // number rec_zero;                                            ///< Virgin recruitment 
+  // number steep;                                               ///< Stock-recruit steepness 
   number mbio_zero;                                           ///< Virgin MMB 
   vector mbio(styr,endyr);                                    ///< Mature male biomass 
-  // vector logmbio(styr,endyr);                              ///< Log of MMB
+  // vector logmbio(styr,endyr);                        ///< Log of MMB
   vector recruits(styr,endyr);                                ///< Recruitment vector
-  // vector logrecruits(styr,endyr);                          ///< Log of recruitment vector
-  // vector logrecmbio(styr,endyr-sr_lag);                    ///< Log of recruits-per-spawner
+  // vector logrecruits(styr,endyr);                    ///< Log of recruitment vector
+  // vector logrecmbio(styr,endyr-sr_lag);              ///< Log of recruits-per-spawner
  
   // Initialize the components of the objective function:
   vector prior_val(1,nprior_terms);                           ///< Objective function prior values
   vector like_val(1,nlike_terms);                             ///< Objective function likelihood values
-  objective_function_value ObjFun;                            ///< Objective function value to be minimised
+  objective_function_value ObjFun;                              ///< Objective function value to be minimised
 
 
   // TODO: See example for more complicated selectivity options from LSMR.tpl.
@@ -1204,6 +1207,7 @@ FUNCTION Initial_size_structure
 // --------------------------------------------------------------------
 FUNCTION Set_selectivity
   // Produce all selectivities:
+  // TODO: Check the ipnt pointer is correct here; inherits 0 from selex_type for fleet 1, could be made to be 1 if required in selex_type setup.
   int ipnt; 
 
   // Collect over selectivity patterns
@@ -1655,4 +1659,3 @@ FINAL_SECTION
 RUNTIME_SECTION
     maximum_function_evaluations 500,1500,2500,25000,25000
     convergence_criteria 0.01,1.e-4,1.e-5,1.e-5
-
