@@ -1,6 +1,6 @@
-# Gmacs (Release Version 1.0) #
+# Gmacs Version 1.0 #
 
-This is the pilot release of Gmacs. Currently posted source files are compilable using ADMB 11.1 and have been tested using the BBRKC model available in the examples folder. This release will remain active until the current 'under development' version is released. *Updated February 2014, by Athol Whitten*
+This is the pilot release of Gmacs. Currently posted source files are compilable using ADMB 11.1 and have been tested using the BBRKC model available in the examples folder. This release will remain active until the current 'under development' version is released. **Updated February 2014, by Athol Whitten**
 
 ## Generalized Modeling for Alaskan Crab Stocks ##
 
