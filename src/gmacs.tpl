@@ -16,8 +16,8 @@
 //  - Add routine to calculate reference points
 //  - Add forecast routine
 //  - Add warning section: use macro for warning(object,text)
-//  - Add section to write new data file (enable easy labelling after first model attempt)
-//  - Add simulation option, see LSMR model for demonstration 
+//  - Add section to write new data/control files (enable easy labelling after first model attempt)
+//  - Add simulation option, see LSMR model for demonstration
 //  =========================================================================================================
 
 //  =========================================================================================================
@@ -1726,11 +1726,11 @@ FUNCTION Do_R_Output
   }
   */
   writeR(nsurvey);
-  writeR(yr_survey_lf)
-  writeR(survey_num_pred)
-  writeR(survey_num_obs)
-  writeR(survey_biom_pred)
-  writeR(survey_biom_obs)
+  writeR(yr_survey_lf);
+  writeR(survey_num_pred);
+  writeR(survey_num_obs);
+  writeR(survey_biom_pred);
+  writeR(survey_biom_obs);
   writeR(nlf_survey);
   // writeR(survey_names);
   // writeR(survey_lf_obs);
@@ -1803,58 +1803,27 @@ FINAL_SECTION
   }
 
 // =========================================================================================================
+// TEMPORARY FUNCTIONS TO BE MOVED TO CSTAR IF REQUIRED:
 // ---------------------------------------------------------------------------------------------------------
-  /** Returns mean length for variable objects (model estimates) */
+/** Returns mean length for variable objects (model estimates) */
 FUNCTION double mn_length(_CONST dvector& pobs)
   double mobs = (pobs*mean_length);
   return mobs;
 
-// ---------------------------------------------------------------------------------------------------------
-  /** Returns mean length for variable objects (model estimates) */
 FUNCTION double mn_length(_CONST dvar_vector& pobs)
   double mobs = value(pobs*mean_length);
   return mobs;
 
-  /** Returns standard deviation of length */
-FUNCTION double Sd_length(_CONST dvector& pobs)
+// ---------------------------------------------------------------------------------------------------------
+/** Returns standard deviation of length */
+FUNCTION double sd_length(_CONST dvector& pobs)
   double mobs = (pobs*length);
   double stmp = sqrt((elem_prod(mean_length,mean_length)*pobs) - mobs*mobs);
   return stmp;
 
 // ---------------------------------------------------------------------------------------------------------
-   /* FUNCTION double Eff_N_adj(_CONST double, _CONST dvar_vector& pobs, _CONST dvar_vector& phat)
-  int lb1 = pobs.indexmin();
-  int ub1 = pobs.indexmax();
-  dvector av = age_vector(lb1,ub1)  ;
-  double mobs = value(pobs*av);
-  double mhat = value(phat*av );
-  double rtmp = mobs-mhat;
-  double stmp = value(sqrt(elem_prod(av,av)*pobs - mobs*mobs));
-  return square(stmp)/square(rtmp);
-
-  // ---------------------------------------------------------------------------------------------------------
-  FUNCTION double Eff_N2(_CONST dvector& pobs, _CONST dvar_vector& phat)
-  int lb1 = pobs.indexmin();
-  int ub1 = pobs.indexmax();
-  dvector av = age_vector(lb1,ub1)  ;
-  double mobs =      (pobs*av);
-  double mhat = value(phat*av );
-  double rtmp = mobs-mhat;
-  double stmp = (sqrt(elem_prod(av,av)*pobs - mobs*mobs));
-  return square(stmp)/square(rtmp);
-
-  // ---------------------------------------------------------------------------------------------------------
-  FUNCTION double Eff_N2_L(_CONST dvector& pobs, _CONST dvar_vector& phat)
-  dvector av = mn_length;
-  double mobs =      (pobs*av);
-  double mhat = value(phat*av );
-  double rtmp = mobs-mhat;
-  double stmp = (sqrt(elem_prod(av,av)*pobs - mobs*mobs));
-  return square(stmp)/square(rtmp);
-   */
-
-  /** Returns normalized residuals of composition data given sample size. */
-FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m)
+/** Returns normalized residuals of composition data given sample size. */
+FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m);
   RETURN_ARRAYS_INCREMENT();
   pred += incd;
   obs  += incd;
@@ -1863,7 +1832,8 @@ FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m)
   RETURN_ARRAYS_DECREMENT();
   return nr;
 
-  /** Computes standard deviation of normalized residuals given observed and predicted proportions */
+// ---------------------------------------------------------------------------------------------------------
+/** Computes standard deviation of normalized residuals given observed and predicted proportions. */
 FUNCTION double sdnr(const dvar_vector& pred,const dvector& obs,double m)
   RETURN_ARRAYS_INCREMENT();
   double sdnr;
@@ -1872,8 +1842,8 @@ FUNCTION double sdnr(const dvar_vector& pred,const dvector& obs,double m)
   RETURN_ARRAYS_DECREMENT();
   return sdnr;
 
-  // ---------------------------------------------------------------------------------------------------------
-  /** Computes effective sample size. */
+// ---------------------------------------------------------------------------------------------------------
+/** Computes effective sample size. */
 FUNCTION double Eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat)
   pobs += incd;
   phat += incd;
@@ -1882,11 +1852,7 @@ FUNCTION double Eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat)
   vtmp = value(norm2(rtmp)/size_count(rtmp));
   return 1./vtmp;
 
-  /** Write a nicely formatted control file given the inputs. */
-FUNCTION Write_New_Control_file
-
-
-
+// ---------------------------------------------------------------------------------------------------------
 RUNTIME_SECTION
     maximum_function_evaluations 500,1500,2500,25000,25000
     convergence_criteria 0.01,1.e-4,1.e-5,1.e-5
