@@ -1695,7 +1695,7 @@ FUNCTION Do_R_Output
       iyr = yr_fleet_lf(ifl,i);
       R_out << iyr << " "
             << ifl << " "
-            << Eff_N(fleet_lf_obs(ifl,i),fleet_lf_pred(ifl,iyr) )<<endl;
+            << eff_N(fleet_lf_obs(ifl,i),fleet_lf_pred(ifl,iyr) )<<endl;
     }
   }    
   R_out << "norm_res_fleet_lf"<<endl;
@@ -1805,8 +1805,8 @@ FINAL_SECTION
 // =========================================================================================================
 // TEMPORARY FUNCTIONS TO BE MOVED TO CSTAR IF REQUIRED:
 // ---------------------------------------------------------------------------------------------------------
-/** Returns mean length for variable objects (model estimates) */
-FUNCTION double mn_length(_CONST dvector& pobs)
+ /** Returns mean length for variable objects (model estimates) */
+FUNCTION double mn_length(_CONST dvector& pobs);
   double mobs = (pobs*mean_length);
   return mobs;
 
@@ -1815,14 +1815,14 @@ FUNCTION double mn_length(_CONST dvar_vector& pobs)
   return mobs;
 
 // ---------------------------------------------------------------------------------------------------------
-/** Returns standard deviation of length */
-FUNCTION double sd_length(_CONST dvector& pobs)
+ /** Returns standard deviation of length */
+FUNCTION double sd_length(_CONST dvector& pobs);
   double mobs = (pobs*length);
   double stmp = sqrt((elem_prod(mean_length,mean_length)*pobs) - mobs*mobs);
   return stmp;
 
 // ---------------------------------------------------------------------------------------------------------
-/** Returns normalized residuals of composition data given sample size. */
+ /** Returns normalized residuals of composition data given sample size. */
 FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m);
   RETURN_ARRAYS_INCREMENT();
   pred += incd;
@@ -1833,8 +1833,8 @@ FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m);
   return nr;
 
 // ---------------------------------------------------------------------------------------------------------
-/** Computes standard deviation of normalized residuals given observed and predicted proportions. */
-FUNCTION double sdnr(const dvar_vector& pred,const dvector& obs,double m)
+ /** Computes standard deviation of normalized residuals given observed and predicted proportions. */
+FUNCTION double sd_norm_res(const dvar_vector& pred,const dvector& obs,double m);
   RETURN_ARRAYS_INCREMENT();
   double sdnr;
   dvector pp = value(pred)+ incd;
@@ -1843,8 +1843,8 @@ FUNCTION double sdnr(const dvar_vector& pred,const dvector& obs,double m)
   return sdnr;
 
 // ---------------------------------------------------------------------------------------------------------
-/** Computes effective sample size. */
-FUNCTION double Eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat)
+ /** Computes effective sample size. */
+FUNCTION double eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat);
   pobs += incd;
   phat += incd;
   dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
