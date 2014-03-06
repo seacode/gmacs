@@ -25,7 +25,8 @@ GLOBALS_SECTION
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
-
+  #include <C:/Dropbox/Github/cstar/src/cstar.h>
+  
   time_t start,finish;
   long hour,minute,second;
   double elapsed_time;
@@ -764,7 +765,7 @@ DATA_SECTION
   // Read in specifications for each selectivity pattern and determine number of parameters to estimate:
   matrix selex_type(1,nselex_pats,1,4);    ///< Selectivity types for each fleet/survey by time-block
   
-  // TODO: The selex_type matrix can probably be read in directly, then the loop over the columns should work the same.
+  // TODO: The selex_type matrix could probably be read in directly, then the loop over the columns should work the same.
  LOCAL_CALCS
   nselex = 0;
   for (int i=1; i<=nselex_pats; i++)
@@ -1801,56 +1802,6 @@ FINAL_SECTION
     double ub=value(mbio(iyr)*exp(2.*sqrt(log(1+square(mbio.sd(iyr))/square(mbio(iyr))))));
     R_out << iyr <<" "<<mbio(iyr)<<" "<<mbio.sd(iyr)<<" "<<lb<<" "<<ub<<endl;
   }
-
-// =========================================================================================================
-// TEMPORARY FUNCTIONS TO BE MOVED TO CSTAR IF REQUIRED:
-// ---------------------------------------------------------------------------------------------------------
- /** Returns mean length for variable objects (model estimates) */
-FUNCTION double mn_length(_CONST dvector& pobs);
-  double mobs = (pobs*mean_length);
-  return mobs;
-
-FUNCTION double mn_length(_CONST dvar_vector& pobs)
-  double mobs = value(pobs*mean_length);
-  return mobs;
-
-// ---------------------------------------------------------------------------------------------------------
- /** Returns standard deviation of length */
-FUNCTION double sd_length(_CONST dvector& pobs);
-  double mobs = (pobs*length);
-  double stmp = sqrt((elem_prod(mean_length,mean_length)*pobs) - mobs*mobs);
-  return stmp;
-
-// ---------------------------------------------------------------------------------------------------------
- /** Returns normalized residuals of composition data given sample size. */
-FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m);
-  RETURN_ARRAYS_INCREMENT();
-  pred += incd;
-  obs  += incd;
-  dvector nr(1,size_count(obs));
-  nr = elem_div(obs-pred,sqrt(elem_prod(pred,(1.-pred))/m));
-  RETURN_ARRAYS_DECREMENT();
-  return nr;
-
-// ---------------------------------------------------------------------------------------------------------
- /** Computes standard deviation of normalized residuals given observed and predicted proportions. */
-FUNCTION double sd_norm_res(const dvar_vector& pred,const dvector& obs,double m);
-  RETURN_ARRAYS_INCREMENT();
-  double sdnr;
-  dvector pp = value(pred)+ incd;
-  sdnr = std_dev( norm_res(pp,obs,m) );
-  RETURN_ARRAYS_DECREMENT();
-  return sdnr;
-
-// ---------------------------------------------------------------------------------------------------------
- /** Computes effective sample size. */
-FUNCTION double eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat);
-  pobs += incd;
-  phat += incd;
-  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
-  double vtmp;
-  vtmp = value(norm2(rtmp)/size_count(rtmp));
-  return 1./vtmp;
 
 // ---------------------------------------------------------------------------------------------------------
 RUNTIME_SECTION
