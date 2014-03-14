@@ -1,0 +1,129 @@
+FUNCTION ObjFunction
+  PriorVal.initialize(); 
+  like_val.initialize();
+  Get_Likes();
+  Get_Priors();
+ // cout << PriorVal << endl;
+ // cout << like_val << endl;  
+
+FUNCTION Get_Likes
+  int ilike=0;
+  double incc = 0.00001;
+  double incd = 0.0001;
+  // Likelihood for Catch biomass (or number)-----------------------
+  // This could be re-written withoutiff statement
+  for (int ifl=1;ifl<=nfleet;ifl++)
+  {
+    ilike++; ///< Increment the likelihood index
+    if (CatchAndDiscard(ifl,Iyr) > 0) // need to know what this is
+    {
+      if(CatchUnit(ifl) == 1)
+        like_val(ilike) += norm2(log((CatFleetWghtPred(ifl)+Incd)/(CatchAndDiscard(ifl)+Incd)));
+      else
+       like_val(ilike) += norm2(log((CatFleetNumPred(ifl)+Incd)/(CatchAndDiscard(ifl)+Incd)));
+    }  
+  }
+ 
+  // Catch LFs-----------------------
+  for (ifl=1;ifl<=nfleet;ifl++)
+  {
+    ilike++; ///< Increment the likelihood index
+    for (int i=1;i<=nlf_fleet(ifl);i++)
+    {
+      dvar_vector phat = fleet_lf_pred(ifl,i)/sum(fleet_lf_pred(ifl,i));
+      dvector pobs     = fleet_lf_obs(ifl,i)/sum(fleet_lf_obs(ifl,i)); // this should probably be done once in beginning
+      dvariable Error  = elem_div(phat+Incc),(pobs+Incc);
+      like_val(ilike)  += -ss_fleet_lf(ifl,i)*pobs*log(Error);
+  } 
+
+  // Effort indices-----------------------
+  qEff.initialize();
+  for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
+   {
+    nn= 0;
+    for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
+     if (Effort(Ifleet,Iyr) > 0) 
+      {
+       if (FOverWrite(Ifleet,0) == 0 |Iyr<FOverWrite(Ifleet,1) | Iyr>FOverWrite(Ifleet,2))
+        { nn += 1; qEff(Ifleet) += log((Effort(Ifleet,Iyr)+Incd)/(ExplRates(Ifleet,Iyr)+Incd)); }
+      }  
+    qEff(Ifleet) = mfexp(qEff(Ifleet)/nn); 
+    for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
+     if (Effort(Ifleet,Iyr) > 0)
+      if (FOverWrite(Ifleet,0) == 0 |Iyr<FOverWrite(Ifleet,1) | Iyr>FOverWrite(Ifleet,2))
+       like_val(Jpnt+Ifleet+1) += square(log((Effort(Ifleet,Iyr)+Incd)/(qEff(Ifleet)*(ExplRates(Ifleet,Iyr)+Incd))));
+   }  
+  Jpnt = Jpnt + (Nfleet+1); 
+
+  // Survey indices 
+  for (Isurv=1;Isurv<=Nsurvey;Isurv++)
+   for (Iyr=Yr1;Iyr<=Yr2;Iyr++)
+    if (SurveyEst(Isurv,Iyr,1) > 0)
+     {
+      if(SurveyUnit(Isurv) == 1)
+       like_val(Jpnt+Isurv) += 0.5*square(log((SurveyEst(Isurv,Iyr,1)+Incd)/(PredSurveyWght(Isurv,Iyr)+Incd)))/square(SurveyEst(Isurv,Iyr,2));
+      else 
+       like_val(Jpnt+Isurv) += 0.5*square(log((SurveyEst(Isurv,Iyr,1)+Incd)/(PredSurveyNum(Isurv,Iyr)+Incd)))/square(SurveyEst(Isurv,Iyr,2));
+      }  
+   Jpnt = Jpnt + Nsurvey;   
+     
+  // Survey LF
+  for (Isurv=1;Isurv<=Nsurvey;Isurv++)
+   for (Icnt=1;Icnt<=NLFsurvey(Isurv);Icnt++)
+    {
+     Iyr = YrSurveyLF(Isurv,Icnt);
+     Total = 0;
+     for (Iclass=1;Iclass<=Nclass;Iclass++) Total += PredSurvey(Isurv,Iyr,Iclass);
+     for (Iclass=1;Iclass<=Nclass;Iclass++) PredSurvey(Isurv,Iyr,Iclass) /= Total;
+     for (Iclass=1;Iclass<=Nclass;Iclass++)
+      if (SurveyObsLF(Isurv,Icnt,Iclass) > 0)
+       {
+        Error = (PredSurvey(Isurv,Iyr,Iclass)+Incc)/(SurveyObsLF(Isurv,Icnt,Iclass)+Incc);
+        like_val(Jpnt+Isurv) += -1*SSSurveyLF(Isurv,Icnt)*SurveyObsLF(Isurv,Icnt,Iclass)*log(Error);
+       }
+    } 
+                                                    
+  //================================================================================
+FUNCTION Get_Priors();
+  
+  // Prior on F-devs 
+  for (Ifleet=0;Ifleet<=Nfleet;Ifleet++)
+   {
+    MeanF = 0; nn = 0;
+    for (Iyr=Yr1;Iyr<=Yr2;Iyr++) 
+     if (Effort(Ifleet,Iyr) > 0) { MeanF += FAll(Ifleet,Iyr); nn+= 1; }
+    MeanF /= nn;
+    for (Iyr=Yr1;Iyr<=Yr2;Iyr++) 
+     if (Effort(Ifleet,Iyr) > 0) PriorVal(Ifleet+1) += square(FAll(Ifleet,Iyr)-MeanF);
+    } 
+  Jpnt = Nfleet+1;
+  
+  // Prior on Rec Devs
+  for (Iyr=Yr1;Iyr<=Yr2;Iyr++) PriorVal(Jpnt+1) += square(RecDev(Iyr));
+    
+  // penalties on parameters
+  PriorVal(Jpnt+2) = sum(square(TransPars));
+  for (Ifleet=1;Ifleet<=NSelex;Ifleet++)
+   if (SelexPhase(Ifleet) > 0)
+    PriorVal(Jpnt+3) += square(SelexPar(Ifleet));
+  PriorVal(Jpnt+4) = sum(square(RetainPar));
+  PriorVal(Jpnt+5) = 0;
+  
+  // q - prior
+  for (Isurv=1;Isurv<=NSurveyQ;Isurv++)
+   if (SurveyQPSD(Isurv) > 0)
+     PriorVal(Jpnt+5+Isurv) = square(exp(LogSurveyQ(Isurv))-SurveyQPMean(Isurv))/(2.0*square(SurveyQPSD(Isurv)));
+  Jpnt = Jpnt+5+NSurveyQ;
+  
+  // M-prior
+  PriorVal(Jpnt+1) = square(M0-MPriorMean)/(2.0*square(MPriorSD));
+  Jpnt += 1;
+
+  // 2nd derivative penalty
+  Penal = 0;
+  for (Iselex=1;Iselex<=NSelexPat;Iselex++)
+   if (SelexType(Iselex,1) == 2)
+    for (Iclass=2;Iclass<=Nclass-1;Iclass++)
+     Penal += square(SelexAll(Iselex,Iclass-1)-2.0*SelexAll(Iselex,Iclass)+SelexAll(Iselex,Iclass+1));
+  PriorVal(Jpnt+1) = Penal;   
+      
