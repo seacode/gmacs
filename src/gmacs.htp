@@ -288,12 +288,6 @@ public:
   void Get_Catch_Pred(void);
   void Get_Survey(void);
   void Do_R_Output(void);
- double mn_length(_CONST dvector& pobs);
- double mn_length(_CONST dvar_vector& pobs);
- double sd_length(_CONST dvector& pobs);
- dvector norm_res(const dvector& pred,const dvector& obs,double m);
- double sd_norm_res(const dvar_vector& pred,const dvector& obs,double m);
- double eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat);
 
 };
 #endif

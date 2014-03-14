@@ -1,9 +1,13 @@
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
+  #include <../../cstar/src/cstar.h>
+ 
   time_t start,finish;
   long hour,minute,second;
   double elapsed_time;
+  // This is an example change.
+  // This is an example change.
   // Define objects for report file, echoinput, etc.
   /**
   \def report(object)
@@ -1543,61 +1547,6 @@ void model_parameters::final_calcs()
     double ub=value(mbio(iyr)*exp(2.*sqrt(log(1+square(mbio.sd(iyr))/square(mbio(iyr))))));
     R_out << iyr <<" "<<mbio(iyr)<<" "<<mbio.sd(iyr)<<" "<<lb<<" "<<ub<<endl;
   }
- /** Returns mean length for variable objects (model estimates) */
-}
-
-double model_parameters::mn_length(_CONST dvector& pobs)
-{
-  double mobs = (pobs*mean_length);
-  return mobs;
-}
-
-double model_parameters::mn_length(_CONST dvar_vector& pobs)
-{
-  double mobs = value(pobs*mean_length);
-  return mobs;
- /** Returns standard deviation of length */
-}
-
-double model_parameters::sd_length(_CONST dvector& pobs)
-{
-  double mobs = (pobs*length);
-  double stmp = sqrt((elem_prod(mean_length,mean_length)*pobs) - mobs*mobs);
-  return stmp;
- /** Returns normalized residuals of composition data given sample size. */
-}
-
-dvector model_parameters::norm_res(const dvector& pred,const dvector& obs,double m)
-{
-  RETURN_ARRAYS_INCREMENT();
-  pred += incd;
-  obs  += incd;
-  dvector nr(1,size_count(obs));
-  nr = elem_div(obs-pred,sqrt(elem_prod(pred,(1.-pred))/m));
-  RETURN_ARRAYS_DECREMENT();
-  return nr;
- /** Computes standard deviation of normalized residuals given observed and predicted proportions. */
-}
-
-double model_parameters::sd_norm_res(const dvar_vector& pred,const dvector& obs,double m)
-{
-  RETURN_ARRAYS_INCREMENT();
-  double sdnr;
-  dvector pp = value(pred)+ incd;
-  sdnr = std_dev( norm_res(pp,obs,m) );
-  RETURN_ARRAYS_DECREMENT();
-  return sdnr;
- /** Computes effective sample size. */
-}
-
-double model_parameters::eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat)
-{
-  pobs += incd;
-  phat += incd;
-  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
-  double vtmp;
-  vtmp = value(norm2(rtmp)/size_count(rtmp));
-  return 1./vtmp;
 }
 
 void model_parameters::set_runtime(void)

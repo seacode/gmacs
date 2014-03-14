@@ -25,12 +25,13 @@ GLOBALS_SECTION
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
-  #include <C:/Dropbox/Github/cstar/src/cstar.h>
+  #include <../../cstar/src/cstar.h>
  
   time_t start,finish;
   long hour,minute,second;
   double elapsed_time;
 
+  // This is an example change.
   // This is an example change.
 
   // Define objects for report file, echoinput, etc.
