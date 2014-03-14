@@ -32,6 +32,7 @@ GLOBALS_SECTION
   double elapsed_time;
 
   // This is an example change.
+  // This is an example change.
 
   // Define objects for report file, echoinput, etc.
   /**
