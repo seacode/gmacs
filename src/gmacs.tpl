@@ -31,9 +31,6 @@ GLOBALS_SECTION
   long hour,minute,second;
   double elapsed_time;
 
-  // This is an example change.
-  // This is an example change.
-
   // Define objects for report file, echoinput, etc.
   /**
   \def report(object)
@@ -1309,7 +1306,7 @@ FUNCTION Set_selectivity
         selex_survey(subsurvey(ipnt,1),iyr,iclass) *= selex_survey(subsurvey(ipnt,2),iyr,iclass); 
 
 // --------------------------------------------------------------------
-FUNCTION dvar_vector Get_Sel(const int& isel)
+FUNCTION dvar_vector Get_Sel(const int& isel);
   RETURN_ARRAYS_INCREMENT();
   dvar_vector seltmp(1,nclass);
   dvariable slope_par;

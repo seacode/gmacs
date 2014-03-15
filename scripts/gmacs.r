@@ -51,6 +51,8 @@ for(ifleet in nfleet_ret)
   legend("topright", legend=c("Observed","Predicted"), pch=20, col=c(2,4), bty="n")
 }
 
+
+
 # Plot fits to survey data:
 plot(1, type="n", main="Fit to survey data", xlab="Years", ylab ="Survey Observation", xlim=(c(min(gmout$years),max(gmout$years)+1)), ylim=c(0,max(c(gmout$survey_num_pred[1, ],gmout$survey_num_obs[1, ]))), cex.main=1.2)
 

@@ -15,7 +15,7 @@
 Discard:Pot:Trawl:Tanner
 
 # Survey names (delimited with ":" no spaces in names?)
-NMFS_Trawl:BSRF
+NMFS_Trawl:BSFRF
 
 # Links between data size classes and model size classes
 1   4
@@ -372,7 +372,7 @@ NMFS_Trawl:BSRF
 # Mean Weight Vector (length n-size-classes)
 0.218	0.273	0.337	0.411	0.495	0.59	0.696	0.815	0.948	1.094	1.256	1.432	1.625	1.835	2.063	2.31	2.576	2.862	3.169	3.7
 
-# Fecundity (weight * proportion mature) 
+# Fecundity Vector (weight * proportion mature) 
 0	0	0	0	0	0	0	0	0	0	0	1.432	1.625	1.835	2.063	2.31	2.576	2.862	3.169	3.7
 
 0 # Number of lines of capture data to read
