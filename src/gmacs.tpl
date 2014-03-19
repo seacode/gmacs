@@ -773,7 +773,7 @@ DATA_SECTION
     *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
     if (selex_type(i,2) == 1) nselex += 2;
     if (selex_type(i,2) == 2) nselex += nclass;
-    if (selex_type(i,2) == 3) nselex += 1;
+    if (selex_type(i,2) == 3) nselex += 2;
   }
   nselex_pars = nselex;
   echo(selex_type);
@@ -786,7 +786,7 @@ DATA_SECTION
     selex_type(j,4) = i;
     if (selex_type(j,2)==1) last = 2;
     if (selex_type(j,2)==2) last = nclass;
-    if (selex_type(j,2)==3) last = 1;
+    if (selex_type(j,2)==3) last = 2;
     i += last;
   }
   check(selex_type);
@@ -1313,6 +1313,9 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
   dvariable temp;
   int  ipnt    = selex_type(isel,4);
   int  seltype = selex_type(isel,2); 
+  dvariable mu = selex_parms(ipnt +1);
+  dvariable sd = selex_parms(ipnt +2);
+
   switch (seltype)
   {
     case 1 : ///< Logistic parameterized to be the location of 5 and 95% selectivity
@@ -1320,19 +1323,28 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
       seltmp    = 1.0 / (1.0 + mfexp(slope_par) * (length-selex_parms(ipnt +1)));
       temp      = seltmp(nclass);
       seltmp    /= temp;
-      break;
+    break;
+    
     case 2 : ///< One selectivity parameter per size class
       for (int iclass=1; iclass<=nclass; iclass++)
         seltmp(iclass) = 1.0 / (1.0+mfexp(selex_parms(ipnt + iclass)));
       temp   = seltmp(nclass);
       seltmp /= temp;
-      break;
-    case 3 : ///< Template for a new pattern (presently identical to type==1)
-      slope_par = -log(19)* selex_parms(ipnt +2);
-      seltmp    = 1.0 / (1.0 + mfexp(slope_par) * (length-selex_parms(ipnt +1)));
-      temp      = seltmp(nclass);
-      seltmp    /= temp;
-      break;
+    break;
+    
+    case 3 : ///< Logistic from Cstar functions (test):
+      cstar::Selex<dvar_vector> * ptr3;  // Pointer to Selex base class
+      ptr3 = new cstar::LogisticCurve<dvar_vector,dvariable>(mu,sd);
+      seltmp = ptr3->Selectivity(length);
+      delete ptr3;
+    break;
+
+    case 4 : ///< Log-logistic from Cstar functions (test):
+      cstar::Selex<dvar_vector> * ptr4;  // Pointer to Selex base class
+      ptr4 = new cstar::LogisticCurve<dvar_vector,dvariable>(mu,sd);
+      seltmp = ptr4->logSelectivity(length);
+      delete ptr4;
+    break;
   } 
   RETURN_ARRAYS_DECREMENT();
   return seltmp;
@@ -1783,11 +1795,11 @@ FINAL_SECTION
   
   // Print runtime records to screen:
   cout << endl << endl << "*******************************************"   << endl;
-  cout <<         "--Start time: "    <<  ctime(&start)    << endl;
-  cout <<          "--Finish time: "    <<   ctime(&finish)    << endl;
-  cout <<          "--Runtime: ";
-  cout <<  hour <<" hours, "<<minute<<" minutes, "<<second<<" seconds"    << endl;
-  cout <<          "*******************************************"  << endl;
+  cout <<                 "--Start time: "                                << ctime(&start)  << endl;
+  cout <<                 "--Finish time: "                               << ctime(&finish) << endl;
+  cout <<                 "--Runtime: ";
+  cout << hour <<         " hours, "  <<minute<<" minutes, "<<second<<" seconds"            << endl;
+  cout <<                 "*******************************************"                     << endl;
 
   // Additional R output: needs Hessian to print
   R_out<<"Recruits"<<endl; for (iyr=styr;iyr<=endyr;iyr++) 
