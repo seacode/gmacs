@@ -85,8 +85,8 @@ TOP_OF_MAIN_SECTION
 // =========================================================================================================
 DATA_SECTION
   // Create strings with version information:
-  !!version+="Gmacs_V1.03_2014/01/02_by_Athol_Whitten_and_Jim_Ianelli_using_ADMB_11.1";
-  !!version_short+="Gmacs V1.03";
+  !! version+="Gmacs_V1.05_2014/03/20_by_Athol_Whitten_and_Jim_Ianelli_using_ADMB_11.1";
+  !! version_short+="Gmacs V1.05";
   !! echoinput << version << endl;
   !! echoinput << ctime(&start) << endl;
 
@@ -161,19 +161,21 @@ DATA_SECTION
   init_int nclass;      ///< Number of size classes
   init_int ndclass;     ///< Number of size classes (in the data)
 
-  imatrix iname_flt(1,nfleet,1,2);
-  imatrix iname_srv(1,nfleet,1,2);
-  init_adstring name_read_flt;
+  imatrix iname_flt(1,nfleet,1,2);    ///< Fleet names
+  imatrix iname_srv(1,nfleet,1,2);    ///< Survey names
+  init_adstring name_read_flt;        
   init_adstring name_read_srv;
+ 
+  // Convert read-in strings of fishery and survey names to a string array (so they can be indexed):
+  // TODO: Create way to return an error if not formatted properly.
  LOCAL_CALCS
-   // Convert read in strings of fishery and survey names to a string array (so they can be indexed):
-   // TODO: Create way to return an error if not formatted properly.
   int k;
   for(k=1;k<=nfleet;k++) 
   {
     iname_flt(k,1)=1; 
     iname_flt(k,2)=1;
   }    
+  
   // Set whole array equal to 1 in case not enough names are read:
   adstring_array CRLF;   // Blank to terminate lines (not sure why this is needed...)
   CRLF+="";
@@ -187,6 +189,7 @@ DATA_SECTION
       iname_flt(k,1)=i+1;
     }
   }
+  
   iname_flt(nfleet,2)=strlen(name_read_flt);
   for(k=1;k<=nfleet;k++)
   {
@@ -197,6 +200,7 @@ DATA_SECTION
     iname_srv(k,1)=1; 
     iname_srv(k,2)=1;
   }    
+  
   // Set whole array equal to 1 in case not enough names are read
   // Read in survey names
   k=1;
@@ -209,18 +213,37 @@ DATA_SECTION
       iname_srv(k,1) =i+1;
     }
   }
+  
   iname_srv(nsurvey,2)=strlen(name_read_srv);
   for(k=1;k<=nsurvey;k++)
   {
     survey_names += name_read_srv(iname_srv(k,1),iname_srv(k,2))+CRLF(1);
   }
-  // TODO: Macro doesn't work perfectly for printing these out...unsure why. Test and fix.
-  echotxt(fleet_names,  "Fleetnames");
-  echotxt(survey_names, "Surveynames");
  END_CALCS
-  
-  init_imatrix class_link(1,nclass,1,2);      ///< Link between data size-classes and model size-classs
-   
+
+  !! echo(fleet_names);
+  !! echo(survey_names);
+ 
+  // Initialize class link matrix; read from data file if number of data and model classes differ.
+  matrix class_link(1,nclass,1,2);      ///< Matrix of links between data size-classes and model size-classes
+ 
+ LOCAL_CALCS
+  // If number of data and model classes differ, read class link matrix from data file.
+  if(ndclass!=nclass)
+  {
+    *(ad_comm::global_datafile) >> class_link;
+  }
+  // Otherwise, fill each column of class link matrix with sequential numbers (links 1:1).
+  else
+  {
+    ivector class_link_col(1,nclass);       
+    class_link_col.fill_seqadd(1,1);    
+    class_link.colfill(1,class_link_col);
+    class_link.colfill(2,class_link_col);
+  }
+ END_CALCS
+
+
   !! echotxt(nsex,    " Number of sexes");
   !! echotxt(nfleet,  " Number of fleets");
   !! echotxt(nsurvey, " Number of surveys")
@@ -306,10 +329,10 @@ DATA_SECTION
   check(nobs_survey);
 
  END_CALCS
-  imatrix yr_survey(1,nsurvey,1,nobs_survey) ;
-  matrix survey_biom_obs(1,nsurvey,1,nobs_survey) ;
-  matrix survey_num_obs(1,nsurvey,1,nobs_survey) ;
-  matrix survey_var(1,nsurvey,1,nobs_survey) ;
+  imatrix yr_survey(1,nsurvey,1,nobs_survey);
+  matrix survey_biom_obs(1,nsurvey,1,nobs_survey);
+  matrix survey_num_obs(1,nsurvey,1,nobs_survey);
+  matrix survey_var(1,nsurvey,1,nobs_survey);
  LOC_CALCS
   survey_var.initialize();
   survey_biom_obs.initialize();
@@ -401,6 +424,9 @@ DATA_SECTION
   3darray fleet_lf(1,nfleet,1,nlf_fleet,1,ndclass);         ///< Length-frequency data (ndclass), by fleet (can be ragged array)
   3darray fleet_lf_obs(1,nfleet,1,nlf_fleet,1,nclass);      ///< Length-frequency data (nclass), by fleet (can be ragged array)
  
+// TODO: The counter for fleets below will need to be extended to sexes, shell conds, and mat stages. 
+//       This will mean data can be entered into Gmacs in a flat format.
+
  LOC_CALCS 
   ivector iobs_fl(1,nfleet);                                ///< Counter for number of obs within each fleet
   iobs_fl.initialize();
