@@ -1,14 +1,44 @@
 // Catch at length model: Calculations over size, sex, shell-condition, maturity
 // Note: This simple example adapted from ADMB catage.tpl as a learning exercise for Gmacs model development.
-// By Athol Whitten and James Ianelli, ASFC NOAA 2014
+// By Athol Whitten and Jim Ianelli, ASFC NOAA 2014
+
+GLOBALS_SECTION
+  #include <admodel.h>
+
+  #define echo(object) echoinput << #object << "\n" << object << endl;
+  #define echotxt(object,text) echoinput << object << "\t" << text << endl;
+  ofstream echoinput("echoinput.ad");
 
 DATA_SECTION
-  init_int nyrs  
-  init_int nsizes
-  init_matrix obs_catch_at_size(1,nyrs,1,nsizes)
-  init_vector effort(1,nyrs)
-  init_number M
+  init_int nyrs; 
+  init_int nsizes;
+  init_int nsexes;
+  init_int nshell;
+  init_int nstage;
+
+ LOCAL_CALCS
+  int ncols = nsizes*nsexes*nshell*nstage;
+  int nmats = ncols/nsizes;
+  ivector nmpos(1,nmats);
+
+  nmpos.fill("{1,2,3,4,5,6,7,8}");
+ END_CALCS
+
+  init_matrix obs_catch_at_size(1,nyrs,1,ncols);
+  init_vector effort(1,nyrs);
+  init_number M;
   vector relwt(2,nsizes);
+
+  !! echo(nyrs);
+  !! echo(nsizes);
+  !! echo(nsexes);
+  !! echo(nshell);
+  !! echo(nstage);
+
+  !! echo(obs_catch_at_size);
+  !! echo(effort);
+  !! echo(nmpos);
+
 
 INITIALIZATION_SECTION
   log_q -1
