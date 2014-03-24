@@ -136,7 +136,7 @@ DATA_SECTION
   !! cout << " Reading main data file" << endl;
   !! echoinput << " Start reading main data file" << endl;
 
-  //Initialize some counters:
+  // Initialize some counters:
   int i; 
   int j;
   int iyr;
@@ -146,7 +146,9 @@ DATA_SECTION
   int isurvey;
   int last;
   
-  // Read input from main data file:
+  // ......................................................................
+  // Read input from main data file, establish dimensions:
+  
   init_int styr;        ///< Start year
   init_int endyr;       ///< End year
   init_number tstep;    ///< Time-step
@@ -161,6 +163,57 @@ DATA_SECTION
   init_int nclass;      ///< Number of size classes
   init_int ndclass;     ///< Number of size classes (in the data)
 
+  // Initialize class link matrix:
+  matrix class_link(1,nclass,1,2);      ///< Matrix of links between data size-classes and model size-classes
+ 
+  // If number of data classes is not a multiple of model classes, read class link matrix from data file.
+ LOC_CALCS
+  
+  double class_div = double(ndclass)/double(nclass);
+  int class_int = class_div;
+
+  if(class_div!=class_int)
+  {
+    *(ad_comm::global_datafile) >> class_link;
+  }
+  // Otherwise, fill each column of class link matrix with sequential numbers.
+  else
+  {
+    // Links are 1:1 when ndclass is equal to nclass:
+    if(ndclass==nclass)
+    {
+      ivector class_link_col(1,nclass);       
+      class_link_col.fill_seqadd(1,1);    
+      class_link.colfill(1,class_link_col);
+      class_link.colfill(2,class_link_col);
+    }
+    
+    // Links are function of the number of data vs. model classes:
+    else
+    {
+      ivector class_link_col_a(1,nclass);       
+      ivector class_link_col_b(1,nclass);
+      class_link_col_a.fill_seqadd(1,class_int);    
+      class_link_col_b.fill_seqadd(class_int,class_int);
+      class_link.colfill(1,class_link_col_a);
+      class_link.colfill(2,class_link_col_b); 
+    }
+  }
+ END_CALCS
+
+  !! echotxt(nsex,    " Number of sexes");
+  !! echotxt(nfleet,  " Number of fleets");
+  !! echotxt(nsurvey, " Number of surveys")
+  !! echotxt(nclass,  " Number of size classes for model");
+  !! echotxt(ndclass, " Number of size classes for data");
+  
+  !! echotxt(class_div, " Class divisor");
+  !! echotxt(class_int, " Rounded class divisor");
+  !! echo(class_link);
+
+  // ......................................................................
+  // Get fleet and survey names and process text strings:
+
   imatrix iname_flt(1,nfleet,1,2);    ///< Fleet names
   imatrix iname_srv(1,nfleet,1,2);    ///< Survey names
   init_adstring name_read_flt;        
@@ -168,7 +221,7 @@ DATA_SECTION
  
   // Convert read-in strings of fishery and survey names to a string array (so they can be indexed):
   // TODO: Create way to return an error if not formatted properly.
- LOCAL_CALCS
+ LOC_CALCS
   int k;
   for(k=1;k<=nfleet;k++) 
   {
@@ -223,34 +276,9 @@ DATA_SECTION
 
   !! echo(fleet_names);
   !! echo(survey_names);
- 
-  // Initialize class link matrix; read from data file if number of data and model classes differ.
-  matrix class_link(1,nclass,1,2);      ///< Matrix of links between data size-classes and model size-classes
- 
- LOCAL_CALCS
-  // If number of data and model classes differ, read class link matrix from data file.
-  if(ndclass!=nclass)
-  {
-    *(ad_comm::global_datafile) >> class_link;
-  }
-  // Otherwise, fill each column of class link matrix with sequential numbers (links 1:1).
-  else
-  {
-    ivector class_link_col(1,nclass);       
-    class_link_col.fill_seqadd(1,1);    
-    class_link.colfill(1,class_link_col);
-    class_link.colfill(2,class_link_col);
-  }
- END_CALCS
 
-
-  !! echotxt(nsex,    " Number of sexes");
-  !! echotxt(nfleet,  " Number of fleets");
-  !! echotxt(nsurvey, " Number of surveys")
-  !! echotxt(nclass,  " Number of size classes");
-  !! echotxt(ndclass, " Number of size classes for data");
-  
-  !! echo(class_link);
+  // ......................................................................
+  // Read catch and survey units and observations:
 
   init_vector catch_units(1,nfleet);          ///< Catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
   init_vector catch_multi(1,nfleet);          ///< Additional catch scaling multipliers [1 for no effect]
@@ -267,7 +295,8 @@ DATA_SECTION
   !! echotxt(ncatch_obs,   " Number of lines of catch data");
   !! echotxt(nsurvey_obs,  " Number of lines of survey data")
   !! echotxt(survey_time,  " Time between survey and fishery");
-      
+    
+  // ......................................................................    
   // Read fleet specifications and determine number with catch retained or discarded etc:
   init_imatrix fleet_control(1,nfleet,1,2);   ///< Fleet control matrix
 
@@ -276,7 +305,7 @@ DATA_SECTION
   int nfleet_byc;                  ///< Number of fleets for bycatch data only
   int nfleet_act;                  ///< Number of active distinct fleets
 
- LOCAL_CALCS
+ LOC_CALCS
     nfleet_ret = 0;
     nfleet_dis = 0;
     nfleet_byc = 0;
@@ -333,6 +362,7 @@ DATA_SECTION
   matrix survey_biom_obs(1,nsurvey,1,nobs_survey);
   matrix survey_num_obs(1,nsurvey,1,nobs_survey);
   matrix survey_var(1,nsurvey,1,nobs_survey);
+ 
  LOC_CALCS
   survey_var.initialize();
   survey_biom_obs.initialize();
@@ -391,7 +421,7 @@ DATA_SECTION
   // Determine which F values will be computed using effort (f_new) if applicable: 
   ivector ncatch_f(1,nfleet_act);
  
- LOCAL_CALCS
+ LOC_CALCS
   for (ifleet=1; ifleet<=nfleet_act; ifleet++)
   {
     ncatch_f(ifleet) = 0;
@@ -527,7 +557,7 @@ DATA_SECTION
   !! checkfile << "Class-specific length, weight, and fecundity" << endl;
   
  // TODO: Check surv_lf_store loop over nlfs_obs; only loops over first survey in simple.tpl (only first survey has data).
- LOCAL_CALCS
+ LOC_CALCS
   if(nclass!=ndclass)
   {
     int total;
@@ -585,7 +615,7 @@ DATA_SECTION
   !! echotxt(nrecapture_obs, " Number of recapture data lines")
 
   // Echo capture, mark, recapture data when appropriate:
- LOCAL_CALCS
+ LOC_CALCS
   if(ncapture_obs > 0) 
   {
     echo(capture_data);
@@ -613,7 +643,7 @@ DATA_SECTION
 
   !! ndclass_growth = 0;
 
- LOCAL_CALCS
+ LOC_CALCS
   if(read_growth==1)
   {  
     // Open size transition file (*.dat) //
@@ -643,7 +673,7 @@ DATA_SECTION
   
   int eof_growth;    // Declare EOF check
 
- LOCAL_CALCS
+ LOC_CALCS
   if(read_growth==1)
   {  
     *(ad_comm::global_datafile) >> growth_bins;
@@ -746,7 +776,7 @@ DATA_SECTION
 
 
   // Fill matrices and vectors created above:
- LOCAL_CALCS
+ LOC_CALCS
     if (theta_blk(2)>0)
     {
       for (int i=1;i<=nMadd_parms;i++) *(ad_comm::global_datafile) >> madd_control(i) ;
@@ -792,7 +822,7 @@ DATA_SECTION
   matrix selex_type(1,nselex_pats,1,4);    ///< Selectivity types for each fleet/survey by time-block
   
   // TODO: The selex_type matrix could probably be read in directly, then the loop over the columns should work the same.
- LOCAL_CALCS
+ LOC_CALCS
   nselex = 0;
   for (int i=1; i<=nselex_pats; i++)
   {
@@ -831,7 +861,7 @@ DATA_SECTION
   !! echo(selex_control);
 
   // Fill matrices and vectors created above:
- LOCAL_CALCS
+ LOC_CALCS
     trans_selex_control = trans(selex_control);
     selex_init = trans_selex_control(1);
     selex_lbnd = trans_selex_control(2);
@@ -862,7 +892,7 @@ DATA_SECTION
   !! echo(reten_control);
 
   // Fill matrices and vectors created above:
- LOCAL_CALCS
+ LOC_CALCS
   trans_reten_control = trans(reten_control);
   reten_init = trans_reten_control(1);
   reten_lbnd = trans_reten_control(2);
@@ -900,7 +930,7 @@ DATA_SECTION
    !! echo(surveyq_control);
 
   // Fill matrices and vectors created above:
- LOCAL_CALCS
+ LOC_CALCS
     trans_surveyq_control = trans(surveyq_control);
     surveyq_init          = trans_surveyq_control(1);
     surveyq_lbnd          = trans_surveyq_control(2);
@@ -922,7 +952,7 @@ DATA_SECTION
   !! echo(lognin_control);
 
   // Fill matrices and vectors created above:
- LOCAL_CALCS
+ LOC_CALCS
     trans_lognin_control = trans(lognin_control);
     lognin_init          = trans_lognin_control(1);
     lognin_lbnd          = trans_lognin_control(2);
@@ -948,7 +978,7 @@ DATA_SECTION
   vector mn_offset(1,nlike_terms);                                  ///< Offset for multinomial calculations
   
   // Fill matrices and vectors created above:
- LOCAL_CALCS
+ LOC_CALCS
   trans_gtrans_control = trans(gtrans_control);
   gtrans_init = trans_gtrans_control(1);
   gtrans_lbnd = trans_gtrans_control(2);
