@@ -52,9 +52,8 @@ DATA_SECTION
   !! echo(pshell);
   !! echo(pstage);
 
-  // TODO: Work out loop structure that can use p* ivectors.
-  // Loop over i for each p*(i) -> p*(i+1)-1 as i goes from 1 to np*.
-
+  // Loop over i for each p*(i) -> p*(i)+ ncol/np* as i goes from 1 to np*.
+  
   // Build N matrix with arbitrary sex values (get shape right);
   matrix N(1,nyrs,1,ncol);
   !! N.initialize();
