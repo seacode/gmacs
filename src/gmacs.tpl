@@ -166,9 +166,8 @@ DATA_SECTION
   // Initialize class link matrix:
   matrix class_link(1,nclass,1,2);      ///< Matrix of links between data size-classes and model size-classes
  
-  // If number of data classes is not a multiple of model classes, read class link matrix from data file.
- LOC_CALCS
-  
+  // If number of data classes is not equal to, or a factor of, model classes, read class link matrix from data file.
+ LOC_CALCS  
   double class_div = double(ndclass)/double(nclass);
   int class_int = class_div;
 
@@ -188,7 +187,7 @@ DATA_SECTION
       class_link.colfill(2,class_link_col);
     }
     
-    // Links are function of the number of data vs. model classes:
+    // Else, links are function of the number of data vs. model classes:
     else
     {
       ivector class_link_col_a(1,nclass);       
@@ -221,6 +220,7 @@ DATA_SECTION
  
   // Convert read-in strings of fishery and survey names to a string array (so they can be indexed):
   // TODO: Create way to return an error if not formatted properly.
+  // Set whole array equal to 1 in case not enough names are read:
  LOC_CALCS
   int k;
   for(k=1;k<=nfleet;k++) 
@@ -229,7 +229,6 @@ DATA_SECTION
     iname_flt(k,2)=1;
   }    
   
-  // Set whole array equal to 1 in case not enough names are read:
   adstring_array CRLF;   // Blank to terminate lines (not sure why this is needed...)
   CRLF+="";
   k=1;
@@ -280,7 +279,7 @@ DATA_SECTION
   // ......................................................................
   // Read catch and survey units and observations:
 
-  init_vector catch_units(1,nfleet);          ///< Catch units (pot discards; + other fleets) [1=biomass (tons);2=numbers]
+  init_vector catch_units(1,nfleet);          ///< Catch units (per discard or retained component fleets) [1=biomass (tons); 2=numbers]
   init_vector catch_multi(1,nfleet);          ///< Additional catch scaling multipliers [1 for no effect]
   init_vector survey_units(1,nsurvey);        ///< Survey units [1=biomass (tons);2=numbers]
   init_vector survey_multi(1,nsurvey);        ///< Additional survey scaling multipliers [1 for no effect]
@@ -1719,21 +1718,27 @@ FUNCTION Do_R_Output
   writeR(M);
   writeR(recruits);
   writeR(N);
-  writeR(nfleet);
+  
   writeR(fleet_control);
+  writeR(nfleet);
+  writeR(fleet_names);
+  writeR(nsurvey);
+  writeR(survey_names);
   writeR(yr_survey);
-  // writeR(fleet_names);
-  writeR(catch_biom_pred);
-  writeR(catch_biom_obs);
+  
+  writeR(catch_units);
   writeR(catch_data);
+  writeR(catch_biom_obs);
+  writeR(catch_biom_pred);
+  writeR(catch_num_obs);
+  writeR(catch_num_pred);
   writeR(lf_data);
+  
   writeR(survey_data);
   writeR(lfs_data);
-  writeR(catch_num_pred);
-  writeR(catch_num_obs);
-  writeR(catch_num_obs);
   writeR(yr_fleet_lf);
   writeR(nlf_fleet);
+  
   R_out<<"fleet_lf_obs"<<endl;
   for (int ifl=1; ifl<=nfleet; ifl++)
   {
@@ -1745,6 +1750,7 @@ FUNCTION Do_R_Output
             << fleet_lf_obs(ifl,i)<<endl;
     }
   }    
+  
   R_out<<"fleet_lf_pred"<<endl;
   for (int ifl=1; ifl<=nfleet; ifl++)
   {
@@ -1756,6 +1762,7 @@ FUNCTION Do_R_Output
             << fleet_lf_pred(ifl,iyr)<<endl;
     }
   }    
+  
   R_out<<"fleet_lf_effN"<<endl;
   for (int ifl=1; ifl<=nfleet; ifl++)
   {
@@ -1767,6 +1774,7 @@ FUNCTION Do_R_Output
             << eff_N(fleet_lf_obs(ifl,i),fleet_lf_pred(ifl,iyr) )<<endl;
     }
   }    
+  
   R_out << "norm_res_fleet_lf"<<endl;
   dvector nr(1,nclass);
   dvector ep(1,nclass);
@@ -1784,6 +1792,7 @@ FUNCTION Do_R_Output
             << endl;
     }
   }
+  
   /*R_out << "sdnr_fleet"<<endl;
   for (int ifl=1; ifl<=nfleet; ifl++)
   {
@@ -1794,6 +1803,7 @@ FUNCTION Do_R_Output
     }
   }
   */
+  
   writeR(nsurvey);
   writeR(yr_survey_lf);
   writeR(survey_num_pred);
@@ -1801,7 +1811,7 @@ FUNCTION Do_R_Output
   writeR(survey_biom_pred);
   writeR(survey_biom_obs);
   writeR(nlf_survey);
-  // writeR(survey_names);
+
   // writeR(survey_lf_obs);
   R_out<<"survey_lf_obs"<<endl;
   for (int ifl=1; ifl<=nsurvey; ifl++)
@@ -1814,6 +1824,7 @@ FUNCTION Do_R_Output
             << survey_lf_obs(ifl,i)<<endl;
     }
   }
+  
   R_out<<"survey_lf_pred"<<endl;
   for (int ifl=1; ifl<=nsurvey; ifl++)
   {
@@ -1825,6 +1836,7 @@ FUNCTION Do_R_Output
             << survey_lf_pred(ifl,i)<<endl;
     }
   }
+  
   // writeR(survey_lf_pred);
   for (int ifl=1; ifl<=nfleet_act; ifl++)
   {
@@ -1839,7 +1851,9 @@ FUNCTION Do_R_Output
     for (iyr=styr; iyr<=endyr; iyr++)
       R_out << iyr<<" "<< selex_fleet(ifl,iyr)<<endl;;
     }  
-  
+
+// TODO: Clean up writeR section; Can all of this go below FINAL_SECTION?
+
 // =========================================================================================================
 FINAL_SECTION
   // Create final time stamp and determine runtime:
