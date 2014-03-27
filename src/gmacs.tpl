@@ -826,8 +826,8 @@ DATA_SECTION
   for (int i=1; i<=nselex_pats; i++)
   {
     *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
-    if (selex_type(i,2) == 1) nselex += 2;
-    if (selex_type(i,2) == 2) nselex += nclass;
+    if (selex_type(i,2) == 1) nselex += nclass;
+    if (selex_type(i,2) == 2) nselex += 2;
     if (selex_type(i,2) == 3) nselex += 2;
   }
   nselex_pars = nselex;
@@ -839,8 +839,8 @@ DATA_SECTION
   for (j=1; j<=nselex_pats; j++)
   {
     selex_type(j,4) = i;
-    if (selex_type(j,2)==1) last = 2;
-    if (selex_type(j,2)==2) last = nclass;
+    if (selex_type(j,2)==1) last = nclass;
+    if (selex_type(j,2)==2) last = 2;
     if (selex_type(j,2)==3) last = 2;
     i += last;
   }
@@ -1363,43 +1363,54 @@ FUNCTION Set_selectivity
 // --------------------------------------------------------------------
 FUNCTION dvar_vector Get_Sel(const int& isel);
   RETURN_ARRAYS_INCREMENT();
-  dvar_vector seltmp(1,nclass);
-  dvariable slope_par;
-  dvariable temp;
+  
   int  ipnt    = selex_type(isel,4);
   int  seltype = selex_type(isel,2); 
-  dvariable mu = selex_parms(ipnt +1);
-  dvariable sd = selex_parms(ipnt +2);
+  dvar_vector seltmp(1,nclass);
 
   switch (seltype)
   {
-    case 1 : ///< Logistic parameterized to be the location of 5 and 95% selectivity
-      slope_par = -log(19)* selex_parms(ipnt +2);
-      seltmp    = 1.0 / (1.0 + mfexp(slope_par) * (length-selex_parms(ipnt +1)));
-      temp      = seltmp(nclass);
-      seltmp    /= temp;
-    break;
-    
-    case 2 : ///< One selectivity parameter per size class
+    case 1 : ///< One selectivity parameter per size class.
+    {
       for (int iclass=1; iclass<=nclass; iclass++)
         seltmp(iclass) = 1.0 / (1.0+mfexp(selex_parms(ipnt + iclass)));
-      temp   = seltmp(nclass);
+      dvariable temp   = seltmp(nclass);
       seltmp /= temp;
-    break;
+      break;
+    }
     
-    case 3 : ///< Logistic from Cstar functions (test):
+    case 2 : ///< Logistic from Cstar: Two parameters, length at 50% and 95% selectivity.
+    {  
+      dvariable s50 = selex_parms(ipnt +1);
+      dvariable s95 = selex_parms(ipnt +2);
+      cstar::Selex<dvar_vector> * ptr2;  // Pointer to Selex base class
+      ptr2 = new cstar::LogisticCurve95<dvar_vector,dvariable>(s50,s95);
+      seltmp = ptr2->Selectivity(length);
+      delete ptr2;
+      break;
+    }
+
+    case 3 : ///< Logistic from Cstar: Two parameters, mean and standard deviation.
+    {  
+      dvariable mu = selex_parms(ipnt +1);
+      dvariable sd = selex_parms(ipnt +2);
       cstar::Selex<dvar_vector> * ptr3;  // Pointer to Selex base class
       ptr3 = new cstar::LogisticCurve<dvar_vector,dvariable>(mu,sd);
       seltmp = ptr3->Selectivity(length);
       delete ptr3;
-    break;
+      break;
+    }
 
     case 4 : ///< Log-logistic from Cstar functions (test):
+    {  
+      dvariable mu = selex_parms(ipnt +1);
+      dvariable sd = selex_parms(ipnt +2);
       cstar::Selex<dvar_vector> * ptr4;  // Pointer to Selex base class
       ptr4 = new cstar::LogisticCurve<dvar_vector,dvariable>(mu,sd);
       seltmp = ptr4->logSelectivity(length);
       delete ptr4;
-    break;
+      break;
+    }
   } 
   RETURN_ARRAYS_DECREMENT();
   return seltmp;
