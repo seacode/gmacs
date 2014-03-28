@@ -16,13 +16,7 @@ DATA_SECTION
   init_int nshell;
   init_int nstage;
 
-  !! int nmats = nsex * nshell * nstage;
-  !! int ncol = nmats * nclass;
-
-  matrix pmat(1,nmats,1,2);
-
-  !! pmat.colfill_seqadd(1, 1, nclass);
-  !! pmat.colfill_seqadd(2, nclass, nclass);
+  !! int ncol = nsex * nshell * nstage * nclass;
 
   !! int npshell = nsex*nshell;
   !! int npstage = nsex*nshell*nstage;
@@ -31,26 +25,28 @@ DATA_SECTION
   ivector pshell(1,npshell);
   ivector pstage(1,npstage);
 
- LOC_CALCS
-  int some_num = nsex*nshell;
- END_CALCS
-
   !! psex.fill_seqadd(1,(ncol/nsex));
   !! pshell.fill_seqadd(1,(ncol/npshell));
   !! pstage.fill_seqadd(1,(ncol/npstage));
    
+ LOC_CALCS
+  int some_num = psex.indexmax();
+  int some_num2 = psex(psex.indexmax());
+ END_CALCS
+
   !! echo(nyrs);
   !! echo(nclass);
   !! echo(nsex);
   !! echo(nshell);
   !! echo(nstage);
 
-  !! echo(nmats);
   !! echo(ncol);
-  !! echo(pmat);
   !! echo(psex);
   !! echo(pshell);
   !! echo(pstage);
+
+  !! echo (some_num);
+  !! echo (some_num2);
 
   // Loop over i for each p*(i) -> p*(i)+ ncol/np* as i goes from 1 to np*.
   
