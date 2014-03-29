@@ -163,6 +163,8 @@ DATA_SECTION
   init_int nclass;      ///< Number of size classes
   init_int ndclass;     ///< Number of size classes (in the data)
 
+  // Add nshell, nmature. 
+
   // Initialize class link matrix:
   matrix class_link(1,nclass,1,2);      ///< Matrix of links between data size-classes and model size-classes
  
@@ -281,11 +283,13 @@ DATA_SECTION
 
   init_vector catch_units(1,nfleet);          ///< Catch units (per discard or retained component fleets) [1=biomass (tons); 2=numbers]
   init_vector catch_multi(1,nfleet);          ///< Additional catch scaling multipliers [1 for no effect]
-  init_vector survey_units(1,nsurvey);        ///< Survey units [1=biomass (tons);2=numbers]
+  init_vector survey_units(1,nsurvey);        ///< Survey units [1=biomass (tons); 2=numbers]
   init_vector survey_multi(1,nsurvey);        ///< Additional survey scaling multipliers [1 for no effect]
   init_int ncatch_obs;                        ///< Number of catch lines to read
   init_int nsurvey_obs;                       ///< Number of survey lines to read
   init_number survey_time;                    ///< Time between survey and fishery (for projections)
+
+  // TODO FLEETS: Catch and survey won't need to be separate. Make fleet_units and fleet_multi part of the fleet control matrix below.
 
   !! echotxt(catch_units,  " Catch units");
   !! echotxt(catch_multi,  " Catch multipliers");
@@ -303,6 +307,11 @@ DATA_SECTION
   int nfleet_dis;                  ///< Number of fleets for discarded catch data (with link to above retained catch)
   int nfleet_byc;                  ///< Number of fleets for bycatch data only
   int nfleet_act;                  ///< Number of active distinct fleets
+
+  // TODO FLEETS: Make a new fleet_control matrix with extra columns. And in reverse order to before. 
+  // Where Column 1 = Fleet, 2 = Data type with that fleet (so multiple rows if multiple data), 3 = Units, 4 = Multiplier.
+  // PROBLEM: Each 'data component' needs to be indexed separately, for input data file indexing.
+  // To fix this, could put extra flag inside data input (new column) which says whether data is directed catch (retained) or discarded.
 
  LOC_CALCS
     nfleet_ret = 0;
@@ -324,11 +333,14 @@ DATA_SECTION
           break;
       } 
     } 
-    nfleet_act = nfleet_ret + nfleet_byc;         ///< Determine number of active distinct fleets
+    nfleet_act = nfleet_ret + nfleet_byc;         ///< Determine number of active distinct fishing fleets
  END_CALCS
 
+  // TODO FLEETS: This above should remain the same, and could be used to count other things as well, if necessary.
+
   ivector fleet_ind_act(1,nfleet_act);            ///< Fleet index to map active fleet to all fleets
-  !! int iact=0;for (int i=1;i<=nfleet;i++) if(fleet_control(i,1)!=2) {iact++;fleet_ind_act(iact)=i;}
+  !! int iact=0; 
+  !! for (int i=1;i<=nfleet;i++) if(fleet_control(i,1)!=2) {iact++;fleet_ind_act(iact)=i;}
   !! echo(fleet_control);
 
   init_matrix catch_data(1,ncatch_obs,1,5);       ///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
@@ -338,6 +350,10 @@ DATA_SECTION
   init_matrix survey_data(1,nsurvey_obs,1,6);     ///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
   ivector nobs_survey(1,nsurvey);
   
+  // TODO FLEETS: Catch data will now also include catches from 'survey fleets'. 
+  // Then survey_data can become index_data, to reflect that indices of abundance might come from different fishing (CPUE) or survey fleets.
+  // Thus, from here onward, all survey references could become 'index' references instead, where still needed for actual index obs. For LF data, can all go to the one data matrix.
+
   !! echo(catch_data);
   !! echo(survey_data);  
 
@@ -435,6 +451,8 @@ DATA_SECTION
   
   !! echotxt(ncatch_f, " Number of F's (calculated)")
   
+  // TODO FLEETS: All LF data can be entered into matrix, with fleet flags which now include the old 'survey fleets'.
+
   // Read in the length frequency data:
   init_int nlf_obs;                                 ///< Number of length frequency lines to read for fishing fleets 
   init_matrix lf_data(1,nlf_obs,1,ndclass+7);       ///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
@@ -453,8 +471,8 @@ DATA_SECTION
   3darray fleet_lf(1,nfleet,1,nlf_fleet,1,ndclass);         ///< Length-frequency data (ndclass), by fleet (can be ragged array)
   3darray fleet_lf_obs(1,nfleet,1,nlf_fleet,1,nclass);      ///< Length-frequency data (nclass), by fleet (can be ragged array)
  
-// TODO: The counter for fleets below will need to be extended to sexes, shell conds, and mat stages. 
-//       This will mean data can be entered into Gmacs in a flat format.
+// TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages. 
+// This will mean data can be entered into Gmacs in a flat format.
 
  LOC_CALCS 
   ivector iobs_fl(1,nfleet);                                ///< Counter for number of obs within each fleet
@@ -1370,15 +1388,19 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
 
   switch (seltype)
   {
-    case 1 : ///< One selectivity parameter per size class.
+    case 1 : ///< Nonparametric from Cstar: One selectivity parameter per size class.
     {
-      for (int iclass=1; iclass<=nclass; iclass++)
-        seltmp(iclass) = 1.0 / (1.0+mfexp(selex_parms(ipnt + iclass)));
-      dvariable temp   = seltmp(nclass);
-      seltmp /= temp;
+      dvar_vector classes(1,nclass);
+      dvar_vector selparms(1,nclass);
+      for(int iclass=1; iclass<=nclass; iclass++)
+        selparms(iclass) = selex_parms(ipnt + iclass); 
+      cstar::Selex<dvar_vector> * ptr5;  // Pointer to Selex base class
+      ptr5 = new cstar::ParameterPerClass<dvar_vector>(selparms);
+      seltmp = ptr5->Selectivity(classes);
+      delete ptr5;
       break;
     }
-    
+
     case 2 : ///< Logistic from Cstar: Two parameters, length at 50% and 95% selectivity.
     {  
       dvariable s50 = selex_parms(ipnt +1);
