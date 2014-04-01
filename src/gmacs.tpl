@@ -1,8 +1,9 @@
 // =========================================================================================================                                   
-//   Gmacs: Generalized Modelling for Alaskan Crab Stocks.
+//   Gmacs: Generalized Modeling for Alaskan Crab Stocks.
 //
-//   Authors: Athol Whitten, University of Washington   
-//            Jim Ianelli, NOAA Alaskan Fisheries Science Centre
+//   Authors: Athol Whitten and Jim Ianelli
+//            University of Washington, Seattle
+//            and Alaska Fisheries Science Centre, NOAA, Seattle
 //
 //   Info: https://github.com/awhitten/gmacs or write to whittena@uw.edu
 //   Copyright (c) 2014. All rights reserved.
@@ -85,7 +86,7 @@ TOP_OF_MAIN_SECTION
 // =========================================================================================================
 DATA_SECTION
   // Create strings with version information:
-  !! version+="Gmacs_V1.05_2014/03/20_by_Athol_Whitten_and_Jim_Ianelli_using_ADMB_11.1";
+  !! version+="Gmacs_V1.05_2014/03/31_by_Athol_Whitten_and_Jim_Ianelli_using_ADMB_11.1";
   !! version_short+="Gmacs V1.05";
   !! echoinput << version << endl;
   !! echoinput << ctime(&start) << endl;
@@ -152,23 +153,31 @@ DATA_SECTION
   init_int styr;        ///< Start year
   init_int endyr;       ///< End year
   init_number tstep;    ///< Time-step
-
-  !! echotxt(styr,  " Start year");
-  !! echotxt(endyr, " End year");
-  !! echotxt(tstep, " Time-step");
+  init_int ndata;       ///< Number of data groups
+  
+  !! echotxt(styr,    " Start year");
+  !! echotxt(endyr,   " End year");
+  !! echotxt(tstep,   " Time-step");
+  !! echotxt(ndata,  " Number of fleets");
   
   init_int nsex;        ///< Number of sexes  
-  init_int nfleet;      ///< Number of fishing fleets
-  init_int nsurvey;     ///< Number of surveys
-  init_int nclass;      ///< Number of size classes
+  init_int nshell;      ///< Number of shell condition types
+  init_int nmature;     ///< Number of maturity types
+
+  init_int nclass;      ///< Number of size classes (in the model)
   init_int ndclass;     ///< Number of size classes (in the data)
 
-  // Add nshell, nmature. 
+  !! echotxt(nsex,    " Number of sexes");
+  !! echotxt(nshell,  " Number of shell types");
+  !! echotxt(nmature, " Number of maturity types");
+
+  !! echotxt(nclass,  " Number of size classes for model");
+  !! echotxt(ndclass, " Number of size classes for data");
 
   // Initialize class link matrix:
-  matrix class_link(1,nclass,1,2);      ///< Matrix of links between data size-classes and model size-classes
+  matrix class_link(1,nclass,1,2);      ///< Matrix of links between model and data size-classes
  
-  // If number of data classes is not equal to, or a factor of, model classes, read class link matrix from data file.
+  // If number of data classes is not equal to, or a factor of model classes, read class link matrix from data file.
  LOC_CALCS  
   double class_div = double(ndclass)/double(nclass);
   int class_int = class_div;
@@ -202,39 +211,138 @@ DATA_SECTION
   }
  END_CALCS
 
-  !! echotxt(nsex,    " Number of sexes");
-  !! echotxt(nfleet,  " Number of fleets");
-  !! echotxt(nsurvey, " Number of surveys")
-  !! echotxt(nclass,  " Number of size classes for model");
-  !! echotxt(ndclass, " Number of size classes for data");
-  
   !! echotxt(class_div, " Class divisor");
   !! echotxt(class_int, " Rounded class divisor");
   !! echo(class_link);
 
+  // ......................................................................    
+  // Read fleet control matrix and determine data vs. fleet specs:  
+  // Column 1 = Data group, 2 = Data type, 3 = Units, 4 = Multiplier.
+  // NOTE: Each 'data component' needs to be indexed separately, for input data file indexing.
+  
+  init_imatrix fleet_control(1,ndata,1,4);  ///< Fleet control matrix
+
+  int nfleet_ret;                           ///< Number of fleets for retained catch data
+  int nfleet_dis;                           ///< Number of fleets for discarded catch data (with link to above retained catch)
+  int nfleet_byc;                           ///< Number of fleets for bycatch data only
+  int nfleet_sur;                           ///< Number of survey fleets (with index of abundance data)
+  int nfleet_act;                           ///< Number of active distinct fleets
+  int nfleet_cat;                           ///< Number of fleets with catch
+
+ LOC_CALCS
+    nfleet_ret = 0;
+    nfleet_dis = 0;
+    nfleet_byc = 0;
+    nfleet_sur = 0;
+
+    for (int idata=1; idata<=ndata; idata++)
+    {
+      switch (fleet_control(idata,2)) 
+      {
+        case 1 : 
+          nfleet_ret += 1;
+          break;
+        case 2 : 
+          nfleet_dis += 1;
+          break;
+        case 3 : 
+          nfleet_byc += 1;
+          break;
+        case 4 :
+          nfleet_sur += 1;
+          break;
+      } 
+    } 
+    
+    nfleet_act = nfleet_ret + nfleet_byc;       ///< Number of active distinct fishing fleets
+    nfleet_cat = nfleet_act + nfleet_dis;       ///< Number of fleets with catch      
+ END_CALCS
+
+  !! echo(fleet_control);
+  !! echo(nfleet_cat);
+  !! echo(nfleet_act);
+  !! echo(nfleet_sur);
+
   // ......................................................................
-  // Get fleet and survey names and process text strings:
+  // Get data group numbers for fishing, active, and survey fleets:
+
+  ivector fleet_cat_ind(1,nfleet_cat);     ///< Fleet index to map active fleet to all fleets
+  !! int icat=0; 
+  !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)!=4) {icat++; fleet_cat_ind(icat)=i;}
+  !! echo(fleet_cat_ind);
+
+  ivector fleet_act_ind(1,nfleet_act);    ///< Fleet index to map active fleet to all fleets
+  !! int iact=0; 
+  !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)==1 | fleet_control(i,2)==3) {iact++; fleet_act_ind(iact)=i;}
+  !! echo(fleet_act_ind);
+
+  ivector fleet_sur_ind(1,nfleet_sur);    ///< Fleet index to map survey fleets to all fleets
+  !! int isur=0; 
+  !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)==4) {isur++; fleet_sur_ind(isur)=i;}
+  !! echo(fleet_sur_ind);
+
+  // ......................................................................
+  // Create fleet/survey counter objects.
+  // Get catch/survey units and multipliers (from fleet control matrix):
+  
+  int nfleet;                         ///< Number of fleets with catch data (fishing fleets)
+  int nsurvey;                        ///< Number of fleets with survey data (survey fleets)
+  !!  nfleet = nfleet_cat;         
+  !!  nsurvey = nfleet_sur;       
+
+  ivector catch_units(1,nfleet);      ///< Catch units (fleets with discard or retained catch) [1=biomass (tons); 2=numbers]
+  ivector catch_multi(1,nfleet);      ///< Additional catch scaling multipliers [1 for no effect]
+  ivector survey_units(1,nsurvey);    ///< Survey units [1=biomass (tons); 2=numbers]
+  ivector survey_multi(1,nsurvey);    ///< Additional survey scaling multipliers [1 for no effect]
+
+ LOC_CALCS
+  for(ifleet=1; ifleet<=nfleet; ifleet++)
+  {
+    catch_units(ifleet) = fleet_control(fleet_cat_ind(ifleet),3);
+    catch_multi(ifleet) = fleet_control(fleet_cat_ind(ifleet),4);
+  }
+  
+  for(isurvey=1; isurvey<=nsurvey; isurvey++)
+  {
+    survey_units(isurvey) = fleet_control(fleet_sur_ind(isurvey),3);
+    survey_multi(isurvey) = fleet_control(fleet_sur_ind(isurvey),4);
+  }
+
+  echo(catch_units);
+  echo(catch_multi);
+  echo(survey_units);
+  echo(survey_multi);
+ END_CALCS
+
+  // TODO: Make it possible for fishing fleets to have survey data, and survey fleets to have catch. 
+  // Tricky with selectivity and survey_q etc. 
+  // This is possible now but selectivity types need to be entered for each group. 
+  // Selectivity can be the same for those fleets by using the same block numbers (mirroring).
+
+  // ......................................................................
+  // Get fishing fleet names and survey names and process text strings:
 
   imatrix iname_flt(1,nfleet,1,2);    ///< Fleet names
   imatrix iname_srv(1,nfleet,1,2);    ///< Survey names
   init_adstring name_read_flt;        
-  init_adstring name_read_srv;
+  init_adstring name_read_srv;   
  
-  // Convert read-in strings of fishery and survey names to a string array (so they can be indexed):
-  // TODO: Create way to return an error if not formatted properly.
+  // Convert read-in strings of fishery and survey names to a string array (so they can be indexed).
   // Set whole array equal to 1 in case not enough names are read:
  LOC_CALCS
   int k;
-  for(k=1;k<=nfleet;k++) 
+  for(k=1; k<=nfleet; k++) 
   {
     iname_flt(k,1)=1; 
     iname_flt(k,2)=1;
   }    
   
-  adstring_array CRLF;   // Blank to terminate lines (not sure why this is needed...)
+  // Blank to terminate lines (check why this is needed...)
+  adstring_array CRLF;   
   CRLF+="";
+  
   k=1;
-  for(i=1;i<=strlen(name_read_flt);i++)
+  for(i=1; i<=strlen(name_read_flt); i++)
   {
     if(adstring(name_read_flt(i))==adstring(":")) 
     {
@@ -245,10 +353,11 @@ DATA_SECTION
   }
   
   iname_flt(nfleet,2)=strlen(name_read_flt);
-  for(k=1;k<=nfleet;k++)
+  for(k=1; k<=nfleet; k++)
   {
-    fleet_names += name_read_flt(iname_flt(k,1),iname_flt(k,2))+CRLF(1);
+    fleet_names += name_read_flt(iname_flt(k,1), iname_flt(k,2))+CRLF(1);
   }
+
   for(k=1;k<=nsurvey;k++) 
   {
     iname_srv(k,1)=1; 
@@ -275,73 +384,21 @@ DATA_SECTION
   }
  END_CALCS
 
+  // TODO: Create way to return an error if names not formatted properly.
   !! echo(fleet_names);
   !! echo(survey_names);
 
-  // ......................................................................
-  // Read catch and survey units and observations:
+  // ......................................................................  
+  // Read in catch and survey data:
+  // TODO: Catch data could also include catches from 'survey fleets', code needs updating to reflect this.
 
-  init_vector catch_units(1,nfleet);          ///< Catch units (per discard or retained component fleets) [1=biomass (tons); 2=numbers]
-  init_vector catch_multi(1,nfleet);          ///< Additional catch scaling multipliers [1 for no effect]
-  init_vector survey_units(1,nsurvey);        ///< Survey units [1=biomass (tons); 2=numbers]
-  init_vector survey_multi(1,nsurvey);        ///< Additional survey scaling multipliers [1 for no effect]
   init_int ncatch_obs;                        ///< Number of catch lines to read
   init_int nsurvey_obs;                       ///< Number of survey lines to read
   init_number survey_time;                    ///< Time between survey and fishery (for projections)
 
-  // TODO FLEETS: Catch and survey won't need to be separate. Make fleet_units and fleet_multi part of the fleet control matrix below.
-
-  !! echotxt(catch_units,  " Catch units");
-  !! echotxt(catch_multi,  " Catch multipliers");
-  !! echotxt(survey_units, " Survey units");
-  !! echotxt(survey_multi, " Survey multipliers")
   !! echotxt(ncatch_obs,   " Number of lines of catch data");
   !! echotxt(nsurvey_obs,  " Number of lines of survey data")
   !! echotxt(survey_time,  " Time between survey and fishery");
-    
-  // ......................................................................    
-  // Read fleet specifications and determine number with catch retained or discarded etc:
-  init_imatrix fleet_control(1,nfleet,1,2);   ///< Fleet control matrix
-
-  int nfleet_ret;                  ///< Number of fleets for retained catch data
-  int nfleet_dis;                  ///< Number of fleets for discarded catch data (with link to above retained catch)
-  int nfleet_byc;                  ///< Number of fleets for bycatch data only
-  int nfleet_act;                  ///< Number of active distinct fleets
-
-  // TODO FLEETS: Make a new fleet_control matrix with extra columns. And in reverse order to before. 
-  // Where Column 1 = Fleet, 2 = Data type with that fleet (so multiple rows if multiple data), 3 = Units, 4 = Multiplier.
-  // PROBLEM: Each 'data component' needs to be indexed separately, for input data file indexing.
-  // To fix this, could put extra flag inside data input (new column) which says whether data is directed catch (retained) or discarded.
-
- LOC_CALCS
-    nfleet_ret = 0;
-    nfleet_dis = 0;
-    nfleet_byc = 0;
-
-    for (ifleet=1; ifleet<=nfleet; ifleet++)
-    {
-      switch (fleet_control(ifleet,1)) 
-      {
-        case 1 : 
-          nfleet_ret += 1;
-          break;
-        case 2 : 
-          nfleet_dis += 1;
-          break;
-        case 3 : 
-          nfleet_byc += 1;
-          break;
-      } 
-    } 
-    nfleet_act = nfleet_ret + nfleet_byc;         ///< Determine number of active distinct fishing fleets
- END_CALCS
-
-  // TODO FLEETS: This above should remain the same, and could be used to count other things as well, if necessary.
-
-  ivector fleet_ind_act(1,nfleet_act);            ///< Fleet index to map active fleet to all fleets
-  !! int iact=0; 
-  !! for (int i=1;i<=nfleet;i++) if(fleet_control(i,1)!=2) {iact++;fleet_ind_act(iact)=i;}
-  !! echo(fleet_control);
 
   init_matrix catch_data(1,ncatch_obs,1,5);       ///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
   matrix catch_biom_obs(1,nfleet,styr,endyr) ;
@@ -349,16 +406,14 @@ DATA_SECTION
 
   init_matrix survey_data(1,nsurvey_obs,1,6);     ///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
   ivector nobs_survey(1,nsurvey);
-  
-  // TODO FLEETS: Catch data will now also include catches from 'survey fleets'. 
-  // Then survey_data can become index_data, to reflect that indices of abundance might come from different fishing (CPUE) or survey fleets.
-  // Thus, from here onward, all survey references could become 'index' references instead, where still needed for actual index obs. For LF data, can all go to the one data matrix.
 
   !! echo(catch_data);
   !! echo(survey_data);  
-
+  
+  // ......................................................................  
+  // Fill catch and survey biomass and number observations:
  LOC_CALCS
-  // Fishery data
+  // Fishery catch data
   catch_biom_obs.initialize();
   catch_num_obs.initialize();
   for (int i=1;i<=ncatch_obs;i++)
@@ -366,13 +421,14 @@ DATA_SECTION
     catch_biom_obs(catch_data(i,3),catch_data(i,1)) = catch_data(i,5);
     catch_num_obs(catch_data(i,3),catch_data(i,1))  = catch_data(i,5);
   }
-  // survey data
+  
+  // Survey data
   nobs_survey.initialize();
   for (int i=1;i<=nsurvey_obs;i++)
     nobs_survey(survey_data(i,3))++;
   check(nobs_survey);
-
  END_CALCS
+  
   imatrix yr_survey(1,nsurvey,1,nobs_survey);
   matrix survey_biom_obs(1,nsurvey,1,nobs_survey);
   matrix survey_num_obs(1,nsurvey,1,nobs_survey);
@@ -471,7 +527,8 @@ DATA_SECTION
   3darray fleet_lf(1,nfleet,1,nlf_fleet,1,ndclass);         ///< Length-frequency data (ndclass), by fleet (can be ragged array)
   3darray fleet_lf_obs(1,nfleet,1,nlf_fleet,1,nclass);      ///< Length-frequency data (nclass), by fleet (can be ragged array)
  
-// TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages. 
+// TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages.
+// Some type of counter will be required to determine which types of data are present for each fishery (with which dimensions).
 // This will mean data can be entered into Gmacs in a flat format.
 
  LOC_CALCS 
@@ -1003,7 +1060,7 @@ DATA_SECTION
   gtrans_phz = ivector(trans_gtrans_control(4));  
 
   for (int ifl=1;ifl<=nfleet_act;ifl++)
-    prior_names  += fleet_names(fleet_ind_act(ifl))+"_Fpen"+CRLF(1);
+    prior_names  += fleet_names(fleet_act_ind(ifl))+"_Fpen"+CRLF(1);
   prior_names  += "rec_devs" +CRLF(1);
   prior_names  += "trans_parms" +CRLF(1);
   prior_names  += "Selex"+CRLF(1);
@@ -1651,20 +1708,20 @@ FUNCTION Get_Catch_Pred;
     N_tmp = N(iyr)*mfexp(-catch_time(1,iyr)*M(iyr));
     for (int ifl=1;ifl<=nfleet;ifl++)
     {
-      switch (fleet_control(ifl,1)) 
+      switch (fleet_control(ifl,2)) 
       {
         case 1 : // Main retained fishery
-          ifl_act = fleet_control(ifl,2);
+          ifl_act = fleet_control(ifl,1);
           S1 = S_fleet(ifl_act,iyr);
           fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),reten(iyr)));
           break;
         case 2 : // Discard fishery
-          ifl_act = fleet_control(ifl,2);
+          ifl_act = fleet_control(ifl,1);
           S1 = S_fleet(ifl_act,iyr);
           fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),(1.-reten(iyr))));
           break;
         case 3 : // Fishery w/ no discard component (can be a bycatch fishery)
-          ifl_act = fleet_control(ifl,2);
+          ifl_act = fleet_control(ifl,1);
           S1 = S_fleet(ifl_act,iyr);
           fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , (1.-S1));
           break;
@@ -1873,14 +1930,14 @@ FUNCTION Do_R_Output
   // writeR(survey_lf_pred);
   for (int ifl=1; ifl<=nfleet_act; ifl++)
   {
-    R_out<<"exp_rate_"<<fleet_ind_act(ifl)<<endl;
+    R_out<<"exp_rate_"<<fleet_act_ind(ifl)<<endl;
     for (iyr=styr; iyr<=endyr; iyr++)
       R_out << iyr<<" "<< exp_rate(ifl,iyr)<<endl;;
   }  
   
   for (int ifl=1; ifl<=nfleet_act; ifl++)
   {
-    R_out<<"select_fish_"<<fleet_ind_act(ifl)<<endl;
+    R_out<<"select_fish_"<<fleet_act_ind(ifl)<<endl;
     for (iyr=styr; iyr<=endyr; iyr++)
       R_out << iyr<<" "<< selex_fleet(ifl,iyr)<<endl;;
     }  
