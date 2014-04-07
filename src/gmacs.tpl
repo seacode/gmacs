@@ -21,7 +21,6 @@
 //  - Add simulation option, see LSMR model for demonstration
 //  =========================================================================================================
 
-//  =========================================================================================================
 GLOBALS_SECTION
   #include <admodel.h>
   #include <time.h>
@@ -158,7 +157,7 @@ DATA_SECTION
   !! echotxt(styr,    " Start year");
   !! echotxt(endyr,   " End year");
   !! echotxt(tstep,   " Time-step");
-  !! echotxt(ndata,  " Number of fleets");
+  !! echotxt(ndata,    " Number of fleet data groups");
   
   init_int nsex;        ///< Number of sexes  
   init_int nshell;      ///< Number of shell condition types
@@ -174,7 +173,26 @@ DATA_SECTION
   !! echotxt(nclass,  " Number of size classes for model");
   !! echotxt(ndclass, " Number of size classes for data");
 
-  // Initialize class link matrix:
+  // Determine number of columns for wide N matrix, and positions of sex, shell, and maturity sections.
+  !! int ncol = nsex * nshell * nmature * nclass;
+  !! int npshell = nsex * nshell;
+  !! int npmature = nsex * nshell * nmature;
+
+  ivector psex(1,nsex);
+  ivector pshell(1,npshell);
+  ivector pmature(1,npmature);
+
+  !! psex.fill_seqadd(1,(ncol/nsex));
+  !! pshell.fill_seqadd(1,(ncol/npshell));
+  !! pmature.fill_seqadd(1,(ncol/npmature));
+
+  !! echo(ncol);
+  !! echo(psex);
+  !! echo(pshell);
+  !! echo(pmature);
+
+  // ......................................................................    
+  // Initialize class link matrix and fill as necessary:
   matrix class_link(1,nclass,1,2);      ///< Matrix of links between model and data size-classes
  
   // If number of data classes is not equal to, or a factor of model classes, read class link matrix from data file.
@@ -401,19 +419,21 @@ DATA_SECTION
   !! echotxt(survey_time,  " Time between survey and fishery");
 
   init_matrix catch_data(1,ncatch_obs,1,5);       ///< Catch data matrix, one line per ncatch_obs, requires year, season, fleet, observation
-  matrix catch_biom_obs(1,nfleet,styr,endyr) ;
-  matrix catch_num_obs(1,nfleet,styr,endyr) ;
-
   init_matrix survey_data(1,nsurvey_obs,1,6);     ///< Survey data matrix, one line per nsurvey_obs, requires year, season, survey, observation, and error
-  ivector nobs_survey(1,nsurvey);
-
+  
   !! echo(catch_data);
   !! echo(survey_data);  
   
   // ......................................................................  
-  // Fill catch and survey biomass and number observations:
+  // Fill catch observations objects:
+  // TODO: Currently survey data is read in ragged, but catch data assumes zeros where years have no data. 
+  // Make catch ragged too: Requires nobs_catch as per nobs_survey.
+  // Survey data is also read conditionally for object specified (num or bio), repeat for catch.
+
+  matrix catch_biom_obs(1,nfleet,styr,endyr) ;
+  matrix catch_num_obs(1,nfleet,styr,endyr) ;
+
  LOC_CALCS
-  // Fishery catch data
   catch_biom_obs.initialize();
   catch_num_obs.initialize();
   for (int i=1;i<=ncatch_obs;i++)
@@ -421,24 +441,32 @@ DATA_SECTION
     catch_biom_obs(catch_data(i,3),catch_data(i,1)) = catch_data(i,5);
     catch_num_obs(catch_data(i,3),catch_data(i,1))  = catch_data(i,5);
   }
-  
-  // Survey data
+  check(catch_biom_obs);
+  check(catch_num_obs);
+ END_CALCS
+
+  // ......................................................................  
+  // Fill survey observation objects:
+
+  ivector nobs_survey(1,nsurvey);                       ///< Total counter for number of obs. within each survey
+ 
+ LOC_CALCS
   nobs_survey.initialize();
-  for (int i=1;i<=nsurvey_obs;i++)
+  for (int i=1; i<=nsurvey_obs; i++)
     nobs_survey(survey_data(i,3))++;
   check(nobs_survey);
  END_CALCS
-  
-  imatrix yr_survey(1,nsurvey,1,nobs_survey);
-  matrix survey_biom_obs(1,nsurvey,1,nobs_survey);
-  matrix survey_num_obs(1,nsurvey,1,nobs_survey);
-  matrix survey_var(1,nsurvey,1,nobs_survey);
+
+  imatrix yr_survey(1,nsurvey,1,nobs_survey);           ///< Years for each survey observation
+  matrix survey_biom_obs(1,nsurvey,1,nobs_survey);      ///< Survey observations (biomass)
+  matrix survey_num_obs(1,nsurvey,1,nobs_survey);       ///< Survey obeservation (numbers)
+  matrix survey_var(1,nsurvey,1,nobs_survey);           ///< Survey variance values
  
  LOC_CALCS
   survey_var.initialize();
   survey_biom_obs.initialize();
   survey_num_obs.initialize();
-  ivector iobs_sv(1,nsurvey);  ///< Counter for number of obs within each survey
+  ivector iobs_sv(1,nsurvey);                           ///< Incremental counter for obs. no. within each survey
   iobs_sv.initialize();
   for (int i=1;i<=nsurvey_obs;i++)
   {
@@ -449,10 +477,11 @@ DATA_SECTION
       survey_biom_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
     else 
       survey_num_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
-    survey_var(isrv,iobs_sv(isrv)) = log(1+square(survey_data(i,6))); // For likelihood, compute input variance here, assumes input as CV.
+    survey_var(isrv,iobs_sv(isrv)) = log(1+square(survey_data(i,6))); 
+    // For likelihood, compute input variance here, assumes input as CV.
   }  
 
-  for (isurvey=1; isurvey<=nsurvey; isurvey++)  
+  for (isurvey=1; isurvey<=nsurvey; isurvey++)
   {
     for (int i=1; i<=nobs_survey(isurvey); i++)
     { 
@@ -460,10 +489,14 @@ DATA_SECTION
       survey_num_obs(isurvey,i)  *= survey_multi(isurvey);
     }
   }
+  check(iobs_sv);
   check(survey_var);
   check(survey_num_obs);
-  check(survey_var);
+  check(survey_biom_obs);
  END_CALCS
+
+  // ......................................................................  
+  // Read in fishing related objects:
 
   init_vector discard_mort(1,nfleet);               ///< Discard mortality (per fishery)
   init_vector hg(styr,endyr);                       ///< Retention value for each year (highgrading)
@@ -477,8 +510,7 @@ DATA_SECTION
   echo(catch_time);
   echo(effort);
   echo(f_new);
-  check(catch_biom_obs);
-  check(catch_num_obs);
+
   for (ifleet=1; ifleet<=nfleet; ifleet++)
   {
     for (iyr=styr; iyr<=endyr; iyr++)
@@ -507,12 +539,12 @@ DATA_SECTION
   
   !! echotxt(ncatch_f, " Number of F's (calculated)")
   
-  // TODO FLEETS: All LF data can be entered into matrix, with fleet flags which now include the old 'survey fleets'.
+  // ......................................................................  
+  // Read in LF data:
 
-  // Read in the length frequency data:
-  init_int nlf_obs;                                 ///< Number of length frequency lines to read for fishing fleets 
-  init_matrix lf_data(1,nlf_obs,1,ndclass+7);       ///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
-  ivector nlf_fleet(1,nfleet);                      ///< Number of years of lf data per fleet
+  init_int nlf_obs;                                      ///< Number of length frequency lines to read for fishing fleets 
+  init_matrix lf_data(1,nlf_obs,1,ndclass+7);            ///< Length frequency data, one line per nlf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
+  ivector nlf_fleet(1,nfleet);                           ///< Number of years of lf data per fleet
  
  LOC_CALCS 
   nlf_fleet.initialize();
@@ -522,17 +554,17 @@ DATA_SECTION
   }
  END_CALCS
   
-  imatrix yr_fleet_lf(1,nfleet,1,nlf_fleet);                ///< Years with lf data, by fleet
-  matrix ss_fleet_lf(1,nfleet,1,nlf_fleet);                 ///< Effective sample sizes, by fleet
-  3darray fleet_lf(1,nfleet,1,nlf_fleet,1,ndclass);         ///< Length-frequency data (ndclass), by fleet (can be ragged array)
-  3darray fleet_lf_obs(1,nfleet,1,nlf_fleet,1,nclass);      ///< Length-frequency data (nclass), by fleet (can be ragged array)
+  imatrix yr_fleet_lf(1,nfleet,1,nlf_fleet);             ///< Years with lf data, by fleet
+  matrix ss_fleet_lf(1,nfleet,1,nlf_fleet);              ///< Effective sample sizes, by fleet
+  3darray fleet_lf(1,nfleet,1,nlf_fleet,1,ndclass);      ///< Length-frequency data (ndclass), by fleet (can be ragged array)
+  3darray fleet_lf_obs(1,nfleet,1,nlf_fleet,1,nclass);   ///< Length-frequency data (nclass), by fleet (can be ragged array)
  
 // TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages.
 // Some type of counter will be required to determine which types of data are present for each fishery (with which dimensions).
 // This will mean data can be entered into Gmacs in a flat format.
 
  LOC_CALCS 
-  ivector iobs_fl(1,nfleet);                                ///< Counter for number of obs within each fleet
+  ivector iobs_fl(1,nfleet);                             ///< Incremental counter for obs. no. within each fleet
   iobs_fl.initialize();
   for (int i=1; i<=nlf_obs; i++) 
   {
@@ -553,7 +585,7 @@ DATA_SECTION
   }
  END_CALCS
 
-  // NOTE: Simple.tpl down-weighted sample sizes w/in the code. Check this.
+  // TODO: Simple.tpl down-weighted sample sizes w/in the code. Check this.
 
   !! echotxt(nlf_obs,  " Number of length freq lines to read");
   !! echo(lf_data);
@@ -562,7 +594,9 @@ DATA_SECTION
   !! echo(ss_fleet_lf);
   !! echo(fleet_lf_obs);
   
-  // Read in survey length frequency data:
+  // ......................................................................  
+  // Read in LF data (survey):
+
   init_int nlfs_obs;                                ///< Number of survey length frequency lines to read
   init_matrix lfs_data(1,nlfs_obs,1,ndclass+5);     ///< Survey length frequency data, one line per nlfs_obs, requires year, season, survey, sex, effective sample size, then data vector
   ivector nlf_survey(1,nsurvey);                    ///< Number of years of survey lf data per survey
@@ -611,8 +645,10 @@ DATA_SECTION
   !! echo(yr_survey_lf);
   !! echo(ss_survey_lf);
   !! echo(survey_lf_obs);
-  
+
+  // ......................................................................  
   // Read in length, weight, fecundity vectors, then calculate equivalent vectors with nclass number of size-classes:
+  
   init_vector mean_length(1,ndclass);       ///< Mean length vector input
   init_vector mean_weight(1,ndclass);       ///< Mean weight vector input
   init_vector fecundity_inp(1,ndclass);     ///< Fecundity vector input
@@ -621,16 +657,12 @@ DATA_SECTION
   !! echo(mean_weight);
   !! echo(fecundity_inp);
 
-  // Format length, weight, and fecundity vectors to model size-classes:
+  // Recaclulate length, weight, and fecundity vectors to specified number of model size-classes:
   vector length(1,nclass);                  ///< Length vector (mm) for model
   vector weight(1,nclass);                  ///< Weight (kg) vector for model
   vector fecundity(1,nclass);               ///< Fecundity (kg) vector for model
-
   vector surv_lf_store(1,ndclass);          ///< Survey lf total by data class
-
-  !! checkfile << "Class-specific length, weight, and fecundity" << endl;
-  
- // TODO: Check surv_lf_store loop over nlfs_obs; only loops over first survey in simple.tpl (only first survey has data).
+   
  LOC_CALCS
   if(nclass!=ndclass)
   {
@@ -642,8 +674,10 @@ DATA_SECTION
       for (iyr=1; iyr<=nlfs_obs; iyr++) surv_lf_store(iclass) += survey_lf(1,iyr,iclass);
       total += surv_lf_store(iclass);
     }
-    if (verbose == 1) cout << "Survey sample sizes stored" << endl; // CHECK: ? Not storing sample sizes.
+    check(surv_lf_store);
+    if (verbose == 1) cout << "Survey total frequency samples by length-class stored" << endl;
 
+    checkfile << "class-specific length, weight, and fecundity (columns)" << endl;
     for (iclass=1; iclass<=nclass; iclass++)
     {
       length(iclass) = 0; 
@@ -660,6 +694,7 @@ DATA_SECTION
       length(iclass) /= total;
       weight(iclass) /= total;
       fecundity(iclass) /= total;
+      
       checkfile << iclass << " " << length(iclass) << " " << weight(iclass) << " " << fecundity(iclass) << endl;
     }
     if (verbose == 1) cout << " Lengths, weights, and fecundity recalculated" << endl;
@@ -675,7 +710,15 @@ DATA_SECTION
   }  
  END_CALCS
 
+  // TODO: Make notes on calculation method from above. 
+  // surv_lf_store is the sum over all years of LF data for each of ndclasses.
+  // Thus it stores the aggregated length-frequency information over all years.
+  // It is used to weight averages among size-classes during re-calculation between ndclasses and nclasses. 
+  // CHECK: If mean-length increases linearly with size-class, should this feature be retained with the new mean-length numbers?
+
+  // ......................................................................  
   // Read in capture, mark, recapture data:
+  
   init_int ncapture_obs;                           ///< Number of capture data lines to read    
   init_int nmark_obs;                              ///< Number of mark data lines to read
   init_int nrecapture_obs;                         ///< Number of recapture data lines to read
@@ -698,6 +741,7 @@ DATA_SECTION
   }
  END_CALCS
   
+  // ......................................................................  
   // Print EOF confirmation to screen and echoinput, warn otherwise:
   init_int eof_data;
   
@@ -741,7 +785,7 @@ DATA_SECTION
   }
  END_CALCS
   
-  // Declare objects dependent on previous objects: needs some defaults 
+  // Declare objects dependent on previous objects:
   ivector growth_bins(1,ndclass_growth);                                                  ///< Vector of growth data bins (lower length of each bin)
   3darray growth_data(styr_growth,endyr_growth,1,ndclass_growth-1,1,ndclass_growth-1);    ///< Array of year specific growth transition matrices  
   
@@ -891,12 +935,10 @@ DATA_SECTION
   !! nselex_pats = max(selex_survey_pnt);
   !! echotxt(nselex_pats, " Total number of selectivity patterns");
 
-  // TODO: For selex types, check AEP BBRKC document for what each type is.
   // Read in specifications for each selectivity pattern and determine number of parameters to estimate:
   matrix selex_type(1,nselex_pats,1,4);    ///< Selectivity types for each fleet/survey by time-block
   
-  // TODO: The selex_type matrix could probably be read in directly, then the loop over the columns should work the same.
- LOC_CALCS
+LOC_CALCS
   nselex = 0;
   for (int i=1; i<=nselex_pats; i++)
   {
@@ -1766,18 +1808,21 @@ REPORT_SECTION
   report << "Likelihood components"<<endl;
   for (int i=1;i<=nlike_terms;i++)
     report << like_names(i)<<" " << like_val(i)<<" "<<like_weight(i)<<" "<<like_val(i)*like_weight(i)<<endl;
-  REPORT(like_val);
+  REPORT(like_val);  
   REPORT(like_weight);
+  
   report << "prior components"<<endl;
   for (int i=1;i<=nprior_terms;i++)
     report << prior_names(i)<<" " << prior_val(i)<<" "<<prior_weight(i)<<" "<<prior_val(i)*prior_weight(i)<<endl;
   REPORT(prior_val);
   REPORT(prior_weight);
+  
   REPORT(logRbar);
   REPORT(M);
   REPORT(f_all);
   REPORT(strans);
   REPORT(N);
+  REPORT(mbio);
   REPORT(selex_survey);
   REPORT(selex_fleet);
   REPORT(reten);
@@ -1786,8 +1831,6 @@ REPORT_SECTION
   REPORT(exp_rate);
   REPORT(f_direct);
   REPORT(recruits);
-  REPORT(N);
-  REPORT(mbio);
 
 FUNCTION Do_R_Output
   writeR(ObjFun);
@@ -1883,17 +1926,6 @@ FUNCTION Do_R_Output
     }
   }
   
-  /*R_out << "sdnr_fleet"<<endl;
-  for (int ifl=1; ifl<=nfleet; ifl++)
-  {
-    for (i=1; i<=nlf_fleet(ifl); i++)
-    {
-      iyr = yr_fleet_lf(ifl,i);
-      R_out << sdnr( fleet_lf_pred(ifl,iyr) , fleet_lf_obs(ifl,i) , ss_fleet_lf(ifl,i) ) << endl;
-    }
-  }
-  */
-  
   writeR(nsurvey);
   writeR(yr_survey_lf);
   writeR(survey_num_pred);
@@ -1942,7 +1974,7 @@ FUNCTION Do_R_Output
       R_out << iyr<<" "<< selex_fleet(ifl,iyr)<<endl;;
     }  
 
-// TODO: Clean up writeR section; Can all of this go below FINAL_SECTION?
+// TODO: Clean up writeR section; Work outr problems with wrteR function and fix.
 
 // =========================================================================================================
 FINAL_SECTION
@@ -1968,6 +2000,7 @@ FINAL_SECTION
     double ub=value(recruits(iyr)*exp(2.*sqrt(log(1+square(recruits.sd(iyr))/square(recruits(iyr))))));
     R_out << iyr <<" "<<recruits(iyr)<<" "<<recruits.sd(iyr)<<" "<<lb<<" "<<ub<<endl;
   }
+  
   R_out<<"mmbio"<<endl; for (iyr=styr;iyr<=endyr;iyr++) 
   {
     double lb=value(mbio(iyr)/exp(2.*sqrt(log(1+square(mbio.sd(iyr))/square(mbio(iyr))))));
