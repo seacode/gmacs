@@ -281,6 +281,8 @@ DATA_SECTION
   !! echo(nfleet_act);
   !! echo(nfleet_sur);
 
+  // TODO: Check 'fleet numbers' and use of those: Mapping for 'fleets with surveys' and 'surveys with catch' required. 
+
   // ......................................................................
   // Get data group numbers for fishing, active, and survey fleets:
 
@@ -465,7 +467,7 @@ DATA_SECTION
  LOC_CALCS
   survey_var.initialize();
   survey_biom_obs.initialize();
-  survey_num_obs.initialize();
+  survey_num_obs.initialize(); 
   ivector iobs_sv(1,nsurvey);                           ///< Incremental counter for obs. no. within each survey
   iobs_sv.initialize();
   for (int i=1;i<=nsurvey_obs;i++)
@@ -858,16 +860,33 @@ DATA_SECTION
     theta_blk           = ivector(trans_theta_control(13));
  END_CALCS
 
-  // Read in specifications relating to recruitment:
-  init_int sr_lag;                                   ///< Lag to recruitment
-  init_int sr_type;                                  ///< Form of stock recruitment relationship
+  // Read in specifications relating to initial population and recruitment:
+  init_int init_n;                              ///< Form of initial numbers routine (estimate numbers or early recruits)
+  init_int sr_type;                             ///< Form of stock recruitment relationship
+  init_int sr_lag;                              ///< Lag to recruitment
+  
+  !! echotxt(init_n,   " Form of initial numbers routine");
+  !! echotxt(sr_type,  " Form of stock-recruitment relationship");
+  !! echotxt(sr_lag,   " Lag to recruitment (years)");
+  !! echotxt(sr_init,  " Number of initial recruitments");
 
-  !! echotxt(sr_lag, " Lag to recruitment (years)");
-  !! echotxt(sr_type, " Form of stock-recruitment relationship");
+  // Determine years over which to estimate recruitment:
+  int sr_init;                                  ///< Number of initial recruitments to estimate
+  int sr_styr;                                  ///< Year to start estimating recruitments
+  
+ LOC_CALCS
+  sr_init.initialize();
+  sr_styr=styr;
+  if(init_n==2)
+  {
+    *(ad_comm::global_datafile) >> sr_init;
+    sr_styr -= sr_init;
+  }
+ END_CALCS           
 
   // Read in pointers for time-varying natural mortality:
   vector M_pnt(styr,endyr);                     ///< Pointers to blocks for time-varying natural mortality
-  int nMadd_parms;                                   ///< Number of M additional parameters
+  int nMadd_parms;                              ///< Number of M additional parameters
  LOC_CALCS
     M_pnt.initialize(); 
     if (theta_blk(2)>0)  
@@ -1178,15 +1197,6 @@ LOC_CALCS
   !! cout << " Finished reading control file \n" << endl;
   !! echotxt(eof_data," EOF: finished reading control file \n");
 
-  // TODO: Check these extra objects below, and make them Gmacs format if required.
-
-  //3darray FleetObsLF(1,nfleet,1,maxFleetLF,1,nclass)        // Catch/bycatch Lfs (by model classes)
-  //3darray SurveyObsLF(1,nsurvey,1,maxSurveyLF,1,nclass)     // Survey Lfs (by model classes)
-  
-  // Objects related to the SR relationship:
-  int IsB0;                                         // Constant recruitment?
-  int SR_rel;                                       // Form of SR_Relationship
-
 // ---------------------------------------------------------------------------------------------------------
 // FORECAST FILE
 
@@ -1273,8 +1283,8 @@ PARAMETER_SECTION
   init_bounded_number_vector reten_parms(1,nreten_pars,reten_lbnd,reten_ubnd,reten_phz);              ///< Vector of retention parameters
   init_bounded_number_vector surveyq_parms(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz);    ///< Vector of survey Q parameters
   init_bounded_number_vector lognin_parms(1,nclass,lognin_lbnd,lognin_ubnd,lognin_phz);               ///< Vector of initial N parameters
-  init_vector recdev(styr,endyr,1);                                                                   ///< Vector of recruitment deviations
   init_bounded_vector_vector f_est(1,nfleet_act,1,ncatch_f,0,1,1);                                    ///< Matrix of predicted F values
+  init_vector recdev(sr_styr,endyr,1);                                                                ///< Vector of recruitment deviations
   
   // TODO: Check recdevs as unbounded parameters, these might be better as bounded parameters.
    
@@ -1349,8 +1359,6 @@ PARAMETER_SECTION
   vector like_val(1,nlike_terms);                             ///< Objective function likelihood values
   objective_function_value ObjFun;                            ///< Objective function value to be minimised
 
-  // TODO: See example for more complicated selectivity options from LSMR.tpl.
-
 // =========================================================================================================
 PROCEDURE_SECTION
   logRbar = theta_parms(1);
@@ -1367,7 +1375,7 @@ PROCEDURE_SECTION
   if (last_phase()) 
     Get_Dependent_Vars();
 
-// --------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_effort
   f_all.initialize(); // Initialize all Fs to zero
   // Convert to Fs
@@ -1412,7 +1420,7 @@ FUNCTION Set_effort
     }
   }
 
-// --------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_growth
   int iclass, jclass;
   dvariable total;
@@ -1425,12 +1433,41 @@ FUNCTION Set_growth
   }
   strans(nclass,nclass) = 1;  // Special case for final diagonal entry.
 
-// --------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION Initial_size_structure
   N.initialize();
-  N(styr) = mfexp(logRbar+lognin_parms);
+  
+  switch(init_n)
+  {
+    case 1: // Initial numbers type 1 (estimate initial numbers, one parameter per size-class):
+    {  
+      N(styr) = mfexp(logRbar+lognin_parms);
+      break;
+    }
 
-// --------------------------------------------------------------------
+    case 2: // Initial numbers type 2 (estimate early recruits, build initial population):
+    {
+      for (int iyr=sr_styr; iyr<=styr-1; iyr++)
+      {
+        // Grow individuals over each time step of initial period: 
+        for (int iclass=1; iclass<=nclass; iclass++) 
+          for (int jclass=1; jclass<=nclass; jclass++)
+            N(iyr+1,iclass) += strans(jclass,iclass)*N(iyr,jclass);
+     
+        // Add recruitment for next year:
+        recruits(iyr) = mfexp(logRbar+recdev(iyr));
+        N(iyr+1,1) += recruits(iyr); 
+        break;
+      }
+    }
+
+  }
+
+  // TODO: Build numbers into N(styr) from recruits in years sr_styr to styr-1.
+  // PROBLEM: How to get the numbers in any first year (here=sr_styr) to start building a population?
+  // Could this be set up as an equillibrium population? Some constant recruitment where N equil. is also constant?
+
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_selectivity
   // Produce all selectivities:
   int ipnt; 
@@ -1477,7 +1514,7 @@ FUNCTION Set_selectivity
       for (int iclass=1; iclass<=nclass; iclass++)
         selex_survey(subsurvey(ipnt,1),iyr,iclass) *= selex_survey(subsurvey(ipnt,2),iyr,iclass); 
 
-// --------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION dvar_vector Get_Sel(const int& isel);
   RETURN_ARRAYS_INCREMENT();
   
@@ -1493,10 +1530,10 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
       dvar_vector selparms(1,nclass);
       for(int iclass=1; iclass<=nclass; iclass++)
         selparms(iclass) = selex_parms(ipnt + iclass); 
-      cstar::Selex<dvar_vector> * ptr5;  // Pointer to Selex base class
-      ptr5 = new cstar::ParameterPerClass<dvar_vector>(selparms);
-      seltmp = ptr5->Selectivity(classes);
-      delete ptr5;
+      cstar::Selex<dvar_vector> * ptr1;  // Pointer to Selex base class
+      ptr1 = new cstar::ParameterPerClass<dvar_vector>(selparms);
+      seltmp = ptr1->Selectivity(classes);
+      delete ptr1;
       break;
     }
 
@@ -1522,7 +1559,7 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
       break;
     }
 
-    case 4 : ///< Log-logistic from Cstar functions (test):
+    case 4 : ///< Log-logistic from Cstar functions (needs testing):
     {  
       dvariable mu = selex_parms(ipnt +1);
       dvariable sd = selex_parms(ipnt +2);
@@ -1536,7 +1573,7 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
   RETURN_ARRAYS_DECREMENT();
   return seltmp;
 
-// --------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_survival
   int iyr,iclass,ifl;
   // Specify natural mortality:
@@ -1555,7 +1592,8 @@ FUNCTION Set_survival
       S(iyr) = elem_prod(S(iyr),S_fleet(ifl,iyr));
     } 
   }
-// --------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION Update_population
   for (int iyr=styr; iyr<=endyr; iyr++)
   {
