@@ -12,14 +12,14 @@
 //   were adapted from code developed for the NPFMC by Andre Punt (2012), 
 //   and on the 'LSMR' model by Steven Martell (2011).
 //
-//   TO DO LIST:
-//  - Look at numbers-at-length matrix...dimensioned by year, maturity, shell condition, sex, size bin
+//  TO DO LIST:
+//  - Extend numbers-at-length matrix...dimensioned by year, maturity, shell condition, sex, size bin
 //  - Add routine to calculate reference points
 //  - Add forecast routine
 //  - Add warning section: use macro for warning(object,text)
 //  - Add section to write new data/control files (enable easy labelling after first model attempt)
 //  - Add simulation option, see LSMR model for demonstration
-//  =========================================================================================================
+// =========================================================================================================
 
 GLOBALS_SECTION
   #include <admodel.h>
@@ -822,6 +822,7 @@ DATA_SECTION
   // Specifiy number of general parameters to be read in:
   int ntheta;
   !! ntheta = 2;
+  // TODO: When extending theta control options, remember to change this number.
   
   // Read general input from control file:
   init_matrix theta_control(1,ntheta,1,13);     ///< General parameter matrix, with specifications
@@ -868,21 +869,22 @@ DATA_SECTION
   !! echotxt(init_n,   " Form of initial numbers routine");
   !! echotxt(sr_type,  " Form of stock-recruitment relationship");
   !! echotxt(sr_lag,   " Lag to recruitment (years)");
-  !! echotxt(sr_init,  " Number of initial recruitments");
 
   // Determine years over which to estimate recruitment:
-  int sr_init;                                  ///< Number of initial recruitments to estimate
-  int sr_styr;                                  ///< Year to start estimating recruitments
+  int rinit;                                  ///< Number of initial recruitments to estimate
+  int rstyr;                                  ///< Year to start estimating recruitments
   
  LOC_CALCS
-  sr_init.initialize();
-  sr_styr=styr;
+  rinit=0;
+  rstyr=styr;
   if(init_n==2)
   {
-    *(ad_comm::global_datafile) >> sr_init;
-    sr_styr -= sr_init;
+    *(ad_comm::global_datafile) >> rinit;
+    rstyr -= rinit;
   }
- END_CALCS           
+  echotxt(rinit,  " Number of initial recruitments");
+  echotxt(rstyr,  " Start year for estimated recruitment");
+ END_CALCS
 
   // Read in pointers for time-varying natural mortality:
   vector M_pnt(styr,endyr);                     ///< Pointers to blocks for time-varying natural mortality
@@ -903,40 +905,40 @@ DATA_SECTION
  END_CALCS
   
   // Read in naturaly mortality parameter specifications:
-  matrix madd_control(1,nMadd_parms,1,4);       ///< Natural mort. parameter matrix, with speciifications           
-  // init_matrix madd_control(1,nMadd_parms,1,4);       ///< Natural mort. parameter matrix, with speciifications           
-  matrix trans_madd_control(1,4,1,nMadd_parms);      ///< Transponse of natural mort. parameter matrix    
-  vector madd_init(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - initial values  
-  vector madd_lbnd(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - lower bounds
-  vector madd_ubnd(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - upper bounds      
-  ivector madd_phz(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - phase values
+  matrix Madd_control(1,nMadd_parms,1,4);       ///< Natural mort. parameter matrix, with speciifications           
+  // init_matrix Madd_control(1,nMadd_parms,1,4);       ///< Natural mort. parameter matrix, with speciifications           
+  matrix trans_Madd_control(1,4,1,nMadd_parms);      ///< Transponse of natural mort. parameter matrix    
+  vector Madd_init(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - initial values  
+  vector Madd_lbnd(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - lower bounds
+  vector Madd_ubnd(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - upper bounds      
+  ivector Madd_phz(1,nMadd_parms);                   ///< Vector of natural mort. parameter specs - phase values
 
 
   // Fill matrices and vectors created above:
  LOC_CALCS
     if (theta_blk(2)>0)
     {
-      for (int i=1;i<=nMadd_parms;i++) *(ad_comm::global_datafile) >> madd_control(i) ;
-      trans_madd_control = trans(madd_control);
-      madd_init = trans_madd_control(1);
-      madd_lbnd = trans_madd_control(2);
-      madd_ubnd = trans_madd_control(3);
-      madd_phz = ivector(trans_madd_control(4));
+      for (int i=1;i<=nMadd_parms;i++) *(ad_comm::global_datafile) >> Madd_control(i) ;
+      trans_Madd_control = trans(Madd_control);
+      Madd_init = trans_Madd_control(1);
+      Madd_lbnd = trans_Madd_control(2);
+      Madd_ubnd = trans_Madd_control(3);
+      Madd_phz = ivector(trans_Madd_control(4));
     }
     else
     {
       nMadd_parms = 1;
-      madd_lbnd = 0.;
-      madd_ubnd = 1.;
-      madd_phz   = -1;
-      madd_init = 0.0;
-      madd_control.initialize();
+      Madd_lbnd = 0.;
+      Madd_ubnd = 1.;
+      Madd_phz   = -1;
+      Madd_init = 0.0;
+      Madd_control.initialize();
     }
-  echo(madd_control);
-  echo(madd_init);
-  echo(madd_ubnd);
-  echo(madd_lbnd);
-  echo(madd_phz);
+  echo(Madd_control);
+  echo(Madd_init);
+  echo(Madd_ubnd);
+  echo(Madd_lbnd);
+  echo(Madd_phz);
  END_CALCS
 
   // Read in pointers for time-varying fishery and survey selectivity:
@@ -1122,7 +1124,7 @@ LOC_CALCS
 
   for (int ifl=1;ifl<=nfleet_act;ifl++)
     prior_names  += fleet_names(fleet_act_ind(ifl))+"_Fpen"+CRLF(1);
-  prior_names  += "rec_devs" +CRLF(1);
+  prior_names  += "recdevs" +CRLF(1);
   prior_names  += "trans_parms" +CRLF(1);
   prior_names  += "Selex"+CRLF(1);
   prior_names  += "reten_parms" +CRLF(1);
@@ -1263,7 +1265,7 @@ LOC_CALCS
 // =========================================================================================================
 INITIALIZATION_SECTION
   theta_parms  theta_init
-  // Madd_parms madd_init;  
+  // Madd_parms Madd_init;  
   gtrans_parms gtrans_init;
   selex_parms selex_init;
   reten_parms reten_init;
@@ -1277,19 +1279,19 @@ PARAMETER_SECTION
   init_bounded_number_vector theta_parms(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);                   ///< Vector of general parameters
   
   // Initialize other parameter matrices:
-  init_bounded_number_vector Madd_parms(1,nMadd_parms,madd_lbnd,madd_ubnd,madd_phz);                  ///< Vector of increments in M parameters
+  init_bounded_number_vector Madd_parms(1,nMadd_parms,Madd_lbnd,Madd_ubnd,Madd_phz);                  ///< Vector of increments in M parameters
   init_bounded_number_vector gtrans_parms(1,nclass-1,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
   init_bounded_number_vector selex_parms(1,nselex_pars,selex_lbnd,selex_ubnd,selex_phz);              ///< Vector of selectivity parameters
   init_bounded_number_vector reten_parms(1,nreten_pars,reten_lbnd,reten_ubnd,reten_phz);              ///< Vector of retention parameters
   init_bounded_number_vector surveyq_parms(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz);    ///< Vector of survey Q parameters
   init_bounded_number_vector lognin_parms(1,nclass,lognin_lbnd,lognin_ubnd,lognin_phz);               ///< Vector of initial N parameters
   init_bounded_vector_vector f_est(1,nfleet_act,1,ncatch_f,0,1,1);                                    ///< Matrix of predicted F values
-  init_vector recdev(sr_styr,endyr,1);                                                                ///< Vector of recruitment deviations
+  init_vector recdev(rstyr,endyr,1);                                                                  ///< Vector of recruitment deviations
   
   // TODO: Check recdevs as unbounded parameters, these might be better as bounded parameters.
    
   !! check(Madd_parms);
-  !! check(madd_phz);
+  !! check(Madd_phz);
   !! check(gtrans_parms);
   !! check(gtrans_phz);
   !! check(selex_parms);
@@ -1309,8 +1311,8 @@ PARAMETER_SECTION
   // Create model vectors, matrices, and arrays:
   matrix f_all(1,nfleet_act,styr,endyr);                      ///< Fishing mortality matrix 
 
-  matrix N(styr,endyr+1,1,nclass);                            ///< Numbers-at-age matrix
-  matrix S(styr,endyr,1,nclass);                              ///< Survival matrix (general)
+  matrix N(rstyr,endyr+1,1,nclass);                           ///< Numbers-at-age matrix
+  matrix S(rstyr,endyr,1,nclass);                             ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
   matrix exp_rate(1,nfleet_act,styr,endyr);                   ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
@@ -1332,7 +1334,7 @@ PARAMETER_SECTION
   matrix survey_biom_pred(1,nsurvey,1,nobs_survey);           ///< Predicted survey weights
   matrix survey_num_pred(1,nsurvey,1,nobs_survey);            ///< Predicted survey numbers
   vector q_effort(1,nfleet_act);                              ///< Effort q
-  vector M(styr,endyr);                                       ///< Natural mortality
+  vector M(rstyr,endyr);                                      ///< Natural mortality
   vector f_direct(styr,endyr);                                ///< Fishing mortality
 
   // Values related to the SR relationship
@@ -1348,9 +1350,9 @@ PARAMETER_SECTION
   // number rec_zero;                                         ///< Virgin recruitment 
   // number steep;                                            ///< Stock-recruit steepness 
   number mbio_zero;                                           ///< Virgin MMB 
-  sdreport_vector mbio(styr,endyr);                                    ///< Mature male biomass 
+  sdreport_vector mbio(styr,endyr);                           ///< Mature male biomass 
   // vector logmbio(styr,endyr);                              ///< Log of MMB
-  sdreport_vector recruits(styr,endyr);                       ///< Recruitment vector
+  sdreport_vector recruits(rstyr,endyr);                      ///< Recruitment vector
   // vector logrecruits(styr,endyr);                          ///< Log of recruitment vector
   // vector logrecmbio(styr,endyr-sr_lag);                    ///< Log of recruits-per-spawner
  
@@ -1447,25 +1449,25 @@ FUNCTION Initial_size_structure
 
     case 2: // Initial numbers type 2 (estimate early recruits, build initial population):
     {
-      for (int iyr=sr_styr; iyr<=styr-1; iyr++)
+
+      N(rstyr,1) = mfexp(logRbar);
+
+      for (int iyr=rstyr; iyr<styr; iyr++)
       {
         // Grow individuals over each time step of initial period: 
         for (int iclass=1; iclass<=nclass; iclass++) 
           for (int jclass=1; jclass<=nclass; jclass++)
-            N(iyr+1,iclass) += strans(jclass,iclass)*N(iyr,jclass);
+            N(iyr+1,iclass) += strans(jclass,iclass)*N(iyr,jclass)*S(iyr,jclass);
      
         // Add recruitment for next year:
         recruits(iyr) = mfexp(logRbar+recdev(iyr));
         N(iyr+1,1) += recruits(iyr); 
-        break;
       }
+      break;
     }
-
   }
 
-  // TODO: Build numbers into N(styr) from recruits in years sr_styr to styr-1.
-  // PROBLEM: How to get the numbers in any first year (here=sr_styr) to start building a population?
-  // Could this be set up as an equillibrium population? Some constant recruitment where N equil. is also constant?
+  // TODO: Build numbers into N(styr) from recruits in years rstyr to styr-1.
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_selectivity
@@ -1582,6 +1584,11 @@ FUNCTION Set_survival
     if (M_pnt(iyr)>0)  // TODO Check to see the logic here
       M(iyr) += Madd_parms(M_pnt(iyr)); 
   
+  for (iyr=rstyr; iyr<styr; iyr++)
+  {
+    S(iyr) = mfexp(-M(iyr));
+  }
+
   for (iyr=styr; iyr<=endyr; iyr++)
   {
     S(iyr) = mfexp(-M(iyr));
@@ -1856,6 +1863,7 @@ REPORT_SECTION
   REPORT(prior_weight);
   
   REPORT(logRbar);
+  REPORT(recdev);
   REPORT(M);
   REPORT(f_all);
   REPORT(strans);
@@ -1884,6 +1892,11 @@ FUNCTION Do_R_Output
   ivector years(styr,endyr);
   years.fill_seqadd(styr,1);
   writeR(years);
+  
+  ivector early_years(rstyr,endyr);
+  years.fill_seqadd(rstyr,1);
+  writeR(early_years);
+
   writeR(mean_length);
   writeR(nclass);
   writeR(M);

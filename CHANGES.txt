@@ -1,0 +1,16 @@
+# CHANGES to GMACS for May 2014 CPT.
+# List of changes to Gmacs since fist pilot version:
+
+(1) 	Generic functions at end of code, now exported to Cstar.
+(2) 	Selectivity functions exported to Cstar.
+(3) 	Cstar selectivity functions used in code (more options available).
+(4) 	When number of classes in data and model are same, class link matrix not required. Automatically generated instead.
+(5) 	When number of classes in the data and the model differ by an integer factor, class link matrix is automatically generated. 
+(6) 	When number of classes in the data is not a multiple of number of classes in the model, read in class_link matrix.
+(7) 	Names of fleets and surveys now printed correctly to echoinput file.
+(8) 	All references in model are now to size-classes rather than length classes.
+(9) 	Functionality improved for writeR: Fleet and survey names now exported to R and used for plots.
+(10) 	Gmacs R Functions now wrapped in simple 'gmplot_all' function, can be used with any model.
+(11)	Fleet control section of data file is now extended to include surveys, catch units and multipliers, all entered in the one matrix. This is to prepare to future options where a fishing fleet might also have a 'survey' such as a CPUE index, and where a survey might have some catch.
+(12)	Data file now expects extra dimensions to be specified, such as number of shell and maturity types.
+
