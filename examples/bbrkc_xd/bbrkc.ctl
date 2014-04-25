@@ -2,12 +2,15 @@
 # General parameter specifications *(only two for now):
 #========================================================================================================
 # Init   Lower   Upper  Phase   Prior   Pmean    Psd   Cov.   Dev.   Dsd   Dmin  Dmax   Block
- 9.76518 -10	    40	    1	    0	    0	   0	 0	    0	  0	    0	   0	   0	#R0
- 0.18	    0	     1	     -1	    0	  0.18  1000     0	    0	  0	    0	   0	   1	#M
+ 9.76518  -10	    40	    1	    0	    0	   0	 0	    0	  0	    0	   0	   0	#R0
+ 0.18	    0	     1	   -1	    0	  0.18  1000     0	    0	  0	    0	   0	   1	#M
 #========================================================================================================
 
-6	# Lag to recruitment
-3	# SR_Act
+2	# Form of initial numbers (1 = estimate initial size structure, 2 = estimate early recruitment)
+1	# Form of stock-recruitment relationship (placeholder)
+6	# Lag to recruitment (placeholder)
+
+9   # Number of initial recruitments to estimate (conditional)
 
 # Time-varying natural mortality blocks
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
@@ -98,12 +101,15 @@
 100 -1000 1000  -1      
 1.0986123 -1000 1000  -1      
 -100  -1000 1000  -1      
--100  -1000 1000  -1      
+-100  -1000 1000  -1        
 
 # Time-varying fishery retention
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
   1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 
+# Retention types
+1 1 0   
+ 
 # Specifications for the retained probability (one parm per size-class, per fleet)
 # Init, Lower, Upper, Phase
 0 -100 100  4
@@ -122,9 +128,9 @@
   
 # Specifications for survey Q parameters
 # Init, Lower, Upper, Phase, Prior, Pmean, Psd
--2.6e-8  -50     1     4      1	     0   	-100
--0.10981487   -50     1 -1   1	0.896   0.03  
- 0.0          -50     1 -1   1	0   	-100
+-2.6e-8  	  -50     1      4   1	0   	-100
+-0.10981487   -50     1 	-1   1	0.896   0.03  
+ 0.0          -50     1 	-1   1	0   	-100
 
 # Specifications for the initial numbers parameters
 # Init, Lower, Upper, Phase
