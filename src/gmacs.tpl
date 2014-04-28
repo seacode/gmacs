@@ -878,7 +878,7 @@ DATA_SECTION
  LOC_CALCS
   rinit=0;
   rstyr=styr;
-  if(init_n==2 || init_n==3)
+  if(init_n==2 || init_n==3 || init_n==4)
   {
     *(ad_comm::global_datafile) >> rinit;
     rstyr -= rinit;
@@ -1345,11 +1345,12 @@ PARAMETER_SECTION
   matrix f_all(1,nfleet_act,styr,endyr);                      ///< Fishing mortality matrix 
 
   matrix N(rstyr,endyr+1,1,nclass);                           ///< Numbers-at-age matrix
-  matrix N0(1,nclass*2,1,nclass);                               ///< equilibrium numbers matrix (calculated)
+  matrix N0(1,nclass*2,1,nclass);                             ///< equilibrium numbers matrix (calculated)
   matrix S(rstyr,endyr,1,nclass);                             ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
   matrix exp_rate(1,nfleet_act,styr,endyr);                   ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
+  matrix xtrans(1,nclass,1,nclass);                           ///< Temp size-trans matrix (diagonal only) for testing [!REMOVE!]  
   
   3darray reten(1,nfleet_ret,styr,endyr,1,nclass);            ///< Directed fishery (male) retention array 
   matrix reten_all(1,nreten_pats,1,nclass);                   ///< All retention matrix
@@ -1528,6 +1529,29 @@ FUNCTION Initial_size_structure
         for (int iclass=1; iclass<=nclass; iclass++) 
           for (int jclass=1; jclass<=nclass; jclass++)
             N(iyr+1,iclass) += strans(jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
+     
+        // Add recruitment for next year:
+        recruits(iyr) = mfexp(logRbar+recdev(iyr));
+        N(iyr+1,1) += recruits(iyr); 
+      }
+      break;
+    }
+
+    case 4: // Initial numbers type 4 (estimate early recruits, build initial population from R0, no est. growth in pre-model years):
+    {      
+      // Start build up from single recruitment:
+      N(rstyr,1) = mfexp(logRbar);
+
+      xtrans(nclass, nclass) = 1;
+      for (int i=1; i<nclass; i++)
+        xtrans(i,i+1) = 1;
+
+      for (int iyr=rstyr; iyr<styr; iyr++)
+      {
+        // Grow individuals over each time step of initial period: 
+        for (int iclass=1; iclass<=nclass; iclass++) 
+          for (int jclass=1; jclass<=nclass; jclass++)
+            N(iyr+1,iclass) += xtrans(jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
      
         // Add recruitment for next year:
         recruits(iyr) = mfexp(logRbar+recdev(iyr));
@@ -1989,6 +2013,7 @@ REPORT_SECTION
   REPORT(M);
   REPORT(f_all);
   REPORT(strans);
+  REPORT(xtrans);
   REPORT(N0);
   REPORT(N);
   REPORT(mbio);
