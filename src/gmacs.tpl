@@ -274,12 +274,14 @@ DATA_SECTION
     
     nfleet_act = nfleet_ret + nfleet_byc;       ///< Number of active distinct fishing fleets
     nfleet_cat = nfleet_act + nfleet_dis;       ///< Number of fleets with catch      
- END_CALCS
+  echo(fleet_control);
+  echo(nfleet_cat);
+  echo(nfleet_ret);
+  echo(nfleet_byc);
+  echo(nfleet_act);
+  echo(nfleet_sur);
 
-  !! echo(fleet_control);
-  !! echo(nfleet_cat);
-  !! echo(nfleet_act);
-  !! echo(nfleet_sur);
+ END_CALCS
 
   // TODO: Check 'fleet numbers' and use of those: Mapping for 'fleets with surveys' and 'surveys with catch' required. 
 
@@ -712,8 +714,7 @@ DATA_SECTION
   }  
  END_CALCS
 
-  // TODO: Make notes on calculation method from above. 
-  // surv_lf_store is the sum over all years of LF data for each of ndclasses.
+  // NOTE: surv_lf_store is the sum over all years of LF data for each of ndclasses.
   // Thus it stores the aggregated length-frequency information over all years.
   // It is used to weight averages among size-classes during re-calculation between ndclasses and nclasses. 
   // CHECK: If mean-length increases linearly with size-class, should this feature be retained with the new mean-length numbers?
@@ -961,6 +962,7 @@ DATA_SECTION
   
 LOC_CALCS
   nselex = 0;
+  selex_type = 0;
   for (int i=1; i<=nselex_pats; i++)
   {
     *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
@@ -973,19 +975,18 @@ LOC_CALCS
   echotxt(nselex_pars, " Total number of selectivity parameters");
 
   // Fill last column of selex_type matrix, for use in Set_selex function.
-  int i = 0;
+  last = 0;
+  int psel = 0;
   for (j=1; j<=nselex_pats; j++)
   {
-    selex_type(j,4) = i;
+    selex_type(j,4) = psel;
     if (selex_type(j,2)==1) last = nclass;
     if (selex_type(j,2)==2) last = 2;
     if (selex_type(j,2)==3) last = 2;
-    i += last;
+    psel += last;
   }
   check(selex_type);
  END_CALCS
-
-  //TODO: Add more selectivity options above as necessary for next example models. See LSMR code for example.
 
   // Read in selectivity parameter specifications:
   init_matrix selex_control(1,nselex_pars,1,4);      ///< Selectivity parameter matrix, with specifications
@@ -1008,16 +1009,46 @@ LOC_CALCS
  END_CALCS
 
   // Read in pointers for time-varying fishery retention:
-  int nreten_pars;
   init_imatrix reten_fleet_pnt(1,nfleet_ret,styr,endyr);
 
-  !! nreten_pars = max(reten_fleet_pnt);
-  !! nreten_pars *= nclass;
+  // Determine number of different retention functions/patterns to estimate:
+  int nreten;
+  int nreten_pats;
+  int nreten_pars;
 
-  //TODO: This code assumes only one type of retention function at the moment. Update as necessary.
+  !! nreten_pats = max(reten_fleet_pnt);
+  !! echotxt(nreten_pats, " Total number of retention patterns");
+
+  // Read in specifications for each retention pattern and determine number of parameters to estimate:
+  matrix reten_type(1,nreten_pats,1,4);    ///< Retention types for each relevant fleet by time-block
   
-  !! echotxt(nreten_pars, " Total number of retention parameters");
+LOC_CALCS
+  nreten = 0;
+  reten_type = 0;
+  for (int i=1; i<=nreten_pats; i++)
+  {
+    *(ad_comm::global_datafile) >> reten_type(i,1) >> reten_type(i,2) >> reten_type(i,3);
+    if (reten_type(i,2) == 1) nreten += nclass;
+    if (reten_type(i,2) == 2) nreten += 2;
+  }
 
+  nreten_pars = nreten;
+  echo(reten_type);
+  echotxt(nreten_pars, " Total number of retention parameters");
+
+  // Fill last column of reten_type matrix, starting parameter for each retention pattern:
+  last = 0;
+  int preten = 0;
+  for (j=1; j<=nreten_pats; j++)
+  {
+    reten_type(j,4) = preten;
+    if (reten_type(j,2)==1) last = nclass;
+    if (reten_type(j,2)==2) last = 2;
+    preten += last;
+  }
+  check(reten_type);
+ END_CALCS
+  
   // Read in retention parameter specifications:
   init_matrix reten_control(1,nreten_pars,1,4);       ///< Retention parameter matrix, with speciifications           
   matrix trans_reten_control(1,4,1,nreten_pars);      ///< Transponse of retention parameter matrix    
@@ -1317,9 +1348,10 @@ PARAMETER_SECTION
   matrix exp_rate(1,nfleet_act,styr,endyr);                   ///< Exploitation rate matrix
   matrix strans(1,nclass,1,nclass);                           ///< Size-transition matrix
   
-  matrix reten(styr,endyr,1,nclass);                          ///< Male retention matrix 
-  
-  // TODO: The above matrix was retain_males in old code. Needs to be made as sex-distinct object(s) for next version of model.
+  3darray reten(1,nfleet_ret,styr,endyr,1,nclass);            ///< Directed fishery (male) retention array 
+  matrix reten_all(1,nreten_pats,1,nclass);                   ///< All retention matrix
+
+  // TODO: The above matrix was retain_males in AEP code. Check if need sex-distinct object(s) for multi-sex model.
 
   3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);      ///< Distinct fishery selectivity array
   3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
@@ -1478,7 +1510,7 @@ FUNCTION Set_selectivity
   for (int isel=1; isel<=nselex_pats; isel++)
     selex_all(isel) = Get_Sel(isel);
 
-  // Fishery and bycatch selectivity:
+  // Fishery and bycatch selectivities:
   for (int ifl=1; ifl<=nfleet_act; ifl++)
   {
     for (iyr=styr; iyr<=endyr; iyr++)
@@ -1488,6 +1520,21 @@ FUNCTION Set_selectivity
     }  
   }
   
+  // Loop over retention patterns:
+  for (int ireten=1; ireten<=nreten_pats; ireten++)
+    reten_all(ireten) = Get_Reten(ireten);
+
+  // Retention in directed fisheries:
+  for (int ifl=1; ifl<=nfleet_ret; ifl++)
+  {
+    for (iyr=styr; iyr<=endyr; iyr++)
+    {
+      ipnt = reten_fleet_pnt(ifl,iyr);
+      reten(ifl,iyr) = reten_all(ipnt) ;
+    }  
+  }
+
+  /*
   // Retention in the pot fishery:
   for (int ifl=1; ifl<=nfleet_ret; ifl++)
     for (iyr=styr; iyr<=endyr; iyr++)
@@ -1498,6 +1545,7 @@ FUNCTION Set_selectivity
         reten(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(reten_parms(ipnt+iclass)));
       } 
     } 
+    */
 
   // Survey selectivity:
   dvariable qq ;
@@ -1561,7 +1609,7 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
       break;
     }
 
-    case 4 : ///< Log-logistic from Cstar functions (needs testing):
+    case 4 : ///< Log-logistic from Cstar functions (*not yet implemented, needs testing):
     {  
       dvariable mu = selex_parms(ipnt +1);
       dvariable sd = selex_parms(ipnt +2);
@@ -1574,6 +1622,38 @@ FUNCTION dvar_vector Get_Sel(const int& isel);
   } 
   RETURN_ARRAYS_DECREMENT();
   return seltmp;
+
+// ---------------------------------------------------------------------------------------------------------
+FUNCTION dvar_vector Get_Reten(const int& ireten);
+  RETURN_ARRAYS_INCREMENT();
+  
+  int  ipnt    = reten_type(ireten,4);
+  int  retentype = reten_type(ireten,2); 
+  dvar_vector retentmp(1,nclass);
+
+  switch (retentype)
+  {
+    case 1 : ///< Nonparametric: One retension parameter per size class. 
+    // TODO: Move to Cstar.
+    {
+      for (iclass=1; iclass<=nclass; iclass++)
+        retentmp(iclass) = 1/(1.0 + mfexp(reten_parms(ipnt + iclass)));
+      break;
+    }
+
+    case 2 : ///< Logistic from Cstar: Two parameters, length at 50% and 95% retension.
+    {  
+      dvariable r50 = reten_parms(ipnt +1);
+      dvariable r95 = reten_parms(ipnt +2);
+      cstar::Selex<dvar_vector> * ptr2;  // Pointer to Selex base class
+      ptr2 = new cstar::LogisticCurve95<dvar_vector,dvariable>(r50,r95);
+      retentmp = ptr2->Selectivity(length);
+      delete ptr2;
+      break;
+    }
+  }   
+  RETURN_ARRAYS_DECREMENT();
+  return retentmp;
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_survival
@@ -1792,28 +1872,31 @@ FUNCTION Get_Catch_Pred;
   for (int iyr=styr;iyr<=endyr;iyr++)
   {
     // TODO: Need to loop over number of directed fisheries (presently fixed at 1) fleet control matrix
-    N_tmp = N(iyr)*mfexp(-catch_time(1,iyr)*M(iyr));
-    for (int ifl=1;ifl<=nfleet;ifl++)
+    N_tmp = N(iyr) * mfexp(-catch_time(1,iyr) * M(iyr));
+    for (int ifl=1; ifl<=nfleet; ifl++)
     {
       switch (fleet_control(ifl,2)) 
       {
-        case 1 : // Main retained fishery
+        case 1 : // Main retained fisheries
           ifl_act = fleet_control(ifl,1);
           S1 = S_fleet(ifl_act,iyr);
-          fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),reten(iyr)));
+          fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1), reten(ifl_act,iyr)));
           break;
-        case 2 : // Discard fishery
+        
+        case 2 : // Discard fisheries
           ifl_act = fleet_control(ifl,1);
           S1 = S_fleet(ifl_act,iyr);
-          fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1),(1.-reten(iyr))));
+          fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.-S1), (1.-reten(ifl_act,iyr))));
           break;
-        case 3 : // Fishery w/ no discard component (can be a bycatch fishery)
+        
+        case 3 : // Fisheries w/ no discard component (e.g. bycatch fisheries)
           ifl_act = fleet_control(ifl,1);
           S1 = S_fleet(ifl_act,iyr);
           fleet_lf_pred(ifl,iyr) = elem_prod(N_tmp , (1.-S1));
           break;
       }
       N_tmp = elem_prod(N_tmp,S1);
+      
       // Accumulate totals 
       catch_biom_pred(ifl,iyr) = fleet_lf_pred(ifl,iyr) * weight;
       catch_num_pred(ifl,iyr)  = sum(fleet_lf_pred(ifl,iyr) );
@@ -1850,11 +1933,12 @@ REPORT_SECTION
   if (last_phase())
     Do_R_Output();
 
+  REPORT(ObjFun);
+  REPORT(like_val);  
+  REPORT(like_weight);
   report << "Likelihood components"<<endl;
   for (int i=1;i<=nlike_terms;i++)
     report << like_names(i)<<" " << like_val(i)<<" "<<like_weight(i)<<" "<<like_val(i)*like_weight(i)<<endl;
-  REPORT(like_val);  
-  REPORT(like_weight);
   
   report << "prior components"<<endl;
   for (int i=1;i<=nprior_terms;i++)
