@@ -295,7 +295,7 @@ DATA_SECTION
 
   ivector fleet_act_ind(1,nfleet_act);    ///< Fleet index to map active fleet to all fleets
   !! int iact=0; 
-  !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)==1 | fleet_control(i,2)==3) {iact++; fleet_act_ind(iact)=i;}
+  !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)==1 || fleet_control(i,2)==3) {iact++; fleet_act_ind(iact)=i;}
   !! echo(fleet_act_ind);
 
   ivector fleet_sur_ind(1,nfleet_sur);    ///< Fleet index to map survey fleets to all fleets
@@ -878,7 +878,7 @@ DATA_SECTION
  LOC_CALCS
   rinit=0;
   rstyr=styr;
-  if(init_n==2)
+  if(init_n==2 || init_n==3)
   {
     *(ad_comm::global_datafile) >> rinit;
     rstyr -= rinit;
@@ -1145,6 +1145,8 @@ LOC_CALCS
   !! nlike_terms = (nfleet)*2+ (nfleet_act) + (nsurvey)*2;
   vector mn_offset(1,nlike_terms);                                  ///< Offset for multinomial calculations
   
+  // TODO: Generalise this section to deal with different numbers of fleets.
+
   // Fill matrices and vectors created above:
  LOC_CALCS
   trans_gtrans_control = trans(gtrans_control);
@@ -1343,6 +1345,7 @@ PARAMETER_SECTION
   matrix f_all(1,nfleet_act,styr,endyr);                      ///< Fishing mortality matrix 
 
   matrix N(rstyr,endyr+1,1,nclass);                           ///< Numbers-at-age matrix
+  matrix N0(1,nclass*2,1,nclass);                               ///< equilibrium numbers matrix (calculated)
   matrix S(rstyr,endyr,1,nclass);                             ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
   matrix exp_rate(1,nfleet_act,styr,endyr);                   ///< Exploitation rate matrix
@@ -1470,7 +1473,23 @@ FUNCTION Set_growth
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Initial_size_structure
   N.initialize();
+  N0.initialize();
+
+  // Calculate N0 (initial numbers) from equilibrium recruitment:
+  N0(1,1) = mfexp(logRbar);
+  for (int irow=1; irow<(nclass*2); irow++)
+  {
+    // Grow individuals over nclass time-steps:
+    for(int iclass=1; iclass<=nclass; iclass++)
+      for (int jclass=1; jclass<=nclass; jclass++)
+        N0(irow+1,iclass) += strans(jclass,iclass) * N0(irow,jclass) * mfexp(-M0);
   
+    // Add recruitment (R0) each time-step:
+    N0(irow+1,1) += mfexp(logRbar);   
+  }
+  // TODO: Is this a good estimate of an equilibrium population? How many years required to get smooth distribution?
+  
+  // Get initial numbers:
   switch(init_n)
   {
     case 1: // Initial numbers type 1 (estimate initial numbers, one parameter per size-class):
@@ -1479,9 +1498,9 @@ FUNCTION Initial_size_structure
       break;
     }
 
-    case 2: // Initial numbers type 2 (estimate early recruits, build initial population):
+    case 2: // Initial numbers type 2 (estimate early recruits, build initial population from R0):
     {
-
+      // Start build up from single recruitment:
       N(rstyr,1) = mfexp(logRbar);
 
       for (int iyr=rstyr; iyr<styr; iyr++)
@@ -1489,7 +1508,26 @@ FUNCTION Initial_size_structure
         // Grow individuals over each time step of initial period: 
         for (int iclass=1; iclass<=nclass; iclass++) 
           for (int jclass=1; jclass<=nclass; jclass++)
-            N(iyr+1,iclass) += strans(jclass,iclass)*N(iyr,jclass)*S(iyr,jclass);
+            N(iyr+1,iclass) += strans(jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
+     
+        // Add recruitment for next year:
+        recruits(iyr) = mfexp(logRbar+recdev(iyr));
+        N(iyr+1,1) += recruits(iyr); 
+      }
+      break;
+    }
+
+    case 3: // Initial numbers type 3 (estimate early recruits, build initial population from N0):
+    {      
+      // Start build up from equilibrium numbers:
+      N(rstyr) = N0(nclass*2);
+
+      for (int iyr=rstyr; iyr<styr; iyr++)
+      {
+        // Grow individuals over each time step of initial period: 
+        for (int iclass=1; iclass<=nclass; iclass++) 
+          for (int jclass=1; jclass<=nclass; jclass++)
+            N(iyr+1,iclass) += strans(jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
      
         // Add recruitment for next year:
         recruits(iyr) = mfexp(logRbar+recdev(iyr));
@@ -1499,7 +1537,7 @@ FUNCTION Initial_size_structure
     }
   }
 
-  // TODO: Build numbers into N(styr) from recruits in years rstyr to styr-1.
+  // TODO: Check if numbers into N(styr) from different options give same values? Should they?
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_selectivity
@@ -1633,7 +1671,7 @@ FUNCTION dvar_vector Get_Reten(const int& ireten);
 
   switch (retentype)
   {
-    case 1 : ///< Nonparametric: One retension parameter per size class. 
+    case 1 : ///< Nonparametric: One retention parameter per size class. 
     // TODO: Move to Cstar.
     {
       for (iclass=1; iclass<=nclass; iclass++)
@@ -1641,7 +1679,7 @@ FUNCTION dvar_vector Get_Reten(const int& ireten);
       break;
     }
 
-    case 2 : ///< Logistic from Cstar: Two parameters, length at 50% and 95% retension.
+    case 2 : ///< Logistic from Cstar: Two parameters, length at 50% and 95% retention.
     {  
       dvariable r50 = reten_parms(ipnt +1);
       dvariable r95 = reten_parms(ipnt +2);
@@ -1707,7 +1745,7 @@ FUNCTION Get_Dependent_Vars
 FUNCTION Get_ObjFunction
   Get_Likes();
   Get_Priors();
-  ObjFun  = like_weight*like_val  + prior_weight * prior_val;
+  ObjFun  = like_weight*like_val + prior_weight*prior_val;
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Likes
@@ -1951,6 +1989,7 @@ REPORT_SECTION
   REPORT(M);
   REPORT(f_all);
   REPORT(strans);
+  REPORT(N0);
   REPORT(N);
   REPORT(mbio);
   REPORT(selex_survey);
