@@ -6,11 +6,8 @@
  0.18	    0	     1	   -1	    0	  0.18  1000     0	    0	  0	    0	   0	   1	#M
 #========================================================================================================
 
-2	# Form of initial numbers (1 = estimate initial size structure, 2 = estimate early recruitment)
 1	# Form of stock-recruitment relationship (placeholder)
 6	# Lag to recruitment (placeholder)
-
-9   # Number of initial recruitments to estimate (conditional)
 
 # Time-varying natural mortality blocks
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
@@ -112,11 +109,14 @@
  
 # Specifications for the retained probability (one parm per size-class, per fleet)
 # Init, Lower, Upper, Phase
-0 -100 100  4
-12.2 -100 100  4
-5.5 -100 100  4
--0.1 -100 100  4
--6.7 -100 100  4
+50    -100 100 -4
+12.2  -100 100  4
+5.5   -100 100  4
+-0.1  -100 100  4
+-6.7  -100 100  4
+
+# 110   70  130  3      
+# 160  135  175  3   
 
 # Time-varying Q
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10 11
@@ -124,7 +124,7 @@
   3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3
   
 # Number of survey fleets which are in a sub-area of the main survey
-0         # Number of cases
+0  # Number of cases
   
 # Specifications for survey Q parameters
 # Init, Lower, Upper, Phase, Prior, Pmean, Psd
@@ -132,20 +132,38 @@
 -0.10981487   -50     1 	-1   1	0.896   0.03  
  0.0          -50     1 	-1   1	0   	-100
 
+4	# Form of initial numbers (1 = estimate initial size structure, 2 = estimate early recruitment, build from R0, 3 = as for 2, but build from N0)
+7   # Number of initial recruitments to estimate (conditional)
+ 
 # Specifications for the initial numbers parameters
 # Init, Lower, Upper, Phase
-0.8133 -10 10 2
-1.1774 -10 10 2
-0.1239 -10 10 2
--0.84 -10 10 2
--1.02 -10 10 2
+0.8133 -10 10 -2
+1.1774 -10 10 -2
+0.1239 -10 10 -2
+-0.84 -10 10 -2
+-1.02 -10 10 -2
 
-# Specifications for the growth transition probabilities
+# Specifications for the growth transition matrix
+# Time-varying growth
+# 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+# 2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 
+
+# Type of growth estimation (1 = simple parameter-per-cass, 2 = linear growth increment, gamma distribution about mean) 
+1 1 0
+
+# Growth parameters for option 1
 # Init, Lower, Upper, Phase
-10 -20 50 5
-0.4 -20 50 5
-1.2 -20 50 5
-0.8 -20 50 5
+4.36 -20 50 -5
+0.12 -20 50 -5
+0.95 -20 50 -5
+1.86 -20 50 -5
+
+# Growth parameters for option 2
+# 0	-1	1	5   # Linear growth increment a 
+# 0	-1	1	5	# Linear growth increment b
+# 0	-1	1	5	# Gamma distribution beta
  
 # Objective Fn weights
 # (1) Priors
@@ -165,15 +183,15 @@
 # Objective Fn weights
 # (2) Data 
 # Catch: PotDisc, PotRet, Trawl, Tanner 
-         10.00  100.00   10.00   10.00
+  10.00  100.00   10.00   10.00
 # LF: PotDisc, PotRet, Trawl, Tanner
-        0.100  1.000  0.100  0.100      
+  0.100  1.000  0.100  0.100      
 # Effort: PotRet, Trawl, Tanner
-          0.000  0.000  10.000
+  0.000  0.000  10.000
 # Survey: NMFS, BSFRF 
-          1.000  1.000  
+  1.000  1.000  
 # Survey-LF: NMFS, BSFRF
-          1.00   1.00
+  1.00   1.00
 
 #EOF
 999
