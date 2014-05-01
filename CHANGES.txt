@@ -7,10 +7,19 @@
 (4) 	When number of classes in data and model are same, class link matrix not required. Automatically generated instead.
 (5) 	When number of classes in the data and the model differ by an integer factor, class link matrix is automatically generated. 
 (6) 	When number of classes in the data is not a multiple of number of classes in the model, read in class_link matrix.
-(7) 	Names of fleets and surveys now printed correctly to echoinput file.
-(8) 	All references in model are now to size-classes rather than length classes.
-(9) 	Functionality improved for writeR: Fleet and survey names now exported to R and used for plots.
+(7) 	Names of fleets and surveys now printed correctly to echoinput file: (bug fix).
+(8) 	Functionality improved for writeR: Fleet and survey names now exported to R and used for plots.
+(9) 	All references in model are now to size-classes rather than length classes.
 (10) 	Gmacs R Functions now wrapped in simple 'gmplot_all' function, can be used with any model.
-(11)	Fleet control section of data file is now extended to include surveys, catch units and multipliers, all entered in the one matrix. This is to prepare to future options where a fishing fleet might also have a 'survey' such as a CPUE index, and where a survey might have some catch.
+(11)	Fleet control section of data file is now extended to include surveys, catch units and multipliers, all entered in the one matrix. This is to prepare for future options where a fishing fleet might also have a 'survey' such as a CPUE index, and where a survey might have some catch.
 (12)	Data file now expects extra dimensions to be specified, such as number of shell and maturity types.
-
+(13) 	Initial numbers can now be specified by estimating early recruitments. Initial numbers options input via control file.
+		- NOTE: Currently the lognin_parms have to be entered and have phase set to -ve so as not to be estimated. Later: Make reading these lines conditional.
+(14)    Retention function can now be selected from among multiple options. This includes a logistic function. Currently borrowed from cstar::selex functions.
+(15)	Growth functions can now be selected from among multiple options. This includes a linear growth relationship with a gamma distribution about each size class.
+(16) 	Internal calculations have been modified so that multiple copies of selectivity, retention, or size-transition matrix patterns are not created nor stored as before. This make the code mode efficient.
+		- NOTE: Will do the same for selectivity, but waiting until further selectivity updates are made [to selex_fleet and selex_survey]
+		
+		
+(*) Cstar functions for selectivity (and some others) have now been written in Template style code.
+(*) Many updates to Gmacs R functions: Can now be used for any Gmacs model. 
