@@ -819,7 +819,7 @@ DATA_SECTION
   
   // Specifiy number of parameters to be read in:
   int ntheta;
-  !! ntheta = 2;
+  !! ntheta = 4;
   // TODO: When extending theta control options, this number must be updated.
   
   // Read general input from control file:
@@ -880,7 +880,7 @@ DATA_SECTION
  
  LOC_CALCS
   M_pnt.initialize(); 
-  if (theta_blk(2)>0)  
+  if (theta_blk(1)>0)  
   {
     *(ad_comm::global_datafile) >> M_pnt ;
     M_pnt -= 1;
@@ -904,7 +904,7 @@ DATA_SECTION
 
   // Fill matrices and vectors created above:
  LOC_CALCS
-    if (theta_blk(2)>0)
+    if (theta_blk(1)>0)
     {
       for (int i = 1;i<=nMadd_parms;i++) * (ad_comm::global_datafile) >> Madd_control(i) ;
       trans_Madd_control = trans(Madd_control);
@@ -1353,6 +1353,7 @@ LOC_CALCS
     if(theta_phz(i) >= 0)
       active_count++; active_parm(active_count)=par_count;
   }
+  
   active_parms=active_count;
   cout << " Number of active parameters is " << active_parms << endl;
   cout << " Maximum phase for estimation is " << max_phase << "\n" << endl;
@@ -1368,7 +1369,6 @@ LOC_CALCS
 // =========================================================================================================
 INITIALIZATION_SECTION
   theta_parms  theta_init
-  // Madd_parms Madd_init;  
   gtrans_parms gtrans_init;
   selex_parms selex_init;
   reten_parms reten_init;
@@ -1408,8 +1408,12 @@ PARAMETER_SECTION
   !! cout << " All parameters declared \n" << endl;
   !! checkfile << " All parameters declared" << endl;
 
+  // Create holders for parameters estimated via 'theta' object:
   number logRbar;
   number M0;
+  number ra;
+  number rbeta;
+  
   // Create model vectors, matrices, and arrays:
   matrix  f_all(1,nfleet_act,styr,endyr);                     ///< Fishing mortality matrix 
 
@@ -1420,9 +1424,9 @@ PARAMETER_SECTION
   matrix  exp_rate(1,nfleet_act,styr,endyr);                  ///< Exploitation rate matrix
   matrix  xtrans(1,nclass,1,nclass);                          ///< Simple size-transition matrix for growth checking
   3darray strans(1,ngrowth_pats,1,nclass,1,nclass);           ///< Size-transition patterns array (one matrix per required pattern)
-  vector  grow_size(1,nclass);                                 ///< Size vector (incremented by growth)
+  vector  grow_size(1,nclass);                                ///< Size vector (incremented by growth)
+  vector  recdis(1,nclass);                                   ///< Recruitment distribution among size classes (vector)
 
-  //3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);    ///< Distinct fishery selectivity array
   3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
   vector  surveyq(1,nsurvey);                                 ///< Survey q vector
   matrix  selex(1,nselex_pats,1,nclass);                      ///< Selectivity patterns matrix (one row per required pattern)
@@ -1467,19 +1471,41 @@ PARAMETER_SECTION
 
 // =========================================================================================================
 PROCEDURE_SECTION
-  logRbar = theta_parms(1);
-  M0      = theta_parms(2);
+  Calculate_Bio_Pars();
   Set_Effort();
   Set_Selectivity();
   Set_Survival();
-  Initial_Size_Structure();
   Set_Growth();
+  Initial_Size_Structure();
   Update_Population(); 
   Get_Survey();
   Get_Catch_Pred();
   Get_Obj_Function();
   if (last_phase()) 
     Get_Dependent_Vars();
+
+// ---------------------------------------------------------------------------------------------------------
+FUNCTION Calculate_Bio_Pars
+  dvariable szbnd;
+  dvariable ralpha;
+
+  // Get parameters from theta control matrix:
+  M0      = theta_parms(1);
+  logRbar = theta_parms(2);
+  ra      = theta_parms(3);
+  rbeta   = theta_parms(4);
+
+  // Placeholder to get weight at length vector
+  // weight() = size * parameters(a,b)
+
+  // Get fraction recruiting to each size class (gamma function):
+  ralpha = ra / rbeta;
+  for(int iclass=1; iclass<=nclass; iclass++)
+  {
+    szbnd = size(iclass) + (binw/2) - size(1);
+    recdis(iclass) =  pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
+  }
+  recdis /= sum(recdis);   // Standardize so each row sums to 1.0
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Effort
@@ -1525,174 +1551,6 @@ FUNCTION Set_Effort
         f_all(ifl,iyear) = 1.0-mfexp(-delta*effort(ifl,iyear));
     }
   }
-
-// ---------------------------------------------------------------------------------------------------------
-FUNCTION Set_Growth
-  strans.initialize();
-  // Loop over growth patterns and get 'strans' matrix for each:
-  for (int igrow=1; igrow<=ngrowth_pats; igrow++)
-    strans(igrow) = Get_Growth(igrow);
-
-// ---------------------------------------------------------------------------------------------------------
-FUNCTION dvar_matrix Get_Growth(const int& igrow);
-  RETURN_ARRAYS_INCREMENT();
-
-  int ipnt = growth_type(igrow,4);
-  int growtype = growth_type(igrow,2);
-  dvar_matrix growtmp(1,nclass,1,nclass);
-
-  switch(growtype)
-  {
-    case 1: // Simple 'parameter-per-class' growth transition matrix:
-    {
-      dvariable total;
-      for (int iclass=1; iclass<nclass; iclass++)
-      {
-        total = (1+mfexp(gtrans_parms(iclass)));
-        growtmp(iclass,iclass) = 1/total;
-        growtmp(iclass,iclass+1) = mfexp(gtrans_parms(ipnt + iclass))/total;
-      }
-
-      growtmp(nclass,nclass) = 1;  // Special case for final diagonal entry.
-      break;
-    }    
-
-    case 2: // Linear growth increment with gamma distribution about mean:
-    {
-      dvariable ga = gtrans_parms(ipnt + 1);
-      dvariable gb = gtrans_parms(ipnt + 2);
-      dvariable gbeta = gtrans_parms(ipnt + 3);
-
-      for(int iclass=1; iclass<=nclass; iclass++)
-        grow_size(iclass) = mfexp(ga) * pow(size(iclass), gb); // Exponential/power version of linear growth eq.
-        
-      for(int iclass=1; iclass<nclass; iclass++)
-      {
-        int growbnd;
-        dvariable growsum = 0;
-        dvariable galpha = (grow_size(iclass) - (size(iclass)-(binw/2))) / gbeta;
-        
-        for(int jclass=iclass; jclass<=(iclass+min(10,nclass-iclass)); jclass++) // Growth truncated to maximum of 10 size bins.
-        {
-          growbnd = size(jclass) + (binw/2) - size(iclass);
-          growtmp(iclass,jclass) = pow(growbnd,(galpha-1.0)) * mfexp(-growbnd/gbeta); // Gamma function
-          growsum += growtmp(iclass,jclass); 
-        }
-        growtmp(iclass) /= sum(growtmp(iclass));
-      }
-
-      growtmp(nclass,nclass) = 1;  // Special case for final diagonal entry.
-      break;
-    }
-  }
-
-  // Notes: ga and gb are parameters of the linear growth function
-  // growbnd is the bounds of growth bins to evaluate
-  // the gamma function (x) in prop = integral(i1 to i2) g(x|alpha,beta) dx
-  // galpha and gbeta are the parameters of the gamma function
-  // galpha*gbeta is the mean size after growth (g') per molt for some premolt size class
-  // thus galpha = mean growth increment per molt divided by gbeta
-  // gbeta is the shape parameter, a larger gbeta gives more variance 
-
-  RETURN_ARRAYS_DECREMENT();
-  return growtmp;
-
-// ---------------------------------------------------------------------------------------------------------
-FUNCTION Initial_Size_Structure
-  N.initialize();
-  N0.initialize();
-
-  // Calculate N0 (initial numbers) from equilibrium recruitment:
-  N0(1,1) = mfexp(logRbar);
-  for (int irow=1; irow<(nclass*2); irow++)
-  {
-    // Grow individuals over nclass time-steps:
-    for(int iclass=1; iclass<=nclass; iclass++)
-      for (int jclass=1; jclass<=nclass; jclass++)
-        N0(irow+1,iclass) += strans(growth_pnt(1,styr),jclass,iclass) * N0(irow,jclass) * mfexp(-M0);
-        // TODO: Update strans as required when using multi-sex and multi year growth.
-  
-    // Add recruitment (R0) each time-step:
-    N0(irow+1,1) += mfexp(logRbar);   
-  }
-  // TODO: Is this a good estimate of an equilibrium population? How many years required to get smooth distribution?
-  
-  // Get initial numbers:
-  switch(init_n)
-  {
-    case 1: // Initial numbers type 1 (estimate initial numbers, one parameter per size-class):
-    {  
-      N(styr) = mfexp(logRbar+lognin_parms);
-      break;
-    }
-
-    case 2: // Initial numbers type 2 (estimate early recruits, build initial population from R0):
-    {
-      // Start build up from single recruitment:
-      N(rstyr,1) = mfexp(logRbar);
-
-      for (int iyr=rstyr; iyr<styr; iyr++)
-      {
-        // Grow individuals over each time step of initial period: 
-        for (int iclass=1; iclass<=nclass; iclass++) 
-          for (int jclass=1; jclass<=nclass; jclass++)
-            N(iyr+1,iclass) += strans(growth_pnt(1,styr),jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
-            // TODO: Update strans as required when using multi-sex and multi year growth.
-  
-     
-        // Add recruitment for next year:
-        recruits(iyr) = mfexp(logRbar+recdev(iyr));
-        N(iyr+1,1) += recruits(iyr); 
-      }
-      break;
-    }
-
-    case 3: // Initial numbers type 3 (estimate early recruits, build initial population from N0):
-    {      
-      // Start build up from equilibrium numbers:
-      N(rstyr) = N0(nclass*2);
-
-      for (int iyr=rstyr; iyr<styr; iyr++)
-      {
-        // Grow individuals over each time step of initial period: 
-        for (int iclass=1; iclass<=nclass; iclass++) 
-          for (int jclass=1; jclass<=nclass; jclass++)
-            N(iyr+1,iclass) += strans(growth_pnt(1,styr),jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
-            // TODO: Update strans as required when using multi-sex and multi year growth.
-  
-        // Add recruitment for next year:
-        recruits(iyr) = mfexp(logRbar+recdev(iyr));
-        N(iyr+1,1) += recruits(iyr); 
-      }
-      break;
-    }
-
-    case 4: // Initial numbers type 4 (estimate early recruits, build initial population from R0, no est. growth in pre-model years):
-    {      
-      // Start build up from single recruitment:
-      N(rstyr,1) = mfexp(logRbar);
-
-      xtrans(nclass, nclass) = 1;
-      for (int i=1; i<nclass; i++)
-        xtrans(i,i+1) = 1;
-
-      for (int iyr=rstyr; iyr<styr; iyr++)
-      {
-        // Grow individuals over each time step of initial period: 
-        for (int iclass=1; iclass<=nclass; iclass++) 
-          for (int jclass=1; jclass<=nclass; jclass++)
-            N(iyr+1,iclass) += xtrans(jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
-     
-        // Add recruitment for next year:
-        recruits(iyr) = mfexp(logRbar+recdev(iyr));
-        N(iyr+1,1) += recruits(iyr); 
-      }
-      break;
-    }
-  }
-
-  // TODO: Check if numbers into N(styr) from different options give same values? Should they?
-  // CHECK: Should initial number in first size class be related to a rec_dev?
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Selectivity
@@ -1823,9 +1681,7 @@ FUNCTION dvar_vector Get_Reten(const int& ireten);
     {
       ipnt = (reten_pnt(ifl,iyr)-1)*nclass;
       for (iclass=1; iclass<=nclass; iclass++)
-      {
         reten(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(reten_parms(ipnt+iclass)));
-      } 
     } 
     */
 
@@ -1860,9 +1716,180 @@ FUNCTION Set_Survival
   }
 
 // ---------------------------------------------------------------------------------------------------------
+FUNCTION Set_Growth
+  strans.initialize();
+  // Loop over growth patterns and get 'strans' matrix for each:
+  for (int igrow=1; igrow<=ngrowth_pats; igrow++)
+    strans(igrow) = Get_Growth(igrow);
+
+// ---------------------------------------------------------------------------------------------------------
+FUNCTION dvar_matrix Get_Growth(const int& igrow);
+  RETURN_ARRAYS_INCREMENT();
+
+  int ipnt = growth_type(igrow,4);
+  int growtype = growth_type(igrow,2);
+  dvar_matrix growtmp(1,nclass,1,nclass);
+
+  switch(growtype)
+  {
+    case 1: // Simple 'parameter-per-class' growth transition matrix:
+    {
+      dvariable total;
+      for (int iclass=1; iclass<nclass; iclass++)
+      {
+        total = (1+mfexp(gtrans_parms(iclass)));
+        growtmp(iclass,iclass) = 1/total;
+        growtmp(iclass,iclass+1) = mfexp(gtrans_parms(ipnt + iclass))/total;
+      }
+
+      growtmp(nclass,nclass) = 1;  // Special case for final diagonal entry.
+      break;
+    }    
+
+    case 2: // Linear growth increment with gamma distribution about mean:
+    {
+      dvariable ga = gtrans_parms(ipnt + 1);
+      dvariable gb = gtrans_parms(ipnt + 2);
+      dvariable gbeta = gtrans_parms(ipnt + 3);
+
+      for(int iclass=1; iclass<=nclass; iclass++)
+        grow_size(iclass) = mfexp(ga) * pow(size(iclass), gb); // Exponential/power version of linear growth eq.
+        
+      for(int iclass=1; iclass<nclass; iclass++)
+      {
+        dvariable szbnd;
+        dvariable growsum = 0;
+        dvariable galpha = (grow_size(iclass) - (size(iclass)-(binw/2))) / gbeta;
+        
+        for(int jclass=iclass; jclass<=(iclass+min(10,nclass-iclass)); jclass++) // Growth truncated to maximum of 10 size bins.
+        {
+          szbnd = size(jclass) + (binw/2) - size(iclass);
+          growtmp(iclass,jclass) = pow(szbnd,(galpha-1.0)) * mfexp(-szbnd/gbeta); // Gamma function
+          growsum += growtmp(iclass,jclass); 
+        }
+        growtmp(iclass) /= sum(growtmp(iclass));
+      }
+
+      growtmp(nclass,nclass) = 1;  // Special case for final diagonal entry.
+      break;
+    }
+  }
+
+  // Notes: ga and gb are parameters of the linear growth function
+  // szbnd is the bounds of size bins to evaluate
+  // the gamma function (x) in prop = integral(i1 to i2) g(x|alpha,beta) dx
+  // galpha and gbeta are the parameters of the gamma function
+  // galpha*gbeta is the mean size after growth (g') per molt for some premolt size class
+  // thus galpha = mean growth increment per molt divided by gbeta
+  // gbeta is the shape parameter, a larger gbeta gives more variance 
+
+  RETURN_ARRAYS_DECREMENT();
+  return growtmp;
+
+// ---------------------------------------------------------------------------------------------------------
+FUNCTION Initial_Size_Structure
+  N.initialize();
+  N0.initialize();
+
+  // Calculate N0 (initial numbers) from equilibrium recruitment:
+  N0(1,1) = mfexp(logRbar);
+  for (int irow=1; irow<(nclass*2); irow++)
+  {
+    // Grow individuals over nclass time-steps:
+    for(int iclass=1; iclass<=nclass; iclass++)
+      for (int jclass=1; jclass<=nclass; jclass++)
+        N0(irow+1,iclass) += strans(growth_pnt(1,styr),jclass,iclass) * N0(irow,jclass) * mfexp(-M0);
+        // TODO: Update strans as required when using multi-sex and multi year growth.
+  
+    // Add recruitment (R0) each time-step:
+    N0(irow+1,1) += mfexp(logRbar);   
+  }
+  // TODO: Is this a good estimate of an equilibrium population? How many years required to get smooth distribution?
+  
+  // Get initial numbers:
+  switch(init_n)
+  {
+    case 1: // Initial numbers type 1 (estimate initial numbers, one parameter per size-class):
+    {  
+      N(styr) = mfexp(logRbar+lognin_parms);
+      break;
+    }
+
+    case 2: // Initial numbers type 2 (estimate early recruits, build initial population from R0):
+    {
+      // Start build up from single recruitment:
+      N(rstyr,1) = mfexp(logRbar);
+
+      for (int iyr=rstyr; iyr<styr; iyr++)
+      {
+        // Grow individuals over each time step of initial period: 
+        for (int iclass=1; iclass<=nclass; iclass++) 
+          for (int jclass=1; jclass<=nclass; jclass++)
+            N(iyr+1,iclass) += strans(growth_pnt(1,styr),jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
+            // TODO: Update strans as required when using multi-sex and multi year growth.
+  
+     
+        // Add recruitment for next year:
+        recruits(iyr) = mfexp(logRbar+recdev(iyr));
+        N(iyr+1,1) += recruits(iyr); 
+      }
+      break;
+    }
+
+    case 3: // Initial numbers type 3 (estimate early recruits, build initial population from N0):
+    {      
+      // Start build up from equilibrium numbers:
+      N(rstyr) = N0(nclass*2);
+
+      for (int iyr=rstyr; iyr<styr; iyr++)
+      {
+        // Grow individuals over each time step of initial period: 
+        for (int iclass=1; iclass<=nclass; iclass++) 
+          for (int jclass=1; jclass<=nclass; jclass++)
+            N(iyr+1,iclass) += strans(growth_pnt(1,styr),jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
+            // TODO: Update strans as required when using multi-sex and multi year growth.
+  
+        // Add recruitment for next year:
+        recruits(iyr) = mfexp(logRbar+recdev(iyr));
+        N(iyr+1,1) += recruits(iyr); 
+      }
+      break;
+    }
+
+    case 4: // Initial numbers type 4 (estimate early recruits, build initial population from R0, no est. growth in pre-model years):
+    {      
+      // Start build up from single recruitment:
+      //N(rstyr) = mfexp(logRbar) * recdis;
+      N(rstyr,1) = mfexp(logRbar);
+
+      xtrans(nclass, nclass) = 1;
+      for (int i=1; i<nclass; i++)
+        xtrans(i,i+1) = 1;
+
+      for (int iyr=rstyr; iyr<styr; iyr++)
+      {
+        // Grow individuals over each time step of initial period: 
+        for (int iclass=1; iclass<=nclass; iclass++) 
+          for (int jclass=1; jclass<=nclass; jclass++)
+            N(iyr+1,iclass) += xtrans(jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
+     
+        // Add recruitment for next year:
+        recruits(iyr) = mfexp(logRbar+recdev(iyr));
+        //N(iyr+1) += recruits(iyr) * recdis;
+        N(iyr+1,1) += recruits(iyr); 
+      }
+      break;
+    }
+  }
+
+  // TODO: Check if numbers into N(styr) from different options give same values? Should they?
+  // CHECK: Should initial number in first size class be related to a rec_dev?
+  // CHECK: Should initial numbers in the pre-model period be spread over size classes by recdis?
+
+// ---------------------------------------------------------------------------------------------------------
 FUNCTION Update_Population
   int igrow;
-
+  
   // Grow individuals for one time-step (by sex) and add recruitment for next year:
   for (int isex=1; isex<=1; isex++)
   {
@@ -1874,6 +1901,7 @@ FUNCTION Update_Population
           N(iyr+1,iclass) += strans(igrow,jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
      
       recruits(iyr) = mfexp(logRbar+recdev(iyr));
+      //N(iyr+1) += recruits(iyr) * recdis;
       N(iyr+1,1) += recruits(iyr);
     }
   }
@@ -1882,16 +1910,77 @@ FUNCTION Update_Population
   // Need to loop over sex when possible.
 
 // ---------------------------------------------------------------------------------------------------------
-FUNCTION Get_Dependent_Vars
-   // TODO: Check why only selex_fleet(1) is used for mbio_calc.
-   // TODO: Check 2/12 here in mbio calculation, is this a timing fraction that needs to be generalised?
-  mbio.initialize();
-  for (int iyr=styr; iyr<=endyr; iyr++)
+FUNCTION Get_Survey
+  survey_sf_pred.initialize();
+  survey_biom_pred.initialize();
+  survey_num_pred.initialize();
+  for (int isrv=1;isrv<=nsurvey;isrv++)
+  {
+    for (int i=1;i<=nsf_survey(isrv);i++)
     {
-      int ipnt = selex_fleet_pnt(1,iyr);
-      mbio(iyr) += N(iyr) * elem_prod(fecundity,(1.0-selex(ipnt) * f_all(1,iyr))) * mfexp(-(catch_time(1,iyr)+2/12) * M(iyr));
+      int iyr = yr_survey_sf(isrv,i);
+      survey_sf_pred(isrv,i)   = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
+      survey_sf_pred(isrv,i)  /= sum(survey_sf_pred(isrv,i));
     }
+    for (int i=1;i<=nobs_survey(isrv);i++)
+    {
+      int iyr = yr_survey(isrv,i);
+      dvar_vector N_tmp        = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
+      survey_biom_pred(isrv,i) = N_tmp * weight;
+      survey_num_pred(isrv,i)  = sum(N_tmp);
+    }
+  }  
 
+// ---------------------------------------------------------------------------------------------------------
+FUNCTION Get_Catch_Pred;
+  dvar_vector S1(1,nclass);                              
+  dvar_vector N_tmp(1,nclass);   ///< Numbers per fishery (temporary accumulator)
+  int ifl_act;
+  int ireten;
+  
+  fleet_sf_pred.initialize();
+  catch_biom_pred.initialize();
+  catch_num_pred.initialize();
+  N_tmp.initialize();
+  
+  for (int iyr=styr;iyr<=endyr;iyr++)
+  {
+    // TODO: Need to loop over number of directed fisheries (presently fixed at 1) fleet control matrix
+    N_tmp = N(iyr) * mfexp(-catch_time(1,iyr) * M(iyr));
+    for (int ifl=1; ifl<=nfleet; ifl++)
+    {
+
+      switch (fleet_control(ifl,2)) 
+      {
+        case 1 : // Main retained fisheries
+          ifl_act = fleet_control(ifl,1);
+          ireten = reten_pnt(ifl_act,iyr);
+          S1 = S_fleet(ifl_act,iyr);
+          fleet_sf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.0-S1), reten(ireten)));
+          break;
+        
+        case 2 : // Discard fisheries
+          ifl_act = fleet_control(ifl,1);
+          ireten = reten_pnt(ifl_act,iyr);
+          S1 = S_fleet(ifl_act,iyr);
+          fleet_sf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.0-S1), (1.0-reten(ireten))));
+          break;
+        
+        case 3 : // Fisheries w/ no discard component (e.g. bycatch fisheries)
+          ifl_act = fleet_control(ifl,1);
+          S1 = S_fleet(ifl_act,iyr);
+          fleet_sf_pred(ifl,iyr) = elem_prod(N_tmp , (1.0-S1));
+          break;
+      }
+      N_tmp = elem_prod(N_tmp,S1);
+      
+      // Accumulate totals  
+      catch_biom_pred(ifl,iyr) = fleet_sf_pred(ifl,iyr) * weight;
+      catch_num_pred(ifl,iyr)  = sum(fleet_sf_pred(ifl,iyr) );
+      if (catch_num_pred(ifl,iyr) >0.0)
+        fleet_sf_pred(ifl,iyr)  /= catch_num_pred(ifl,iyr) ;
+    }
+  } 
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Obj_Function
@@ -2037,7 +2126,7 @@ FUNCTION Get_Priors
     iprior++;
   }
   // M-prior
-  prior_val(iprior) = square(M0-theta_pmean(2))/(2.0*square(theta_psd(2)));
+  prior_val(iprior) = square(M0-theta_pmean(1))/(2.0*square(theta_psd(1)));
 
   // 2nd Derivative Penalty
   iprior++;
@@ -2049,77 +2138,17 @@ FUNCTION Get_Priors
   prior_val(iprior) = penal;   
   
 // ---------------------------------------------------------------------------------------------------------
-FUNCTION Get_Catch_Pred;
-  dvar_vector S1(1,nclass);                              
-  dvar_vector N_tmp(1,nclass);   ///< Numbers per fishery (temporary accumulator)
-  int ifl_act;
-  int ireten;
-  
-  fleet_sf_pred.initialize();
-  catch_biom_pred.initialize();
-  catch_num_pred.initialize();
-  N_tmp.initialize();
-  
-  for (int iyr=styr;iyr<=endyr;iyr++)
-  {
-    // TODO: Need to loop over number of directed fisheries (presently fixed at 1) fleet control matrix
-    N_tmp = N(iyr) * mfexp(-catch_time(1,iyr) * M(iyr));
-    for (int ifl=1; ifl<=nfleet; ifl++)
+FUNCTION Get_Dependent_Vars
+  // TODO: Check why only selex_fleet(1) is used for mbio_calc.
+  // TODO: Check 2/12 here in mbio calculation, is this a timing fraction that needs to be generalised?
+  mbio.initialize();
+  for (int iyr=styr; iyr<=endyr; iyr++)
     {
+      int ipnt = selex_fleet_pnt(1,iyr);
+      mbio(iyr) += N(iyr) * elem_prod(fecundity,(1.0-selex(ipnt) * f_all(1,iyr))) * mfexp(-(catch_time(1,iyr)+2/12) * M(iyr));
+    } 
 
-      switch (fleet_control(ifl,2)) 
-      {
-        case 1 : // Main retained fisheries
-          ifl_act = fleet_control(ifl,1);
-          ireten = reten_pnt(ifl_act,iyr);
-          S1 = S_fleet(ifl_act,iyr);
-          fleet_sf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.0-S1), reten(ireten)));
-          break;
-        
-        case 2 : // Discard fisheries
-          ifl_act = fleet_control(ifl,1);
-          ireten = reten_pnt(ifl_act,iyr);
-          S1 = S_fleet(ifl_act,iyr);
-          fleet_sf_pred(ifl,iyr) = elem_prod(N_tmp , elem_prod((1.0-S1), (1.0-reten(ireten))));
-          break;
-        
-        case 3 : // Fisheries w/ no discard component (e.g. bycatch fisheries)
-          ifl_act = fleet_control(ifl,1);
-          S1 = S_fleet(ifl_act,iyr);
-          fleet_sf_pred(ifl,iyr) = elem_prod(N_tmp , (1.0-S1));
-          break;
-      }
-      N_tmp = elem_prod(N_tmp,S1);
-      
-      // Accumulate totals  
-      catch_biom_pred(ifl,iyr) = fleet_sf_pred(ifl,iyr) * weight;
-      catch_num_pred(ifl,iyr)  = sum(fleet_sf_pred(ifl,iyr) );
-      if (catch_num_pred(ifl,iyr) >0.0)
-        fleet_sf_pred(ifl,iyr)  /= catch_num_pred(ifl,iyr) ;
-    }
-  } 
-
-// ---------------------------------------------------------------------------------------------------------
-FUNCTION Get_Survey
-  survey_sf_pred.initialize();
-  survey_biom_pred.initialize();
-  survey_num_pred.initialize();
-  for (int isrv=1;isrv<=nsurvey;isrv++)
-  {
-    for (int i=1;i<=nsf_survey(isrv);i++)
-    {
-      int iyr = yr_survey_sf(isrv,i);
-      survey_sf_pred(isrv,i)   = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
-      survey_sf_pred(isrv,i)  /= sum(survey_sf_pred(isrv,i));
-    }
-    for (int i=1;i<=nobs_survey(isrv);i++)
-    {
-      int iyr = yr_survey(isrv,i);
-      dvar_vector N_tmp        = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
-      survey_biom_pred(isrv,i) = N_tmp * weight;
-      survey_num_pred(isrv,i)  = sum(N_tmp);
-    }
-  }
+  //TODO: Add other variable calculations here: Such as female biomass, spawning depletion, others?
 
 // =========================================================================================================
 REPORT_SECTION
@@ -2142,12 +2171,14 @@ REPORT_SECTION
   
   REPORT(logRbar);
   REPORT(recdev);
+  REPORT(ra);
+  REPORT(rbeta);
+  REPORT(recdis);
   REPORT(M);
   REPORT(f_all);
   REPORT(size);
   REPORT(grow_size);
   REPORT(strans);
-  REPORT(xtrans);
   REPORT(N0);
   REPORT(N);
   REPORT(mbio);
