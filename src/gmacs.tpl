@@ -1564,18 +1564,18 @@ FUNCTION dvar_matrix Get_Growth(const int& igrow);
       dvariable gbeta = gtrans_parms(ipnt + 3);
 
       for(int iclass=1; iclass<=nclass; iclass++)
-        grow_size(iclass) = mfexp(ga) * pow(size(iclass), gb);
+        grow_size(iclass) = mfexp(ga) * pow(size(iclass), gb); // Exponential/power version of linear growth eq.
         
       for(int iclass=1; iclass<nclass; iclass++)
       {
-        int growinc;
+        int growbnd;
         dvariable growsum = 0;
         dvariable galpha = (grow_size(iclass) - (size(iclass)-(binw/2))) / gbeta;
         
-        for(int jclass=iclass; jclass<=iclass+min(10,nclass-iclass); jclass++)
+        for(int jclass=iclass; jclass<=(iclass+min(10,nclass-iclass)); jclass++) // Growth truncated to maximum of 10 size bins.
         {
-          growinc = size(jclass) + (binw/2) - size(iclass);
-          growtmp(iclass,jclass) = pow(growinc,(galpha-1.0)) * mfexp(-growinc/gbeta);
+          growbnd = size(jclass) + (binw/2) - size(iclass);
+          growtmp(iclass,jclass) = pow(growbnd,(galpha-1.0)) * mfexp(-growbnd/gbeta); // Gamma function
           growsum += growtmp(iclass,jclass); 
         }
         growtmp(iclass) /= sum(growtmp(iclass));
@@ -1586,7 +1586,13 @@ FUNCTION dvar_matrix Get_Growth(const int& igrow);
     }
   }
 
-  //
+  // Notes: ga and gb are parameters of the linear growth function
+  // growbnd is the bounds of growth bins to evaluate
+  // the gamma function (x) in prop = integral(i1 to i2) g(x|alpha,beta) dx
+  // galpha and gbeta are the parameters of the gamma function
+  // galpha*gbeta is the mean size after growth (g') per molt for some premolt size class
+  // thus galpha = mean growth increment per molt divided by gbeta
+  // gbeta is the shape parameter, a larger gbeta gives more variance 
 
   RETURN_ARRAYS_DECREMENT();
   return growtmp;
