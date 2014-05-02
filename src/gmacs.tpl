@@ -12,13 +12,6 @@
 //   were adapted from code developed for the NPFMC by Andre Punt (2012), 
 //   and on the 'LSMR' model by Steven Martell (2011).
 //
-//  TO DO LIST:
-//  - Extend numbers-at-size matrix...dimensioned by year, maturity, shell condition, sex, size bin
-//  - Add routine to calculate reference points
-//  - Add forecast routine
-//  - Add warning section: use macro for warning(object,text)
-//  - Add section to write new data/control files (enable easy labelling after first model attempt)
-//  - Add simulation option, see LSMR model for demonstration
 // =========================================================================================================
 
 GLOBALS_SECTION
@@ -653,10 +646,12 @@ DATA_SECTION
   // ......................................................................  
   // Read in size, weight, fecundity vectors, then calculate equivalent vectors with nclass number of size-classes:
   
+  init_number binw;                         ///< Width of size-bins
   init_vector mean_size(1,ndclass);         ///< Mean size vector input
   init_vector mean_weight(1,ndclass);       ///< Mean weight vector input
   init_vector fecundity_inp(1,ndclass);     ///< Fecundity vector input
 
+  !! echo(binw);
   !! echo(mean_size);
   !! echo(mean_weight);
   !! echo(fecundity_inp);
@@ -1388,7 +1383,7 @@ PARAMETER_SECTION
   
   // Initialize other parameter matrices:
   init_bounded_number_vector Madd_parms(1,nMadd_parms,Madd_lbnd,Madd_ubnd,Madd_phz);                  ///< Vector of increments in M parameters
-  init_bounded_number_vector gtrans_parms(1,nclass-1,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
+  init_bounded_number_vector gtrans_parms(1,ngrowth_pars,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
   init_bounded_number_vector selex_parms(1,nselex_pars,selex_lbnd,selex_ubnd,selex_phz);              ///< Vector of selectivity parameters
   init_bounded_number_vector reten_parms(1,nreten_pars,reten_lbnd,reten_ubnd,reten_phz);              ///< Vector of retention parameters
   init_bounded_number_vector surveyq_parms(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz);    ///< Vector of survey Q parameters
@@ -1423,13 +1418,14 @@ PARAMETER_SECTION
   matrix  S(rstyr,endyr,1,nclass);                            ///< Survival matrix (general)
   3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
   matrix  exp_rate(1,nfleet_act,styr,endyr);                  ///< Exploitation rate matrix
-  matrix  xtrans(1,nclass,1,nclass); 
+  matrix  xtrans(1,nclass,1,nclass);                          ///< Simple size-transition matrix for growth checking
   3darray strans(1,ngrowth_pats,1,nclass,1,nclass);           ///< Size-transition patterns array (one matrix per required pattern)
-                          
-  3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);      ///< Distinct fishery selectivity array
+  vector  grow_size(1,nclass);                                 ///< Size vector (incremented by growth)
+
+  //3darray selex_fleet(1,nfleet_act,styr,endyr,1,nclass);    ///< Distinct fishery selectivity array
   3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
   vector  surveyq(1,nsurvey);                                 ///< Survey q vector
-  matrix  selex_pat(1,nselex_pats,1,nclass);                  ///< Selectivity patterns matrix (one row per required pattern)
+  matrix  selex(1,nselex_pats,1,nclass);                      ///< Selectivity patterns matrix (one row per required pattern)
   matrix  reten(1,nreten_pats,1,nclass);                      ///< Retention patterns matrix (one row per required pattern)
 
   // TODO: The above matrix was retain_males in AEP code. Check if need sex-distinct object(s) for multi-sex model.
@@ -1533,9 +1529,7 @@ FUNCTION Set_Effort
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Growth
   strans.initialize();
-  int ipnt;
-
-  // Loop over growth patterns and get strans matrix for each:
+  // Loop over growth patterns and get 'strans' matrix for each:
   for (int igrow=1; igrow<=ngrowth_pats; igrow++)
     strans(igrow) = Get_Growth(igrow);
 
@@ -1565,15 +1559,34 @@ FUNCTION dvar_matrix Get_Growth(const int& igrow);
 
     case 2: // Linear growth increment with gamma distribution about mean:
     {
-      for (int iclass=1; iclass<nclass; iclass++)
+      dvariable ga = gtrans_parms(ipnt + 1);
+      dvariable gb = gtrans_parms(ipnt + 2);
+      dvariable gbeta = gtrans_parms(ipnt + 3);
+
+      for(int iclass=1; iclass<=nclass; iclass++)
+        grow_size(iclass) = mfexp(ga) * pow(size(iclass), gb);
+        
+      for(int iclass=1; iclass<nclass; iclass++)
       {
-        growtmp(iclass,iclass+1) = 1;
+        int growinc;
+        dvariable growsum = 0;
+        dvariable galpha = (grow_size(iclass) - (size(iclass)-(binw/2))) / gbeta;
+        
+        for(int jclass=iclass; jclass<=iclass+min(10,nclass-iclass); jclass++)
+        {
+          growinc = size(jclass) + (binw/2) - size(iclass);
+          growtmp(iclass,jclass) = pow(growinc,(galpha-1.0)) * mfexp(-growinc/gbeta);
+          growsum += growtmp(iclass,jclass); 
+        }
+        growtmp(iclass) /= sum(growtmp(iclass));
       }
-    
+
       growtmp(nclass,nclass) = 1;  // Special case for final diagonal entry.
       break;
     }
   }
+
+  //
 
   RETURN_ARRAYS_DECREMENT();
   return growtmp;
@@ -1682,42 +1695,13 @@ FUNCTION Set_Selectivity
 
   // Loop over selectivity patterns:
   for (int isel=1; isel<=nselex_pats; isel++)
-    selex_pat(isel) = Get_Sel(isel);
-
-
-  // Fishery and bycatch selectivities:
-  for (int ifl=1; ifl<=nfleet_act; ifl++)
-  {
-    for (iyr=styr; iyr<=endyr; iyr++)
-    {
-      ipnt = selex_fleet_pnt(ifl,iyr);
-      selex_fleet(ifl,iyr) = selex_pat(ipnt) ;
-    }  
-  }
-  
+    selex(isel) = Get_Sel(isel);
 
   // Loop over retention patterns:
   for (int ireten=1; ireten<=nreten_pats; ireten++)
     reten(ireten) = Get_Reten(ireten); 
 
-  /*
-  // Retention in the pot fishery:
-  for (int ifl=1; ifl<=nfleet_ret; ifl++)
-    for (iyr=styr; iyr<=endyr; iyr++)
-    {
-      ipnt = (reten_pnt(ifl,iyr)-1)*nclass;
-      for (iclass=1; iclass<=nclass; iclass++)
-      {
-        reten(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(reten_parms(ipnt+iclass)));
-      } 
-    } 
-    */
-
-  // TODO: Refer here when adding high-grading as an option via functional offsets to retention. 
-  // EG: An exponential offset parameter could be added to rescale the retention function (or selectivity function).
-  // Or, add a 'rescale' option for functions that naturally max out at one, and rescale by multiplying by some value.
-
-  // Survey selectivity:
+  // Get survey selectivity (includes potentially time varying q parameters):
   dvariable qq;
   for (int isurv=1; isurv<=nsurvey; isurv++)
     for (int iyr=styr; iyr<=endyr+1; iyr++)
@@ -1725,10 +1709,10 @@ FUNCTION Set_Selectivity
       ipnt = surveyq_pnt(isurv,iyr);
       qq = mfexp(surveyq_parms(ipnt));
       ipnt = selex_survey_pnt(isurv,iyr);
-      selex_survey(isurv,iyr) = qq*selex_pat(ipnt);
+      selex_survey(isurv,iyr) = qq * selex(ipnt);
     }
 
-  // Nest one survey within another:
+  // Nest one survey within another where required:
   for (ipnt=1; ipnt<=nsubsurvey; ipnt++)
     for (int iyr=styr; iyr<=endyr+1; iyr++)
       for (int iclass=1; iclass<=nclass; iclass++)
@@ -1826,6 +1810,23 @@ FUNCTION dvar_vector Get_Reten(const int& ireten);
   RETURN_ARRAYS_DECREMENT();
   return retentmp;
 
+  /*
+  // Retention in the pot fishery:
+  for (int ifl=1; ifl<=nfleet_ret; ifl++)
+    for (iyr=styr; iyr<=endyr; iyr++)
+    {
+      ipnt = (reten_pnt(ifl,iyr)-1)*nclass;
+      for (iclass=1; iclass<=nclass; iclass++)
+      {
+        reten(iyr,iclass) = (1-hg(iyr))/(1.0+mfexp(reten_parms(ipnt+iclass)));
+      } 
+    } 
+    */
+
+  // TODO: Refer here when adding high-grading as an option via functional offsets to retention. 
+  // EG: An exponential offset parameter could be added to rescale the retention function (or selectivity function).
+  // Or, add a 'rescale' option for functions that naturally max out at one, and rescale by multiplying by some value.
+
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Survival
   int iyr,iclass,ifl,ipnt;
@@ -1845,8 +1846,8 @@ FUNCTION Set_Survival
     S(iyr) = mfexp(-M(iyr));
     for (ifl=1; ifl<=nfleet_act; ifl++)
     {
-      //ipnt = selex_fleet_pnt(ifl,iyr);
-      S_fleet(ifl,iyr) = (1.0-selex_fleet(ifl,iyr) * f_all(ifl,iyr));
+      ipnt = selex_fleet_pnt(ifl,iyr);
+      S_fleet(ifl,iyr) = (1.0-selex(ipnt) * f_all(ifl,iyr));
       exp_rate(ifl,iyr) = f_all(ifl,iyr);
       S(iyr) = elem_prod(S(iyr),S_fleet(ifl,iyr));
     } 
@@ -1881,8 +1882,8 @@ FUNCTION Get_Dependent_Vars
   mbio.initialize();
   for (int iyr=styr; iyr<=endyr; iyr++)
     {
-      //int ipnt = selex_fleet_pnt(1,iyr);
-      mbio(iyr) += N(iyr) * elem_prod(fecundity,(1.0-selex_fleet(1,iyr) * f_all(1,iyr))) * mfexp(-(catch_time(1,iyr)+2/12) * M(iyr));
+      int ipnt = selex_fleet_pnt(1,iyr);
+      mbio(iyr) += N(iyr) * elem_prod(fecundity,(1.0-selex(ipnt) * f_all(1,iyr))) * mfexp(-(catch_time(1,iyr)+2/12) * M(iyr));
     }
 
 
@@ -2038,7 +2039,7 @@ FUNCTION Get_Priors
   for (int isel=1; isel<=nselex_pats; isel++)
    if (selex_type(isel,1) == 2)
     for (iclass=2; iclass<=nclass-1; iclass++)
-     penal += square(selex_pat(isel,iclass-1)-2.0*selex_pat(isel,iclass)+selex_pat(isel,iclass+1));
+     penal += square(selex(isel,iclass-1)-2.0*selex(isel,iclass)+selex(isel,iclass+1));
   prior_val(iprior) = penal;   
   
 // ---------------------------------------------------------------------------------------------------------
@@ -2101,14 +2102,14 @@ FUNCTION Get_Survey
   {
     for (int i=1;i<=nsf_survey(isrv);i++)
     {
-      int iyr                  = yr_survey_sf(isrv,i);
-      survey_sf_pred(isrv,i)   = elem_prod(N(iyr),selex_survey(isrv,iyr)); // note use if iyr here...t
+      int iyr = yr_survey_sf(isrv,i);
+      survey_sf_pred(isrv,i)   = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
       survey_sf_pred(isrv,i)  /= sum(survey_sf_pred(isrv,i));
     }
     for (int i=1;i<=nobs_survey(isrv);i++)
     {
-      int iyr                  = yr_survey(isrv,i);
-      dvar_vector N_tmp        = elem_prod(N(iyr),selex_survey(isrv,iyr)); // note use if iyr here...t
+      int iyr = yr_survey(isrv,i);
+      dvar_vector N_tmp        = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
       survey_biom_pred(isrv,i) = N_tmp * weight;
       survey_num_pred(isrv,i)  = sum(N_tmp);
     }
@@ -2137,12 +2138,14 @@ REPORT_SECTION
   REPORT(recdev);
   REPORT(M);
   REPORT(f_all);
+  REPORT(size);
+  REPORT(grow_size);
   REPORT(strans);
   REPORT(xtrans);
   REPORT(N0);
   REPORT(N);
   REPORT(mbio);
-  REPORT(selex_fleet);
+  REPORT(selex);
   REPORT(selex_survey);
   REPORT(reten);
   REPORT(S);
@@ -2151,6 +2154,7 @@ REPORT_SECTION
   REPORT(f_direct);
   REPORT(recruits);
 
+// =========================================================================================================
 FUNCTION Do_R_Output
   writeR(ObjFun);
   writeR(like_weight);
@@ -2291,16 +2295,19 @@ FUNCTION Do_R_Output
       R_out << iyr<<" "<< exp_rate(ifl,iyr)<<endl;
   }  
   
-  //int jpnt;
+  int jpnt;
   for (int ifl=1; ifl<=nfleet_act; ifl++)
   {
     R_out<<"select_fish_"<<fleet_act_ind(ifl)<<endl;
     for (iyr=styr; iyr<=endyr; iyr++)
-      //jpnt = selex_fleet_pnt(ifl,iyr);
-      R_out << iyr<<" "<< selex_fleet(ifl,iyr)<<endl;
-    }  
+    {
+      jpnt = selex_fleet_pnt(ifl,iyr);
+      R_out << iyr<<" "<< selex(jpnt)<<endl;
+    }
 
-// TODO: Clean up writeR section; Work out problems with wrteR function and fix.
+  }  
+
+// TODO: Clean up writeR section; Work out problems with writeR function and fix.
 
 // =========================================================================================================
 FINAL_SECTION
