@@ -11,7 +11,7 @@
 2		# Number of sexes
 2		# Number of shell condition types
 1		# Number of maturity types
-5		# Number of size-classes in the model
+10		# Number of size-classes in the model
 20		# Number of size-classes in the data
 
 # Fleet data specs: (1) catch retain, (2) catch discard, (3) bycatch (either retained or discarded), (4) index of abundance.
