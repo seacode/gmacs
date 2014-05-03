@@ -860,18 +860,6 @@ DATA_SECTION
  END_CALCS
 
   // ......................................................................  
-  // Get Recruitment Specifications:
-
-  // Read in specifications relating to recruitment:
-  init_int sr_type;                             ///< Form of stock recruitment relationship
-  init_int sr_lag;                              ///< Lag to recruitment
-  
-  !! echotxt(sr_type,  " Form of stock-recruitment relationship");
-  !! echotxt(sr_lag,   " Lag to recruitment (years)");
-
-  // TODO: Add options for SIGMA_R and associated recruitment deviation estimates.
-
-  // ......................................................................  
   // Get Natural Mortality (M) Specifications:
 
   // Read in pointers for time-varying M:
@@ -927,6 +915,185 @@ DATA_SECTION
   echo(Madd_ubnd);
   echo(Madd_lbnd);
   echo(Madd_phz);
+ END_CALCS
+
+  // ......................................................................  
+  // Get Recruitment Specifications:
+
+  // Read in specifications relating to recruitment:
+  init_int sr_type;                             ///< Form of stock recruitment relationship
+  init_int sr_lag;                              ///< Lag to recruitment
+  
+  !! echotxt(sr_type,  " Form of stock-recruitment relationship");
+  !! echotxt(sr_lag,   " Lag to recruitment (years)");
+
+  // TODO: Add options for SIGMA_R and associated recruitment deviation estimates.
+
+  // ......................................................................  
+  // Get Growth Specifications:
+
+  // Read in pointers for time-varying growth:
+  init_imatrix growth_pnt(1,nsex,styr,endyr);        ///< Pointers to blocks for time-varying growth
+
+  !! echo(growth_pnt);
+
+  // Determine number of different growth functions/patterns to estimate:
+  int ngrowth;
+  int ngrowth_pats;
+  int ngrowth_pars;
+
+  !! ngrowth_pats = max(growth_pnt);
+  !! echotxt(ngrowth_pats, " Total number of growth patterns");
+
+  // Read in specifications for each growth pattern and determine number of parameters to estimate:
+  matrix growth_type(1,ngrowth_pats,1,4);            ///< Selectivity types for each fleet/survey by time-block
+  
+LOC_CALCS
+  ngrowth = 0;
+  growth_type = 0;
+  for (int i=1; i<=ngrowth_pats; i++)
+  {
+    *(ad_comm::global_datafile) >> growth_type(i,1) >> growth_type(i,2) >> growth_type(i,3);
+    if (growth_type(i,2) == 1) ngrowth += nclass-1;
+    if (growth_type(i,2) == 2) ngrowth += 3;
+  }
+  ngrowth_pars = ngrowth;
+  echo(growth_type);
+  echotxt(ngrowth_pars, " Total number of growth parameters");
+
+  // Fill last column of growth_type matrix, for use in Set_Growth function.
+  last = 0;
+  int pgrow = 0;
+  for (j=1; j<=ngrowth_pats; j++)
+  {
+    growth_type(j,4) = pgrow;
+    if (growth_type(j,2)==1) last = nclass-1;
+    if (growth_type(j,2)==2) last = 3;
+    pgrow += last;
+  }
+  check(growth_type);
+ END_CALCS
+
+  // Read in growth parameter specifications:
+  init_matrix gtrans_control(1,ngrowth_pars,1,4);     ///< Growth transition parameter matrix, with specifications
+  matrix trans_gtrans_control(1,4,1,ngrowth_pars);    ///< Transpose of initial N parameter matrix
+  vector gtrans_init(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - initial values
+  vector gtrans_lbnd(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - lower bounds
+  vector gtrans_ubnd(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - upper bounds
+  ivector gtrans_phz(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - phase values
+
+  !! echo(gtrans_control);
+
+  // Fill matrices and vectors created above:
+ LOC_CALCS
+  trans_gtrans_control = trans(gtrans_control);
+  gtrans_init          = trans_gtrans_control(1);
+  gtrans_lbnd          = trans_gtrans_control(2);
+  gtrans_ubnd          = trans_gtrans_control(3);
+  gtrans_phz           = ivector(trans_gtrans_control(4));  
+ END_CALCS
+
+  // ......................................................................  
+  // Get Molting Specifications:
+
+  // Read in pointers for time-varying fishery molting:
+  init_imatrix molt_pnt(1,nsex*nmature,styr,endyr);
+
+  // Determine number of different molting functions/patterns to estimate:
+  int nmolt;
+  int nmolt_pats;
+  int nmolt_pars;
+
+  !! nmolt_pats = max(molt_pnt);
+  !! echotxt(nmolt_pats, " Total number of molting patterns");
+
+  // Read in specifications for each molting pattern and determine number of parameters to estimate:
+  matrix molt_type(1,nmolt_pats,1,4);                ///< Molting types for each relevant fleet by time-block
+  
+ LOC_CALCS
+  nmolt = 0;
+  molt_type = 0;
+  for (int i=1; i<=nmolt_pats; i++)
+  {
+    *(ad_comm::global_datafile) >> molt_type(i,1) >> molt_type(i,2) >> molt_type(i,3);
+    if (molt_type(i,2) == 1) nmolt += 2;
+  }
+
+  nmolt_pars = nmolt;
+  echo(molt_type);
+  echotxt(nmolt_pars, " Total number of molting parameters");
+
+  // Fill last column of molt_type matrix, starting parameter for each molting pattern:
+  last = 0;
+  int pmolt = 0;
+  for (j=1; j<=nmolt_pats; j++)
+  {
+    molt_type(j,4) = pmolt;
+    if (molt_type(j,2)==1) last = 2;
+    pmolt += last;
+  }
+  check(molt_type);
+ END_CALCS
+  
+  // Read in molting parameter specifications:
+  init_matrix molt_control(1,nmolt_pars,1,4);       ///< molting parameter matrix, with speciifications           
+  matrix trans_molt_control(1,4,1,nmolt_pars);      ///< Transponse of molting parameter matrix    
+  vector molt_init(1,nmolt_pars);                   ///< Vector of molting parameter specs - initial values  
+  vector molt_lbnd(1,nmolt_pars);                   ///< Vector of molting parameter specs - lower bounds
+  vector molt_ubnd(1,nmolt_pars);                   ///< Vector of molting parameter specs - upper bounds      
+  ivector molt_phz(1,nmolt_pars);                   ///< Vector of molting parameter specs - phase values
+
+  !! echo(molt_control);
+
+  // Fill matrices and vectors created above:
+ LOC_CALCS
+  trans_molt_control = trans(molt_control);
+  molt_init          = trans_molt_control(1);
+  molt_lbnd          = trans_molt_control(2);
+  molt_ubnd          = trans_molt_control(3);
+  molt_phz           = ivector(trans_molt_control(4));
+ END_CALCS
+
+  // ......................................................................  
+  // Get Initial Numbers Specifications:
+
+  // Read in specs for initial N estimation:
+  init_int init_n;                               ///< Form of initial numbers routine (estimate numbers or early recruits)
+  !! echotxt(init_n,   " Form of initial numbers routine");
+
+  // Determine years over which to estimate recruitment:
+  int rinit;                                     ///< Number of initial recruitments to estimate
+  int rstyr;                                     ///< Year to start estimating recruitments
+  
+ LOC_CALCS
+  rinit = 0;
+  rstyr = styr;
+  if(init_n == 2 || init_n == 3 || init_n == 4)
+  {
+    *(ad_comm::global_datafile) >> rinit;
+    rstyr -= rinit;
+  }
+  echotxt(rinit,  " Number of initial recruitments");
+  echotxt(rstyr,  " Start year for estimated recruitment");
+ END_CALCS
+
+  // Read in initial N parameter values:
+  init_matrix lognin_control(1,nclass,1,4);      ///< Initial N parameter matrix, with specifications
+  matrix trans_lognin_control(1,4,1,nclass);     ///< Transpose of initial N parameter matrix
+  vector lognin_init(1,nclass);                  ///< Vector of initial N parameter specs - initial values
+  vector lognin_lbnd(1,nclass);                  ///< Vector of initial N parameter specs - lower bounds
+  vector lognin_ubnd(1,nclass);                  ///< Vector of initial N parameter specs - upper bounds
+  ivector lognin_phz(1,nclass);                  ///< Vector of initial N parameter specs - phase values
+  
+  !! echo(lognin_control);
+
+  // Fill matrices and vectors created above:
+ LOC_CALCS
+  trans_lognin_control = trans(lognin_control);
+  lognin_init          = trans_lognin_control(1);
+  lognin_lbnd          = trans_lognin_control(2);
+  lognin_ubnd          = trans_lognin_control(3);
+  lognin_phz           = ivector(trans_lognin_control(4));  
  END_CALCS
 
   // ......................................................................  
@@ -1106,112 +1273,6 @@ LOC_CALCS
  END_CALCS
 
   // ......................................................................  
-  // Get Initial Numbers Specifications:
-
-  // Read in specs for initial N estimation:
-  init_int init_n;                               ///< Form of initial numbers routine (estimate numbers or early recruits)
-  !! echotxt(init_n,   " Form of initial numbers routine");
-
-  // Determine years over which to estimate recruitment:
-  int rinit;                                     ///< Number of initial recruitments to estimate
-  int rstyr;                                     ///< Year to start estimating recruitments
-  
- LOC_CALCS
-  rinit = 0;
-  rstyr = styr;
-  if(init_n == 2 || init_n == 3 || init_n == 4)
-  {
-    *(ad_comm::global_datafile) >> rinit;
-    rstyr -= rinit;
-  }
-  echotxt(rinit,  " Number of initial recruitments");
-  echotxt(rstyr,  " Start year for estimated recruitment");
- END_CALCS
-
-  // Read in initial N parameter values:
-  init_matrix lognin_control(1,nclass,1,4);      ///< Initial N parameter matrix, with specifications
-  matrix trans_lognin_control(1,4,1,nclass);     ///< Transpose of initial N parameter matrix
-  vector lognin_init(1,nclass);                  ///< Vector of initial N parameter specs - initial values
-  vector lognin_lbnd(1,nclass);                  ///< Vector of initial N parameter specs - lower bounds
-  vector lognin_ubnd(1,nclass);                  ///< Vector of initial N parameter specs - upper bounds
-  ivector lognin_phz(1,nclass);                  ///< Vector of initial N parameter specs - phase values
-  
-  !! echo(lognin_control);
-
-  // Fill matrices and vectors created above:
- LOC_CALCS
-  trans_lognin_control = trans(lognin_control);
-  lognin_init          = trans_lognin_control(1);
-  lognin_lbnd          = trans_lognin_control(2);
-  lognin_ubnd          = trans_lognin_control(3);
-  lognin_phz           = ivector(trans_lognin_control(4));  
- END_CALCS
-
-  // ......................................................................  
-  // Get Growth Specifications:
-
-  // Read in pointers for time-varying growth:
-  init_imatrix growth_pnt(1,nsex,styr,endyr);        ///< Pointers to blocks for time-varying growth
-
-  !! echo(growth_pnt);
-
-  // Determine number of different growth functions/patterns to estimate:
-  int ngrowth;
-  int ngrowth_pats;
-  int ngrowth_pars;
-
-  !! ngrowth_pats = max(growth_pnt);
-  !! echotxt(ngrowth_pats, " Total number of growth patterns");
-
-  // Read in specifications for each growth pattern and determine number of parameters to estimate:
-  matrix growth_type(1,ngrowth_pats,1,4);            ///< Selectivity types for each fleet/survey by time-block
-  
-LOC_CALCS
-  ngrowth = 0;
-  growth_type = 0;
-  for (int i=1; i<=ngrowth_pats; i++)
-  {
-    *(ad_comm::global_datafile) >> growth_type(i,1) >> growth_type(i,2) >> growth_type(i,3);
-    if (growth_type(i,2) == 1) ngrowth += nclass-1;
-    if (growth_type(i,2) == 2) ngrowth += 3;
-  }
-  ngrowth_pars = ngrowth;
-  echo(growth_type);
-  echotxt(ngrowth_pars, " Total number of growth parameters");
-
-  // Fill last column of growth_type matrix, for use in Set_Growth function.
-  last = 0;
-  int pgrow = 0;
-  for (j=1; j<=ngrowth_pats; j++)
-  {
-    growth_type(j,4) = pgrow;
-    if (growth_type(j,2)==1) last = nclass-1;
-    if (growth_type(j,2)==2) last = 3;
-    pgrow += last;
-  }
-  check(growth_type);
- END_CALCS
-
-  // Read in growth parameter specifications:
-  init_matrix gtrans_control(1,ngrowth_pars,1,4);     ///< Growth transition parameter matrix, with specifications
-  matrix trans_gtrans_control(1,4,1,ngrowth_pars);    ///< Transpose of initial N parameter matrix
-  vector gtrans_init(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - initial values
-  vector gtrans_lbnd(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - lower bounds
-  vector gtrans_ubnd(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - upper bounds
-  ivector gtrans_phz(1,ngrowth_pars);                 ///< Vector of growth trans. parameter specs - phase values
-
-  !! echo(gtrans_control);
-
-  // Fill matrices and vectors created above:
- LOC_CALCS
-  trans_gtrans_control = trans(gtrans_control);
-  gtrans_init          = trans_gtrans_control(1);
-  gtrans_lbnd          = trans_gtrans_control(2);
-  gtrans_ubnd          = trans_gtrans_control(3);
-  gtrans_phz           = ivector(trans_gtrans_control(4));  
- END_CALCS
-
-  // ......................................................................  
   // Get Prior and Likelihood Specifications:
   // TODO: Generalise this section to deal with different numbers of fleets and different parameter setups. 
 
@@ -1383,7 +1444,8 @@ PARAMETER_SECTION
   
   // Initialize other parameter matrices:
   init_bounded_number_vector Madd_parms(1,nMadd_parms,Madd_lbnd,Madd_ubnd,Madd_phz);                  ///< Vector of increments in M parameters
-  init_bounded_number_vector gtrans_parms(1,ngrowth_pars,gtrans_lbnd,gtrans_ubnd,gtrans_phz);             ///< Vector of growth transition parameters
+  init_bounded_number_vector gtrans_parms(1,ngrowth_pars,gtrans_lbnd,gtrans_ubnd,gtrans_phz);         ///< Vector of growth transition parameters
+  init_bounded_number_vector molt_parms(1,nmolt_pars,molt_lbnd,molt_ubnd,molt_phz);                   ///< Vector of molting probability parameters
   init_bounded_number_vector selex_parms(1,nselex_pars,selex_lbnd,selex_ubnd,selex_phz);              ///< Vector of selectivity parameters
   init_bounded_number_vector reten_parms(1,nreten_pars,reten_lbnd,reten_ubnd,reten_phz);              ///< Vector of retention parameters
   init_bounded_number_vector surveyq_parms(1,nsurveyq_pars,surveyq_lbnd,surveyq_ubnd,surveyq_phz);    ///< Vector of survey Q parameters
@@ -1396,6 +1458,8 @@ PARAMETER_SECTION
   !! check(Madd_phz);
   !! check(gtrans_parms);
   !! check(gtrans_phz);
+  !! check(molt_parms);
+  !! check(molt_phz);
   !! check(selex_parms);
   !! check(selex_phz);
   !! check(reten_parms);
@@ -1425,6 +1489,7 @@ PARAMETER_SECTION
   matrix  xtrans(1,nclass,1,nclass);                          ///< Simple size-transition matrix for growth checking
   3darray strans(1,ngrowth_pats,1,nclass,1,nclass);           ///< Size-transition patterns array (one matrix per required pattern)
   vector  grow_size(1,nclass);                                ///< Size vector (incremented by growth)
+  matrix  molt(1,nmolt_pats,1,nclass);                        ///< Molting probability patterns matrix (one row per required pattern)
   vector  recdis(1,nclass);                                   ///< Recruitment distribution among size classes (vector)
 
   3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
@@ -1476,6 +1541,7 @@ PROCEDURE_SECTION
   Set_Selectivity();
   Set_Survival();
   Set_Growth();
+  Set_Molt_Prob();
   Initial_Size_Structure();
   Update_Population(); 
   Get_Survey();
@@ -1732,7 +1798,7 @@ FUNCTION dvar_matrix Get_Growth(const int& igrow);
 
   switch(growtype)
   {
-    case 1: // Simple 'parameter-per-class' growth transition matrix:
+    case 1: ///< Simple 'parameter-per-class' growth transition matrix:
     {
       dvariable total;
       for (int iclass=1; iclass<nclass; iclass++)
@@ -1746,7 +1812,7 @@ FUNCTION dvar_matrix Get_Growth(const int& igrow);
       break;
     }    
 
-    case 2: // Linear growth increment with gamma distribution about mean:
+    case 2: ///< Linear growth increment with gamma distribution about mean:
     {
       dvariable ga = gtrans_parms(ipnt + 1);
       dvariable gb = gtrans_parms(ipnt + 2);
@@ -1785,6 +1851,30 @@ FUNCTION dvar_matrix Get_Growth(const int& igrow);
 
   RETURN_ARRAYS_DECREMENT();
   return growtmp;
+
+  // TODO: Move growth functions to Cstar.
+
+// ---------------------------------------------------------------------------------------------------------
+FUNCTION Set_Molt_Prob
+
+  for(int imolt=1; imolt<=nmolt_pats; imolt++)
+  {
+    int ipnt = molt_type(imolt,4);
+    int molttype = molt_type(imolt,2);
+    
+    switch(molttype)
+    {
+      case 1: ///< Declining logistic function of size:
+      { 
+        dvariable mbeta = molt_parms(ipnt + 1);
+        dvariable m50   = molt_parms(ipnt + 2);   
+        for(int iclass=1; iclass<=nclass; iclass++)
+          molt(imolt,iclass) = (1.0 + mfexp(mbeta * (size(iclass) - m50)));
+      }
+    }
+  }
+
+  // TODO: Add molting functional form types (more cases), and move them to Get_Molt_Prob and to Cstar.
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Initial_Size_Structure
@@ -1827,11 +1917,10 @@ FUNCTION Initial_Size_Structure
           for (int jclass=1; jclass<=nclass; jclass++)
             N(iyr+1,iclass) += strans(growth_pnt(1,styr),jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
             // TODO: Update strans as required when using multi-sex and multi year growth.
-  
      
         // Add recruitment for next year:
         recruits(iyr) = mfexp(logRbar+recdev(iyr));
-        N(iyr+1,1) += recruits(iyr); 
+        N(iyr+1) += recruits(iyr) * recdis; 
       }
       break;
     }
@@ -1851,7 +1940,7 @@ FUNCTION Initial_Size_Structure
   
         // Add recruitment for next year:
         recruits(iyr) = mfexp(logRbar+recdev(iyr));
-        N(iyr+1,1) += recruits(iyr); 
+        N(iyr+1) += recruits(iyr) * recdis;
       }
       break;
     }
@@ -1875,8 +1964,7 @@ FUNCTION Initial_Size_Structure
      
         // Add recruitment for next year:
         recruits(iyr) = mfexp(logRbar+recdev(iyr));
-        //N(iyr+1) += recruits(iyr) * recdis;
-        N(iyr+1,1) += recruits(iyr); 
+        N(iyr+1) += recruits(iyr) * recdis;
       }
       break;
     }
@@ -1901,8 +1989,7 @@ FUNCTION Update_Population
           N(iyr+1,iclass) += strans(igrow,jclass,iclass) * N(iyr,jclass) * S(iyr,jclass);
      
       recruits(iyr) = mfexp(logRbar+recdev(iyr));
-      //N(iyr+1) += recruits(iyr) * recdis;
-      N(iyr+1,1) += recruits(iyr);
+      N(iyr+1) += recruits(iyr) * recdis;
     }
   }
 
@@ -2178,6 +2265,7 @@ REPORT_SECTION
   REPORT(f_all);
   REPORT(size);
   REPORT(grow_size);
+  REPORT(molt);
   REPORT(strans);
   REPORT(N0);
   REPORT(N);
