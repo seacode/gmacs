@@ -1,13 +1,13 @@
+#========================================================================================================
 # Gmacs Control File Version 1.02
-# General parameter specifications *(only two for now):
+# General parameter specifications *(only 4 for now):
 #========================================================================================================
 # Init   Lower   Upper  Phase   Prior   Pmean    Psd   Cov.   Dev.   Dsd   Dmin  Dmax   Block
- 9.76518  -10	    40	    1	    0	    0	   0	 0	    0	  0	    0	   0	   0	#R0
- 0.18	    0	     1	   -1	    0	  0.18  1000     0	    0	  0	    0	   0	   1	#M
+ 0.18	    0	      1	    -1	    0	  0.18  1000     0	    0	  0	    0	   0	   1	#M
+ 9.76518  -10	     40	     1	    0	    0	   0	 0	    0	  0	    0	   0	   0	#R0
+ 8.9    	5	     15		-3	    0	  	0  	   0     0	    0	  0	    0	   0	   0	#Recruitment Beta
+ 2.0    	1		  5		-3	    0	  	0  	   0     0	    0	  0	    0	   0	   0	#Recruitment A
 #========================================================================================================
-
-1	# Form of stock-recruitment relationship (placeholder)
-6	# Lag to recruitment (placeholder)
 
 # Time-varying natural mortality blocks
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
@@ -17,6 +17,65 @@
 # Init, Lower, Upper, Phase
 0.585 	0 1 2
 0.0001 	0 1 2
+
+1	# Form of stock-recruitment relationship (placeholder)
+6	# Lag to recruitment (placeholder)
+
+# Specifications for the growth transition matrix
+# Time-varying growth (one line per sex)
+# 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+ #2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 
+
+# Type of growth estimation (1 = simple parameter-per-class, 2 = linear growth increment, gamma distribution about mean) 
+ 1 1 0
+#2 2 0
+
+# Growth parameters for option 1
+# Init, Lower, Upper, Phase
+4.36 	-20 50  5 # Parameter-per-class
+0.12 	-20 50  5
+0.95 	-20 50  5
+1.86 	-20 50  5
+
+# 4.36 	-20 50  5 # Parameter-per-class
+# 0.12 	-20 50  5
+# 0.95 	-20 50  5
+# 1.86 	-20 50  5
+
+# Growth parameters for option 2
+  # 0.42     0.1	1	 5  # Linear growth increment a 
+  # 0.93     0.1	2	 5	# Linear growth increment b
+  # 0.75	   0.0	1	-5	# Gamma distribution beta
+  
+# 0.37     0.1	1	-5  # Linear growth increment a 
+# 0.93     0.1	2	-5	# Linear growth increment b
+# 0.75	   0.0	1	-5	# Gamma distribution beta
+
+# Time-varying molting probability
+# 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+
+# Molting types
+1 1 0   
+ 
+# Specifications for the molting probability
+# Init, Lower, Upper, Phase
+ 110   70  130  -3      
+ 160  135  175  -3   
+
+4	# Form of initial numbers (1 = estimate initial size structure, 2 = estimate early recruitment, build from R0, 3 = as for 2, but build from N0)
+7   # Number of initial recruitments to estimate (conditional)
+ 
+# Specifications for the initial numbers parameters
+# Init, Lower, Upper, Phase
+0.8133 		-10  10   -2
+1.1774 		-10  10   -2
+0.1239 		-10  10   -2
+-0.84 		-10  10   -2
+-1.02 		-10  10   -2
 
 # Time-varying fishery selectivity blocks
 # 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
@@ -132,59 +191,20 @@
 -0.10981487   -50     1 	-1   1	0.896   0.03  
  0.0          -50     1 	-1   1	0   	-100
 
-4	# Form of initial numbers (1 = estimate initial size structure, 2 = estimate early recruitment, build from R0, 3 = as for 2, but build from N0)
-7   # Number of initial recruitments to estimate (conditional)
- 
-# Specifications for the initial numbers parameters
-# Init, Lower, Upper, Phase
-0.8133 		-10  10   -2
-1.1774 		-10  10   -2
-0.1239 		-10  10   -2
--0.84 		-10  10   -2
--1.02 		-10  10   -2
-
-# Specifications for the growth transition matrix
-# Time-varying growth (one line per sex)
-# 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10
-  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
-  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
-  #2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 
-
-# Type of growth estimation (1 = simple parameter-per-class, 2 = linear growth increment, gamma distribution about mean) 
-1 2 0
-#2 2 0
-
-# Growth parameters for option 1
-# Init, Lower, Upper, Phase
-# 4.36 	-20 50  5
-# 0.12 	-20 50  5
-# 0.95 	-20 50  5
-# 1.86 	-20 50  5
-
-# 4.36 	-20 50  5
-# 0.12 	-20 50  5
-# 0.95 	-20 50  5
-# 1.86 	-20 50  5
-
-# Growth parameters for option 2
-0.37     0.1	1	 5  # Linear growth increment a 
-0.93     0.1	2	 5	# Linear growth increment b
-0.75	 0.0	1	-5	# Gamma distribution beta
- 
 # Objective Fn weights
 # (1) Priors
 # F Devs
-0.00001 100.000 100.000
+  0.00001 100.000 100.000
 # Rec_devs
-1.0000 
+  1.0000 
 # Parameters (Growth, Selex, Reten)
-0.1001 0.1001 0.1001 
+  0.1001 0.1001 0.1001 
 # Survey q
-1.000 1.000 1.000
+  1.000 1.000 1.000
 # Prior on M
-1.000
+  1.000
 # 2nd Derviative Penalty on Selex Parms
-1.000
+  1.000
 
 # Objective Fn weights
 # (2) Data 
@@ -198,6 +218,9 @@
   1.000  1.000  
 # Survey-LF: NMFS, BSFRF
   1.00   1.00
-
+  
+#========================================================================================================
 #EOF
 999
+#========================================================================================================
+
