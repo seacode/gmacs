@@ -1,28 +1,30 @@
-#	Gmacs	Main	Data	File	Version	1.05																																					
-#	Fisheries:	1	Pot	"Fishery,"	2	Trawl	"by-catch,"	3	Tanner	by-catch																																	
-#	Surveys:	1	NMFS	Trawl	"Survey,"	2	BSFRF	Index																																			
-																																											
-1968	#	Start	year																																								
-2010	#	End	year																																								
-1	#	Time-step	(years)																																								
-																																											
-5	#	Number	of	distinct	data	groups	(fishing	fleets	and	surveys)																																	
-																																											
-2	#	Number	of	sexes																																							
-2	#	Number	of	shell	condition	types																																					
-1	#	Number	of	maturity	types																																						
-10	#	Number	of	size-classes	in	the	model																																				
-20	#	Number	of	size-classes	in	the	data																																				
-																																											
-#	Fleet	data	specs:	-1	catch	"retain,"	-2	catch	"discard,"	-3	bycatch	(either	retained	or	"discarded),"	-4	index	of	abundance.																								
+#========================================================================================================
+# Gmacs Main Data File Version 1.02
+# Fisheries: 1 Pot Fishery, 2 Discard, 3 Trawl by-catch
+# Surveys: 1 NMFS Trawl Survey, 2 BSFRF Survey
+#========================================================================================================
+
+1968	# Start year																																								
+2010	# End	year																																								
+1		# Time-step (years)																																								
+          
+5		# Number	of	distinct	data	groups	(fishing	fleets	and	surveys)																																	
+          
+2		# Number	of	sexes																																							
+2		# Number	of	shell	condition	types																																					
+1		# Number	of	maturity	types																																						
+10		# Number	of	size-classes	in	the	model																																				
+20		# Number	of	size-classes	in	the	data																																				
+
+#	Fleet data specs: -1 catch (retain)	-2	catch	"discard,"	-3	bycatch	(either	retained	or	"discarded),"	-4	index	of	abundance.																								
 #	First	col	=	fleet	"index,"	second	col	=	type	of	"data,"	third	col	=	"units,"	fourth	col	=	multiplier																								
 1	2	1	1000	#	Group	1																																					
 1	1	1	1000	#	Group	2																																					
 2	3	1	1000	#	Group	3																																					
 3	3	1	1000	#	Group	4																																					
 4	4	2	1000	#	Group	5																																					
-																																											
-#	Fishing	fleet	names	(delimited	with	:	no	spaces	in	names)																																	
+
+#	Fishing	fleet names	(delimited with	: no spaces	in names)																																	
 Pot_Discard:Pot_Retained:Trawl																																											
 																																											
 #	Survey	names	(delimited	with	:	no	spaces	in	names)																																		
