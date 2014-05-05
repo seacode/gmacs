@@ -537,7 +537,7 @@ DATA_SECTION
   !! echotxt(ncatch_f, " Number of F's (calculated)")
   
   // ......................................................................  
-  // Read in Size Frequency (SF) data:
+  // Read in Fishing Fleet SF data:
 
   init_int nsf_obs;                                      ///< Number of size frequency lines to read for fishing fleets 
   init_matrix sf_data(1,nsf_obs,1,ndclass+7);            ///< Size frequency data, one line per nsf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
@@ -592,10 +592,10 @@ DATA_SECTION
   !! echo(fleet_sf_obs);
   
   // ......................................................................  
-  // Read in LF data (survey):
+  // Read in Survey SF data:
 
   init_int nsfs_obs;                                ///< Number of survey size frequency lines to read
-  init_matrix sfs_data(1,nsfs_obs,1,ndclass+5);     ///< Survey size frequency data, one line per nsfs_obs, requires year, season, survey, sex, effective sample size, then data vector
+  init_matrix sfs_data(1,nsfs_obs,1,ndclass+7);     ///< Survey size frequency data, one line per nsfs_obs, requires year, season, survey, sex, effective sample size, then data vector
   ivector nsf_survey(1,nsurvey);                    ///< Number of years of survey sf data per survey
 
  LOC_CALCS 
@@ -618,21 +618,21 @@ DATA_SECTION
     isurvey = int(sfs_data(i,3));
     iobs_sv(isurvey)++;
     yr_survey_sf(isurvey,iobs_sv(isurvey)) = (sfs_data(i,1));
-    ss_survey_sf(isurvey,iobs_sv(isurvey)) = sfs_data(i,5);
+    ss_survey_sf(isurvey,iobs_sv(isurvey)) = sfs_data(i,7);
     
     if(nclass!=ndclass)
     {
       for (iclass=1; iclass<=nclass; iclass++)
       {
-        survey_sf_obs(isurvey,iobs_sv(isurvey),iclass) = sum(sfs_data(i)(5+class_link(iclass,1),5+class_link(iclass,2)));
+        survey_sf_obs(isurvey,iobs_sv(isurvey),iclass) = sum(sfs_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));
       }
     }
     else
     {
-      survey_sf_obs(isurvey,iobs_sv(isurvey)) = sfs_data(i)(6,5+ndclass).shift(1);
+      survey_sf_obs(isurvey,iobs_sv(isurvey)) = sfs_data(i)(8,7+ndclass).shift(1);
     }
     survey_sf_obs(isurvey,iobs_sv(isurvey)) /= sum(survey_sf_obs(isurvey,iobs_sv(isurvey))); // normalize to sum to 1
-    survey_sf(isurvey,iobs_sv(isurvey)) = sfs_data(i)(6,(ndclass+5)).shift(1);               // Retain full dimension for size and weight calcs
+    survey_sf(isurvey,iobs_sv(isurvey)) = sfs_data(i)(8,(ndclass+7)).shift(1);               // Retain full dimension for size and weight calcs
   }
  END_CALCS
 
@@ -643,13 +643,16 @@ DATA_SECTION
   !! echo(ss_survey_sf);
   !! echo(survey_sf_obs);
 
+  // TODO: The above calculations need to take account of sex- and shell-specific numbers. 
+  // Note, this may alter values when calculating numbers per size bin and renormalizing (but should be okay with extra loops over sex and shell).
+
   // ......................................................................  
   // Read in size, weight, fecundity vectors, then calculate equivalent vectors with nclass number of size-classes:
   
-  init_number binw;                         ///< Width of size-bins
-  init_vector mean_size(1,ndclass);         ///< Mean size vector input
-  init_vector mean_weight(1,ndclass);       ///< Mean weight vector input
-  init_vector fecundity_inp(1,ndclass);     ///< Fecundity vector input
+  init_number binw;                           ///< Width of size-bins
+  init_vector mean_size(1,ndclass);           ///< Mean size vector input
+  init_matrix mean_weight(1,nsex,1,ndclass);  ///< Mean weight vector input
+  init_vector fecundity_inp(1,ndclass);       ///< Fecundity vector input
 
   !! echo(binw);
   !! echo(mean_size);
@@ -657,10 +660,10 @@ DATA_SECTION
   !! echo(fecundity_inp);
 
   // Recalculate size, weight, and fecundity vectors to specified number of model size-classes:
-  vector size(1,nclass);                    ///< Size vector (mm) for model
-  vector weight(1,nclass);                  ///< Weight (kg) vector for model
-  vector fecundity(1,nclass);               ///< Fecundity (kg) vector for model
-  vector surv_sf_store(1,ndclass);          ///< Survey sf total by data class
+  vector size(1,nclass);                      ///< Size vector (mm) for model
+  matrix weight(1,nsex,1,nclass);             ///< Weight (kg) vector for model
+  vector fecundity(1,nclass);                 ///< Fecundity (kg) vector for model
+  vector surv_sf_store(1,ndclass);            ///< Survey sf total by data class
    
  LOC_CALCS
   if(nclass!=ndclass)
@@ -680,14 +683,16 @@ DATA_SECTION
     for (iclass=1; iclass<=nclass; iclass++)
     {
       size(iclass) = 0; 
-      weight(iclass) = 0; 
       fecundity(iclass) = 0; 
+      for(int isex=1; isex<=2; isex++)
+        weight(isex,iclass) = 0; 
       total = 0;
       for (jclass=class_link(iclass,1); jclass<=class_link(iclass,2); jclass++)
       {
         size(iclass) += mean_size(jclass)*surv_sf_store(jclass);
-        weight(iclass) += mean_weight(jclass)*surv_sf_store(jclass);
         fecundity(iclass) += fecundity_inp(jclass)*surv_sf_store(jclass);
+        for(int isex=1; isex<=2; isex++)
+          weight(isex,iclass) += mean_weight(isex,jclass)*surv_sf_store(jclass);
         total += surv_sf_store(jclass);
       }
       size(iclass) /= total;
@@ -713,6 +718,7 @@ DATA_SECTION
   // Thus it stores the aggregated size-frequency information over all years.
   // It is used to weight averages among size-classes during re-calculation between ndclasses and nclasses. 
   // TODO: Check if mean-size increases linearly with size-class, should this feature be retained with the new mean-size numbers?
+  // TODO: Should surv_sf_store be sex specific?
 
   // ......................................................................  
   // Read in capture, mark, recapture data:
@@ -2013,10 +2019,13 @@ FUNCTION Get_Survey
     {
       int iyr = yr_survey(isrv,i);
       dvar_vector N_tmp        = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
-      survey_biom_pred(isrv,i) = N_tmp * weight;
+      survey_biom_pred(isrv,i) = N_tmp * weight(1);
       survey_num_pred(isrv,i)  = sum(N_tmp);
     }
-  }  
+  }
+
+  // TODO: survey_biom_pred currently only for males: Needs upgrade to multi-sex
+  // Weight matrix currently sex-specific, here only using male: weight(1)
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Catch_Pred;
@@ -2062,12 +2071,15 @@ FUNCTION Get_Catch_Pred;
       N_tmp = elem_prod(N_tmp,S1);
       
       // Accumulate totals  
-      catch_biom_pred(ifl,iyr) = fleet_sf_pred(ifl,iyr) * weight;
+      catch_biom_pred(ifl,iyr) = fleet_sf_pred(ifl,iyr) * weight(1);
       catch_num_pred(ifl,iyr)  = sum(fleet_sf_pred(ifl,iyr) );
       if (catch_num_pred(ifl,iyr) >0.0)
         fleet_sf_pred(ifl,iyr)  /= catch_num_pred(ifl,iyr) ;
     }
   } 
+
+  // TODO: catch_biom_pred currently only for males: Needs upgrade to multi-sex
+  // Weight matrix currently sex-specific, here only using male: weight(1)
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Obj_Function
