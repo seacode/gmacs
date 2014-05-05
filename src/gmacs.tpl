@@ -593,12 +593,12 @@ DATA_SECTION
     if(nclass         !=ndclass)
     {
       for (iclass=1; iclass<=nclass; iclass++)
-        sf_fleet_obs(idx,iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+        sf_fleet_obs(itmp,iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
     }
     else
-      sf_fleet_obs(idx) = sf_data(i)(8,7+ndclass).shift(1);
+      sf_fleet_obs(itmp) = sf_data(i)(8,7+ndclass).shift(1);
 
-    sf_fleet_obs(ifleet,iobs_fl(ifleet)) /= sum(sf_fleet_obs(ifleet,iobs_fl(ifleet)) ); // normalize LF to sum to 1
+    sf_fleet_obs(itmp) /= sum(sf_fleet_obs(itmp) ); // normalize LF to sum to 1
   }
  END_CALCS
 
