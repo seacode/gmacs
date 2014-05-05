@@ -138,6 +138,8 @@ DATA_SECTION
   int ifleet;
   int isurvey;
   int last;
+
+  // TODO: Remove global counters.
   
   // ......................................................................
   // Read input from main data file, establish dimensions:
@@ -171,18 +173,21 @@ DATA_SECTION
   !! int npshell = nsex * nshell;
   !! int npmature = nsex * nshell * nmature;
 
-  ivector psex(1,nsex);
-  ivector pshell(1,npshell);
-  ivector pmature(1,npmature);
+  ivector psex(1,nsex);                     ///< Starting column (positions) of sex-specific N matrix blocks
+  ivector pshell(1,npshell);                ///< Starting column (positions) of shell-specific N matrix blocks
+  ivector pmature(1,npmature);              ///< Starting column (positions) of maturity-specific N matrix blocks
+  ivector pall(1,npmature);                 ///< Starting column (positions) of all required N matrix blocks
 
   !! psex.fill_seqadd(1,(ncol/nsex));
   !! pshell.fill_seqadd(1,(ncol/npshell));
   !! pmature.fill_seqadd(1,(ncol/npmature));
+  !! pall = pmature;
 
   !! echo(ncol);
   !! echo(psex);
   !! echo(pshell);
   !! echo(pmature);
+  !! echo(pall);
 
   // ......................................................................    
   // Initialize class link matrix and fill as necessary:
@@ -333,6 +338,17 @@ DATA_SECTION
   // Tricky with selectivity and survey_q etc. 
   // This is possible now but selectivity types need to be entered for each group. 
   // Selectivity can be the same for those fleets by using the same block numbers (mirroring).
+
+  // Determine number of possible fleet/sex/shell/maturity categories for SF observations and predictions:
+  ivector ndt_fleet;        ///< Number of possible data types (ndt) for catch fleets
+  ivector ndt_survey;       ///< Number of possible data types (ndt) for survey fleets
+
+ LOC_CALCS
+  ndt_fleet = nfleet * nsex * nshell * nmature;
+  ndt_survey = nsurvey * nsex * nshell * nmature;
+  echo(ndt_fleet);
+  echo(ndt_fleet);
+ END_CALCS
 
   // ......................................................................
   // Get fishing fleet names and survey names and process text strings:
@@ -541,7 +557,7 @@ DATA_SECTION
 
   init_int nsf_obs;                                      ///< Number of size frequency lines to read for fishing fleets 
   init_matrix sf_data(1,nsf_obs,1,ndclass+7);            ///< Size frequency data, one line per nsf_obs, requires year, season, fleet, sex, maturity, shell cond., effective sample size, then data vector 
-  ivector nsf_fleet(1,nfleet);                           ///< Number of years of sf data per fleet
+  ivector nsf_fleet(1,ndt_fleet);                        ///< Number of years of sf data per fleet, sex, shell, and maturity type
  
  LOC_CALCS 
   nsf_fleet.initialize();
@@ -551,34 +567,37 @@ DATA_SECTION
   }
  END_CALCS
   
-  imatrix yr_fleet_sf(1,nfleet,1,nsf_fleet);             ///< Years with sf data, by fleet
-  matrix ss_fleet_sf(1,nfleet,1,nsf_fleet);              ///< Effective sample sizes, by fleet
-  3darray fleet_sf(1,nfleet,1,nsf_fleet,1,ndclass);      ///< Size-frequency data (ndclass), by fleet (can be ragged array)
-  3darray fleet_sf_obs(1,nfleet,1,nsf_fleet,1,nclass);   ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  imatrix sf_fleet_yr(1,nfleet,1,nsf_fleet);             ///< Years with sf data, by fleet
+  matrix  sf_fleet_ss(1,nfleet,1,nsf_fleet);             ///< Effective sample sizes, by fleet
+  3darray sf_fleet(1,nfleet,1,nsf_fleet,1,ndclass);      ///< Size-frequency data (ndclass), by fleet (can be ragged array)
+  3darray sf_fleet_obs(1,nfleet,1,nsf_fleet,1,nclass);   ///< Size-frequency data (nclass), by fleet (can be ragged array)
  
   // TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages.
   // Some type of counter will be required to determine which types of data are present for each fishery (with which dimensions).
   // This will mean data can be entered into Gmacs in a flat format.
 
  LOC_CALCS 
-  ivector iobs_fl(1,nfleet);                             ///< Incremental counter for obs. no. within each fleet
+  ivector iobs_fl(1,ndt_fleet);                             ///< Incremental counter for obs. no. within each fleet data type
   iobs_fl.initialize();
   for (int i=1; i<=nsf_obs; i++) 
   {
     ifleet = int(sf_data(i,3));
-    iobs_fl(ifleet)++;
-    yr_fleet_sf(ifleet,iobs_fl(ifleet)) = (sf_data(i,1));
-    ss_fleet_sf(ifleet,iobs_fl(ifleet)) = sf_data(i,7);
+    isex = int(sf_data(i,4));
+    ishell = int(sf_data(i,5));
+    imat = int(sf_data(i,6));
+    iobs_fl(ifleet)++;                                     ///< TODO: Extend this counter over multiple types!?
+    sf_fleet_yr(ifleet,iobs_fl(ifleet)) = (sf_data(i,1));
+    sf_fleet_ss(ifleet,iobs_fl(ifleet)) = sf_data(i,7);
     
     if(nclass!=ndclass)
     {
       for (iclass=1; iclass<=nclass; iclass++)
-        fleet_sf_obs(ifleet,iobs_fl(ifleet),iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+        sf_fleet_obs(ifleet,iobs_fl(ifleet),iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
     }
     else
-      fleet_sf_obs(ifleet,iobs_fl(ifleet)) = sf_data(i)(8,7+ndclass).shift(1);
+      sf_fleet_obs(ifleet,iobs_fl(ifleet)) = sf_data(i)(8,7+ndclass).shift(1);
 
-    fleet_sf_obs(ifleet,iobs_fl(ifleet)) /= sum(fleet_sf_obs(ifleet,iobs_fl(ifleet)) ); // normalize LF to sum to 1
+    sf_fleet_obs(ifleet,iobs_fl(ifleet)) /= sum(sf_fleet_obs(ifleet,iobs_fl(ifleet)) ); // normalize LF to sum to 1
   }
  END_CALCS
 
@@ -587,9 +606,9 @@ DATA_SECTION
   !! echotxt(nsf_obs,  " Number of size frequency lines to read");
   !! echo(sf_data);
   !! echo(nsf_fleet);
-  !! echo(yr_fleet_sf);
-  !! echo(ss_fleet_sf);
-  !! echo(fleet_sf_obs);
+  !! echo(sf_fleet_yr);
+  !! echo(sf_fleet_ss);
+  !! echo(sf_fleet_obs);
   
   // ......................................................................  
   // Read in Survey SF data:
@@ -1322,9 +1341,9 @@ LOC_CALCS
     ilike++; 
     for (int i=1;i<=nsf_fleet(ifl);i++)
     {
-      dvector pobs      = incd + fleet_sf_obs(ifl,i);
+      dvector pobs      = incd + sf_fleet_obs(ifl,i);
               pobs     /= sum(pobs);
-      mn_offset(ilike) -= ss_fleet_sf(ifl,i)*pobs*log(pobs);
+      mn_offset(ilike) -= sf_fleet_ss(ifl,i)*pobs*log(pobs);
     } 
     like_names += fleet_names(ifl)+"_LF"+CRLF(1);
   } 
@@ -2113,14 +2132,14 @@ FUNCTION Get_Likes
     ilike++; ///< Increment the likelihood index
     for (int i=1;i<=nsf_fleet(ifl);i++)
     {
-      int iyr = yr_fleet_sf(ifl,i);
+      int iyr = sf_fleet_yr(ifl,i);
       dvar_vector phat(1,nclass);
       phat  = incd + fleet_sf_pred(ifl,iyr);
       phat /= sum(phat);
       dvector pobs(1,nclass);
-      pobs      = incd + fleet_sf_obs(ifl,i);
+      pobs      = incd + sf_fleet_obs(ifl,i);
       pobs     /= sum(pobs);
-      like_val(ilike)  -= ss_fleet_sf(ifl,i)*pobs*log(phat);
+      like_val(ilike)  -= sf_fleet_ss(ifl,i)*pobs*log(phat);
     } 
     like_val(ilike) -= mn_offset(ilike);
   } 
@@ -2334,18 +2353,18 @@ FUNCTION Do_R_Output
   
   writeR(survey_data);
   writeR(sfs_data);
-  writeR(yr_fleet_sf);
+  writeR(sf_fleet_yr);
   writeR(nsf_fleet);
   
-  R_out<<"fleet_sf_obs"<<endl;
+  R_out<<"sf_fleet_obs"<<endl;
   for (int ifl=1; ifl<=nfleet; ifl++)
   {
     for (i=1; i<=nsf_fleet(ifl); i++)
     {
-      iyr = yr_fleet_sf(ifl,i);
+      iyr = sf_fleet_yr(ifl,i);
       R_out << iyr << " "
             << ifl << " "
-            << fleet_sf_obs(ifl,i)<<endl;
+            << sf_fleet_obs(ifl,i)<<endl;
     }
   }    
   
@@ -2354,7 +2373,7 @@ FUNCTION Do_R_Output
   {
     for (i=1; i<=nsf_fleet(ifl); i++)
     {
-      iyr = yr_fleet_sf(ifl,i);
+      iyr = sf_fleet_yr(ifl,i);
       R_out << iyr << " "
             << ifl << " "
             << fleet_sf_pred(ifl,iyr)<<endl;
@@ -2366,10 +2385,10 @@ FUNCTION Do_R_Output
   {
     for (i=1; i<=nsf_fleet(ifl); i++)
     {
-      iyr = yr_fleet_sf(ifl,i);
+      iyr = sf_fleet_yr(ifl,i);
       R_out << iyr << " "
             << ifl << " "
-            << eff_N(fleet_sf_obs(ifl,i),fleet_sf_pred(ifl,iyr) )<<endl;
+            << eff_N(sf_fleet_obs(ifl,i),fleet_sf_pred(ifl,iyr) )<<endl;
     }
   }    
   
@@ -2380,9 +2399,9 @@ FUNCTION Do_R_Output
   {
     for (i=1; i<=nsf_fleet(ifl); i++)
     {
-      iyr = yr_fleet_sf(ifl,i);
+      iyr = sf_fleet_yr(ifl,i);
       ep  = value(fleet_sf_pred(ifl,iyr)) ;
-      nr  = norm_res( ep , fleet_sf_obs(ifl,i) , ss_fleet_sf(ifl,i) ) ;
+      nr  = norm_res( ep , sf_fleet_obs(ifl,i) , sf_fleet_ss(ifl,i) ) ;
       R_out << iyr       << " "
             << ifl       << " "
             << std_dev(nr) << " "
