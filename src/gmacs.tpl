@@ -567,10 +567,10 @@ DATA_SECTION
   }
  END_CALCS
   
-  ivector sf_fleet_yr(1,nsf_obs);                  ///< Years with sf data, by fleet
-  vector  sf_fleet_ss(1,nsf_obs);                  ///< Effective sample sizes, by fleet
-  matrix sf_fleet_obs(1,nsf_obs,1,nclass);   ///< Size-frequency data (nclass), by fleet (can be ragged array)
-  4darray idx(1,nfleet,1,2,1,2,1,2);                         ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  ivector sf_fleet_yr(1,nsf_obs);           ///< Years with sf data, by fleet
+  vector  sf_fleet_ss(1,nsf_obs);           ///< Effective sample sizes, by fleet
+  matrix sf_fleet_obs(1,nsf_obs,1,nclass);  ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  4darray idx(1,nfleet,1,nsex,1,nshell,1,nmature);        ///< Size-frequency data (nclass), by fleet (can be ragged array)
  
   // TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages.
   // Some type of counter will be required to determine which types of data are present for each fishery (with which dimensions).
@@ -590,7 +590,7 @@ DATA_SECTION
     int itmp          = int(idx(ifleet,isex,ishell,imat));                           
     sf_fleet_yr(itmp) = sf_data(i,1);
     sf_fleet_ss(itmp) = sf_data(i,7);
-    if(nclass         !=ndclass)
+    if(nclass !=ndclass)
     {
       for (iclass=1; iclass<=nclass; iclass++)
         sf_fleet_obs(itmp,iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
@@ -1340,11 +1340,14 @@ LOC_CALCS
   for (int ifl=1;ifl<=nfleet;ifl++)
   {
     ilike++; 
-    for (int i=1;i<=nsf_fleet(ifl);i++)
-    {
-      dvector pobs      = incd + sf_fleet_obs(ifl,i);
-              pobs     /= sum(pobs);
-      mn_offset(ilike) -= sf_fleet_ss(ifl,i)*pobs*log(pobs);
+    for (int i=1;i<=nsex;i++)
+      for (int j=1;i<=nshell;j++)
+        for (int k=1;k<=nmature;k++)
+        {
+          int itmp = idx(ifl,i,j,k);
+          dvector pobs      = incd + sf_fleet_obs(itmp);
+                  pobs     /= sum(pobs);
+      mn_offset(ilike) -= sf_fleet_ss(itmp)*pobs*log(pobs);
     } 
     like_names += fleet_names(ifl)+"_LF"+CRLF(1);
   } 
