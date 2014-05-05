@@ -567,10 +567,10 @@ DATA_SECTION
   }
  END_CALCS
   
-  imatrix sf_fleet_yr(1,ndt_fleet,1,nsf_fleet);             ///< Years with sf data, by fleet
-  matrix  sf_fleet_ss(1,ndt_fleet,1,nsf_fleet);             ///< Effective sample sizes, by fleet
-  3darray sf_fleet(1,ndt_fleet,1,nsf_fleet,1,ndclass);      ///< Size-frequency data (ndclass), by fleet (can be ragged array)
-  3darray sf_fleet_obs(1,ndt_fleet,1,nsf_fleet,1,nclass);   ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  ivector sf_fleet_yr(1,nsf_obs);                  ///< Years with sf data, by fleet
+  vector  sf_fleet_ss(1,nsf_obs);                  ///< Effective sample sizes, by fleet
+  matrix sf_fleet_obs(1,nsf_obs,1,nclass);   ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  4darray idx(1,nfleet,1,2,1,2,1,2);                         ///< Size-frequency data (nclass), by fleet (can be ragged array)
  
   // TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages.
   // Some type of counter will be required to determine which types of data are present for each fishery (with which dimensions).
@@ -578,24 +578,25 @@ DATA_SECTION
 
  LOC_CALCS 
   ivector iobs_fl(1,ndt_fleet);                             ///< Incremental counter for obs. no. within each fleet data type
-  iobs_fl.initialize();
+  idx.initialize();
+  int isex, ishell, imat;
   for (int i=1; i<=nsf_obs; i++) 
   {
-    ifleet                              = int(sf_data(i,3));
-    int isex                            = int(sf_data(i,4));
-    int ishell                          = int(sf_data(i,5));
-    int imat                            = int(sf_data(i,6));
-    iobs_fl(ifleet)++;                                     ///< TODO: Extend this counter over multiple types!?
-    sf_fleet_yr(ifleet,iobs_fl(ifleet)) = (sf_data(i,1));
-    sf_fleet_ss(ifleet,iobs_fl(ifleet)) = sf_data(i,7);
-    
-    if(nclass!=ndclass)
+    ifleet            = int(sf_data(i,3));
+    isex              = int(sf_data(i,4));
+    ishell            = int(sf_data(i,5));
+    imat              = int(sf_data(i,6));
+    idx(ifleet,isex,ishell,imat)++;                                     
+    int itmp          = int(idx(ifleet,isex,ishell,imat));                           
+    sf_fleet_yr(itmp) = sf_data(i,1);
+    sf_fleet_ss(itmp) = sf_data(i,7);
+    if(nclass         !=ndclass)
     {
       for (iclass=1; iclass<=nclass; iclass++)
-        sf_fleet_obs(ifleet,iobs_fl(ifleet),iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+        sf_fleet_obs(idx,iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
     }
     else
-      sf_fleet_obs(ifleet,iobs_fl(ifleet)) = sf_data(i)(8,7+ndclass).shift(1);
+      sf_fleet_obs(idx) = sf_data(i)(8,7+ndclass).shift(1);
 
     sf_fleet_obs(ifleet,iobs_fl(ifleet)) /= sum(sf_fleet_obs(ifleet,iobs_fl(ifleet)) ); // normalize LF to sum to 1
   }
