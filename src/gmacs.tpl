@@ -445,8 +445,10 @@ DATA_SECTION
 
   matrix catch_biom_obs(1,nfleet,styr,endyr) ;
   matrix catch_num_obs(1,nfleet,styr,endyr) ;
+  imatrix nobs_yr_flt(styr,endyr,1,nfleet);
 
  LOC_CALCS
+  nobs_yr_flt.initialize();
   catch_biom_obs.initialize();
   catch_num_obs.initialize();
   for (int i=1;i<=ncatch_obs;i++)
@@ -567,10 +569,12 @@ DATA_SECTION
   }
  END_CALCS
   
-  ivector sf_fleet_yr(1,nsf_obs);           ///< Years with sf data, by fleet
-  vector  sf_fleet_ss(1,nsf_obs);           ///< Effective sample sizes, by fleet
-  matrix sf_fleet_obs(1,nsf_obs,1,nclass);  ///< Size-frequency data (nclass), by fleet (can be ragged array)
-  4darray idx(1,nfleet,1,nsex,1,nshell,1,nmature);        ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  imatrix sf_fleet_yr(1,nfleet,1,nsf_fleet);           ///< Years with sf data, by fleet
+  matrix  sf_fleet_ss(1,nfleet,1,nsf_fleet);           ///< Effective sample sizes, by fleet
+  matrix  fleet_nbins(1,nfleet,1,nsf_fleet);           ///< Effective sample sizes, by fleet
+  3darray sf_fleet_obs(1,nfleet,1,nsf_fleet,1,22);  ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  matrix sf_fleet_tmp(1,nsf_obs,1,22);          ///< Size-frequency data (nclass), by fleet (can be ragged array)
+  5darray idx(styr,endyr,1,nfleet,0,nsex,0,nshell,0,nmature);        ///< Size-frequency data (nclass), by fleet (can be ragged array)
  
   // TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages.
   // Some type of counter will be required to determine which types of data are present for each fishery (with which dimensions).
@@ -582,25 +586,51 @@ DATA_SECTION
   int isex, ishell, imat;
   for (int i=1; i<=nsf_obs; i++) 
   {
+    iyr               = int(sf_data(i,1));
     ifleet            = int(sf_data(i,3));
     isex              = int(sf_data(i,4));
     ishell            = int(sf_data(i,5));
     imat              = int(sf_data(i,6));
-    idx(ifleet,isex,ishell,imat)++;                                     
-    int itmp          = int(idx(ifleet,isex,ishell,imat));                           
-    sf_fleet_yr(itmp) = sf_data(i,1);
-    sf_fleet_ss(itmp) = sf_data(i,7);
-    if(nclass !=ndclass)
-    {
-      for (iclass=1; iclass<=nclass; iclass++)
-        sf_fleet_obs(itmp,iclass) = sum(sf_data(i)(7+class_link(iclass,1),7+class_link(iclass,2)));      
-    }
-    else
-      sf_fleet_obs(itmp) = sf_data(i)(8,7+ndclass).shift(1);
-
-    sf_fleet_obs(itmp) /= sum(sf_fleet_obs(itmp) ); // normalize LF to sum to 1
+    idx(iyr,ifleet,isex,ishell,imat)++;                                     
   }
+    int itmp          = int(idx(iyr,ifleet,isex,ishell,imat));                           
+
+    // sf_fleet_yr(ifleet,iobs_fl) = sf_data(i,1);
+    // sf_fleet_ss(itmp) = sf_data(i,7);
+    // sf_fleet_obs(itmp) /= sum(sf_fleet_obs(itmp) ); // normalize LF to sum to 1
+  for (iyr=styr;iyr<=endyr;iyr++) 
+   for (int ifl=1;ifl<=nfleet;ifl++) 
+     for (int i=1;i<=nsex;i++) 
+       for (int j=1;i<=nshell;j++)
+        for (int k=1;k<=nmature;k++)
+        {
+          int itmp = idx(iyr,ifl,i,j,k);
+          if (itmp>0) // can proceed to do counting, building structure
+          {
+            // Test for sex, shell, maturity>1
+            if(i>1) // split sex
+            {
+              nobs_yr_flt(iyr,ifl)++;
+              if(nclass !=ndclass)
+              {
+                for (iclass=1; iclass<=nclass; iclass++)
+                  sf_fleet_tmp(itmp,iclass) = sum(sf_data(itmp)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+              }
+              else
+                sf_fleet_tmp(itmp) = sf_data(itmp)(8,7+ndclass).shift(1);
+            }
+            iobs_fl(ifleet)++;
+          }
+        }
+  for (iyr=styr;iyr<=endyr;iyr++) 
+   for (int ifl=1;ifl<=nfleet;ifl++) 
+     cout<<iyr<<" "<<ifl<<" "<<nobs_yr_flt(iyr,ifl)<<endl;exit(1);
+
+
+
  END_CALCS
+
+ // Now fill up ragged array dimentsions
 
   // TODO: Simple.tpl down-weighted sample sizes w/in the code. Check this.
 
@@ -1336,6 +1366,7 @@ LOC_CALCS
     ilike++; 
     like_names  += fleet_names(ifl)+"_catch"+CRLF(1);
   }
+  /*
    // Catch LFs
   for (int ifl=1;ifl<=nfleet;ifl++)
   {
@@ -1351,6 +1382,7 @@ LOC_CALCS
     } 
     like_names += fleet_names(ifl)+"_LF"+CRLF(1);
   } 
+  */
   // Effort indices
   for (int ifl=1;ifl<=nfleet_act;ifl++)
   {
@@ -2136,14 +2168,14 @@ FUNCTION Get_Likes
     ilike++; ///< Increment the likelihood index
     for (int i=1;i<=nsf_fleet(ifl);i++)
     {
-      int iyr = sf_fleet_yr(ifl,i);
+      int iyr         = sf_fleet_yr(ifl,i);
       dvar_vector phat(1,nclass);
-      phat  = incd + fleet_sf_pred(ifl,iyr);
-      phat /= sum(phat);
+      phat            = incd + fleet_sf_pred(ifl,iyr);
+      phat            /= sum(phat);
       dvector pobs(1,nclass);
-      pobs      = incd + sf_fleet_obs(ifl,i);
-      pobs     /= sum(pobs);
-      like_val(ilike)  -= sf_fleet_ss(ifl,i)*pobs*log(phat);
+      pobs            = incd + sf_fleet_obs(ifl,i);
+      pobs            /= sum(pobs);
+      like_val(ilike) -= sf_fleet_ss(ifl,i)*pobs*log(phat);
     } 
     like_val(ilike) -= mn_offset(ilike);
   } 
