@@ -1,13 +1,15 @@
 #========================================================================================================
-# Gmacs Control File Version 1.02
-# General parameter specifications *(only 4 for now):
+# Gmacs Control File Version 1.1: BBRKC Example
+# Fisheries: 1 Pot Fishery, 2 Pot Discard, 3 Trawl by-catch
+# Surveys: 1 NMFS Trawl Survey, 2 BSFRF Survey
 #========================================================================================================
+
+# General parameter specifications:
 # Init   Lower   Upper  Phase   Prior   Pmean    Psd   Cov.   Dev.   Dsd   Dmin  Dmax   Block
  0.18	    0	      1	    -1	    0	  0.18  1000     0	    0	  0	    0	   0	   1	#M
  9.76518  -10	     40	     1	    0	    0	   0	 0	    0	  0	    0	   0	   0	#R0
  8.9    	5	     15		 3	    0	  	0  	   0     0	    0	  0	    0	   0	   0	#Recruitment mBeta
  2.5    	1		  5		-3	    0	  	0  	   0     0	    0	  0	    0	   0	   0	#Recruitment m50
-#========================================================================================================
 
 # Time-varying natural mortality blocks
 # 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10 11 12 13
@@ -19,7 +21,7 @@
 0.0001 	0 1   2
 
 1	# Form of stock-recruitment relationship (placeholder)
-6	# Lag to recruitment (placeholder)
+1	# Lag to recruitment (placeholder)
 
 # Specifications for the growth transition matrix
 # Time-varying growth (one line per sex) one pattern in this case
@@ -67,7 +69,7 @@
  110   70  130  -3      
  160  135  175  -3   
 
-4	 # Form of initial numbers (1 = estimate initial size structure, 2 = estimate early recruitment, build from R0, 3 = as for 2, but build from N0)
+4	 # Form of initial numbers (1 = estimate initial size structure, 2 = estimate early recruitment, build from R0, 3 = as with 2 but build from N0, 4 = as with 2 but use dummy growth trans matrix)
 15   # Number of initial recruitments to estimate (conditional)
  
 # Specifications for the initial numbers parameters
