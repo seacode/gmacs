@@ -474,7 +474,7 @@ DATA_SECTION
   check(nobs_survey);
  END_CALCS
 
-  imatrix yr_survey(1,nsurvey,1,nobs_survey);           ///< Years for each survey observation
+  imatrix survey_yr(1,nsurvey,1,nobs_survey);           ///< Years for each survey observation
   matrix survey_biom_obs(1,nsurvey,1,nobs_survey);      ///< Survey observations (biomass)
   matrix survey_num_obs(1,nsurvey,1,nobs_survey);       ///< Survey obeservation (numbers)
   matrix survey_var(1,nsurvey,1,nobs_survey);           ///< Survey variance values
@@ -483,18 +483,18 @@ DATA_SECTION
   survey_var.initialize();
   survey_biom_obs.initialize();
   survey_num_obs.initialize(); 
-  ivector iobs_sv(1,nsurvey);                           ///< Incremental counter for obs. no. within each survey
-  iobs_sv.initialize();
+  ivector iobs_srv(1,nsurvey);                           ///< Incremental counter for obs. no. within each survey
+  iobs_srv.initialize();
   for (int i=1;i<=nsurvey_obs;i++)
   {
     int isrv=survey_data(i,3);
-    iobs_sv(isrv)++;
-    sf_survey_yr(isrv,iobs_sv(isrv)) = survey_data(i,1); 
+    iobs_srv(isrv)++;
+    survey_yr(isrv,iobs_srv(isrv)) = survey_data(i,1); 
     if (survey_units(isrv)==1)
-      survey_biom_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
+      survey_biom_obs(isrv,iobs_srv(isrv)) = survey_data(i,5);
     else 
-      survey_num_obs(isrv,iobs_sv(isrv)) = survey_data(i,5);
-    survey_var(isrv,iobs_sv(isrv)) = log(1+square(survey_data(i,6))); 
+      survey_num_obs(isrv,iobs_srv(isrv)) = survey_data(i,5);
+    survey_var(isrv,iobs_srv(isrv)) = log(1+square(survey_data(i,6))); 
     // For likelihood, compute input variance here, assumes input as CV.
   }  
 
@@ -506,7 +506,7 @@ DATA_SECTION
       survey_num_obs(isurvey,i)  *= survey_multi(isurvey);
     }
   }
-  check(iobs_sv);
+  check(iobs_srv);
   check(survey_var);
   check(survey_num_obs);
   check(survey_biom_obs);
@@ -721,7 +721,6 @@ DATA_SECTION
  LOC_CALCS
   nobs_yr_srv.initialize();
   ss_yr_srv.initialize();
-  ivector iobs_srv(1,nsurvey);                ///< Incremental counter for obs. no. within each survey data type
   iobs_srv.initialize();
   idxsrv.initialize();
   idxsrv2.initialize();
@@ -860,26 +859,27 @@ DATA_SECTION
   vector surv_sf_store(1,ndclass);            ///< Survey sf total by data class
    
  LOC_CALCS
+  surv_sf_store.initialize();
   if(nclass!=ndclass)
   {
     int total;
     total = 0;
     for (iclass=1; iclass<=ndclass; iclass++)
     {
-      surv_sf_store(iclass) = 0;
-      for (iyr=1; iyr<=nsfs_obs; iyr++) surv_sf_store(iclass) += sf_survey_obs(1,iyr,iclass);
+      for (int isrv=1;isrv<=nsurvey;isrv++)
+        for (int i=1;i<=nsf_survey(isrv);i++)
+          surv_sf_store(iclass) += sf_survey_obs(isrv,i,iclass);
       total += surv_sf_store(iclass);
     }
     check(surv_sf_store);
     if (verbose == 1) cout << "Survey total frequency samples by size-class stored" << endl;
 
     checkfile << "class-specific size, weight, and fecundity (columns)" << endl;
+    size.initialize();
+    fecundity.initialize();
+    weight.initialize();
     for (iclass=1; iclass<=nclass; iclass++)
     {
-      size(iclass) = 0; 
-      fecundity(iclass) = 0; 
-      for(int isex=1; isex<=2; isex++)
-        weight(isex,iclass) = 0; 
       total = 0;
       for (jclass=class_link(iclass,1); jclass<=class_link(iclass,2); jclass++)
       {
@@ -890,10 +890,11 @@ DATA_SECTION
         total += surv_sf_store(jclass);
       }
       size(iclass) /= total;
-      weight(iclass) /= total;
       fecundity(iclass) /= total;
+      // Note these were by sex...
+      weight(1,iclass) /= total;
       
-      checkfile << iclass << " " << size(iclass) << " " << weight(iclass) << " " << fecundity(iclass) << endl;
+      checkfile << iclass << " " << size(iclass) << " " << weight(1,iclass) << " " << fecundity(iclass) << endl;
     }
     if (verbose == 1) cout << " Sizes, weights, and fecundity recalculated" << endl;
   }
@@ -1708,7 +1709,7 @@ PARAMETER_SECTION
   matrix  catch_biom_pred(1,nfleet,styr,endyr);               ///< Predicted catch weights
   matrix  catch_num_pred(1,nfleet,styr,endyr);                ///< Predicted catch numbers
   
-  3darray survey_sf_pred(1,nsurvey,1,nsf_survey,1,nclass);    ///< Survey SF from the model
+  3darray sf_survey_pred(1,nsurvey,1,nsf_survey,1,nclass);    ///< Survey SF from the model
   matrix  survey_biom_pred(1,nsurvey,1,nobs_survey);          ///< Predicted survey weights
   matrix  survey_num_pred(1,nsurvey,1,nobs_survey);           ///< Predicted survey numbers
   vector  q_effort(1,nfleet_act);                             ///< Effort q vector
@@ -2203,7 +2204,7 @@ FUNCTION Update_Population
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Get_Survey
-  survey_sf_pred.initialize();
+  sf_survey_pred.initialize();
   survey_biom_pred.initialize();
   survey_num_pred.initialize();
   for (int isrv=1;isrv<=nsurvey;isrv++)
@@ -2211,12 +2212,12 @@ FUNCTION Get_Survey
     for (int i=1;i<=nsf_survey(isrv);i++)
     {
       int iyr = sf_survey_yr(isrv,i);
-      survey_sf_pred(isrv,i)   = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
-      survey_sf_pred(isrv,i)  /= sum(survey_sf_pred(isrv,i));
+      sf_survey_pred(isrv,i)   = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
+      sf_survey_pred(isrv,i)  /= sum(sf_survey_pred(isrv,i));
     }
     for (int i=1;i<=nobs_survey(isrv);i++)
     {
-      int iyr = yr_survey(isrv,i);
+      int iyr = survey_yr(isrv,i);
       dvar_vector N_tmp        = elem_prod(N(iyr),selex_survey(isrv,iyr)); // Note use of iyr here.
       survey_biom_pred(isrv,i) = N_tmp * weight(1);
       survey_num_pred(isrv,i)  = sum(N_tmp);
@@ -2364,7 +2365,7 @@ FUNCTION Get_Likes
     for (int i=1;i<=nsf_survey(isrv);i++)
     {
       dvar_vector phat(1,nclass);
-      phat  = incd + survey_sf_pred(isrv,i);
+      phat  = incd + sf_survey_pred(isrv,i);
       phat /= sum(phat);
       dvector pobs(1,nclass);
       pobs      = incd + sf_survey_obs(isrv,i);
@@ -2521,7 +2522,7 @@ FUNCTION Do_R_Output
   writeR(fleet_names);
   writeR(nsurvey);
   writeR(survey_names);
-  writeR(yr_survey);
+  writeR(survey_yr);
   
   writeR(catch_units);
   writeR(catch_data);
@@ -2610,7 +2611,7 @@ FUNCTION Do_R_Output
     }
   }
   
-  R_out<<"survey_sf_pred"<<endl;
+  R_out<<"sf_survey_pred"<<endl;
   for (int ifl=1; ifl<=nsurvey; ifl++)
   {
     for (i=1; i<=nsf_survey(ifl); i++)
@@ -2618,7 +2619,7 @@ FUNCTION Do_R_Output
       iyr = sf_survey_yr(ifl,i);
       R_out << iyr << " "
             << ifl << " "
-            << survey_sf_pred(ifl,i)<<endl;
+            << sf_survey_pred(ifl,i)<<endl;
     }
   }
   
