@@ -1687,17 +1687,17 @@ PARAMETER_SECTION
   number rbeta;
   
   // Create model vectors, matrices, and arrays:
-  matrix   f_all(1,nfleet_act,styr,endyr);                     ///< Fishing mortality matrix 
+  3darray  f_all(1,nfleet_act,1,nsex,styr,endyr);              ///< Fishing mortality matrix 
 
-  matrix   N(rstyr,endyr+1,1,ncol);                           ///< Numbers-at-age matrix
-  matrix   N0(1,nclass*2,1,ncol);                             ///< Equilibrium numbers matrix (calculated) 2*nclass rows to try and reach approximate-equillibrium point
-  matrix   S(rstyr,endyr,1,ncol);                             ///< Survival matrix (general)
-  3darray  S_fleet(1,nfleet_act,styr,endyr,1,ncol);           ///< Survival matrices (one for each distinct fishery)
+  matrix   N(rstyr,endyr+1,1,ncol);                            ///< Numbers-at-age matrix
+  matrix   N0(1,nclass*2,1,ncol);                              ///< Equilibrium numbers matrix (calculated) 2*nclass rows to try and reach approximate-equillibrium point
+  matrix   S(rstyr,endyr,1,ncol);                              ///< Survival matrix (general)
+  3darray  S_fleet(1,nfleet_act,styr,endyr,1,ncol);            ///< Survival matrices (one for each distinct fishery)
   matrix   exp_rate(1,nfleet_act,styr,endyr);                  ///< Exploitation rate matrix
   matrix   xtrans(1,nclass,1,nclass);                          ///< Simple size-transition matrix for growth checking
-  4darray  strans(1,ngrowth_pats,1,nsex,1,nclass,1,nclass);    ///< Size-transition patterns array (one matrix per required pattern)
+  3darray  strans(1,ngrowth_pats,1,nclass,1,nclass);           ///< Size-transition patterns array (one matrix per required pattern)
   matrix   grow_size(1,nsex,1,nclass);                         ///< Size vector (incremented by growth)
-  3darray  molt(1,nmolt_pats,1,nsex,1,nclass);                 ///< Molting probability patterns matrix (one row per required pattern)
+  matrix   molt(1,nmolt_pats,1,nclass);                        ///< Molting probability patterns matrix (one row per required pattern)
   vector   recdis(1,nclass);                                   ///< Recruitment distribution among size classes (vector)
 
   3darray  selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
