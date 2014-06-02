@@ -1852,11 +1852,16 @@ FUNCTION double Sd_length(_CONST dvector& pobs)
   double stmp = (sqrt(elem_prod(av,av)*pobs - mobs*mobs));
   return square(stmp)/square(rtmp);
    */
+   multinomial cMyMult[nfleet];
+   //multinomial cMyMult(obs(i),pred(i));
+   f = cMyMult();
+   res = cMyMult.norm_res();
+   sdnr = cMyMult.sdnr();
 
   /** Returns normalized residuals of composition data given sample size. */
-FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m)
+FUNCTION dvector norm_res(dvector& pred, dvector& obs,double m)
   RETURN_ARRAYS_INCREMENT();
-  pred += incd;
+  pred = pred + incd;
   obs  += incd;
   dvector nr(1,size_count(obs));
   nr = elem_div(obs-pred,sqrt(elem_prod(pred,(1.-pred))/m));
@@ -1864,7 +1869,7 @@ FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m)
   return nr;
 
   /** Computes standard deviation of normalized residuals given observed and predicted proportions */
-FUNCTION double sdnr(const dvar_vector& pred,const dvector& obs,double m)
+FUNCTION double sdnr( dvar_vector& pred, dvector& obs,double m)
   RETURN_ARRAYS_INCREMENT();
   double sdnr;
   dvector pp = value(pred)+ incd;
