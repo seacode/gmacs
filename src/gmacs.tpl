@@ -12,7 +12,7 @@
 //   were adapted from code developed for the NPFMC by Andre Punt (2012), 
 //   and on the 'LSMR' model by Steven Martell (2011).
 //
-//  NOTE: This is current development version.
+//  NOTE: This is current development version. As at 6pm Seattle time, June 6th 2014.
 //
 // =========================================================================================================
 
