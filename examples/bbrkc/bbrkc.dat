@@ -11,18 +11,19 @@
 5		# Number of size-classes in the model
 20		# Number of size-classes in the data
 
+# COND: If number of size-classes in model and data are not the same, or a multiple:
+# Then read class_link matrix explicitly:
+# 1   4
+# 5   8
+# 9  12
+# 13 16
+# 17 20
+
 # Fishery names (delimited with ":" no spaces in names?)
 Discard:Pot:Trawl:Tanner
 
 # Survey names (delimited with ":" no spaces in names?)
 NMFS_Trawl:BSFRF
-
-# Links between data size classes and model size classes
-1   4
-5   8
-9  12
-13 16
-17 20
 
 1 1 1 1 				# Catch units (per fishery) # 1= biomass (tons); 2=numbers
 1000 1000 1000 1000		# Catch multipliers

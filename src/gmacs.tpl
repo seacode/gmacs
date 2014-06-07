@@ -12,6 +12,8 @@
 //   were adapted from code developed for the NPFMC by Andre Punt (2012), 
 //   and on the 'LSMR' model by Steven Martell (2011).
 //
+//  NOTE: This is current development version.
+//
 // =========================================================================================================
 
 GLOBALS_SECTION
