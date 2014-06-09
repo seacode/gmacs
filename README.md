@@ -1,5 +1,8 @@
 # Gmacs Version 1.0 #
 
+## Table of contents ##
+- [TODO List](#todo-list)
+
 This is the pilot release of Gmacs. Currently posted source files are compilable using ADMB 11.1 and have been tested using the BBRKC model available in the examples folder. This release will remain active until the current 'under development' version is released. **Updated February 2014, by Athol Whitten**
 
 ## Generalized Modeling for Alaskan Crab Stocks ##
@@ -34,3 +37,16 @@ A general user-guide to the program is under development and will be made availa
 
 ## Development ##
 This software is under development and is not yet intended for general use. If you would like to contribute to the project, please contact [Athol Whitten](mailto:whittena@uw.edu). 
+
+
+<!-- TODO list created by Martell -->
+## TODO List ##
+- [ ] Create makefile for building & installing GMACS (debug & release).
+- [ ] Test makefile on Windows box.
+- [ ] Commandline option for simulation model (-sim seedNo.)
+- [ ] Simulation testing.
+- [ ] Documentation
+	- [ ] Doxygen
+	- [ ] Write up the model description (latex) with all equations/options.
+- [ ] Alternative likelihoods for composition data
+- [ ] Alternative models for time-varying parameters.

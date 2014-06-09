@@ -1658,7 +1658,7 @@ PARAMETER_SECTION
   init_bounded_number_vector lognin_parms(1,nclass,lognin_lbnd,lognin_ubnd,lognin_phz);               ///< Vector of initial N parameters
   init_bounded_vector_vector f_est(1,nfleet_act,1,ncatch_f,0,1,1);                                    ///< Matrix of predicted F values
   init_vector recdev(rstyr,endyr,1);                                                                  ///< Vector of recruitment deviations
-  // TODO: Check recdevs as unbounded parameters, these might be better as bounded parameters.
+  // TODO: Check recdev as unbounded parameters, these might be better as bounded dev vector.
   
   !! check(Madd_parms);
   !! check(Madd_phz);
