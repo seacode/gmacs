@@ -17,10 +17,95 @@ The following is a list of the input data structures used in data file for Gmacs
 	nmature & $m$ & int    & number of maturity states \\
 	nclass & $l$ & int & number of size classes in the model\\
 	ndclass & $l$ & int & number of size classes in the data\\
-	ncol & & int & number of columns in N-matrix (nsex*nshell*nmature*nclass)\\
-	psex & & ivector& starting col pos for sex-specific N\\
-	pshell && ivector& starting col pos for shell-specific N\\
-	pmature &&ivector&starting col pos for mature-specific N\\
+	ncol & & int & number of columns in N-matrix \\
+
+	% Not used anywhere in the code.
+	% psex & & ivector(1,nsex)& starting col pos for sex-specific N\\
+	% pshell && ivector(1,npshell)& starting col pos for shell-specific N\\
+	% pmature &&ivector(1,npmature)&starting col pos for mature-specific N\\
+	% pall&&ivector(1,npmature)& col position for all blocks of N\\
+
+	class\_link & & matrix(1,nclass,1,2)&links between model and data size-classes.\\
 	\hline         
 	\end{tabular}
 \end{table}
+
+
+\paragraph{Indexes}
+For consistency the following indexes are used to describe the various model dimensions:
+
+\begin{description}
+	\item [g] index for group (sex, shell condition, maturity state),
+	\item [h] index for sex,
+	\item [i] index for year,
+	\item [j] index for season or month,
+	\item [k] index for fleet,
+	\item [l] index for length class,
+	\item [m] index for maturity state,
+	\item [n] index for shell condition,
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+  \centering
+\caption{Statistical catch-at-length model used in Gmacs}
+\label{tab:statistical_catch_length_model}
+\tableEq
+    \begin{align}
+        \hline \nonumber \\
+        &\mbox{Estimated parameters} \nonumber\\
+        \Theta&= 
+                (M_0,\ln(\bar{R}),R_\alpha,R_\beta,)\label{T4.1}\\
+        \sigma^2&=\rho /\vartheta^2, \quad
+        \tau^2=(1-\rho)/\vartheta^2\label{T4.2}\\[1ex]
+        %\vartheta^2=\sigma^2+\tau^2, \quad
+        %\rho=\frac{\sigma^2}{\sigma^2+\tau^2}\label{T4.3}\\[1ex]
+        %%
+        %%
+        &\mbox{Unobserved states} \nonumber\\
+        &N_{g,t,l},Z_{g,t,l}    \label{T4.3}\\
+    %%
+    %%    
+    	&\mbox{Recruitment size distribution} \nonumber\\
+    	\alpha &= R_\alpha /R_\beta \\
+    	p(R_l) &= \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x} 
+    	\frac{x_l^{\alpha-1}e^{x_l/R_\beta}}{\Gamma(\alpha)x_l^\alpha}dx\\
+    %%
+    %%      
+        % &\mbox{Initial states} \nonumber\\
+        % %v_a=\left[1+e^{-(\hat{a}-a)/\hat{\gamma}}\right]^{-1}\label{T4.7}\\
+        % N_{t,a}&=\bar{R}e^{\omega_{t-a}} \exp(-M_t)^{(a-1)};\quad t=1;  2\leq a\leq A \label{T4.4}\\
+        % N_{t,a}&=\bar{R}e^{\omega_{t}} ;\quad 1\leq t\leq T;  a=1 \label{T4.5}\\
+        % v_{k,a}&=f(\gamma_k) \label{T4.6}\\
+        % M_t &= M_{t-1} \exp(\varphi_t), \quad t>1 \label{T4.6b}\\
+        % F_{k,t}&=\exp(\digamma_{k,t}) \label{T4.7}\\[1ex]
+        % %%
+        % %%
+        % &\mbox{State dynamics (t$>$1)} \nonumber\\
+        % B_t&=\sum_a N_{t,a}f_a \label{T4.8}\\
+        % Z_{t,a}&=M_t+\sum_k F_{k,t} v_{k,t,a}\label{T4.9}\\
+        % \hat{C}_{k,t}&=\sum _ a\frac {N_{{t,a}}w_{{a}}F_{k,t} v_{{k,t,a}}
+        % \left( 1-{e^{-Z_{t,a}}} \right) }{Z_{t,a}}^{\eta_t} \label{T4.10}\\
+        % %F_{t_{i+1}}= \ F_{t_{i}} -\frac{\hat{C}_t-C_t}{\hat{C}_t'} \label{T4.12}\\
+        % N_{t,a}&=\begin{cases}
+        %     %\dfrac{s_oE_{t-1}}{1+\beta E_{t-1}} \exp(\omega_t-0.5\tau^2) &a=1\\ \\
+        %     N_{t-1,a-1} \exp(-Z_{t-1,a-1}) &a>1\\
+        %     N_{t-1,a} \exp(-Z_{t-1,a}) & a=A
+        % \end{cases}\label{T4.11}\\[1ex]
+        % %%
+        % %%
+        % &\mbox{Recruitment models} \nonumber\\
+        % R_t &= \frac{s_oB_{t-k}}{1+\beta B_{t-k}}e^{\delta_{t}-0.5\tau^2} \quad \mbox{Beverton-Holt} \label{T4.12}\\
+        % R_t &= s_oB_{t-k}e^{-\beta B_{t-k}+\delta_t-0.5\tau^2} \quad \mbox{Ricker} \label{T4.13}\\
+    %%        \mbox{Residuals \& predicted observations} \nonumber\\
+    %%        \epsilon_t=\ln\left(\frac{I_t}{B_t}\right)-\frac{1}{n}\sum_{t \in I_t}\ln\left(\frac{I_t}{B_t}\right)\label{T4.15}\\
+    %%        \hat{A}_{t,a}=\dfrac{N_{t,a}\dfrac{F_tv_a}{Z_{t,a}}\left(1-e^{-Z_{t,a}}\right)}
+    %%        {\sum_a N_{t,a}\dfrac{F_tv_a}{Z_{t,a}}\left(1-e^{-Z_{t,a}}\right)}\label{T4.16}\\
+        \hline \hline \nonumber
+    \end{align}
+
+    \normalEq
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1683,10 +1683,10 @@ PARAMETER_SECTION
   !! checkfile << " All parameters declared" << endl;
 
   // Create holders for parameters estimated via 'theta' object:
-  number logRbar;
-  number M0;
-  number ra;
-  number rbeta;
+  number logRbar;  	///> log of average recruitment.
+  number M0;       	///> initial natural mortality rate.
+  number ra;		///> shape parameter for recruitment distribution
+  number rbeta;		///> rate parameter for recruitment distribution
   
   // Create model vectors, matrices, and arrays:
   3darray  f_all(1,nfleet_act,1,nsex,styr,endyr);              ///< Fishing mortality matrix 
