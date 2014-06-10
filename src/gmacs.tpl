@@ -12,6 +12,8 @@
 //   were adapted from code developed for the NPFMC by Andre Punt (2012), 
 //   and on the 'LSMR' model by Steven Martell (2011).
 //
+//  NOTE: This is current development version. As at 6pm Seattle time, June 6th 2014.
+//
 // =========================================================================================================
 
 GLOBALS_SECTION
@@ -169,7 +171,9 @@ DATA_SECTION
   !! echotxt(ndclass, " Number of size classes for data");
 
   // Determine number of columns for wide N matrix, and positions of sex, shell, and maturity sections.
-  !! int ncol = nsex * nshell * nmature * nclass;
+  int ncol;
+  
+  !! ncol = nsex * nshell * nmature * nclass;
   !! int npshell = nsex * nshell;
   !! int npmature = nsex * nshell * nmature;
 
@@ -1685,36 +1689,34 @@ PARAMETER_SECTION
   number rbeta;
   
   // Create model vectors, matrices, and arrays:
-  matrix  f_all(1,nfleet_act,styr,endyr);                     ///< Fishing mortality matrix 
+  3darray  f_all(1,nfleet_act,1,nsex,styr,endyr);              ///< Fishing mortality matrix 
 
-  matrix  N(rstyr,endyr+1,1,nclass);                          ///< Numbers-at-age matrix
-  matrix  N0(1,nclass*2,1,nclass);                            ///< Equilibrium numbers matrix (calculated)
-  matrix  S(rstyr,endyr,1,nclass);                            ///< Survival matrix (general)
-  3darray S_fleet(1,nfleet_act,styr,endyr,1,nclass);          ///< Survival matrices (one for each distinct fishery)
-  matrix  exp_rate(1,nfleet_act,styr,endyr);                  ///< Exploitation rate matrix
-  matrix  xtrans(1,nclass,1,nclass);                          ///< Simple size-transition matrix for growth checking
-  3darray strans(1,ngrowth_pats,1,nclass,1,nclass);           ///< Size-transition patterns array (one matrix per required pattern)
-  vector  grow_size(1,nclass);                                ///< Size vector (incremented by growth)
-  matrix  molt(1,nmolt_pats,1,nclass);                        ///< Molting probability patterns matrix (one row per required pattern)
-  vector  recdis(1,nclass);                                   ///< Recruitment distribution among size classes (vector)
+  matrix   N(rstyr,endyr+1,1,ncol);                            ///< Numbers-at-age matrix
+  matrix   N0(1,nclass*2,1,ncol);                              ///< Equilibrium numbers matrix (calculated) 2*nclass rows to try and reach approximate-equillibrium point
+  matrix   S(rstyr,endyr,1,ncol);                              ///< Survival matrix (general)
+  3darray  S_fleet(1,nfleet_act,styr,endyr,1,ncol);            ///< Survival matrices (one for each distinct fishery)
+  matrix   exp_rate(1,nfleet_act,styr,endyr);                  ///< Exploitation rate matrix
+  matrix   xtrans(1,nclass,1,nclass);                          ///< Simple size-transition matrix for growth checking
+  3darray  strans(1,ngrowth_pats,1,nclass,1,nclass);           ///< Size-transition patterns array (one matrix per required pattern)
+  matrix   grow_size(1,nsex,1,nclass);                         ///< Size vector (incremented by growth)
+  matrix   molt(1,nmolt_pats,1,nclass);                        ///< Molting probability patterns matrix (one row per required pattern)
+  vector   recdis(1,nclass);                                   ///< Recruitment distribution among size classes (vector)
 
-  3darray selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
-  vector  surveyq(1,nsurvey);                                 ///< Survey q vector
-  matrix  selex(1,nselex_pats,1,nclass);                      ///< Selectivity patterns matrix (one row per required pattern)
-  matrix  reten(1,nreten_pats,1,nclass);                      ///< Retention patterns matrix (one row per required pattern)
+  3darray  selex_survey(1,nsurvey,styr,endyr+1,1,nclass);      ///< Survey selectivity array
+  vector   surveyq(1,nsurvey);                                 ///< Survey q vector
+  matrix   selex(1,nselex_pats,1,nclass);                      ///< Selectivity patterns matrix (one row per required pattern)
+  matrix   reten(1,nreten_pats,1,nclass);                      ///< Retention patterns matrix (one row per required pattern)
 
-  // TODO: The above matrix was retain_males in AEP code. Check if need sex-distinct object(s) for multi-sex model.
-
-  3darray fleet_sf_pred(1,nfleet,styr,endyr,1,nclass);        ///< Predicted catches (numbers) by class
-  matrix  catch_biom_pred(1,nfleet,styr,endyr);               ///< Predicted catch weights
-  matrix  catch_num_pred(1,nfleet,styr,endyr);                ///< Predicted catch numbers
+  3darray  fleet_sf_pred(1,nfleet,styr,endyr,1,nclass);        ///< Predicted catches (numbers) by class
+  matrix   catch_biom_pred(1,nfleet,styr,endyr);               ///< Predicted catch weights
+  matrix   catch_num_pred(1,nfleet,styr,endyr);                ///< Predicted catch numbers
   
-  3darray sf_survey_pred(1,nsurvey,1,nsf_survey,1,nclass);    ///< Survey SF from the model
-  matrix  survey_biom_pred(1,nsurvey,1,nobs_survey);          ///< Predicted survey weights
-  matrix  survey_num_pred(1,nsurvey,1,nobs_survey);           ///< Predicted survey numbers
-  vector  q_effort(1,nfleet_act);                             ///< Effort q vector
-  vector  M(rstyr,endyr);                                     ///< Natural mortality
-  vector  f_direct(styr,endyr);                               ///< Fishing mortality
+  3darray  sf_survey_pred(1,nsurvey,1,nsf_survey,1,nclass);    ///< Survey SF from the model
+  matrix   survey_biom_pred(1,nsurvey,1,nobs_survey);          ///< Predicted survey weights
+  matrix   survey_num_pred(1,nsurvey,1,nobs_survey);           ///< Predicted survey numbers
+  vector   q_effort(1,nfleet_act);                             ///< Effort q vector
+  vector   M(rstyr,endyr);                                     ///< Natural mortality
+  vector   f_direct(styr,endyr);                               ///< Fishing mortality
 
   // Values related to the SR relationship
   number f_multi;                                             ///< Passed F multiplier

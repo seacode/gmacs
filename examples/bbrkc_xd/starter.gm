@@ -1,4 +1,7 @@
-# Gmacs Starter File Version 1.02
+#========================================================================================================
+# Gmacs Starter File Version 1.1: BBRKC Example
+#========================================================================================================
+
 bbrkc.dat
 bbrkc.ctl
 growth.dat
@@ -9,3 +12,4 @@ growth.dat
 0	# Read growth transition matrix data file (0 no, 1 yes)
 
 999 # EOF check.
+
