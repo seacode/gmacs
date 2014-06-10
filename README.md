@@ -51,6 +51,8 @@ This software is under development and is not yet intended for general use. If y
 - [ ] Test scripts with simulated data and examples
 
 #### Gmacs Executable
+- [ ] Get code to compile.
+- [ ] Document data structures.
 - [ ] Implement alternative likelihoods for composition data
 - [ ] Develop alternative models for time-varying parameters
 - [ ] Implement spline functions as alternative to 'piecewise linear' functions in current model.

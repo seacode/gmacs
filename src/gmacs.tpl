@@ -1791,18 +1791,21 @@ FUNCTION Set_Effort
   for (ifl=1; ifl<=nfleet_act; ifl++)
   {
     count = 0;
-    for (iyear=styr; iyear<=endyr; iyear++)
+    for( i = 1; i <= nsex; i++ )
     {
-      if (effort(ifl,iyear) > 0)
-      {
-        if (f_new(ifl,1) == 0 || iyear < f_new(ifl,2) || iyear > f_new(ifl,3))
-        { 
-          count++; 
-          f_all(ifl,iyear) = f_est(ifl,count); 
-        }
-        else
-          f_all(ifl,iyear) = -100; // not sure why this is needed?
-      }  
+	    for (iyear=styr; iyear<=endyr; iyear++)
+	    {
+	      if (effort(ifl,iyear) > 0)
+	      {
+	        if (f_new(ifl,1) == 0 || iyear < f_new(ifl,2) || iyear > f_new(ifl,3))
+	        { 
+	          count++; 
+	          f_all(ifl,i,iyear) = f_est(ifl,count); 
+	        }
+	        else
+	          f_all(ifl,i,iyear) = -100; // not sure why this is needed?  Me either SM
+	      }  
+	    }
     }
   }  
 
@@ -1811,20 +1814,28 @@ FUNCTION Set_Effort
   {
     if (f_new(ifl,1) > 0) // Not used for BBRKC case...
     {
-      ratio = 0; ratio_2 = 0;
-      for (iyear=f_new(ifl,4); iyear<=f_new(ifl,5); iyear++)
-      {
-        if (effort(ifl,iyear) > 0)
-        {
-          ratio += -1.0*log(1.0-f_all(ifl,iyear))/effort(ifl,iyear);
-          ratio_2 += 1;
-        }
-      }
-      delta = ratio/ratio_2;
-      for (iyear=f_new(ifl,2); iyear<=f_new(ifl,3); iyear++)
-        f_all(ifl,iyear) = 1.0-mfexp(-delta*effort(ifl,iyear));
+
+    	for( i = 1; i <= nsex; i++ )
+    	{
+			ratio = 0; ratio_2 = 0;
+			for (iyear=f_new(ifl,4); iyear<=f_new(ifl,5); iyear++)
+			{
+			if (effort(ifl,iyear) > 0)
+			{
+			  ratio += -1.0*log(1.0-f_all(ifl,i,iyear))/effort(ifl,iyear);
+			  ratio_2 += 1;
+			}
+			}
+			delta = ratio/ratio_2;
+
+			for (iyear=f_new(ifl,2); iyear<=f_new(ifl,3); iyear++)
+			{
+				f_all(ifl,i,iyear) = 1.0-mfexp(-delta*effort(ifl,iyear));
+			}
+
+    	} // nsex
     }
-  }
+  } //nfleet
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Selectivity
