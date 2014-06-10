@@ -1,0 +1,26 @@
+%!TEX root = ModelDescription.tex
+\section{Data structures}
+The following is a list of the input data structures used in data file for Gmacs.
+
+\begin{table}[!tbh]
+	\caption{Input data structures}\label{Tab:inputDataStructures}
+	\begin{tabular}{lcll}
+	\hline
+	Variable & Symbol & Type & Description \\
+	\hline
+	styr & $t$      & int  & Start year  \\
+	endyr & $t$     & int  & End year    \\
+	tstep & NA    & double & time step \\
+	ndata &  &  int        & number of data groups \\
+	nsex  & $s$   & int    & number of sexes \\
+	nshell & $v$  & int    & number of shell conditions\\
+	nmature & $m$ & int    & number of maturity states \\
+	nclass & $l$ & int & number of size classes in the model\\
+	ndclass & $l$ & int & number of size classes in the data\\
+	ncol & & int & number of columns in N-matrix (nsex*nshell*nmature*nclass)\\
+	psex & & ivector& starting col pos for sex-specific N\\
+	pshell && ivector& starting col pos for shell-specific N\\
+	pmature &&ivector&starting col pos for mature-specific N\\
+	\hline         
+	\end{tabular}
+\end{table}
