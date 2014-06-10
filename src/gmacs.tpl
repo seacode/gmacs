@@ -12,7 +12,7 @@
 //   were adapted from code developed for the NPFMC by Andre Punt (2012), 
 //   and on the 'LSMR' model by Steven Martell (2011).
 //
-//  NOTE: This is current development version. As at 6pm Seattle time, June 6th 2014.
+//  NOTE: This is current development version. As at June 10th 2014.
 //
 // =========================================================================================================
 
@@ -1779,7 +1779,10 @@ FUNCTION Calculate_Bio_Pars
   for(int iclass=1; iclass<=nclass; iclass++)
   {
     szbnd = size(iclass) + (binw/2) - size(1);
-    recdis(iclass) =  pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
+    recdis(iclass) = pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
+    
+    // TODO: Try alternative recdis calculation below.
+    // recdis(iclass) = cumd_gamma(size(iclass) + binw/2, ralpha) - cumd_gamma(size(iclass) - binw/2, alpha);
   }
   recdis /= sum(recdis);   // Standardize so each row sums to 1.0
 
