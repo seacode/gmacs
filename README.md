@@ -41,16 +41,15 @@ This software is under development and is not yet intended for general use. If y
 ### TODO List ###
 
 #### Project
-- [ ] Create makefile for building & installing Gmacs (debug & release).
-- [ ] Test makefile on Windows box.
-- [ ] Commandline option for simulation model (-sim seedNo.)
-- [ ] Simulation testing.
-- [ ] Documentation
-	- [ ] Doxygen
-	- [ ] Write up the model description (Latex) with all equations/options.
+- [ ] Create makefile for building and installing Gmacs (debug & release)
+	- [ ] Test makefile on Windows box
+- [ ] Create commandline option for simulation model (-sim seedNo.)
+- [ ] Perform simulation testing
+- [ ] Update documentation
+	- [ ] Extend existing Doxygen comments and create Doxygen output
+	- [ ] Continue working on Gmacs Wiki, parallel with user-guide
 
 #### Gmacs Executable
-- [ ] 
 - [ ] Implement alternative likelihoods for composition data
 - [ ] Develop alternative models for time-varying parameters
 - [ ] Implement spline functions as alternative to 'piecewise linear' functions in current model.
@@ -59,4 +58,5 @@ This software is under development and is not yet intended for general use. If y
 - [x] Implement the capacity to change functional form for selectivity (and other factors) over time
 - [ ] Implement the capacity for penalties to be placed on the extent to which parameters change over time
 - [ ] Implement time-varying recruitment using deviations from a SR-relationship as alternative to using deviations from a mean
-- [ ] 
+- [ ] Allow time-varying M to depdend on maturity state *and* length
+- [ ] Implement **hybrid** method as an option for calculating annual fishing mortality rates
