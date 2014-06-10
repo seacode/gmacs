@@ -1823,7 +1823,7 @@ FUNCTION double sd_length(const dvector& pobs);
 
 // ---------------------------------------------------------------------------------------------------------
  /** Returns normalized residuals of composition data given sample size. */
-FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m);
+FUNCTION dvector norm_res( dvector& pred, dvector& obs,double m);
   RETURN_ARRAYS_INCREMENT();
   pred += incd;
   obs  += incd;
@@ -1834,7 +1834,7 @@ FUNCTION dvector norm_res(const dvector& pred,const dvector& obs,double m);
 
 // ---------------------------------------------------------------------------------------------------------
  /** Computes standard deviation of normalized residuals given observed and predicted proportions. */
-FUNCTION double sd_norm_res(const dvar_vector& pred,const dvector& obs,double m);
+FUNCTION double sd_norm_res(const dvar_vector& pred, dvector& obs,double m);
   RETURN_ARRAYS_INCREMENT();
   double sdnr;
   dvector pp = value(pred)+ incd;
@@ -1844,7 +1844,7 @@ FUNCTION double sd_norm_res(const dvar_vector& pred,const dvector& obs,double m)
 
 // ---------------------------------------------------------------------------------------------------------
  /** Computes effective sample size. */
-FUNCTION double eff_N(const dvector& pobs, const dvar_vector& phat);
+FUNCTION double eff_N( dvector& pobs,  dvar_vector& phat);
   pobs += incd;
   phat += incd;
   dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
