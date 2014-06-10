@@ -48,5 +48,10 @@ This software is under development and is not yet intended for general use. If y
 - [ ] Documentation
 	- [ ] Doxygen
 	- [ ] Write up the model description (latex) with all equations/options.
-- [ ] Alternative likelihoods for composition data
+- [ ] Alternative likelihoods for composition data.
 - [ ] Alternative models for time-varying parameters.
+- [ ] Addition of cubic splines
+	- [ ] splines for selectivity,
+	- [ ] splines for initial size-distribution.
+	- [ ] splines of time-varying parameters.
+- [ ] Test scripts with simulated data and examples
