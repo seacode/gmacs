@@ -4,8 +4,8 @@ This is the pilot release of Gmacs. Currently posted source files are compilable
 
 ## Table of contents ##
 - [TODO List](#todo-list)
-- [Introduction](#intro)
-- [Input File Structure](#input)
+- [Introduction](#generalized-modeling-for-alaskan-crab-stocks)
+- [Input File Structure](#input-file-structure)
 
 ## Generalized Modeling for Alaskan Crab Stocks ##
 This repository holds source code, instructions, examples, and associated scripts for **Gmacs** (Generalized Modeling for Alaskan Crab Stocks), a generic size-based stock assessment model. 
@@ -37,11 +37,10 @@ A general user-guide to the program is under development in parallel with the Gm
 ## Development ##
 This software is under development and is not yet intended for general use. If you would like to contribute to the project, please contact [Athol Whitten](mailto:whittena@uw.edu). 
 
-
 <!-- TODO list created by Martell and Whitten -->
-## TODO List ##
+### TODO List ###
 
-# Project
+#### Project
 - [ ] Create makefile for building & installing Gmacs (debug & release).
 - [ ] Test makefile on Windows box.
 - [ ] Commandline option for simulation model (-sim seedNo.)
@@ -50,9 +49,14 @@ This software is under development and is not yet intended for general use. If y
 	- [ ] Doxygen
 	- [ ] Write up the model description (Latex) with all equations/options.
 
-# Gmacs Executable
+#### Gmacs Executable
 - [ ] 
 - [ ] Implement alternative likelihoods for composition data
 - [ ] Develop alternative models for time-varying parameters
 - [ ] Implement spline functions as alternative to 'piecewise linear' functions in current model.
 - [ ] Consider cumulative normal distribution (and/or others) as alternatives to gamma function for size-at-recruitment and/or growth increment.
+- [ ] Incorporate option to use tagging data to estimate growth.
+- [x] Implement the capacity to change functional form for selectivity (and other factors) over time
+- [ ] Implement the capacity for penalties to be placed on the extent to which parameters change over time
+- [ ] Implement time-varying recruitment using deviations from a SR-relationship as alternative to using deviations from a mean
+- [ ] 
