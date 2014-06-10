@@ -41,11 +41,11 @@ RM=rm -f
 ifeq ($(OPT),TRUE)
   CC_OPT = -O3 -DOPT_LIB
   LDFLAGS = -O3 
-  LDLIBS  = $(ADMB_HOME)/lib/libadmbo.a $(ADMB_HOME)/contrib/lib/libcontribo.a ../../CSTAR/src/cstar.so
+  LDLIBS  = $(ADMB_HOME)/lib/libadmbo.a $(ADMB_HOME)/contrib/lib/libcontribo.a ../../CSTAR/src/libcstar.a
 else
   CC_OPT = -O3 -DSAFE_ALL
   LDFLAGS = -O3 -g
-  LDLIBS  = $(ADMB_HOME)/lib/libadmb.a $(ADMB_HOME)/contrib/lib/libcontrib.a ../../CSTAR/src/cstar.so
+  LDLIBS  = $(ADMB_HOME)/lib/libadmb.a $(ADMB_HOME)/contrib/lib/libcontrib.a ../../CSTAR/src/libcstar.a
 endif
 
 # set general compiler flags

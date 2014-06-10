@@ -20,7 +20,7 @@ GLOBALS_SECTION
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
-  #include <../../cstar/src/cstar.h>
+  #include "../../CSTAR/src/cstar.h"
  
   time_t start,finish;
   long hour,minute,second;
@@ -1745,18 +1745,18 @@ PARAMETER_SECTION
 // =========================================================================================================
 PROCEDURE_SECTION
   Calculate_Bio_Pars();
-  Set_Effort();
-  Set_Selectivity();
-  Set_Survival();
-  Set_Growth();
-  Set_Molt_Prob();
-  Initial_Size_Structure();
-  Update_Population(); 
-  Get_Survey();
-  Get_Catch_Pred();
-  Get_Obj_Function();
-  if (last_phase()) 
-    Get_Dependent_Vars();
+  //Set_Effort();
+  //Set_Selectivity();
+  //Set_Survival();
+  //Set_Growth();
+  //Set_Molt_Prob();
+  //Initial_Size_Structure();
+  //Update_Population(); 
+  //Get_Survey();
+  //Get_Catch_Pred();
+  //Get_Obj_Function();
+  //if (last_phase()) 
+  //  Get_Dependent_Vars();
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Calculate_Bio_Pars

@@ -1,6 +1,6 @@
 # Name of executable.
 OUTPUT:=gmacs
-
+LIBINCLUDE = ../../CSTAR/src
 # Global source files from current dir.
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx )
 
@@ -15,21 +15,22 @@ CXXFLAGS:=-g -Wall -D__GNUDOS__ -Dlinux -DUSE_LAPLACE  \
 	      -I.                                          \
 	      -I$(ADMB_HOME)/include                       \
 	      -I$(ADMB_HOME)/contrib/include               \
+	      -I$(LIBINCLUDE)                              \
 	      -I/usr/include/libxml2
-LDFLAGS:=
+LDFLAGS:= 
 
 # Release specific flags.
 RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
 RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmbo.a            \
 	              $(ADMB_HOME)/contrib/lib/libcontribo.a \
-	              ../../CSTAR/src/cstar.so               \
+	              $(LIBINCLUDE)/libcstar.a               \
 	              -lxml2
 
 # Debug specific flags.
 DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
 DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb.a               \
 	            $(ADMB_HOME)/contrib/lib/libcontrib.a    \
-	            ../../CSTAR/src/cstar.so                 \
+	            $(LIBINCLUDE)/libcstar.a                 \
 	            -lxml2
 
 # Name of text file containing build number.
@@ -43,7 +44,7 @@ RELEASE_OBJS:=$(addprefix build/release/,$(addsuffix .o,$(BASEFILES)))
 DEPFILES:=$(addprefix build/deps/,$(addsuffix .d,$(BASEFILES)))
 
 # Default to release build.
-all: $(OUTPUT).cpp release
+all: $(OUTPUT).cpp debug
 
 $(OUTPUT).cpp: $(OUTPUT).tpl
 	$(ADMB_HOME)/bin/tpl2cpp $(OUTPUT)
