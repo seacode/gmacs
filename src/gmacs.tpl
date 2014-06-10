@@ -1816,7 +1816,7 @@ FUNCTION Set_Effort
       {
         if (effort(ifl,iyear) > 0)
         {
-          ratio += -log(1.0-f_all(ifl,iyear))/effort(ifl,iyear);
+          ratio += -1.0*log(1.0-f_all(ifl,iyear))/effort(ifl,iyear);
           ratio_2 += 1;
         }
       }
