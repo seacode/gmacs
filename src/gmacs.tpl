@@ -1683,10 +1683,10 @@ PARAMETER_SECTION
   !! checkfile << " All parameters declared" << endl;
 
   // Create holders for parameters estimated via 'theta' object:
-  number logRbar;  	///> log of average recruitment.
-  number M0;       	///> initial natural mortality rate.
-  number ra;		///> shape parameter for recruitment distribution
-  number rbeta;		///> rate parameter for recruitment distribution
+  number logRbar;   ///> log of average recruitment.
+  number M0;        ///> initial natural mortality rate.
+  number ra;    ///> shape parameter for recruitment distribution
+  number rbeta;   ///> rate parameter for recruitment distribution
   
   // Create model vectors, matrices, and arrays:
   matrix  f_all(1,nfleet_act,styr,endyr);                     ///< Fishing mortality matrix 
@@ -1793,21 +1793,18 @@ FUNCTION Set_Effort
   for (ifl=1; ifl<=nfleet_act; ifl++)
   {
     count = 0;
-    for( i = 1; i <= nsex; i++ )
+    for (iyear=styr; iyear<=endyr; iyear++)
     {
-	    for (iyear=styr; iyear<=endyr; iyear++)
-	    {
-	      if (effort(ifl,iyear) > 0)
-	      {
-	        if (f_new(ifl,1) == 0 || iyear < f_new(ifl,2) || iyear > f_new(ifl,3))
-	        { 
-	          count++; 
-	          f_all(ifl,i,iyear) = f_est(ifl,count); 
-	        }
-	        else
-	          f_all(ifl,i,iyear) = -100; // not sure why this is needed?  Me either SM
-	      }  
-	    }
+      if (effort(ifl,iyear) > 0)
+      {
+        if (f_new(ifl,1) == 0 || iyear < f_new(ifl,2) || iyear > f_new(ifl,3))
+        { 
+          count++; 
+          f_all(ifl,iyear) = f_est(ifl,count); 
+        }
+        else
+          f_all(ifl,iyear) = -100; // not sure why this is needed?
+      }  
     }
   }  
 
@@ -1816,28 +1813,20 @@ FUNCTION Set_Effort
   {
     if (f_new(ifl,1) > 0) // Not used for BBRKC case...
     {
-
-    	for( i = 1; i <= nsex; i++ )
-    	{
-			ratio = 0; ratio_2 = 0;
-			for (iyear=f_new(ifl,4); iyear<=f_new(ifl,5); iyear++)
-			{
-			if (effort(ifl,iyear) > 0)
-			{
-			  ratio += -1.0*log(1.0-f_all(ifl,i,iyear))/effort(ifl,iyear);
-			  ratio_2 += 1;
-			}
-			}
-			delta = ratio/ratio_2;
-
-			for (iyear=f_new(ifl,2); iyear<=f_new(ifl,3); iyear++)
-			{
-				f_all(ifl,i,iyear) = 1.0-mfexp(-delta*effort(ifl,iyear));
-			}
-
-    	} // nsex
+      ratio = 0; ratio_2 = 0;
+      for (iyear=f_new(ifl,4); iyear<=f_new(ifl,5); iyear++)
+      {
+        if (effort(ifl,iyear) > 0)
+        {
+          ratio += -log(1.0-f_all(ifl,iyear))/effort(ifl,iyear);
+          ratio_2 += 1;
+        }
+      }
+      delta = ratio/ratio_2;
+      for (iyear=f_new(ifl,2); iyear<=f_new(ifl,3); iyear++)
+        f_all(ifl,iyear) = 1.0-mfexp(-delta*effort(ifl,iyear));
     }
-  } //nfleet
+  }
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Selectivity
