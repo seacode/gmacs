@@ -1976,7 +1976,7 @@ FUNCTION dvar_vector Get_Reten(const int& ireten);
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Survival
-  int iyr,iclass,ifl,ipnt;
+  int iyr,ifl,ipnt;
   // Specify natural mortality:
   M = M0;
   for (iyr=styr; iyr<=endyr; iyr++) 
@@ -1995,7 +1995,7 @@ FUNCTION Set_Survival
     {
       ipnt = selex_fleet_pnt(ifl,iyr);
       S_fleet(ifl,iyr) = (1.0-selex(ipnt) * f_all(ifl,iyr));
-      exp_rate(ifl,iyr) = f_all(ifl,iyr);
+      exp_rate(ifl,iyr) = f_all(ifl,1,iyr);
       S(iyr) = elem_prod(S(iyr),S_fleet(ifl,iyr));
     } 
   }
@@ -2044,7 +2044,7 @@ FUNCTION dvar_matrix Get_Growth(const int& igrow);
       {
         dvariable szbnd;
         dvariable growsum = 0;
-        dvariable galpha = (grow_size(iclass) - (size(iclass)-(binw/2))) / gbeta;
+        dvariable galpha = (grow_size(1,iclass) - (size(iclass)-(binw/2))) / gbeta;
         
         for(int jclass=iclass; jclass<=(iclass+min(10,nclass-iclass)); jclass++) // Growth truncated to maximum of 10 size bins.
         {
@@ -2404,14 +2404,14 @@ FUNCTION Get_Priors
     {
       if (effort(ifl,iyr) > 0) 
       { 
-        mean_F += f_all(ifl,iyr); 
+        mean_F += f_all(ifl,1,iyr); 
         nn++; 
       }
       mean_F /= nn;
     }
     for (iyr=styr;iyr<=endyr;iyr++) 
       if (effort(ifl,iyr) > 0) 
-        prior_val(iprior) += square(f_all(ifl,iyr)-mean_F);
+        prior_val(iprior) += square(f_all(ifl,1,iyr)-mean_F);
   } 
   iprior++;
   // Prior on Rec Devs
@@ -2457,7 +2457,7 @@ FUNCTION Get_Dependent_Vars
   for (int iyr=styr; iyr<=endyr; iyr++)
     {
       int ipnt = selex_fleet_pnt(1,iyr);
-      mbio(iyr) += N(iyr) * elem_prod(fecundity,(1.0-selex(ipnt) * f_all(1,iyr))) * mfexp(-(catch_time(1,iyr)+2/12) * M(iyr));
+      mbio(iyr) += N(iyr) * elem_prod(fecundity,(1.0-selex(ipnt) * f_all(1,1,iyr))) * mfexp(-(catch_time(1,iyr)+2/12) * M(iyr));
     } 
 
   //TODO: Add other variable calculations here: Such as female biomass, spawning depletion, others?
