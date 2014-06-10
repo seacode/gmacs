@@ -1806,17 +1806,17 @@ FINAL_SECTION
 // TEMPORARY FUNCTIONS TO BE MOVED TO CSTAR IF REQUIRED:
 // ---------------------------------------------------------------------------------------------------------
  /** Returns mean length for variable objects (model estimates) */
-FUNCTION double mn_length(_CONST dvector& pobs);
+FUNCTION double mn_length(const dvector& pobs);
   double mobs = (pobs*mean_length);
   return mobs;
 
-FUNCTION double mn_length(_CONST dvar_vector& pobs)
+FUNCTION double mn_length(const dvar_vector& pobs)
   double mobs = value(pobs*mean_length);
   return mobs;
 
 // ---------------------------------------------------------------------------------------------------------
  /** Returns standard deviation of length */
-FUNCTION double sd_length(_CONST dvector& pobs);
+FUNCTION double sd_length(const dvector& pobs);
   double mobs = (pobs*length);
   double stmp = sqrt((elem_prod(mean_length,mean_length)*pobs) - mobs*mobs);
   return stmp;
@@ -1844,7 +1844,7 @@ FUNCTION double sd_norm_res(const dvar_vector& pred,const dvector& obs,double m)
 
 // ---------------------------------------------------------------------------------------------------------
  /** Computes effective sample size. */
-FUNCTION double eff_N(_CONST dvector& pobs, _CONST dvar_vector& phat);
+FUNCTION double eff_N(const dvector& pobs, const dvar_vector& phat);
   pobs += incd;
   phat += incd;
   dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
