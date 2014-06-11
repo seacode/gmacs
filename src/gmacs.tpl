@@ -1,4 +1,4 @@
-// =========================================================================================================                                   
+// ==================================================================================== //
 //   Gmacs: Generalized Modeling for Alaskan Crab Stocks.
 //
 //   Authors: Athol Whitten and Jim Ianelli
@@ -14,7 +14,16 @@
 //
 //  NOTE: This is current development version. As at 6pm Seattle time, June 6th 2014.
 //
-// =========================================================================================================
+//  INDEXES:
+//    g = group
+//    h = sex
+//    i = year
+//    j = time step (years)
+//    k = gear or fleet
+//    l = index for length class
+//    m = index for maturity state
+//    n = index for shell condition.
+// ==================================================================================== //
 
 GLOBALS_SECTION
   #include <admodel.h>
@@ -1763,9 +1772,15 @@ PARAMETER_SECTION
 
 // =========================================================================================================
 PROCEDURE_SECTION
-  Calculate_Bio_Pars();
+  initialize_model_parameters();
+
+  fishing_fleet_dynamics();
+
+
+
   calc_recruitment_size_distribution();
   //Set_Effort();
+
   //Set_Selectivity();
   //Set_Survival();
   //Set_Growth();
@@ -1778,11 +1793,16 @@ PROCEDURE_SECTION
   //if (last_phase()) 
   //  Get_Dependent_Vars();
 
-// ---------------------------------------------------------------------------------------------------------
-FUNCTION Calculate_Bio_Pars
- 
 
-  // Get parameters from theta control matrix:
+
+
+
+  /**
+   * @brief Initialize model parameters
+   * @details Set global variable equal to the estimated parameter vectors.
+   */
+FUNCTION initialize_model_parameters
+   // Get parameters from theta control matrix:
   M0      = theta_parms(1);
   logRbar = theta_parms(2);
   ra      = theta_parms(3);
@@ -1791,35 +1811,61 @@ FUNCTION Calculate_Bio_Pars
   // Placeholder to get weight at length vector
   // weight() = size * parameters(a,b)
 
+
+  /**
+   * @brief Calculate selectivities and fishing mortality
+   * @details This function calls two sub-functions to calculate
+   * the selectivity of each fishing fleet, and the survey fleets if
+   * applicable.  The second function then calculates the size-specific 
+   * fishing mortality rates based either on direct estimation of annual
+   * F parameters, or conditional on the catch, or conditional on fishing
+   * effort data in the data file.
+   * 
+   * For the directed fisheries, the catch equation for a specific gear
+   * \f$k\f$ can be written as:
+   * \f{eqnarray*}{
+   * 	C_{k,t} &=& \sum_l \frac{N_l F_{k,t} v_{k,l} (1-e^{-Z_l})}{Z_l}
+   * 	Z_l &=& M_l + \sum_k F_{k,t} v_{k,l}
+   * 	v_{k,l} &=& s_l[r_l+(1-r_l)\lambda]
+   * \f}
+   * 
+   */
+FUNCTION fishing_fleet_dynamics
+	// Calculate Selectivities
+	
+
+
+	// Calculate annual F's and size-specific f's.
+
+
+
+
+
   /**
    * @brief calculate size distribution for new recuits.
    * @details Based on the gamma distribution, calculates the probability
    * of a new recruit being in size-interval size
-   * 
-   * 
    */
 FUNCTION calc_recruitment_size_distribution
-  // Get fraction recruiting to each size class (gamma function):
-  dvariable szbnd;
+  //dvariable szbnd;
   dvariable ralpha = ra / rbeta;
-  COUT(ralpha);
-  COUT(ra);
-  COUT(rbeta);
-  COUT(size);
+
   for(int iclass=1; iclass<=nclass; iclass++)
   {
-    szbnd = size(iclass) + (binw/2) - size(1);
-    recdis(iclass) =  pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
+    // szbnd = size(iclass) + (binw/2) - size(1);
+    // recdis(iclass) =  pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
 
-    dvariable alpha = 0.8;
     dvariable x2 = (size(iclass)+0.5*binw) / rbeta;
     dvariable x1 = (size(iclass)-0.5*binw) / rbeta;
     recdis(iclass) = cumd_gamma(x2, ralpha) 
                    - cumd_gamma(x1, ralpha);
   }
   recdis /= sum(recdis);   // Standardize so each row sums to 1.0
-  COUT(recdis)
-  exit(1);
+  
+
+
+
+
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Effort
   f_all.initialize(); // Initialize all Fs to zero
@@ -2039,8 +2085,33 @@ FUNCTION Set_Survival
     } 
   }
 
-// ---------------------------------------------------------------------------------------------------------
+
+
+
+
+
+  /**
+   * @brief calculates the molt increments based on growth parameters
+   * @details Linear function to predict the mean molt increment versus size.
+   * This function assumes that the molt increment increases linearly with the 
+   * initial size of the animal.  This is based on equation T2.6
+   * 
+   * @author Steve Martell
+   * Growth parameters are vector gtrans_parms(1,ngrowth_pars)
+   * @return void
+   */
+FUNCTION calc_molt_increment
+	int l;
+
+	for( l = 1; l <= nclass; l++ )
+	{
+		//a_hi(g,l) = gtrans_params(1)
+	}
+
+
+
 FUNCTION Set_Growth
+  
   strans.initialize();
   // Loop over growth patterns and get 'strans' matrix for each:
   for (int igrow=1; igrow<=ngrowth_pats; igrow++)

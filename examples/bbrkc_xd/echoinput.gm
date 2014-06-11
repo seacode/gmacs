@@ -1,10 +1,10 @@
 Gmacs_V1.05_2014/03/31_by_Athol_Whitten_and_Jim_Ianelli_using_ADMB_11.1
-Wed Jun 11 08:56:29 2014
+Wed Jun 11 15:35:31 2014
 
  Start reading starter file
 bbrkc.dat	data file
 bbrkc.ctl	control file
-1	 display detail
+0	 display detail
 5	 final phase
 0	 use parameter in file (*.pin)
 0	 read growth transition matrix data file

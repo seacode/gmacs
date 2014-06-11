@@ -56,7 +56,8 @@ For consistency the following indexes are used to describe the various model dim
         \hline \nonumber \\
         &\mbox{Estimated parameters} \nonumber\\
         \Theta&= 
-                (M_0,\ln(\bar{R}),R_\alpha,R_\beta,)\label{T4.1}\\
+                (M_0,\ln(\bar{R}),R_\alpha,R_\beta, 
+                \alpha_h, \beta_h,b_h)\label{T4.1}\\
         \sigma^2&=\rho /\vartheta^2, \quad
         \tau^2=(1-\rho)/\vartheta^2\label{T4.2}\\[1ex]
         %\vartheta^2=\sigma^2+\tau^2, \quad
@@ -70,9 +71,15 @@ For consistency the following indexes are used to describe the various model dim
     	&\mbox{Recruitment size distribution} \nonumber\\
     	\alpha &= R_\alpha /R_\beta \\
     	p(R_l) &= \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x} 
-    	\frac{x_l^{\alpha-1}e^{x_l/R_\beta}}{\Gamma(\alpha)x_l^\alpha}dx\\
+    	\frac{x_l^{\alpha-1}e^{x_l/R_\beta}}{\Gamma(\alpha)x_l^\alpha}dx 
+        \label{T4.4}\\
     %%
-    %%      
+    %%  
+        &\mbox{Molt increment \& size transition} \nonumber\\  
+        a_{h,l} &= \alpha_h + \beta_h x_l \label{T4.5} \\
+        p(x_l,x_{l'})_h &= \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x}
+        \frac{ x_l^{a_{h,l}-1} e^{x_l/b_h} }
+        { \Gamma(a_{h,l}) x_l^{a_{h,l}} } dx \label{T4.6} \\
         % &\mbox{Initial states} \nonumber\\
         % %v_a=\left[1+e^{-(\hat{a}-a)/\hat{\gamma}}\right]^{-1}\label{T4.7}\\
         % N_{t,a}&=\bar{R}e^{\omega_{t-a}} \exp(-M_t)^{(a-1)};\quad t=1;  2\leq a\leq A \label{T4.4}\\
