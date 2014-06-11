@@ -519,8 +519,5 @@ NMFS_Trawl:BSFRF
 0 # Number of lines of mark data to read
 0 # Number of lines of recapture data to read
 
-<<<<<<< HEAD
+
 999 # EOF check.																																						
-=======
-999 # EOF check.																																						
->>>>>>> JimsDev

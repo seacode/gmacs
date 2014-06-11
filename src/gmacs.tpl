@@ -35,6 +35,13 @@ GLOBALS_SECTION
   #define REPORT(object) report << #object "\n" << object << endl;
 
   /**
+   * \def COUT(object)
+   * Prints object to the screen at run time.
+   */
+   #undef COUT
+   #define COUT(object) cout<< #object "\n" << object <<endl;
+
+  /**
   \def echo(object)
   Prints name and value of \a object on echoinput %ofstream file.
   */
@@ -196,7 +203,7 @@ DATA_SECTION
   // ......................................................................    
   // Initialize class link matrix and fill as necessary:
   matrix class_link(1,nclass,1,2);      ///< Matrix of links between model and data size-classes
- 
+  
   // If number of data classes is not equal to, or a factor of model classes, read class link matrix from data file.
  LOC_CALCS  
   double class_div = double(ndclass)/double(nclass);
@@ -241,7 +248,7 @@ DATA_SECTION
   // NOTE: Each 'data component' needs to be indexed separately, for input data file indexing.
   
   init_imatrix fleet_control(1,ndata,1,4);    ///< Fleet control matrix
-
+  !! COUT(fleet_control)
   int nfleet_ret;                             ///< Number of fleets for retained catch data
   int nfleet_dis;                             ///< Number of fleets for discarded catch data (with link to above retained catch)
   int nfleet_byc;                             ///< Number of fleets for bycatch data only
@@ -289,12 +296,13 @@ DATA_SECTION
 
   // ......................................................................
   // Get data group numbers for fishing, active, and survey fleets:
-
+  !! COUT(nfleet_cat);
   ivector fleet_cat_ind(1,nfleet_cat);     ///< Fleet index to map active fleet to all fleets
   !! int icat=0; 
   !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)!=4) {icat++; fleet_cat_ind(icat)=i;}
   !! echo(fleet_cat_ind);
 
+  !! cout<<"Ok what the fuck is broken"<<endl;
   ivector fleet_act_ind(1,nfleet_act);    ///< Fleet index to map active fleet to all fleets
   !! int iact=0; 
   !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)==1 || fleet_control(i,2)==3) {iact++; fleet_act_ind(iact)=i;}
