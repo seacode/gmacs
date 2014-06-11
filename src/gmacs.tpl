@@ -1782,7 +1782,7 @@ FUNCTION Calculate_Bio_Pars
     recdis(iclass) = pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
     
     // TODO: Try alternative recdis calculation below.
-    // recdis(iclass) = cumd_gamma(size(iclass) + binw/2, ralpha) - cumd_gamma(size(iclass) - binw/2, alpha);
+    // recdis(iclass) = cumd_gamma(size(iclass) + binw/2, ralpha) - cumd_gamma(size(iclass) - binw/2, ralpha);
   }
   recdis /= sum(recdis);   // Standardize so each row sums to 1.0
 
