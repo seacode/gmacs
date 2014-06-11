@@ -871,6 +871,13 @@ DATA_SECTION
   vector surv_sf_store(1,ndclass);            ///< Survey sf total by data class
    
  LOC_CALCS
+  /**
+   * Steve Martell:
+   * I'm not sure what is being done here. Somehow the vector size
+   * here gets modified to match the differencs in the model size classes
+   * to the data size classes.  However, there are infinite values showing up 
+   * in size()
+   */
   surv_sf_store.initialize();
   if(nclass!=ndclass)
   {
@@ -890,6 +897,10 @@ DATA_SECTION
     size.initialize();
     fecundity.initialize();
     weight.initialize();
+    COUT(mean_size)
+    COUT(surv_sf_store)
+    COUT(elem_prod(mean_size,surv_sf_store))
+    exit(1);
     for (iclass=1; iclass<=nclass; iclass++)
     {
       total = 0;
@@ -1753,6 +1764,7 @@ PARAMETER_SECTION
 // =========================================================================================================
 PROCEDURE_SECTION
   Calculate_Bio_Pars();
+  calc_recruitment_size_distribution();
   //Set_Effort();
   //Set_Selectivity();
   //Set_Survival();
@@ -1768,8 +1780,7 @@ PROCEDURE_SECTION
 
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Calculate_Bio_Pars
-  dvariable szbnd;
-  dvariable ralpha;
+ 
 
   // Get parameters from theta control matrix:
   M0      = theta_parms(1);
@@ -1780,12 +1791,30 @@ FUNCTION Calculate_Bio_Pars
   // Placeholder to get weight at length vector
   // weight() = size * parameters(a,b)
 
+  /**
+   * @brief calculate size distribution for new recuits.
+   * @details Based on the gamma distribution, calculates the probability
+   * of a new recruit being in size-interval size
+   * 
+   * 
+   */
+FUNCTION calc_recruitment_size_distribution
   // Get fraction recruiting to each size class (gamma function):
-  ralpha = ra / rbeta;
+  dvariable szbnd;
+  dvariable ralpha = ra / rbeta;
+  COUT(ralpha);
+  COUT(ra);
+  COUT(rbeta);
+  COUT(size);
   for(int iclass=1; iclass<=nclass; iclass++)
   {
     szbnd = size(iclass) + (binw/2) - size(1);
     recdis(iclass) =  pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
+
+    dvariable alpha = 0.8;
+    COUT(size(iclass))
+    recdis(iclass) = cumd_gamma(size(iclass) + binw/2, alpha) 
+                   - cumd_gamma(size(iclass) - binw/2, alpha);
   }
   recdis /= sum(recdis);   // Standardize so each row sums to 1.0
 
