@@ -170,6 +170,8 @@ DATA_SECTION
   init_int nclass;      ///< Number of size classes (in the model)
   init_int ndclass;     ///< Number of size classes (in the data)
 
+  init_vector size(1,nclass);
+
   !! echotxt(nsex,    " Number of sexes");
   !! echotxt(nshell,  " Number of shell types");
   !! echotxt(nmature, " Number of maturity types");
@@ -865,7 +867,7 @@ DATA_SECTION
   !! echo(fecundity_inp);
 
   // Recalculate size, weight, and fecundity vectors to specified number of model size-classes:
-  vector size(1,nclass);                      ///< Size vector (mm) for model
+  //vector size(1,nclass);                      ///< Size vector (mm) for model
   matrix weight(1,nsex,1,nclass);             ///< Weight (kg) vector for model
   vector fecundity(1,nclass);                 ///< Fecundity (kg) vector for model
   vector surv_sf_store(1,ndclass);            ///< Survey sf total by data class
@@ -894,25 +896,22 @@ DATA_SECTION
     if (verbose == 1) cout << "Survey total frequency samples by size-class stored" << endl;
 
     checkfile << "class-specific size, weight, and fecundity (columns)" << endl;
-    size.initialize();
+    //size.initialize();
     fecundity.initialize();
     weight.initialize();
-    COUT(mean_size)
-    COUT(surv_sf_store)
-    COUT(elem_prod(mean_size,surv_sf_store))
-    exit(1);
     for (iclass=1; iclass<=nclass; iclass++)
     {
       total = 0;
       for (jclass=class_link(iclass,1); jclass<=class_link(iclass,2); jclass++)
       {
-        size(iclass) += mean_size(jclass)*surv_sf_store(jclass);
+        //size(iclass) += mean_size(jclass)*surv_sf_store(jclass);
         fecundity(iclass) += fecundity_inp(jclass)*surv_sf_store(jclass);
         for(int isex=1; isex<=2; isex++)
           weight(isex,iclass) += mean_weight(isex,jclass)*surv_sf_store(jclass);
         total += surv_sf_store(jclass);
+        
       }
-      size(iclass) /= total;
+      //size(iclass) /= total;  // divide by zero here
       fecundity(iclass) /= total;
       // Note these were by sex...
       weight(1,iclass) /= total;
@@ -923,13 +922,14 @@ DATA_SECTION
   }
   else
   {
-    size = mean_size;
+    //size = mean_size;
     weight = mean_weight;
     fecundity = fecundity_inp;
     check(size);
     check(weight);
     check(fecundity);
   }  
+  // SJDM  Patch to get size working.
  END_CALCS
 
   // NOTE: surv_sf_store is the sum over all years of LF data for each of ndclasses.
@@ -1812,12 +1812,14 @@ FUNCTION calc_recruitment_size_distribution
     recdis(iclass) =  pow(szbnd,ralpha-1.0) * mfexp(-szbnd/rbeta);
 
     dvariable alpha = 0.8;
-    COUT(size(iclass))
-    recdis(iclass) = cumd_gamma(size(iclass) + binw/2, alpha) 
-                   - cumd_gamma(size(iclass) - binw/2, alpha);
+    dvariable x2 = (size(iclass)+0.5*binw) / rbeta;
+    dvariable x1 = (size(iclass)-0.5*binw) / rbeta;
+    recdis(iclass) = cumd_gamma(x2, ralpha) 
+                   - cumd_gamma(x1, ralpha);
   }
   recdis /= sum(recdis);   // Standardize so each row sums to 1.0
-
+  COUT(recdis)
+  exit(1);
 // ---------------------------------------------------------------------------------------------------------
 FUNCTION Set_Effort
   f_all.initialize(); // Initialize all Fs to zero

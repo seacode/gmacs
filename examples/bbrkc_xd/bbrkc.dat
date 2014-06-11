@@ -16,6 +16,9 @@
 10		# Number of size-classes in the model
 20		# Number of size-classes in the data
 
+# Mid point of Model size classes
+65.00  76.11  87.22  98.33 109.44 120.56 131.67 142.78 153.89 165.00
+
 # Class-link information: (conditional)																																				
 
 # Fleet data specs: (1) catch retain, (2) catch discard, (3) bycatch (either retained or discarded), (4) survey data.

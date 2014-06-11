@@ -1,5 +1,5 @@
 Gmacs_V1.05_2014/03/31_by_Athol_Whitten_and_Jim_Ianelli_using_ADMB_11.1
-Tue Jun 10 22:57:30 2014
+Wed Jun 11 08:56:29 2014
 
  Start reading starter file
 bbrkc.dat	data file
@@ -918,3 +918,155 @@ mean_weight
  0.2151 0.26898 0.33137 0.40294 0.48437 0.62711 0.7216 0.82452 0.93615 1.05678 1.18669 1.32613 1.47539 1.63473 1.80441 2.18315 2.18315 2.18315 2.18315 2.18315
 fecundity_inp
  0 0 0 0 0 0 0 0 0 0 0 1.432 1.625 1.835 2.063 2.31 2.576 2.862 3.169 3.7
+0	 Number of capture data lines
+0	 Number of mark data lines
+0	 Number of recapture data lines
+999	 EOF: finished reading main data file 
+
+ Start reading control file
+theta_control
+ 0.18 0 1 -1 0 0.18 1000 0 0 0 0 0 1
+ 9.76518 -10 40 1 0 0 0 0 0 0 0 0 0
+ 8.9 5 15 3 0 0 0 0 0 0 0 0 0
+ 2.5 1 5 -3 0 0 0 0 0 0 0 0 0
+M_pnt
+ 0 2 2 2 2 1 1 1 1 1 2 2 2 2 2 2 2 2 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+2	 Number of additional natural mortality parameters
+Madd_control
+ 0.585 0 1 2
+ 0.0001 0 1 2
+Madd_init
+ 0.585 0.0001
+Madd_ubnd
+ 1 1
+Madd_lbnd
+ 0 0
+Madd_phz
+ 2 2
+1	 Form of stock-recruitment relationship
+1	 Lag to recruitment (years)
+growth_pnt
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1	 Total number of growth patterns
+growth_type
+ 1 2 0 0
+3	 Total number of growth parameters
+gtrans_control
+ 0.39 0.1 2 5
+ 0.93 0.1 2 5
+ 0.75 0 1 -5
+1	 Total number of molting patterns
+molt_type
+ 1 1 0 0
+2	 Total number of molting parameters
+molt_control
+ 110 70 130 -3
+ 160 135 175 -3
+4	 Form of initial numbers routine
+15	 Number of initial recruitments
+1960	 Start year for estimated recruitment
+lognin_control
+ 0.8133 -10 10 -2
+ 0.8133 -10 10 -2
+ 1.1774 -10 10 -2
+ 1.1774 -10 10 -2
+ 0.1239 -10 10 -2
+ 0.1239 -10 10 -2
+ -0.84 -10 10 -2
+ -0.84 -10 10 -2
+ -1.02 -10 10 -2
+ -1.02 -10 10 -2
+selex_fleet_pnt
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+selex_survey_pnt
+ 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+ 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+5	 Total number of selectivity patterns
+selex_type
+ 1 1 0 0
+ 2 1 0 0
+ 3 1 0 0
+ 4 1 0 0
+ 5 2 0 0
+42	 Total number of selectivity parameters
+selex_control
+ 46.0517 -100 1000 -1
+ 46.0517 -100 1000 1
+ 2.7436 -100 1000 2
+ 2.7436 -100 1000 2
+ 0.96735 -100 1000 2
+ 0.96735 -100 1000 2
+ -1.96573 -100 1000 2
+ -1.96573 -100 1000 2
+ -4.59512 -100 1000 1
+ -4.59512 -100 1000 -1
+ 3.17118 -100 1000 1
+ 3.17118 -100 1000 1
+ 2.69908 -100 1000 3
+ 2.69908 -100 1000 3
+ 0.957125 -100 1000 3
+ 0.957125 -100 1000 3
+ -1.47215 -100 1000 3
+ -1.47215 -100 1000 3
+ -4.59512 -100 1000 1
+ -4.59512 -100 1000 -1
+ 4.34991 -1000 1000 2
+ 4.84771 -1000 1000 2
+ 4.15885 -1000 1000 2
+ 3.5296 -1000 1000 2
+ 2.82833 -1000 1000 2
+ 2.14615 -1000 1000 2
+ 1.39467 -1000 1000 2
+ 0.606391 -1000 1000 2
+ -0.0577816 -1000 1000 2
+ -2.29582 -1000 1000 2
+ 2.9992 -1000 1000 3
+ 2.63234 -1000 1000 3
+ 2.10814 -1000 1000 3
+ 1.60717 -1000 1000 3
+ 1.03109 -1000 1000 3
+ 0.185767 -1000 1000 3
+ -0.723791 -1000 1000 3
+ -1.64143 -1000 1000 3
+ -0.733155 -1000 1000 3
+ 0.154878 -1000 1000 3
+ 117 110 120 -3
+ 123 121 130 -3
+selex_phz
+ -1 1 2 2 2 2 2 2 1 -1 1 1 3 3 3 3 3 3 1 -1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 -3 -3
+1	 Total number of retention patterns
+reten_type
+ 1 2 0 0
+2	 Total number of retention parameters
+reten_control
+ 135 130 140 3
+ 145 141 155 4
+surveyq_pnt
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+2	 Total number of survey Q patterns
+0	 Number of sub-surveys
+surveyq_control
+ -0.109815 -50 1 -4 1 0.896 0.03
+ 0 -50 1 -1 1 0 -100
+10	 Number of prior terms
+12	 Number of likelihood terms
+mn_offset
+ 0 0 0 0 0 0 5051.53 0 259.773 0 0 0
+nlike_terms
+12
+nprior_terms
+10
+prior_weight
+ 1e-05 100 1 0.1001 0.1001 0.1001 1 1 1 1
+like_weight
+ 10 100 10 0.1 1 0.1 0 0 1 1 1 1
+999	 EOF: finished reading control file 
+
+ Start reading forecast file
+1995	 BMSY start year
+2010	 BMSY end year
+999	 EOF: finished reading forecast file 
+
