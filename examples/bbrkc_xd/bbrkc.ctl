@@ -85,16 +85,19 @@
 	-1.020    	-10  10   -2
 	-1.02 		-10  10   -2
 
+## TOBE DEPRECATED
 # Time-varying fishery selectivity blocks (one row per active fleet)
 # 75	76	77	78	79	80	81	82	83	84	85	86	87	88	89	90	91	92	93	94	95	96	97	98	99	0	1	2	3	4	5	6	7	8	9	10	11	12	13	
    1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
    2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	
 
+## TOBE DEPRECATED
 # Time-varying survey selectivity blocks (one row per survey)
 # 75	76	77	78	79	80	81	82	83	84	85	86	87	88	89	90	91	92	93	94	95	96	97	98	99	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14
    3	3	3	3	3	3	3	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4	4
    5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5	5
 
+## TOBE DEPRECATED
 # Selectivity types
 # Pattern, SelType, Offset
 1 1 0  
@@ -103,6 +106,26 @@
 4 1 0  
 5 2 0
 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## SELECTIVITY CONTROLS                                                                 ##
+## LEGEND sel_type:1=coefficients,2=logistic,3=logistic95                               ##
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ivector for number of year blocks or nodes                                           ##
+## Gear-1    Gear-2    Gear-3   Gear-4    Gear-5
+   1         1         1        1         1 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+##        sel   sel  sel  size   year  phz                                              ##
+## Index  type  mu   sd   nodes  nodes mirror lam1  lam2  lam3 | blocks                 ##
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+   1      1     80   10   1      1     2      12.5  12.5  12.5   1975
+   1      1     80   10   1      1     2      12.5  12.5  12.5   1975
+   1      1     80   10   1      1     2      12.5  12.5  12.5   1975
+   1      1     80   10   1      1     2      12.5  12.5  12.5   1975
+   1      2     80   10   1      1     2      12.5  12.5  12.5   1975
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+
+
+## TOBE DEPRECATED
 # Specifications for Selectivity (Fishing Fleets) parameters
 # Init, Lower, Upper, Phase
 # # Block 1:  1973+ for Fleet 1

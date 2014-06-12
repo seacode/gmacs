@@ -1352,7 +1352,7 @@ LOC_CALCS
   
 LOC_CALCS
   nselex = 0;
-  selex_type = 0;
+  selex_type.initialize();
   for (int i=1; i<=nselex_pats; i++)
   {
     *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
@@ -1378,6 +1378,13 @@ LOC_CALCS
   check(selex_type);
  END_CALCS
 
+ 	// SJDM added new SELECTIVITY CONTROLS
+ 	init_ivector slx_nsel_blocks(1,ndata);
+ 	ivector nc(1,ndata);
+ 	!! nc = 10 + slx_nsel_blocks;
+ 	init_matrix slx_control(1,ndata,1,nc);
+
+
   // Read in selectivity parameter specifications:
   init_matrix selex_control(1,nselex_pars,1,4);      ///< Selectivity parameter matrix, with specifications
   matrix trans_selex_control(1,4,1,nselex_pars);     ///< Transpose of selectivity parameter matrix
@@ -1397,6 +1404,8 @@ LOC_CALCS
     selex_phz           = ivector(trans_selex_control(4));
     echo(selex_phz);
  END_CALCS
+
+
 
   // ......................................................................  
   // Get Retention Specifications:
@@ -1770,13 +1779,19 @@ PARAMETER_SECTION
   vector like_val(1,nlike_terms);                             ///< Objective function likelihood values
   objective_function_value ObjFun;                            ///< Objective function value to be minimised
 
+
+  // Selectivity arrays for all gears (ndata)
+  3darray   slx_capture(1,ndata,styr,endyr,1,nclass);
+  3darray slx_retention(1,ndata,styr,endyr,1,nclass);
+  3darray   slx_discard(1,ndata,styr,endyr,1,nclass);
+  //init_bounded_matrix_vector(1,ndata,1,sel_irow,1,sel_icol,-25,25,2);
+
+
 // =========================================================================================================
 PROCEDURE_SECTION
   initialize_model_parameters();
 
   fishing_fleet_dynamics();
-
-
 
   calc_recruitment_size_distribution();
   //Set_Effort();
@@ -1831,7 +1846,16 @@ FUNCTION initialize_model_parameters
    * 
    */
 FUNCTION fishing_fleet_dynamics
-	// Calculate Selectivities
+	// Calculate Selectivities for nfleet_act
+	slx_capture.initialize();
+	slx_retention.initialize();
+	slx_discard.initialize();
+	for(int k = 1; k <= ndata; k++ )
+	{
+		 /* loop over gears and compute selectivities */
+
+	}
+
 	
 
 
