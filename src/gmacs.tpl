@@ -1378,11 +1378,69 @@ LOC_CALCS
   check(selex_type);
  END_CALCS
 
- 	// SJDM added new SELECTIVITY CONTROLS
+
+
+
+  // *************************************** //
+ 	//   SJDM added new SELECTIVITY CONTROLS   //
+ 	// *************************************** //
  	init_ivector slx_nsel_blocks(1,ndata);
  	ivector nc(1,ndata);
  	!! nc = 10 + slx_nsel_blocks;
  	init_matrix slx_control(1,ndata,1,nc);
+ 	ivector slx_indx(1,ndata);
+ 	ivector slx_type(1,ndata);
+ 	ivector slx_phzm(1,ndata);
+ 	ivector slx_xnod(1,ndata);
+ 	ivector slx_inod(1,ndata);
+ 	ivector slx_irow(1,ndata);
+ 	ivector slx_jcol(1,ndata);
+ 	 vector slx_lam1(1,ndata);
+ 	 vector slx_mean(1,ndata);
+ 	 vector slx_stdv(1,ndata);
+ 	 vector slx_lam2(1,ndata);
+ 	 vector slx_lam3(1,ndata);
+
+	LOC_CALCS
+	    slx_indx = ivector(column(slx_control,1));
+	    slx_type = ivector(column(slx_control,2));
+	    slx_mean = column(slx_control,3);
+	    slx_stdv = column(slx_control,4);
+	    slx_xnod = ivector(column(slx_control,5));
+	    slx_inod = ivector(column(slx_control,6));
+	    slx_phzm = ivector(column(slx_control,7));
+	    slx_lam1 = column(slx_control,8);
+	    slx_lam2 = column(slx_control,9);
+	    slx_lam3 = column(slx_control,10);
+
+	    // count up number of parameters required
+	    slx_irow.initialize();
+	    slx_jcol.initialize();
+	    for(int k = 1; k <= ndata; k++ )
+	    {
+	 			switch (slx_type(k))
+	 			{
+	 				case 1:	// coefficients
+	 					slx_jcol(k) = nclass - 1;
+	 					slx_irow(k) = slx_nsel_blocks(k);
+	 				break;
+
+	 				case 2: // logistic
+	 					slx_jcol(k) = 2;
+	 					slx_irow(k) = slx_nsel_blocks(k);
+	 				break;
+
+	 				case 3: // logistic95
+	 					slx_jcol(k) = 2;
+	 					slx_irow(k) = slx_nsel_blocks(k);
+	 				break;
+	 			}
+	    }
+	END_CALCS
+
+
+
+
 
 
   // Read in selectivity parameter specifications:
@@ -1784,7 +1842,7 @@ PARAMETER_SECTION
   3darray   slx_capture(1,ndata,styr,endyr,1,nclass);
   3darray slx_retention(1,ndata,styr,endyr,1,nclass);
   3darray   slx_discard(1,ndata,styr,endyr,1,nclass);
-  //init_bounded_matrix_vector(1,ndata,1,sel_irow,1,sel_icol,-25,25,2);
+  init_bounded_matrix_vector log_slx_pars(1,ndata,1,slx_irow,1,slx_jcol,-25,25,2);
 
 
 // =========================================================================================================
@@ -1846,6 +1904,7 @@ FUNCTION initialize_model_parameters
    * 
    */
 FUNCTION fishing_fleet_dynamics
+
 	// Calculate Selectivities for nfleet_act
 	slx_capture.initialize();
 	slx_retention.initialize();
@@ -1853,6 +1912,22 @@ FUNCTION fishing_fleet_dynamics
 	for(int k = 1; k <= ndata; k++ )
 	{
 		 /* loop over gears and compute selectivities */
+		 switch (slx_type(k))
+		 {
+		 		case 1:
+		 			
+		 		break;
+
+		 		case 2:
+
+		 		break;
+
+		 		case 3:
+
+		 		break
+		 }
+
+		 //slx_capture = plogis<dvar_vector>(size,slx_mean(k),slx_stdv(k));
 
 	}
 
