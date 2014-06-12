@@ -1908,6 +1908,7 @@ FUNCTION fishing_fleet_dynamics
 	// Calculate Selectivities for nfleet_act
 	int bpar = 1;
 	dvariable p1,p2;
+	dvar_vector pv;
 	log_slx_capture.initialize();
 	log_slx_retention.initialize();
 	log_slx_discard.initialize();
@@ -1918,37 +1919,28 @@ FUNCTION fishing_fleet_dynamics
 		 switch (slx_type(k))
 		 {
 		 		case 1:
-		 			
-		 			dvar_vector parms = log_slx_pars(k)(bpar);
-		 			pSLX = new cstar::SelectivityCoefficients<dvar_vector>(parms);
-		 			for( i = styr; i <= endyr; i++ )
-		 			{
-		 				log_slx_capture(k)(i) = pSLX->Selectivity(size);
-		 			}
-		 			delete pSLX;
+		 			pv = mfexp(log_slx_pars(k)(bpar));
+		 			pSLX = new cstar::SelectivityCoefficients<dvar_vector>(pv);
 		 		break;
 
 		 		case 2:
 		 			p1 = mfexp(log_slx_pars(k,bpar,1));
 		 			p2 = mfexp(log_slx_pars(k,bpar,2));
-		 			for( i = styr; i <= endyr; i++ )
-		 			{
-		 				log_slx_capture(k)(i) = log( plogis<dvar_vector>(size,p1,p2) );
-		 			}
+		 			pSLX = new cstar::LogisticCurve<dvar_vector,dvariable>(p1,p2);
 		 		break;
 
 		 		case 3:
 		 			p1 = mfexp(log_slx_pars(k,bpar,1));
-		 			p2 = mfexp(log_slx_pars(k,bpar,2));
-		 			cstar::Selex<dvar_vector> *pSLX;
+		 			p2 = mfexp(log_slx_pars(k,bpar,2));	
       		pSLX = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
-		 			for( i = styr; i <= endyr; i++ )
-		 			{
-		 				log_slx_capture(k)(i) =  pSLX->logSelectivity(size);
-		 			}
-		 			delete pSLX;
 		 		break;
 		 }
+		 
+		 for( i = styr; i <= endyr; i++ )
+		 {
+				log_slx_capture(k)(i) =  pSLX->logSelectivity(size);
+		 }
+		 delete pSLX;
 		 
 		 //slx_capture = plogis<dvar_vector>(size,slx_mean(k),slx_stdv(k));
 
