@@ -1839,9 +1839,9 @@ PARAMETER_SECTION
 
 
   // Selectivity arrays for all gears (ndata)
-  3darray   slx_capture(1,ndata,styr,endyr,1,nclass);
-  3darray slx_retention(1,ndata,styr,endyr,1,nclass);
-  3darray   slx_discard(1,ndata,styr,endyr,1,nclass);
+  3darray   log_slx_capture(1,ndata,styr,endyr,1,nclass);
+  3darray log_slx_retention(1,ndata,styr,endyr,1,nclass);
+  3darray   log_slx_discard(1,ndata,styr,endyr,1,nclass);
   init_bounded_matrix_vector log_slx_pars(1,ndata,1,slx_irow,1,slx_jcol,-25,25,2);
 
 
@@ -1904,29 +1904,52 @@ FUNCTION initialize_model_parameters
    * 
    */
 FUNCTION fishing_fleet_dynamics
-
+	
 	// Calculate Selectivities for nfleet_act
-	slx_capture.initialize();
-	slx_retention.initialize();
-	slx_discard.initialize();
+	int bpar = 1;
+	dvariable p1,p2;
+	log_slx_capture.initialize();
+	log_slx_retention.initialize();
+	log_slx_discard.initialize();
 	for(int k = 1; k <= ndata; k++ )
 	{
 		 /* loop over gears and compute selectivities */
+		 cstar::Selex<dvar_vector> *pSLX;
 		 switch (slx_type(k))
 		 {
 		 		case 1:
 		 			
+		 			dvar_vector parms = log_slx_pars(k)(bpar);
+		 			pSLX = new cstar::SelectivityCoefficients<dvar_vector>(parms);
+		 			for( i = styr; i <= endyr; i++ )
+		 			{
+		 				log_slx_capture(k)(i) = pSLX->Selectivity(size);
+		 			}
+		 			delete pSLX;
 		 		break;
 
 		 		case 2:
-
+		 			p1 = mfexp(log_slx_pars(k,bpar,1));
+		 			p2 = mfexp(log_slx_pars(k,bpar,2));
+		 			for( i = styr; i <= endyr; i++ )
+		 			{
+		 				log_slx_capture(k)(i) = log( plogis<dvar_vector>(size,p1,p2) );
+		 			}
 		 		break;
 
 		 		case 3:
-
-		 		break
+		 			p1 = mfexp(log_slx_pars(k,bpar,1));
+		 			p2 = mfexp(log_slx_pars(k,bpar,2));
+		 			cstar::Selex<dvar_vector> *pSLX;
+      		pSLX = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+		 			for( i = styr; i <= endyr; i++ )
+		 			{
+		 				log_slx_capture(k)(i) =  pSLX->logSelectivity(size);
+		 			}
+		 			delete pSLX;
+		 		break;
 		 }
-
+		 
 		 //slx_capture = plogis<dvar_vector>(size,slx_mean(k),slx_stdv(k));
 
 	}

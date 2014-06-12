@@ -23,10 +23,10 @@
 
 # Fleet data specs: (1) catch retain, (2) catch discard, (3) bycatch (either retained or discarded), (4) survey data.
 # First col = fleet index, second col = data type, third col = units (1=biomass, 2=numbers), fourth col = multiplier
-1	1	2	1		# Group	1																																					
-1	2	2	1		# Group	2
-2	3	2	1		# Group	3																																					
-3 	4 	2 	1		# Group 4
+1	  1	  2	  1	  	# Group	1																																					
+1	  2	  2	  1	  	# Group	2
+2	  3	  2	  1	  	# Group	3																																					
+3 	4 	2 	1	  	# Group 4
 4 	4 	1 	200		# Group 5																																				
 
 # Fishing fleet names (delimited with ":" no spaces in names)
