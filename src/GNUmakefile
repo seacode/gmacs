@@ -1,6 +1,6 @@
 # Name of executable.
 OUTPUT:=gmacs
-LIBINCLUDE = ../../CSTAR/src
+LIBINCLUDE = ../../CSTAR/build
 # Global source files from current dir.
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx )
 
@@ -23,14 +23,14 @@ LDFLAGS:=
 RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
 RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmbo.a            \
 	              $(ADMB_HOME)/contrib/lib/libcontribo.a \
-	              $(LIBINCLUDE)/libcstar.a               \
+	              $(LIBINCLUDE)/release/libcstar.a               \
 	              -lxml2
 
 # Debug specific flags.
 DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
 DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb.a               \
 	            $(ADMB_HOME)/contrib/lib/libcontrib.a    \
-	            $(LIBINCLUDE)/libcstar.a                 \
+	            $(LIBINCLUDE)/debug/libcstar.a                 \
 	            -lxml2
 
 # Name of text file containing build number.
