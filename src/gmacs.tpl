@@ -29,7 +29,7 @@ GLOBALS_SECTION
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
-  #include "../../CSTAR/src/cstar.h"
+  #include "../../CSTAR/include/cstar.h"
  
   time_t start,finish;
   long hour,minute,second;
@@ -313,7 +313,7 @@ DATA_SECTION
   !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)!=4) {icat++; fleet_cat_ind(icat)=i;}
   !! echo(fleet_cat_ind);
 
-  !! cout<<"Ok what the fuck is broken"<<endl;
+  
   ivector fleet_act_ind(1,nfleet_act);    ///< Fleet index to map active fleet to all fleets
   !! int iact=0; 
   !! for (i=1; i<=ndata; i++) if(fleet_control(i,2)==1 || fleet_control(i,2)==3) {iact++; fleet_act_ind(iact)=i;}
@@ -1915,6 +1915,7 @@ FUNCTION fishing_fleet_dynamics
 	for(int k = 1; k <= ndata; k++ )
 	{
 		 /* loop over gears and compute selectivities */
+		 /*	for time varying selectivities, loo over blocks*/
 		 cstar::Selex<dvar_vector> *pSLX;
 		 switch (slx_type(k))
 		 {
@@ -1935,15 +1936,12 @@ FUNCTION fishing_fleet_dynamics
       		pSLX = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
 		 		break;
 		 }
-		 
+
 		 for( i = styr; i <= endyr; i++ )
 		 {
 				log_slx_capture(k)(i) =  pSLX->logSelectivity(size);
 		 }
 		 delete pSLX;
-		 
-		 //slx_capture = plogis<dvar_vector>(size,slx_mean(k),slx_stdv(k));
-
 	}
 
 	
