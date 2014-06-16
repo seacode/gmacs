@@ -38,6 +38,12 @@ NMFS_Trawl:BSFRF
 116	# Number of lines of catch data to read
 41	# Number of lines of survey data to read
 0.5	# Time between survey and fishery
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## CATCH DATA
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+##                | catch |     | retain catch | discard catch | fishing
+## year seas fleet| type  | sex | obs    cv    | obs     cv    | effort
+
 
 # Catch data
 # Year, Season, Fleet, Sex, Catch Obs.

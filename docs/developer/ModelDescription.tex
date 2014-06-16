@@ -1,5 +1,8 @@
 \documentclass[12pt,letterpaper]{article}
 
+
+
+
 % Use utf-8 encoding for foreign characters
 \usepackage[utf8]{inputenc}
 
@@ -79,6 +82,29 @@
 \usepackage{graphicx}
 \fi
 
+
+\usepackage{tikz-uml}
+
+
+
+
+
 \begin{document}
 	\input{DataStructures}
+
+\begin{tikzpicture}
+  \umlclass[x=0,y=0]{myclass}{}{}
+  \umlclass[x=2,y=-2]{B}{}{a}
+\end{tikzpicture}
+
+\begin{tikzpicture}    
+\begin{umlcomponent}{Some name}
+\umlbasiccomponent[x=2]{A}
+\umlprovidedinterface{A}
+\umlrequiredinterface[interface=C]{A}
+\pgfnodealias{newname}{A-west-interface} %<- Adding another name
+\end{umlcomponent}
+\draw[blue,ultra thick] (newname) -- (0,-1); %<- using new name
+\end{tikzpicture}
+
 \end{document}
