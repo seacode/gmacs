@@ -29,7 +29,7 @@ GLOBALS_SECTION
   #include <admodel.h>
   #include <time.h>
   #include <contrib.h>
-  #include "../../CSTAR/src/cstar.h"
+  #include "../../CSTAR/include/cstar.h"
  
   time_t start,finish;
   long hour,minute,second;
@@ -1935,7 +1935,7 @@ FUNCTION fishing_fleet_dynamics
       		pSLX = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
 		 		break;
 		 }
-		 
+
 		 for( i = styr; i <= endyr; i++ )
 		 {
 				log_slx_capture(k)(i) =  pSLX->logSelectivity(size);
