@@ -216,43 +216,43 @@ DATA_SECTION
   matrix class_link(1,nclass,1,2);      ///< Matrix of links between model and data size-classes
   
   // If number of data classes is not equal to, or a factor of model classes, read class link matrix from data file.
- LOC_CALCS  
-  double class_div = double(ndclass)/double(nclass);
-  int class_int = class_div;
+  LOC_CALCS  
+    double class_div = double(ndclass)/double(nclass);
+    int class_int = class_div;
 
-  if(class_div!=class_int)
-  {
-    *(ad_comm::global_datafile) >> class_link;
-  }
-  // Otherwise, fill each column of class link matrix with sequential numbers.
-  else
-  {
-    // Links are 1:1 when ndclass is equal to nclass:
-    if(ndclass==nclass)
+    if(class_div!=class_int)
     {
-      ivector class_link_col(1,nclass);       
-      class_link_col.fill_seqadd(1,1);    
-      class_link.colfill(1,class_link_col);
-      class_link.colfill(2,class_link_col);
+      *(ad_comm::global_datafile) >> class_link;
     }
-    
-    // Else, links are function of the number of data vs. model classes:
+    // Otherwise, fill each column of class link matrix with sequential numbers.
     else
     {
-      ivector class_link_col_a(1,nclass);       
-      ivector class_link_col_b(1,nclass);
-      class_link_col_a.fill_seqadd(1,class_int);    
-      class_link_col_b.fill_seqadd(class_int,class_int);
-      class_link.colfill(1,class_link_col_a);
-      class_link.colfill(2,class_link_col_b); 
+      // Links are 1:1 when ndclass is equal to nclass:
+      if(ndclass==nclass)
+      {
+        ivector class_link_col(1,nclass);       
+        class_link_col.fill_seqadd(1,1);    
+        class_link.colfill(1,class_link_col);
+        class_link.colfill(2,class_link_col);
+      } 
+      // Else, links are function of the number of data vs. model classes:
+      else
+      {
+        ivector class_link_col_a(1,nclass);       
+        ivector class_link_col_b(1,nclass);
+        class_link_col_a.fill_seqadd(1,class_int);    
+        class_link_col_b.fill_seqadd(class_int,class_int);
+        class_link.colfill(1,class_link_col_a);
+        class_link.colfill(2,class_link_col_b); 
+      }
     }
-  }
- END_CALCS
-
+  END_CALCS
+    //
+  
   !! echotxt(class_div, " Class divisor");
   !! echotxt(class_int, " Rounded class divisor");
   !! echo(class_link);
-
+  
   // ......................................................................    
   // Read fleet control matrix and determine data vs. fleet specs:  
   // Column 1 = Data group, 2 = Data type, 3 = Units, 4 = Multiplier.
@@ -267,7 +267,7 @@ DATA_SECTION
   int nfleet_act;                             ///< Number of active distinct fleets
   int nfleet_cat;                             ///< Number of fleets with catch
 
- LOC_CALCS
+  LOC_CALCS
     nfleet_ret = 0;
     nfleet_dis = 0;
     nfleet_byc = 0;
@@ -291,17 +291,16 @@ DATA_SECTION
           break;
       } 
     } 
-    
+
     nfleet_act = nfleet_ret + nfleet_byc;     ///< Number of active distinct fishing fleets
     nfleet_cat = nfleet_act + nfleet_dis;     ///< Number of fleets with catch      
-  echo(fleet_control);
-  echo(nfleet_cat);
-  echo(nfleet_ret);
-  echo(nfleet_byc);
-  echo(nfleet_act);
-  echo(nfleet_sur);
-
- END_CALCS
+    echo(fleet_control);
+    echo(nfleet_cat);
+    echo(nfleet_ret);
+    echo(nfleet_byc);
+    echo(nfleet_act);
+    echo(nfleet_sur);
+  END_CALCS
 
   // TODO: Check 'fleet numbers' and use of those: Mapping for 'fleets with surveys' and 'surveys with catch' required. 
 
@@ -338,24 +337,24 @@ DATA_SECTION
   ivector survey_units(1,nsurvey);    ///< Survey units [1=biomass (tons); 2=numbers]
   ivector survey_multi(1,nsurvey);    ///< Additional survey scaling multipliers [1 for no effect]
 
- LOC_CALCS
-  for(ifleet=1; ifleet<=nfleet; ifleet++)
-  {
-    catch_units(ifleet) = fleet_control(fleet_cat_ind(ifleet),3);
-    catch_multi(ifleet) = fleet_control(fleet_cat_ind(ifleet),4);
-  }
-  
-  for(isurvey=1; isurvey<=nsurvey; isurvey++)
-  {
-    survey_units(isurvey) = fleet_control(fleet_sur_ind(isurvey),3);
-    survey_multi(isurvey) = fleet_control(fleet_sur_ind(isurvey),4);
-  }
+  LOC_CALCS
+    for(ifleet=1; ifleet<=nfleet; ifleet++)
+    {
+      catch_units(ifleet) = fleet_control(fleet_cat_ind(ifleet),3);
+      catch_multi(ifleet) = fleet_control(fleet_cat_ind(ifleet),4);
+    }
 
-  echo(catch_units);
-  echo(catch_multi);
-  echo(survey_units);
-  echo(survey_multi);
- END_CALCS
+    for(isurvey=1; isurvey<=nsurvey; isurvey++)
+    {
+      survey_units(isurvey) = fleet_control(fleet_sur_ind(isurvey),3);
+      survey_multi(isurvey) = fleet_control(fleet_sur_ind(isurvey),4);
+    }
+
+    echo(catch_units);
+    echo(catch_multi);
+    echo(survey_units);
+    echo(survey_multi);
+  END_CALCS
 
   // TODO: Make it possible for fishing fleets to have survey data, and survey fleets to have catch. 
   // Tricky with selectivity and survey_q etc. 
@@ -366,12 +365,12 @@ DATA_SECTION
   int ndt_fleet;        ///< Number of possible data types (ndt) for catch fleets
   int ndt_survey;       ///< Number of possible data types (ndt) for survey fleets
 
- LOC_CALCS
-  ndt_fleet = nfleet * nsex * nshell * nmature;
-  ndt_survey = nsurvey * nsex * nshell * nmature;
-  echo(ndt_fleet);
-  echo(ndt_fleet);
- END_CALCS
+  LOC_CALCS
+    ndt_fleet = nfleet * nsex * nshell * nmature;
+    ndt_survey = nsurvey * nsex * nshell * nmature;
+    echo(ndt_fleet);
+    echo(ndt_fleet);
+  END_CALCS
 
   // ......................................................................
   // Get fishing fleet names and survey names and process text strings:
@@ -380,63 +379,63 @@ DATA_SECTION
   imatrix iname_srv(1,nfleet,1,2);    ///< Survey names
   init_adstring name_read_flt;        
   init_adstring name_read_srv;   
- 
+
   // Convert read-in strings of fishery and survey names to a string array (so they can be indexed).
   // Set whole array equal to 1 in case not enough names are read:
- LOC_CALCS
-  int k;
-  for(k=1; k<=nfleet; k++) 
-  {
-    iname_flt(k,1)=1; 
-    iname_flt(k,2)=1;
-  }    
-  
-  // Blank to terminate lines (check why this is needed...)
-  adstring_array CRLF;   
-  CRLF+="";
-  
-  k=1;
-  for(i=1; i<=strlen(name_read_flt); i++)
-  {
-    if(adstring(name_read_flt(i))==adstring(":")) 
+  LOC_CALCS
+    int k;
+    for(k=1; k<=nfleet; k++) 
     {
-      iname_flt(k,2)=i-1; 
-      k++;  
-      iname_flt(k,1)=i+1;
-    }
-  }
-  
-  iname_flt(nfleet,2)=strlen(name_read_flt);
-  for(k=1; k<=nfleet; k++)
-  {
-    fleet_names += name_read_flt(iname_flt(k,1), iname_flt(k,2))+CRLF(1);
-  }
+      iname_flt(k,1)=1; 
+      iname_flt(k,2)=1;
+    }    
 
-  for(k=1;k<=nsurvey;k++) 
-  {
-    iname_srv(k,1)=1; 
-    iname_srv(k,2)=1;
-  }    
-  
-  // Set whole array equal to 1 in case not enough names are read
-  // Read in survey names
-  k=1;
-  for(i=1;i<=strlen(name_read_srv);i++)
-  {
-    if(adstring(name_read_srv(i))==adstring(":")) 
+    // Blank to terminate lines (check why this is needed...)
+    adstring_array CRLF;   
+    CRLF+="";
+
+    k=1;
+    for(i=1; i<=strlen(name_read_flt); i++)
     {
-      iname_srv(k,2) =i-1; 
-      k++;  
-      iname_srv(k,1) =i+1;
+      if(adstring(name_read_flt(i))==adstring(":")) 
+      {
+        iname_flt(k,2)=i-1; 
+        k++;  
+        iname_flt(k,1)=i+1;
+      }
     }
-  }
-  
-  iname_srv(nsurvey,2)=strlen(name_read_srv);
-  for(k=1;k<=nsurvey;k++)
-  {
-    survey_names += name_read_srv(iname_srv(k,1),iname_srv(k,2))+CRLF(1);
-  }
- END_CALCS
+
+    iname_flt(nfleet,2)=strlen(name_read_flt);
+    for(k=1; k<=nfleet; k++)
+    {
+      fleet_names += name_read_flt(iname_flt(k,1), iname_flt(k,2))+CRLF(1);
+    }
+
+    for(k=1;k<=nsurvey;k++) 
+    {
+      iname_srv(k,1)=1; 
+      iname_srv(k,2)=1;
+    }    
+
+    // Set whole array equal to 1 in case not enough names are read
+    // Read in survey names
+    k=1;
+    for(i=1;i<=strlen(name_read_srv);i++)
+    {
+      if(adstring(name_read_srv(i))==adstring(":")) 
+      {
+        iname_srv(k,2) =i-1; 
+        k++;  
+        iname_srv(k,1) =i+1;
+      }
+    }
+
+    iname_srv(nsurvey,2)=strlen(name_read_srv);
+    for(k=1;k<=nsurvey;k++)
+    {
+      survey_names += name_read_srv(iname_srv(k,1),iname_srv(k,2))+CRLF(1);
+    }
+  END_CALCS
 
   // TODO: Create way to return an error if names not formatted properly.
   !! echo(fleet_names);
@@ -450,7 +449,27 @@ DATA_SECTION
   init_int nsurvey_obs;                       ///< Number of survey lines to read
   init_number survey_time;                    ///< Time between survey and fishery (for projections)
 
-  init_matrix d_catchData(1,ncatch_obs,1,9); 
+  init_matrix d_catchData(1,ncatch_obs,1,9);
+  //
+  // Determine number of fdevs that need to be estimated based on catch data
+  //
+  ivector n_fdevs(1,nfleet);
+    imatrix flag(styr,endyr,1,nfleet);
+  LOC_CALCS
+    n_fdevs.initialize();
+    for( ii = 1; ii <= ncatch_obs; ii++ )
+    {
+      int i = d_catchData(ii,1);  // year index
+      int j = d_catchData(ii,2);  // seas index
+      int k = d_catchData(ii,3);  // gear index
+
+      n_fdevs(k) ++; 
+    }
+  END_CALCS
+
+
+
+
 
   !! echotxt(ncatch_obs,   " Number of lines of catch data");
   !! echotxt(nsurvey_obs,  " Number of lines of survey data")
@@ -473,69 +492,69 @@ DATA_SECTION
   imatrix nobs_yr_flt(styr,endyr,1,nfleet);
   matrix ss_yr_flt(styr,endyr,1,nfleet);
 
- LOC_CALCS
-  nobs_yr_flt.initialize();
-  ss_yr_flt.initialize();
-  catch_biom_obs.initialize();
-  catch_num_obs.initialize();
-  for (int i=1;i<=ncatch_obs;i++)
-  {
-    catch_biom_obs(catch_data(i,3),catch_data(i,1)) = catch_data(i,5);
-    catch_num_obs(catch_data(i,3),catch_data(i,1))  = catch_data(i,5);
-  }
-  check(catch_biom_obs);
-  check(catch_num_obs);
- END_CALCS
+  LOC_CALCS
+    nobs_yr_flt.initialize();
+    ss_yr_flt.initialize();
+    catch_biom_obs.initialize();
+    catch_num_obs.initialize();
+    for (int i=1;i<=ncatch_obs;i++)
+    {
+      catch_biom_obs(catch_data(i,3),catch_data(i,1)) = catch_data(i,5);
+      catch_num_obs(catch_data(i,3),catch_data(i,1))  = catch_data(i,5);
+    }
+    check(catch_biom_obs);
+    check(catch_num_obs);
+  END_CALCS
 
   // ......................................................................  
   // Fill survey observation objects:
 
   ivector nobs_survey(1,nsurvey);                       ///< Total counter for number of obs. within each survey
- 
- LOC_CALCS
-  nobs_survey.initialize();
-  for (int i=1; i<=nsurvey_obs; i++)
-    nobs_survey(survey_data(i,3))++;
-  check(nobs_survey);
- END_CALCS
+
+  LOC_CALCS
+    nobs_survey.initialize();
+    for (int i=1; i<=nsurvey_obs; i++)
+      nobs_survey(survey_data(i,3))++;
+    check(nobs_survey);
+  END_CALCS
 
   imatrix survey_yr(1,nsurvey,1,nobs_survey);           ///< Years for each survey observation
   matrix survey_biom_obs(1,nsurvey,1,nobs_survey);      ///< Survey observations (biomass)
   matrix survey_num_obs(1,nsurvey,1,nobs_survey);       ///< Survey obeservation (numbers)
   matrix survey_var(1,nsurvey,1,nobs_survey);           ///< Survey variance values
- 
- LOC_CALCS
-  survey_var.initialize();
-  survey_biom_obs.initialize();
-  survey_num_obs.initialize(); 
-  ivector iobs_srv(1,nsurvey);                           ///< Incremental counter for obs. no. within each survey
-  iobs_srv.initialize();
-  for (int i=1;i<=nsurvey_obs;i++)
-  {
-    int isrv=survey_data(i,3);
-    iobs_srv(isrv)++;
-    survey_yr(isrv,iobs_srv(isrv)) = survey_data(i,1); 
-    if (survey_units(isrv)==1)
-      survey_biom_obs(isrv,iobs_srv(isrv)) = survey_data(i,5);
-    else 
-      survey_num_obs(isrv,iobs_srv(isrv)) = survey_data(i,5);
-    survey_var(isrv,iobs_srv(isrv)) = log(1+square(survey_data(i,6))); 
-    // For likelihood, compute input variance here, assumes input as CV.
-  }  
 
-  for (isurvey=1; isurvey<=nsurvey; isurvey++)
-  {
-    for (int i=1; i<=nobs_survey(isurvey); i++)
-    { 
-      survey_biom_obs(isurvey,i) *= survey_multi(isurvey);
-      survey_num_obs(isurvey,i)  *= survey_multi(isurvey);
+  LOC_CALCS
+    survey_var.initialize();
+    survey_biom_obs.initialize();
+    survey_num_obs.initialize(); 
+    ivector iobs_srv(1,nsurvey);                           ///< Incremental counter for obs. no. within each survey
+    iobs_srv.initialize();
+    for (int i=1;i<=nsurvey_obs;i++)
+    {
+      int isrv=survey_data(i,3);
+      iobs_srv(isrv)++;
+      survey_yr(isrv,iobs_srv(isrv)) = survey_data(i,1); 
+      if (survey_units(isrv)==1)
+        survey_biom_obs(isrv,iobs_srv(isrv)) = survey_data(i,5);
+      else 
+        survey_num_obs(isrv,iobs_srv(isrv)) = survey_data(i,5);
+      survey_var(isrv,iobs_srv(isrv)) = log(1+square(survey_data(i,6))); 
+      // For likelihood, compute input variance here, assumes input as CV.
+    }  
+
+    for (isurvey=1; isurvey<=nsurvey; isurvey++)
+    {
+      for (int i=1; i<=nobs_survey(isurvey); i++)
+      { 
+        survey_biom_obs(isurvey,i) *= survey_multi(isurvey);
+        survey_num_obs(isurvey,i)  *= survey_multi(isurvey);
+      }
     }
-  }
-  check(iobs_srv);
-  check(survey_var);
-  check(survey_num_obs);
-  check(survey_biom_obs);
- END_CALCS
+    check(iobs_srv);
+    check(survey_var);
+    check(survey_num_obs);
+    check(survey_biom_obs);
+  END_CALCS
 
   // ......................................................................  
   // Read in fishing related objects:
@@ -546,38 +565,38 @@ DATA_SECTION
   init_matrix effort(1,nfleet_act,styr,endyr);      ///< Effort by fishery
   init_imatrix f_new(1,nfleet_act,1,5);             ///< Alternative f estimators (overwrite others)
 
- LOC_CALCS
-  echo(discard_mort);
-  echo(hg);
-  echo(catch_time);
-  echo(effort);
-  echo(f_new);
+  LOC_CALCS
+    echo(discard_mort);
+    echo(hg);
+    echo(catch_time);
+    echo(effort);
+    echo(f_new);
 
-  for (ifleet=1; ifleet<=nfleet; ifleet++)
-  {
-    for (iyr=styr; iyr<=endyr; iyr++)
-    { 
-     catch_biom_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
-     catch_num_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
+    for (ifleet=1; ifleet<=nfleet; ifleet++)
+    {
+      for (iyr=styr; iyr<=endyr; iyr++)
+      { 
+       catch_biom_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
+       catch_num_obs(ifleet,iyr) *= discard_mort(ifleet) * catch_multi(ifleet);
+      }
     }
-  }
- END_CALCS
+  END_CALCS
 
   // Determine which F values will be computed using effort (f_new) if applicable: 
   ivector ncatch_f(1,nfleet_act);
- 
- LOC_CALCS
-  for (ifleet=1; ifleet<=nfleet_act; ifleet++)
-  {
-    ncatch_f(ifleet) = 0;
-    for (iyr=styr; iyr<=endyr; iyr++) 
-      if (effort(ifleet,iyr) > 0) 
-      {
-        if (f_new(ifleet,1) == 0 || iyr < f_new(ifleet,2) || iyr > f_new(ifleet,3))
-          ncatch_f(ifleet) += 1;
-      }
-  }
- END_CALCS
+
+  LOC_CALCS
+    for (ifleet=1; ifleet<=nfleet_act; ifleet++)
+    {
+      ncatch_f(ifleet) = 0;
+      for (iyr=styr; iyr<=endyr; iyr++) 
+        if (effort(ifleet,iyr) > 0) 
+        {
+          if (f_new(ifleet,1) == 0 || iyr < f_new(ifleet,2) || iyr > f_new(ifleet,3))
+            ncatch_f(ifleet) += 1;
+        }
+    }
+  END_CALCS
   
   !! echotxt(ncatch_f, " Number of F's (calculated)")
   
@@ -589,8 +608,8 @@ DATA_SECTION
   ivector nsf_fleet(1,nfleet);                       ///< Number of years of sf data per fleet
   !! echotxt(nsf_obs,  " Number of size frequency lines to read");
   !! echo(sf_data);
-
- 
+  
+   
   // TODO DIMS: The counter for fleets below may need to be extended to sexes, shell conds, and mat stages.
   // Some type of counter will be required to determine which types of data are present for each fishery (with which dimensions).
   // This will mean data can be entered into Gmacs in a flat format.
@@ -599,133 +618,135 @@ DATA_SECTION
   5darray idx(styr,endyr,1,nfleet,0,nsex,0,nshell,0,nmature);        ///< Size-frequency data (nclass), by fleet (can be ragged array)
   // index for fleet,numberof years within fleetand category n
   3darray idx2(1,nfleet,1,100,1,10);         // other index 
- LOC_CALCS 
-  ivector iobs_fl(1,nfleet);                ///< Incremental counter for obs. no. within each fleet data type
-  iobs_fl.initialize();
-  idx.initialize();
-  idx2.initialize();
-  int isex, ishell, imat;
-  for (int i=1; i<=nsf_obs; i++) 
-  {
-    iyr               = int(sf_data(i,1));
-    ifleet            = int(sf_data(i,3));
-    isex              = int(sf_data(i,4));
-    ishell            = int(sf_data(i,5));
-    imat              = int(sf_data(i,6));
-    idx(iyr,ifleet,isex,ishell,imat) = i;
-    // int itmp = int(idx(iyr,ifleet,isex,ishell,imat));                           
-    // sf_fleet_tmp(1,nfleet,1,100,0,10,1,ncol);          ///< Size-frequency data (nclass), by fleet (can be ragged array)
-  }
-  for (iyr=styr;iyr<=endyr;iyr++) 
-    for (int ifl=1;ifl<=nfleet;ifl++) 
-    {
-      for (int i=0;i<=nsex;i++) 
-        for (int j=0;j<=nshell;j++)
-         for (int k=0;k<=nmature;k++)
-         {
-           int itmp = idx(iyr,ifl,i,j,k);
-           if (itmp>0) // can proceed to do counting, building structure
-           {
-              // cout<<iyr<<" "<< ifl<<" "<< i<<" "<< j<<" "<< k<<" "<< itmp<<endl;;
-              ++nobs_yr_flt(iyr,ifl);
-              ss_yr_flt(iyr,ifl) = sf_data(itmp,7);
-              if (nobs_yr_flt(iyr,ifl)==1)
-              {
-                iobs_fl(ifl)++;
-              }
-              idx2(ifl,iobs_fl(ifl),nobs_yr_flt(iyr,ifl)) = itmp;
-            }
-         }
-    }
-  // Need total number of sf for each fleet, NOT by sex etc (concatenated ragged form)
-  // NOTE: definition of nsf_fleet is number of composition records, not lines on input
-  nsf_fleet.initialize();
-  for (iyr=styr;iyr<=endyr;iyr++) 
-    for (int ifl=1;ifl<=nfleet;ifl++) 
-      if (nobs_yr_flt(iyr,ifl)>0)
-        nsf_fleet(ifl)++;
 
-  echo(nobs_yr_flt);
- END_CALCS
+  LOC_CALCS 
+    ivector iobs_fl(1,nfleet);                ///< Incremental counter for obs. no. within each fleet data type
+    iobs_fl.initialize();
+    idx.initialize();
+    idx2.initialize();
+    int isex, ishell, imat;
+    for (int i=1; i<=nsf_obs; i++) 
+    {
+      iyr               = int(sf_data(i,1));
+      ifleet            = int(sf_data(i,3));
+      isex              = int(sf_data(i,4));
+      ishell            = int(sf_data(i,5));
+      imat              = int(sf_data(i,6));
+      idx(iyr,ifleet,isex,ishell,imat) = i;
+      // int itmp = int(idx(iyr,ifleet,isex,ishell,imat));                           
+      // sf_fleet_tmp(1,nfleet,1,100,0,10,1,ncol);          ///< Size-frequency data (nclass), by fleet (can be ragged array)
+    }
+    for (iyr=styr;iyr<=endyr;iyr++) 
+      for (int ifl=1;ifl<=nfleet;ifl++) 
+      {
+        for (int i=0;i<=nsex;i++) 
+          for (int j=0;j<=nshell;j++)
+           for (int k=0;k<=nmature;k++)
+           {
+             int itmp = idx(iyr,ifl,i,j,k);
+             if (itmp>0) // can proceed to do counting, building structure
+             {
+                // cout<<iyr<<" "<< ifl<<" "<< i<<" "<< j<<" "<< k<<" "<< itmp<<endl;;
+                ++nobs_yr_flt(iyr,ifl);
+                ss_yr_flt(iyr,ifl) = sf_data(itmp,7);
+                if (nobs_yr_flt(iyr,ifl)==1)
+                {
+                  iobs_fl(ifl)++;
+                }
+                idx2(ifl,iobs_fl(ifl),nobs_yr_flt(iyr,ifl)) = itmp;
+              }
+           }
+      }
+    // Need total number of sf for each fleet, NOT by sex etc (concatenated ragged form)
+    // NOTE: definition of nsf_fleet is number of composition records, not lines on input
+    nsf_fleet.initialize();
+    for (iyr=styr;iyr<=endyr;iyr++) 
+      for (int ifl=1;ifl<=nfleet;ifl++) 
+        if (nobs_yr_flt(iyr,ifl)>0)
+          nsf_fleet(ifl)++;
+
+    echo(nobs_yr_flt);
+  END_CALCS
+
   imatrix  nbins_fleet(1,nfleet,1,nsf_fleet);           ///< Number of length bins
   matrix  fleet_sftyp(1,nfleet,1,nsf_fleet);           ///< Type of size freq data (see legend)
   imatrix sf_fleet_yr(1,nfleet,1,nsf_fleet);           ///< Years with sf data, by fleet
   matrix  sf_fleet_ss(1,nfleet,1,nsf_fleet);           ///< Effective sample sizes, by fleet
- LOC_CALCS 
-  nbins_fleet.initialize();
-  fleet_sftyp.initialize();
-  sf_fleet_yr.initialize();
-  sf_fleet_ss.initialize();
-  // imatrix sf_fleet_yr(1,nfleet,1,nsf_fleet);           ///< Years with sf data, by fleet
-  for (int ifl=1;ifl<=nfleet;ifl++) 
-  {
-    // Reset counter for records with this fleet
-    int iobs=0;
-    // Scan over all years for records
-    for (iyr=styr;iyr<=endyr;iyr++) 
+  LOC_CALCS 
+    nbins_fleet.initialize();
+    fleet_sftyp.initialize();
+    sf_fleet_yr.initialize();
+    sf_fleet_ss.initialize();
+    // imatrix sf_fleet_yr(1,nfleet,1,nsf_fleet);           ///< Years with sf data, by fleet
+    for (int ifl=1;ifl<=nfleet;ifl++) 
     {
-      if (nobs_yr_flt(iyr,ifl)>0) 
+      // Reset counter for records with this fleet
+      int iobs=0;
+      // Scan over all years for records
+      for (iyr=styr;iyr<=endyr;iyr++) 
       {
-        // Increment counter for records with this fleet
-        ++iobs;
-        sf_fleet_yr(ifl,iobs) = iyr;
-        sf_fleet_ss(ifl,iobs) = ss_yr_flt(iyr,ifl);
-        for (int i=1;i<=nobs_yr_flt(iyr,ifl);i++)
+        if (nobs_yr_flt(iyr,ifl)>0) 
         {
-          // Get index for fleet and records within this fleet
-          int itmp = int(idx2(ifl,iobs,i));
-          if(nclass !=ndclass)
+          // Increment counter for records with this fleet
+          ++iobs;
+          sf_fleet_yr(ifl,iobs) = iyr;
+          sf_fleet_ss(ifl,iobs) = ss_yr_flt(iyr,ifl);
+          for (int i=1;i<=nobs_yr_flt(iyr,ifl);i++)
           {
-            for (int iclass=1; iclass<=nclass; iclass++) 
-            { 
-              sf_fleet_tmp(ifl,iobs,i,iclass) =
-                 sum(sf_data(itmp)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+            // Get index for fleet and records within this fleet
+            int itmp = int(idx2(ifl,iobs,i));
+            if(nclass !=ndclass)
+            {
+              for (int iclass=1; iclass<=nclass; iclass++) 
+              { 
+                sf_fleet_tmp(ifl,iobs,i,iclass) =
+                   sum(sf_data(itmp)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+              }
+              // cout<<ifl<<" "<<iobs<<" "<<i<<" "<< sf_fleet_tmp(ifl,iobs,nobs_yr_flt(iyr,ifl))(1,nclass)<<endl;
+              // cout<<ifl<<" "<<iobs<<" "<<i<<" "<< sf_fleet_tmp(ifl,iobs,i)(1,nclass)<<endl;
             }
-            // cout<<ifl<<" "<<iobs<<" "<<i<<" "<< sf_fleet_tmp(ifl,iobs,nobs_yr_flt(iyr,ifl))(1,nclass)<<endl;
-            // cout<<ifl<<" "<<iobs<<" "<<i<<" "<< sf_fleet_tmp(ifl,iobs,i)(1,nclass)<<endl;
+            else
+              sf_fleet_tmp(ifl,iobs,nobs_yr_flt(iyr,ifl))(1,nclass) = sf_data(itmp)(8,7+ndclass).shift(1);
+          // cout <<sf_fleet_tmp<<endl;exit(1); 
+            nbins_fleet(ifl,iobs) += nclass;
           }
-          else
-            sf_fleet_tmp(ifl,iobs,nobs_yr_flt(iyr,ifl))(1,nclass) = sf_data(itmp)(8,7+ndclass).shift(1);
-        // cout <<sf_fleet_tmp<<endl;exit(1); 
-          nbins_fleet(ifl,iobs) += nclass;
         }
+        // cout<<iyr<<" "<<ifl<<" "<<nobs_yr_flt(iyr,ifl)<<endl;
       }
-      // cout<<iyr<<" "<<ifl<<" "<<nobs_yr_flt(iyr,ifl)<<endl;
     }
-  }
-  // echo(sf_fleet_tmp);
- END_CALCS
+    // echo(sf_fleet_tmp);
+  END_CALCS
   3darray sf_fleet_obs(1,nfleet,1,nsf_fleet,1,nbins_fleet);  ///< Size-frequency data (nclass), by fleet (can be ragged array)
- LOC_CALCS 
-  // Construct final observed ragged object...need nbins
-  for (int ifl=1;ifl<=nfleet;ifl++) 
-  {
-    for (int i=1;i<=nsf_fleet(ifl);i++)
+   LOC_CALCS 
+    // Construct final observed ragged object...need nbins
+    for (int ifl=1;ifl<=nfleet;ifl++) 
     {
-      int ibin1 = 1;
-      int ibin2 = (ibin1+nclass-1);
-      for (int j=1;j<=nobs_yr_flt(sf_fleet_yr(ifl,i),ifl);++j)
+      for (int i=1;i<=nsf_fleet(ifl);i++)
       {
-        for (int iclass=ibin1;iclass<=ibin2;++iclass)
+        int ibin1 = 1;
+        int ibin2 = (ibin1+nclass-1);
+        for (int j=1;j<=nobs_yr_flt(sf_fleet_yr(ifl,i),ifl);++j)
         {
-          sf_fleet_obs(ifl,i,iclass) = sf_fleet_tmp(ifl,i,j,(iclass-(ibin1-1)));
+          for (int iclass=ibin1;iclass<=ibin2;++iclass)
+          {
+            sf_fleet_obs(ifl,i,iclass) = sf_fleet_tmp(ifl,i,j,(iclass-(ibin1-1)));
+          }
+          // cout <<j<<" "<<sf_fleet_tmp(ifl,i,j) <<endl;
+          ibin1 += nclass;
+          ibin2 += nclass;
+         cout <<sf_fleet_yr(ifl,i)<<" "<<i<<" "<< j<<" "<< ifl<<" " <<sf_fleet_obs(ifl,i)<<endl;
         }
-        // cout <<j<<" "<<sf_fleet_tmp(ifl,i,j) <<endl;
-        ibin1 += nclass;
-        ibin2 += nclass;
-       cout <<sf_fleet_yr(ifl,i)<<" "<<i<<" "<< j<<" "<< ifl<<" " <<sf_fleet_obs(ifl,i)<<endl;
       }
     }
-  }
-  echo( sf_fleet_obs);
-  echo( nsf_fleet);
-  echo( nbins_fleet);
-  echo( sf_fleet_yr);
-  echo( sf_fleet_ss);
-  echo(sf_fleet_obs);
+    echo( sf_fleet_obs);
+    echo( nsf_fleet);
+    echo( nbins_fleet);
+    echo( sf_fleet_yr);
+    echo( sf_fleet_ss);
+    echo(sf_fleet_obs);
 
- END_CALCS
-  
+   END_CALCS
+    
   // ......................................................................  
   // Read in Survey SF data:
 
@@ -743,123 +764,123 @@ DATA_SECTION
   matrix nobs_yr_srv(styr,endyr,1,nsurvey);
   matrix ss_yr_srv(styr,endyr,1,nsurvey);
 
- LOC_CALCS
-  nobs_yr_srv.initialize();
-  ss_yr_srv.initialize();
-  iobs_srv.initialize();
-  idxsrv.initialize();
-  idxsrv2.initialize();
-  for (int i=1; i<=nsfs_obs; i++) 
-  {
-    iyr               = int(sfs_data(i,1));
-    isurvey           = int(sfs_data(i,3));
-    isex              = int(sfs_data(i,4));
-    ishell            = int(sfs_data(i,5));
-    imat              = int(sfs_data(i,6));
-    idxsrv(iyr,isurvey,isex,ishell,imat) = i;
-  }
-  for (iyr=styr;iyr<=endyr;iyr++) 
-    for (int isrv=1;isrv<=nsurvey;isrv++) 
+   LOC_CALCS
+    nobs_yr_srv.initialize();
+    ss_yr_srv.initialize();
+    iobs_srv.initialize();
+    idxsrv.initialize();
+    idxsrv2.initialize();
+    for (int i=1; i<=nsfs_obs; i++) 
     {
-      for (int i=0;i<=nsex;i++) 
-        for (int j=0;j<=nshell;j++)
-         for (int k=0;k<=nmature;k++)
-         {
-           int itmp = idxsrv(iyr,isrv,i,j,k);
-           if (itmp>0) // can proceed to do counting, building structure
-           {
-              // cout<<iyr<<" "<< isrv<<" "<< i<<" "<< j<<" "<< k<<" "<< itmp<<endl;;
-              ++nobs_yr_srv(iyr,isrv);
-              ss_yr_srv(iyr,isrv) = sf_data(itmp,7);
-              if (nobs_yr_srv(iyr,isrv)==1)
-              {
-                iobs_srv(isrv)++;
-              }
-              idxsrv2(isrv,iobs_srv(isrv),nobs_yr_srv(iyr,isrv)) = itmp;
-            }
-         }
+      iyr               = int(sfs_data(i,1));
+      isurvey           = int(sfs_data(i,3));
+      isex              = int(sfs_data(i,4));
+      ishell            = int(sfs_data(i,5));
+      imat              = int(sfs_data(i,6));
+      idxsrv(iyr,isurvey,isex,ishell,imat) = i;
     }
-  // Need total number of sf for each survey, NOT by sex etc (concatenated ragged form)
-  // NOTE: definition of nsf_survey is number of composition records, not lines on input
-  nsf_survey.initialize();
-  for (iyr=styr;iyr<=endyr;iyr++) 
-    for (int isrv=1;isrv<=nsurvey;isrv++) 
-      if (nobs_yr_srv(iyr,isrv)>0)
-        nsf_survey(isrv)++;
+    for (iyr=styr;iyr<=endyr;iyr++) 
+      for (int isrv=1;isrv<=nsurvey;isrv++) 
+      {
+        for (int i=0;i<=nsex;i++) 
+          for (int j=0;j<=nshell;j++)
+           for (int k=0;k<=nmature;k++)
+           {
+             int itmp = idxsrv(iyr,isrv,i,j,k);
+             if (itmp>0) // can proceed to do counting, building structure
+             {
+                // cout<<iyr<<" "<< isrv<<" "<< i<<" "<< j<<" "<< k<<" "<< itmp<<endl;;
+                ++nobs_yr_srv(iyr,isrv);
+                ss_yr_srv(iyr,isrv) = sf_data(itmp,7);
+                if (nobs_yr_srv(iyr,isrv)==1)
+                {
+                  iobs_srv(isrv)++;
+                }
+                idxsrv2(isrv,iobs_srv(isrv),nobs_yr_srv(iyr,isrv)) = itmp;
+              }
+           }
+      }
+    // Need total number of sf for each survey, NOT by sex etc (concatenated ragged form)
+    // NOTE: definition of nsf_survey is number of composition records, not lines on input
+    nsf_survey.initialize();
+    for (iyr=styr;iyr<=endyr;iyr++) 
+      for (int isrv=1;isrv<=nsurvey;isrv++) 
+        if (nobs_yr_srv(iyr,isrv)>0)
+          nsf_survey(isrv)++;
 
-  echo(nobs_yr_srv);
- END_CALCS
+    echo(nobs_yr_srv);
+   END_CALCS
   imatrix  nbins_survey(1,nsurvey,1,nsf_survey);           ///< Number of length bins
   matrix  survey_sftyp(1,nsurvey,1,nsf_survey);           ///< Type of size freq data (see legend)
   imatrix sf_survey_yr(1,nsurvey,1,nsf_survey);           ///< Years with sf data, by survey
   matrix  sf_survey_ss(1,nsurvey,1,nsf_survey);           ///< Effective sample sizes, by survey
- LOC_CALCS 
-  nbins_survey.initialize();
-  survey_sftyp.initialize();
-  sf_survey_yr.initialize();
-  sf_survey_ss.initialize();
-  // imatrix sf_survey_yr(1,nsurvey,1,nsf_survey);           ///< Years with sf data, by survey
-  for (int isrv=1;isrv<=nsurvey;isrv++) 
-  {
-    // Reset counter for records with this survey
-    int iobs=0;
-    // Scan over all years for records
-    for (iyr=styr;iyr<=endyr;iyr++) 
+   LOC_CALCS 
+    nbins_survey.initialize();
+    survey_sftyp.initialize();
+    sf_survey_yr.initialize();
+    sf_survey_ss.initialize();
+    // imatrix sf_survey_yr(1,nsurvey,1,nsf_survey);           ///< Years with sf data, by survey
+    for (int isrv=1;isrv<=nsurvey;isrv++) 
     {
-      if (nobs_yr_srv(iyr,isrv)>0) 
+      // Reset counter for records with this survey
+      int iobs=0;
+      // Scan over all years for records
+      for (iyr=styr;iyr<=endyr;iyr++) 
       {
-        // Increment counter for records with this survey
-        ++iobs;
-        sf_survey_yr(isrv,iobs) = iyr;
-        sf_survey_ss(isrv,iobs) = ss_yr_srv(iyr,isrv);
-        for (int i=1;i<=nobs_yr_srv(iyr,isrv);i++)
+        if (nobs_yr_srv(iyr,isrv)>0) 
         {
-          // Get index for survey and records within this survey
-          int itmp = int(idxsrv2(isrv,iobs,i));
-          if(nclass !=ndclass)
+          // Increment counter for records with this survey
+          ++iobs;
+          sf_survey_yr(isrv,iobs) = iyr;
+          sf_survey_ss(isrv,iobs) = ss_yr_srv(iyr,isrv);
+          for (int i=1;i<=nobs_yr_srv(iyr,isrv);i++)
           {
-            for (int iclass=1; iclass<=nclass; iclass++) 
-            { 
-              sf_survey_tmp(isrv,iobs,i,iclass) =
-                 sum(sf_data(itmp)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+            // Get index for survey and records within this survey
+            int itmp = int(idxsrv2(isrv,iobs,i));
+            if(nclass !=ndclass)
+            {
+              for (int iclass=1; iclass<=nclass; iclass++) 
+              { 
+                sf_survey_tmp(isrv,iobs,i,iclass) =
+                   sum(sf_data(itmp)(7+class_link(iclass,1),7+class_link(iclass,2)));      
+              }
             }
+            else
+              sf_survey_tmp(isrv,iobs,nobs_yr_srv(iyr,isrv))(1,nclass) = sf_data(itmp)(8,7+ndclass).shift(1);
+            nbins_survey(isrv,iobs) += nclass;
           }
-          else
-            sf_survey_tmp(isrv,iobs,nobs_yr_srv(iyr,isrv))(1,nclass) = sf_data(itmp)(8,7+ndclass).shift(1);
-          nbins_survey(isrv,iobs) += nclass;
         }
+        // cout<<iyr<<" "<<isrv<<" "<<nobs_yr_srv(iyr,isrv)<<endl;
       }
-      // cout<<iyr<<" "<<isrv<<" "<<nobs_yr_srv(iyr,isrv)<<endl;
     }
-  }
- END_CALCS
+   END_CALCS
   3darray sf_survey_obs(1,nsurvey,1,nsf_survey,1,nbins_survey);  ///< Size-frequency data (nclass), by survey (can be ragged array)
- LOC_CALCS 
-  // Construct final observed ragged object...need nbins
-  for (int isrv=1;isrv<=nsurvey;isrv++) 
-  {
-    for (int i=1;i<=nsf_survey(isrv);i++)
+   LOC_CALCS 
+    // Construct final observed ragged object...need nbins
+    for (int isrv=1;isrv<=nsurvey;isrv++) 
     {
-      int ibin1 = 1;
-      int ibin2 = (ibin1+nclass-1);
-      for (int j=1;j<=nobs_yr_srv(sf_survey_yr(isrv,i),isrv);++j)
+      for (int i=1;i<=nsf_survey(isrv);i++)
       {
-        for (int iclass=ibin1;iclass<=ibin2;++iclass)
+        int ibin1 = 1;
+        int ibin2 = (ibin1+nclass-1);
+        for (int j=1;j<=nobs_yr_srv(sf_survey_yr(isrv,i),isrv);++j)
         {
-          sf_survey_obs(isrv,i,iclass) = sf_survey_tmp(isrv,i,j,(iclass-(ibin1-1)));
+          for (int iclass=ibin1;iclass<=ibin2;++iclass)
+          {
+            sf_survey_obs(isrv,i,iclass) = sf_survey_tmp(isrv,i,j,(iclass-(ibin1-1)));
+          }
+          ibin1 += nclass;
+          ibin2 += nclass;
         }
-        ibin1 += nclass;
-        ibin2 += nclass;
       }
     }
-  }
-  echo( sf_survey_obs);
-  echo( nsf_survey);
-  echo( nbins_survey);
-  echo( sf_survey_yr);
-  echo( sf_survey_ss);
-  echo(sf_survey_obs);
- END_CALCS
+    echo( sf_survey_obs);
+    echo( nsf_survey);
+    echo( nbins_survey);
+    echo( sf_survey_yr);
+    echo( sf_survey_ss);
+    echo(sf_survey_obs);
+   END_CALCS
 
   // TODO: The above calculations need to take account of sex- and shell-specific numbers. 
   // Note, this may alter values when calculating numbers per size bin and renormalizing (but should be okay with extra loops over sex and shell).
@@ -883,65 +904,65 @@ DATA_SECTION
   vector fecundity(1,nclass);                 ///< Fecundity (kg) vector for model
   vector surv_sf_store(1,ndclass);            ///< Survey sf total by data class
    
- LOC_CALCS
-  /**
-   * Steve Martell:
-   * I'm not sure what is being done here. Somehow the vector size
-   * here gets modified to match the differencs in the model size classes
-   * to the data size classes.  However, there are infinite values showing up 
-   * in size()
-   */
-  surv_sf_store.initialize();
-  if(nclass!=ndclass)
-  {
-    int total;
-    total = 0;
-    for (iclass=1; iclass<=ndclass; iclass++)
+   LOC_CALCS
+    /**
+     * Steve Martell:
+     * I'm not sure what is being done here. Somehow the vector size
+     * here gets modified to match the differencs in the model size classes
+     * to the data size classes.  However, there are infinite values showing up 
+     * in size()
+     */
+    surv_sf_store.initialize();
+    if(nclass!=ndclass)
     {
-      for (int isrv=1;isrv<=nsurvey;isrv++)
-        for (int i=1;i<=nsf_survey(isrv);i++)
-          surv_sf_store(iclass) += sf_survey_obs(isrv,i,iclass);
-      total += surv_sf_store(iclass);
-    }
-    check(surv_sf_store);
-    if (verbose == 1) cout << "Survey total frequency samples by size-class stored" << endl;
-
-    checkfile << "class-specific size, weight, and fecundity (columns)" << endl;
-    //size.initialize();
-    fecundity.initialize();
-    weight.initialize();
-    for (iclass=1; iclass<=nclass; iclass++)
-    {
+      int total;
       total = 0;
-      for (jclass=class_link(iclass,1); jclass<=class_link(iclass,2); jclass++)
+      for (iclass=1; iclass<=ndclass; iclass++)
       {
-        //size(iclass) += mean_size(jclass)*surv_sf_store(jclass);
-        fecundity(iclass) += fecundity_inp(jclass)*surv_sf_store(jclass);
-        for(int isex=1; isex<=2; isex++)
-          weight(isex,iclass) += mean_weight(isex,jclass)*surv_sf_store(jclass);
-        total += surv_sf_store(jclass);
-        
+        for (int isrv=1;isrv<=nsurvey;isrv++)
+          for (int i=1;i<=nsf_survey(isrv);i++)
+            surv_sf_store(iclass) += sf_survey_obs(isrv,i,iclass);
+        total += surv_sf_store(iclass);
       }
-      //size(iclass) /= total;  // divide by zero here
-      fecundity(iclass) /= total;
-      // Note these were by sex...
-      weight(1,iclass) /= total;
-      
-      checkfile << iclass << " " << size(iclass) << " " << weight(1,iclass) << " " << fecundity(iclass) << endl;
+      check(surv_sf_store);
+      if (verbose == 1) cout << "Survey total frequency samples by size-class stored" << endl;
+
+      checkfile << "class-specific size, weight, and fecundity (columns)" << endl;
+      //size.initialize();
+      fecundity.initialize();
+      weight.initialize();
+      for (iclass=1; iclass<=nclass; iclass++)
+      {
+        total = 0;
+        for (jclass=class_link(iclass,1); jclass<=class_link(iclass,2); jclass++)
+        {
+          //size(iclass) += mean_size(jclass)*surv_sf_store(jclass);
+          fecundity(iclass) += fecundity_inp(jclass)*surv_sf_store(jclass);
+          for(int isex=1; isex<=2; isex++)
+            weight(isex,iclass) += mean_weight(isex,jclass)*surv_sf_store(jclass);
+          total += surv_sf_store(jclass);
+          
+        }
+        //size(iclass) /= total;  // divide by zero here
+        fecundity(iclass) /= total;
+        // Note these were by sex...
+        weight(1,iclass) /= total;
+        
+        checkfile << iclass << " " << size(iclass) << " " << weight(1,iclass) << " " << fecundity(iclass) << endl;
+      }
+      if (verbose == 1) cout << " Sizes, weights, and fecundity recalculated" << endl;
     }
-    if (verbose == 1) cout << " Sizes, weights, and fecundity recalculated" << endl;
-  }
-  else
-  {
-    //size = mean_size;
-    weight = mean_weight;
-    fecundity = fecundity_inp;
-    check(size);
-    check(weight);
-    check(fecundity);
-  }  
-  // SJDM  Patch to get size working.
- END_CALCS
+    else
+    {
+      //size = mean_size;
+      weight = mean_weight;
+      fecundity = fecundity_inp;
+      check(size);
+      check(weight);
+      check(fecundity);
+    }  
+    // SJDM  Patch to get size working.
+   END_CALCS
 
   // NOTE: surv_sf_store is the sum over all years of LF data for each of ndclasses.
   // Thus it stores the aggregated size-frequency information over all years.
@@ -965,14 +986,14 @@ DATA_SECTION
   !! echotxt(nrecapture_obs, " Number of recapture data lines")
 
   // Echo capture, mark, recapture data when appropriate:
- LOC_CALCS
-  if(ncapture_obs > 0) 
-  {
-    echo(capture_data);
-    echo(mark_data);
-    echo(recapture_data);
-  }
- END_CALCS
+   LOC_CALCS
+    if(ncapture_obs > 0) 
+    {
+      echo(capture_data);
+      echo(mark_data);
+      echo(recapture_data);
+    }
+   END_CALCS
   
   // ......................................................................  
   // Print EOF confirmation to screen and echoinput, warn otherwise:
@@ -981,7 +1002,7 @@ DATA_SECTION
   !! if(eof_data!=999) {cout << " Error reading main data file \n EOF = "<< eof_data << endl; exit(1);}
   !! cout << " Finished reading main data file \n" << endl;
   !! echotxt(eof_data," EOF: finished reading main data file \n");
-
+  
   
 // ---------------------------------------------------------------------------------------------------------
 // DATA FILE (GROWTH)
@@ -992,30 +1013,30 @@ DATA_SECTION
   int endyr_growth;       ///< End year for growth data
   int ndclass_growth;     ///< Number of data classes for growth data
 
- LOC_CALCS
-  ndclass_growth = 0;
-  if(read_growth==1)
-  {  
-    // Open size transition file (*.dat) //
-    ad_comm::change_datafile_name(size_trans_file);
-    cout << " Reading size transition file" << endl;
-    echoinput << " Start reading size transition file" << endl;
-    // Read input from growth data file:
-    *(ad_comm::global_datafile) >> styr_growth;
-    *(ad_comm::global_datafile) >> endyr_growth;
-    *(ad_comm::global_datafile) >> ndclass_growth;
+   LOC_CALCS
+    ndclass_growth = 0;
+    if(read_growth==1)
+    {  
+      // Open size transition file (*.dat) //
+      ad_comm::change_datafile_name(size_trans_file);
+      cout << " Reading size transition file" << endl;
+      echoinput << " Start reading size transition file" << endl;
+      // Read input from growth data file:
+      *(ad_comm::global_datafile) >> styr_growth;
+      *(ad_comm::global_datafile) >> endyr_growth;
+      *(ad_comm::global_datafile) >> ndclass_growth;
 
-    echotxt(styr_growth, " Start year for growth data");
-    echotxt(endyr_growth, " End year for growth data");
-    echotxt(ndclass_growth, " Number of growth data classes");
-  }
-  else // Set to some values so as not to cause allocation issues for public variables:
-  {
-    ndclass_growth = ndclass;
-    styr_growth    = styr;
-    endyr_growth   = endyr;
-  }
- END_CALCS
+      echotxt(styr_growth, " Start year for growth data");
+      echotxt(endyr_growth, " End year for growth data");
+      echotxt(ndclass_growth, " Number of growth data classes");
+    }
+    else // Set to some values so as not to cause allocation issues for public variables:
+    {
+      ndclass_growth = ndclass;
+      styr_growth    = styr;
+      endyr_growth   = endyr;
+    }
+   END_CALCS
   
   // Declare objects dependent on previous objects:
   ivector growth_bins(1,ndclass_growth);                                                  ///< Vector of growth data bins (lower size of each bin)
@@ -1023,23 +1044,23 @@ DATA_SECTION
   
   int eof_growth;    // Declare EOF check
 
- LOC_CALCS
-  if(read_growth==1)
-  {  
-    *(ad_comm::global_datafile) >> growth_bins;
-    *(ad_comm::global_datafile) >> growth_data;
+   LOC_CALCS
+    if(read_growth==1)
+    {  
+      *(ad_comm::global_datafile) >> growth_bins;
+      *(ad_comm::global_datafile) >> growth_data;
 
-    echo(growth_bins);
-    echo(growth_data);
+      echo(growth_bins);
+      echo(growth_data);
 
-    *(ad_comm::global_datafile) >> eof_growth;
-    
-    // Print EOF confirmation to screen and echoinput, warn otherwise:
-    if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_growth << endl; exit(1);}
-    cout << " Finished reading size transition file \n" << endl;
-    echotxt(eof_growth," EOF: finished reading size transition file \n");
-  }
- END_CALCS
+      *(ad_comm::global_datafile) >> eof_growth;
+      
+      // Print EOF confirmation to screen and echoinput, warn otherwise:
+      if(eof_growth!=999) {cout << " Error reading size transition file\n EOF = " << eof_growth << endl; exit(1);}
+      cout << " Finished reading size transition file \n" << endl;
+      echotxt(eof_growth," EOF: finished reading size transition file \n");
+    }
+   END_CALCS
 
 // ---------------------------------------------------------------------------------------------------------
 // CONTROL FILE
@@ -1077,22 +1098,22 @@ DATA_SECTION
   !! echo(theta_control);
 
   // Fill matrices and vectors created above:
- LOC_CALCS
-    trans_theta_control = trans(theta_control);
-    theta_init          = trans_theta_control(1);
-    theta_lbnd          = trans_theta_control(2);
-    theta_ubnd          = trans_theta_control(3);
-    theta_phz           = ivector(trans_theta_control(4));
-    theta_prior         = ivector(trans_theta_control(5));
-    theta_pmean         = trans_theta_control(6);
-    theta_psd           = trans_theta_control(7);
-    theta_cov           = ivector(trans_theta_control(8));
-    theta_dev           = ivector(trans_theta_control(9));
-    theta_dsd           = trans_theta_control(10);
-    theta_dmin          = ivector(trans_theta_control(11));
-    theta_dmax          = ivector(trans_theta_control(12));
-    theta_blk           = ivector(trans_theta_control(13));
- END_CALCS
+   LOC_CALCS
+      trans_theta_control = trans(theta_control);
+      theta_init          = trans_theta_control(1);
+      theta_lbnd          = trans_theta_control(2);
+      theta_ubnd          = trans_theta_control(3);
+      theta_phz           = ivector(trans_theta_control(4));
+      theta_prior         = ivector(trans_theta_control(5));
+      theta_pmean         = trans_theta_control(6);
+      theta_psd           = trans_theta_control(7);
+      theta_cov           = ivector(trans_theta_control(8));
+      theta_dev           = ivector(trans_theta_control(9));
+      theta_dsd           = trans_theta_control(10);
+      theta_dmin          = ivector(trans_theta_control(11));
+      theta_dmax          = ivector(trans_theta_control(12));
+      theta_blk           = ivector(trans_theta_control(13));
+   END_CALCS
 
   // ......................................................................  
   // Get Natural Mortality (M) Specifications:
@@ -1100,22 +1121,22 @@ DATA_SECTION
   // Read in pointers for time-varying M:
   vector M_pnt(styr,endyr);                          ///< Pointers to blocks for time-varying natural mortality
   int nMadd_parms;                                   ///< Number of M additional parameters
- 
- LOC_CALCS
-  M_pnt.initialize(); 
-  if (theta_blk(1)>0)  
-  {
-    *(ad_comm::global_datafile) >> M_pnt ;
-    M_pnt -= 1;
-    nMadd_parms = max(M_pnt) ;                   
-  }
-  else
-    nMadd_parms = 1; // just to have some value (will be unestimated)
 
-  echo(M_pnt);
-  echotxt(nMadd_parms, " Number of additional natural mortality parameters");
- END_CALCS
-  
+   LOC_CALCS
+    M_pnt.initialize(); 
+    if (theta_blk(1)>0)  
+    {
+      *(ad_comm::global_datafile) >> M_pnt ;
+      M_pnt -= 1;
+      nMadd_parms = max(M_pnt) ;                   
+    }
+    else
+      nMadd_parms = 1; // just to have some value (will be unestimated)
+
+    echo(M_pnt);
+    echotxt(nMadd_parms, " Number of additional natural mortality parameters");
+   END_CALCS
+    
   // Read in naturaly mortality parameter specifications:
   matrix Madd_control(1,nMadd_parms,1,4);            ///< Natural mort. parameter matrix, with speciifications           
   matrix trans_Madd_control(1,4,1,nMadd_parms);      ///< Transponse of natural mort. parameter matrix    
@@ -1126,31 +1147,31 @@ DATA_SECTION
 
 
   // Fill matrices and vectors created above:
- LOC_CALCS
-    if (theta_blk(1)>0)
-    {
-      for (int i = 1;i<=nMadd_parms;i++) * (ad_comm::global_datafile) >> Madd_control(i) ;
-      trans_Madd_control = trans(Madd_control);
-      Madd_init          = trans_Madd_control(1);
-      Madd_lbnd          = trans_Madd_control(2);
-      Madd_ubnd          = trans_Madd_control(3);
-      Madd_phz           = ivector(trans_Madd_control(4));
-    }
-    else
-    {
-      nMadd_parms =  1.0 ;
-      Madd_lbnd   =  0.0 ;
-      Madd_ubnd   =  1.0 ;
-      Madd_phz    = -1.0 ;
-      Madd_init   =  0.0 ;
-      Madd_control.initialize();
-    }
-  echo(Madd_control);
-  echo(Madd_init);
-  echo(Madd_ubnd);
-  echo(Madd_lbnd);
-  echo(Madd_phz);
- END_CALCS
+   LOC_CALCS
+      if (theta_blk(1)>0)
+      {
+        for (int i = 1;i<=nMadd_parms;i++) * (ad_comm::global_datafile) >> Madd_control(i) ;
+        trans_Madd_control = trans(Madd_control);
+        Madd_init          = trans_Madd_control(1);
+        Madd_lbnd          = trans_Madd_control(2);
+        Madd_ubnd          = trans_Madd_control(3);
+        Madd_phz           = ivector(trans_Madd_control(4));
+      }
+      else
+      {
+        nMadd_parms =  1.0 ;
+        Madd_lbnd   =  0.0 ;
+        Madd_ubnd   =  1.0 ;
+        Madd_phz    = -1.0 ;
+        Madd_init   =  0.0 ;
+        Madd_control.initialize();
+      }
+    echo(Madd_control);
+    echo(Madd_init);
+    echo(Madd_ubnd);
+    echo(Madd_lbnd);
+    echo(Madd_phz);
+   END_CALCS
 
   // ......................................................................  
   // Get Recruitment Specifications:
@@ -1183,31 +1204,31 @@ DATA_SECTION
   // Read in specifications for each growth pattern and determine number of parameters to estimate:
   matrix growth_type(1,ngrowth_pats,1,4);            ///< Selectivity types for each fleet/survey by time-block
   
-LOC_CALCS
-  ngrowth = 0;
-  growth_type = 0;
-  for (int i=1; i<=ngrowth_pats; i++)
-  {
-    *(ad_comm::global_datafile) >> growth_type(i,1) >> growth_type(i,2) >> growth_type(i,3);
-    if (growth_type(i,2) == 1) ngrowth += nclass-1;
-    if (growth_type(i,2) == 2) ngrowth += 3;
-  }
-  ngrowth_pars = ngrowth;
-  echo(growth_type);
-  echotxt(ngrowth_pars, " Total number of growth parameters");
+  LOC_CALCS
+    ngrowth = 0;
+    growth_type = 0;
+    for (int i=1; i<=ngrowth_pats; i++)
+    {
+      *(ad_comm::global_datafile) >> growth_type(i,1) >> growth_type(i,2) >> growth_type(i,3);
+      if (growth_type(i,2) == 1) ngrowth += nclass-1;
+      if (growth_type(i,2) == 2) ngrowth += 3;
+    }
+    ngrowth_pars = ngrowth;
+    echo(growth_type);
+    echotxt(ngrowth_pars, " Total number of growth parameters");
 
-  // Fill last column of growth_type matrix, for use in Set_Growth function.
-  last = 0;
-  int pgrow = 0;
-  for (j=1; j<=ngrowth_pats; j++)
-  {
-    growth_type(j,4) = pgrow;
-    if (growth_type(j,2)==1) last = nclass-1;
-    if (growth_type(j,2)==2) last = 3;
-    pgrow += last;
-  }
-  check(growth_type);
- END_CALCS
+    // Fill last column of growth_type matrix, for use in Set_Growth function.
+    last = 0;
+    int pgrow = 0;
+    for (j=1; j<=ngrowth_pats; j++)
+    {
+      growth_type(j,4) = pgrow;
+      if (growth_type(j,2)==1) last = nclass-1;
+      if (growth_type(j,2)==2) last = 3;
+      pgrow += last;
+    }
+    check(growth_type);
+   END_CALCS
 
   // Read in growth parameter specifications:
   init_matrix gtrans_control(1,ngrowth_pars,1,4);     ///< Growth transition parameter matrix, with specifications
@@ -1220,13 +1241,13 @@ LOC_CALCS
   !! echo(gtrans_control);
 
   // Fill matrices and vectors created above:
- LOC_CALCS
-  trans_gtrans_control = trans(gtrans_control);
-  gtrans_init          = trans_gtrans_control(1);
-  gtrans_lbnd          = trans_gtrans_control(2);
-  gtrans_ubnd          = trans_gtrans_control(3);
-  gtrans_phz           = ivector(trans_gtrans_control(4));  
- END_CALCS
+   LOC_CALCS
+    trans_gtrans_control = trans(gtrans_control);
+    gtrans_init          = trans_gtrans_control(1);
+    gtrans_lbnd          = trans_gtrans_control(2);
+    gtrans_ubnd          = trans_gtrans_control(3);
+    gtrans_phz           = ivector(trans_gtrans_control(4));  
+   END_CALCS
 
   // ......................................................................  
   // Get Molting Specifications:
@@ -1245,30 +1266,30 @@ LOC_CALCS
   // Read in specifications for each molting pattern and determine number of parameters to estimate:
   matrix molt_type(1,nmolt_pats,1,4);                ///< Molting types for each relevant fleet by time-block
   
- LOC_CALCS
-  nmolt = 0;
-  molt_type = 0;
-  for (int i=1; i<=nmolt_pats; i++)
-  {
-    *(ad_comm::global_datafile) >> molt_type(i,1) >> molt_type(i,2) >> molt_type(i,3);
-    if (molt_type(i,2) == 1) nmolt += 2;
-  }
+   LOC_CALCS
+    nmolt = 0;
+    molt_type = 0;
+    for (int i=1; i<=nmolt_pats; i++)
+    {
+      *(ad_comm::global_datafile) >> molt_type(i,1) >> molt_type(i,2) >> molt_type(i,3);
+      if (molt_type(i,2) == 1) nmolt += 2;
+    }
 
-  nmolt_pars = nmolt;
-  echo(molt_type);
-  echotxt(nmolt_pars, " Total number of molting parameters");
+    nmolt_pars = nmolt;
+    echo(molt_type);
+    echotxt(nmolt_pars, " Total number of molting parameters");
 
-  // Fill last column of molt_type matrix, starting parameter for each molting pattern:
-  last = 0;
-  int pmolt = 0;
-  for (j=1; j<=nmolt_pats; j++)
-  {
-    molt_type(j,4) = pmolt;
-    if (molt_type(j,2)==1) last = 2;
-    pmolt += last;
-  }
-  check(molt_type);
- END_CALCS
+    // Fill last column of molt_type matrix, starting parameter for each molting pattern:
+    last = 0;
+    int pmolt = 0;
+    for (j=1; j<=nmolt_pats; j++)
+    {
+      molt_type(j,4) = pmolt;
+      if (molt_type(j,2)==1) last = 2;
+      pmolt += last;
+    }
+    check(molt_type);
+   END_CALCS
   
   // Read in molting parameter specifications:
   init_matrix molt_control(1,nmolt_pars,1,4);       ///< molting parameter matrix, with speciifications           
@@ -1281,13 +1302,13 @@ LOC_CALCS
   !! echo(molt_control);
 
   // Fill matrices and vectors created above:
- LOC_CALCS
-  trans_molt_control = trans(molt_control);
-  molt_init          = trans_molt_control(1);
-  molt_lbnd          = trans_molt_control(2);
-  molt_ubnd          = trans_molt_control(3);
-  molt_phz           = ivector(trans_molt_control(4));
- END_CALCS
+   LOC_CALCS
+    trans_molt_control = trans(molt_control);
+    molt_init          = trans_molt_control(1);
+    molt_lbnd          = trans_molt_control(2);
+    molt_ubnd          = trans_molt_control(3);
+    molt_phz           = ivector(trans_molt_control(4));
+   END_CALCS
 
   // ......................................................................  
   // Get Initial Numbers Specifications:
@@ -1300,17 +1321,17 @@ LOC_CALCS
   int rinit;                                     ///< Number of initial recruitments to estimate
   int rstyr;                                     ///< Year to start estimating recruitments
   
- LOC_CALCS
-  rinit = 0;
-  rstyr = styr;
-  if(init_n == 2 || init_n == 3 || init_n == 4)
-  {
-    *(ad_comm::global_datafile) >> rinit;
-    rstyr -= rinit;
-  }
-  echotxt(rinit,  " Number of initial recruitments");
-  echotxt(rstyr,  " Start year for estimated recruitment");
- END_CALCS
+   LOC_CALCS
+    rinit = 0;
+    rstyr = styr;
+    if(init_n == 2 || init_n == 3 || init_n == 4)
+    {
+      *(ad_comm::global_datafile) >> rinit;
+      rstyr -= rinit;
+    }
+    echotxt(rinit,  " Number of initial recruitments");
+    echotxt(rstyr,  " Start year for estimated recruitment");
+   END_CALCS
 
   // Read in initial N parameter values:
   init_matrix lognin_control(1,nclass,1,4);      ///< Initial N parameter matrix, with specifications
@@ -1322,14 +1343,14 @@ LOC_CALCS
   
   !! echo(lognin_control);
 
-  // Fill matrices and vectors created above:
- LOC_CALCS
-  trans_lognin_control = trans(lognin_control);
-  lognin_init          = trans_lognin_control(1);
-  lognin_lbnd          = trans_lognin_control(2);
-  lognin_ubnd          = trans_lognin_control(3);
-  lognin_phz           = ivector(trans_lognin_control(4));  
- END_CALCS
+    // Fill matrices and vectors created above:
+   LOC_CALCS
+    trans_lognin_control = trans(lognin_control);
+    lognin_init          = trans_lognin_control(1);
+    lognin_lbnd          = trans_lognin_control(2);
+    lognin_ubnd          = trans_lognin_control(3);
+    lognin_phz           = ivector(trans_lognin_control(4));  
+   END_CALCS
 
   // ......................................................................  
   // Get Selectivity Specifications:
@@ -1352,33 +1373,33 @@ LOC_CALCS
   // Read in specifications for each selectivity pattern and determine number of parameters to estimate:
   matrix selex_type(1,nselex_pats,1,4);    ///< Selectivity types for each fleet/survey by time-block
   
-LOC_CALCS
-  nselex = 0;
-  selex_type.initialize();
-  for (int i=1; i<=nselex_pats; i++)
-  {
-    *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
-    if (selex_type(i,2) == 1) nselex += nclass;
-    if (selex_type(i,2) == 2) nselex += 2;
-    if (selex_type(i,2) == 3) nselex += 2;
-  }
-  nselex_pars = nselex;
-  echo(selex_type);
-  echotxt(nselex_pars, " Total number of selectivity parameters");
+  LOC_CALCS
+    nselex = 0;
+    selex_type.initialize();
+    for (int i=1; i<=nselex_pats; i++)
+    {
+      *(ad_comm::global_datafile) >> selex_type(i,1) >> selex_type(i,2) >> selex_type(i,3);
+      if (selex_type(i,2) == 1) nselex += nclass;
+      if (selex_type(i,2) == 2) nselex += 2;
+      if (selex_type(i,2) == 3) nselex += 2;
+    }
+    nselex_pars = nselex;
+    echo(selex_type);
+    echotxt(nselex_pars, " Total number of selectivity parameters");
 
-  // Fill last column of selex_type matrix, for use in Set_Selectivity function.
-  last = 0;
-  int psel = 0;
-  for (j=1; j<=nselex_pats; j++)
-  {
-    selex_type(j,4) = psel;
-    if (selex_type(j,2) == 1) last = nclass;
-    if (selex_type(j,2) == 2) last = 2;
-    if (selex_type(j,2) == 3) last = 2;
-    psel += last;
-  }
-  check(selex_type);
- END_CALCS
+    // Fill last column of selex_type matrix, for use in Set_Selectivity function.
+    last = 0;
+    int psel = 0;
+    for (j=1; j<=nselex_pats; j++)
+    {
+      selex_type(j,4) = psel;
+      if (selex_type(j,2) == 1) last = nclass;
+      if (selex_type(j,2) == 2) last = 2;
+      if (selex_type(j,2) == 3) last = 2;
+      psel += last;
+    }
+    check(selex_type);
+   END_CALCS
 
 
 
@@ -1403,42 +1424,42 @@ LOC_CALCS
  	 vector slx_lam2(1,ndata);
  	 vector slx_lam3(1,ndata);
 
-	LOC_CALCS
-	    slx_indx = ivector(column(slx_control,1));
-	    slx_type = ivector(column(slx_control,2));
-	    slx_mean = column(slx_control,3);
-	    slx_stdv = column(slx_control,4);
-	    slx_xnod = ivector(column(slx_control,5));
-	    slx_inod = ivector(column(slx_control,6));
-	    slx_phzm = ivector(column(slx_control,7));
-	    slx_lam1 = column(slx_control,8);
-	    slx_lam2 = column(slx_control,9);
-	    slx_lam3 = column(slx_control,10);
+  	LOC_CALCS
+  	    slx_indx = ivector(column(slx_control,1));
+  	    slx_type = ivector(column(slx_control,2));
+  	    slx_mean = column(slx_control,3);
+  	    slx_stdv = column(slx_control,4);
+  	    slx_xnod = ivector(column(slx_control,5));
+  	    slx_inod = ivector(column(slx_control,6));
+  	    slx_phzm = ivector(column(slx_control,7));
+  	    slx_lam1 = column(slx_control,8);
+  	    slx_lam2 = column(slx_control,9);
+  	    slx_lam3 = column(slx_control,10);
 
-	    // count up number of parameters required
-	    slx_irow.initialize();
-	    slx_jcol.initialize();
-	    for(int k = 1; k <= ndata; k++ )
-	    {
-	 			switch (slx_type(k))
-	 			{
-	 				case 1:	// coefficients
-	 					slx_jcol(k) = nclass - 1;
-	 					slx_irow(k) = slx_nsel_blocks(k);
-	 				break;
+  	    // count up number of parameters required
+  	    slx_irow.initialize();
+  	    slx_jcol.initialize();
+  	    for(int k = 1; k <= ndata; k++ )
+  	    {
+  	 			switch (slx_type(k))
+  	 			{
+  	 				case 1:	// coefficients
+  	 					slx_jcol(k) = nclass - 1;
+  	 					slx_irow(k) = slx_nsel_blocks(k);
+  	 				break;
 
-	 				case 2: // logistic
-	 					slx_jcol(k) = 2;
-	 					slx_irow(k) = slx_nsel_blocks(k);
-	 				break;
+  	 				case 2: // logistic
+  	 					slx_jcol(k) = 2;
+  	 					slx_irow(k) = slx_nsel_blocks(k);
+  	 				break;
 
-	 				case 3: // logistic95
-	 					slx_jcol(k) = 2;
-	 					slx_irow(k) = slx_nsel_blocks(k);
-	 				break;
-	 			}
-	    }
-	END_CALCS
+  	 				case 3: // logistic95
+  	 					slx_jcol(k) = 2;
+  	 					slx_irow(k) = slx_nsel_blocks(k);
+  	 				break;
+  	 			}
+  	    }
+  	END_CALCS
 
 
 
@@ -1456,14 +1477,14 @@ LOC_CALCS
   !! echo(selex_control);
 
   // Fill matrices and vectors created above:
- LOC_CALCS
-    trans_selex_control = trans(selex_control);
-    selex_init          = trans_selex_control(1);
-    selex_lbnd          = trans_selex_control(2);
-    selex_ubnd          = trans_selex_control(3);
-    selex_phz           = ivector(trans_selex_control(4));
-    echo(selex_phz);
- END_CALCS
+   LOC_CALCS
+      trans_selex_control = trans(selex_control);
+      selex_init          = trans_selex_control(1);
+      selex_lbnd          = trans_selex_control(2);
+      selex_ubnd          = trans_selex_control(3);
+      selex_phz           = ivector(trans_selex_control(4));
+      echo(selex_phz);
+   END_CALCS
 
 
 
@@ -1484,32 +1505,32 @@ LOC_CALCS
   // Read in specifications for each retention pattern and determine number of parameters to estimate:
   matrix reten_type(1,nreten_pats,1,4);    ///< Retention types for each relevant fleet by time-block
   
-LOC_CALCS
-  nreten = 0;
-  reten_type = 0;
-  for (int i=1; i<=nreten_pats; i++)
-  {
-    *(ad_comm::global_datafile) >> reten_type(i,1) >> reten_type(i,2) >> reten_type(i,3);
-    if (reten_type(i,2) == 1) nreten += nclass;
-    if (reten_type(i,2) == 2) nreten += 2;
-  }
+  LOC_CALCS
+    nreten = 0;
+    reten_type = 0;
+    for (int i=1; i<=nreten_pats; i++)
+    {
+      *(ad_comm::global_datafile) >> reten_type(i,1) >> reten_type(i,2) >> reten_type(i,3);
+      if (reten_type(i,2) == 1) nreten += nclass;
+      if (reten_type(i,2) == 2) nreten += 2;
+    }
 
-  nreten_pars = nreten;
-  echo(reten_type);
-  echotxt(nreten_pars, " Total number of retention parameters");
+    nreten_pars = nreten;
+    echo(reten_type);
+    echotxt(nreten_pars, " Total number of retention parameters");
 
-  // Fill last column of reten_type matrix, starting parameter for each retention pattern:
-  last = 0;
-  int preten = 0;
-  for (j=1; j<=nreten_pats; j++)
-  {
-    reten_type(j,4) = preten;
-    if (reten_type(j,2)==1) last = nclass;
-    if (reten_type(j,2)==2) last = 2;
-    preten += last;
-  }
-  check(reten_type);
- END_CALCS
+    // Fill last column of reten_type matrix, starting parameter for each retention pattern:
+    last = 0;
+    int preten = 0;
+    for (j=1; j<=nreten_pats; j++)
+    {
+      reten_type(j,4) = preten;
+      if (reten_type(j,2)==1) last = nclass;
+      if (reten_type(j,2)==2) last = 2;
+      preten += last;
+    }
+    check(reten_type);
+   END_CALCS
   
   // Read in retention parameter specifications:
   init_matrix reten_control(1,nreten_pars,1,4);       ///< Retention parameter matrix, with speciifications           
@@ -1522,13 +1543,13 @@ LOC_CALCS
   !! echo(reten_control);
 
   // Fill matrices and vectors created above:
- LOC_CALCS
-  trans_reten_control = trans(reten_control);
-  reten_init          = trans_reten_control(1);
-  reten_lbnd          = trans_reten_control(2);
-  reten_ubnd          = trans_reten_control(3);
-  reten_phz           = ivector(trans_reten_control(4));
- END_CALCS
+   LOC_CALCS
+    trans_reten_control = trans(reten_control);
+    reten_init          = trans_reten_control(1);
+    reten_lbnd          = trans_reten_control(2);
+    reten_ubnd          = trans_reten_control(3);
+    reten_phz           = ivector(trans_reten_control(4));
+   END_CALCS
 
   // ......................................................................  
   // Get Survey Q Specifications:
@@ -1563,16 +1584,16 @@ LOC_CALCS
   !! echo(surveyq_control);
 
   // Fill matrices and vectors created above:
- LOC_CALCS
-  trans_surveyq_control = trans(surveyq_control);
-  surveyq_init          = trans_surveyq_control(1);
-  surveyq_lbnd          = trans_surveyq_control(2);
-  surveyq_ubnd          = trans_surveyq_control(3);
-  surveyq_phz           = ivector(trans_surveyq_control(4));
-  surveyq_prior         = ivector(trans_surveyq_control(5));
-  surveyq_pmean         = trans_surveyq_control(6);
-  surveyq_psd           = trans_surveyq_control(7);  
- END_CALCS
+   LOC_CALCS
+    trans_surveyq_control = trans(surveyq_control);
+    surveyq_init          = trans_surveyq_control(1);
+    surveyq_lbnd          = trans_surveyq_control(2);
+    surveyq_ubnd          = trans_surveyq_control(3);
+    surveyq_phz           = ivector(trans_surveyq_control(4));
+    surveyq_prior         = ivector(trans_surveyq_control(5));
+    surveyq_pmean         = trans_surveyq_control(6);
+    surveyq_psd           = trans_surveyq_control(7);  
+   END_CALCS
 
   // ......................................................................  
   // Get Prior and Likelihood Specifications:
@@ -1587,74 +1608,74 @@ LOC_CALCS
   vector mn_offset(1,nlike_terms);                           ///< Offset for multinomial calculations
   
   // Fill matrices and vectors created above:
- LOC_CALCS
-  // Fill prior names:
-  for (int ifl=1;ifl<=nfleet_act;ifl++)
-    prior_names  += fleet_names(fleet_act_ind(ifl))+"_Fpen"+CRLF(1);
-  prior_names  += "recdevs" +CRLF(1);
-  prior_names  += "trans_parms" +CRLF(1);
-  prior_names  += "Selex"+CRLF(1);
-  prior_names  += "reten_parms" +CRLF(1);
-  for (int ifl=1;ifl<=nsurveyq_pars;ifl++) 
-    prior_names  += "Survey_q_parms" +CRLF(1);
-  prior_names  += "M" +CRLF(1);
-  prior_names  += "SelPen" +CRLF(1);
-    
-  // TODO: Check this section works in the general sense when applying to other species.
-  echotxt(nprior_terms, " Number of prior terms");
-  echotxt(nlike_terms, " Number of likelihood terms");
-  mn_offset.initialize();
+   LOC_CALCS
+    // Fill prior names:
+    for (int ifl=1;ifl<=nfleet_act;ifl++)
+      prior_names  += fleet_names(fleet_act_ind(ifl))+"_Fpen"+CRLF(1);
+    prior_names  += "recdevs" +CRLF(1);
+    prior_names  += "trans_parms" +CRLF(1);
+    prior_names  += "Selex"+CRLF(1);
+    prior_names  += "reten_parms" +CRLF(1);
+    for (int ifl=1;ifl<=nsurveyq_pars;ifl++) 
+      prior_names  += "Survey_q_parms" +CRLF(1);
+    prior_names  += "M" +CRLF(1);
+    prior_names  += "SelPen" +CRLF(1);
+      
+    // TODO: Check this section works in the general sense when applying to other species.
+    echotxt(nprior_terms, " Number of prior terms");
+    echotxt(nlike_terms, " Number of likelihood terms");
+    mn_offset.initialize();
 
-  // Fill likelihood names:
-  int ilike=0;
-  for (int ifl=1;ifl<=nfleet;ifl++)
-  {
-    ilike++; 
-    like_names  += fleet_names(ifl)+"_catch"+CRLF(1);
-  }
-  /*
-   // Catch LFs
-  for (int ifl=1;ifl<=nfleet;ifl++)
-  {
-    ilike++; 
-    for (int i=1;i<=nsex;i++)
-      for (int j=1;i<=nshell;j++)
-        for (int k=1;k<=nmature;k++)
-        {
-          int itmp = idx(ifl,i,j,k);
-          dvector pobs      = incd + sf_fleet_obs(itmp);
-                  pobs     /= sum(pobs);
-      mn_offset(ilike) -= sf_fleet_ss(itmp)*pobs*log(pobs);
-    } 
-    like_names += fleet_names(ifl)+"_LF"+CRLF(1);
-  } 
-  */
-  // Effort indices
-  for (int ifl=1;ifl<=nfleet_act;ifl++)
-  {
-    ilike++; ///< Increment the likelihood index
-    like_names += "Fish_effort"+CRLF(1);
-  } 
-  // Survey indices 
-  for (int isrv=1;isrv<=nsurvey;isrv++)
-  {
-    ilike++; ///< Increment the likelihood index
-    like_names += survey_names(isrv)+"_Index"+CRLF(1);
-    ilike++; 
-    like_names += survey_names(isrv)+"_LF"+CRLF(1);
-    // Survey LF
-    for (int i=1;i<=nsf_survey(isrv);i++)
+    // Fill likelihood names:
+    int ilike=0;
+    for (int ifl=1;ifl<=nfleet;ifl++)
     {
-      dvector pobs      = incd + sf_survey_obs(isrv,i);
-              pobs     /= sum(pobs);
-      mn_offset(ilike) -= sf_survey_ss(isrv,i)*pobs*log(pobs);
+      ilike++; 
+      like_names  += fleet_names(ifl)+"_catch"+CRLF(1);
     }
-  } 
-  check(mn_offset);
-  echo(mn_offset);
-  echo(nlike_terms);
-  echo(nprior_terms);
- END_CALCS
+    /*
+     // Catch LFs
+    for (int ifl=1;ifl<=nfleet;ifl++)
+    {
+      ilike++; 
+      for (int i=1;i<=nsex;i++)
+        for (int j=1;i<=nshell;j++)
+          for (int k=1;k<=nmature;k++)
+          {
+            int itmp = idx(ifl,i,j,k);
+            dvector pobs      = incd + sf_fleet_obs(itmp);
+                    pobs     /= sum(pobs);
+        mn_offset(ilike) -= sf_fleet_ss(itmp)*pobs*log(pobs);
+      } 
+      like_names += fleet_names(ifl)+"_LF"+CRLF(1);
+    } 
+    */
+    // Effort indices
+    for (int ifl=1;ifl<=nfleet_act;ifl++)
+    {
+      ilike++; ///< Increment the likelihood index
+      like_names += "Fish_effort"+CRLF(1);
+    } 
+    // Survey indices 
+    for (int isrv=1;isrv<=nsurvey;isrv++)
+    {
+      ilike++; ///< Increment the likelihood index
+      like_names += survey_names(isrv)+"_Index"+CRLF(1);
+      ilike++; 
+      like_names += survey_names(isrv)+"_LF"+CRLF(1);
+      // Survey LF
+      for (int i=1;i<=nsf_survey(isrv);i++)
+      {
+        dvector pobs      = incd + sf_survey_obs(isrv,i);
+                pobs     /= sum(pobs);
+        mn_offset(ilike) -= sf_survey_ss(isrv,i)*pobs*log(pobs);
+      }
+    } 
+    check(mn_offset);
+    echo(mn_offset);
+    echo(nlike_terms);
+    echo(nprior_terms);
+   END_CALCS
     
   // Read in prior and data re-weighting values:  
   init_vector prior_weight(1,nprior_terms);        ///< Weights on the priors
@@ -1705,33 +1726,33 @@ LOC_CALCS
 
   // Adjust the phases to negative if beyond final_phase and find resultant max_phase:
   int max_phase;
- 
- LOC_CALCS
-  cout << " Count parameters and get max phase, adjust phases if required" << endl;
-  max_phase=1;
-  active_count=0;
-  par_count=0;
-  active_parm(0,ntheta)=0;
+   
+   LOC_CALCS
+    cout << " Count parameters and get max phase, adjust phases if required" << endl;
+    max_phase=1;
+    active_count=0;
+    par_count=0;
+    active_parm(0,ntheta)=0;
+      
+    for(int i=1; i<=ntheta; i++)
+    { 
+      par_count++;
+      if(theta_phz(i) > final_phase) theta_phz(i)=-1;
+      if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
+      if(theta_phz(i) >= 0)
+        active_count++; active_parm(active_count)=par_count;
+    }
     
-  for(int i=1; i<=ntheta; i++)
-  { 
-    par_count++;
-    if(theta_phz(i) > final_phase) theta_phz(i)=-1;
-    if(theta_phz(i) > max_phase) max_phase=theta_phz(i);
-    if(theta_phz(i) >= 0)
-      active_count++; active_parm(active_count)=par_count;
-  }
-  
-  active_parms=active_count;
-  cout << " Number of active parameters is " << active_parms << endl;
-  cout << " Maximum phase for estimation is " << max_phase << "\n" << endl;
+    active_parms=active_count;
+    cout << " Number of active parameters is " << active_parms << endl;
+    cout << " Maximum phase for estimation is " << max_phase << "\n" << endl;
 
-  check (theta_phz);
-  check (ntheta);
-  check (par_count); 
-  check (active_parm);
-  check (active_parms);
- END_CALCS
+    check (theta_phz);
+    check (ntheta);
+    check (par_count); 
+    check (active_parm);
+    check (active_parms);
+   END_CALCS
   // TODO: Adjust this section to include other parameters not specified in the general paramter matrix 'theta'.
 
 // =========================================================================================================
@@ -1743,12 +1764,18 @@ INITIALIZATION_SECTION
   surveyq_parms surveyq_init;
   lognin_parms lognin_init;
   f_est  0.1;
+  log_fbar -2.30;
 
 // =========================================================================================================
 PARAMETER_SECTION
   // Initialize general parameter matrix:
   init_bounded_number_vector theta_parms(1,ntheta,theta_lbnd,theta_ubnd,theta_phz);                   ///< Vector of general parameters
   
+  // Fishing mortality rate parameters:
+  init_bounded_vector log_fbar(1,nfleet,-100.0,5,1);
+  init_bounded_matrix log_fdev(1,nfleet,1,10,-5.0,5.0,1);
+
+
   // Initialize other parameter matrices:
   init_bounded_number_vector Madd_parms(1,nMadd_parms,Madd_lbnd,Madd_ubnd,Madd_phz);                  ///< Vector of increments in M parameters
   init_bounded_number_vector gtrans_parms(1,ngrowth_pars,gtrans_lbnd,gtrans_ubnd,gtrans_phz);         ///< Vector of growth transition parameters
