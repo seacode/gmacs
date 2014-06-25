@@ -450,6 +450,8 @@ DATA_SECTION
   init_int nsurvey_obs;                       ///< Number of survey lines to read
   init_number survey_time;                    ///< Time between survey and fishery (for projections)
 
+  init_matrix d_catchData(1,ncatch_obs,1,9); 
+
   !! echotxt(ncatch_obs,   " Number of lines of catch data");
   !! echotxt(nsurvey_obs,  " Number of lines of survey data")
   !! echotxt(survey_time,  " Time between survey and fishery");
