@@ -1,8 +1,9 @@
 # Name of executable.
-OUTPUT:=gmacs
+OUTPUT:=gsmac
 LIBINCLUDE = ../../CSTAR/build
 # Global source files from current dir.
-SRCS:=$(wildcard *.cpp *.c *.cc *.cxx )
+SRCS:=$(wildcard *.cpp *.c *.cc *.cxx ) 
+
 
 # Path to ADMB distribution directory
 export ADMB_HOME=/Users/stevenmartell1/admb-trunk/build/dist

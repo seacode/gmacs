@@ -216,7 +216,7 @@ DATA_SECTION
   matrix class_link(1,nclass,1,2);      ///< Matrix of links between model and data size-classes
   
   // If number of data classes is not equal to, or a factor of model classes, read class link matrix from data file.
-  LOC_CALCS  
+  LOCAL_CALCS  
     double class_div = double(ndclass)/double(nclass);
     int class_int = class_div;
 
@@ -247,7 +247,7 @@ DATA_SECTION
       }
     }
   END_CALCS
-    //
+    
   
   !! echotxt(class_div, " Class divisor");
   !! echotxt(class_int, " Rounded class divisor");
