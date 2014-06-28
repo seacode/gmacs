@@ -116,14 +116,27 @@ DATA_SECTION
 
 INITIALIZATION_SECTION
   //theta theta_ival;
-  
+	alpha 2.733;
+	beta 0.2;
+	scale 50.1;
 
 PARAMETER_SECTION
 
 	// Leading parameters
 	//      M = theta(1)
 	// ln(Ro) = theta(2)
-	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);                   ///< Vector of general parameters
+	// ra     = theta(3)
+	// rbeta  = theta(4)
+	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+
+	// Molt increment parameters
+	init_bounded_vector alpha(1,nsex,0,100,1);
+	init_bounded_vector beta(1,nsex,0,10,1);
+	init_bounded_vector scale(1,nsex,1,100,1);
+
+	// Molt probability parameters
+	init_bounded_vector molt_mu(1,nsex,0,200,1);
+	init_bounded_vector molt_cv(1,nsex,0,1,1);
 	
 	objective_function_value objfun;
 
@@ -132,10 +145,27 @@ PARAMETER_SECTION
 	number ra;				// shape parameter for recruitment distribution
 	number rbeta;			// rate parameter for recruitment distribution
 
-	vector rec_sdd(1,nclass);	// recruitment size_density_distribution
+	vector rec_sdd(1,nclass);			// recruitment size_density_distribution
+	
+	matrix molt_increment(1,nsex,1,nclass);		// linear molt increment
+	matrix molt_probability(1,nsex,1,nclass); 	// probability of molting
+
+	3darray size_transition(1,nsex,1,nclass,1,nclass);
+	3darray M(1,nsex,syr,nyr,1,nclass);		// Natural mortality
+	3darray Z(1,nsex,syr,nyr,1,nclass);		// Total mortality
+	3darray S(1,nsex,syr,nyr,1,nclass);		// Surival Rate (S=exp(-Z))
 
 PROCEDURE_SECTION
 	initialize_model_parameters();
+
+	// Fishing fleet dynamics ...
+
+	// Population dynamics ...
+	calc_growth_increments();
+	calc_size_transition_matrix();
+	calc_natural_mortality();
+	calc_total_mortality();
+	calc_molting_probability();
 	calc_recruitment_size_distribution();
 
 
@@ -150,6 +180,137 @@ FUNCTION initialize_model_parameters
   logRbar = theta(2);
   ra      = theta(3);
   rbeta   = theta(4);
+
+
+
+
+
+
+
+
+  /**
+   * @brief Molt increment as a linear function of pre-molt size.
+   */
+FUNCTION calc_growth_increments
+	int h,l;
+
+	for( h = 1; h <= nsex; h++ )
+	{
+		for( l = 1; l <= nclass; l++ )
+		{
+			molt_increment(h)(l) = alpha(h) + beta(h) * mid_points(l);
+		}
+	}
+	
+
+
+
+
+
+
+  /**
+   * \brief Calclate the size transtion matrix.
+   * \Authors Steven Martell
+   * \details Calculates the size transition matrix for each sex based on
+   * growth increments, which is a linear function of the size interval, and
+   * the scale parameter for the gamma distribution.  This function does the 
+   * proper integration from the lower to upper size bin, where the mode of 
+   * the growth increment is scaled by the scale parameter.
+   * 
+   * This function loops over sex, then loops over the rows of the size
+   * transition matrix for each sex.  The probability of transitioning from 
+   * size l to size ll is based on the vector molt_increment and the 
+   * scale parameter. In all there are three parameters that define the size
+   * transition matrix (alpha, beta, scale) for each sex.
+   */
+FUNCTION calc_size_transition_matrix
+	int h,l,ll;
+	dvariable tmp;
+	dvar_vector psi(1,nclass+1);
+	size_transition.initialize();
+
+	for( h = 1; h <= nsex; h++ )
+	{
+		for( l = 1; l <= nclass; l++ )
+		{
+			tmp = molt_increment(h)(l)/scale(h);
+			psi.initialize();
+			for( ll = l; ll <= nclass+1; ll++ )
+			{
+				psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
+			}
+			size_transition(h)(l)(l,nclass)  = first_difference(psi(l,nclass+1));
+			size_transition(h)(l)(l,nclass) /= sum(size_transition(h)(l)(l,nclass));
+		}
+	}
+
+	//COUT(size_transition(1));
+
+
+
+
+
+
+
+  /**
+   * @brief Calculate natural mortality array
+   * @details Natural mortality (M) is a 3d array for sex, year and size.
+   * @return NULL
+   * 
+   * todo:  
+   * 		 Add time varying components
+   * 		 Size-dependent mortality
+   * 
+   */
+FUNCTION calc_natural_mortality
+	int h;
+	M.initialize();
+	for( h = 1; h <= nsex; h++ )
+	{
+		M(h) = M0;
+	}
+
+
+
+
+
+
+  /**
+   * @brief Calculate total instantaneous mortality rate and survival rate
+   * @details S = exp(-Z)
+   * @return NULL
+   * 
+   * todo:
+   *  		 Add fishing mortality rate from each fleet.
+   */
+FUNCTION calc_total_mortality
+	int h;
+	Z.initialize();
+	S.initialize();
+	for( h = 1; h <= nsex; h++ )
+	{
+		 Z(h) = M(h);
+		 S(h) = mfexp(-Z(h));
+	}
+
+
+
+
+  /**
+   * \brief Calculate the probability of moulting vs carapace width.
+   * \details Note that the parameters molt_mu and molt cv can only be
+   * estimated in cases where there is new shell and old shell data.
+   */
+FUNCTION calc_molting_probability
+	int h;
+	molt_probability.initialize();
+
+	for( h = 1; h <= nsex; h++ )
+	{
+		dvariable sd = molt_mu(h) * molt_cv(h);
+		molt_probability(h) = plogis<dvar_vector>(mid_points,molt_mu(h),sd);
+	}
+
 
 
 
