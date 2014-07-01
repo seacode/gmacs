@@ -1944,7 +1944,7 @@ FUNCTION fishing_fleet_dynamics
 	for(int k = 1; k <= ndata; k++ )
 	{
 		 /* loop over gears and compute selectivities */
-		 /*	for time varying selectivities, loo over blocks*/
+		 /*	for time varying selectivities, loop over blocks*/
 		 cstar::Selex<dvar_vector> *pSLX;
 		 switch (slx_type(k))
 		 {

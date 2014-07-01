@@ -15,4 +15,4 @@ run: $(EXEC)
 clean:
 	rm -f $(EXEC)
 	rm -f admodel.*
-	rm -f $(EXEC).* *.rpt *.log variance
+	rm -f $(EXEC)  $(EXEC).[brpces]* *.rpt *.log variance

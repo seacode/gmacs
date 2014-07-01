@@ -97,7 +97,31 @@ DATA_SECTION
 	init_matrix dSurveyData(1,nSurveyRows,1,6);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	!! ad_comm::change_datafile_name(controlfile);
+	// |----------------------------|
+	// | LEADING PARAMETER CONTROLS |
+	// |----------------------------|
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
 	vector theta_ival(1,ntheta);
@@ -110,7 +134,71 @@ DATA_SECTION
 		theta_ub   = column(theta_control,3);
 		theta_phz  = ivector(column(theta_control,4));
 	END_CALCS
-	!! COUT(theta_ival);
+	
+
+	// |--------------------------------|
+	// | SELECTIVITY PARAMETER CONTROLS |
+	// |--------------------------------|
+	init_ivector slx_nsel_blocks(1,nfleet);
+ 	ivector nc(1,nfleet);
+ 	!! nc = 11 + slx_nsel_blocks;
+ 	init_matrix slx_control(1,nfleet,1,nc);
+ 	ivector slx_indx(1,nfleet);
+ 	ivector slx_type(1,nfleet);
+ 	ivector slx_phzm(1,nfleet);
+ 	ivector slx_bsex(1,nfleet);			// boolean 0 sex-independent, 1 sex-dependent
+ 	ivector slx_xnod(1,nfleet);
+ 	ivector slx_inod(1,nfleet);
+ 	ivector slx_rows(1,nfleet);
+ 	ivector slx_cols(1,nfleet);
+ 	 vector slx_mean(1,nfleet);
+ 	 vector slx_stdv(1,nfleet);
+ 	 vector slx_lam1(1,nfleet);
+ 	 vector slx_lam2(1,nfleet);
+ 	 vector slx_lam3(1,nfleet);
+
+	LOC_CALCS
+		slx_indx = ivector(column(slx_control,1));
+		slx_type = ivector(column(slx_control,2));
+		slx_mean = column(slx_control,3);
+		slx_stdv = column(slx_control,4);
+		slx_bsex = ivector(column(slx_control,5));
+		slx_xnod = ivector(column(slx_control,6));
+		slx_inod = ivector(column(slx_control,7));
+		slx_phzm = ivector(column(slx_control,8));
+		slx_lam1 = column(slx_control,9);
+		slx_lam2 = column(slx_control,10);
+		slx_lam3 = column(slx_control,11);
+
+		// count up number of parameters required
+		slx_rows.initialize();
+		slx_cols.initialize();
+		for(int k = 1; k <= nfleet; k++ )
+		{
+			/* multiplier for sex dependent selex */
+			int bsex = 1;
+			if(slx_bsex(k)) bsex = 2;	
+			
+			switch (slx_type(k))
+			{
+				case 1:	// coefficients
+					slx_cols(k) = nclass - 1;
+					slx_rows(k) = bsex * slx_nsel_blocks(k);
+				break;
+
+				case 2: // logistic
+					slx_cols(k) = 2;
+					slx_rows(k) = bsex * slx_nsel_blocks(k);
+				break;
+
+				case 3: // logistic95
+					slx_cols(k) = 2;
+					slx_rows(k) = bsex * slx_nsel_blocks(k);
+				break;
+			}
+		}
+	END_CALCS
+
 	!! cout<<"end of control section"<<endl;
 	
 
@@ -137,6 +225,10 @@ PARAMETER_SECTION
 	// Molt probability parameters
 	init_bounded_vector molt_mu(1,nsex,0,200,1);
 	init_bounded_vector molt_cv(1,nsex,0,1,1);
+
+	// Selectivity parameters
+	init_bounded_matrix_vector log_slx_pars(1,nfleet,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
+
 	
 	objective_function_value objfun;
 
@@ -156,6 +248,10 @@ PARAMETER_SECTION
 	3darray S(1,nsex,syr,nyr,1,nclass);		// Surival Rate (S=exp(-Z))
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);	// Numbers-at-length
+
+	4darray   log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
+	4darray log_slx_retention(1,nfleet,1,nsex,syr,nyr,1,nclass);
+	4darray   log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
 PROCEDURE_SECTION
 	initialize_model_parameters();
@@ -188,6 +284,55 @@ FUNCTION initialize_model_parameters
   rbeta   = theta(4);
 
 
+
+
+
+  /**
+   * @brief Calculate selectivies for each gear.
+   * @author Steve Martell
+   * @details Three selectivities must be accounted for by each fleet.
+   * 1) capture probability, 2) retention probability, and 3) release probability.
+   * 
+   * Maintain the possibility of estimating selectivity independently for
+   * each sex; assumes there are data to estimate female selex.
+   * 
+   * Psuedocode:
+   * 	 Loop over each gear:
+   * 	 Loop over sex
+   * 	 determine which selectivity type is used for that gear
+   * 	 
+   * 	
+   */
+FUNCTION calc_selectivities
+	int h,i,j,k;
+	int block;
+	dvar_vector pv;
+	log_slx_capture.initialize();
+	log_slx_discard.initialize();
+	log_slx_retention.initialize();
+
+	for( k = 1; k <= nfleet; k++ )
+	{
+		block = 1;
+		cstar::Selex<dvar_vector> *pSLX[slx_nsel_blocks(k)-1];
+		switch (slx_type(k))
+		{
+			case 1:  //coefficients
+				pv   = mfexp(log_slx_pars(k)(block));
+				pSLX[k-1] = new cstar::SelectivityCoefficients<dvar_vector>(pv);
+			break;
+
+			case 2:  //logistic
+				
+			break;
+
+			case 3:  // logistic95
+			break;
+		}
+		// delete the pointers
+
+		
+	}
 
 
 
