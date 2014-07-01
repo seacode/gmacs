@@ -116,7 +116,7 @@ DATA_SECTION
 
 INITIALIZATION_SECTION
   //theta theta_ival;
-	alpha 2.733;
+	alpha 3.733;
 	beta 0.2;
 	scale 50.1;
 
@@ -155,10 +155,14 @@ PARAMETER_SECTION
 	3darray Z(1,nsex,syr,nyr,1,nclass);		// Total mortality
 	3darray S(1,nsex,syr,nyr,1,nclass);		// Surival Rate (S=exp(-Z))
 
+	3darray N(1,nsex,syr,nyr+1,1,nclass);	// Numbers-at-length
+
 PROCEDURE_SECTION
 	initialize_model_parameters();
 
 	// Fishing fleet dynamics ...
+	calc_selectivities();
+
 
 	// Population dynamics ...
 	calc_growth_increments();
@@ -167,6 +171,8 @@ PROCEDURE_SECTION
 	calc_total_mortality();
 	calc_molting_probability();
 	calc_recruitment_size_distribution();
+	calc_initial_numbers_at_length();
+	update_population_numbers_at_length();
 
 
 
@@ -180,6 +186,12 @@ FUNCTION initialize_model_parameters
   logRbar = theta(2);
   ra      = theta(3);
   rbeta   = theta(4);
+
+
+
+
+
+
 
 
 
@@ -244,7 +256,7 @@ FUNCTION calc_size_transition_matrix
 		}
 	}
 
-	//COUT(size_transition(1));
+	
 
 
 
@@ -296,6 +308,8 @@ FUNCTION calc_total_mortality
 
 
 
+
+
   /**
    * \brief Calculate the probability of moulting vs carapace width.
    * \details Note that the parameters molt_mu and molt cv can only be
@@ -307,9 +321,13 @@ FUNCTION calc_molting_probability
 
 	for( h = 1; h <= nsex; h++ )
 	{
-		dvariable sd = molt_mu(h) * molt_cv(h);
-		molt_probability(h) = plogis<dvar_vector>(mid_points,molt_mu(h),sd);
+		dvariable mu = molt_mu(h);
+		dvariable sd = mu* molt_cv(h);
+		molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
 	}
+
+
+
 
 
 
@@ -330,6 +348,54 @@ FUNCTION calc_recruitment_size_distribution
                    - cumd_gamma(x1, ralpha);
   }
   rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
+
+
+
+
+
+  /**
+   * @brief initialiaze populations numbers-at-length in syr
+   * @author Steve Martell
+   * @details This function initializes the populations numbers-at-length
+   * in the initial year of the model.  
+   * 
+   * Psuedocode:
+   * 
+   * 	
+   */
+FUNCTION calc_initial_numbers_at_length
+	int h,i,l;
+	N.initialize();
+
+	// Option 1: spin up from constant recruitment.
+	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
+	for( h = 1; h <= nsex; h++ )
+	{
+		for( i = 1; i <= 50; i++ )
+		{	
+			N(h)(syr) = elem_prod(N(h)(syr),S(h)(syr)) * size_transition(h) + rt;
+		}
+	}
+
+
+
+
+  /**
+   * @brief Update numbers-at-length
+   * @author Steve Martell
+   */
+FUNCTION update_population_numbers_at_length
+	int h,i;
+
+	for( h = 1; h <= nsex; h++ )
+	{
+		for( i = syr; i <= nyr; i++ )
+		{
+			N(h)(i+1)  = 0.5 * mfexp(logRbar) * rec_sdd;
+			N(h)(i+1) += elem_prod(N(h)(i),S(h)(i)) * size_transition(h);
+		}
+	}
+	
 
 
 REPORT_SECTION
