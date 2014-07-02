@@ -316,36 +316,43 @@ FUNCTION calc_selectivities
 	for( k = 1; k <= nfleet; k++ )
 	{	
 		block = 1;
-		for( h = 1; h <= nsex; h++ )
+		cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
+		for( j = 0; j < slx_rows(k); j++ )
 		{
-				
-			cstar::Selex<dvar_vector> *pSLX[slx_nsel_blocks(k)-1];
+
 			switch (slx_type(k))
 			{
-				case 1:  //coefficients
-					pv   = mfexp(log_slx_pars(k)(block));
-					pSLX[k-1] = new cstar::SelectivityCoefficients<dvar_vector>(pv);
-				break;
+			case 1:  //coefficients
+				pv   = mfexp(log_slx_pars(k)(block));
+				pSLX[j] = new cstar::SelectivityCoefficients<dvar_vector>(pv);
+			break;
 
-				case 2:  //logistic
-					p1 = mfexp(log_slx_pars(k,block,1));
-					p2 = mfexp(log_slx_pars(k,block,2));
-					pSLX[k-1] = new cstar::LogisticCurve<dvar_vector,dvariable>(p1,p2);
-				break;
+			case 2:  //logistic
+				p1 = mfexp(log_slx_pars(k,block,1));
+				p2 = mfexp(log_slx_pars(k,block,2));
+				pSLX[j] = new cstar::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+			break;
 
-				case 3:  // logistic95
-					p1 = mfexp(log_slx_pars(k,block,1));
-					p2 = mfexp(log_slx_pars(k,block,2));
-					pSLX[k-1] = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
-				break;
+			case 3:  // logistic95
+				p1 = mfexp(log_slx_pars(k,block,1));
+				p2 = mfexp(log_slx_pars(k,block,2));
+				pSLX[j] = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+			break;
 			}
+
 			if( slx_bsex(k) ) block ++;
 			// fill array with selectivity coefficients
-
-			// delete the pointers
-			delete pSLX[k-1];
 		}
+		
+		//for( i = syr; i <= nyr; i++ )
+		//{
+		//	log_slx_capture(k)(h)(i) = pSLX[block]->logSelectivity(mid_points);
+		//}
+
+		// delete the pointers
+		delete pSLX[k-1];
 	}
+	
 
 
 
