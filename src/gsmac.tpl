@@ -139,24 +139,26 @@ DATA_SECTION
 	// |--------------------------------|
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
-	init_ivector slx_nsel_blocks(1,nfleet);
- 	ivector nc(1,nfleet);
+	int nslx;
+	!! nslx = 2 * nfleet;
+	init_ivector slx_nsel_blocks(1,nslx);
+ 	ivector nc(1,nslx);
  	!! nc = 11 + slx_nsel_blocks;
- 	init_matrix slx_control(1,nfleet,1,nc);
- 	ivector slx_indx(1,nfleet);
- 	ivector slx_type(1,nfleet);
- 	ivector slx_phzm(1,nfleet);
- 	ivector slx_bsex(1,nfleet);			// boolean 0 sex-independent, 1 sex-dependent
- 	ivector slx_xnod(1,nfleet);
- 	ivector slx_inod(1,nfleet);
- 	ivector slx_rows(1,nfleet);
- 	ivector slx_cols(1,nfleet);
- 	 vector slx_mean(1,nfleet);
- 	 vector slx_stdv(1,nfleet);
- 	 vector slx_lam1(1,nfleet);
- 	 vector slx_lam2(1,nfleet);
- 	 vector slx_lam3(1,nfleet);
- 	imatrix slx_blks(1,nfleet,1,slx_nsel_blocks);
+ 	init_matrix slx_control(1,nslx,1,nc);
+ 	ivector slx_indx(1,nslx);
+ 	ivector slx_type(1,nslx);
+ 	ivector slx_phzm(1,nslx);
+ 	ivector slx_bsex(1,nslx);			// boolean 0 sex-independent, 1 sex-dependent
+ 	ivector slx_xnod(1,nslx);
+ 	ivector slx_inod(1,nslx);
+ 	ivector slx_rows(1,nslx);
+ 	ivector slx_cols(1,nslx);
+ 	 vector slx_mean(1,nslx);
+ 	 vector slx_stdv(1,nslx);
+ 	 vector slx_lam1(1,nslx);
+ 	 vector slx_lam2(1,nslx);
+ 	 vector slx_lam3(1,nslx);
+ 	imatrix slx_blks(1,nslx,1,slx_nsel_blocks);
 
 	LOC_CALCS
 		slx_indx = ivector(column(slx_control,1));
@@ -174,7 +176,7 @@ DATA_SECTION
 		// count up number of parameters required
 		slx_rows.initialize();
 		slx_cols.initialize();
-		for(int k = 1; k <= nfleet; k++ )
+		for(int k = 1; k <= nslx; k++ )
 		{
 			/* multiplier for sex dependent selex */
 			int bsex = 1;
@@ -230,9 +232,9 @@ PARAMETER_SECTION
 	init_bounded_vector molt_cv(1,nsex,0,1,1);
 
 	// Selectivity parameters
-	init_bounded_matrix_vector log_slx_pars(1,nfleet,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
+	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
 	LOC_CALCS
-		for(int k = 1; k <= nfleet; k++ )
+		for(int k = 1; k <= nslx; k++ )
 		{
 			if(slx_type(k) == 2)
 			{
@@ -265,15 +267,16 @@ PARAMETER_SECTION
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);	// Numbers-at-length
 
-	4darray   log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
-	4darray log_slx_retention(1,nfleet,1,nsex,syr,nyr,1,nclass);
-	4darray   log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
+	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
+	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
+	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
 PROCEDURE_SECTION
 	initialize_model_parameters();
 
 	// Fishing fleet dynamics ...
 	calc_selectivities();
+
 
 
 	// Population dynamics ...
@@ -314,10 +317,9 @@ FUNCTION initialize_model_parameters
    * 
    * Psuedocode:
    * 	 Loop over each gear:
-   * 	 Loop over sex
-   * 	 determine which selectivity type is used for that gear
-   * 	 if sex independent then fill both sexes with same fn.
-   * 	 if sex independent then fill each sex with independent fn.
+   * 	 Create a pointer array with length = number of blocks
+   * 	 Based on slx_type, fill pointer with parameter estimates.
+   * 	 Loop over years and block-in the log_selectivity at mid points.
    * 	
    */
 FUNCTION calc_selectivities
@@ -327,10 +329,11 @@ FUNCTION calc_selectivities
 	dvar_vector pv;
 	log_slx_capture.initialize();
 	log_slx_discard.initialize();
-	log_slx_retention.initialize();
+	log_slx_retaind.initialize();
 
-	for( k = 1; k <= nfleet; k++ )
+	for( k = 1; k <= nslx; k++ )
 	{	
+		
 		block = 1;
 		cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
@@ -373,9 +376,20 @@ FUNCTION calc_selectivities
 					j ++;
 					if(block != slx_nsel_blocks(k)) block ++;
 				}
-				log_slx_capture(k)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+				
+				int kk = fabs(slx_indx(k));
+				
+				if(slx_indx(k) > 0)
+				{
+					log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+				}
+				else
+				{
+					log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)));
+				}
 			}
-			COUT(j);
+			
 			if(!slx_bsex(k)){
 				j-= slx_nsel_blocks(k);
 				block = 1;
@@ -598,6 +612,8 @@ FUNCTION update_population_numbers_at_length
 
 REPORT_SECTION
 	REPORT(log_slx_capture);
+	REPORT(log_slx_retaind);
+	REPORT(log_slx_discard);
 
 
 
