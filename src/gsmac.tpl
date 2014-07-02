@@ -300,38 +300,51 @@ FUNCTION initialize_model_parameters
    * 	 Loop over each gear:
    * 	 Loop over sex
    * 	 determine which selectivity type is used for that gear
-   * 	 
+   * 	 if sex independent then fill both sexes with same fn.
+   * 	 if sex independent then fill each sex with independent fn.
    * 	
    */
 FUNCTION calc_selectivities
 	int h,i,j,k;
 	int block;
+	dvariable p1,p2;
 	dvar_vector pv;
 	log_slx_capture.initialize();
 	log_slx_discard.initialize();
 	log_slx_retention.initialize();
 
 	for( k = 1; k <= nfleet; k++ )
-	{
+	{	
 		block = 1;
-		cstar::Selex<dvar_vector> *pSLX[slx_nsel_blocks(k)-1];
-		switch (slx_type(k))
+		for( h = 1; h <= nsex; h++ )
 		{
-			case 1:  //coefficients
-				pv   = mfexp(log_slx_pars(k)(block));
-				pSLX[k-1] = new cstar::SelectivityCoefficients<dvar_vector>(pv);
-			break;
-
-			case 2:  //logistic
 				
-			break;
+			cstar::Selex<dvar_vector> *pSLX[slx_nsel_blocks(k)-1];
+			switch (slx_type(k))
+			{
+				case 1:  //coefficients
+					pv   = mfexp(log_slx_pars(k)(block));
+					pSLX[k-1] = new cstar::SelectivityCoefficients<dvar_vector>(pv);
+				break;
 
-			case 3:  // logistic95
-			break;
+				case 2:  //logistic
+					p1 = mfexp(log_slx_pars(k,block,1));
+					p2 = mfexp(log_slx_pars(k,block,2));
+					pSLX[k-1] = new cstar::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+				break;
+
+				case 3:  // logistic95
+					p1 = mfexp(log_slx_pars(k,block,1));
+					p2 = mfexp(log_slx_pars(k,block,2));
+					pSLX[k-1] = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+				break;
+			}
+			if( slx_bsex(k) ) block ++;
+			// fill array with selectivity coefficients
+
+			// delete the pointers
+			delete pSLX[k-1];
 		}
-		// delete the pointers
-
-		
 	}
 
 
