@@ -156,6 +156,7 @@ DATA_SECTION
  	 vector slx_lam1(1,nfleet);
  	 vector slx_lam2(1,nfleet);
  	 vector slx_lam3(1,nfleet);
+ 	imatrix slx_blks(1,nfleet,1,slx_nsel_blocks);
 
 	LOC_CALCS
 		slx_indx = ivector(column(slx_control,1));
@@ -196,6 +197,8 @@ DATA_SECTION
 					slx_rows(k) = bsex * slx_nsel_blocks(k);
 				break;
 			}
+			ivector tmp = ivector(slx_control(k).sub(12,11+slx_nsel_blocks(k)));
+			slx_blks(k) = tmp.shift(1);
 		}
 	END_CALCS
 
@@ -228,7 +231,20 @@ PARAMETER_SECTION
 
 	// Selectivity parameters
 	init_bounded_matrix_vector log_slx_pars(1,nfleet,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
+	LOC_CALCS
+		for(int k = 1; k <= nfleet; k++ )
+		{
+			if(slx_type(k) == 2)
+			{
+				for(int j = 1; j <= slx_rows(k); j++ )
+				{
+					log_slx_pars(k)(j,1) = log(slx_mean(k));
+					log_slx_pars(k)(j,2) = log(slx_stdv(k));
+				}
+			}
+		}
 
+	END_CALCS
 	
 	objective_function_value objfun;
 
@@ -340,17 +356,30 @@ FUNCTION calc_selectivities
 			break;
 			}
 
-			if( slx_bsex(k) ) block ++;
-			// fill array with selectivity coefficients
+			block ++;
+			
 		}
 		
-		//for( i = syr; i <= nyr; i++ )
-		//{
-		//	log_slx_capture(k)(h)(i) = pSLX[block]->logSelectivity(mid_points);
-		//}
+		
+		// fill array with selectivity coefficients
+		j = -1;
+		block = 1;
+		for( h = 1; h <= nsex; h++ )
+		{
+			for( i = syr; i <= nyr; i++ )
+			{
+				if(i == slx_blks(k)(block))
+				{
+					j ++;
+					if(block != slx_nsel_blocks(k)) block ++;
+				}
+				log_slx_capture(k)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+			}
+			if(!slx_bsex(k)) j--;
+		}
 
-		// delete the pointers
-		delete pSLX[k-1];
+		// delete pointers
+		delete *pSLX;
 	}
 	
 
@@ -529,7 +558,7 @@ FUNCTION calc_recruitment_size_distribution
    * 	
    */
 FUNCTION calc_initial_numbers_at_length
-	int h,i,l;
+	int h,i;
 	N.initialize();
 
 	// Option 1: spin up from constant recruitment.
@@ -564,6 +593,7 @@ FUNCTION update_population_numbers_at_length
 
 
 REPORT_SECTION
+	REPORT(log_slx_capture);
 
 
 
