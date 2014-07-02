@@ -51,6 +51,14 @@ GLOBALS_SECTION
 	 #undef COUT
 	 #define COUT(object) cout << #object "\n" << object << endl;
 
+TOP_OF_MAIN_SECTION
+	time(&start);
+	arrmblsize = 50000000;
+	gradient_structure::set_GRADSTACK_BUFFER_SIZE(1.e7);
+	gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);
+	gradient_structure::set_MAX_NVAR_OFFSET(5000);
+	gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
+
 DATA_SECTION
 	// |------------------------|
 	// | DATA AND CONTROL FILES |
@@ -247,6 +255,11 @@ PARAMETER_SECTION
 		}
 
 	END_CALCS
+
+	// Fishing mortality rate parameters
+	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
+	init_bounded_matrix log_fdev(1,nfleet,syr,nyr,-10.0,10.0,2);
+
 	
 	objective_function_value objfun;
 
@@ -264,8 +277,10 @@ PARAMETER_SECTION
 	3darray M(1,nsex,syr,nyr,1,nclass);		// Natural mortality
 	3darray Z(1,nsex,syr,nyr,1,nclass);		// Total mortality
 	3darray S(1,nsex,syr,nyr,1,nclass);		// Surival Rate (S=exp(-Z))
+	3darray F(1,nsex,syr,nyr,1,nclass);		// Fishing mortality
 
-	3darray N(1,nsex,syr,nyr+1,1,nclass);	// Numbers-at-length
+	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
+	3darray log_ft(1,nfleet,1,nsex,syr,nyr);	// Fishing mortality by gear
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -276,6 +291,7 @@ PROCEDURE_SECTION
 
 	// Fishing fleet dynamics ...
 	calc_selectivities();
+	calc_fishing_mortality();
 
 
 
@@ -409,6 +425,40 @@ FUNCTION calc_selectivities
 
 
 
+  /**
+   * @brief Calculate fishing mortality rates for each fleet.
+   * @details For each fleet estimate scaler log_fbar and deviates (f_devs).
+   */
+FUNCTION calc_fishing_mortality
+	int h,i,k;
+	double lambda = 0.5;  // discard mortality rate
+	F.initialize();
+	log_ft.initialize();
+	dvar_vector sel(1,nclass);
+	dvar_vector ret(1,nclass);
+	dvar_vector tmp(1,nclass);
+
+	for( k = 1; k <= nfleet; k++ )
+	{
+		for( h = 1; h <= nsex; h++ )
+		{
+			for( i = syr; i <= nyr; i++ )
+			{
+				log_ft(k)(h)(i) = log_fbar(k) + log_fdev(k,i);
+				sel = exp(log_slx_capture(k)(h)(i));
+				ret = exp(log_slx_retaind(k)(h)(i));
+				tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
+				F(h)(i) += mfexp(log_ft(k,h,i)) * tmp;
+			}
+		}
+	}
+
+
+
+
+
+
+
 
 
 
@@ -513,7 +563,7 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		 Z(h) = M(h);
+		 Z(h) = M(h) + F(h);
 		 S(h) = mfexp(-Z(h));
 	}
 
