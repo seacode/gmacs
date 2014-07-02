@@ -375,7 +375,11 @@ FUNCTION calc_selectivities
 				}
 				log_slx_capture(k)(h)(i) = pSLX[j]->logSelectivity(mid_points);
 			}
-			if(!slx_bsex(k)) j--;
+			COUT(j);
+			if(!slx_bsex(k)){
+				j-= slx_nsel_blocks(k);
+				block = 1;
+			} 
 		}
 
 		// delete pointers
