@@ -234,9 +234,10 @@ DATA_SECTION
 
 INITIALIZATION_SECTION
 	//theta theta_ival;
-	alpha 3.733;
-	beta 0.2;
-	scale 50.1;
+	alpha     3.733;
+	beta      0.2;
+	scale    50.1;
+ 	
 
 PARAMETER_SECTION
 
@@ -275,6 +276,8 @@ PARAMETER_SECTION
 
 	// Fishing mortality rate parameters
 	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
+
+	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.01);
 	!! ivector f_phz(1,nfleet);
 	!! f_phz = 1;
 	!! ivector isyr(1,nfleet);
@@ -293,6 +296,7 @@ PARAMETER_SECTION
 
 	vector rec_sdd(1,nclass);			// recruitment size_density_distribution
 	vector pre_catch(1,nCatchRows);		// predicted catch from Barnov catch equatoin
+	vector res_catch(1,nCatchRows);		// catch residuals in log-space
 	
 	matrix molt_increment(1,nsex,1,nclass);		// linear molt increment
 	matrix molt_probability(1,nsex,1,nclass); 	// probability of molting
@@ -334,6 +338,10 @@ PROCEDURE_SECTION
 	// observation models ...
 	calc_predicted_catch();
 
+
+
+	// objective function ...
+	calc_objective_function();
 
 
   /**
@@ -772,10 +780,53 @@ FUNCTION calc_predicted_catch
 		}
 	}
 
+	// Catch residuals
+	res_catch = log(obs_catch) - log(pre_catch);
+
+
+
+
+
+  /**
+   * @brief calculate objective function
+   * @details 
+   * 
+   * Likelihood components
+   * 	1) likelihood of the catch data (assume lognormal error)
+   * 
+   * Penalty components
+   * 	1) Penalty on log_fdev to ensure they sum to zero.
+   * 
+   */
+FUNCTION calc_objective_function
+	dvar_vector nloglike(1,2);
+	dvar_vector nlogPenalty(1,2);
+
+	nloglike.initialize();
+	nlogPenalty.initialize();
+
+	// Likelihood of the catch data.
+	dvar_vector std = sqrt(square(catch_cv)+1.0);
+	nloglike(1) = dnorm(res_catch,std);
+
+	// Penalty on log_fdev to ensure they sum to zero 
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		dvariable s    = mean(log_fdev(k));
+		nlogPenalty(1) += 10000.0*s*s;
+	}
+
+
+
+
+	objfun = sum(nloglike) + sum(nlogPenalty);
 
 
 
 REPORT_SECTION
+	REPORT(obs_catch);
+	REPORT(pre_catch);
+	REPORT(res_catch);
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
