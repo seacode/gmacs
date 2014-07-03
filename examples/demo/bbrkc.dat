@@ -19,6 +19,12 @@
 # size_breaks (a vector giving the break points between size intervals)
 60  71  82  93 104 115 126 137 148 159 170
 
+# weight-at-length allometry w_l = a•l^b
+## a (male, female)
+0.0002  0.0002
+## b (male, female)
+3.0     3.0
+
 # Class-link information: (conditional)																																				
 
 # Fleet data specs: (1) catch retain, (2) catch discard, (3) bycatch (either retained or discarded), (4) survey data.
@@ -40,6 +46,8 @@ NMFS_Trawl:BSFRF
 #0.5	# Time between survey and fishery
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## CATCH DATA
+## Type of catch: 	1 = retained, 2 = discard
+## Units of catch:	1 = biomass,  2 = numbers
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## year seas fleet sex       obs   cv type units mult  effort
    1975    1     1   1  8.745200 0.05    1     1    1       0

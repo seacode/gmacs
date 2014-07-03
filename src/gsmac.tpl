@@ -86,6 +86,19 @@ DATA_SECTION
 	vector       mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + first_difference(size_breaks);
 
+	// |-----------|
+	// | ALLOMETRY |
+	// |-----------|
+	init_vector lw_alfa(1,nsex);
+	init_vector lw_beta(1,nsex);
+	matrix mean_wt(1,nsex,1,nclass);
+	LOC_CALCS
+		for(int h = 1; h <= nsex; h++ )
+		{
+			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
+		}
+	END_CALCS
+
 	// |-------------|
 	// | FLEET NAMES |
 	// |-------------|
@@ -699,12 +712,12 @@ FUNCTION update_population_numbers_at_length
    */
 FUNCTION calc_predicted_catch
 	int h,i,j,k;
-	double lambda = 0.5;  // discard mortality rate from control file
+	int type,unit;
 	pre_catch.initialize();
 	dvariable ft;
 	dvar_vector sel(1,nclass);
-	dvar_vector ret(1,nclass);
-	dvar_vector vul(1,nclass);
+	dvar_vector nal(1,nclass);		// numbers or biomass at length.
+	
 
 
 	for( j = 1; j <= nCatchRows; j++ )
@@ -712,24 +725,49 @@ FUNCTION calc_predicted_catch
 		i = dCatchData(j,1);		// year index
 		k = dCatchData(j,3);		// gear index
 		h = dCatchData(j,4); 		// sex index
+
+		// Type of catch (retained = 1, discard = 2)
+		type = int(dCatchData(j,7));
+
+		// Units of catch equation (1 = biomass, 2 = numbers)
+		unit = int(dCatchData(j,8));
 		
+		// Total catch
 		if(h)	// sex specific 
 		{
-			sel = exp( log_slx_capture(k)(h)(i) );
-			ret = exp( log_slx_retaind(k)(h)(i) );
-			vul = elem_prod(sel, ret+(1.0 - ret)*lambda);
-			 ft = mfexp( log_ft(k)(h)(i) );
-			pre_catch(j) = sum(elem_div(elem_prod(ft*vul,1.0-exp(-Z(h)(i))),Z(h)(i)));
+			switch(type)
+			{
+				case 1:		// retained catch
+					sel = exp( log_slx_capture(k)(h)(i) );
+				break;
+
+				case 2:		// discard catch
+					sel = 1.0 - exp( log_slx_retaind(k)(h)(i) );
+				break;
+			}
+			ft = mfexp( log_ft(k)(h)(i) );
+			unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+
+			pre_catch(j) = nal * elem_div(elem_prod(ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 		}
 		else 	// sexes combibed
 		{
 			for( h = 1; h <= nsex; h++ )
 			{
-				sel = exp( log_slx_capture(k)(h)(i) );
-				ret = exp( log_slx_retaind(k)(h)(i) );
-				vul = elem_prod(sel, ret+(1.0 - ret)*lambda);
-				 ft = mfexp( log_ft(k)(h)(i) );
-				pre_catch(j) += sum(elem_div(elem_prod(ft*vul,1.0-exp(-Z(h)(i))),Z(h)(i)));
+				switch(type)
+				{
+					case 1:		// retained catch
+						sel = exp( log_slx_capture(k)(h)(i) );
+					break;
+
+					case 2:		// discard catch
+						sel = 1.0 - exp( log_slx_retaind(k)(h)(i) );
+					break;
+				}
+				ft = mfexp( log_ft(k)(h)(i) );
+				unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+
+				pre_catch(j) += nal * elem_div(elem_prod(ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 			}
 		}
 	}
