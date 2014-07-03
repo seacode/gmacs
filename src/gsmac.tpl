@@ -699,13 +699,39 @@ FUNCTION update_population_numbers_at_length
    */
 FUNCTION calc_predicted_catch
 	int h,i,j,k;
+	double lambda = 0.5;  // discard mortality rate from control file
 	pre_catch.initialize();
+	dvariable ft;
+	dvar_vector sel(1,nclass);
+	dvar_vector ret(1,nclass);
+	dvar_vector vul(1,nclass);
+
 
 	for( j = 1; j <= nCatchRows; j++ )
 	{	
 		i = dCatchData(j,1);		// year index
 		k = dCatchData(j,3);		// gear index
 		h = dCatchData(j,4); 		// sex index
+		
+		if(h)	// sex specific 
+		{
+			sel = exp( log_slx_capture(k)(h)(i) );
+			ret = exp( log_slx_retaind(k)(h)(i) );
+			vul = elem_prod(sel, ret+(1.0 - ret)*lambda);
+			 ft = mfexp( log_ft(k)(h)(i) );
+			pre_catch(j) = sum(elem_div(elem_prod(ft*vul,1.0-exp(-Z(h)(i))),Z(h)(i)));
+		}
+		else 	// sexes combibed
+		{
+			for( h = 1; h <= nsex; h++ )
+			{
+				sel = exp( log_slx_capture(k)(h)(i) );
+				ret = exp( log_slx_retaind(k)(h)(i) );
+				vul = elem_prod(sel, ret+(1.0 - ret)*lambda);
+				 ft = mfexp( log_ft(k)(h)(i) );
+				pre_catch(j) += sum(elem_div(elem_prod(ft*vul,1.0-exp(-Z(h)(i))),Z(h)(i)));
+			}
+		}
 	}
 
 
