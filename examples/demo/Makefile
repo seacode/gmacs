@@ -1,5 +1,6 @@
 EXEC = gsmac
 DIST = ../../src/build/debug/
+ARGS = 
 
 all: run
 
@@ -10,7 +11,7 @@ $(DIST)$(EXEC).tpl:
 	$(MAKE) --directory=../../src
 
 run: $(EXEC)
-	./$(EXEC)
+	./$(EXEC) $(ARGS)
 
 clean:
 	rm -f $(EXEC)

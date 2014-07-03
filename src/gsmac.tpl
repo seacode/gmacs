@@ -96,7 +96,11 @@ DATA_SECTION
 	// | CATCH SERIES |
 	// |--------------|
 	init_int nCatchRows;						// number of rows in dCatchData
-	init_matrix dCatchData(1,nCatchRows,1,9);	// array of catch data
+	init_matrix dCatchData(1,nCatchRows,1,10);	// array of catch data
+	vector obs_catch(1,nCatchRows);
+	vector  catch_cv(1,nCatchRows);
+	!! obs_catch = column(dCatchData,5);
+	!!  catch_cv = column(dCatchData,6);
 
 	// |----------------------------|
 	// | RELATIVE ABUNDANCE INDICES |
@@ -216,7 +220,7 @@ DATA_SECTION
 	
 
 INITIALIZATION_SECTION
-  //theta theta_ival;
+	//theta theta_ival;
 	alpha 3.733;
 	beta 0.2;
 	scale 50.1;
@@ -258,7 +262,13 @@ PARAMETER_SECTION
 
 	// Fishing mortality rate parameters
 	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
-	init_bounded_matrix log_fdev(1,nfleet,syr,nyr,-10.0,10.0,2);
+	!! ivector f_phz(1,nfleet);
+	!! f_phz = 1;
+	!! ivector isyr(1,nfleet);
+	!! isyr = syr;
+	!! ivector inyr(1,nfleet);
+	!! inyr = nyr;
+	init_bounded_vector_vector log_fdev(1,nfleet,isyr,inyr,-10.,10.,f_phz);
 
 	
 	objective_function_value objfun;
@@ -269,6 +279,7 @@ PARAMETER_SECTION
 	number rbeta;			// rate parameter for recruitment distribution
 
 	vector rec_sdd(1,nclass);			// recruitment size_density_distribution
+	vector pre_catch(1,nCatchRows);		// predicted catch from Barnov catch equatoin
 	
 	matrix molt_increment(1,nsex,1,nclass);		// linear molt increment
 	matrix molt_probability(1,nsex,1,nclass); 	// probability of molting
@@ -304,6 +315,11 @@ PROCEDURE_SECTION
 	calc_recruitment_size_distribution();
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
+
+
+
+	// observation models ...
+	calc_predicted_catch();
 
 
 
@@ -428,10 +444,20 @@ FUNCTION calc_selectivities
   /**
    * @brief Calculate fishing mortality rates for each fleet.
    * @details For each fleet estimate scaler log_fbar and deviates (f_devs).
+   * 
+   * In the event that there is effort data and catch data, then it's possible
+   * to estimate a catchability coefficient and predict the catch for the
+   * period of missing catch/discard data.  Best option for this would be
+   * to use F = q*E, where q = F/E.  Then in the objective function, minimize
+   * the variance in the estimates of q, and use the mean q to predict catch.
+   * Or minimize the first difference and assume a random walk in q.
+   * 
+   * Note that this function calculates the fishing mortality rate including
+   * deaths due to discards.  Where lambda is the discard mortality rate.
    */
 FUNCTION calc_fishing_mortality
 	int h,i,k;
-	double lambda = 0.5;  // discard mortality rate
+	double lambda = 0.5;  // discard mortality rate from control file
 	F.initialize();
 	log_ft.initialize();
 	dvar_vector sel(1,nclass);
@@ -657,7 +683,32 @@ FUNCTION update_population_numbers_at_length
 			N(h)(i+1) += elem_prod(N(h)(i),S(h)(i)) * size_transition(h);
 		}
 	}
-	
+
+
+
+
+
+
+  /**
+   * @brief Calculate predicted catch observations
+   * @details The function uses the Baranov catch equation to predict the retained
+   * and discarded catch.
+   * 
+   * @param  [description]
+   * @return [description]
+   */
+FUNCTION calc_predicted_catch
+	int h,i,j,k;
+	pre_catch.initialize();
+
+	for( j = 1; j <= nCatchRows; j++ )
+	{	
+		i = dCatchData(j,1);		// year index
+		k = dCatchData(j,3);		// gear index
+		h = dCatchData(j,4); 		// sex index
+	}
+
+
 
 
 REPORT_SECTION
