@@ -8,7 +8,7 @@
 # 4. To make executables with ADMB "safe" library type: make   #
 # 5. Optimized executables type: make OPT=TRUE                 #
 # ———————————————————————————————————————————————————————————— #
-EXEC = gmacs
+EXEC = gsmac
 SRCS = $(EXEC).cpp #multinomial.cpp 
 OBJS = $(SRCS:.cpp=.o)
 TPLS = $(EXEC).tpl
