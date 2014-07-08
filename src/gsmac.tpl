@@ -656,7 +656,8 @@ FUNCTION calc_molting_probability
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu* molt_cv(h);
-		molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
+		//molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
+		molt_probability(h) = 1.0 - 1.0/(1+exp((mid_points-mu)/sd));
 	}
 
 
