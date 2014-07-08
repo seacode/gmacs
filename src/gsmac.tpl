@@ -47,9 +47,11 @@ GLOBALS_SECTION
 	 *
 	 * \def COUT(object)
 	 * Prints object to screen during runtime.
+	 * cout <<setw(6) << setprecision(3) << setfixed() << x << endl;
 	 */
 	 #undef COUT
-	 #define COUT(object) cout << #object "\n" << object << endl;
+	 #define COUT(object) cout << #object "\n" << setw(6) \
+	 << setprecision(3) << setfixed() << object << endl;
 
 TOP_OF_MAIN_SECTION
 	time(&start);
@@ -158,6 +160,7 @@ DATA_SECTION
 	// | LEADING PARAMETER CONTROLS |
 	// |----------------------------|
 	init_int ntheta;
+	ivector junk(1,ntheta);
 	init_matrix theta_control(1,ntheta,1,7);
 	vector theta_ival(1,ntheta);
 	vector theta_lb(1,ntheta);
@@ -168,6 +171,7 @@ DATA_SECTION
 		theta_lb   = column(theta_control,2);
 		theta_ub   = column(theta_control,3);
 		theta_phz  = ivector(column(theta_control,4));
+		junk = 1;
 	END_CALCS
 	
 
@@ -240,22 +244,23 @@ DATA_SECTION
 	END_CALCS
 
 	!! cout<<"end of control section"<<endl;
-	
+	!! COUT(theta_ival);
 
 INITIALIZATION_SECTION
-	//theta theta_ival;
-	alpha     3.733;
-	beta      0.2;
-	scale    50.1;
+  theta theta_ival;
+  alpha     3.733;
+  beta      0.2;
+  scale    50.1;
  	
 
 PARAMETER_SECTION
-
+	!! cout<<"'here we are'"<<endl;
 	// Leading parameters
 	//      M = theta(1)
 	// ln(Ro) = theta(2)
 	// ra     = theta(3)
 	// rbeta  = theta(4)
+	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 
 	// Molt increment parameters
@@ -285,11 +290,11 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
+	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,-1);
 
-	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.01);
+	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.1);
 	!! ivector f_phz(1,nfleet);
-	!! f_phz = 1;
+	!! f_phz = -2;
 	!! ivector isyr(1,nfleet);
 	!! isyr = syr;
 	!! ivector inyr(1,nfleet);
@@ -564,7 +569,9 @@ FUNCTION calc_size_transition_matrix
 	int h,l,ll;
 	dvariable tmp;
 	dvar_vector psi(1,nclass+1);
+	dvar_matrix At(1,nclass,1,nclass);
 	size_transition.initialize();
+
 
 	for( h = 1; h <= nsex; h++ )
 	{
@@ -576,9 +583,12 @@ FUNCTION calc_size_transition_matrix
 			{
 				psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
 			}
-			size_transition(h)(l)(l,nclass)  = first_difference(psi(l,nclass+1));
-			size_transition(h)(l)(l,nclass) /= sum(size_transition(h)(l)(l,nclass));
+			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
+			At(l)(l,nclass) /= sum(At(l));
+			// size_transition(h)(l)(l,nclass)  = first_difference(psi(l,nclass+1));
+			// size_transition(h)(l)(l,nclass) /= sum(size_transition(h)(l)(l,nclass));
 		}
+		size_transition(h) = trans(At);
 	}
 
 	
@@ -628,7 +638,6 @@ FUNCTION calc_total_mortality
 		 Z(h) = M(h) + F(h);
 		 S(h) = mfexp(-Z(h));
 	}
-
 
 
 
@@ -690,16 +699,41 @@ FUNCTION calc_recruitment_size_distribution
 FUNCTION calc_initial_numbers_at_length
 	int h,i;
 	N.initialize();
+	dmatrix Id=identity_matrix(1,nclass);
 
 	// Option 1: spin up from constant recruitment.
 	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
+	
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( i = 1; i <= 50; i++ )
 		{	
-			N(h)(syr) = elem_prod(N(h)(syr),S(h)(syr)) * size_transition(h) + rt;
+			N(h)(syr) = size_transition(h) * elem_prod(N(h)(syr),S(h)(syr)) + rt;
 		}
 	}
+
+
+	// Option 2: equilibrium approach
+	dvar_vector x(1,nclass);
+	dvar_matrix A(1,nclass,1,nclass);
+	for( h = 1; h <= nsex; h++ )
+	{
+		A = size_transition(h);
+		for(int l = 1; l <= nclass; l++ )
+		{
+			A(l) = elem_prod( A(l), S(h)(syr) );
+		}
+
+		
+		x = -solve(A-Id,rt);
+		N(h)(syr) = x;
+	}
+
+	
+	
+
+
+
 
 
 
@@ -709,16 +743,24 @@ FUNCTION calc_initial_numbers_at_length
    * @author Steve Martell
    */
 FUNCTION update_population_numbers_at_length
-	int h,i;
+	int h,i,l;
+	dvar_matrix A(1,nclass,1,nclass);
 
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( i = syr; i <= nyr; i++ )
 		{
+			A = size_transition(h);
+			for( l = 1; l <= nclass; l++ )
+			{
+				A(l) = elem_prod( A(l), S(h)(i) );
+			}
 			N(h)(i+1)  = 0.5 * mfexp(logRbar) * rec_sdd;
-			N(h)(i+1) += elem_prod(N(h)(i),S(h)(i)) * size_transition(h);
+			N(h)(i+1) += A * N(h)(i);
 		}
 	}
+
+
 
 
 
