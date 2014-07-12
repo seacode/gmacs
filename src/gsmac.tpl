@@ -134,7 +134,9 @@ DATA_SECTION
 		}
 	END_CALCS
 
-
+	init_int nSizeComps;
+	init_ivector nSizeCompRows(1,nSizeComps);
+	init_3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,1,27);
 
 
 	// |------------------|
@@ -260,8 +262,8 @@ PARAMETER_SECTION
 	// ln(Ro) = theta(2)
 	// ra     = theta(3)
 	// rbeta  = theta(4)
-	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+
 
 	// Molt increment parameters
 	init_bounded_vector alpha(1,nsex,0,100,-1);
@@ -290,11 +292,11 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,-1);
+	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
 
 	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.1);
 	!! ivector f_phz(1,nfleet);
-	!! f_phz = -2;
+	!! f_phz = 1;
 	!! ivector isyr(1,nfleet);
 	!! isyr = syr;
 	!! ivector inyr(1,nfleet);
@@ -746,6 +748,7 @@ FUNCTION calc_initial_numbers_at_length
 FUNCTION update_population_numbers_at_length
 	int h,i,l;
 	dvar_matrix A(1,nclass,1,nclass);
+	
 
 	for( h = 1; h <= nsex; h++ )
 	{
@@ -756,10 +759,13 @@ FUNCTION update_population_numbers_at_length
 			{
 				A(l) = elem_prod( A(l), S(h)(i) );
 			}
+
 			N(h)(i+1)  = 0.5 * mfexp(logRbar) * rec_sdd;
 			N(h)(i+1) += A * N(h)(i);
 		}
 	}
+	//COUT(N(nsex));
+	//exit(1);
 
 
 
