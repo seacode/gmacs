@@ -136,8 +136,16 @@ DATA_SECTION
 
 	init_int nSizeComps;
 	init_ivector nSizeCompRows(1,nSizeComps);
-	init_3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,1,27);
-
+	init_ivector nSizeCompCols(1,nSizeComps);
+	init_3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,-7,nSizeCompCols);
+	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	LOC_CALCS
+		for(int k = 1; k <= nSizeComps; k++ )
+		{
+			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
+			d3_obs_size_comps(k) = trans(tmp);
+		}
+	END_CALCS
 
 	// |------------------|
 	// | END OF DATA FILE |
@@ -331,6 +339,7 @@ PARAMETER_SECTION
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
 	3darray log_ft(1,nfleet,1,nsex,syr,nyr);	// Fishing mortality by gear
+	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -360,6 +369,7 @@ PROCEDURE_SECTION
 	// observation models ...
 	calc_predicted_catch();
 	calc_relative_abundance();
+	calc_predicted_composition();
 
 
 
@@ -907,6 +917,40 @@ FUNCTION calc_relative_abundance
 
 
 
+  /**
+   * @brief Calculate predicted size composition data.
+   * @details   Predicted size composition data are given in proportions
+   */
+FUNCTION calc_predicted_composition
+	int h,i,j,k;
+	int type;
+	d3_pre_size_comps.initialize();
+
+	for(int ii = 1; ii <= nSizeComps; ii++ )
+	{
+		for(int jj = 1; jj <= nSizeCompRows(ii); jj++ )
+		{
+			i    = d3_SizeComps(ii)(jj,-7);		// year
+			j    = d3_SizeComps(ii)(jj,-6);		// seas
+			k    = d3_SizeComps(ii)(jj,-5);		// gear
+			h    = d3_SizeComps(ii)(jj,-4);		// sex
+			type = d3_SizeComps(ii)(jj,-3);		// type
+
+			if(h) // sex specific
+			{
+				dvar_vector sel = log_slx_capture(k)(h)(i);
+				dvar_vector ret = log_slx_retaind(k)(h)(i);
+				dvar_vector dis = log_slx_discard(k)(h)(i);
+				dvar_vector tmp = N(h)(i);
+
+
+			}
+			else
+			{
+
+			}
+		}
+	}
 
 
 

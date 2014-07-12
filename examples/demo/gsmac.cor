@@ -1,6 +1,0 @@
- The logarithm of the determinant of the hessian = -78.7342
- index   name      value      std.dev       1       2       3       4   
-     1   molt_mu  1.0000e+02 1.0000e+06   1.0000
-     2   molt_mu  1.0000e+02 1.0000e+06   0.0000  1.0000
-     3   molt_cv  5.0000e-01 3.5355e+02   0.0000  0.0000  1.0000
-     4   molt_cv  5.0000e-01 3.5355e+02   0.0000  0.0000  0.0000  1.0000
