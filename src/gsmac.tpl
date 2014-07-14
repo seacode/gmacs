@@ -340,6 +340,7 @@ PARAMETER_SECTION
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
 	3darray log_ft(1,nfleet,1,nsex,syr,nyr);	// Fishing mortality by gear
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -1011,13 +1012,14 @@ FUNCTION calc_predicted_composition
    * Likelihood components
    * 	-# likelihood of the catch data (assume lognormal error)
    * 	-# likelihood of relative abundance data
+   * 	-# likelihood for the size composition data.
    * 
    * Penalty components
    * 	-# Penalty on log_fdev to ensure they sum to zero.
    * 
    */
 FUNCTION calc_objective_function
-	dvar_vector nloglike(1,2);
+	dvar_vector nloglike(1,3);
 	dvar_vector nlogPenalty(1,2);
 
 	nloglike.initialize();
@@ -1042,6 +1044,17 @@ FUNCTION calc_objective_function
 	}
 
 
+
+	// 3) Likelihood for size composition data.
+	double minP = 0;
+	double variance;
+	for(int ii = 1; ii <= nSizeComps; ii++)
+	{
+		dmatrix O     = d3_obs_size_comps(ii);
+		dvar_matrix P = d3_pre_size_comps(ii);
+
+		nloglike(3) += dmultinom(O,P,d3_res_size_comps(ii),variance,minP);
+	}
 
 	objfun = sum(nloglike) + sum(nlogPenalty);
 
