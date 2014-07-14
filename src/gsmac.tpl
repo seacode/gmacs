@@ -134,8 +134,18 @@ DATA_SECTION
 		}
 	END_CALCS
 
-
-
+	init_int nSizeComps;
+	init_ivector nSizeCompRows(1,nSizeComps);
+	init_ivector nSizeCompCols(1,nSizeComps);
+	init_3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,-7,nSizeCompCols);
+	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	LOC_CALCS
+		for(int k = 1; k <= nSizeComps; k++ )
+		{
+			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
+			d3_obs_size_comps(k) = trans(tmp);
+		}
+	END_CALCS
 
 	// |------------------|
 	// | END OF DATA FILE |
@@ -260,8 +270,8 @@ PARAMETER_SECTION
 	// ln(Ro) = theta(2)
 	// ra     = theta(3)
 	// rbeta  = theta(4)
-	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+
 
 	// Molt increment parameters
 	init_bounded_vector alpha(1,nsex,0,100,-1);
@@ -290,11 +300,11 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,-1);
+	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
 
 	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.1);
 	!! ivector f_phz(1,nfleet);
-	!! f_phz = -2;
+	!! f_phz = 1;
 	!! ivector isyr(1,nfleet);
 	!! isyr = syr;
 	!! ivector inyr(1,nfleet);
@@ -329,6 +339,7 @@ PARAMETER_SECTION
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
 	3darray log_ft(1,nfleet,1,nsex,syr,nyr);	// Fishing mortality by gear
+	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -358,6 +369,7 @@ PROCEDURE_SECTION
 	// observation models ...
 	calc_predicted_catch();
 	calc_relative_abundance();
+	calc_predicted_composition();
 
 
 
@@ -746,6 +758,7 @@ FUNCTION calc_initial_numbers_at_length
 FUNCTION update_population_numbers_at_length
 	int h,i,l;
 	dvar_matrix A(1,nclass,1,nclass);
+	
 
 	for( h = 1; h <= nsex; h++ )
 	{
@@ -756,10 +769,13 @@ FUNCTION update_population_numbers_at_length
 			{
 				A(l) = elem_prod( A(l), S(h)(i) );
 			}
+
 			N(h)(i+1)  = 0.5 * mfexp(logRbar) * rec_sdd;
 			N(h)(i+1) += A * N(h)(i);
 		}
 	}
+	//COUT(N(nsex));
+	//exit(1);
 
 
 
@@ -901,6 +917,89 @@ FUNCTION calc_relative_abundance
 
 
 
+  /**
+   * @brief Calculate predicted size composition data.
+   * @details   Predicted size composition data are given in proportions.
+   * Size composition strata:
+   * 	- sex
+   * 	- type (retained or discard)
+   * 	- shell condition
+   * 	- mature or immature
+   * 
+   * NB Sitting in a campground on the Orgeon Coast writing this code,
+   * with baby Tabitha sleeping on my back.
+   * 
+   * TODO: 
+   * 	- add pointers for shell type.
+   * 	- add pointers for maturity state.
+   */
+FUNCTION calc_predicted_composition
+	int h,i,j,k;
+	int type,shell,maturity;
+	d3_pre_size_comps.initialize();
+	dvar_vector dNtmp(1,nclass);
+
+
+	for(int ii = 1; ii <= nSizeComps; ii++ )
+	{
+		for(int jj = 1; jj <= nSizeCompRows(ii); jj++ )
+		{
+			dNtmp.initialize();
+			i        = d3_SizeComps(ii)(jj,-7);		// year
+			j        = d3_SizeComps(ii)(jj,-6);		// seas
+			k        = d3_SizeComps(ii)(jj,-5);		// gear
+			h        = d3_SizeComps(ii)(jj,-4);		// sex
+			type     = d3_SizeComps(ii)(jj,-3);		
+			shell    = d3_SizeComps(ii)(jj,-2);	
+			maturity = d3_SizeComps(ii)(jj,-1);
+
+			if(h) // sex specific
+			{
+				dvar_vector sel = log_slx_capture(k)(h)(i);
+				dvar_vector ret = log_slx_retaind(k)(h)(i);
+				dvar_vector dis = log_slx_discard(k)(h)(i);
+				dvar_vector tmp = N(h)(i);
+
+				switch (type)
+				{
+					case 1:
+						dNtmp = elem_prod(tmp,ret);
+					break;
+					case 2:
+						dNtmp = elem_prod(tmp,dis);
+					break;
+					default:
+						dNtmp = elem_prod(tmp,sel);
+					break;
+				}
+
+			}
+			else
+			{
+				for( h = 1; h <= nsex; h++ )
+				{
+					dvar_vector sel = log_slx_capture(k)(h)(i);
+					dvar_vector ret = log_slx_retaind(k)(h)(i);
+					dvar_vector dis = log_slx_discard(k)(h)(i);
+					dvar_vector tmp = N(h)(i);
+
+					switch (type)
+					{
+						case 1:
+							dNtmp += elem_prod(tmp,ret);
+						break;
+						case 2:
+							dNtmp += elem_prod(tmp,dis);
+						break;
+						default:
+							dNtmp += elem_prod(tmp,sel);
+						break;
+					}
+				}
+			}
+			d3_pre_size_comps(ii)(jj) = dNtmp / sum(dNtmp);
+		}
+	}
 
 
 
@@ -934,6 +1033,8 @@ FUNCTION calc_objective_function
 		nlogPenalty(1) += 10000.0*s*s;
 	}
 
+
+
 	// 2) Likelihood of the relative abundance data.
 	for(int k = 1; k <= nSurveys; k++ )
 	{
@@ -956,6 +1057,8 @@ REPORT_SECTION
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
+	REPORT(d3_obs_size_comps);
+	REPORT(d3_pre_size_comps);
 
 
 
