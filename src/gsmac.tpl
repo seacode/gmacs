@@ -300,7 +300,7 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
+	init_bounded_number_vector log_fbar(1,nfleet,-30.0,5.0,1);
 
 	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.1);
 	!! ivector f_phz(1,nfleet);
@@ -706,31 +706,20 @@ FUNCTION calc_recruitment_size_distribution
    * @details This function initializes the populations numbers-at-length
    * in the initial year of the model.  
    * 
-   * Psuedocode:
+   * Psuedocode:  See note from Dave Fournier.
    * 
    * 	
    */
 FUNCTION calc_initial_numbers_at_length
-	int h,i;
+	
 	N.initialize();
 	dmatrix Id=identity_matrix(1,nclass);
 
-	// Option 1: spin up from constant recruitment.
-	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
-	
-	for( h = 1; h <= nsex; h++ )
-	{
-		for( i = 1; i <= 50; i++ )
-		{	
-			N(h)(syr) = size_transition(h) * elem_prod(N(h)(syr),S(h)(syr)) + rt;
-		}
-	}
-
-
-	// Option 2: equilibrium approach
+	// Option 1: equilibrium approach
 	dvar_vector x(1,nclass);
 	dvar_matrix A(1,nclass,1,nclass);
-	for( h = 1; h <= nsex; h++ )
+	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
+	for(int h = 1; h <= nsex; h++ )
 	{
 		A = size_transition(h);
 		for(int l = 1; l <= nclass; l++ )
@@ -738,7 +727,6 @@ FUNCTION calc_initial_numbers_at_length
 			A(l) = elem_prod( A(l), S(h)(syr) );
 		}
 
-		
 		x = -solve(A-Id,rt);
 		N(h)(syr) = x;
 	}
