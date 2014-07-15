@@ -314,6 +314,9 @@ PARAMETER_SECTION
 	init_bounded_vector_vector log_fdev(1,nfleet,isyr,inyr,-10.,10.,f_phz);
 
 	
+  vector nloglike(1,2); ///> nLog likelihood components need to be shown
+  vector nlogPenalty(1,2); ///> nLog penalty components need to be shown
+
 	objective_function_value objfun;
 
 	number M0;				///> natural mortality rate
@@ -1019,9 +1022,6 @@ FUNCTION calc_predicted_composition
    * 
    */
 FUNCTION calc_objective_function
-	dvar_vector nloglike(1,2);
-	dvar_vector nlogPenalty(1,2);
-
 	nloglike.initialize();
 	nlogPenalty.initialize();
 
