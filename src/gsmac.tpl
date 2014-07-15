@@ -302,7 +302,7 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_bounded_number_vector log_fbar(1,nfleet,-300.0,30.0,1);
+	init_bounded_number_vector log_fbar(1,nfleet,-30.0,5.0,1);
 
 	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.1);
 	!! ivector f_phz(1,nfleet);
@@ -342,6 +342,7 @@ PARAMETER_SECTION
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
 	3darray log_ft(1,nfleet,1,nsex,syr,nyr);	// Fishing mortality by gear
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -707,31 +708,20 @@ FUNCTION calc_recruitment_size_distribution
    * @details This function initializes the populations numbers-at-length
    * in the initial year of the model.  
    * 
-   * Psuedocode:
+   * Psuedocode:  See note from Dave Fournier.
    * 
    * 	
    */
 FUNCTION calc_initial_numbers_at_length
-	int h,i;
+	
 	N.initialize();
 	dmatrix Id=identity_matrix(1,nclass);
 
-	// Option 1: spin up from constant recruitment.
-	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
-	
-	for( h = 1; h <= nsex; h++ )
-	{
-		for( i = 1; i <= 50; i++ )
-		{	
-			N(h)(syr) = size_transition(h) * elem_prod(N(h)(syr),S(h)(syr)) + rt;
-		}
-	}
-
-
-	// Option 2: equilibrium approach
+	// Option 1: equilibrium approach
 	dvar_vector x(1,nclass);
 	dvar_matrix A(1,nclass,1,nclass);
-	for( h = 1; h <= nsex; h++ )
+	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
+	for(int h = 1; h <= nsex; h++ )
 	{
 		A = size_transition(h);
 		for(int l = 1; l <= nclass; l++ )
@@ -739,7 +729,6 @@ FUNCTION calc_initial_numbers_at_length
 			A(l) = elem_prod( A(l), S(h)(syr) );
 		}
 
-		
 		x = -solve(A-Id,rt);
 		N(h)(syr) = x;
 	}
@@ -1013,13 +1002,14 @@ FUNCTION calc_predicted_composition
    * Likelihood components
    * 	-# likelihood of the catch data (assume lognormal error)
    * 	-# likelihood of relative abundance data
+   * 	-# likelihood for the size composition data.
    * 
    * Penalty components
    * 	-# Penalty on log_fdev to ensure they sum to zero.
    * 
    */
 FUNCTION calc_objective_function
-	dvar_vector nloglike(1,2);
+	dvar_vector nloglike(1,3);
 	dvar_vector nlogPenalty(1,2);
 
 	nloglike.initialize();
@@ -1044,6 +1034,17 @@ FUNCTION calc_objective_function
 	}
 
 
+
+	// 3) Likelihood for size composition data.
+	double minP = 0;
+	double variance;
+	for(int ii = 1; ii <= nSizeComps; ii++)
+	{
+		dmatrix O     = d3_obs_size_comps(ii);
+		dvar_matrix P = d3_pre_size_comps(ii);
+
+		nloglike(3) += dmultinom(O,P,d3_res_size_comps(ii),variance,minP);
+	}
 
 	objfun = sum(nloglike) + sum(nlogPenalty);
 
