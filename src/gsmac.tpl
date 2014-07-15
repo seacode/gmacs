@@ -78,6 +78,8 @@ DATA_SECTION
 	// |------------------|
 	init_int syr;		///> initial year
 	init_int nyr;		///> terminal year
+  vector mod_yrs(syr,nyr) ///> Model years
+  !! mod_yrs.fill_seqadd(syr,1);
 	init_number jstep;  ///> time step (years)
 	init_int nfleet;	///> number of gears
 	init_int nsex;		///> number of sexes
@@ -305,9 +307,9 @@ PARAMETER_SECTION
 	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.1);
 	!! ivector f_phz(1,nfleet);
 	!! f_phz = 1;
-	!! ivector isyr(1,nfleet);
+	!! ivector isyr(1,nfleet); ///> fleet-specific start year
 	!! isyr = syr;
-	!! ivector inyr(1,nfleet);
+	!! ivector inyr(1,nfleet); ///> fleet-specific end year
 	!! inyr = nyr;
 	init_bounded_vector_vector log_fdev(1,nfleet,isyr,inyr,-10.,10.,f_phz);
 
@@ -1048,6 +1050,10 @@ FUNCTION calc_objective_function
 
 
 REPORT_SECTION
+  REPORT(mod_yrs);
+  REPORT(size_breaks);
+  REPORT(nloglike);
+  REPORT(nlogPenalty);
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
@@ -1060,6 +1066,4 @@ REPORT_SECTION
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
 
-
-
-
+  REPORT(N);
