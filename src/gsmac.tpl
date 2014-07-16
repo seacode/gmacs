@@ -51,6 +51,7 @@ DATA_SECTION
 	init_vector size_breaks(1,nclass+1);
 	vector       mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + first_difference(size_breaks);
+	!! ECHO(syr); ECHO(nyr); ECHO(mod_yrs);ECHO(nfleet); ECHO(nsex); ECHO(nshell);ECHO(nmature); ECHO(nclass);
 
 	// |-----------|
 	// | ALLOMETRY |
@@ -64,12 +65,14 @@ DATA_SECTION
 			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
 		}
 	END_CALCS
+	!! ECHO(lw_alfa); ECHO(lw_beta); ECHO(mean_wt);
 
 	// |-------------|
 	// | FLEET NAMES |
 	// |-------------|
 	init_adstring name_read_flt;        
 	init_adstring name_read_srv;
+	!! ECHO(name_read_srv); ECHO(name_read_flt);
 
 	// |--------------|
 	// | CATCH SERIES |
@@ -80,6 +83,7 @@ DATA_SECTION
 	vector  catch_cv(1,nCatchRows);
 	!! obs_catch = column(dCatchData,5);
 	!!  catch_cv = column(dCatchData,6);
+	!! ECHO(obs_catch); ECHO(catch_cv);
 
 	// |----------------------------|
 	// | RELATIVE ABUNDANCE INDICES |
@@ -95,6 +99,7 @@ DATA_SECTION
 			obs_cpue(k) = column(dSurveyData(k),5);
 			 cpue_cv(k) = column(dSurveyData(k),6);
 		}
+	  ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
 	init_int nSizeComps;
@@ -108,6 +113,8 @@ DATA_SECTION
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
 		}
+	  ECHO(nSizeComps); 
+	  ECHO(d3_obs_size_comps); 
 	END_CALCS
 
 	// |------------------|
@@ -318,8 +325,6 @@ PROCEDURE_SECTION
 	calc_selectivities();
 	calc_fishing_mortality();
 
-
-
 	// Population dynamics ...
 	calc_growth_increments();
 	calc_size_transition_matrix();
@@ -330,14 +335,10 @@ PROCEDURE_SECTION
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 
-
-
 	// observation models ...
 	calc_predicted_catch();
 	calc_relative_abundance();
 	calc_predicted_composition();
-
-
 
 	// objective function ...
 	calc_objective_function();
@@ -353,9 +354,6 @@ FUNCTION initialize_model_parameters
   logRbar = theta(2);
   ra      = theta(3);
   rbeta   = theta(4);
-
-
-
 
 
   /**
@@ -385,12 +383,10 @@ FUNCTION calc_selectivities
 
 	for( k = 1; k <= nslx; k++ )
 	{	
-		
 		block = 1;
 		cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
 		{
-
 			switch (slx_type(k))
 			{
 			case 1:  //coefficients
@@ -410,11 +406,8 @@ FUNCTION calc_selectivities
 				pSLX[j] = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
 			break;
 			}
-
 			block ++;
-			
 		}
-		
 		
 		// fill array with selectivity coefficients
 		j = -1;
@@ -455,12 +448,6 @@ FUNCTION calc_selectivities
 
 
 
-
-
-
-
-
-
   /**
    * @brief Calculate fishing mortality rates for each fleet.
    * @details For each fleet estimate scaler log_fbar and deviates (f_devs).
@@ -498,11 +485,6 @@ FUNCTION calc_fishing_mortality
 			}
 		}
 	}
-
-
-
-
-
 
 
 
@@ -1074,7 +1056,8 @@ GLOBALS_SECTION
    */
    #define check(object) checkfile << #object << "\n" << object << endl;
    // Open output files using ofstream
-   ofstream echoinput("echoinput.gm");
+   ofstream echoinput("echoinput.rep");
+   ofstream checkfile("checkfile.rep");
 
 TOP_OF_MAIN_SECTION
 	time(&start);
