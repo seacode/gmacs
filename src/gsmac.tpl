@@ -118,6 +118,27 @@ DATA_SECTION
 	!! obs_catch = column(dCatchData,5);
 	!!  catch_cv = column(dCatchData,6);
 
+	// From the catch series determine the number of fishing mortality
+	// rate parameters that need to be estimated.  Note that  there is
+	// a number of combinations which require a F to be estimated. 
+	ivector nFparams(1,nfleet);
+	imatrix fhit(syr,nyr,1,nfleet);
+
+	LOC_CALCS
+		nFparams.initialize();
+		fhit.initialize();
+		for(int i = 1; i <= nCatchRows; i++ )
+		{
+			int k = dCatchData(i,3);
+			int y = dCatchData(i,1);
+			if(!fhit(y,k))
+			{
+				fhit(y,k)   ++;
+				nFparams(k) ++;
+			}
+		}
+	END_CALCS
+
 	// |----------------------------|
 	// | RELATIVE ABUNDANCE INDICES |
 	// |----------------------------|
@@ -257,21 +278,30 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
 	// |---------------------------------------------------------|
-	init_vector pen_fbar(1,nfleet);
-	init_matrix pen_fstd(1,2,1,nfleet);
+	init_matrix f_controls(1,nfleet,1,4);
+	ivector f_phz(1,nfleet);
+	vector pen_fbar(1,nfleet);
+	matrix pen_fstd(1,2,1,nfleet);
+	LOC_CALCS
+		pen_fbar = column(f_controls,1);
+		for(int i=1; i<=2; i++)
+			pen_fstd(i) = trans(f_controls)(i+1);
+		f_phz    = ivector(column(f_controls,4));
+	END_CALCS
+
 
 	!! cout<<"end of control section"<<endl;
 	
 
 INITIALIZATION_SECTION
   theta theta_ival;
+  log_fbar  pen_fbar;
   alpha     3.733;
   beta      0.2;
   scale    50.1;
  	
 
 PARAMETER_SECTION
-	!! cout<<"'here we are'"<<endl;
 	// Leading parameters
 	//      M = theta(1)
 	// ln(Ro) = theta(2)
@@ -307,17 +337,17 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_bounded_number_vector log_fbar(1,nfleet,-30.0,5.0,1);
+	init_bounded_number_vector log_fbar(1,nfleet,-30.0,5.0,f_phz);
+	init_bounded_vector_vector log_fdev(1,nfleet,1,nFparams,-10.,10.,f_phz);
 
-	!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(0.1);
-	!! ivector f_phz(1,nfleet);
-	!! f_phz = 1;
-	!! ivector isyr(1,nfleet);
-	!! isyr = syr;
-	!! ivector inyr(1,nfleet);
-	!! inyr = nyr;
-	init_bounded_vector_vector log_fdev(1,nfleet,isyr,inyr,-10.,10.,f_phz);
-
+	//!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(pen_fbar+1.e-10);
+	//!! ivector f_phz(1,nfleet);
+	//!! f_phz = 1;
+	//!! ivector isyr(1,nfleet);
+	//!! isyr = syr;
+	//!! ivector inyr(1,nfleet);
+	//!! inyr = nyr;
+	//init_bounded_vector_vector log_fdev2(1,nfleet,isyr,inyr,-10.,10.,f_phz);
 	
 	objective_function_value objfun;
 
@@ -345,7 +375,7 @@ PARAMETER_SECTION
 	3darray F(1,nsex,syr,nyr,1,nclass);		// Fishing mortality
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
-	3darray log_ft(1,nfleet,1,nsex,syr,nyr);	// Fishing mortality by gear
+	3darray ft(1,nfleet,1,nsex,syr,nyr);		// Fishing mortality by gear
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
@@ -518,10 +548,10 @@ FUNCTION calc_selectivities
    * deaths due to discards.  Where lambda is the discard mortality rate.
    */
 FUNCTION calc_fishing_mortality
-	int h,i,k;
+	int h,i,k,ik;
 	double lambda = 0.5;  // discard mortality rate from control file
 	F.initialize();
-	log_ft.initialize();
+	ft.initialize();
 	dvar_vector sel(1,nclass);
 	dvar_vector ret(1,nclass);
 	dvar_vector tmp(1,nclass);
@@ -530,13 +560,19 @@ FUNCTION calc_fishing_mortality
 	{
 		for( h = 1; h <= nsex; h++ )
 		{
+			ik=1;
 			for( i = syr; i <= nyr; i++ )
 			{
-				log_ft(k)(h)(i) = log_fbar(k) + log_fdev(k,i);
-				sel = exp(log_slx_capture(k)(h)(i));
-				ret = exp(log_slx_retaind(k)(h)(i));
-				tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
-				F(h)(i) += mfexp(log_ft(k,h,i)) * tmp;
+				if(fhit(i,k))
+				{
+					ft(k)(h)(i) = mfexp(log_fbar(k)+log_fdev(k,ik++));
+
+					//ft(k)(h)(i) = mfexp(log_fbar(k) + log_fdev(k,i));
+					sel = exp(log_slx_capture(k)(h)(i));
+					ret = exp(log_slx_retaind(k)(h)(i));
+					tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
+					F(h)(i) += ft(k,h,i) * tmp;
+				}
 			}
 		}
 	}
@@ -792,7 +828,7 @@ FUNCTION calc_predicted_catch
 	int h,i,j,k;
 	int type,unit;
 	pre_catch.initialize();
-	dvariable ft;
+	dvariable tmp_ft;
 	dvar_vector sel(1,nclass);
 	dvar_vector nal(1,nclass);		// numbers or biomass at length.
 	
@@ -823,10 +859,10 @@ FUNCTION calc_predicted_catch
 					sel = 1.0 - exp( log_slx_retaind(k)(h)(i) );
 				break;
 			}
-			ft = mfexp( log_ft(k)(h)(i) );
+			tmp_ft = ft(k)(h)(i);
 			unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
 
-			pre_catch(j) = nal * elem_div(elem_prod(ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+			pre_catch(j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 		}
 		else 	// sexes combibed
 		{
@@ -842,10 +878,10 @@ FUNCTION calc_predicted_catch
 						sel = 1.0 - exp( log_slx_retaind(k)(h)(i) );
 					break;
 				}
-				ft = mfexp( log_ft(k)(h)(i) );
+				tmp_ft = ft(k)(h)(i);
 				unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
 
-				pre_catch(j) += nal * elem_div(elem_prod(ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+				pre_catch(j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 			}
 		}
 	}
@@ -1011,6 +1047,7 @@ FUNCTION calc_predicted_composition
    * 
    * Penalty components
    * 	-# Penalty on log_fdev to ensure they sum to zero.
+   * 	-# Penalty to regularize values of log_fbar.
    * 
    */
 FUNCTION calc_objective_function
