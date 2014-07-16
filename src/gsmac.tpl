@@ -1054,6 +1054,10 @@ FUNCTION calc_objective_function
 
 
 REPORT_SECTION
+  REPORT(mod_yrs);
+  REPORT(size_breaks);
+  REPORT(nloglike);
+  REPORT(nlogPenalty);
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
