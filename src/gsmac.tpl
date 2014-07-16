@@ -140,7 +140,6 @@ DATA_SECTION
 	// | LEADING PARAMETER CONTROLS |
 	// |----------------------------|
 	init_int ntheta;
-	ivector junk(1,ntheta);
 	init_matrix theta_control(1,ntheta,1,7);
 	vector theta_ival(1,ntheta);
 	vector theta_lb(1,ntheta);
@@ -151,7 +150,6 @@ DATA_SECTION
 		theta_lb   = column(theta_control,2);
 		theta_ub   = column(theta_control,3);
 		theta_phz  = ivector(column(theta_control,4));
-		junk = 1;
 	END_CALCS
 	
 
@@ -282,7 +280,7 @@ PARAMETER_SECTION
 	init_bounded_vector_vector log_fdev(1,nfleet,isyr,inyr,-10.,10.,f_phz);
 
 	
-  vector nloglike(1,2); ///> nLog likelihood components need to be shown
+  vector nloglike(1,3); ///> nLog likelihood components need to be shown
   vector nlogPenalty(1,2); ///> nLog penalty components need to be shown
 
 	objective_function_value objfun;
@@ -313,6 +311,7 @@ PARAMETER_SECTION
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
 	3darray log_ft(1,nfleet,1,nsex,syr,nyr);	// Fishing mortality by gear
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -959,6 +958,7 @@ FUNCTION calc_predicted_composition
    * Likelihood components
    * 	-# likelihood of the catch data (assume lognormal error)
    * 	-# likelihood of relative abundance data
+   * 	-# likelihood of size composition data
    * 
    * Penalty components
    * 	-# Penalty on log_fdev to ensure they sum to zero.
@@ -967,7 +967,6 @@ FUNCTION calc_predicted_composition
 FUNCTION calc_objective_function
 	nloglike.initialize();
 	nlogPenalty.initialize();
-
 	// 1) Likelihood of the catch data.
 	nloglike(1) = dnorm(res_catch,catch_cv);
 
@@ -984,6 +983,17 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		nloglike(2) += dnorm(res_cpue(k),cpue_cv(k));
+	}
+
+	// 3) Likelihood for size composition data.
+	double minP = 0;
+	double variance;
+	for(int ii = 1; ii <= nSizeComps; ii++)
+	{
+		dmatrix O     = d3_obs_size_comps(ii);
+		dvar_matrix P = d3_pre_size_comps(ii);
+		nloglike(3)  += dmultinom(O,P,d3_res_size_comps(ii),variance,minP);
+		COUT(nloglike(3));
 	}
 
 
