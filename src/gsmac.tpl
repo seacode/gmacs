@@ -253,8 +253,15 @@ DATA_SECTION
 		}
 	END_CALCS
 
+
+	// |---------------------------------------------------------|
+	// | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
+	// |---------------------------------------------------------|
+	init_vector pen_fbar(1,nfleet);
+	init_matrix pen_fstd(1,2,1,nfleet);
+
 	!! cout<<"end of control section"<<endl;
-	!! COUT(theta_ival);
+	
 
 INITIALIZATION_SECTION
   theta theta_ival;
@@ -1007,21 +1014,16 @@ FUNCTION calc_predicted_composition
    * 
    */
 FUNCTION calc_objective_function
+
+	// |---------------------------------------------------------------------------------|
+	// | NEGATIVE LOGLIKELIHOOD COMPONENTS FOR THE OBJECTIVE FUNCTION                    |
+	// |---------------------------------------------------------------------------------|
 	dvar_vector nloglike(1,3);
-	dvar_vector nlogPenalty(1,2);
-
 	nloglike.initialize();
-	nlogPenalty.initialize();
-
+	
 	// 1) Likelihood of the catch data.
 	nloglike(1) = dnorm(res_catch,catch_cv);
 
-	// Penalty on log_fdev to ensure they sum to zero 
-	for(int k = 1; k <= nfleet; k++ )
-	{
-		dvariable s    = mean(log_fdev(k));
-		nlogPenalty(1) += 10000.0*s*s;
-	}
 
 
 
@@ -1043,6 +1045,30 @@ FUNCTION calc_objective_function
 
 		nloglike(3) += dmultinom(O,P,d3_res_size_comps(ii),variance,minP);
 	}
+
+	// |---------------------------------------------------------------------------------|
+	// | PENALTIES AND CONSTRAINTS                                                       |
+	// |---------------------------------------------------------------------------------|
+	dvar_vector nlogPenalty(1,2);
+	nlogPenalty.initialize();
+
+	// 1) Penalty on log_fdev to ensure they sum to zero 
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		dvariable s    = mean(log_fdev(k));
+		nlogPenalty(1) += 10000.0*s*s;
+	}
+
+
+	// 2) Penalty on mean F to regularize the solution.
+	int irow=1;
+	if(last_phase()) irow=2;
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		nlogPenalty(2) += dnorm(exp(log_fbar(k)),pen_fbar(k),pen_fstd(irow,k));
+	}
+
+
 
 	objfun = sum(nloglike) + sum(nlogPenalty);
 
