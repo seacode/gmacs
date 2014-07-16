@@ -25,43 +25,6 @@
 //    n = index for shell condition.
 // ==================================================================================== //
 
-GLOBALS_SECTION
-	#include <admodel.h>
-	#include <time.h>
-	#include <contrib.h>
-	#include "../../CSTAR/include/cstar.h"
-
-	time_t start,finish;
-	long hour,minute,second;
-	double elapsed_time;
-
-	// Define objects for report file, echoinput, etc.
-	/**
-	\def report(object)
-	Prints name and value of \a object on ADMB report %ofstream file.
-	*/
-	#undef REPORT
-	#define REPORT(object) report << #object "\n" << object << endl;
-
-	/**
-	 *
-	 * \def COUT(object)
-	 * Prints object to screen during runtime.
-	 * cout <<setw(6) << setprecision(3) << setfixed() << x << endl;
-	 */
-	 #undef COUT
-	 #define COUT(object) cout << #object "\n" << setw(6) \
-	 << setprecision(3) << setfixed() << object << endl;
-
-TOP_OF_MAIN_SECTION
-	time(&start);
-	arrmblsize = 50000000;
-	gradient_structure::set_GRADSTACK_BUFFER_SIZE(1.e7);
-	gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);
-	gradient_structure::set_MAX_NVAR_OFFSET(5000);
-	gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
-	gradient_structure::set_MAX_DLINKS(50000);
-
 DATA_SECTION
 	// |------------------------|
 	// | DATA AND CONTROL FILES |
@@ -69,9 +32,7 @@ DATA_SECTION
 	init_adstring datafile;
 	init_adstring controlfile;
 
-
-
-	!! ad_comm::change_datafile_name(datafile);
+	!! ad_comm::change_datafile_name(datafile); ECHO(datafile);ECHO(controlfile);
 
 	// |------------------|
 	// | MODEL DIMENSIONS |
@@ -1067,3 +1028,59 @@ REPORT_SECTION
 	REPORT(d3_pre_size_comps);
 
   REPORT(N);
+
+
+
+
+GLOBALS_SECTION
+	#include <admodel.h>
+	#include <time.h>
+	#include <contrib.h>
+	#include "../../CSTAR/include/cstar.h"
+
+	time_t start,finish;
+	long hour,minute,second;
+	double elapsed_time;
+
+	// Define objects for report file, echoinput, etc.
+	/**
+	\def report(object)
+	Prints name and value of \a object on ADMB report %ofstream file.
+	*/
+	#undef REPORT
+	#define REPORT(object) report << #object "\n" << object << endl;
+
+	/**
+	 *
+	 * \def COUT(object)
+	 * Prints object to screen during runtime.
+	 * cout <<setw(6) << setprecision(3) << setfixed() << x << endl;
+	 */
+	 #undef COUT
+	 #define COUT(object) cout << #object "\n" << setw(6) \
+	 << setprecision(3) << setfixed() << object << endl;
+  /**
+
+  \def ECHO(object)
+  Prints name and value of \a object on echoinput %ofstream file.
+  */
+	 #undef ECHO
+   #define ECHO(object) echoinput << #object << "\n" << object << endl;
+   // #define ECHO(object,text) echoinput << object << "\t" << text << endl;
+ 
+   /**
+   \def check(object)
+   Prints name and value of \a object on checkfile %ofstream output file.
+   */
+   #define check(object) checkfile << #object << "\n" << object << endl;
+   // Open output files using ofstream
+   ofstream echoinput("echoinput.gm");
+
+TOP_OF_MAIN_SECTION
+	time(&start);
+	arrmblsize = 50000000;
+	gradient_structure::set_GRADSTACK_BUFFER_SIZE(1.e7);
+	gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);
+	gradient_structure::set_MAX_NVAR_OFFSET(5000);
+	gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
+	gradient_structure::set_MAX_DLINKS(50000); 
