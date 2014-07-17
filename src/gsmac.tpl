@@ -257,6 +257,11 @@ DATA_SECTION
 		f_phz    = ivector(column(f_controls,4));
 	END_CALCS
 
+	// |---------------------------------------------------------|
+	// | OTHER CONTROLS
+	// |---------------------------------------------------------|
+
+	init_int rdv_phz //> Estimated rec_dev phase
 
 	!! cout<<"end of control section"<<endl;
 	
@@ -276,7 +281,6 @@ PARAMETER_SECTION
 	// ra     = theta(3)
 	// rbeta  = theta(4)
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
-
 
 	// Molt increment parameters
 	init_bounded_vector alpha(1,nsex,0,100,-1);
@@ -301,7 +305,6 @@ PARAMETER_SECTION
 				}
 			}
 		}
-
 	END_CALCS
 
 	// Fishing mortality rate parameters
@@ -317,17 +320,20 @@ PARAMETER_SECTION
 	//!! inyr = nyr;
 	//init_bounded_vector_vector log_fdev2(1,nfleet,isyr,inyr,-10.,10.,f_phz);
 	
+	// Recruitment deviation parameters
+	init_bounded_vector rec_dev(syr,nyr,-15.0,15.0,rdv_phz); ///> vector of bounded recruitment deviations
+
 	vector nloglike(1,3);
 	vector nlogPenalty(1,2);
 	objective_function_value objfun;
 
 	number M0;				///> natural mortality rate
-	number logRbar;			///> logarithm of unfished recruits
+	number logRbar;		///> logarithm of unfished recruits
 	number ra;				///> shape parameter for recruitment distribution
 	number rbeta;			///> rate parameter for recruitment distribution
 
 	vector rec_sdd(1,nclass);			///> recruitment size_density_distribution
-	vector survey_q(1,nSurveys);		///> scalers for relative abundance indices (q)
+  vector survey_q(1,nSurveys);	///> scalers for relative abundance indices (q)
 
 	vector pre_catch(1,nCatchRows);		///> predicted catch from Barnov catch equatoin
 	vector res_catch(1,nCatchRows);		///> catch residuals in log-space
@@ -336,22 +342,24 @@ PARAMETER_SECTION
 	matrix res_cpue(1,nSurveys,1,nSurveyRows);	///> relative abundance residuals
 	
 	matrix molt_increment(1,nsex,1,nclass);		///> linear molt increment
-	matrix molt_probability(1,nsex,1,nclass); 	///> probability of molting
+	matrix molt_probability(1,nsex,1,nclass); ///> probability of molting
 
 	3darray size_transition(1,nsex,1,nclass,1,nclass);
-	3darray M(1,nsex,syr,nyr,1,nclass);		// Natural mortality
-	3darray Z(1,nsex,syr,nyr,1,nclass);		// Total mortality
-	3darray S(1,nsex,syr,nyr,1,nclass);		// Surival Rate (S=exp(-Z))
-	3darray F(1,nsex,syr,nyr,1,nclass);		// Fishing mortality
+	3darray M(1,nsex,syr,nyr,1,nclass);		///> Natural mortality
+	3darray Z(1,nsex,syr,nyr,1,nclass);		///> Total mortality
+	3darray S(1,nsex,syr,nyr,1,nclass);		///> Surival Rate (S=exp(-Z))
+	3darray F(1,nsex,syr,nyr,1,nclass);		///> Fishing mortality
 
-	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
-	3darray ft(1,nfleet,1,nsex,syr,nyr);		// Fishing mortality by gear
+	3darray N(1,nsex,syr,nyr+1,1,nclass);		///> Numbers-at-length
+	3darray ft(1,nfleet,1,nsex,syr,nyr);		///> Fishing mortality by gear
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
+
+	sdreport_vector recruits(syr,nyr);	///> vector of estimated recruits
 
 PROCEDURE_SECTION
 	initialize_model_parameters();
@@ -703,22 +711,38 @@ FUNCTION calc_initial_numbers_at_length
 	N.initialize();
 	dmatrix Id=identity_matrix(1,nclass);
 
-	// Option 1: equilibrium approach
-	dvar_vector x(1,nclass);
-	dvar_matrix A(1,nclass,1,nclass);
-	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
-	for(int h = 1; h <= nsex; h++ )
-	{
-		A = size_transition(h);
-		for(int l = 1; l <= nclass; l++ )
+	// Specification for initial numbers option (TODO: make part of control file)
+  int init_n = 1;
+
+  switch(init_n)
+  {
+    case 1: // Initial N's option 1: equilibrium approach
 		{
-			A(l) = elem_prod( A(l), S(h)(syr) );
+
+			dvar_vector x(1,nclass);
+			dvar_matrix A(1,nclass,1,nclass);
+			dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
+			for(int h = 1; h <= nsex; h++ )
+			{
+				A = size_transition(h);
+				for(int l = 1; l <= nclass; l++ )
+				{
+					A(l) = elem_prod( A(l), S(h)(syr) );
+				}
+				
+				x = -solve(A-Id,rt);
+				N(h)(syr) = x;
+			}
 		}
 
-		
-		x = -solve(A-Id,rt);
-		N(h)(syr) = x;
-	}
+		case 2: // Initial N's option 2: estimate one parameter per size-class
+  	{
+
+  	}
+
+  }
+
+
 
 	
 	
