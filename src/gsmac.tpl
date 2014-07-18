@@ -1014,15 +1014,18 @@ FUNCTION calc_objective_function
 		nloglike(2) += dnorm(res_cpue(k),cpue_cv(k));
 	}
 
+
+
+
+
 	// 3) Likelihood for size composition data.
 	double minP = 0;
 	double variance;
 	for(int ii = 1; ii <= nSizeComps; ii++)
 	{
-		dmatrix O     = d3_obs_size_comps(ii);
+		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 		nloglike(3)  += dmultinom(O,P,d3_res_size_comps(ii),variance,minP);
-		COUT(nloglike(3));
 	}
 
 	// |---------------------------------------------------------------------------------|
@@ -1066,7 +1069,7 @@ REPORT_SECTION
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
 
-  REPORT(N);
+	REPORT(N);
 
 
 
