@@ -16,10 +16,13 @@ DEPS = $(SRCS:.cpp=.depends)
 
 # Export the path to your ADMB dist directory
 export ADMB_HOME=/Users/stevenmartell1/admb-trunk/build/dist
+export ADMB_HOME=/a/trunk/build/dist
 
 # establish the C++ compiler (on Mac OSX use clang++)
 CC=clang
 CXX=clang++
+CC=gcc
+CXX=g++
 # and linker
 LL = $(CC)
 LD = $(CXX)

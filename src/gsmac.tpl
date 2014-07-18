@@ -249,21 +249,34 @@ DATA_SECTION
 	init_matrix f_controls(1,nfleet,1,4);
 	ivector f_phz(1,nfleet);
 	vector pen_fbar(1,nfleet);
+	vector log_pen_fbar(1,nfleet);
 	matrix pen_fstd(1,2,1,nfleet);
 	LOC_CALCS
 		pen_fbar = column(f_controls,1);
+		log_pen_fbar = log(pen_fbar+1.0e-14);
 		for(int i=1; i<=2; i++)
 			pen_fstd(i) = trans(f_controls)(i+1);
 		f_phz    = ivector(column(f_controls,4));
 	END_CALCS
 
-
+	// |---------------------------------------------------------|
+	// | OTHER CONTROLS                                          |
+	// |---------------------------------------------------------|
+	init_vector model_controls(1,3);
+	int rdv_phz; 										///> Estimated rec_dev phase
+	int verbose;										///> Flag to print to screen
+	int bInitializeUnfished;				///> Flag to initialize at unfished conditions
+	LOC_CALCS
+		rdv_phz = int(model_controls(1));
+		verbose = int(model_controls(2));
+		bInitializeUnfished = int(model_controls(3));
+	END_CALCS
 	!! cout<<"end of control section"<<endl;
 	
 
 INITIALIZATION_SECTION
   theta theta_ival;
-  log_fbar  pen_fbar;
+  log_fbar  log_pen_fbar;
   alpha     3.733;
   beta      0.2;
   scale    50.1;
@@ -276,7 +289,6 @@ PARAMETER_SECTION
 	// ra     = theta(3)
 	// rbeta  = theta(4)
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
-
 
 	// Molt increment parameters
 	init_bounded_vector alpha(1,nsex,0,100,-1);
@@ -301,31 +313,31 @@ PARAMETER_SECTION
 				}
 			}
 		}
-
 	END_CALCS
 
 	// Fishing mortality rate parameters
 	init_bounded_number_vector log_fbar(1,nfleet,-30.0,5.0,f_phz);
 	init_bounded_vector_vector log_fdev(1,nfleet,1,nFparams,-10.,10.,f_phz);
 
-	//!! for(int k = 1; k <= nfleet; k++) log_fbar(k) = log(pen_fbar+1.e-10);
-	//!! ivector f_phz(1,nfleet);
-	//!! f_phz = 1;
-	//!! ivector isyr(1,nfleet);
-	//!! isyr = syr;
-	//!! ivector inyr(1,nfleet);
-	//!! inyr = nyr;
-	//init_bounded_vector_vector log_fdev2(1,nfleet,isyr,inyr,-10.,10.,f_phz);
-	
+
+	// Recruitment deviation parameters
+	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
+	init_bounded_dev_vector rec_dev(syr,nyr,-15.0,15.0,rdv_phz); ///> recruitment deviations
+
+	vector nloglike(1,3);
+	vector nlogPenalty(1,2);
 	objective_function_value objfun;
 
 	number M0;				///> natural mortality rate
-	number logRbar;			///> logarithm of unfished recruits
+	number logR0;			///> logarithm of unfished recruits.
+	number logRbar;		///> logarithm of average recruits(syr+1,nyr)
+	number logRini;   ///> logarithm of initial recruitment(syr).
 	number ra;				///> shape parameter for recruitment distribution
 	number rbeta;			///> rate parameter for recruitment distribution
 
 	vector rec_sdd(1,nclass);			///> recruitment size_density_distribution
-	vector survey_q(1,nSurveys);		///> scalers for relative abundance indices (q)
+	vector recruits(syr,nyr);			///> vector of estimated recruits
+  vector survey_q(1,nSurveys);	///> scalers for relative abundance indices (q)
 
 	vector pre_catch(1,nCatchRows);		///> predicted catch from Barnov catch equatoin
 	vector res_catch(1,nCatchRows);		///> catch residuals in log-space
@@ -334,22 +346,24 @@ PARAMETER_SECTION
 	matrix res_cpue(1,nSurveys,1,nSurveyRows);	///> relative abundance residuals
 	
 	matrix molt_increment(1,nsex,1,nclass);		///> linear molt increment
-	matrix molt_probability(1,nsex,1,nclass); 	///> probability of molting
+	matrix molt_probability(1,nsex,1,nclass); ///> probability of molting
 
 	3darray size_transition(1,nsex,1,nclass,1,nclass);
-	3darray M(1,nsex,syr,nyr,1,nclass);		// Natural mortality
-	3darray Z(1,nsex,syr,nyr,1,nclass);		// Total mortality
-	3darray S(1,nsex,syr,nyr,1,nclass);		// Surival Rate (S=exp(-Z))
-	3darray F(1,nsex,syr,nyr,1,nclass);		// Fishing mortality
+	3darray M(1,nsex,syr,nyr,1,nclass);		///> Natural mortality
+	3darray Z(1,nsex,syr,nyr,1,nclass);		///> Total mortality
+	3darray S(1,nsex,syr,nyr,1,nclass);		///> Surival Rate (S=exp(-Z))
+	3darray F(1,nsex,syr,nyr,1,nclass);		///> Fishing mortality
 
-	3darray N(1,nsex,syr,nyr+1,1,nclass);		// Numbers-at-length
-	3darray ft(1,nfleet,1,nsex,syr,nyr);		// Fishing mortality by gear
+	3darray N(1,nsex,syr,nyr+1,1,nclass);		///> Numbers-at-length
+	3darray ft(1,nfleet,1,nsex,syr,nyr);		///> Fishing mortality by gear
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
+
+	sdreport_vector sd_recruits(syr,nyr);
 
 PROCEDURE_SECTION
 	initialize_model_parameters();
@@ -376,6 +390,17 @@ PROCEDURE_SECTION
 	// objective function ...
 	calc_objective_function();
 
+	// sd_report variables
+	if( last_phase() ) calc_sdreport();
+
+
+
+  /**
+   * @brief calculate sdreport variables in final phase
+   */
+FUNCTION calc_sdreport
+	sd_recruits = recruits;
+	
 
   /**
    * @brief Initialize model parameters
@@ -384,9 +409,11 @@ PROCEDURE_SECTION
 FUNCTION initialize_model_parameters
    // Get parameters from theta control matrix:
   M0      = theta(1);
-  logRbar = theta(2);
-  ra      = theta(3);
-  rbeta   = theta(4);
+  logR0   = theta(2);
+  logRini = theta(3);
+  logRbar = theta(4);
+  ra      = theta(5);
+  rbeta   = theta(6);
 
 
   /**
@@ -514,7 +541,6 @@ FUNCTION calc_fishing_mortality
 				if(fhit(i,k))
 				{
 					ft(k)(h)(i) = mfexp(log_fbar(k)+log_fdev(k,ik++));
-
 					//ft(k)(h)(i) = mfexp(log_fbar(k) + log_fdev(k,i));
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i));
@@ -524,7 +550,11 @@ FUNCTION calc_fishing_mortality
 			}
 		}
 	}
+	//COUT(F(1)(syr));
+	COUT(log_fdev(1)(1));
 
+	//COUT(log_fbar);
+	
 
 
 
@@ -577,6 +607,7 @@ FUNCTION calc_size_transition_matrix
 		for( l = 1; l <= nclass; l++ )
 		{
 			tmp = molt_increment(h)(l)/scale(h);
+			
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
@@ -584,8 +615,6 @@ FUNCTION calc_size_transition_matrix
 			}
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
 			At(l)(l,nclass) /= sum(At(l));
-			// size_transition(h)(l)(l,nclass)  = first_difference(psi(l,nclass+1));
-			// size_transition(h)(l)(l,nclass) /= sum(size_transition(h)(l)(l,nclass));
 		}
 		size_transition(h) = trans(At);
 	}
@@ -681,7 +710,9 @@ FUNCTION calc_recruitment_size_distribution
                    - cumd_gamma(x1, ralpha);
   }
   rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
-
+  //COUT(rbeta);
+  //COUT(ra);
+  //COUT(rec_sdd);
 
 
 
@@ -694,29 +725,64 @@ FUNCTION calc_recruitment_size_distribution
    * 
    * Psuedocode:  See note from Dave Fournier.
    * 
+   * Athol, I think a better option here is to estimate a vector of 
+   * deviates, one for each size class, and have the option to initialize
+   * the model at unfished equilibrium, or some other steady state condition.
    * 	
    */
 FUNCTION calc_initial_numbers_at_length
-	
+	dvariable log_initial_recruits;
 	N.initialize();
-	dmatrix Id=identity_matrix(1,nclass);
 
-	// Option 1: equilibrium approach
+	// Initial recrutment.
+	if ( bInitializeUnfished )
+	{
+		log_initial_recruits = logR0;
+	}
+	else
+	{
+		log_initial_recruits = logRini;
+	}
+	dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
+
+	// Equilibrium soln.
+	dmatrix Id=identity_matrix(1,nclass);
 	dvar_vector x(1,nclass);
 	dvar_matrix A(1,nclass,1,nclass);
-	dvar_vector rt = 0.5 * mfexp(logRbar) * rec_sdd;
 	for(int h = 1; h <= nsex; h++ )
 	{
 		A = size_transition(h);
+		//cout<<"start"<<endl;
+		//COUT(diagonal(A));
+		//COUT(S(h)(syr));
 		for(int l = 1; l <= nclass; l++ )
 		{
 			A(l) = elem_prod( A(l), S(h)(syr) );
 		}
-
-		
 		x = -solve(A-Id,rt);
-		N(h)(syr) = x;
+		//COUT(diagonal(A));
+		//cout<<"stop"<<endl;
+		N(h)(syr) = elem_prod(x,exp(rec_ini));
 	}
+	
+//	// Specification for initial numbers option (TODO: make part of control file)
+//  int init_n = 1;
+//
+//  switch(init_n)
+//  {
+//    case 1: // Initial N's option 1: equilibrium approach
+//		{
+//
+//		}
+//
+//		case 2: // Initial N's option 2: estimate one parameter per size-class
+//  	{
+//
+//  	}
+//
+//  }
+
+
 
 	
 	
@@ -746,8 +812,9 @@ FUNCTION update_population_numbers_at_length
 				A(l) = elem_prod( A(l), S(h)(i) );
 			}
 
-			N(h)(i+1)  = 0.5 * mfexp(logRbar) * rec_sdd;
-			N(h)(i+1) += A * N(h)(i);
+			recruits(i) = mfexp(logRbar+rec_dev(i));
+			N(h)(i+1)   = (0.5 * recruits(i)) * rec_sdd;
+			N(h)(i+1)   += A * N(h)(i);
 		}
 	}
 	//COUT(N(nsex));
@@ -999,7 +1066,6 @@ FUNCTION calc_objective_function
 	// |---------------------------------------------------------------------------------|
 	// | NEGATIVE LOGLIKELIHOOD COMPONENTS FOR THE OBJECTIVE FUNCTION                    |
 	// |---------------------------------------------------------------------------------|
-	dvar_vector nloglike(1,3);
 	nloglike.initialize();
 	
 	// 1) Likelihood of the catch data.
@@ -1031,7 +1097,6 @@ FUNCTION calc_objective_function
 	// |---------------------------------------------------------------------------------|
 	// | PENALTIES AND CONSTRAINTS                                                       |
 	// |---------------------------------------------------------------------------------|
-	dvar_vector nlogPenalty(1,2);
 	nlogPenalty.initialize();
 
 	// 1) Penalty on log_fdev to ensure they sum to zero 
@@ -1057,6 +1122,10 @@ FUNCTION calc_objective_function
 
 
 REPORT_SECTION
+  REPORT(mod_yrs);
+  REPORT(size_breaks);
+  REPORT(nloglike);
+  REPORT(nlogPenalty);
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
@@ -1069,7 +1138,9 @@ REPORT_SECTION
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
 
-	REPORT(N);
+  REPORT(N);
+  REPORT(rec_dev);
+  REPORT(recruits);
 
 
 
