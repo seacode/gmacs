@@ -273,6 +273,9 @@ DATA_SECTION
 	END_CALCS
 	!! cout<<"end of control section"<<endl;
 	
+	int nf;
+	!! nf = 0;
+
 
 INITIALIZATION_SECTION
 	theta theta_ival;
@@ -316,8 +319,9 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_bounded_number_vector log_fbar(1,nfleet,-30.0,5.0,f_phz);
-	init_bounded_vector_vector log_fdev(1,nfleet,1,nFparams,-10.,10.,f_phz);
+	init_number_vector log_fbar(1,nfleet,f_phz);
+
+	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
 
 
 	// Recruitment deviation parameters
@@ -392,7 +396,8 @@ PROCEDURE_SECTION
 
 	// sd_report variables
 	if( last_phase() ) calc_sdreport();
-
+	nf++;
+	//COUT(nf);
 
 
 	/**
@@ -541,7 +546,7 @@ FUNCTION calc_fishing_mortality
 				if(fhit(i,k))
 				{
 					ft(k)(h)(i) = mfexp(log_fbar(k)+log_fdev(k,ik++));
-					//ft(k)(h)(i) = mfexp(log_fbar(k) + log_fdev(k,i));
+					
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i));
 					tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
@@ -551,7 +556,8 @@ FUNCTION calc_fishing_mortality
 		}
 	}
 	//COUT(F(1)(syr));
-	//COUT(F(1)(syr));
+	//COUT(log_fbar(1));
+	//COUT(log_fdev(1));
 
 	//COUT(log_fbar);
 	
@@ -601,7 +607,7 @@ FUNCTION calc_size_transition_matrix
 	dvar_matrix At(1,nclass,1,nclass);
 	size_transition.initialize();
 
-
+	dvector sb = size_breaks / 10;
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( l = 1; l <= nclass; l++ )
@@ -610,15 +616,24 @@ FUNCTION calc_size_transition_matrix
 			
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
+			//for( ll = l; ll <= l+9; ll++ )
 			{
-				psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
+				if(ll<=nclass+1)
+				{
+					psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
+					//dvariable scl = scale(h)/10;
+					//psi(ll) = cumd_gamma(sb(ll)/scl,tmp);
+				}
 			}
+			
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
 			At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = trans(At);
 	}
-
+	COUT(size_breaks);
+	COUT(size_transition(1));
+	//exit(1);
 	
 
 
