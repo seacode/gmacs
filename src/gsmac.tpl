@@ -772,7 +772,8 @@ FUNCTION update_population_numbers_at_length
 				A(l) = elem_prod( A(l), S(h)(i) );
 			}
 
-			N(h)(i+1)  = 0.5 * mfexp(logRbar) * rec_sdd;
+			recruits(i) = mfexp(logRbar+rec_dev(i));
+			N(h)(i+1)  = (0.5 * recruits(i)) * rec_sdd;
 			N(h)(i+1) += A * N(h)(i);
 		}
 	}
@@ -1095,6 +1096,8 @@ REPORT_SECTION
 	REPORT(d3_pre_size_comps);
 
   REPORT(N);
+  REPORT(rec_dev);
+  REPORT(recruits);
 
 
 
