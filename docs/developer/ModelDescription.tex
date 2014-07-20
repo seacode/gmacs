@@ -48,6 +48,8 @@
 \usepackage[round]{natbib}
 
 %% -math-
+\def\bs#1{\boldsymbol{#1}}
+
 \newcounter{saveEq}
   \def\putEq{\setcounter{saveEq}{\value{equation}}}
   \def\getEq{\setcounter{equation}{\value{saveEq}}}
@@ -86,25 +88,29 @@
 \usepackage{tikz-uml}
 
 
-
+\title{GMACS DOCUMENTATION}
+\author{Steve Martell, Dave Fournier, Athol Whitten, Jim Ianelli}
 
 
 \begin{document}
+\maketitle
 	\input{DataStructures}
 
-\begin{tikzpicture}
-  \umlclass[x=0,y=0]{myclass}{}{}
-  \umlclass[x=2,y=-2]{B}{}{a}
-\end{tikzpicture}
 
-\begin{tikzpicture}    
-\begin{umlcomponent}{Some name}
-\umlbasiccomponent[x=2]{A}
-\umlprovidedinterface{A}
-\umlrequiredinterface[interface=C]{A}
-\pgfnodealias{newname}{A-west-interface} %<- Adding another name
-\end{umlcomponent}
-\draw[blue,ultra thick] (newname) -- (0,-1); %<- using new name
-\end{tikzpicture}
-
+% TO do class diagrams
+% \begin{tikzpicture}
+  % \umlclass[x=0,y=0]{myclass}{}{}
+  % \umlclass[x=2,y=-2]{B}{}{a}
+% \end{tikzpicture}
+% 
+% \begin{tikzpicture}    
+% \begin{umlcomponent}{Some name}
+% \umlbasiccomponent[x=2]{A}
+% \umlprovidedinterface{A}
+% \umlrequiredinterface[interface=C]{A}
+% \pgfnodealias{newname}{A-west-interface} %<- Adding another name
+% \end{umlcomponent}
+% \draw[blue,ultra thick] (newname) -- (0,-1); %<- using new name
+% \end{tikzpicture}
+% 
 \end{document}

@@ -16,7 +16,7 @@ The following is a list of the input data structures used in data file for Gmacs
 	nshell & $v$  & int    & number of shell conditions\\
 	nmature & $m$ & int    & number of maturity states \\
 	nclass & $l$ & int & number of size classes in the model\\
-	ndclass & $l$ & int & number of size classes in the data\\
+	% ndclass & $l$ & int & number of size classes in the data\\
 	ncol & & int & number of columns in N-matrix \\
 
 	% Not used anywhere in the code.
@@ -45,6 +45,39 @@ For consistency the following indexes are used to describe the various model dim
 	\item [n] index for shell condition,
 \end{description}
 
+
+\subsection{Recruitment} % (fold)
+\label{sub:recruitment}
+The numbers-at-size in the first year are initialized using an initial mean recruitment $\dot{R}$, natural mortality, the size transition matrix, and a vector of deviations for each size class that represents recruitment variability prior to the initial start year of the model.  Assuming steady state conditions, the model assumes that at any time the population consists of a vector of individuals in each size category. At each time step, these individuals experience natural mortality and grow into the next size category and is represented by the matrix $\boldsymbol{A}$. If the number of individuals in a given size class is represented by $\boldsymbol{v}=(v_1,v_2,\ldots,v_n)$, then after growing and surviving to the next time step is given by $\boldsymbol{A}\boldsymbol{v}$.  This does not include new recruits into the population. Let $\boldsymbol{r}= (r_1, r_2, \ldots, r_n)$ be the vector of new recruits at each size class. Then the population next year is equal to $\boldsymbol{A}\boldsymbol{v} + \boldsymbol{r}$.  Recruitment in this contexts is defined as the number of new individuals entering the popuation in a specific size class.  In a simple age-structured model this would be the total number of age-0 recruits, and in the next year these individuals would all enter the age-1 class.  In a size-based model, not all individuals will leave a given size class (i.e., there is a probability of not molting and remaining in the same size class).   Moreover, individuals will growth to multiple size categories in one-time step due to individual variation in molt increments or molt frequency.
+
+Let $\boldsymbol{x}=(x_1,x_2,\ldots,x_n)$ be the equilibrium population when the recruitment vector is $\boldsymbol{r}$. The requirement that the population is at equilibrium is equivalent to the matrix equation 
+\begin{equation}\label{eq1}
+    \bs{x} = \bs{A}\bs{x} + \bs{r}
+\end{equation}
+and the equilibrium solution for $\bs{x}$ is given by
+\begin{equation}\label{eq2}
+    \bs{x} =-(\bs{A}-\mathbf{I})^{-1}(\bs{r})
+\end{equation}
+where $\mathbf{I}$ is the $n \times n$ identity matrix.
+
+Given an initial value of $\dot{R}$, the distribution of new recriuts is represented by a gamma distribution \eqref{T4.4}, where the estimated parameters $R_\alpha$ and $R_\beta$ represent the mean size at recruitment and the coefficient of variation in size.  At equilibrium, the total number of recruits in each size class is given by
+\begin{equation}\label{eq3}
+    \bs{r} = p(\bs{r})\dot{R},
+\end{equation}
+and departures from equilibrium conditions are represented by
+\begin{equation}\label{eq4}
+    \bs{r} = p(\bs{r})\dot{R}\exp(\bs{\nu}),
+\end{equation}
+where $\bs{\nu}=(\nu_1,\nu_2,\ldots,\nu_n)$ is a vector of estimated deviations with the additional constraint $\sum_i\nu_i = 0$.
+
+Annual recruitment to each size class is an estimated vector of deviates $\bs{\xi}=(\xi_{i=2},\xi_{i=3},\ldots,\xi_{i=I})$ around an average recruitment value $\bar{R}$
+\begin{equation}
+    \bs{r}_i = p(\bs{r})\bar{R}\xi_i
+\end{equation}
+where it is assumed that the size-distribution of new recruits is time-invariant and the additional constraint $\sum_i \xi_i = 0$.
+% subsection recruitment (end)
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}
@@ -56,8 +89,8 @@ For consistency the following indexes are used to describe the various model dim
         \hline \nonumber \\
         &\mbox{Estimated parameters} \nonumber\\
         \Theta&= 
-                (M_0,\ln(\bar{R}),R_\alpha,R_\beta, 
-                \alpha_h, \beta_h,b_h)\label{T4.1}\\
+                (M_0,\ln(\dot{R}),\ln(\bar{R}),R_\alpha,R_\beta, 
+                \alpha_h, \beta_h,b_h, \bs{\nu},\bs{\xi})\label{T4.1}\\
         \sigma^2&=\rho /\vartheta^2, \quad
         \tau^2=(1-\rho)/\vartheta^2\label{T4.2}\\[1ex]
         %\vartheta^2=\sigma^2+\tau^2, \quad
@@ -65,21 +98,21 @@ For consistency the following indexes are used to describe the various model dim
         %%
         %%
         &\mbox{Unobserved states} \nonumber\\
-        &N_{g,t,l},Z_{g,t,l}    \label{T4.3}\\
+        &\boldsymbol{N},\boldsymbol{Z}    \label{T4.3}\\
     %%
     %%    
     	&\mbox{Recruitment size distribution} \nonumber\\
-    	\alpha &= R_\alpha /R_\beta \\
-    	p(R_l) &= \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x} 
-    	\frac{x_l^{\alpha-1}e^{x_l/R_\beta}}{\Gamma(\alpha)x_l^\alpha}dx 
+    	\alpha &= R_\alpha /R_\beta \nonumber \\
+    	p(\boldsymbol{r}) &= \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x} 
+    	\frac{x_l^{(\alpha-1)}e^{x_l/R_\beta}}{\Gamma(\alpha)x_l^\alpha}dx 
         \label{T4.4}\\
     %%
     %%  
         &\mbox{Molt increment \& size transition} \nonumber\\  
-        a_{h,l} &= \alpha_h + \beta_h x_l \label{T4.5} \\
-        p(x_l,x_{l'})_h &= \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x}
-        \frac{ x_l^{a_{h,l}-1} e^{x_l/b_h} }
-        { \Gamma(a_{h,l}) x_l^{a_{h,l}} } dx \label{T4.6} \\
+        a_{h,l} &= \alpha_h + \beta_h l \label{T4.5} \\
+        p({l},{l'})_h &= \int_{l-0.5\Delta l}^{l+0.5\Delta l}
+        \frac{ l^{(a_{h,l}-1)} e^{l/b_h} }
+        { \Gamma(a_{h,l}) l^{a_{h,l}} } dl \label{T4.6} \\
         % &\mbox{Initial states} \nonumber\\
         % %v_a=\left[1+e^{-(\hat{a}-a)/\hat{\gamma}}\right]^{-1}\label{T4.7}\\
         % N_{t,a}&=\bar{R}e^{\omega_{t-a}} \exp(-M_t)^{(a-1)};\quad t=1;  2\leq a\leq A \label{T4.4}\\
@@ -116,3 +149,13 @@ For consistency the following indexes are used to describe the various model dim
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Size transition matrix} % (fold)
+\label{sub:size_transition_matrix}
+
+A parametric approach based on molt increments for calculating the elements of the size transition matrix is based on \eqref{T4.5} and \eqref{T4.6}.  Molt increments are assumed to be a linear function of carapace width, or size-interval $l$. Growth is assumed to be sex-specific and is index by $h$.  The probability of growing from interval $l$ to $l'$ is based on the gamma distribution \eqref{T4.6} where the expected increased in length is a function of the molt increment at length $l$ \eqref{T4.5} and the shape parameter $b_h$.
+
+In short, 3 estimated parameters ($\alpha_h, \beta_h$, and $b_h$) are required to describe growth increments and the size-transition matrix.  Ideally, independent molt-increment data, by sex, should be included in the model to provide additional information to estimate $\alpha_h$ and $\beta_h$.  Absent this information, clear modes in the size-composition data must be discernable in order to reasonably resolve confounding among the three growth parameters.
+
+% subsection size_transition_matrix (end)
+

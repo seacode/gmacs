@@ -299,8 +299,8 @@ PARAMETER_SECTION
 	init_bounded_vector scale(1,nsex,1,100,-1);
 
 	// Molt probability parameters
-	init_bounded_vector molt_mu(1,nsex,0,200,1);
-	init_bounded_vector molt_cv(1,nsex,0,1,1);
+	init_bounded_vector molt_mu(1,nsex,0,200,-1);
+	init_bounded_vector molt_cv(1,nsex,0,1,-1);
 
 	// Selectivity parameters
 	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
@@ -616,13 +616,10 @@ FUNCTION calc_size_transition_matrix
 			
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
-			//for( ll = l; ll <= l+9; ll++ )
 			{
 				if(ll<=nclass+1)
 				{
 					psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
-					//dvariable scl = scale(h)/10;
-					//psi(ll) = cumd_gamma(sb(ll)/scl,tmp);
 				}
 			}
 			
@@ -631,9 +628,8 @@ FUNCTION calc_size_transition_matrix
 		}
 		size_transition(h) = trans(At);
 	}
-	COUT(size_breaks);
-	COUT(size_transition(1));
-	//exit(1);
+	
+	
 	
 
 
@@ -712,23 +708,20 @@ FUNCTION calc_molting_probability
 	/**
 	 * @brief calculate size distribution for new recuits.
 	 * @details Based on the gamma distribution, calculates the probability
-	 * of a new recruit being in size-interval size
+	 * of a new recruit being in size-interval size.
+	 * @param ra is the mean of the distribution.
+	 * @param rbeta scales the variance of the distribution
 	 */
 FUNCTION calc_recruitment_size_distribution
 	dvariable ralpha = ra / rbeta;
-
-	for(int l=1; l<=nclass; l++)
+	dvar_vector x(1,nclass+1);
+	for(int l = 1; l <= nclass+1; l++ )
 	{
-		dvariable x1 = size_breaks(l) / rbeta;
-		dvariable x2 = size_breaks(l+1) / rbeta;
-		rec_sdd(l) = cumd_gamma(x2, ralpha) 
-									 - cumd_gamma(x1, ralpha);
+		x(l) = cumd_gamma(size_breaks(l)/rbeta,ralpha);
 	}
+	rec_sdd  = first_difference(x);
 	rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
-	//COUT(rbeta);
-	//COUT(ra);
-	//COUT(rec_sdd);
-
+	
 
 
 
@@ -1153,9 +1146,11 @@ REPORT_SECTION
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
 	REPORT(ft);
-	REPORT(N);
+	REPORT(rec_sdd);
+	REPORT(size_transition);
 	REPORT(rec_dev);
 	REPORT(recruits);
+	REPORT(N);
 
 
 
