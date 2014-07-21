@@ -281,8 +281,8 @@ INITIALIZATION_SECTION
 	theta theta_ival;
 	log_fbar  log_pen_fbar;
 	alpha     3.733;
-	beta      0.2;
-	scale    50.1;
+	beta      0.02;
+	scale    15.1;
 	
 
 PARAMETER_SECTION
@@ -575,7 +575,7 @@ FUNCTION calc_growth_increments
 	{
 		for( l = 1; l <= nclass; l++ )
 		{
-			molt_increment(h)(l) = alpha(h) + beta(h) * mid_points(l);
+			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
 		}
 	}
 	
@@ -607,7 +607,7 @@ FUNCTION calc_size_transition_matrix
 	dvar_matrix At(1,nclass,1,nclass);
 	size_transition.initialize();
 
-	dvector sb = size_breaks / 10;
+	
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( l = 1; l <= nclass; l++ )
@@ -626,7 +626,7 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
 			At(l)(l,nclass) /= sum(At(l));
 		}
-		size_transition(h) = trans(At);
+		size_transition(h) = At;
 	}
 	
 	
@@ -756,20 +756,18 @@ FUNCTION calc_initial_numbers_at_length
 	// Equilibrium soln.
 	dmatrix Id=identity_matrix(1,nclass);
 	dvar_vector x(1,nclass);
-	dvar_matrix A(1,nclass,1,nclass);
+	dvar_matrix At(1,nclass,1,nclass);
+	dvar_matrix  A(1,nclass,1,nclass);
 	for(int h = 1; h <= nsex; h++ )
 	{
-		A = size_transition(h);
-		//cout<<"start"<<endl;
-		//COUT(diagonal(A));
-		//COUT(S(h)(syr));
+		At = size_transition(h);
 		for(int l = 1; l <= nclass; l++ )
 		{
-			A(l) = elem_prod( A(l), S(h)(syr) );
+			//A(l) = elem_prod( A(l), S(h)(syr) );
+			At(l) *= S(h)(syr)(l);
 		}
+		A = trans(At);
 		x = -solve(A-Id,rt);
-		//COUT(diagonal(A));
-		//cout<<"stop"<<endl;
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 	}
 	
@@ -807,22 +805,21 @@ FUNCTION calc_initial_numbers_at_length
 	 */
 FUNCTION update_population_numbers_at_length
 	int h,i,l;
-	dvar_matrix A(1,nclass,1,nclass);
-	
+	dvar_matrix At(1,nclass,1,nclass);
 
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( i = syr; i <= nyr; i++ )
 		{
-			A = size_transition(h);
+			At = size_transition(h);
 			for( l = 1; l <= nclass; l++ )
 			{
-				A(l) = elem_prod( A(l), S(h)(i) );
+				//A(l) = elem_prod( A(l), S(h)(i) );
+				At(l) *= S(h)(i)(l);
 			}
-
 			recruits(i) = mfexp(logRbar+rec_dev(i));
 			N(h)(i+1)   = (0.5 * recruits(i)) * rec_sdd;
-			N(h)(i+1)   += A * N(h)(i);
+			N(h)(i+1)   += N(h)(i) * At;
 		}
 	}
 	//COUT(N(nsex));
@@ -1171,7 +1168,8 @@ GLOBALS_SECTION
 	Prints name and value of \a object on ADMB report %ofstream file.
 	*/
 	#undef REPORT
-	#define REPORT(object) report << #object "\n" << object << endl;
+	#define REPORT(object) report << #object "\n" << setw(8) \
+	<< setprecision(4) << setfixed() << object << endl;
 
 	/**
 	 *
