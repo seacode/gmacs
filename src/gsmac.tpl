@@ -802,6 +802,11 @@ FUNCTION calc_initial_numbers_at_length
 	/**
 	 * @brief Update numbers-at-length
 	 * @author Steve Martell
+	 * @details  Numbers at length are propagated each year for each sex based on the 
+	 * size transition matrix and a vector of size-specifc survival rates. The columns
+	 * of the size-transition matrix are multiplied by the size-specific survival rate
+	 * (a sclaer).  New recruits are added based on the estimated aveerage recruitment and 
+	 * annual deviate, multiplied by a vector of size-proportions (rec_sdd).
 	 */
 FUNCTION update_population_numbers_at_length
 	int h,i,l;
@@ -822,8 +827,7 @@ FUNCTION update_population_numbers_at_length
 			N(h)(i+1)   += N(h)(i) * At;
 		}
 	}
-	//COUT(N(nsex));
-	//exit(1);
+	
 
 
 
@@ -1098,6 +1102,10 @@ FUNCTION calc_objective_function
 		dvar_matrix P = d3_pre_size_comps(ii);
 		nloglike(3)  += dmultinom(O,P,d3_res_size_comps(ii),variance,minP);
 	}
+
+
+
+
 
 	// |---------------------------------------------------------------------------------|
 	// | PENALTIES AND CONSTRAINTS                                                       |
