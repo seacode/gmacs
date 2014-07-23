@@ -26,6 +26,23 @@
 // ==================================================================================== //
 
 DATA_SECTION
+
+	// |---------------------|
+	// | SIMULATION CONTROLS |
+	// |---------------------|
+	int simflag;
+	int rseed
+	LOC_CALCS
+		simflag = 0;
+		rseed   = 0;
+		int opt,on;
+		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
+		{
+			simflag = 1;
+			rseed   = atoi(ad_comm::argv[on+1]);
+		}
+	END_CALCS
+
 	// |------------------------|
 	// | DATA AND CONTROL FILES |
 	// |------------------------|
@@ -128,11 +145,13 @@ DATA_SECTION
 	init_ivector nSizeCompCols(1,nSizeComps);
 	init_3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,-7,nSizeCompCols);
 	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
 	LOC_CALCS
 		for(int k = 1; k <= nSizeComps; k++ )
 		{
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
+			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
 		ECHO(nSizeComps); 
 		ECHO(d3_obs_size_comps); 
@@ -315,6 +334,7 @@ PARAMETER_SECTION
 					log_slx_pars(k)(j,2) = log(slx_stdv(k));
 				}
 			}
+		//COUT(log_slx_pars(k));
 		}
 	END_CALCS
 
@@ -369,12 +389,24 @@ PARAMETER_SECTION
 
 	sdreport_vector sd_recruits(syr,nyr);
 
+PRELIMINARY_CALCS_SECTION
+	if( simflag )
+	{
+		cout<<" RUNNING SIMULATION WITH RSEED = "<<rseed<<endl;
+		simulation_model();
+		exit(1);
+	}
+
+
 PROCEDURE_SECTION
+	// Initialize model parameters
 	initialize_model_parameters();
+	if( verbose ) cout<<"Ok after initializing model parameters ..."<<endl;
 
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
+	if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
 
 	// Population dynamics ...
 	calc_growth_increments();
@@ -385,19 +417,27 @@ PROCEDURE_SECTION
 	calc_recruitment_size_distribution();
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
+	if( verbose ) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
 	calc_predicted_catch();
 	calc_relative_abundance();
 	calc_predicted_composition();
+	if( verbose ) cout<<"Ok after observation models ..."<<endl;
 
 	// objective function ...
 	calc_objective_function();
+	if( verbose ) cout<<"Ok after objective function ..."<<endl;
 
 	// sd_report variables
-	if( last_phase() ) calc_sdreport();
+	if( last_phase() ) 
+	{
+		calc_sdreport();
+	}
 	nf++;
-	//COUT(nf);
+
+
+
 
 
 	/**
@@ -505,7 +545,7 @@ FUNCTION calc_selectivities
 				block = 1;
 			} 
 		}
-
+		//if(k<=nfleet)COUT(log_slx_capture(k)(1)(syr));
 		// delete pointers
 		delete *pSLX;
 	}
@@ -1094,13 +1134,14 @@ FUNCTION calc_objective_function
 
 
 	// 3) Likelihood for size composition data.
-	double minP = 0;
+	double minP = 0.0;
 	double variance;
 	for(int ii = 1; ii <= nSizeComps; ii++)
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
-		nloglike(3)  += dmultinom(O,P,d3_res_size_comps(ii),variance,minP);
+		likelihoods::nloglike myfun(O,P);
+		nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
 	}
 
 
@@ -1133,6 +1174,37 @@ FUNCTION calc_objective_function
 	objfun = sum(nloglike) + sum(nlogPenalty);
 
 
+  /**
+   * @brief Simulation model
+   * @details Uses many of the same routines as the assessment
+   * model, over-writes the observed data in memory with simulated 
+   * data.
+   * 
+   */
+FUNCTION simulation_model
+	// Initialize model parameters
+	initialize_model_parameters();
+
+	// Fishing fleet dynamics ...
+	calc_selectivities();
+	calc_fishing_mortality();
+	
+
+	// Population dynamics ...
+	calc_growth_increments();
+	calc_size_transition_matrix();
+	calc_natural_mortality();
+	calc_total_mortality();
+	calc_molting_probability();
+	calc_recruitment_size_distribution();
+	calc_initial_numbers_at_length();
+	update_population_numbers_at_length();
+	
+	// observation models ...
+	calc_predicted_catch();
+	calc_relative_abundance();
+	calc_predicted_composition();
+
 
 REPORT_SECTION
 	REPORT(mod_yrs);
@@ -1164,6 +1236,7 @@ GLOBALS_SECTION
 	#include <admodel.h>
 	#include <time.h>
 	#include <contrib.h>
+	#include "nloglike.h"
 	#include "../../CSTAR/include/cstar.h"
 
 	time_t start,finish;
