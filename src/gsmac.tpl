@@ -1240,17 +1240,18 @@ FUNCTION simulation_model
 
 	// add sampling errors to size-composition.
 	// 3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
-	double tau = 0.2;
+	double tau;
 	for(int k = 1; k <= nSizeComps; k++ )
 	{
 		for(int i = 1; i <= nSizeCompRows(k); i++ )
 		{
+			tau = 1.0 / size_comp_sample_size(k)(i);
 			dvector p = value(d3_pre_size_comps(k)(i)); 
 			d3_obs_size_comps(k)(i) = rmvlogistic(p,tau,rseed+k+i);
 		}
 	}
-	COUT(d3_pre_size_comps(1)(1));
-	COUT(d3_obs_size_comps(1)(1));
+	// COUT(d3_pre_size_comps(1)(1));
+	// COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
 	REPORT(mod_yrs);
