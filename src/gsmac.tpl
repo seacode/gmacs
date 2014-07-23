@@ -392,7 +392,15 @@ PARAMETER_SECTION
 PRELIMINARY_CALCS_SECTION
 	if( simflag )
 	{
-		cout<<" RUNNING SIMULATION WITH RSEED = "<<rseed<<endl;
+		if(!global_parfile)
+		{
+			cerr << "Must have a gsmac.pin file to use the -sim command line option"<<endl;
+			ad_exit(1);
+		}
+		cout<<"|———————————————————————————————————————————|"<<endl;
+		cout<<"|*** RUNNING SIMULATION WITH RSEED = "<<rseed<<" ***|"<<endl;
+		cout<<"|———————————————————————————————————————————|"<<endl;
+		
 		simulation_model();
 		exit(1);
 	}
@@ -1118,7 +1126,8 @@ FUNCTION calc_objective_function
 	nloglike.initialize();
 	
 	// 1) Likelihood of the catch data.
-	nloglike(1) = dnorm(res_catch,catch_cv);
+	dvector catch_sd = sqrt(log(1.0+square(catch_cv)));
+	nloglike(1) = dnorm(res_catch,catch_sd);
 
 
 
@@ -1188,6 +1197,7 @@ FUNCTION simulation_model
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
+
 	
 
 	// Population dynamics ...
@@ -1200,11 +1210,47 @@ FUNCTION simulation_model
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	
+
 	// observation models ...
 	calc_predicted_catch();
 	calc_relative_abundance();
 	calc_predicted_composition();
 
+	// random number generator
+	random_number_generator rng(rseed);
+	
+	
+	// add observation errors to catch.
+	dvector err_catch(1,nCatchRows);
+	dvector catch_sd = sqrt(log(1.0 + square(catch_cv)));
+	err_catch.fill_randn(rng);
+	obs_catch = value(pre_catch);
+	err_catch = elem_prod(catch_sd,err_catch) - 0.5*square(catch_sd);
+	obs_catch = elem_prod(obs_catch,exp(err_catch));
+	
+
+	// add observation errors to cpue.
+	dmatrix err_cpue(1,nSurveys,1,nSurveyRows);
+	dmatrix cpue_sd = sqrt(log(1.0 + square(cpue_cv)));
+	err_cpue.fill_randn(rng);
+	obs_cpue = value(pre_cpue);
+	err_cpue = elem_prod(cpue_sd,err_cpue) - 0.5*square(cpue_sd);
+	obs_cpue = elem_prod(obs_cpue,exp(err_cpue));
+	
+
+	// add sampling errors to size-composition.
+	// 3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	double tau = 0.2;
+	for(int k = 1; k <= nSizeComps; k++ )
+	{
+		for(int i = 1; i <= nSizeCompRows(k); i++ )
+		{
+			dvector p = value(d3_pre_size_comps(k)(i)); 
+			d3_obs_size_comps(k)(i) = rmvlogistic(p,tau,rseed+k+i);
+		}
+	}
+	COUT(d3_pre_size_comps(1)(1));
+	COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
 	REPORT(mod_yrs);
