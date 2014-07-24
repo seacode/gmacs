@@ -1153,9 +1153,9 @@ FUNCTION calc_objective_function
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 		likelihoods::nloglike myfun(O,P);
-		//nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
+		nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
 
-		nloglike(3)  += myfun.dmvlogistic();
+		//nloglike(3)  += myfun.dmvlogistic();
 	}
 
 
