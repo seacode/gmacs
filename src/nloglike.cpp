@@ -17,6 +17,36 @@ nloglike::~nloglike()
 
 }
 
+  /**
+   * @brief Multivariate logistic likelihood
+   * @details This is a modified version of the dmvlogistic negative log likelihood
+		where proportions at age less than minp are pooled into the consecutive 
+		age-classes.  See last paragraph in Appendix A of Richards, Schnute and
+		Olsen 1997. 
+   * @return negative log likelihood.
+   */
+dvariable nloglike::dmvlogistic()
+{
+	
+	int n = 0;
+	dvariable nll = 0;
+	dvar_matrix nu;
+	nu.allocate(m_Pr);
+	nu.initialize();
+	
+
+	for(int i = r1; i <= r2; i++ )
+	{
+		if(min(m_Pr(i))==0) {cout<<"Deal with zeros"<<endl; exit(1);}
+		nu(i)  = log(m_Or(i)) - log(m_Pr(i));
+		nu(i) -= mean(nu(i));
+		n += size_count(nu(i)) -1;
+	}
+	dvariable tau2 = 1/n * norm2(nu);
+	nll = n * log(tau2+0.001);
+	return nll;
+}
+
 /**
  * @brief Multinomial likleihood for composition data.
  * @details [long description]
@@ -32,6 +62,7 @@ dvariable nloglike::multinomial(const dvector& dSampleSize)
 		       observed size composition matrix."<<endl;
 		ad_exit(1);
 	}
+	RETURN_ARRAYS_INCREMENT();
 	dvariable nll = 0;
 	double tiny = 1.e-14;
 	for(int i = r1; i <= r2; i++ )
@@ -44,7 +75,7 @@ dvariable nloglike::multinomial(const dvector& dSampleSize)
 		dvector n = dSampleSize(i) * o;
 		nll += dmultinom(n,p);
 	}
-	
+	RETURN_ARRAYS_DECREMENT();
 	return nll;
 }
 
@@ -71,10 +102,8 @@ dvariable nloglike::dmultinom(const dvector& x, const dvar_vector& p)
  */
 void nloglike::tail_compression()
 {
-	cout<<"Tail compression"<<endl;
 	
-	
-	double pmin = 0.00;
+	double pmin = 0.0001;
 	
 
 	ivector jmin(r1,r2);
@@ -119,6 +148,5 @@ void nloglike::tail_compression()
 
 	//cout<<jmin(i)<<" "<<jmax(i)<<" "<<m_Or(i)<<endl;
 	}
-	//cout<<m_O<<endl;
-	//exit(1);
+	
 }

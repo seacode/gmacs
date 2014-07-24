@@ -27,6 +27,8 @@ public:
 	void tail_compression();
 	dvariable multinomial(const dvector& dSampleSize);
 	dvariable dmultinom(const dvector& x, const dvar_vector& p);
+
+	dvariable dmvlogistic();
 	
 };
 

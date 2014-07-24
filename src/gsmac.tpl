@@ -291,7 +291,7 @@ DATA_SECTION
 		bInitializeUnfished = int(model_controls(3));
 	END_CALCS
 	!! cout<<"end of control section"<<endl;
-	
+
 	int nf;
 	!! nf = 0;
 
@@ -301,7 +301,7 @@ INITIALIZATION_SECTION
 	log_fbar  log_pen_fbar;
 	alpha     3.733;
 	beta      0.02;
-	scale    15.1;
+	scale    12.1;
 	
 
 PARAMETER_SECTION
@@ -313,13 +313,13 @@ PARAMETER_SECTION
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 
 	// Molt increment parameters
-	init_bounded_vector alpha(1,nsex,0,100,-1);
+	init_bounded_vector alpha(1,nsex,0,20.,-1);
 	init_bounded_vector beta(1,nsex,0,10,-1);
-	init_bounded_vector scale(1,nsex,1,100,-1);
+	init_bounded_vector scale(1,nsex,1,20.,-1);
 
 	// Molt probability parameters
-	init_bounded_vector molt_mu(1,nsex,0,200,-1);
-	init_bounded_vector molt_cv(1,nsex,0,1,-1);
+	init_bounded_vector molt_mu(1,nsex,0,100,-1);
+	init_bounded_vector molt_cv(1,nsex,0,50,-1);
 
 	// Selectivity parameters
 	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
@@ -340,13 +340,11 @@ PARAMETER_SECTION
 
 	// Fishing mortality rate parameters
 	init_number_vector log_fbar(1,nfleet,f_phz);
-
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
-
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr,nyr,-15.0,15.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr,nyr,-5.0,5.0,rdv_phz); ///> recruitment deviations
 
 	vector nloglike(1,3);
 	vector nlogPenalty(1,2);
@@ -402,7 +400,7 @@ PRELIMINARY_CALCS_SECTION
 		cout<<"|———————————————————————————————————————————|"<<endl;
 		
 		simulation_model();
-		exit(1);
+		//exit(1);
 	}
 
 
@@ -436,7 +434,6 @@ PROCEDURE_SECTION
 	// objective function ...
 	calc_objective_function();
 	if( verbose ) cout<<"Ok after objective function ..."<<endl;
-
 	// sd_report variables
 	if( last_phase() ) 
 	{
@@ -604,8 +601,9 @@ FUNCTION calc_fishing_mortality
 		}
 	}
 	//COUT(F(1)(syr));
-	//COUT(log_fbar(1));
+	//COUT(log_fbar);
 	//COUT(log_fdev(1));
+	//COUT(logRbar);
 
 	//COUT(log_fbar);
 	
@@ -724,6 +722,7 @@ FUNCTION calc_total_mortality
 	{
 		 Z(h) = M(h) + F(h);
 		 S(h) = mfexp(-Z(h));
+		 //COUT(F(h)(syr));
 	}
 
 
@@ -799,6 +798,7 @@ FUNCTION calc_initial_numbers_at_length
 	{
 		log_initial_recruits = logRini;
 	}
+	recruits(syr) = exp(log_initial_recruits);
 	dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
 
 	// Equilibrium soln.
@@ -815,6 +815,8 @@ FUNCTION calc_initial_numbers_at_length
 			At(l) *= S(h)(syr)(l);
 		}
 		A = trans(At);
+		//COUT(S(h)(syr));
+		//COUT(A);
 		x = -solve(A-Id,rt);
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 	}
@@ -860,9 +862,11 @@ FUNCTION update_population_numbers_at_length
 	int h,i,l;
 	dvar_matrix At(1,nclass,1,nclass);
 
-	for( h = 1; h <= nsex; h++ )
+	for( i = syr; i <= nyr; i++ )
 	{
-		for( i = syr; i <= nyr; i++ )
+		if( i > syr ) 
+			recruits(i) = mfexp(logRbar+rec_dev(i));
+		for( h = 1; h <= nsex; h++ )
 		{
 			At = size_transition(h);
 			for( l = 1; l <= nclass; l++ )
@@ -870,7 +874,6 @@ FUNCTION update_population_numbers_at_length
 				//A(l) = elem_prod( A(l), S(h)(i) );
 				At(l) *= S(h)(i)(l);
 			}
-			recruits(i) = mfexp(logRbar+rec_dev(i));
 			N(h)(i+1)   = (0.5 * recruits(i)) * rec_sdd;
 			N(h)(i+1)   += N(h)(i) * At;
 		}
@@ -1055,11 +1058,11 @@ FUNCTION calc_predicted_composition
 
 			if(h) // sex specific
 			{
-				dvar_vector sel = log_slx_capture(k)(h)(i);
-				dvar_vector ret = log_slx_retaind(k)(h)(i);
-				dvar_vector dis = log_slx_discard(k)(h)(i);
+				dvar_vector sel = exp(log_slx_capture(k)(h)(i));
+				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
+				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				dvar_vector tmp = N(h)(i);
-
+			
 				switch (type)
 				{
 					case 1:
@@ -1078,9 +1081,9 @@ FUNCTION calc_predicted_composition
 			{
 				for( h = 1; h <= nsex; h++ )
 				{
-					dvar_vector sel = log_slx_capture(k)(h)(i);
-					dvar_vector ret = log_slx_retaind(k)(h)(i);
-					dvar_vector dis = log_slx_discard(k)(h)(i);
+					dvar_vector sel = exp(log_slx_capture(k)(h)(i));
+					dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
+					dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 					dvar_vector tmp = N(h)(i);
 
 					switch (type)
@@ -1150,7 +1153,9 @@ FUNCTION calc_objective_function
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 		likelihoods::nloglike myfun(O,P);
-		nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
+		//nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
+
+		nloglike(3)  += myfun.dmvlogistic();
 	}
 
 
@@ -1250,8 +1255,8 @@ FUNCTION simulation_model
 			d3_obs_size_comps(k)(i) = rmvlogistic(p,tau,rseed+k+i);
 		}
 	}
-	// COUT(d3_pre_size_comps(1)(1));
-	// COUT(d3_obs_size_comps(1)(1));
+	COUT(d3_pre_size_comps(1)(1));
+	COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
 	REPORT(mod_yrs);
