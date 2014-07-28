@@ -3,8 +3,13 @@ require(ggplot2)
 # Observed CPUE
 df <- as.data.frame(A$dSurveyData)
 colnames(df) <- c("year","seas","fleet","sex","cpue","cv","units")
+sd <- sqrt(log(1+df$cv^2))
+df$lb <- exp(log(df$cpue)-1.96*sd)
+df$ub <- exp(log(df$cpue)+1.96*sd)
+
 p  <- ggplot(df,aes(year,cpue))
-p  <- p + geom_point(aes(col=sex))
+# p  <- p + geom_point(aes(col=sex))
+p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb,col=sex))
 p  <- p + labs(x="Year",y="CPUE",col="Sex")
 pCPUE  <- p + facet_wrap(~fleet,scales="free")
 

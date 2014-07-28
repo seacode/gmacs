@@ -1138,7 +1138,8 @@ FUNCTION calc_objective_function
 	// 2) Likelihood of the relative abundance data.
 	for(int k = 1; k <= nSurveys; k++ )
 	{
-		nloglike(2) += dnorm(res_cpue(k),cpue_cv(k));
+		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
+		nloglike(2) += dnorm(res_cpue(k),cpue_sd(k));
 	}
 
 

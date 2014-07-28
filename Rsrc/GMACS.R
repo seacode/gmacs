@@ -1,13 +1,15 @@
 # REPORT FILE
+repfile <- "../examples/demo/gsmac"
+A <- read.admb(repfile)
+
+# SOURCE R-scripts
 .LIB        <- "./lib"
 .RFILES     <- list.files(.LIB,pattern="\\.[Rr]$")
 for(nm in .RFILES) source(file.path(.LIB, nm), echo=FALSE)
-repfile <- "../examples/demo/gsmac"
-
-A <- read.admb(repfile)
 
 
 
+#  PLOT RESULTS
 # Plot catch
 print(pCatch)
 
@@ -22,3 +24,4 @@ print(pCPUEfit)
 
 # Plot CPUE residuals
 print(pCPUEres)
+
