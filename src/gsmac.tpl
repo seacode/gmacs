@@ -1267,6 +1267,7 @@ REPORT_SECTION
 	REPORT(size_breaks);
 	REPORT(nloglike);
 	REPORT(nlogPenalty);
+	REPORT(dCatchData);
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
