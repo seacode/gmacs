@@ -26,7 +26,10 @@ print(pCPUEfit)
 print(pCPUEres)
 
 # Plot Size comps
-print(pSIZECOMPS[1])
+print(pSizeComps[1])
+
+# Plot Size Comp bubbles
+print(pSizeCompResid[1])
 
 
 

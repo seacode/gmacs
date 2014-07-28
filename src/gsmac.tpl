@@ -138,11 +138,16 @@ DATA_SECTION
 		ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
+	// |-----------------------|
+	// | SIZE COMPOSITION DATA |
+	// |-----------------------|
+
 	init_int nSizeComps;
 	init_ivector nSizeCompRows(1,nSizeComps);
 	init_ivector nSizeCompCols(1,nSizeComps);
 	init_3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,-7,nSizeCompCols);
 	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
 	LOC_CALCS
 		for(int k = 1; k <= nSizeComps; k++ )
@@ -1156,6 +1161,11 @@ FUNCTION calc_objective_function
 		likelihoods::nloglike myfun(O,P);
 		nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
 
+		if(last_phase())
+		{
+			d3_res_size_comps(ii) = myfun.residuals();
+		}
+
 		//nloglike(3)  += myfun.dmvlogistic();
 	}
 
@@ -1289,6 +1299,7 @@ REPORT_SECTION
 	REPORT(d3_SizeComps);
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
+	REPORT(d3_res_size_comps);
 	REPORT(ft);
 	REPORT(rec_sdd);
 	REPORT(size_transition);

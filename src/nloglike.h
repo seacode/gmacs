@@ -29,6 +29,8 @@ public:
 	dvariable dmultinom(const dvector& x, const dvar_vector& p);
 
 	dvariable dmvlogistic();
+
+	dmatrix residuals();
 	
 };
 

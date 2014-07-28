@@ -93,6 +93,11 @@ dvariable nloglike::dmultinom(const dvector& x, const dvar_vector& p)
 	return -gammln(n+1.)+sum(gammln(x+1.))-x*log(p/sum(p));
 }
 
+dmatrix nloglike::residuals()
+{
+	return (m_O - value(m_P));
+}
+
 /**
  * @brief Tail compression
  * @details This algorithim compresses the tails of a size composition matrix, such that
