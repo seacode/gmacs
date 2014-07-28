@@ -25,3 +25,9 @@ print(pCPUEfit)
 # Plot CPUE residuals
 print(pCPUEres)
 
+# Plot Size comps
+print(pSIZECOMPS[1])
+
+
+
+

@@ -1272,7 +1272,7 @@ REPORT_SECTION
 	mod_yrs.fill_seqadd(syr,1);
 
 	REPORT(mod_yrs);
-	REPORT(size_breaks);
+	REPORT(mid_points);
 	REPORT(nloglike);
 	REPORT(nlogPenalty);
 	REPORT(dCatchData);
@@ -1286,6 +1286,7 @@ REPORT_SECTION
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
+	REPORT(d3_SizeComps);
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
 	REPORT(ft);
