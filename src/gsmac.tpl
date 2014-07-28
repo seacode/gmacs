@@ -54,21 +54,19 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	init_int syr;		///> initial year
-	init_int nyr;		///> terminal year
-	vector mod_yrs(syr,nyr) ///> Model years
-	!! mod_yrs.fill_seqadd(syr,1);
+	init_int syr;				///> initial year
+	init_int nyr;				///> terminal year
 	init_number jstep;  ///> time step (years)
-	init_int nfleet;	///> number of gears
-	init_int nsex;		///> number of sexes
-	init_int nshell;	///> number of shell conditions
-	init_int nmature;	///> number of maturity types
-	init_int nclass;	///> number of size-classes
+	init_int nfleet;		///> number of gears
+	init_int nsex;			///> number of sexes
+	init_int nshell;		///> number of shell conditions
+	init_int nmature;		///> number of maturity types
+	init_int nclass;		///> number of size-classes
 
 	init_vector size_breaks(1,nclass+1);
 	vector       mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + first_difference(size_breaks);
-	!! ECHO(syr); ECHO(nyr); ECHO(mod_yrs);ECHO(nfleet); ECHO(nsex); ECHO(nshell);ECHO(nmature); ECHO(nclass);
+	!! ECHO(syr); ECHO(nyr); ECHO(nfleet); ECHO(nsex); ECHO(nshell);ECHO(nmature); ECHO(nclass);
 
 	// |-----------|
 	// | ALLOMETRY |
@@ -306,10 +304,12 @@ INITIALIZATION_SECTION
 
 PARAMETER_SECTION
 	// Leading parameters
-	//      M = theta(1)
-	// ln(Ro) = theta(2)
-	// ra     = theta(3)
-	// rbeta  = theta(4)
+	//      M   = theta(1)
+	// ln(Ro)   = theta(2)
+	// ln(R1)   = theta(3)
+	// ln(Rbar) = theta(4)
+	// ra       = theta(5)
+	// rbeta    = theta(6)
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 
 	// Molt increment parameters
@@ -1259,6 +1259,10 @@ FUNCTION simulation_model
 	COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
+
+	dvector mod_yrs(syr,nyr); 
+	mod_yrs.fill_seqadd(syr,1);
+
 	REPORT(mod_yrs);
 	REPORT(size_breaks);
 	REPORT(nloglike);
@@ -1339,3 +1343,19 @@ TOP_OF_MAIN_SECTION
 	gradient_structure::set_MAX_NVAR_OFFSET(5000);
 	gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
 	gradient_structure::set_MAX_DLINKS(50000); 
+
+FINAL_SECTION
+	//  Print run time statistics to the screen.
+	time(&finish);
+	elapsed_time=difftime(finish,start);
+	hour=long(elapsed_time)/3600;
+	minute=long(elapsed_time)%3600/60;
+	second=(long(elapsed_time)%3600)%60;
+	cout<<endl<<endl<<"*******************************************"<<endl;
+	cout<<endl<<endl<<"———————————————————————————————————————————"<<endl;
+	cout<<"--Start time: "<<ctime(&start)<<endl;
+	cout<<"--Finish time: "<<ctime(&finish)<<endl;
+	cout<<"--Runtime: ";
+	cout<<hour<<" hours, "<<minute<<" minutes, "<<second<<" seconds"<<endl;
+	cout<<"--Number of function evaluations: "<<nf<<endl;
+	cout<<"*******************************************"<<endl;
