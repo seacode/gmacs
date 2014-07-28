@@ -1234,13 +1234,20 @@ FUNCTION simulation_model
 	obs_catch = elem_prod(obs_catch,exp(err_catch));
 	
 
-	// add observation errors to cpue.
+	// add observation errors to cpue. & fill in dSurveyData column 5
 	dmatrix err_cpue(1,nSurveys,1,nSurveyRows);
 	dmatrix cpue_sd = sqrt(log(1.0 + square(cpue_cv)));
 	err_cpue.fill_randn(rng);
 	obs_cpue = value(pre_cpue);
 	err_cpue = elem_prod(cpue_sd,err_cpue) - 0.5*square(cpue_sd);
 	obs_cpue = elem_prod(obs_cpue,exp(err_cpue));
+	for(int k = 1; k <= nSurveys; k++ )
+	{
+		for(int i = 1; i <= nSurveyRows(k); i++ )
+		{
+			dSurveyData(k)(i,5) = obs_cpue(k,i);
+		}
+	}
 	
 
 	// add sampling errors to size-composition.
@@ -1271,6 +1278,7 @@ REPORT_SECTION
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
+	REPORT(dSurveyData);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
 	REPORT(res_cpue);
