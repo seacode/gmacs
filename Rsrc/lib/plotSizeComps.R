@@ -44,7 +44,7 @@ p <- ggplot(data=sdf[[1]])
 p <- p + geom_bar(aes(variable,value),stat="identity")
 p <- p + geom_line(aes(as.numeric(variable),pred),col="red")
 p <- p + scale_x_discrete(breaks=pretty(A$mid_points)) 
-p <- p + facet_wrap(~year)
+p <- p + facet_wrap(~year) + .THEME
 
 pSizeComps <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)
 
@@ -54,6 +54,7 @@ p <- p + geom_point(aes(x=factor(year),variable,col=factor(sign(resid)),size=abs
 p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
 p <- p + scale_x_discrete(breaks=pretty(A$mod_yrs))
 p <- p + scale_y_discrete(breaks=pretty(A$mid_points))
+p <- p + .THEME
 
 pSizeCompResid <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)
 

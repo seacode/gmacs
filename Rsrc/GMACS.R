@@ -30,18 +30,21 @@ print(pCPUEfit + .THEME)
 print(pCPUEres + .THEME)
 
 # Plot Size comps
-print(pSizeComps[1] + .THEME)
+print(pSizeComps[1])
 
 # Plot Size Comp bubbles
-print(pSizeCompResid[1] + .THEME)
+print(pSizeCompResid[1])
 
 # Plot Mature Male Biomass
 print(pMMB + .THEME)
 
 # Plot size-transition matrix
-
+print(pSizeTransition + .THEME)
 
 # Plot recruitment
+print(pRecruitment + .THEME)
+
+
 
 
 

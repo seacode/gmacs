@@ -307,7 +307,7 @@ DATA_SECTION
 INITIALIZATION_SECTION
 	theta theta_ival;
 	log_fbar  log_pen_fbar;
-	alpha     3.733;
+	alpha     1.733;
 	beta      0.02;
 	scale    12.1;
 	
@@ -354,7 +354,7 @@ PARAMETER_SECTION
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr,nyr,-5.0,5.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr+1,nyr-1,-5.0,5.0,rdv_phz); ///> recruitment deviations
 
 	vector nloglike(1,3);
 	vector nlogPenalty(1,2);
@@ -395,7 +395,7 @@ PARAMETER_SECTION
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
-	sdreport_vector sd_recruits(syr,nyr);
+	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector sd_log_mmb(syr,nyr);
 
 PRELIMINARY_CALCS_SECTION
@@ -460,7 +460,7 @@ PROCEDURE_SECTION
 	 * @brief calculate sdreport variables in final phase
 	 */
 FUNCTION calc_sdreport
-	sd_recruits = recruits;
+	sd_log_recruits = log(recruits);
 	int h = 1;
 	for(int i = syr; i <= nyr; i++ )
 	{
@@ -828,33 +828,13 @@ FUNCTION calc_initial_numbers_at_length
 		At = size_transition(h);
 		for(int l = 1; l <= nclass; l++ )
 		{
-			//A(l) = elem_prod( A(l), S(h)(syr) );
 			At(l) *= S(h)(syr)(l);
 		}
 		A = trans(At);
-		//COUT(S(h)(syr));
-		//COUT(A);
 		x = -solve(A-Id,rt);
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 	}
 	
-//	// Specification for initial numbers option (TODO: make part of control file)
-//  int init_n = 1;
-//
-//  switch(init_n)
-//  {
-//    case 1: // Initial N's option 1: equilibrium approach
-//		{
-//
-//		}
-//
-//		case 2: // Initial N's option 2: estimate one parameter per size-class
-//  	{
-//
-//  	}
-//
-//  }
-
 
 
 	
@@ -878,11 +858,13 @@ FUNCTION calc_initial_numbers_at_length
 FUNCTION update_population_numbers_at_length
 	int h,i,l;
 	dvar_matrix At(1,nclass,1,nclass);
+	recruits(syr+1,nyr) = mfexp(logRbar);
 
 	for( i = syr; i <= nyr; i++ )
 	{
-		if( i > syr ) 
-			recruits(i) = mfexp(logRbar+rec_dev(i));
+		if( i > syr && i != nyr ) 
+			recruits(i) *= mfexp(rec_dev(i));
+
 		for( h = 1; h <= nsex; h++ )
 		{
 			At = size_transition(h);
