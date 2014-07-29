@@ -366,6 +366,7 @@ PARAMETER_SECTION
 	number logRini;   ///> logarithm of initial recruitment(syr).
 	number ra;				///> shape parameter for recruitment distribution
 	number rbeta;			///> rate parameter for recruitment distribution
+	number logSigmaR; ///> standard deviation of recruitment deviations.
 
 	vector rec_sdd(1,nclass);			///> recruitment size_density_distribution
 	vector recruits(syr,nyr);			///> vector of estimated recruits
@@ -475,12 +476,13 @@ FUNCTION calc_sdreport
 	 */
 FUNCTION initialize_model_parameters
 	 // Get parameters from theta control matrix:
-	M0      = theta(1);
-	logR0   = theta(2);
-	logRini = theta(3);
-	logRbar = theta(4);
-	ra      = theta(5);
-	rbeta   = theta(6);
+	M0        = theta(1);
+	logR0     = theta(2);
+	logRini   = theta(3);
+	logRbar   = theta(4);
+	ra        = theta(5);
+	rbeta     = theta(6);
+	logSigmaR = theta(7);
 
 
 	/**
@@ -1165,8 +1167,8 @@ FUNCTION calc_objective_function
 
 
 	// 4) Likelihood for recruitment deviations.
-	double sigR = 0.6;
-	nloglike(4) = dnorm(rec_dev,sigR);
+	dvariable sigR = mfexp(logSigmaR);
+	nloglike(4)    = dnorm(rec_dev,sigR);
 
 
 
