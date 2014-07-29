@@ -22,15 +22,13 @@ LDFLAGS:=
 
 # Release specific flags.
 RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
-RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmbo.a            \
-	              $(ADMB_HOME)/contrib/lib/libcontribo.a \
+RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contribo.a            \
 	              $(LIBINCLUDE)/release/libcstar.a               \
 	              -lxml2
 
 # Debug specific flags.
 DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
-DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb.a               \
-	            $(ADMB_HOME)/contrib/lib/libcontrib.a    \
+DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contrib.a               \
 	            $(LIBINCLUDE)/debug/libcstar.a                 \
 	            -lxml2
 

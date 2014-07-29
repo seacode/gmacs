@@ -1116,7 +1116,7 @@ FUNCTION calc_predicted_composition
 	 * @details
 	 */
 FUNCTION calculate_prior_densities
-	dvariable p1,p2;
+	double p1,p2;
 	priorDensity.initialize();
 	
 	for(int i = 1; i <= ntheta; i++ )
@@ -1135,12 +1135,12 @@ FUNCTION calculate_prior_densities
 
 			// normal
 			case 1:
-
+				priorDensity(i) = dnorm(theta(i),p1,p2);
 			break;
 
 			// lognormal
 			case 2:
-
+				priorDensity(i) = dlnorm(theta(i),log(p1),p2);
 			break;
 
 			// beta
@@ -1203,8 +1203,6 @@ FUNCTION calc_objective_function
 
 
 	// 3) Likelihood for size composition data.
-	double minP = 0.0;
-	double variance;
 	for(int ii = 1; ii <= nSizeComps; ii++)
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
