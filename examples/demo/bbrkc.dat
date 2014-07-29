@@ -24,7 +24,9 @@
 0.0002  0.0002
 ## b (male, female)
 3.0     3.0
-																																				
+
+# Fecundity Vector (weight * proportion mature) 
+0 0 0 0 0 0 0 0 0 0 0 1.432 1.625 1.835 2.063 2.31  2.576 2.862 3.169 3.7																																			
 
 # Fishing fleet names (delimited with ":" no spaces in names)
 Pot_Fishery:Trawl_Bycatch
@@ -546,8 +548,6 @@ NMFS_Trawl:BSFRF
 0.22478	0.28135	0.34692	0.42221	0.50793	0.6048	0.71356	0.83495	0.9697	1.11856	1.28229	1.46163	1.65736	1.87023	2.10101	2.35048	2.61942	2.90861	3.21882	3.90595																								
 0.2151	0.26898	0.33137	0.40294	0.48437	0.62711	0.7216	0.82452	0.93615	1.05678	1.18669	1.32613	1.47539	1.63473	1.80441	2.18315	2.18315	2.18315	2.18315	2.18315																								
 
-# Fecundity Vector (weight * proportion mature) 
-0	0	0	0	0	0	0	0	0	0	0	1.432	1.625	1.835	2.063	2.31	2.576	2.862	3.169	3.7
 
 0 # Number of lines of capture data to read
 0 # Number of lines of mark data to read

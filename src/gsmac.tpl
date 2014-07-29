@@ -82,6 +82,11 @@ DATA_SECTION
 	END_CALCS
 	!! ECHO(lw_alfa); ECHO(lw_beta); ECHO(mean_wt);
 
+	// |-------------------------------|
+	// | FECUNDITY FOR MMB CALCULATION |
+	// |-------------------------------|
+	init_vector fecundity(1,nclass);
+
 	// |-------------|
 	// | FLEET NAMES |
 	// |-------------|
@@ -391,6 +396,7 @@ PARAMETER_SECTION
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
 	sdreport_vector sd_recruits(syr,nyr);
+	sdreport_vector sd_log_mmb(syr,nyr);
 
 PRELIMINARY_CALCS_SECTION
 	if( simflag )
@@ -455,6 +461,12 @@ PROCEDURE_SECTION
 	 */
 FUNCTION calc_sdreport
 	sd_recruits = recruits;
+	int h = 1;
+	for(int i = syr; i <= nyr; i++ )
+	{
+		sd_log_mmb(i) = log( N(h)(i) * fecundity );
+	}
+	
 	
 
 	/**
@@ -1273,8 +1285,8 @@ FUNCTION simulation_model
 			d3_obs_size_comps(k)(i) = rmvlogistic(p,tau,rseed+k+i);
 		}
 	}
-	COUT(d3_pre_size_comps(1)(1));
-	COUT(d3_obs_size_comps(1)(1));
+	// COUT(d3_pre_size_comps(1)(1));
+	// COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
 
@@ -1306,8 +1318,26 @@ REPORT_SECTION
 	REPORT(rec_dev);
 	REPORT(recruits);
 	REPORT(N);
+	dvector mmb = calc_mmb();
+	REPORT(mmb);
 
 
+  /**
+   * @brief Calculate mature male biomass
+   * @details Calculate mature male biomass based on numbers N array.
+   * 
+   * TODO correct for timing of when the MMB is calculated
+   */
+FUNCTION dvector calc_mmb()
+	dvector mmb(syr,nyr);
+	mmb.initialize();
+
+	for(int i = syr; i <= nyr; i++ )
+	{
+		int h = 1;
+		mmb(i) = value(N(h)(i)) * fecundity;
+	}
+	return(mmb);
 
 
 GLOBALS_SECTION
