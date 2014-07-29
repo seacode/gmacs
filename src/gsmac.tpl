@@ -307,8 +307,8 @@ DATA_SECTION
 INITIALIZATION_SECTION
 	theta theta_ival;
 	log_fbar  log_pen_fbar;
-	alpha     1.733;
-	beta      0.02;
+	alpha     16.56211;  //16.56211     -0.05496
+	beta      0.05496;
 	scale    12.1;
 	
 
@@ -1117,6 +1117,7 @@ FUNCTION calc_predicted_composition
 	 */
 FUNCTION calculate_prior_densities
 	double p1,p2;
+	double lb,ub;
 	priorDensity.initialize();
 	
 	for(int i = 1; i <= ntheta; i++ )
@@ -1145,12 +1146,14 @@ FUNCTION calculate_prior_densities
 
 			// beta
 			case 3:
-
+				lb = theta_control(i,2);
+				ub = theta_control(i,3);
+				priorDensity(i) = dbeta((theta(i)-lb)/(ub-lb),p1,p2);
 			break;
 
 			// gamma
 			case 4:
-
+				priorDensity(i) = dgamma(theta(i),p1,p2);
 			break;
 		}
 	}
