@@ -1113,7 +1113,12 @@ FUNCTION calc_predicted_composition
 
 	/**
 	 * @brief Calculate prior density functions for leading parameters.
-	 * @details
+	 * @details 
+	 * 	- case 0 is a uniform density between the lower and upper bounds.
+	 * 	- case 1 is a normal density with mean = p1 and sd = p2
+	 * 	- case 2 is a lognormal density with mean = log(p1) and sd = p2
+	 * 	- case 3 is a beta density bounded between lb-ub with p1 and p2 as alpha & beta
+	 * 	- case 4 is a gamma density with parameters p1 and p2.
 	 */
 FUNCTION calculate_prior_densities
 	double p1,p2;
@@ -1215,7 +1220,7 @@ FUNCTION calc_objective_function
 
 		if(last_phase())
 		{
-			d3_res_size_comps(ii) = myfun.residuals();
+			d3_res_size_comps(ii) = myfun.residuals(size_comp_sample_size(ii));
 		}
 
 		//nloglike(3)  += myfun.dmvlogistic();

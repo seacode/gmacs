@@ -14,8 +14,12 @@ private:
 	int c1;
 	int c2;
 
+	ivector jmin;
+	ivector jmax;
+
 	dmatrix m_O;
 	dmatrix m_Or;
+	dmatrix m_residual;
 
 	dvar_matrix m_P;
 	dvar_matrix m_Pr;
@@ -30,7 +34,7 @@ public:
 
 	dvariable dmvlogistic();
 
-	dmatrix residuals();
+	dmatrix residuals(const dvector& dSampleSize);
 	
 };
 

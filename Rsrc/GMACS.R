@@ -1,4 +1,10 @@
+# GLOBAL SETTINGS
+#.THEME <- theme_classic()
+.THEME <- theme_bw()
+#.THEME <- theme_minimal()
+
 # REPORT FILE
+source("./lib/read.admb.R")
 repfile <- "../examples/demo/gsmac"
 A <- read.admb(repfile)
 
@@ -7,10 +13,7 @@ A <- read.admb(repfile)
 .RFILES     <- list.files(.LIB,pattern="\\.[Rr]$")
 for(nm in .RFILES) source(file.path(.LIB, nm), echo=FALSE)
 
-# GLOBAL SETTINGS
-#.THEME <- theme_classic()
-.THEME <- theme_bw()
-#.THEME <- theme_minimal()
+
 
 #  Very Simple functions such that you can build a shiny app
 #  or a tck/tk interface to plot results.

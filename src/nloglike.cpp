@@ -10,6 +10,7 @@ nloglike::nloglike(const dmatrix& _O, const dvar_matrix& _P)
 	c1 = m_O.colmin();
 	c2 = m_O.colmax();
 	tail_compression();
+	m_residual.allocate(r1,r2,c1,c2);
 }
 
 nloglike::~nloglike()
@@ -93,9 +94,16 @@ dvariable nloglike::dmultinom(const dvector& x, const dvar_vector& p)
 	return -gammln(n+1.)+sum(gammln(x+1.))-x*log(p/sum(p));
 }
 
-dmatrix nloglike::residuals()
+dmatrix nloglike::residuals(const dvector& dSampleSize)
 {
-	return (m_O - value(m_P));
+	m_residual.initialize();
+	for(int i = r1; i <= r2; i++ )
+	{
+		dvector var = value(elem_prod(m_Pr(i),1.0-m_Pr(i)) / dSampleSize(i));
+		dvector res = elem_div(m_Or(i)-value(m_Pr(i)),sqrt(var + 0.01/(c2-c1)));
+		m_residual(i)(jmin(i),jmax(i)) = res;
+	}
+	return (m_residual);
 }
 
 /**
@@ -111,8 +119,8 @@ void nloglike::tail_compression()
 	double pmin = 0.0001;
 	
 
-	ivector jmin(r1,r2);
-	ivector jmax(r1,r2);
+	jmin.allocate(r1,r2);
+	jmax.allocate(r1,r2);
 
 	for(int i = r1; i <= r2; i++ )
 	{
