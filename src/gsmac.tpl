@@ -354,10 +354,10 @@ PARAMETER_SECTION
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr-1,-5.0,5.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr+1,nyr,-5.0,5.0,rdv_phz); ///> recruitment deviations
 
-	vector nloglike(1,3);
-	vector nlogPenalty(1,2);
+	vector nloglike(1,4);
+	vector nlogPenalty(1,4);
 	objective_function_value objfun;
 
 	number M0;				///> natural mortality rate
@@ -862,7 +862,7 @@ FUNCTION update_population_numbers_at_length
 
 	for( i = syr; i <= nyr; i++ )
 	{
-		if( i > syr && i != nyr ) 
+		if( i > syr ) 
 			recruits(i) *= mfexp(rec_dev(i));
 
 		for( h = 1; h <= nsex; h++ )
@@ -1163,6 +1163,10 @@ FUNCTION calc_objective_function
 		//nloglike(3)  += myfun.dmvlogistic();
 	}
 
+
+	// 4) Likelihood for recruitment deviations.
+	double sigR = 0.6;
+	nloglike(4) = dnorm(rec_dev,sigR);
 
 
 
