@@ -358,6 +358,8 @@ PARAMETER_SECTION
 
 	vector nloglike(1,4);
 	vector nlogPenalty(1,4);
+	vector priorDensity(1,ntheta);
+
 	objective_function_value objfun;
 
 	number M0;				///> natural mortality rate
@@ -444,6 +446,7 @@ PROCEDURE_SECTION
 	if( verbose ) cout<<"Ok after observation models ..."<<endl;
 
 	// objective function ...
+	calculate_prior_densities();
 	calc_objective_function();
 	if( verbose ) cout<<"Ok after objective function ..."<<endl;
 	// sd_report variables
@@ -1109,6 +1112,58 @@ FUNCTION calc_predicted_composition
 
 
 	/**
+	 * @brief Calculate prior density functions for leading parameters.
+	 * @details
+	 */
+FUNCTION calculate_prior_densities
+	dvariable p1,p2;
+	priorDensity.initialize();
+	
+	for(int i = 1; i <= ntheta; i++ )
+	{
+		int priorType = theta_control(i,5);
+		p1 = theta_control(i,6);
+		p2 = theta_control(i,7);
+		switch(priorType)
+		{
+			// uniform
+			case 0: 
+				p1 = theta_control(i,2);
+				p2 = theta_control(i,3);
+				priorDensity(i) = -log(1.0 / (p2-p1));
+			break;
+
+			// normal
+			case 1:
+
+			break;
+
+			// lognormal
+			case 2:
+
+			break;
+
+			// beta
+			case 3:
+
+			break;
+
+			// gamma
+			case 4:
+
+			break;
+		}
+	}
+
+
+
+
+
+
+
+
+
+	/**
 	 * @brief calculate objective function
 	 * @details 
 	 * 
@@ -1196,7 +1251,7 @@ FUNCTION calc_objective_function
 
 
 
-	objfun = sum(nloglike) + sum(nlogPenalty);
+	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
 
 
   /**
@@ -1207,6 +1262,9 @@ FUNCTION calc_objective_function
    * 
    */
 FUNCTION simulation_model
+	// random number generator
+	random_number_generator rng(rseed);
+	
 	// Initialize model parameters
 	initialize_model_parameters();
 
@@ -1215,6 +1273,9 @@ FUNCTION simulation_model
 	calc_fishing_mortality();
 
 	
+	dvector drec_dev(syr+1,nyr);
+	drec_dev.fill_randn(rng);
+	rec_dev = exp(logSigmaR) * drec_dev;
 
 	// Population dynamics ...
 	calc_growth_increments();
@@ -1232,9 +1293,6 @@ FUNCTION simulation_model
 	calc_relative_abundance();
 	calc_predicted_composition();
 
-	// random number generator
-	random_number_generator rng(rseed);
-	
 	
 	// add observation errors to catch.
 	dvector err_catch(1,nCatchRows);
