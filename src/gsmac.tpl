@@ -356,6 +356,10 @@ PARAMETER_SECTION
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
 	init_bounded_dev_vector rec_dev(syr+1,nyr,-5.0,5.0,rdv_phz); ///> recruitment deviations
 
+
+	// Effective sample size parameter for multinomial
+	init_vector log_vn(1,nSizeComps);
+
 	vector nloglike(1,4);
 	vector nlogPenalty(1,4);
 	vector priorDensity(1,ntheta);
@@ -1215,13 +1219,22 @@ FUNCTION calc_objective_function
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
-		likelihoods::nloglike myfun(O,P);
-		nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
 
-		if(last_phase())
-		{
-			d3_res_size_comps(ii) = myfun.residuals(size_comp_sample_size(ii));
-		}
+		acl::negativeLogLikelihood *pNLL;
+		pNLL = new acl::multinomial(log_vn(ii),P);
+		nloglike(3) += pNLL->nloglike(O);
+
+		d3_res_size_comps(ii) = pNLL->residual(O);
+		
+		//delete *pNLL;
+
+		//likelihoods::nloglike myfun(O,P);
+		//nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
+
+		//if(last_phase())
+		//{
+		//	d3_res_size_comps(ii) = myfun.residuals(size_comp_sample_size(ii));
+		//}
 
 		//nloglike(3)  += myfun.dmvlogistic();
 	}
@@ -1332,7 +1345,7 @@ FUNCTION simulation_model
 	{
 		for(int i = 1; i <= nSizeCompRows(k); i++ )
 		{
-			tau = 1.0 / size_comp_sample_size(k)(i);
+			tau = sqrt(1.0 / size_comp_sample_size(k)(i));
 			dvector p = value(d3_pre_size_comps(k)(i)); 
 			d3_obs_size_comps(k)(i) = rmvlogistic(p,tau,rseed+k+i);
 		}
