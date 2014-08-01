@@ -11,7 +11,7 @@
  */
 void acl::negativeLogLikelihood::tail_compression()
 {
-	cout<<"Running tail compression"<<endl;
+	// cout<<"Running tail compression"<<endl;
 	double pmin = 0.001;
 	
 

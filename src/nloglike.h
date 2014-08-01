@@ -50,7 +50,11 @@ namespace acl
 {
 
 
-	// Base class for negative log likelihoods
+	/**
+	 * Base class for negative loglikelihoods used in composition data.
+	 * @details This class has two virtual methods: nloglike and residual.
+	 * 
+	 */
 	class negativeLogLikelihood
 	{
 	private:
@@ -88,18 +92,20 @@ namespace acl
 		const ivector get_jmin() const { return m_jmin; }
 		const ivector get_jmax() const { return m_jmax; }
 
-		void tail_compression();
+		void tail_compression();	///> get indexes for ragged objects
 
 		template <typename T>
-		const T compress(const T& _M) const;
+		inline
+		const T compress(const T& _M) const; ///> make ragged objects
 
 	};
 
   
 	template <typename T>
+	inline
 	const T acl::negativeLogLikelihood::compress(const T& _M) const
 	{
-		cout<<"In compress"<<endl;
+		// cout<<"In compress"<<endl;
 	
 		T R;
 		T M = _M;
@@ -120,7 +126,12 @@ namespace acl
 	}
 
 	
-
+	/**
+	 * @brief Class for multinomial negative loglikelihood.
+	 * @details This is a derived class which inherits the virtual methods
+	 * in negativeLogLikelihood.
+	 * 
+	 */
 	class multinomial: public negativeLogLikelihood
 	{
 	private:

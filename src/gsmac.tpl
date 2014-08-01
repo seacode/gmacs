@@ -286,6 +286,13 @@ DATA_SECTION
 		f_phz    = ivector(column(f_controls,4));
 	END_CALCS
 
+
+  // |-----------------------------------|
+  // | OPTIONS FOR SIZE COMPOSITION DATA |
+  // |-----------------------------------|
+  init_ivector nAgeCompType(1,nSizeComps);
+  init_ivector bTailCompression(1,nSizeComps);
+
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
@@ -1220,18 +1227,26 @@ FUNCTION calc_objective_function
 
 
 
-
 	// 3) Likelihood for size composition data.
 	for(int ii = 1; ii <= nSizeComps; ii++)
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 
-
+		bool bCmp = bTailCompression(ii);
 		acl::negativeLogLikelihood *ploglike;
-		ploglike = new acl::multinomial(O,true);
-		nloglike(3) 				 += ploglike->nloglike(log_vn(ii),P);
-		d3_res_size_comps(ii) = ploglike->residual(log_vn(ii),P);
+		switch(nAgeCompType(ii))
+		{
+			case 1: // multinomial with fixed n
+				
+			break;
+
+			case 2: // multinomial with estimated n
+				ploglike = new acl::multinomial(O,bCmp);
+				nloglike(3) 				 += ploglike->nloglike(log_vn(ii),P);
+				d3_res_size_comps(ii) = ploglike->residual(log_vn(ii),P);
+			break;
+		}
 		
 
 		//likelihoods::nloglike myfun(O,P);
