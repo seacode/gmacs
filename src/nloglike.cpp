@@ -110,13 +110,13 @@ dmatrix nloglike::residuals(const dvector& dSampleSize)
  * @brief Tail compression
  * @details This algorithim compresses the tails of a size composition matrix, such that
  * there are no zeros at the tails of the size composition data that would interfear
- * with the likelihood caclculation.  Note that the data that is less than pmin 
+ * with the likelihood calculation.  Note that the data that is less than pmin 
  * is pooled (cululative sum) into the tails of a ragged object.
  */
 void nloglike::tail_compression()
 {
 	
-	double pmin = 0.0001;
+	double pmin = 0.001;
 	
 
 	jmin.allocate(r1,r2);

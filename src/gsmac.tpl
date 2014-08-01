@@ -26,7 +26,7 @@
 // ==================================================================================== //
 
 DATA_SECTION
-
+	
 	// |---------------------|
 	// | SIMULATION CONTROLS |
 	// |---------------------|
@@ -171,7 +171,7 @@ DATA_SECTION
 	init_int eof;
 	!! if (eof != 9999) {cout<<"Error reading data"<<endl; exit(1);}
 
-
+	
 
 
 
@@ -313,6 +313,7 @@ INITIALIZATION_SECTION
 	
 
 PARAMETER_SECTION
+	
 	// Leading parameters
 	//      M   = theta(1)
 	// ln(Ro)   = theta(2)
@@ -358,7 +359,7 @@ PARAMETER_SECTION
 
 
 	// Effective sample size parameter for multinomial
-	init_vector log_vn(1,nSizeComps);
+	init_vector log_vn(1,nSizeComps,4);
 
 	vector nloglike(1,4);
 	vector nlogPenalty(1,4);
@@ -405,6 +406,9 @@ PARAMETER_SECTION
 	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector sd_log_mmb(syr,nyr);
 
+
+	
+
 PRELIMINARY_CALCS_SECTION
 	if( simflag )
 	{
@@ -420,13 +424,16 @@ PRELIMINARY_CALCS_SECTION
 		simulation_model();
 		//exit(1);
 	}
-
+	// Must declare the abstract base class in GLOBALS_SECTION
+	// acl::negativeLogLikelihood *agecomplike;
+	// agecomplike = new acl::multinomial(d3_obs_size_comps(1));
+	
 
 PROCEDURE_SECTION
 	// Initialize model parameters
 	initialize_model_parameters();
 	if( verbose ) cout<<"Ok after initializing model parameters ..."<<endl;
-
+	
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
@@ -1220,13 +1227,12 @@ FUNCTION calc_objective_function
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 
-		acl::negativeLogLikelihood *pNLL;
-		pNLL = new acl::multinomial(log_vn(ii),P);
-		nloglike(3) += pNLL->nloglike(O);
 
-		d3_res_size_comps(ii) = pNLL->residual(O);
+		acl::negativeLogLikelihood *ploglike;
+		ploglike = new acl::multinomial(O,true);
+		nloglike(3) 				 += ploglike->nloglike(log_vn(ii),P);
+		d3_res_size_comps(ii) = ploglike->residual(log_vn(ii),P);
 		
-		//delete *pNLL;
 
 		//likelihoods::nloglike myfun(O,P);
 		//nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
@@ -1404,6 +1410,10 @@ FUNCTION dvector calc_mmb()
 	}
 	return(mmb);
 
+RUNTIME_SECTION
+    maximum_function_evaluations 500,  500,   1500, 25000, 25000
+    convergence_criteria        1.e-4, 1.e-4, 1.e-4, 1.e-4, 1.e-4, 
+
 
 GLOBALS_SECTION
 	#include <admodel.h>
@@ -1411,6 +1421,8 @@ GLOBALS_SECTION
 	#include <contrib.h>
 	#include "nloglike.h"
 	#include "../../CSTAR/include/cstar.h"
+
+	// acl::negativeLogLikelihood *agecomplike;
 
 	time_t start,finish;
 	long hour,minute,second;
@@ -1460,6 +1472,7 @@ TOP_OF_MAIN_SECTION
 	gradient_structure::set_MAX_NVAR_OFFSET(5000);
 	gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
 	gradient_structure::set_MAX_DLINKS(50000); 
+
 
 FINAL_SECTION
 	//  Print run time statistics to the screen.

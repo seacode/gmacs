@@ -21,7 +21,7 @@ const dvariable acl::multinomial::dmultinom(const dvariable& log_vn,
 		ad_exit(1);
 	}
 
-
+	
 	dvariable vn  = mfexp(log_vn);
 	dvariable ff = 0;
 	int r1 = o.rowmin();
@@ -44,6 +44,7 @@ const dvariable acl::multinomial::dmultinom(const dvariable& log_vn,
 	return ff;
 }
 
+
 const dmatrix acl::multinomial::pearson_residuals(const dvariable& log_vn,
                                 									const dmatrix& o,
                                 									const dvar_matrix p) const
@@ -57,6 +58,8 @@ const dmatrix acl::multinomial::pearson_residuals(const dvariable& log_vn,
 	}
 	return res;
 }
+
+
 
 // dvariable mult_likelihood(const dmatrix &o, const dvar_matrix &p, dvar_matrix &nu, 
 //                           const dvariable &log_vn)
