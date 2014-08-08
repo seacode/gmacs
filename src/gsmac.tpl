@@ -1238,7 +1238,7 @@ FUNCTION calc_objective_function
 		switch(nAgeCompType(ii))
 		{
 			case 1: // multinomial with fixed n
-				
+
 			break;
 
 			case 2: // multinomial with estimated n

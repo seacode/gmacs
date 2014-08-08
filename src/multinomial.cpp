@@ -5,7 +5,7 @@
  * @details Negative log likelihood using the multinomial distribution.	
  * @author Dave Fournier
  * @param log_vn log of effective sample size.
- * @param o observed proportions
+ * @param o observed proportions.
  * @param p predicted proportions
  * @return negative loglikelihood.
  */
