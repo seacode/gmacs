@@ -1,5 +1,5 @@
 # Name of executable.
-OUTPUT:=gsmac
+OUTPUT:=gmacs
 LIBINCLUDE = ../../CSTAR/build
 # Global source files from current dir.
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx ) 

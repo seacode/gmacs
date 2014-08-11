@@ -1,4 +1,4 @@
-EXEC = gsmac
+EXEC = gmacs
 DIST = ../../src/build/debug/
 ARGS = 
 
