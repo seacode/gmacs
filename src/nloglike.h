@@ -150,7 +150,7 @@ namespace acl
 
 		~f_multinomial();
 
-		dvariable get_n()      const { return m_vn;    }
+		dvector get_n()      const { return m_vn;    }
 		void      set_n(dvector _n){ this->m_vn = _n;}
 
 		dvar_matrix get_P()         const { return m_P;    }
