@@ -703,7 +703,7 @@ FUNCTION calc_size_transition_matrix
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
-				if(ll<=nclass+1)
+				if( ll<=nclass+1 )
 				{
 					psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
 				}
@@ -1084,6 +1084,13 @@ FUNCTION calc_predicted_composition
 				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				dvar_vector tmp = N(h)(i);
+        if( shell ) tmp = elem_prod(tmp,molt_probability(h));
+
+        // TODO: Should not be fecundity, rather should 
+        // be multiplied by the proportion mature at length.
+        // FemailsMales mature at 90 mm for BBRKC
+        // Males Mature at 119 mm.
+        if( maturity ) tmp = elem_prod(tmp,fecundity(h))
 			
 				switch (type)
 				{

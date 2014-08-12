@@ -5,7 +5,7 @@
 
 # REPORT FILE
 source("./lib/read.admb.R")
-repfile <- "../examples/demo/gsmac"
+repfile <- "../examples/demo/gmacs"
 A <- read.admb(repfile)
 
 # SOURCE R-scripts
