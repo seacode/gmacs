@@ -204,12 +204,17 @@ DATA_SECTION
 	// |--------------------------------|
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
-	int nslx;
-	!! nslx = 2 * nfleet;
-	init_ivector slx_nsel_blocks(1,nslx);
-	ivector nc(1,nslx);
-	!! nc = 11 + slx_nsel_blocks;
+  int nr;
+	int nc;
+  int nslx;
+  !! nr = 2 * nfleet;
+  !! nc = 12;
+  init_ivector slx_nsel_blocks(1,nr);
+  !! nslx = sum(slx_nsel_blocks);
+
 	init_matrix slx_control(1,nslx,1,nc);
+  !! COUT(slx_control);
+
 	ivector slx_indx(1,nslx);
 	ivector slx_type(1,nslx);
 	ivector slx_phzm(1,nslx);
@@ -223,7 +228,7 @@ DATA_SECTION
 	 vector slx_lam1(1,nslx);
 	 vector slx_lam2(1,nslx);
 	 vector slx_lam3(1,nslx);
-	imatrix slx_blks(1,nslx,1,slx_nsel_blocks);
+	ivector slx_blks(1,nslx);
 
 	LOC_CALCS
 		slx_indx = ivector(column(slx_control,1));
@@ -237,6 +242,7 @@ DATA_SECTION
 		slx_lam1 = column(slx_control,9);
 		slx_lam2 = column(slx_control,10);
 		slx_lam3 = column(slx_control,11);
+    slx_blks = ivector(column(slx_control,12));
 
 		// count up number of parameters required
 		slx_rows.initialize();
@@ -251,21 +257,21 @@ DATA_SECTION
 			{
 				case 1:	// coefficients
 					slx_cols(k) = nclass - 1;
-					slx_rows(k) = bsex * slx_nsel_blocks(k);
+					slx_rows(k) = bsex;
 				break;
 
 				case 2: // logistic
 					slx_cols(k) = 2;
-					slx_rows(k) = bsex * slx_nsel_blocks(k);
+					slx_rows(k) = bsex;
 				break;
 
 				case 3: // logistic95
 					slx_cols(k) = 2;
-					slx_rows(k) = bsex * slx_nsel_blocks(k);
+					slx_rows(k) = bsex;
 				break;
 			}
-			ivector tmp = ivector(slx_control(k).sub(12,11+slx_nsel_blocks(k)));
-			slx_blks(k) = tmp.shift(1);
+			// ivector tmp = ivector(slx_control(k).sub(12,11+slx_nsel_blocks(k)));
+			// slx_blks(k) = tmp.shift(1);
 		}
 	END_CALCS
 
@@ -1090,7 +1096,7 @@ FUNCTION calc_predicted_composition
         // be multiplied by the proportion mature at length.
         // FemailsMales mature at 90 mm for BBRKC
         // Males Mature at 119 mm.
-        if( maturity ) tmp = elem_prod(tmp,fecundity(h))
+        if( maturity ) tmp = elem_prod(tmp,fecundity);
 			
 				switch (type)
 				{
