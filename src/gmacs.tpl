@@ -319,11 +319,11 @@ DATA_SECTION
 
 
 INITIALIZATION_SECTION
-	theta theta_ival;
+	theta     theta_ival;
+  alpha     16.56211;  //16.56211     -0.05496
+  beta      0.05496;
+  scale     12.1;
 	log_fbar  log_pen_fbar;
-	alpha     16.56211;  //16.56211     -0.05496
-	beta      0.05496;
-	scale    12.1;
 	
 
 
@@ -649,9 +649,9 @@ FUNCTION calc_fishing_mortality
 			}
 		}
 	}
-	COUT(F(1)(syr));
-	COUT(log_fbar);
-	COUT(log_fdev(1));
+	//COUT(F(1)(syr));
+	//COUT(log_fbar);
+	//COUT(log_fdev(1));
 	//COUT(logRbar);
 
 	//COUT(log_fbar);
@@ -696,7 +696,7 @@ FUNCTION calc_growth_increments
 	 * transition matrix (alpha, beta, scale) for each sex.
 	 */
 FUNCTION calc_size_transition_matrix
-  cout<<"Start of calc_size_transition_matrix"<<endl;
+  //cout<<"Start of calc_size_transition_matrix"<<endl;
 	int h,l,ll;
 	dvariable tmp;
 	dvar_vector psi(1,nclass+1);
@@ -724,7 +724,7 @@ FUNCTION calc_size_transition_matrix
 		}
 		size_transition(h) = At;
 	}
-	cout<<"End of calc_size_transition_matrix"<<endl;
+	//cout<<"End of calc_size_transition_matrix"<<endl;
 	
 	
 
@@ -810,7 +810,7 @@ FUNCTION calc_molting_probability
 	 * @param rbeta scales the variance of the distribution
 	 */
 FUNCTION calc_recruitment_size_distribution
-  cout<<"Start of calc_recruitment_size_distribution"<<endl;
+  //cout<<"Start of calc_recruitment_size_distribution"<<endl;
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
 	for(int l = 1; l <= nclass+1; l++ )
@@ -819,11 +819,11 @@ FUNCTION calc_recruitment_size_distribution
 	}
 	rec_sdd  = first_difference(x);
 	rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
-  COUT(ra);
-  COUT(rbeta);
-  COUT(ralpha);
-  COUT(rec_sdd);
-	cout<<"End of calc_recruitment_size_distribution"<<endl;
+  //COUT(ra);
+  //COUT(rbeta);
+  //COUT(ralpha);
+  //COUT(rec_sdd);
+	//cout<<"End of calc_recruitment_size_distribution"<<endl;
 
 
 
@@ -854,7 +854,7 @@ FUNCTION calc_initial_numbers_at_length
 		log_initial_recruits = logRini;
 	}
 	recruits(syr) = exp(log_initial_recruits);
-  COUT(log_initial_recruits);
+  // COUT(log_initial_recruits);
 	dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
 
 	// Equilibrium soln.
@@ -870,9 +870,7 @@ FUNCTION calc_initial_numbers_at_length
 			At(l) *= S(h)(syr)(l);
 		}
 		A = trans(At);
-    COUT(S(h)(syr));
-    COUT(size_transition(h)(1));
-		x = -solve(A-Id,rt);
+    x = -solve(A-Id,rt);
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 	}
 	
