@@ -429,7 +429,7 @@ PRELIMINARY_CALCS_SECTION
 	{
 		if(!global_parfile)
 		{
-			cerr << "Must have a gsmac.pin file to use the -sim command line option"<<endl;
+			cerr << "Must have a gmacs.pin file to use the -sim command line option"<<endl;
 			ad_exit(1);
 		}
 		cout<<"|———————————————————————————————————————————|"<<endl;
