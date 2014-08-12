@@ -208,7 +208,7 @@ DATA_SECTION
 	int nc;
   int nslx;
   !! nr = 2 * nfleet;
-  !! nc = 12;
+  !! nc = 13;
   init_ivector slx_nsel_blocks(1,nr);
   !! nslx = sum(slx_nsel_blocks);
 
@@ -228,7 +228,8 @@ DATA_SECTION
 	 vector slx_lam1(1,nslx);
 	 vector slx_lam2(1,nslx);
 	 vector slx_lam3(1,nslx);
-	ivector slx_blks(1,nslx);
+	ivector slx_styr(1,nslx);
+  ivector slx_edyr(1,nslx);
 
 	LOC_CALCS
 		slx_indx = ivector(column(slx_control,1));
@@ -242,7 +243,8 @@ DATA_SECTION
 		slx_lam1 = column(slx_control,9);
 		slx_lam2 = column(slx_control,10);
 		slx_lam3 = column(slx_control,11);
-    slx_blks = ivector(column(slx_control,12));
+    slx_styr = ivector(column(slx_control,12));
+    slx_edyr = ivector(column(slx_control,13));
 
 		// count up number of parameters required
 		slx_rows.initialize();
@@ -568,19 +570,12 @@ FUNCTION calc_selectivities
 		}
 		
 		// fill array with selectivity coefficients
-		j = -1;
-		block = 1;
+		j = 0;
 		for( h = 1; h <= nsex; h++ )
 		{
-			for( i = syr; i <= nyr; i++ )
+			for( i = slx_styr(k); i <= slx_edyr(k); i++ )
 			{
-				if(i == slx_blks(k)(block))
-				{
-					j ++;
-					if(block != slx_nsel_blocks(k)) block ++;
-				}
-				
-				int kk = fabs(slx_indx(k));
+				int kk = fabs(slx_indx(k));   // gear index
 				
 				if(slx_indx(k) > 0)
 				{
@@ -593,16 +588,12 @@ FUNCTION calc_selectivities
 				}
 			}
 			
-			if(!slx_bsex(k)){
-				j-= slx_nsel_blocks(k);
-				block = 1;
-			} 
+      // Increment counter if sex-specific selectivity curves are defined.
+			if(slx_bsex(k))  j++;
 		}
-		//if(k<=nfleet)COUT(log_slx_capture(k)(1)(syr));
-		// delete pointers
-		delete *pSLX;
-	}
-	
+		
+    delete *pSLX;
+  }
 
 
 
