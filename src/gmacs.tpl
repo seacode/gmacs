@@ -421,7 +421,7 @@ PRELIMINARY_CALCS_SECTION
 	{
 		if(!global_parfile)
 		{
-			cerr << "Must have a gsmac.pin file to use the -sim command line option"<<endl;
+			cerr << "Must have a gmacs.pin file to use the -sim command line option"<<endl;
 			ad_exit(1);
 		}
 		cout<<"|———————————————————————————————————————————|"<<endl;
@@ -1084,6 +1084,8 @@ FUNCTION calc_predicted_composition
 				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				dvar_vector tmp = N(h)(i);
+				if(maturity) tmp = elem_prod(tmp,fecundity);
+				if(shell)    tmp = elem_prod(tmp,molt_probability(h));
 			
 				switch (type)
 				{
