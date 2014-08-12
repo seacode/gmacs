@@ -537,10 +537,12 @@ FUNCTION calc_selectivities
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
 
+  
+
 	for( k = 1; k <= nslx; k++ )
 	{	
 		block = 1;
-		cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
+	  cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
 		{
 			switch (slx_type(k))
