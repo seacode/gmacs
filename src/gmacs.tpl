@@ -462,18 +462,18 @@ PROCEDURE_SECTION
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
-	if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
+  if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
 
-	// Population dynamics ...
-	calc_growth_increments();
-	calc_size_transition_matrix();
-	calc_natural_mortality();
-	calc_total_mortality();
+  // Population dynamics ...
+  calc_growth_increments();
+  calc_size_transition_matrix();
+  calc_natural_mortality();
+  calc_total_mortality();
 	calc_molting_probability();
 	calc_recruitment_size_distribution();
-	calc_initial_numbers_at_length();
-	update_population_numbers_at_length();
-	if( verbose ) cout<<"Ok after population dynamcs ..."<<endl;
+  calc_initial_numbers_at_length();
+  update_population_numbers_at_length();
+  if( verbose ) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
 	calc_predicted_catch();
@@ -644,6 +644,7 @@ FUNCTION calc_fishing_mortality
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i));
 					tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
+
 					F(h)(i) += ft(k,h,i) * tmp;
 				}
 			}
@@ -706,6 +707,7 @@ FUNCTION calc_size_transition_matrix
 	
 	for( h = 1; h <= nsex; h++ )
 	{
+    At.initialize();
 		for( l = 1; l <= nclass; l++ )
 		{
 			tmp = molt_increment(h)(l)/scale(h);
@@ -723,7 +725,9 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
+    
 	}
+  
 	//cout<<"End of calc_size_transition_matrix"<<endl;
 	
 	
@@ -843,36 +847,36 @@ FUNCTION calc_recruitment_size_distribution
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
 	N.initialize();
-
-	// Initial recrutment.
-	if ( bInitializeUnfished )
-	{
-		log_initial_recruits = logR0;
-	}
-	else
-	{
-		log_initial_recruits = logRini;
-	}
-	recruits(syr) = exp(log_initial_recruits);
+  // Initial recrutment.
+  if ( bInitializeUnfished )
+  {
+    log_initial_recruits = logR0;
+  }
+  else
+  {
+    log_initial_recruits = logRini;
+  }
+  recruits(syr) = exp(log_initial_recruits);
   // COUT(log_initial_recruits);
-	dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
+  dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
 
-	// Equilibrium soln.
-	dmatrix Id=identity_matrix(1,nclass);
-	dvar_vector x(1,nclass);
-	dvar_matrix At(1,nclass,1,nclass);
-	dvar_matrix  A(1,nclass,1,nclass);
-	for(int h = 1; h <= nsex; h++ )
-	{
-		At = size_transition(h);
-		for(int l = 1; l <= nclass; l++ )
-		{
-			At(l) *= S(h)(syr)(l);
-		}
-		A = trans(At);
+  // Equilibrium soln.
+  dmatrix Id=identity_matrix(1,nclass);
+  dvar_vector x(1,nclass);
+  dvar_matrix At(1,nclass,1,nclass);
+  dvar_matrix  A(1,nclass,1,nclass);
+  for(int h = 1; h <= nsex; h++ )
+  {
+    At = size_transition(h);
+    for(int l = 1; l <= nclass; l++ )
+    {
+      At(l) *= S(h)(syr)(l);
+    }
+    A = trans(At);
     x = -solve(A-Id,rt);
-		N(h)(syr) = elem_prod(x,exp(rec_ini));
-	}
+    N(h)(syr) = elem_prod(x,exp(rec_ini));
+  }
+  
 	
 
 
@@ -1315,7 +1319,13 @@ FUNCTION calc_objective_function
 
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
-
+  if( verbose==2 ) 
+  {
+    COUT(objfun);
+    COUT(nloglike);
+    COUT(nlogPenalty);
+    COUT(priorDensity);
+  }
 
   /**
    * @brief Simulation model
