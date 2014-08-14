@@ -304,12 +304,14 @@ DATA_SECTION
 
 
 	// |--------------------------------------------------|
-	// | OPTIONS FOR TIME VARYING NATURAL MORTALITY RATES |
+	// | OPTIONS FOR TIME-VARYING NATURAL MORTALITY RATES |
 	// |--------------------------------------------------|
 	int nMdev;
 	init_int m_type;
 	init_int Mdev_phz;
 	init_number m_stdev;
+	init_int m_nNodes;
+	init_ivector m_nodeyear(1,m_nNodes);
 	LOC_CALCS
 		switch( m_type )
 		{
@@ -319,6 +321,9 @@ DATA_SECTION
 			break;
 			case 1: 
 				nMdev = nyr-syr; 
+			break;
+			case 2:
+				nMdev = m_nNodes;
 			break;
 		}
 	END_CALCS
@@ -783,26 +788,42 @@ FUNCTION calc_natural_mortality
 	}
 
 	// Add random walk to natural mortality rate.
-	switch( m_type )
+	dvar_vector delta(syr+1,nyr);
+	if (active( m_dev ))
 	{
-		case 0:  // constant natural mortality
+		switch( m_type )
+		{
+			case 0:  // constant natural mortality
 
-		break;
+			break;
 
-		case 1:  // random walk in natural mortality
-			for(int h = 1; h <= nsex; h++ )
-			{
-				for(int i = syr+1; i <= nyr; i++ )
+			case 1:  // random walk in natural mortality
+				for(int h = 1; h <= nsex; h++ )
 				{
-					dvariable delta = m_dev(i-syr);
-					M(h)(i) = M(h)(i-1) * mfexp(delta);
+					for(int i = syr+1; i <= nyr; i++ )
+					{
+						delta(i) = m_dev(i-syr);
+						M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
+					}
 				}
-			}
-		break;
+			break;
 
-		case 2:  // cubic splines
-
-		break;
+			case 2:  // cubic splines
+				dvector iyr = (m_nodeyear - min(m_nodeyear)) / (max(m_nodeyear)-min(m_nodeyear));
+				dvector jyr(syr+1,nyr);
+				jyr.fill_seqadd(0,1./(nyr-syr-1));
+				vcubic_spline_function csf(iyr,m_dev);
+				delta = csf(jyr);
+				//COUT(delta);
+				for(int h = 1; h <= nsex; h++ )
+				{
+					for(int i = syr+1; i <= nyr; i++ )
+					{
+						M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
+					}
+				}
+			break;
+		}
 	}
 
 

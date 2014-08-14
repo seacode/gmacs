@@ -76,12 +76,15 @@
 ##      0 = constant natural mortality
 ##      1 = Random walk (deviates constrained by variance in M)
 ##      2 = Cubic Spline (deviates constrined by nodes & node-placement)
-  1
+  2
 ## Phase of estimation
   3
 ## STDEV in m_dev for Random walk
   0.01
-
+## Number of nodes for cubic spline
+  5
+## Year position of the knots (vector must be equal to the number of nodes)
+  1979 1982 1985 1991 2002
 
 
 
