@@ -654,7 +654,7 @@ FUNCTION calc_selectivities
 	 */
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik;
-	double lambda = 0.5;  // discard mortality rate from control file
+	double lambda = 1.0;  // discard mortality rate from control file
 	F.initialize();
 	ft.initialize();
 	dvar_vector sel(1,nclass);
@@ -1030,14 +1030,15 @@ FUNCTION calc_predicted_catch
 		// Total catch
 		if(h)	// sex specific 
 		{
+			sel = log_slx_capture(k)(h)(i);
 			switch(type)
 			{
 				case 1:		// retained catch
-					sel = exp( log_slx_capture(k)(h)(i) );
+					sel = exp( sel + log_slx_retaind(k)(h)(i) );
 				break;
 
 				case 2:		// discard catch
-					sel = 1.0 - exp( log_slx_retaind(k)(h)(i) );
+					sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
 				break;
 			}
 			tmp_ft = ft(k)(h)(i);
@@ -1049,14 +1050,15 @@ FUNCTION calc_predicted_catch
 		{
 			for( h = 1; h <= nsex; h++ )
 			{
+				sel = log_slx_capture(k)(h)(i);
 				switch(type)
 				{
 					case 1:		// retained catch
-						sel = exp( log_slx_capture(k)(h)(i) );
+						sel = exp( sel + log_slx_retaind(k)(h)(i) );
 					break;
 
 					case 2:		// discard catch
-						sel = 1.0 - exp( log_slx_retaind(k)(h)(i) );
+						sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
 					break;
 				}
 				tmp_ft = ft(k)(h)(i);
@@ -1385,7 +1387,10 @@ FUNCTION calc_objective_function
 
 
 	// 3) Penalty to constrain M in random walk
-	nlogPenalty(3) = dnorm(m_dev,m_stdev);
+	if( active(m_dev) )
+	{
+			nlogPenalty(3) = dnorm(m_dev,m_stdev);
+	}
 
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
@@ -1521,9 +1526,9 @@ FUNCTION dvector calc_mmb()
 	dvector mmb(syr,nyr);
 	mmb.initialize();
 
+	int h = 1;  // males
 	for(int i = syr; i <= nyr; i++ )
 	{
-		int h = 1;
 		mmb(i) = value(N(h)(i)) * fecundity;
 	}
 	return(mmb);
