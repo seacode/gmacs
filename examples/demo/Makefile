@@ -9,7 +9,7 @@ ARGS =
 all: run
 
 $(EXEC): $(DIST)$(EXEC).tpl
-	cp $(DIST)$(EXEC) $@
+	ln -sf $(DIST)$(EXEC) $@
 
 $(DIST)$(EXEC).tpl:
 	$(MAKE) --directory=../../src
