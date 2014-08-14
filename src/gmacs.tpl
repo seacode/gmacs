@@ -205,13 +205,13 @@ DATA_SECTION
 	// |--------------------------------|
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
-  int nr;
+	int nr;
 	int nc;
-  int nslx;
-  !! nr = 2 * nfleet;
-  !! nc = 13;
-  init_ivector slx_nsel_blocks(1,nr);
-  !! nslx = sum(slx_nsel_blocks);
+	int nslx;
+	!! nr = 2 * nfleet;
+	!! nc = 13;
+	init_ivector slx_nsel_blocks(1,nr);
+	!! nslx = sum(slx_nsel_blocks);
 
 	init_matrix slx_control(1,nslx,1,nc);
 
@@ -229,7 +229,7 @@ DATA_SECTION
 	 vector slx_lam2(1,nslx);
 	 vector slx_lam3(1,nslx);
 	ivector slx_styr(1,nslx);
-  ivector slx_edyr(1,nslx);
+	ivector slx_edyr(1,nslx);
 
 	LOC_CALCS
 		slx_indx = ivector(column(slx_control,1));
@@ -243,8 +243,8 @@ DATA_SECTION
 		slx_lam1 = column(slx_control,9);
 		slx_lam2 = column(slx_control,10);
 		slx_lam3 = column(slx_control,11);
-    slx_styr = ivector(column(slx_control,12));
-    slx_edyr = ivector(column(slx_control,13));
+		slx_styr = ivector(column(slx_control,12));
+		slx_edyr = ivector(column(slx_control,13));
 
 		// count up number of parameters required
 		slx_rows.initialize();
@@ -295,11 +295,34 @@ DATA_SECTION
 	END_CALCS
 
 
-  // |-----------------------------------|
-  // | OPTIONS FOR SIZE COMPOSITION DATA |
-  // |-----------------------------------|
-  init_ivector nAgeCompType(1,nSizeComps);
-  init_ivector bTailCompression(1,nSizeComps);
+	// |-----------------------------------|
+	// | OPTIONS FOR SIZE COMPOSITION DATA |
+	// |-----------------------------------|
+	init_ivector nAgeCompType(1,nSizeComps);
+	init_ivector bTailCompression(1,nSizeComps);
+
+
+
+	// |--------------------------------------------------|
+	// | OPTIONS FOR TIME VARYING NATURAL MORTALITY RATES |
+	// |--------------------------------------------------|
+	int nMdev;
+	init_int m_type;
+	init_int Mdev_phz;
+	init_number m_stdev;
+	LOC_CALCS
+		switch( m_type )
+		{
+			case 0:
+				nMdev = 0; 
+				Mdev_phz = -1;
+			break;
+			case 1: 
+				nMdev = nyr-syr; 
+			break;
+		}
+	END_CALCS
+
 
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
@@ -321,9 +344,9 @@ DATA_SECTION
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
-  alpha     16.56211;  //16.56211     -0.05496
-  beta      0.05496;
-  scale     12.1;
+	alpha     16.56211;  //16.56211     -0.05496
+	beta      0.05496;
+	scale     12.1;
 	log_fbar  log_pen_fbar;
 	
 
@@ -383,6 +406,8 @@ PARAMETER_SECTION
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
 	init_bounded_dev_vector rec_dev(syr+1,nyr,-5.0,5.0,rdv_phz); ///> recruitment deviations
 
+	// Time-varying natural mortality rate devs.
+	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
 
 	// Effective sample size parameter for multinomial
 	init_vector log_vn(1,nSizeComps,4);
@@ -463,18 +488,18 @@ PROCEDURE_SECTION
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
-  if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
+	if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
 
-  // Population dynamics ...
-  calc_growth_increments();
-  calc_size_transition_matrix();
-  calc_natural_mortality();
-  calc_total_mortality();
+	// Population dynamics ...
+	calc_growth_increments();
+	calc_size_transition_matrix();
+	calc_natural_mortality();
+	calc_total_mortality();
 	calc_molting_probability();
 	calc_recruitment_size_distribution();
-  calc_initial_numbers_at_length();
-  update_population_numbers_at_length();
-  if( verbose ) cout<<"Ok after population dynamcs ..."<<endl;
+	calc_initial_numbers_at_length();
+	update_population_numbers_at_length();
+	if( verbose ) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
 	calc_predicted_catch();
@@ -550,12 +575,12 @@ FUNCTION calc_selectivities
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
 
-  
+	
 
 	for( k = 1; k <= nslx; k++ )
 	{	
 		block = 1;
-	  cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
+		cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
 		{
 			switch (slx_type(k))
@@ -599,12 +624,12 @@ FUNCTION calc_selectivities
 				}
 			}
 			
-      // Increment counter if sex-specific selectivity curves are defined.
+			// Increment counter if sex-specific selectivity curves are defined.
 			if(slx_bsex(k))  j++;
 		}
 		
-    delete *pSLX;
-  }
+		delete *pSLX;
+	}
 
 
 
@@ -698,7 +723,7 @@ FUNCTION calc_growth_increments
 	 * transition matrix (alpha, beta, scale) for each sex.
 	 */
 FUNCTION calc_size_transition_matrix
-  //cout<<"Start of calc_size_transition_matrix"<<endl;
+	//cout<<"Start of calc_size_transition_matrix"<<endl;
 	int h,l,ll;
 	dvariable tmp;
 	dvar_vector psi(1,nclass+1);
@@ -708,7 +733,7 @@ FUNCTION calc_size_transition_matrix
 	
 	for( h = 1; h <= nsex; h++ )
 	{
-    At.initialize();
+		At.initialize();
 		for( l = 1; l <= nclass; l++ )
 		{
 			tmp = molt_increment(h)(l)/scale(h);
@@ -726,9 +751,9 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
-    
+		
 	}
-  
+	
 	//cout<<"End of calc_size_transition_matrix"<<endl;
 	
 	
@@ -757,7 +782,28 @@ FUNCTION calc_natural_mortality
 		M(h) = M0;
 	}
 
+	// Add random walk to natural mortality rate.
+	switch( m_type )
+	{
+		case 0:  // constant natural mortality
 
+		break;
+
+		case 1:  // random walk in natural mortality
+			for(int h = 1; h <= nsex; h++ )
+			{
+				for(int i = syr+1; i <= nyr; i++ )
+				{
+					dvariable delta = m_dev(i-syr);
+					M(h)(i) = M(h)(i-1) * mfexp(delta);
+				}
+			}
+		break;
+
+		case 2:  // cubic splines
+
+		break;
+	}
 
 
 
@@ -815,7 +861,7 @@ FUNCTION calc_molting_probability
 	 * @param rbeta scales the variance of the distribution
 	 */
 FUNCTION calc_recruitment_size_distribution
-  //cout<<"Start of calc_recruitment_size_distribution"<<endl;
+	//cout<<"Start of calc_recruitment_size_distribution"<<endl;
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
 	for(int l = 1; l <= nclass+1; l++ )
@@ -824,10 +870,10 @@ FUNCTION calc_recruitment_size_distribution
 	}
 	rec_sdd  = first_difference(x);
 	rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
-  //COUT(ra);
-  //COUT(rbeta);
-  //COUT(ralpha);
-  //COUT(rec_sdd);
+	//COUT(ra);
+	//COUT(rbeta);
+	//COUT(ralpha);
+	//COUT(rec_sdd);
 	//cout<<"End of calc_recruitment_size_distribution"<<endl;
 
 
@@ -848,36 +894,36 @@ FUNCTION calc_recruitment_size_distribution
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
 	N.initialize();
-  // Initial recrutment.
-  if ( bInitializeUnfished )
-  {
-    log_initial_recruits = logR0;
-  }
-  else
-  {
-    log_initial_recruits = logRini;
-  }
-  recruits(syr) = exp(log_initial_recruits);
-  // COUT(log_initial_recruits);
-  dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
+	// Initial recrutment.
+	if ( bInitializeUnfished )
+	{
+		log_initial_recruits = logR0;
+	}
+	else
+	{
+		log_initial_recruits = logRini;
+	}
+	recruits(syr) = exp(log_initial_recruits);
+	// COUT(log_initial_recruits);
+	dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
 
-  // Equilibrium soln.
-  dmatrix Id=identity_matrix(1,nclass);
-  dvar_vector x(1,nclass);
-  dvar_matrix At(1,nclass,1,nclass);
-  dvar_matrix  A(1,nclass,1,nclass);
-  for(int h = 1; h <= nsex; h++ )
-  {
-    At = size_transition(h);
-    for(int l = 1; l <= nclass; l++ )
-    {
-      At(l) *= S(h)(syr)(l);
-    }
-    A = trans(At);
-    x = -solve(A-Id,rt);
-    N(h)(syr) = elem_prod(x,exp(rec_ini));
-  }
-  
+	// Equilibrium soln.
+	dmatrix Id=identity_matrix(1,nclass);
+	dvar_vector x(1,nclass);
+	dvar_matrix At(1,nclass,1,nclass);
+	dvar_matrix  A(1,nclass,1,nclass);
+	for(int h = 1; h <= nsex; h++ )
+	{
+		At = size_transition(h);
+		for(int l = 1; l <= nclass; l++ )
+		{
+			At(l) *= S(h)(syr)(l);
+		}
+		A = trans(At);
+		x = -solve(A-Id,rt);
+		N(h)(syr) = elem_prod(x,exp(rec_ini));
+	}
+	
 	
 
 
@@ -1227,6 +1273,7 @@ FUNCTION calculate_prior_densities
 	 * Penalty components
 	 * 	-# Penalty on log_fdev to ensure they sum to zero.
 	 * 	-# Penalty to regularize values of log_fbar.
+	 * 	-# Penalty to constrain random walk in natural mortaliy rates
 	 * 
 	 */
 FUNCTION calc_objective_function
@@ -1316,23 +1363,26 @@ FUNCTION calc_objective_function
 	}
 
 
+	// 3) Penalty to constrain M in random walk
+	nlogPenalty(3) = dnorm(m_dev,m_stdev);
+
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
-  if( verbose==2 ) 
-  {
-    COUT(objfun);
-    COUT(nloglike);
-    COUT(nlogPenalty);
-    COUT(priorDensity);
-  }
+	if( verbose==2 ) 
+	{
+		COUT(objfun);
+		COUT(nloglike);
+		COUT(nlogPenalty);
+		COUT(priorDensity);
+	}
 
-  /**
-   * @brief Simulation model
-   * @details Uses many of the same routines as the assessment
-   * model, over-writes the observed data in memory with simulated 
-   * data.
-   * 
-   */
+	/**
+	 * @brief Simulation model
+	 * @details Uses many of the same routines as the assessment
+	 * model, over-writes the observed data in memory with simulated 
+	 * data.
+	 * 
+	 */
 FUNCTION simulation_model
 	// random number generator
 	random_number_generator rng(rseed);
@@ -1349,20 +1399,20 @@ FUNCTION simulation_model
 	drec_dev.fill_randn(rng);
 	rec_dev = exp(logSigmaR) * drec_dev;
 
-  // Population dynamics ...
-  calc_growth_increments();
-  calc_size_transition_matrix();
-  calc_natural_mortality();
-  calc_total_mortality();
-  calc_molting_probability();
-  calc_recruitment_size_distribution();
-  calc_initial_numbers_at_length();
-  update_population_numbers_at_length();
+	// Population dynamics ...
+	calc_growth_increments();
+	calc_size_transition_matrix();
+	calc_natural_mortality();
+	calc_total_mortality();
+	calc_molting_probability();
+	calc_recruitment_size_distribution();
+	calc_initial_numbers_at_length();
+	update_population_numbers_at_length();
 
-  // observation models ...
-  calc_predicted_catch();
-  calc_relative_abundance();
-  calc_predicted_composition();
+	// observation models ...
+	calc_predicted_catch();
+	calc_relative_abundance();
+	calc_predicted_composition();
 
 	
 	// add observation errors to catch.
@@ -1435,16 +1485,17 @@ REPORT_SECTION
 	REPORT(rec_dev);
 	REPORT(recruits);
 	REPORT(N);
+	REPORT(M);
 	dvector mmb = calc_mmb();
 	REPORT(mmb);
 
 
-  /**
-   * @brief Calculate mature male biomass
-   * @details Calculate mature male biomass based on numbers N array.
-   * 
-   * TODO correct for timing of when the MMB is calculated
-   */
+	/**
+	 * @brief Calculate mature male biomass
+	 * @details Calculate mature male biomass based on numbers N array.
+	 * 
+	 * TODO correct for timing of when the MMB is calculated
+	 */
 FUNCTION dvector calc_mmb()
 	dvector mmb(syr,nyr);
 	mmb.initialize();
