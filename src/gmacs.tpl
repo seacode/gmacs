@@ -86,6 +86,7 @@ DATA_SECTION
 	// | FECUNDITY FOR MMB CALCULATION |
 	// |-------------------------------|
 	init_vector fecundity(1,nclass);
+  init_matrix maturity(1,nsex,1,nclass);
 
 	// |-------------|
 	// | FLEET NAMES |
@@ -1075,12 +1076,14 @@ FUNCTION calc_relative_abundance
 	 * with baby Tabitha sleeping on my back.
 	 * 
 	 * TODO: 
-	 * 	- add pointers for shell type.
-	 * 	- add pointers for maturity state.
+	 * 	- add pointers for shell type.   DONE
+	 * 	- add pointers for maturity state. DONE
+   *  - need to come proper way to handle shell condition.
+   *    I think there should just be newshell/old shell.
 	 */
 FUNCTION calc_predicted_composition
 	int h,i,j,k;
-	int type,shell,maturity;
+	int type,shell,bmature ;
 	d3_pre_size_comps.initialize();
 	dvar_vector dNtmp(1,nclass);
 
@@ -1096,7 +1099,7 @@ FUNCTION calc_predicted_composition
 			h        = d3_SizeComps(ii)(jj,-4);		// sex
 			type     = d3_SizeComps(ii)(jj,-3);		
 			shell    = d3_SizeComps(ii)(jj,-2);	
-			maturity = d3_SizeComps(ii)(jj,-1);
+			bmature  = d3_SizeComps(ii)(jj,-1);
 
 			if(h) // sex specific
 			{
@@ -1104,14 +1107,10 @@ FUNCTION calc_predicted_composition
 				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				dvar_vector tmp = N(h)(i);
-        if( shell ) tmp = elem_prod(tmp,molt_probability(h));
-
-        // TODO: Should not be fecundity, rather should 
-        // be multiplied by the proportion mature at length.
-        // FemailsMales mature at 90 mm for BBRKC
-        // Males Mature at 119 mm.
-        if( maturity ) tmp = elem_prod(tmp,fecundity);
-			
+        
+        if( shell   ) tmp = elem_prod(tmp,molt_probability(h));
+        if( bmature ) tmp = elem_prod(tmp,maturity(h));
+        
 				switch (type)
 				{
 					case 1:
