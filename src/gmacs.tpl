@@ -788,41 +788,37 @@ FUNCTION calc_natural_mortality
 	}
 
 	// Add random walk to natural mortality rate.
-	dvar_vector delta(syr+1,nyr);
 	if (active( m_dev ))
 	{
+		dvar_vector delta(syr+1,nyr);
+		delta.initialize();
+
 		switch( m_type )
 		{
 			case 0:  // constant natural mortality
-
+				delta = 0;
 			break;
 
 			case 1:  // random walk in natural mortality
-				for(int h = 1; h <= nsex; h++ )
-				{
-					for(int i = syr+1; i <= nyr; i++ )
-					{
-						delta(i) = m_dev(i-syr);
-						M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
-					}
-				}
+				delta = m_dev.shift(syr+1);
 			break;
 
 			case 2:  // cubic splines
-				dvector iyr = (m_nodeyear - min(m_nodeyear)) / (max(m_nodeyear)-min(m_nodeyear));
+				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
 				dvector jyr(syr+1,nyr);
 				jyr.fill_seqadd(0,1./(nyr-syr-1));
 				vcubic_spline_function csf(iyr,m_dev);
 				delta = csf(jyr);
-				//COUT(delta);
-				for(int h = 1; h <= nsex; h++ )
-				{
-					for(int i = syr+1; i <= nyr; i++ )
-					{
-						M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
-					}
-				}
 			break;
+		}
+
+		// Update M by year.
+		for(int h = 1; h <= nsex; h++ )
+		{
+			for(int i = syr+1; i <= nyr; i++ )
+			{
+				M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
+			}
 		}
 	}
 
