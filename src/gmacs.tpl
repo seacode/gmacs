@@ -378,9 +378,10 @@ PARAMETER_SECTION
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 
 	// Molt increment parameters
-	init_bounded_vector alpha(1,nsex,0,20.,-1);
-	init_bounded_vector beta(1,nsex,0,10,-1);
-	init_bounded_vector scale(1,nsex,1,20.,-1);
+	// Need molt increment data to estimate these parameters
+	init_bounded_vector alpha(1,nsex,0,20.,-3);
+	init_bounded_vector beta(1,nsex,0,10,-3);
+	init_bounded_vector scale(1,nsex,1,20.,-4);
 
 	// Molt probability parameters
 	init_bounded_vector molt_mu(1,nsex,0,100,-1);
@@ -1081,7 +1082,8 @@ FUNCTION calc_predicted_catch
 	 * 
 	 * @details This function uses the conditional mle for q to scale
 	 * the population to the relative abundance index.  Assumed errors in 
-	 * relative abundance are lognormal.
+	 * relative abundance are lognormal.  Currently assumes that the CPUE
+	 * index is made up of both retained and discarded crabs.
 	 */
 FUNCTION calc_relative_abundance
 	int g,h,i,j,k;
@@ -1178,13 +1180,13 @@ FUNCTION calc_predicted_composition
         
 				switch (type)
 				{
-					case 1:
-						dNtmp = elem_prod(tmp,ret);
+					case 1:		// retained
+						dNtmp = elem_prod(tmp,elem_prod(sel,ret));
 					break;
-					case 2:
-						dNtmp = elem_prod(tmp,dis);
+					case 2: 	// discarded
+						dNtmp = elem_prod(tmp,elem_prod(sel,dis));
 					break;
-					default:
+					default:  // both retained and discarded
 						dNtmp = elem_prod(tmp,sel);
 					break;
 				}
@@ -1376,9 +1378,11 @@ FUNCTION calc_objective_function
 	// 2) Penalty on mean F to regularize the solution.
 	int irow=1;
 	if(last_phase()) irow=2;
+	dvariable fbar;
 	for(int k = 1; k <= nfleet; k++ )
 	{
-		nlogPenalty(2) += dnorm(exp(log_fbar(k)),pen_fbar(k),pen_fstd(irow,k));
+		fbar = mean(ft(k));
+		nlogPenalty(2) += dnorm(fbar,pen_fbar(k),pen_fstd(irow,k));
 	}
 
 
