@@ -37,8 +37,10 @@ Pot_Fishery:Trawl_Bycatch
 # Survey names (delimited with ":" no spaces in names)
 NMFS_Trawl:BSFRF																																											
 
-116	# Number of lines of catch data to read
-
+#116	# Number of lines of catch data to read
+4     # Number of catch data frames
+# Number of rows in each data frame.
+37 21 21 37  
 #0.5	# Time between survey and fishery
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## CATCH DATA
@@ -46,6 +48,7 @@ NMFS_Trawl:BSFRF
 ## Units of catch:	1 = biomass,  2 = numbers
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## year seas fleet sex       obs   cv type units mult  effort
+## Male Retained
    1975    1     1   1  8.745200 0.05    1     1    1       0
    1976    1     1   1 10.603400 0.05    1     1    1       0
    1977    1     1   1 11.733100 0.05    1     1    1       0
@@ -83,6 +86,7 @@ NMFS_Trawl:BSFRF
    2010    1     1   1  2.409949 0.05    1     1    1       0
    2011    1     1   1  1.297750 0.05    1     1    1       0
    2012    1     1   1  1.175752 0.05    1     1    1       0
+## Male discards Pot fishery
    1990    1     1   1  1.718800 0.05    2     1    1       0
    1991    1     1   1  1.453700 0.05    2     1    1       0
    1992    1     1   1  2.305600 0.05    2     1    1       0
@@ -104,6 +108,7 @@ NMFS_Trawl:BSFRF
    2010    1     1   1  2.480059 0.05    2     1    1       0
    2011    1     1   1  1.279960 0.05    2     1    1       0
    2012    1     1   1  0.640960 0.05    2     1    1       0
+## Female discards Pot fishery
    1990    1     1   2  2.670800 0.05    2     1    1       0
    1991    1     1   2  0.484600 0.05    2     1    1       0
    1992    1     1   2  2.408600 0.05    2     1    1       0
@@ -125,6 +130,7 @@ NMFS_Trawl:BSFRF
    2010    1     1   2  0.477993 0.05    2     1    1       0
    2011    1     1   2  0.115860 0.05    2     1    1       0
    2012    1     1   2  0.049933 0.05    2     1    1       0
+## Trawl fishery discards   
    1976    1     2   0  0.384600 0.05    2     1    1       0
    1977    1     2   0  0.787700 0.05    2     1    1       0
    1978    1     2   0  0.646500 0.05    2     1    1       0

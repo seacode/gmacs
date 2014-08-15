@@ -98,13 +98,20 @@ DATA_SECTION
 	// |--------------|
 	// | CATCH SERIES |
 	// |--------------|
-	init_int nCatchRows;						// number of rows in dCatchData
-	init_matrix dCatchData(1,nCatchRows,1,10);	// array of catch data
-	vector obs_catch(1,nCatchRows);
-	vector  catch_cv(1,nCatchRows);
-	!! obs_catch = column(dCatchData,5);
-	!!  catch_cv = column(dCatchData,6);
-	!! ECHO(obs_catch); ECHO(catch_cv);
+	//init_int nCatchRows;						// number of rows in dCatchData
+	init_int nCatchDF;
+	init_ivector nCatchRows(1,nCatchDF);
+	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,10);	// array of catch data
+	matrix obs_catch(1,nCatchDF,1,nCatchRows);
+	matrix  catch_cv(1,nCatchDF,1,nCatchRows);
+	LOC_CALCS
+		for(int k = 1; k <= nCatchDF; k++ )
+		{
+			obs_catch(k) = column(dCatchData(k),5);
+			catch_cv(k)  = column(dCatchData(k),6);
+		}
+	END_CALCS
+	//!! ECHO(obs_catch); ECHO(catch_cv);
 
 	// From the catch series determine the number of fishing mortality
 	// rate parameters that need to be estimated.  Note that  there is
@@ -115,14 +122,17 @@ DATA_SECTION
 	LOC_CALCS
 		nFparams.initialize();
 		fhit.initialize();
-		for(int i = 1; i <= nCatchRows; i++ )
+		for(int k = 1; k <= nCatchDF; k++ )
 		{
-			int k = dCatchData(i,3);
-			int y = dCatchData(i,1);
-			if(!fhit(y,k))
+			for(int i = 1; i <= nCatchRows(k); i++ )
 			{
-				fhit(y,k)   ++;
-				nFparams(k) ++;
+				int g = dCatchData(k)(i,3);
+				int y = dCatchData(k)(i,1);
+				if(!fhit(y,g))
+				{
+					fhit(y,g)   ++;
+					nFparams(g) ++;
+				}
 			}
 		}
 	END_CALCS
@@ -436,8 +446,8 @@ PARAMETER_SECTION
 	vector recruits(syr,nyr);			///> vector of estimated recruits
 	vector survey_q(1,nSurveys);	///> scalers for relative abundance indices (q)
 
-	vector pre_catch(1,nCatchRows);		///> predicted catch from Barnov catch equatoin
-	vector res_catch(1,nCatchRows);		///> catch residuals in log-space
+	matrix pre_catch(1,nCatchDF,1,nCatchRows);		///> predicted catch (Baranov eq)
+	matrix res_catch(1,nCatchDF,1,nCatchRows);		///> catch residuals in log-space
 
 	matrix pre_cpue(1,nSurveys,1,nSurveyRows);	///> predicted relative abundance index
 	matrix res_cpue(1,nSurveys,1,nSurveyRows);	///> relative abundance residuals
@@ -1011,41 +1021,22 @@ FUNCTION calc_predicted_catch
 	dvar_vector nal(1,nclass);		// numbers or biomass at length.
 	
 
+	for(int kk = 1; kk <= nCatchDF; kk++ )
+	{
+		for( j = 1; j <= nCatchRows(kk); j++ )
+		{	
+			i = dCatchData(kk)(j,1);		// year index
+			k = dCatchData(kk)(j,3);		// gear index
+			h = dCatchData(kk)(j,4); 		// sex index
 
-	for( j = 1; j <= nCatchRows; j++ )
-	{	
-		i = dCatchData(j,1);		// year index
-		k = dCatchData(j,3);		// gear index
-		h = dCatchData(j,4); 		// sex index
+			// Type of catch (retained = 1, discard = 2)
+			type = int(dCatchData(kk)(j,7));
 
-		// Type of catch (retained = 1, discard = 2)
-		type = int(dCatchData(j,7));
-
-		// Units of catch equation (1 = biomass, 2 = numbers)
-		unit = int(dCatchData(j,8));
-		
-		// Total catch
-		if(h)	// sex specific 
-		{
-			sel = log_slx_capture(k)(h)(i);
-			switch(type)
-			{
-				case 1:		// retained catch
-					sel = exp( sel + log_slx_retaind(k)(h)(i) );
-				break;
-
-				case 2:		// discard catch
-					sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
-				break;
-			}
-			tmp_ft = ft(k)(h)(i);
-			unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
-
-			pre_catch(j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
-		}
-		else 	// sexes combibed
-		{
-			for( h = 1; h <= nsex; h++ )
+			// Units of catch equation (1 = biomass, 2 = numbers)
+			unit = int(dCatchData(kk)(j,8));
+			
+			// Total catch
+			if(h)	// sex specific 
 			{
 				sel = log_slx_capture(k)(h)(i);
 				switch(type)
@@ -1061,13 +1052,34 @@ FUNCTION calc_predicted_catch
 				tmp_ft = ft(k)(h)(i);
 				unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
 
-				pre_catch(j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+				pre_catch(kk)(j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+			}
+			else 	// sexes combibed
+			{
+				for( h = 1; h <= nsex; h++ )
+				{
+					sel = log_slx_capture(k)(h)(i);
+					switch(type)
+					{
+						case 1:		// retained catch
+							sel = exp( sel + log_slx_retaind(k)(h)(i) );
+						break;
+
+						case 2:		// discard catch
+							sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+						break;
+					}
+					tmp_ft = ft(k)(h)(i);
+					unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+
+					pre_catch(kk)(j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+				}
 			}
 		}
+		// Catch residuals
+		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
 	}
 
-	// Catch residuals
-	res_catch = log(obs_catch) - log(pre_catch);
 
 
 
@@ -1305,8 +1317,11 @@ FUNCTION calc_objective_function
 	nloglike.initialize();
 	
 	// 1) Likelihood of the catch data.
-	dvector catch_sd = sqrt(log(1.0+square(catch_cv)));
-	nloglike(1) = dnorm(res_catch,catch_sd);
+	for(int k = 1; k <= nCatchDF; k++ )
+	{
+		dvector catch_sd = sqrt( log( 1.0+square(catch_cv(k)) ) );
+		nloglike(1) += dnorm(res_catch(k),catch_sd);
+	}
 
 
 
@@ -1442,12 +1457,16 @@ FUNCTION simulation_model
 
 	
 	// add observation errors to catch.
-	dvector err_catch(1,nCatchRows);
-	dvector catch_sd = sqrt(log(1.0 + square(catch_cv)));
+	dmatrix err_catch(1,nCatchDF,1,nCatchRows);
 	err_catch.fill_randn(rng);
-	obs_catch = value(pre_catch);
-	err_catch = elem_prod(catch_sd,err_catch) - 0.5*square(catch_sd);
-	obs_catch = elem_prod(obs_catch,exp(err_catch));
+	dmatrix catch_sd(1,nCatchDF,1,nCatchRows);
+	for(int k = 1; k <= nCatchDF; k++ )
+	{
+		catch_sd(k)  = sqrt(log(1.0 + square(catch_cv(k))));
+		obs_catch(k) = value(pre_catch(k));
+		err_catch(k) = elem_prod(catch_sd(k),err_catch(k)) - 0.5*square(catch_sd(k));
+		obs_catch(k) = elem_prod(obs_catch(k),exp(err_catch(k)));
+	}
 	
 
 	// add observation errors to cpue. & fill in dSurveyData column 5
