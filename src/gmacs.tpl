@@ -662,6 +662,10 @@ FUNCTION calc_selectivities
 	 * 
 	 * Note that this function calculates the fishing mortality rate including
 	 * deaths due to discards.  Where lambda is the discard mortality rate.
+	 * 
+	 * Note also that Jie estimates F for retained fishery, f for male discards and
+	 * f for female discards.  Not recommended to have separate F' for retained and 
+	 * discard fisheries, but might be ok to have sex-specific F's.  
 	 */
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik;
@@ -692,12 +696,7 @@ FUNCTION calc_fishing_mortality
 			}
 		}
 	}
-	//COUT(F(1)(syr));
-	//COUT(log_fbar);
-	//COUT(log_fdev(1));
-	//COUT(logRbar);
 
-	//COUT(log_fbar);
 	
 
 
