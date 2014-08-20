@@ -51,12 +51,10 @@ This software is under development and is not yet intended for general use. If y
 - [ ] Test scripts with simulated data and examples
 
 #### Gmacs Executable
-- [x] Get code to compile:
-  -[ ] Fix bugs so model will run.
-- [ ] Document data structures
+- [ ] Document data structures.
 - [ ] Implement alternative likelihoods for composition data
 - [ ] Develop alternative models for time-varying parameters
-- [ ] Implement spline functions as alternative to 'piecewise linear' functions in current model
+- [x] Implement spline functions as alternative to 'piecewise linear' functions in current model
 - [ ] Consider cumulative normal distribution (and/or others) as alternatives to gamma function for size-at-recruitment and/or growth increment.
 - [ ] Incorporate option to use tagging data to estimate growth.
 - [x] Implement the capacity to change functional form for selectivity (and other factors) over time
