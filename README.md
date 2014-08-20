@@ -29,9 +29,7 @@ Data are supplied via the `model.dat` file in a *flat format* to enable easy ind
 
   * Year, Season, Fleet/Survey, Sex, Type (of data), Shell Condition, Maturity, No. Samples, Data
 
-During the read-in procedure, helpful messages are printed to screen and the information read in is printed to a separate file called `echoinput.rep` allowing users to check and debug their data and control files. 
-
-A general user-guide to the program is under development in the form of the [Gmacs Wiki](https://github.com/seacode/gmacs) and will be made available with future releases.
+Model specifcations are controlled through the `model.ctl` file. During the read-in procedure, helpful messages are printed to screen and information read in from both the data and control files is printed to a separate file called `echoinput.rep` allowing users to check and debug their input. For more information, see the general user-guide at: [Gmacs Wiki](https://github.com/seacode/gmacs).
 
 ## Simulation Mode
 
