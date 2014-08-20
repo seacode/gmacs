@@ -15,25 +15,23 @@ This repository holds source code, instructions, examples, and associated script
 Gmacs implements size-structured assessment models with flexibility similar to that provided by other general stock assessment modelling frameworks. 
 
 ### Input file structure
-Data are supplied via the `model.dat` file in a *flat format* to enable easy indexing and simple preparation using spreadsheet software. Each record for catch, abundance, length-structure etc. should be held in an individual row, with information relating to year, fleet, sex and more:
+Data are supplied via the `model.dat` file in a *flat format* to enable easy indexing and simple preparation. Each record for catch, abundance, length-structure etc. should be held in an individual row, with information relating to year, fleet, sex and more:
 
 ####  Catch data structure
  
-  * Year, Season, Fleet, Sex, Observation    
+  * Year, Season, Fleet, Sex, Observation, CV    
 
 ####  Survey data structure
  
-  * Year, Season, Survey, Observation, Error
+  * Year, Season, Survey, Sex, Abundance, CV
 
 ####  Length frequency data structure  
 
-  * Year, Season, Fleet/Survey, Sex, Maturity, Shell Condition, No. Samples, Data
+  * Year, Season, Fleet/Survey, Sex, Type (of data), Shell Condition, Maturity, No. Samples, Data
 
-Gmacs allows for the inclusion of an optional growth data file `growth.dat` to specify a fixed growth transtion matrix or year-specific growth transtion matrices. The program also reads a control file `model.ctl` for specifications relating to parameter estimation. 
+During the read-in procedure, helpful messages are printed to screen and the information read in is printed to a separate file called `echoinput.rep` allowing users to check and debug their data and control files. 
 
-During the read-in procedure, helpful messages are printed to screen and the information read in is printed to a separate file called `echoinput.gm` allowing users to check and debug their data and control files. 
-
-A general user-guide to the program is under development in parallel with the Gmacs Wiki and will be made available with future releases.
+A general user-guide to the program is under development in the form of the [Gmacs Wiki](https://github.com/seacode/gmacs) and will be made available with future releases.
 
 ## Simulation Mode
 
