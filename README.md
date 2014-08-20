@@ -1,6 +1,6 @@
 # Gmacs
 
-Gmacs is currently under development; the latest source files may or may not compile using recent versions of ADMB. A simple working release version of Gmacs is available via `Tag V1.0` and has been tested using the BBRKC model available in the examples folder. This release will remain active until the next major release, planned for September 2014.
+Gmacs is currently under development. A simple working release version of Gmacs is available via `Tag V1.0` and has been tested using the BBRKC model available in the examples folder. The next major release of Gmacs is planned for September 2014.
 
 ## Table of contents
 - [TODO List](#todo-list)
