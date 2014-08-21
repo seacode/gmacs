@@ -399,8 +399,11 @@ DATA_SECTION
 	// |----------------------|
 	// | SPR Reference points |
 	// |----------------------|
-	number f_spr;
-	number mmb_spr;
+	number spr_fspr;
+	number spr_bspr;
+	number spr_rbar;
+	number spr_cofl;
+	number spr_fofl;
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
@@ -1591,8 +1594,9 @@ REPORT_SECTION
 	if(last_phase())
 	{
 		calc_spr_reference_points(nyr-1,spr_fleet);
-		REPORT(f_spr);
-		REPORT(mmb_spr);
+		REPORT(spr_fspr);
+		REPORT(spr_bspr);
+		REPORT(spr_rbar);
 	}
 
 
@@ -1638,7 +1642,7 @@ FUNCTION dvector calc_mmb()
 	 */
 FUNCTION void calc_spr_reference_points(int iyr,int ifleet)
 	cout<<"Reference points"<<endl;
-	double spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
+	spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
 	
 	// Calculate fishing mortality
 	int count = 100;
@@ -1672,7 +1676,7 @@ FUNCTION void calc_spr_reference_points(int iyr,int ifleet)
 
 			ftmp += ftrial * fratio(k) * tmp;
 		}
-		surv = exp( -value(M(h)(iyr))-ftmp);
+		surv = exp( -value(M(h)(iyr))-ftmp );
 
 		// Calculate growth/survival transition.
 		dmatrix At = value(size_transition(h));
@@ -1689,14 +1693,13 @@ FUNCTION void calc_spr_reference_points(int iyr,int ifleet)
 
 		if(iter > 0 && mmb(iter)/mmb(0) <= spr_target)
 		{
-			f_spr   = ftrial;
-			mmb_spr = mmb(iter);
+			spr_fspr   = ftrial;
+			spr_bspr = mmb(iter);
 			break;
 		}
 	}
 
 	
-	//COUT(mmb/mmb(0));
 	
 	
 
