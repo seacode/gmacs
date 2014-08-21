@@ -1708,8 +1708,8 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 			// Convergence acheived or reaced Tolerance
 			if(fc == 0 || 0.5*(fb-fa) < TOL )
 			{
-				spr_fspr   = ftrial;
-				spr_bspr = mmb/mmb0;
+				spr_fspr = ftrial;
+				spr_bspr = mmb;
 				break;
 			}
 			// bisection update
@@ -1723,7 +1723,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 			}
 		}
 		ftrial = 0.5*(fa+fb);
-		cout<<"iter "<<iter<< "\t"<<ftrial<<endl;
+		//cout<<"iter "<<iter<< "\t"<<ftrial<<endl;
 	}
 
 	
