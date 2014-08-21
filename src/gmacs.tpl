@@ -115,23 +115,35 @@ DATA_SECTION
 
 	// From the catch series determine the number of fishing mortality
 	// rate parameters that need to be estimated.  Note that  there is
-	// a number of combinations which require a F to be estimated. 
+	// a number of combinations which require a F to be estimated. The
+	// ivector nFparams is the number of deviations required for each 
+	// fleet, and nYparams is the number of deviations for female Fs.
 	ivector nFparams(1,nfleet);
+	ivector nYparams(1,nfleet);
 	imatrix fhit(syr,nyr,1,nfleet);
+	imatrix yhit(syr,nyr,1,nfleet);
 
 	LOC_CALCS
 		nFparams.initialize();
+		nYparams.initialize();
 		fhit.initialize();
+		yhit.initialize();
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
 			for(int i = 1; i <= nCatchRows(k); i++ )
 			{
 				int g = dCatchData(k)(i,3);
 				int y = dCatchData(k)(i,1);
+				int h = dCatchData(k)(i,4);
 				if(!fhit(y,g))
 				{
 					fhit(y,g)   ++;
 					nFparams(g) ++;
+				}
+				if(!yhit(y,g))
+				{
+					yhit(y,g)   ++;
+					nYparams(g) ++;
 				}
 			}
 		}
@@ -418,7 +430,7 @@ PARAMETER_SECTION
 	init_number_vector log_fbar(1,nfleet,f_phz);
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
 	init_number_vector log_foff(1,nfleet,f_phz);
-	init_vector_vector log_fdov(1,nfleet,1,nFparams,f_phz);
+	init_vector_vector log_fdov(1,nfleet,1,nYparams,f_phz);
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
@@ -670,7 +682,7 @@ FUNCTION calc_selectivities
 	 * discard fisheries, but might be ok to have sex-specific F's.  
 	 */
 FUNCTION calc_fishing_mortality
-	int h,i,k,ik;
+	int h,i,k,ik,yk;
 	double lambda = 1.0;  // discard mortality rate from control file
 	F.initialize();
 	ft.initialize();
@@ -683,13 +695,16 @@ FUNCTION calc_fishing_mortality
 	{
 		for( h = 1; h <= nsex; h++ )
 		{
-			ik=1;
+			ik=1; yk=1;
 			for( i = syr; i <= nyr; i++ )
 			{
 				if(fhit(i,k))
 				{
-					log_ftmp    = log_fbar(k) + log_fdev(k,ik);
-					log_ftmp   += (1-h) * (log_foff(k) + log_fdov(k,ik++));
+					log_ftmp    = log_fbar(k) + log_fdev(k,ik++);
+					if(yhit(i,k))
+					{
+						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
+					}
 					ft(k)(h)(i) = mfexp(log_ftmp);
 					
 					sel = exp(log_slx_capture(k)(h)(i));
@@ -1391,6 +1406,9 @@ FUNCTION calc_objective_function
 	{
 		dvariable s    = mean(log_fdev(k));
 		nlogPenalty(1) += 10000.0*s*s;
+
+		          s    = mean(log_fdov(k));
+		nlogPenalty(1) += 10000.0*s*s;		       
 	}
 
 
