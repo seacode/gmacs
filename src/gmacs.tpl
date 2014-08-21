@@ -1639,23 +1639,31 @@ FUNCTION dvector calc_mmb()
 	 * 	non-directed fisheries to a recent average and to solve for 
 	 * 	the F for the directed fishery so that you achieve B35%.” but 
 	 * 	I think he meant F35
+	 * 	
+	 * 	Use bisection method to find SPR_target.
 	 */
-FUNCTION void calc_spr_reference_points(int iyr,int ifleet)
+FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	cout<<"Reference points"<<endl;
 	spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
-	
+	int MAXIT = 100;
+	double TOL = 1.0e-4;
 	// Calculate fishing mortality
 	int count = 100;
 	int         h = 1;
 	double    dmr = 0.2;
-	double ftrial = 0.0;
+	double fa,fb,fc;
+	fa=0;
+	fb=2.0;
+	
+	double ftrial = fa;
 	dvector  f_ref(1,nfleet);
 	dvector fratio(1,nfleet);
 	for(int k=1;k<=nfleet;k++) f_ref(k) = value(ft(k)(h)(iyr));
-	dvector mmb(0,count);
-	for(int iter = 0; iter <= count; iter++ )
+	double mmb;
+	double mmb0;
+	for(int iter = 0; iter <= MAXIT; iter++ )
 	{
-		ftrial =  double(iter) / double(count);
+		//ftrial =  double(iter) / double(count);
 		f_ref(ifleet) = ftrial;
 		if(iter > 0)
 		{
@@ -1689,14 +1697,33 @@ FUNCTION void calc_spr_reference_points(int iyr,int ifleet)
 		dvector r = spr_rbar*value(rec_sdd);
 		dvector x = -solve(A-Id,r);
 		
-		mmb(iter) = x * elem_prod(mean_wt(h),maturity(h));
-
-		if(iter > 0 && mmb(iter)/mmb(0) <= spr_target)
+		mmb = x * elem_prod(mean_wt(h),maturity(h));
+		if(iter == 0 )
 		{
-			spr_fspr   = ftrial;
-			spr_bspr = mmb(iter);
-			break;
+			mmb0 = mmb;
 		}
+		if(iter > 0)
+		{ 
+			double fc = mmb/mmb0 - spr_target;
+			// Convergence acheived or reaced Tolerance
+			if(fc == 0 || 0.5*(fb-fa) < TOL )
+			{
+				spr_fspr   = ftrial;
+				spr_bspr = mmb/mmb0;
+				break;
+			}
+			// bisection update
+			if(fc < 0)
+			{
+				fb = ftrial;
+			}
+			else
+			{
+				fa = ftrial;
+			}
+		}
+		ftrial = 0.5*(fa+fb);
+		cout<<"iter "<<iter<< "\t"<<ftrial<<endl;
 	}
 
 	
@@ -1714,6 +1741,7 @@ GLOBALS_SECTION
 	#include <contrib.h>
 	#include "nloglike.h"
 	#include "../../CSTAR/include/cstar.h"
+
 
 	// acl::negativeLogLikelihood *agecomplike;
 
