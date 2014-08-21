@@ -417,6 +417,8 @@ PARAMETER_SECTION
 	// Fishing mortality rate parameters
 	init_number_vector log_fbar(1,nfleet,f_phz);
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
+	init_number_vector log_foff(1,nfleet,f_phz);
+	init_vector_vector log_fdov(1,nfleet,1,nFparams,f_phz);
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
@@ -672,6 +674,7 @@ FUNCTION calc_fishing_mortality
 	double lambda = 1.0;  // discard mortality rate from control file
 	F.initialize();
 	ft.initialize();
+	dvariable log_ftmp;
 	dvar_vector sel(1,nclass);
 	dvar_vector ret(1,nclass);
 	dvar_vector tmp(1,nclass);
@@ -685,7 +688,9 @@ FUNCTION calc_fishing_mortality
 			{
 				if(fhit(i,k))
 				{
-					ft(k)(h)(i) = mfexp(log_fbar(k)+log_fdev(k,ik++));
+					log_ftmp    = log_fbar(k) + log_fdev(k,ik);
+					log_ftmp   += (1-h) * (log_foff(k) + log_fdov(k,ik++));
+					ft(k)(h)(i) = mfexp(log_ftmp);
 					
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i));
