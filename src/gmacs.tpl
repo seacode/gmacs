@@ -396,6 +396,11 @@ DATA_SECTION
 	int nf;
 	!! nf = 0;
 
+	// |----------------------|
+	// | SPR Reference points |
+	// |----------------------|
+	number f_spr;
+	number mmb_spr;
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
@@ -1583,8 +1588,14 @@ REPORT_SECTION
 	dvector mmb = calc_mmb();
 	REPORT(mmb);
 
-	//if(last_phase())
-	//	calc_spr_reference_points(nyr-1,spr_fleet);
+	if(last_phase())
+	{
+		calc_spr_reference_points(nyr-1,spr_fleet);
+		REPORT(f_spr);
+		REPORT(mmb_spr);
+	}
+
+
 
 	/**
 	 * @brief Calculate mature male biomass
@@ -1678,13 +1689,14 @@ FUNCTION void calc_spr_reference_points(int iyr,int ifleet)
 
 		if(iter > 0 && mmb(iter)/mmb(0) <= spr_target)
 		{
-			double f_spr = ftrial;
+			f_spr   = ftrial;
+			mmb_spr = mmb(iter);
 			break;
 		}
 	}
 
 	
-	COUT(mmb/mmb(0));
+	//COUT(mmb/mmb(0));
 	
 	
 
