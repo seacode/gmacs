@@ -120,14 +120,17 @@ DATA_SECTION
 	// fleet, and nYparams is the number of deviations for female Fs.
 	ivector nFparams(1,nfleet);
 	ivector nYparams(1,nfleet);
+	ivector foff_phz(1,nfleet);
 	imatrix fhit(syr,nyr,1,nfleet);
 	imatrix yhit(syr,nyr,1,nfleet);
+
 
 	LOC_CALCS
 		nFparams.initialize();
 		nYparams.initialize();
 		fhit.initialize();
 		yhit.initialize();
+		foff_phz = -1;
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
 			for(int i = 1; i <= nCatchRows(k); i++ )
@@ -144,6 +147,7 @@ DATA_SECTION
 				{
 					yhit(y,g)   ++;
 					nYparams(g) ++;
+					foff_phz(g) = 3;
 				}
 			}
 		}
@@ -429,8 +433,8 @@ PARAMETER_SECTION
 	// Fishing mortality rate parameters
 	init_number_vector log_fbar(1,nfleet,f_phz);
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
-	init_number_vector log_foff(1,nfleet,f_phz);
-	init_vector_vector log_fdov(1,nfleet,1,nYparams,f_phz);
+	init_number_vector log_foff(1,nfleet,foff_phz);
+	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
@@ -717,7 +721,6 @@ FUNCTION calc_fishing_mortality
 		}
 	}
 
-	
 
 
 
