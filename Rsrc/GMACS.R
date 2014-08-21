@@ -18,10 +18,12 @@ for(nm in .RFILES) source(file.path(.LIB, nm), echo=FALSE)
 #  Very Simple functions such that you can build a shiny app
 #  or a tck/tk interface to plot results.
 # Plot catch
-print(pCatch + .THEME)
+print(pCatch[[1]] + .THEME)
+print(pCatch[[2]] + .THEME)
 
 # Plot catch residuals
-print(pCatchRes + .THEME)
+print(pCatchRes[[1]] + .THEME)
+print(pCatchRes[[2]] + .THEME)
 
 # Plot cpue
 print(pCPUE + .THEME)

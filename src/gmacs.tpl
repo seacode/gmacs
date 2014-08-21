@@ -564,7 +564,8 @@ FUNCTION calc_sdreport
 	int h = 1;
 	for(int i = syr; i <= nyr; i++ )
 	{
-		sd_log_mmb(i) = log( N(h)(i) * fecundity );
+		// sd_log_mmb(i) = log( N(h)(i) * fecundity );
+		sd_log_mmb(i) = log(N(h)(i)*elem_prod(mean_wt(h),maturity(h)));
 	}
 	
 	
@@ -1573,7 +1574,7 @@ FUNCTION dvector calc_mmb()
 	int h = 1;  // males
 	for(int i = syr; i <= nyr; i++ )
 	{
-		mmb(i) = value(N(h)(i)) * fecundity;
+		mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h))
 	}
 	return(mmb);
 
