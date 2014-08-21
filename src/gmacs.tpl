@@ -147,7 +147,7 @@ DATA_SECTION
 				{
 					yhit(y,g)   ++;
 					nYparams(g) ++;
-					foff_phz(g) = 2;
+					foff_phz(g) = 1;
 				}
 			}
 		}
@@ -318,6 +318,18 @@ DATA_SECTION
 		for(int i=1; i<=2; i++)
 			pen_fstd(i) = trans(f_controls)(i+1);
 		f_phz    = ivector(column(f_controls,4));
+		// Set foff_phz to f_phz
+		for(int k = 1; k <= nfleet; k++ )
+		{
+			for(int i = syr; i <= nyr; i++ )
+			{
+				if( yhit(i,k) ) 
+				{
+					foff_phz(k) = f_phz(k);
+					break;
+				}
+			}			
+		}
 	END_CALCS
 
 
