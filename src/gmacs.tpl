@@ -370,15 +370,27 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
-	init_vector model_controls(1,3);
+	init_vector model_controls(1,7);
 	int rdv_phz; 										///> Estimated rec_dev phase
 	int verbose;										///> Flag to print to screen
 	int bInitializeUnfished;				///> Flag to initialize at unfished conditions
+	int spr_syr;
+	int spr_nyr;
+	number spr_target;
+	int spr_fleet;
 	LOC_CALCS
-		rdv_phz = int(model_controls(1));
-		verbose = int(model_controls(2));
+		rdv_phz             = int(model_controls(1));
+		verbose             = int(model_controls(2));
 		bInitializeUnfished = int(model_controls(3));
+		spr_syr             = int(model_controls(4));
+		spr_nyr             = int(model_controls(5));
+		spr_target          =     model_controls(6);
+		spr_fleet           = int(model_controls(7));
 	END_CALCS
+
+	init_int eof_ctl;
+	!! if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
+
 	!! cout<<"end of control section"<<endl;
 
 	int nf;
@@ -622,7 +634,6 @@ FUNCTION calc_selectivities
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
 
-	
 
 	for( k = 1; k <= nslx; k++ )
 	{	
@@ -1572,6 +1583,8 @@ REPORT_SECTION
 	dvector mmb = calc_mmb();
 	REPORT(mmb);
 
+	//if(last_phase())
+	//	calc_spr_reference_points(nyr-1,spr_fleet);
 
 	/**
 	 * @brief Calculate mature male biomass
@@ -1589,6 +1602,91 @@ FUNCTION dvector calc_mmb()
 		mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h));
 	}
 	return(mmb);
+
+
+
+	/**
+	 * @brief calculate spr-based reference points.
+	 * @details Calculate the SPR-ration for a given value of F.
+	 * 
+	 * Psuedocode:
+	 * 	-# calculate average recruitment over reference period.
+	 * 	-# compute the ratio of F's based on reference year (nyr)
+	 * 	-# calculate fishing mortality vector.
+	 * 	-# calculate equibrium total mortality vector.
+	 * 	-# calculate growth/survival transition matrix.
+	 * 	
+	 * 	ARGS:
+	 * 	@param iyr Reference year for selectivity and fishing mortality ratios
+	 * 	@param ifleet index for gear to compute SPR values, other fleets with const F
+	 * 	
+	 * 	got response from andre, “The convention is to fix F for all 
+	 * 	non-directed fisheries to a recent average and to solve for 
+	 * 	the F for the directed fishery so that you achieve B35%.” but 
+	 * 	I think he meant F35
+	 */
+FUNCTION void calc_spr_reference_points(int iyr,int ifleet)
+	cout<<"Reference points"<<endl;
+	double spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
+	
+	// Calculate fishing mortality
+	int count = 100;
+	int         h = 1;
+	double    dmr = 0.2;
+	double ftrial = 0.0;
+	dvector  f_ref(1,nfleet);
+	dvector fratio(1,nfleet);
+	for(int k=1;k<=nfleet;k++) f_ref(k) = value(ft(k)(h)(iyr));
+	dvector mmb(0,count);
+	for(int iter = 0; iter <= count; iter++ )
+	{
+		ftrial =  double(iter) / double(count);
+		f_ref(ifleet) = ftrial;
+		if(iter > 0)
+		{
+			for(int k = 1; k <= nfleet; k++ )
+			{
+				 	fratio(k) = f_ref(k) / f_ref(ifleet);
+			}
+		}
+
+		dvector ftmp(1,nclass);
+		dvector surv(1,nclass);
+		ftmp.initialize();
+		for(int k = 1; k <= nfleet; k++ )
+		{
+			dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
+			dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
+			dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
+
+			ftmp += ftrial * fratio(k) * tmp;
+		}
+		surv = exp( -value(M(h)(iyr))-ftmp);
+
+		// Calculate growth/survival transition.
+		dmatrix At = value(size_transition(h));
+		dmatrix Id=identity_matrix(1,nclass);
+		for(int l = 1; l <= nclass; l++ )
+		{
+			At(l) *= surv(l);
+		}
+		dmatrix A = trans(At);
+		dvector r = spr_rbar*value(rec_sdd);
+		dvector x = -solve(A-Id,r);
+		
+		mmb(iter) = x * elem_prod(mean_wt(h),maturity(h));
+
+		if(iter > 0 && mmb(iter)/mmb(0) <= spr_target)
+		{
+			double f_spr = ftrial;
+			break;
+		}
+	}
+
+	
+	COUT(mmb/mmb(0));
+	
+	
 
 RUNTIME_SECTION
     maximum_function_evaluations 500,  500,   1500, 25000, 25000

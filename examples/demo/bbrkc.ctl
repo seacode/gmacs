@@ -94,8 +94,13 @@
   3       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
+  1984    # First year for average recruitment for Bspr calculation.
+  2012    # Last year for average recruitment for Bspr calculation.
+  0.35    # Target SPR ratio for Bmsy proxy.
+  1       # Gear index for SPR calculations (i.e., directed fishery).
 
-
+## EOF
+9999
 
 # Time-varying natural mortality blocks
 # 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 00 01 02 03 04 05 06 07 08 09 10 11 12 13

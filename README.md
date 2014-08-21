@@ -41,14 +41,14 @@ This software is under development and is not yet intended for general use. If y
 ### TODO List ###
 
 #### Project
-- [ ] Create makefile for building and installing Gmacs (debug & release)
+- [x] Create makefile for building and installing Gmacs (debug & release)
 	- [ ] Test makefile on Windows box
-- [ ] Create commandline option for simulation model (-sim seedNo.)
+- [x] Create commandline option for simulation model (-sim seedNo.)
 - [ ] Perform simulation testing
 - [ ] Update documentation
-	- [ ] Extend existing Doxygen comments and create Doxygen output
+	- [x] Extend existing Doxygen comments and create Doxygen output
 	- [ ] Continue working on Gmacs Wiki, parallel with user-guide
-- [ ] Test scripts with simulated data and examples
+- [x] Test scripts with simulated data and examples
 
 #### Gmacs Executable
 - [x] Get code to compile.
