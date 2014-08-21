@@ -147,7 +147,7 @@ DATA_SECTION
 				{
 					yhit(y,g)   ++;
 					nYparams(g) ++;
-					foff_phz(g) = 3;
+					foff_phz(g) = 2;
 				}
 			}
 		}
@@ -1574,7 +1574,7 @@ FUNCTION dvector calc_mmb()
 	int h = 1;  // males
 	for(int i = syr; i <= nyr; i++ )
 	{
-		mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h))
+		mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h));
 	}
 	return(mmb);
 
