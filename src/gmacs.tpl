@@ -140,7 +140,7 @@ DATA_SECTION
 					fhit(y,g)   ++;
 					nFparams(g) ++;
 				}
-				if(!yhit(y,g))
+				if(!yhit(y,g) && h == 2)
 				{
 					yhit(y,g)   ++;
 					nYparams(g) ++;
@@ -703,7 +703,6 @@ FUNCTION calc_fishing_mortality
 					log_ftmp    = log_fbar(k) + log_fdev(k,ik++);
 					if(yhit(i,k))
 					{
-						exit(1);
 						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
 					}
 					ft(k)(h)(i) = mfexp(log_ftmp);
