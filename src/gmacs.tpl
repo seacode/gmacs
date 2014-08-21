@@ -1597,6 +1597,7 @@ REPORT_SECTION
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
 		REPORT(spr_rbar);
+		REPORT(spr_cofl);
 	}
 
 
@@ -1656,6 +1657,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	fb=2.0;
 	
 	double ftrial = fa;
+	dvector nal(1,nclass);
 	dvector  f_ref(1,nfleet);
 	dvector fratio(1,nfleet);
 	for(int k=1;k<=nfleet;k++) f_ref(k) = value(ft(k)(h)(iyr));
@@ -1697,6 +1699,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		dvector r = spr_rbar*value(rec_sdd);
 		dvector x = -solve(A-Id,r);
 		
+
 		mmb = x * elem_prod(mean_wt(h),maturity(h));
 		if(iter == 0 )
 		{
@@ -1710,6 +1713,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 			{
 				spr_fspr = ftrial;
 				spr_bspr = mmb;
+				nal = x;
 				break;
 			}
 			// bisection update
@@ -1726,6 +1730,34 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		//cout<<"iter "<<iter<< "\t"<<ftrial<<endl;
 	}
 
+	// Calculate predicted catch for OFL
+	dvector ctmp(1,nfleet);
+	dvector ftmp(1,nclass);
+	dvector surv(1,nclass);
+	dvector ztmp(1,nclass);
+	ftmp.initialize();
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
+		dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
+		dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
+
+		ftmp += spr_fspr * fratio(k) * tmp;
+	}
+	ztmp = value(M(h)(iyr))+ftmp;
+	surv = exp(-ztmp);
+
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
+		dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
+		dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
+
+		ftmp = spr_fspr * fratio(k) * tmp;
+		ctmp(k) = nal * elem_div(elem_prod(ftmp,1.-surv),ztmp);
+	}
+	spr_cofl = sum(ctmp);
+	COUT(ctmp);
 	
 	
 	
