@@ -370,7 +370,7 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
-	init_vector model_controls(1,7);
+	init_vector model_controls(1,8);
 	int rdv_phz; 										///> Estimated rec_dev phase
 	int verbose;										///> Flag to print to screen
 	int bInitializeUnfished;				///> Flag to initialize at unfished conditions
@@ -378,6 +378,7 @@ DATA_SECTION
 	int spr_nyr;
 	number spr_target;
 	int spr_fleet;
+	number spr_lambda;
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -386,6 +387,7 @@ DATA_SECTION
 		spr_nyr             = int(model_controls(5));
 		spr_target          =     model_controls(6);
 		spr_fleet           = int(model_controls(7));
+		spr_lambda          =     model_controls(8));
 	END_CALCS
 
 	init_int eof_ctl;
@@ -1650,6 +1652,33 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	// Average recruitment
 	spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
 
+	double   _r = spr_rbar;
+	dvector _rx = value(rec_sdd);
+	dmatrix _M(1,nsex,1,nclass);
+	dmatrix _wa(1,nsex,1,nclass);
+	d3_array _A = value(size_transition);
+	for(int h = 1; h <= nsex; h++ )
+	{
+		_M(h) = value(M(h)(iyr));
+		_wa(h) = elem_prod(mean_wt(h),maturity(h));
+	}
+	
+	dmatrix  _fhk(1,nsex,1,nfleet);
+	d3_array _sel(1,nsex,1,nfleet,1,nclass);
+	d3_array _ret(1,nsex,1,nfleet,1,nclass);
+	for(int h = 1; h <= nsex; h++ )
+	{
+		for(int k=1;k<=nfleet;k++)
+		{
+			_fhk(h)(k) = value(ft(k)(h)(iyr));
+			_sel(h)(k) = exp(value(log_slx_capture(k)(h)(iyr)));
+			_ret(h)(k) = exp(value(log_slx_retaind(k)(h)(iyr)));
+		}
+	}
+
+	spr c_spr(_r,_rx,_M,_wa,_A);
+	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,&_sel,&_ret);
+
 	// Calculate fishing mortality
 	int         h = 1;
 	double    dmr = 0.2;
@@ -1658,10 +1687,13 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	fb=2.0;
 	
 	double ftrial = fa;
-	dvector nal(1,nclass);
-	dvector  f_ref(1,nfleet);
+	dvector f_ref(1,nfleet);
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		f_ref(k) = value(ft(k)(h)(iyr));
+	}
 	dvector fratio(1,nfleet);
-	for(int k=1;k<=nfleet;k++) f_ref(k) = value(ft(k)(h)(iyr));
+	dvector nal(1,nclass);
 	double mmb;
 	double mmb0;
 	for(int iter = 0; iter <= MAXIT; iter++ )
@@ -1781,6 +1813,7 @@ GLOBALS_SECTION
 	#include <time.h>
 	#include <contrib.h>
 	#include "nloglike.h"
+	#include "spr.h"
 	#include "../../CSTAR/include/cstar.h"
 
 

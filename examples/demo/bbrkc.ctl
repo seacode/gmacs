@@ -98,6 +98,7 @@
   2012    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
   1       # Gear index for SPR calculations (i.e., directed fishery).
+  1       # Lambda (proportion of mature male biomass for SPR reference points.)
 
 ## EOF
 9999
