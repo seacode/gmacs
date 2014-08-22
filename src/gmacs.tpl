@@ -101,7 +101,7 @@ DATA_SECTION
 	//init_int nCatchRows;						// number of rows in dCatchData
 	init_int nCatchDF;
 	init_ivector nCatchRows(1,nCatchDF);
-	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,10);	// array of catch data
+	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11);	// array of catch data
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix  catch_cv(1,nCatchDF,1,nCatchRows);
 	LOC_CALCS
@@ -1593,8 +1593,9 @@ REPORT_SECTION
 
 	if(last_phase())
 	{
-		calc_spr_reference_points(nyr-1,spr_fleet);
-		calc_ofl(spr_fspr);
+		int refyear = nyr-1;
+		calc_spr_reference_points(refyear,spr_fleet);
+		//calc_ofl(refyear,spr_fspr);
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
 		REPORT(spr_rbar);
@@ -1652,7 +1653,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	// Calculate fishing mortality
 	int         h = 1;
 	double    dmr = 0.2;
-	double fa,fb,fc;
+	double fa,fb;
 	fa=0;
 	fb=2.0;
 	
@@ -1738,8 +1739,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	 * 
 	 * @param f_spr is the asymptotic fishing mortality rate.
 	 */
-FUNCTION void calc_ofl(const double& f_spr)
-	// Calculate predicted catch for OFL
+
 	dvector ctmp(1,nfleet);
 	dvector ftmp(1,nclass);
 	dvector surv(1,nclass);
