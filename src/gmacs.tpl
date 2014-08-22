@@ -22,7 +22,7 @@
 //    k = gear or fleet
 //    l = index for length class
 //    m = index for maturity state
-//    n = index for shell condition.
+//    o = index for shell condition.
 // ==================================================================================== //
 
 DATA_SECTION
