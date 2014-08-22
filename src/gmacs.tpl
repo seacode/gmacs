@@ -1594,6 +1594,7 @@ REPORT_SECTION
 	if(last_phase())
 	{
 		calc_spr_reference_points(nyr-1,spr_fleet);
+		calc_ofl(spr_fspr);
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
 		REPORT(spr_rbar);
@@ -1644,12 +1645,11 @@ FUNCTION dvector calc_mmb()
 	 * 	Use bisection method to find SPR_target.
 	 */
 FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
-	cout<<"Reference points"<<endl;
+	
+	// Average recruitment
 	spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
-	int MAXIT = 100;
-	double TOL = 1.0e-4;
+
 	// Calculate fishing mortality
-	int count = 100;
 	int         h = 1;
 	double    dmr = 0.2;
 	double fa,fb,fc;
@@ -1665,7 +1665,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	double mmb0;
 	for(int iter = 0; iter <= MAXIT; iter++ )
 	{
-		//ftrial =  double(iter) / double(count);
+		
 		f_ref(ifleet) = ftrial;
 		if(iter > 0)
 		{
@@ -1730,6 +1730,15 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		//cout<<"iter "<<iter<< "\t"<<ftrial<<endl;
 	}
 
+
+	/**
+	 * @brief This function caclulates the Overfishing Limit (OFLs)
+	 * @details Determine the Overfishing Limit (OFL) and the 
+	 * fishing mortality rate Fofl.
+	 * 
+	 * @param f_spr is the asymptotic fishing mortality rate.
+	 */
+FUNCTION void calc_ofl(const double& f_spr)
 	// Calculate predicted catch for OFL
 	dvector ctmp(1,nfleet);
 	dvector ftmp(1,nclass);
@@ -1808,6 +1817,9 @@ GLOBALS_SECTION
 	 #define ECHO(object) echoinput << #object << "\n" << object << endl;
 	 // #define ECHO(object,text) echoinput << object << "\t" << text << endl;
  
+
+ 	#define MAXIT 100
+ 	#define TOL 1.0e-4
 	 /**
 	 \def check(object)
 	 Prints name and value of \a object on checkfile %ofstream output file.
