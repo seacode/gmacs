@@ -387,7 +387,7 @@ DATA_SECTION
 		spr_nyr             = int(model_controls(5));
 		spr_target          =     model_controls(6);
 		spr_fleet           = int(model_controls(7));
-		spr_lambda          =     model_controls(8));
+		spr_lambda          =     model_controls(8);
 	END_CALCS
 
 	init_int eof_ctl;
@@ -1676,8 +1676,10 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		}
 	}
 
-	spr c_spr(_r,_rx,_M,_wa,_A);
-	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,&_sel,&_ret);
+	spr c_spr(_r,spr_lambda,_rx,_M,_wa,_A);
+	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret);
+
+
 
 	// Calculate fishing mortality
 	int         h = 1;
