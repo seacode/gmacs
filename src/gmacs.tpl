@@ -1597,7 +1597,7 @@ REPORT_SECTION
 	if(last_phase())
 	{
 		int refyear = nyr-1;
-		//calc_spr_reference_points(refyear,spr_fleet);
+		calc_spr_reference_points(refyear,spr_fleet);
 		//calc_ofl(refyear,spr_fspr);
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
@@ -1853,7 +1853,8 @@ GLOBALS_SECTION
 	 #define ECHO(object) echoinput << #object << "\n" << object << endl;
 	 // #define ECHO(object,text) echoinput << object << "\t" << text << endl;
  
-
+	#undef MAXIT
+	#undef TOL
  	#define MAXIT 100
  	#define TOL 1.0e-4
 	 /**
