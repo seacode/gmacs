@@ -20,10 +20,13 @@
 65  70  75  80  85  90  95 100 105 110 115 120 125 130 135 140 145 150 155 160 165
 
 # weight-at-length allometry w_l = a•l^b
+#a=0.003593,b=2.666076 female > 89mm
+#a=0.000408,b=3.127956 female < 90 new shell
+#a=0.000403, b=3.141334 male new shell
 ## a (male, female)
-0.0002  0.0002
+4.03e-7  4.08e-7
 ## b (male, female)
-3.0     3.0
+3.141334  3.127956
 
 # Male mature weight-at-length (weight * proportion mature) 
 0 0 0 0 0 0 0 0 0 0 0 1.432 1.625 1.835 2.063 2.31  2.576 2.862 3.169 3.7																																			

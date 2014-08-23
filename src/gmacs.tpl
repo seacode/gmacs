@@ -1590,13 +1590,14 @@ REPORT_SECTION
 	REPORT(recruits);
 	REPORT(N);
 	REPORT(M);
+	REPORT(mean_wt);
 	dvector mmb = calc_mmb();
 	REPORT(mmb);
 
 	if(last_phase())
 	{
 		int refyear = nyr-1;
-		calc_spr_reference_points(refyear,spr_fleet);
+		//calc_spr_reference_points(refyear,spr_fleet);
 		//calc_ofl(refyear,spr_fspr);
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
