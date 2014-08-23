@@ -4,7 +4,7 @@ ifeq ($(OPT),TRUE)
 else
 	DIST = ../../src/build/debug/
 endif
-ARGS = 
+ARGS = -nox -iprint 50 
 
 all: run
 
