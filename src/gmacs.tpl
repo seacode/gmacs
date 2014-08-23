@@ -1679,129 +1679,130 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 
 	spr c_spr(_r,spr_lambda,_rx,_M,_wa,_A);
 	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret);
+	spr_bspr = c_spr.get_bspr();
 
 
 
 	// Calculate fishing mortality
-	int         h = 1;
-	double    dmr = 0.2;
-	double fa,fb;
-	fa=0;
-	fb=2.0;
-	
-	double ftrial = fa;
-	dvector f_ref(1,nfleet);
-	for(int k = 1; k <= nfleet; k++ )
-	{
-		f_ref(k) = value(ft(k)(h)(iyr));
-	}
-	dvector fratio(1,nfleet);
-	dvector nal(1,nclass);
-	double mmb;
-	double mmb0;
-	for(int iter = 0; iter <= MAXIT; iter++ )
-	{
-		
-		f_ref(ifleet) = ftrial;
-		if(iter > 0)
-		{
-			for(int k = 1; k <= nfleet; k++ )
-			{
-				 	fratio(k) = f_ref(k) / f_ref(ifleet);
-			}
-		}
-
-		dvector ftmp(1,nclass);
-		dvector surv(1,nclass);
-		ftmp.initialize();
-		for(int k = 1; k <= nfleet; k++ )
-		{
-			dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
-			dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
-			dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
-
-			ftmp += ftrial * fratio(k) * tmp;
-		}
-		surv = exp( -value(M(h)(iyr))-ftmp );
-
-		// Calculate growth/survival transition.
-		dmatrix At = value(size_transition(h));
-		dmatrix Id=identity_matrix(1,nclass);
-		for(int l = 1; l <= nclass; l++ )
-		{
-			At(l) *= surv(l);
-		}
-		dmatrix A = trans(At);
-		dvector r = spr_rbar*value(rec_sdd);
-		dvector x = -solve(A-Id,r);
-		
-
-		mmb = x * elem_prod(mean_wt(h),maturity(h));
-		if(iter == 0 )
-		{
-			mmb0 = mmb;
-		}
-		if(iter > 0)
-		{ 
-			double fc = mmb/mmb0 - spr_target;
-			// Convergence acheived or reaced Tolerance
-			if(fc == 0 || 0.5*(fb-fa) < TOL )
-			{
-				spr_fspr = ftrial;
-				spr_bspr = mmb;
-				nal = x;
-				break;
-			}
-			// bisection update
-			if(fc < 0)
-			{
-				fb = ftrial;
-			}
-			else
-			{
-				fa = ftrial;
-			}
-		}
-		ftrial = 0.5*(fa+fb);
-		//cout<<"iter "<<iter<< "\t"<<ftrial<<endl;
-	}
-
-
-	/**
-	 * @brief This function caclulates the Overfishing Limit (OFLs)
-	 * @details Determine the Overfishing Limit (OFL) and the 
-	 * fishing mortality rate Fofl.
-	 * 
-	 * @param f_spr is the asymptotic fishing mortality rate.
-	 */
-
-	dvector ctmp(1,nfleet);
-	dvector ftmp(1,nclass);
-	dvector surv(1,nclass);
-	dvector ztmp(1,nclass);
-	ftmp.initialize();
-	for(int k = 1; k <= nfleet; k++ )
-	{
-		dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
-		dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
-		dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
-
-		ftmp += spr_fspr * fratio(k) * tmp;
-	}
-	ztmp = value(M(h)(iyr))+ftmp;
-	surv = exp(-ztmp);
-
-	for(int k = 1; k <= nfleet; k++ )
-	{
-		dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
-		dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
-		dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
-
-		ftmp = spr_fspr * fratio(k) * tmp;
-		ctmp(k) = nal * elem_div(elem_prod(ftmp,1.-surv),ztmp);
-	}
-	spr_cofl = sum(ctmp);
-	COUT(ctmp);
+//	int         h = 1;
+//	double    dmr = 0.2;
+//	double fa,fb;
+//	fa=0;
+//	fb=2.0;
+//	
+//	double ftrial = fa;
+//	dvector f_ref(1,nfleet);
+//	for(int k = 1; k <= nfleet; k++ )
+//	{
+//		f_ref(k) = value(ft(k)(h)(iyr));
+//	}
+//	dvector fratio(1,nfleet);
+//	dvector nal(1,nclass);
+//	double mmb;
+//	double mmb0;
+//	for(int iter = 0; iter <= MAXIT; iter++ )
+//	{
+//		
+//		f_ref(ifleet) = ftrial;
+//		if(iter > 0)
+//		{
+//			for(int k = 1; k <= nfleet; k++ )
+//			{
+//				 	fratio(k) = f_ref(k) / f_ref(ifleet);
+//			}
+//		}
+//
+//		dvector ftmp(1,nclass);
+//		dvector surv(1,nclass);
+//		ftmp.initialize();
+//		for(int k = 1; k <= nfleet; k++ )
+//		{
+//			dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
+//			dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
+//			dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
+//
+//			ftmp += ftrial * fratio(k) * tmp;
+//		}
+//		surv = exp( -value(M(h)(iyr))-ftmp );
+//
+//		// Calculate growth/survival transition.
+//		dmatrix At = value(size_transition(h));
+//		dmatrix Id=identity_matrix(1,nclass);
+//		for(int l = 1; l <= nclass; l++ )
+//		{
+//			At(l) *= surv(l);
+//		}
+//		dmatrix A = trans(At);
+//		dvector r = spr_rbar*value(rec_sdd);
+//		dvector x = -solve(A-Id,r);
+//		
+//
+//		mmb = x * elem_prod(mean_wt(h),maturity(h));
+//		if(iter == 0 )
+//		{
+//			mmb0 = mmb;
+//		}
+//		if(iter > 0)
+//		{ 
+//			double fc = mmb/mmb0 - spr_target;
+//			// Convergence acheived or reaced Tolerance
+//			if(fc == 0 || 0.5*(fb-fa) < TOL )
+//			{
+//				spr_fspr = ftrial;
+//				spr_bspr = mmb;
+//				nal = x;
+//				break;
+//			}
+//			// bisection update
+//			if(fc < 0)
+//			{
+//				fb = ftrial;
+//			}
+//			else
+//			{
+//				fa = ftrial;
+//			}
+//		}
+//		ftrial = 0.5*(fa+fb);
+//		//cout<<"iter "<<iter<< "\t"<<ftrial<<endl;
+//	}
+//
+//
+//	/**
+//	 * @brief This function caclulates the Overfishing Limit (OFLs)
+//	 * @details Determine the Overfishing Limit (OFL) and the 
+//	 * fishing mortality rate Fofl.
+//	 * 
+//	 * @param f_spr is the asymptotic fishing mortality rate.
+//	 */
+//
+//	dvector ctmp(1,nfleet);
+//	dvector ftmp(1,nclass);
+//	dvector surv(1,nclass);
+//	dvector ztmp(1,nclass);
+//	ftmp.initialize();
+//	for(int k = 1; k <= nfleet; k++ )
+//	{
+//		dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
+//		dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
+//		dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
+//
+//		ftmp += spr_fspr * fratio(k) * tmp;
+//	}
+//	ztmp = value(M(h)(iyr))+ftmp;
+//	surv = exp(-ztmp);
+//
+//	for(int k = 1; k <= nfleet; k++ )
+//	{
+//		dvector sel = exp(value(log_slx_capture(k)(h)(iyr)));
+//		dvector ret = exp(value(log_slx_retaind(k)(h)(iyr)));
+//		dvector tmp = elem_prod(sel,ret+(1.0 - ret)*dmr);
+//
+//		ftmp = spr_fspr * fratio(k) * tmp;
+//		ctmp(k) = nal * elem_div(elem_prod(ftmp,1.-surv),ztmp);
+//	}
+//	spr_cofl = sum(ctmp);
+//	COUT(ctmp);
 	
 	
 	
