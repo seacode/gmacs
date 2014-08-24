@@ -1169,7 +1169,7 @@ FUNCTION calc_relative_abundance
 			i = dSurveyData(k)(j)(1);		// year index
 			g = dSurveyData(k)(j)(3);		// gear index
 			h = dSurveyData(k)(j)(4);		//  sex index
-			unit = dSurveyData(k)(j)(7);	// units 1==biomass
+			unit = dSurveyData(k)(j)(7);	// units 1==biomass 2==Numbers
 
 			if(h)
 			{
