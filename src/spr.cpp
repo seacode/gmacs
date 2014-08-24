@@ -86,7 +86,7 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 	m_ret.allocate(_ret);
 	m_sel = _sel;
 	m_ret = _ret;
-	COUT("ok to here")
+	
 
 	do
 	{

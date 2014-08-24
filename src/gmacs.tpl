@@ -1,4 +1,5 @@
 // ==================================================================================== //
+//   ETHOS -> new model name after Chateau Ste Michelle Reserve wines
 //   Gmacs: Generalized Modeling for Alaskan Crab Stocks.
 //
 //   Authors: Athol Whitten and Jim Ianelli
@@ -1008,6 +1009,7 @@ FUNCTION calc_initial_numbers_at_length
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 	}
 	
+	if(verbose) COUT(N(1)(syr));
 	
 
 
@@ -1052,6 +1054,7 @@ FUNCTION update_population_numbers_at_length
 		}
 	}
 	
+	if(verbose) COUT(N(1)(nyr));
 
 
 
@@ -1134,6 +1137,7 @@ FUNCTION calc_predicted_catch
 		}
 		// Catch residuals
 		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
+		if(verbose)COUT(pre_catch(kk)(1));
 	}
 
 
@@ -1159,6 +1163,7 @@ FUNCTION calc_relative_abundance
 	dvar_vector nal(1,nclass);	// numbers at length
 	dvar_vector sel(1,nclass);	// selectivity at length
 
+
 	for( k = 1; k <= nSurveys; k++ )
 	{
 		dvar_vector V(1,nSurveyRows(k));	
@@ -1174,7 +1179,15 @@ FUNCTION calc_relative_abundance
 			if(h)
 			{
 				sel = exp(log_slx_capture(g)(h)(i));
-				unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+				switch(unit)
+				{
+					case 1:
+						nal=elem_prod(N(h)(i),mean_wt(h));
+					break;
+					case 2:
+						nal=N(h)(i);
+					break;
+				}
 				V(j) = nal * sel;
 			}
 			else
@@ -1182,7 +1195,15 @@ FUNCTION calc_relative_abundance
 				for( h = 1; h <= nsex; h++ )
 				{
 					sel = exp(log_slx_capture(g)(h)(i));
-					unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+					switch(unit)
+					{
+						case 1:
+							nal=elem_prod(N(h)(i),mean_wt(h));
+						break;
+						case 2:
+							nal=N(h)(i);
+						break;
+					}
 					V(j) += nal * sel;
 				}
 			}
@@ -1373,6 +1394,7 @@ FUNCTION calc_objective_function
 	nloglike.initialize();
 	
 	// 1) Likelihood of the catch data.
+	if(verbose) COUT(res_catch(1));
 	for(int k = 1; k <= nCatchDF; k++ )
 	{
 		dvector catch_sd = sqrt( log( 1.0+square(catch_cv(k)) ) );
@@ -1383,6 +1405,7 @@ FUNCTION calc_objective_function
 
 
 	// 2) Likelihood of the relative abundance data.
+  if(verbose) COUT(res_cpue(1));
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
