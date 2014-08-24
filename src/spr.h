@@ -22,6 +22,8 @@ private:
 	double  m_spr;
 	double  m_fspr;
 	double  m_bspr;
+	double  m_fofl;
+	double  m_cofl;
 
 	dvector m_rx;
 	dmatrix m_M;
@@ -30,8 +32,8 @@ private:
 	d3_array m_A;
 
 	dvector m_fref;
-	dmatrix m_sel;
-	dmatrix m_ret;
+	d3_array m_sel;
+	d3_array m_ret;
 public:
 	// constructors
 	spr();
@@ -49,8 +51,8 @@ public:
 	double get_bspr() {return m_bspr;}
 
 	// TODO add the following functions.
-	// double get_fofl
-	// double get_cofl
+	double get_fofl(const double& alpha, const double& limit, const double& ssb);
+	double get_cofl(const dmatrix& N);
 	
 	dvector calc_equilibrium(const dvector& surv, const int& sex);
 };

@@ -74,14 +74,19 @@ dvector spr::calc_equilibrium(const dvector& surv, const int& sex)
 double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix& _fhk,
 	                const d3_array _sel, const d3_array _ret)
 {
-	int m_nfleet = _fhk.colmax();
-	int iter = 0;
+	m_nfleet  = _fhk.colmax();
+	int iter  = 0;
 	double fa = 0.00;
 	double fb = 2.00;
 	double fc = 0.5*(fa+fb);
 	dmatrix F = _fhk;
 	dvector fratio(1,m_nfleet);
 	int k,h;
+	m_sel.allocate(_sel);
+	m_ret.allocate(_ret);
+	m_sel = _sel;
+	m_ret = _ret;
+	COUT("ok to here")
 
 	do
 	{
@@ -147,8 +152,52 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 }
 
 
+/**
+ * @brief Calculate fishing mortality rate for OFL
+ * @details Use harvest control rule to calculate Fofl
+ * @param alpha is the depletion level at 0 fishing.
+ * @param limit Depletion level where Fofl = 0
+ * @param ssb projected spawning stock biomass
+ * @return [description]
+ */
+double spr::get_fofl(const double& alpha, const double& limit, const double& ssb)
+{
+	double depletion = ssb/m_bspr;
+	m_fofl = 0;
+	if( depletion > 1.0 )
+	{
+		m_fofl = m_fspr;
+	}
+
+	if( limit < depletion && depletion <= 1.0 )
+	{
+		m_fofl = m_fspr * (depletion - alpha)/(1.0-alpha);
+	}
 
 
+	return m_fofl;
+}
+
+double spr::get_cofl(const dmatrix& N)
+{
+	cout<<"Get OFL"<<endl;
+	double ctmp = 0;
+	double dmr  = 0.8;
+	for(int h = 1; h <= m_nsex; h++ )
+	{
+		for(int k = 1; k <= m_nfleet; k++ )
+		{	
+			cout<<"h = "<<h<<" k = "<<k<<endl;
+			dvector vul = elem_prod(m_sel(h)(k),m_ret(h)(k)+(1.0-m_ret(h)(k))*dmr);
+			dvector   f = m_fofl * vul;
+			dvector   z = m_M(h) + f;
+			dvector   o = 1.0-exp(-z);
+			ctmp += N(h)*elem_div(elem_prod(f,o),z);
+		}
+	}
+	m_cofl = ctmp;
+	return(m_cofl);
+}
 
 
 

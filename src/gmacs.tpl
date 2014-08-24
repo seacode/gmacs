@@ -1602,6 +1602,7 @@ REPORT_SECTION
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
 		REPORT(spr_rbar);
+		REPORT(spr_fofl);
 		REPORT(spr_cofl);
 	}
 
@@ -1656,11 +1657,13 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	double   _r = spr_rbar;
 	dvector _rx = value(rec_sdd);
 	dmatrix _M(1,nsex,1,nclass);
+	dmatrix _N(1,nsex,1,nclass);
 	dmatrix _wa(1,nsex,1,nclass);
 	d3_array _A = value(size_transition);
 	for(int h = 1; h <= nsex; h++ )
 	{
 		_M(h) = value(M(h)(iyr));
+		_N(h) = value(N(h)(nyr));
 		_wa(h) = elem_prod(mean_wt(h),maturity(h));
 	}
 	
@@ -1677,12 +1680,18 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		}
 	}
 
+	// SPR reference points
 	spr c_spr(_r,spr_lambda,_rx,_M,_wa,_A);
 	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret);
 	spr_bspr = c_spr.get_bspr();
 
-
-
+	// OFL Calculations
+	dvector mmb = calc_mmb();
+	double cuttoff = 0.1;
+	double limit = 0.25;
+	spr_fofl = c_spr.get_fofl(cuttoff,limit,mmb(nyr));
+	spr_cofl = c_spr.get_cofl(_N);
+	COUT("Finished SPR Calcs")
 	// Calculate fishing mortality
 //	int         h = 1;
 //	double    dmr = 0.2;
