@@ -75,6 +75,8 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 	                const d3_array _sel, const d3_array _ret)
 {
 	m_nfleet  = _fhk.colmax();
+	m_ifleet  = ifleet;
+	m_fref    = _fhk;
 	int iter  = 0;
 	double fa = 0.00;
 	double fb = 2.00;
@@ -183,16 +185,20 @@ double spr::get_cofl(const dmatrix& N)
 	cout<<"Get OFL"<<endl;
 	double ctmp = 0;
 	double dmr  = 0.8;
+	double ftmp;
 	for(int h = 1; h <= m_nsex; h++ )
 	{
 		for(int k = 1; k <= m_nfleet; k++ )
 		{	
-			cout<<"h = "<<h<<" k = "<<k<<endl;
+			ftmp = m_fref(h)(k);
+			if(k == m_ifleet) ftmp = m_fofl;
+
 			dvector vul = elem_prod(m_sel(h)(k),m_ret(h)(k)+(1.0-m_ret(h)(k))*dmr);
-			dvector   f = m_fofl * vul;
+
+			dvector   f = ftmp * vul;
 			dvector   z = m_M(h) + f;
 			dvector   o = 1.0-exp(-z);
-			ctmp += N(h)*elem_div(elem_prod(f,o),z);
+			ctmp += elem_prod(N(h),m_wa(h)) * elem_div(elem_prod(f,o),z);
 		}
 	}
 	m_cofl = ctmp;

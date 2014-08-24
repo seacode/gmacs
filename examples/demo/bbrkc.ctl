@@ -96,8 +96,8 @@
   3       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
-  1992    # First year for average recruitment for Bspr calculation.
-  2012    # Last year for average recruitment for Bspr calculation.
+  1984    # First year for average recruitment for Bspr calculation.
+  2013    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
   1       # Gear index for SPR calculations (i.e., directed fishery).
   1       # Lambda (proportion of mature male biomass for SPR reference points.)

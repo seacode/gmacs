@@ -14,6 +14,7 @@ private:
 	int m_nsex;
 	int m_nfleet;
 	int m_nclass;
+	int m_ifleet;
 
 	double  m_rbar;
 	double  m_lambda;
@@ -31,7 +32,7 @@ private:
 
 	d3_array m_A;
 
-	dvector m_fref;
+	dmatrix m_fref;
 	d3_array m_sel;
 	d3_array m_ret;
 public:
