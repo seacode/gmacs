@@ -345,6 +345,7 @@ DATA_SECTION
 	// |-----------------------------------|
 	init_ivector nAgeCompType(1,nSizeComps);
 	init_ivector bTailCompression(1,nSizeComps);
+	init_ivector nvn_phz(1,nSizeComps);
 
 
 
@@ -485,7 +486,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
 
 	// Effective sample size parameter for multinomial
-	init_vector log_vn(1,nSizeComps,4);
+	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
 	vector nloglike(1,4);
 	vector nlogPenalty(1,4);
@@ -1436,19 +1437,13 @@ FUNCTION calc_objective_function
 		acl::negativeLogLikelihood *ploglike;
 		switch(nAgeCompType(ii))
 		{
-			case 1: // multinomial with fixed n
+			case 1: // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
 				
 				nloglike(3) 				 += ploglike->nloglike(log_effn,P);
 				d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 			break;
 
-			case 2: // multinomial with estimated n
-				ploglike = new acl::multinomial(O,bCmp);
-
-				nloglike(3) 				 += ploglike->nloglike(log_effn,P);
-				d3_res_size_comps(ii) = ploglike->residual(log_effn,P);			
-			break;
 		}
 		
 

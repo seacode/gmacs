@@ -62,15 +62,15 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
-##   -1) multinomial with fixed sample size
-##   -2) multinomial with estimated sample size
-##   -3) logistic normal
-##   -4) multivariate-t
+##   -1) multinomial with estimated/fixed sample size
+##   -2) logistic normal
+##   -3) multivariate-t
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-2   2   2   2   2   2   2   2   2   # Type of likelihood.
-0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
+ 1   1   1   1   1   1   1   1   1   # Type of likelihood.
+ 0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
+-1   2   2   2   2   2   2   2   2   # Phz for estimating effective sample size (if appl.)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
