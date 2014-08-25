@@ -9,7 +9,7 @@
  * @param p predicted proportions
  * @return negative loglikelihood.
  */
-const dvariable acl::multinomial::dmultinom(const dvariable& log_vn,
+const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
                                             const dmatrix& o, 
                                             const dvar_matrix& p) const
 {
@@ -22,7 +22,7 @@ const dvariable acl::multinomial::dmultinom(const dvariable& log_vn,
 	}
 
 
-	dvariable vn  = mfexp(log_vn);
+	dvar_vector vn  = mfexp(log_vn);
 	dvariable ff = 0;
 	int r1 = o.rowmin();
 	int r2 = o.rowmax();
@@ -31,8 +31,8 @@ const dvariable acl::multinomial::dmultinom(const dvariable& log_vn,
   	int c1 = o(i).indexmin();
 	  int c2 = o(i).indexmax();
 		//scale observed numbers by effective sample size.
-		dvar_vector sobs = vn * o(i)/sum(o(i));  
-		ff -= gammln(vn);
+		dvar_vector sobs = vn(i) * o(i)/sum(o(i));  
+		ff -= gammln(vn(i));
 		for(int j = c1; j <= c2; j++ )
 		{
 			if( value(sobs(j)) > 0.0 )
@@ -45,16 +45,17 @@ const dvariable acl::multinomial::dmultinom(const dvariable& log_vn,
 }
 
 
-const dmatrix acl::multinomial::pearson_residuals(const dvariable& log_vn,
+const dmatrix acl::multinomial::pearson_residuals(const dvar_vector& log_vn,
                                 									const dmatrix& o,
                                 									const dvar_matrix p) const
 {
-	double vn = value(mfexp(log_vn));
+	dvector vn = value(mfexp(log_vn));
 	dmatrix res = o - value(p);
-	dmatrix var = value(elem_prod(p,1.0-p)) / vn;
+	// dmatrix var = value(elem_prod(p,1.0-p)) / vn;
 	for(int i = o.rowmin(); i <= o.rowmax(); i++ )
 	{
-		res(i) = elem_div(res(i),sqrt(var(i)+TINY));
+		dvector var = value(elem_prod(p(i),1.0-p(i))) / vn(i);
+		res(i) = elem_div(res(i),sqrt(var+TINY));
 	}
 	return res;
 }

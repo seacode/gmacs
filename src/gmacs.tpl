@@ -1430,7 +1430,7 @@ FUNCTION calc_objective_function
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
-
+		dvar_vector log_effn  = log(exp(log_vn(ii)) * size_comp_sample_size(ii));
 
 		bool bCmp = bTailCompression(ii);
 		acl::negativeLogLikelihood *ploglike;
@@ -1438,14 +1438,16 @@ FUNCTION calc_objective_function
 		{
 			case 1: // multinomial with fixed n
 				ploglike = new acl::multinomial(O,bCmp);
-				nloglike(3) 				 += ploglike->nloglike(log_vn(ii),P);
-				d3_res_size_comps(ii) = ploglike->residual(log_vn(ii),P);
+				
+				nloglike(3) 				 += ploglike->nloglike(log_effn,P);
+				d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 			break;
 
 			case 2: // multinomial with estimated n
 				ploglike = new acl::multinomial(O,bCmp);
-				nloglike(3) 				 += ploglike->nloglike(log_vn(ii),P);
-				d3_res_size_comps(ii) = ploglike->residual(log_vn(ii),P);
+
+				nloglike(3) 				 += ploglike->nloglike(log_effn,P);
+				d3_res_size_comps(ii) = ploglike->residual(log_effn,P);			
 			break;
 		}
 		

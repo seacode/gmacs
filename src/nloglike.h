@@ -69,8 +69,8 @@ namespace acl
 		//virtual const dvariable nloglike(const dmatrix& _O) const = 0;
 		//virtual const   dmatrix residual(const dmatrix& _O) const = 0;
 		
-		virtual const dvariable nloglike(const dvariable& _n, const dvar_matrix& _P) const = 0;
-		virtual const   dmatrix residual(const dvariable& _n, const dvar_matrix& _P) const = 0;
+		virtual const dvariable nloglike(const dvar_vector& _n, const dvar_matrix& _P) const = 0;
+		virtual const   dmatrix residual(const dvar_vector& _n, const dvar_matrix& _P) const = 0;
 
 		negativeLogLikelihood(){}
 		negativeLogLikelihood(const dmatrix& _O)
@@ -219,7 +219,7 @@ namespace acl
 
 	
 		// negative log likelihood
-		const dvariable nloglike(const dvariable& log_vn, const dvar_matrix& _P) const 
+		const dvariable nloglike(const dvar_vector& log_vn, const dvar_matrix& _P) const 
 		{
 			if(m_bCompress)
 			{
@@ -234,17 +234,17 @@ namespace acl
 		}
 
 		// pearson residuals
-		const   dmatrix residual(const dvariable& _n, const dvar_matrix& _P) const
+		const   dmatrix residual(const dvar_vector& _n, const dvar_matrix& _P) const
 		{
 			return pearson_residuals(_n,this->get_O(),_P);
 		}
 		
 		
-		const dvariable dmultinom(const dvariable& log_vn,
+		const dvariable dmultinom(const dvar_vector& log_vn,
 	                          const dmatrix& o, 
 	                          const dvar_matrix& p) const;
 
-		const dmatrix pearson_residuals(const dvariable& log_vn,
+		const dmatrix pearson_residuals(const dvar_vector& log_vn,
                   									const dmatrix& o,
                   									const dvar_matrix p) const;
 	};
