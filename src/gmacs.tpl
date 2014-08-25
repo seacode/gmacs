@@ -1431,12 +1431,15 @@ FUNCTION calc_objective_function
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 
+
 		bool bCmp = bTailCompression(ii);
 		acl::negativeLogLikelihood *ploglike;
 		switch(nAgeCompType(ii))
 		{
 			case 1: // multinomial with fixed n
-				
+				ploglike = new acl::multinomial(O,bCmp);
+				nloglike(3) 				 += ploglike->nloglike(log_vn(ii),P);
+				d3_res_size_comps(ii) = ploglike->residual(log_vn(ii),P);
 			break;
 
 			case 2: // multinomial with estimated n
@@ -1749,6 +1752,7 @@ GLOBALS_SECTION
 	#include <time.h>
 	#include <contrib.h>
 	#include "nloglike.h"
+	
 	#include "spr.h"
 	#include "../../CSTAR/include/cstar.h"
 

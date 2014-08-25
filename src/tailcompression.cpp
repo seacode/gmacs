@@ -1,6 +1,7 @@
 #include <admodel.h>
 #include "nloglike.h"
 
+
 /**
  * @brief Determine non-zero array elements for tail compression.
  * @details This routine fills the member variables m_jmin and m_jmax
@@ -10,6 +11,8 @@
  * @return [description]
  * @author Steve Martell
  */
+
+
 void acl::negativeLogLikelihood::tail_compression()
 {
 	// cout<<"Running tail compression"<<endl;
@@ -36,5 +39,4 @@ void acl::negativeLogLikelihood::tail_compression()
 
 	}
 }
-
 
