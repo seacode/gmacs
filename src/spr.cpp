@@ -72,11 +72,13 @@ dvector spr::calc_equilibrium(const dvector& surv, const int& sex)
  * @return [description]
  */
 double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix& _fhk,
-	                const d3_array _sel, const d3_array _ret)
+	                const d3_array _sel, const d3_array _ret,
+	                const dvector _dmr)
 {
 	m_nfleet  = _fhk.colmax();
 	m_ifleet  = ifleet;
 	m_fref    = _fhk;
+	m_dmr     = _dmr;
 	int iter  = 0;
 	double fa = 0.00;
 	double fb = 2.00;
@@ -103,7 +105,7 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 
 			dmatrix sel = _sel(h);
 			dmatrix ret = _ret(h);
-			double dmr = 0.8;
+			// double dmr = 0.8;
 			dvector ftmp(1,m_nclass);
 			dvector surv(1,m_nclass);
 
@@ -111,7 +113,7 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 			surv.initialize();
 			for( k = 1; k <= m_nfleet; k++ )
 			{
-				dvector vul = elem_prod(sel(k),ret(k)+(1.0-ret(k))*dmr);
+				dvector vul = elem_prod(sel(k),ret(k)+(1.0-ret(k))*m_dmr(k));
 				ftmp += (fc * fratio(k)) * vul;
 			}
 			surv = exp( -m_M(h) - ftmp);
@@ -180,11 +182,20 @@ double spr::get_fofl(const double& alpha, const double& limit, const double& ssb
 	return m_fofl;
 }
 
+
+/**
+ * @brief Calculate OFL
+ * @details Calculates the OFL based on harvest control rule
+ * and estimate of Fspr%
+ * 
+ * @param N [description]
+ * @return [description]
+ */
 double spr::get_cofl(const dmatrix& N)
 {
 	cout<<"Get OFL"<<endl;
 	double ctmp = 0;
-	double dmr  = 0.8;
+	// double dmr  = 0.8;
 	double ftmp;
 	for(int h = 1; h <= m_nsex; h++ )
 	{
@@ -193,7 +204,7 @@ double spr::get_cofl(const dmatrix& N)
 			ftmp = m_fref(h)(k);
 			if(k == m_ifleet) ftmp = m_fofl;
 
-			dvector vul = elem_prod(m_sel(h)(k),m_ret(h)(k)+(1.0-m_ret(h)(k))*dmr);
+			dvector vul = elem_prod(m_sel(h)(k),m_ret(h)(k)+(1.0-m_ret(h)(k))*m_dmr(k));
 
 			dvector   f = ftmp * vul;
 			dvector   z = m_M(h) + f;

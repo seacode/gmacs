@@ -105,11 +105,13 @@ DATA_SECTION
 	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11);	// array of catch data
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix  catch_cv(1,nCatchDF,1,nCatchRows);
+	matrix  catch_dm(1,nCatchDF,1,nCatchRows);
 	LOC_CALCS
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
 			obs_catch(k) = column(dCatchData(k),5);
 			catch_cv(k)  = column(dCatchData(k),6);
+			catch_dm(k)  = column(dCatchData(k),11);
 		}
 	END_CALCS
 	//!! ECHO(obs_catch); ECHO(catch_cv);
@@ -124,6 +126,7 @@ DATA_SECTION
 	ivector foff_phz(1,nfleet);
 	imatrix fhit(syr,nyr,1,nfleet);
 	imatrix yhit(syr,nyr,1,nfleet);
+	matrix  dmr(syr,nyr,1,nfleet);
 
 
 	LOC_CALCS
@@ -131,6 +134,7 @@ DATA_SECTION
 		nYparams.initialize();
 		fhit.initialize();
 		yhit.initialize();
+		dmr.initialize();
 		foff_phz = -1;
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
@@ -143,12 +147,14 @@ DATA_SECTION
 				{
 					fhit(y,g)   ++;
 					nFparams(g) ++;
+					dmr(y,g) = catch_dm(k)(i);
 				}
 				if(!yhit(y,g) && h == 2)
 				{
 					yhit(y,g)   ++;
 					nYparams(g) ++;
 					foff_phz(g) = 1;
+					dmr(y,g) = catch_dm(k)(i);
 				}
 			}
 		}
@@ -719,10 +725,12 @@ FUNCTION calc_selectivities
 	 * Note also that Jie estimates F for retained fishery, f for male discards and
 	 * f for female discards.  Not recommended to have separate F' for retained and 
 	 * discard fisheries, but might be ok to have sex-specific F's.  
+	 * 
+	 * TODO fix discard mortality rate.
 	 */
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik,yk;
-	double lambda = 1.0;  // discard mortality rate from control file
+	double lambda = 0.2;  // discard mortality rate from control file
 	F.initialize();
 	ft.initialize();
 	dvariable log_ftmp;
@@ -746,6 +754,8 @@ FUNCTION calc_fishing_mortality
 					}
 					ft(k)(h)(i) = mfexp(log_ftmp);
 					
+					lambda = dmr(i,k);
+
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i));
 					tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
@@ -1703,9 +1713,18 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		}
 	}
 
+	// Discard Mortality rates
+	dvector  _dmr(1,nfleet);
+	_dmr.initialize();
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		_dmr(k) = dmr(iyr,k);
+	}
+	
+
 	// SPR reference points
 	spr c_spr(_r,spr_lambda,_rx,_M,_wa,_A);
-	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret);
+	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
 	spr_bspr = c_spr.get_bspr();
 
 	// OFL Calculations

@@ -27,12 +27,14 @@ private:
 	double  m_cofl;
 
 	dvector m_rx;
+	dvector m_dmr;
+
 	dmatrix m_M;
 	dmatrix m_wa;
+	dmatrix m_fref;
+
 
 	d3_array m_A;
-
-	dmatrix m_fref;
 	d3_array m_sel;
 	d3_array m_ret;
 public:
@@ -48,7 +50,8 @@ public:
 
 	// getters
 	double get_fspr(const int& ifleet, const double& spr_target, const dmatrix& _fhk,
-	                const d3_array _sel, const d3_array _ret);
+	                const d3_array _sel, const d3_array _ret,
+	                const dvector _dmr);
 	double get_bspr() {return m_bspr;}
 
 	// TODO add the following functions.
