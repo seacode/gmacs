@@ -1120,7 +1120,7 @@ FUNCTION calc_predicted_catch
 					break;
 				}
 				tmp_ft = ft(k)(h)(i);
-				unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+				nal = (unit==1) ? elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
 
 				pre_catch(kk)(j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 			}
@@ -1140,7 +1140,7 @@ FUNCTION calc_predicted_catch
 						break;
 					}
 					tmp_ft = ft(k)(h)(i);
-					unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+					nal = (unit==1) ? elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
 
 					pre_catch(kk)(j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 				}
