@@ -48,6 +48,7 @@
 % Natbib
 \usepackage[round]{natbib}
 
+
 %% -math-
 \def\bs#1{\boldsymbol{#1}}
 
@@ -92,6 +93,13 @@
 \title{A Generalized Length Based Assessment Model}
 \author{Athol Whitten, Steve Martell, Dave Fournier, and James Ianelli}
 
+
+% my macros
+\newcommand{\fspr}{$F_{\textnormal{SPR}}$} 
+\newcommand{\bspr}{$B_{\textnormal{SPR\%}}$}
+
+\newcommand{\fmsy}{$F_{\textnormal{MSY}}$}
+\newcommand{\bmsy}{$B_{\textnormal{MSY}}$}
 
 \begin{document}
   \maketitle
@@ -265,9 +273,16 @@
     % subsection equilibrium_considerations (end)
 
 
-    \subsection{SPR-based reference points} % (fold)
+    \subsection*{SPR-based reference points} % (fold)
     \label{sub:spr_based_reference_points}
-    
+    Reference points based on the Spawning Potential Ratio (SPR) are frequently used as proxies to determine Maximum Sustainable Yield (MSY).  The spawning potential ratio is defined as the ratio of reproductive output in fished conditions relative to unfished conditions.  In the notation used in Table \ref{tab:equilibrium_model} the SPR is defined as
+    \begin{equation}
+      SPR = \tilde{B}/B_0.
+    \end{equation}
+    Fishing mortality rates that results in SPR values of 0.3-0.4 are often desirable for approximating maximum sustainable yield \citep{clark2002f}.  To calculate \fspr\ an iterative solution is required to determine the instantaneous fishing mortality rate that is required to achieve the desired SPR level.  For a single fishery this is relatively simple; the fishing mortality rate at length vector is the product of selectivity-at-length and fishing effort.  A simple bisection algorithm can then be used to iteratively solve for the value of \fspr\ that results in the target SPR.  In cases where there are one or more fisheries involved and the selectivities differ among fisheries, then target \fspr\ will depend on the relative differences in selectivities among gears.  Moreover, the allocation of total fishing mortality to each gear has to be specified \textit{a priori}.  The solution to this problem must be negotiated as part of the management process.  Given a vector of fishing mortality rate ratios, \fspr\ can then be numerically determined using the same algorithm as the single fishery example.
+
+    The expected spawning biomass level when fishing at \fspr\ is referred to as \bspr.  To calculate \bspr we first evaluate \eqref{T1.12} using \fspr\ and then calculate the steady state biomass using \eqref{T1.16}.
+
     % subsection spr_based_reference_points (end)
 
 
@@ -277,20 +292,11 @@
 	%\input{Methods}
 
 
-% TO do class diagrams
-% \begin{tikzpicture}
-  % \umlclass[x=0,y=0]{myclass}{}{}
-  % \umlclass[x=2,y=-2]{B}{}{a}
-% \end{tikzpicture}
-% 
-% \begin{tikzpicture}    
-% \begin{umlcomponent}{Some name}
-% \umlbasiccomponent[x=2]{A}
-% \umlprovidedinterface{A}
-% \umlrequiredinterface[interface=C]{A}
-% \pgfnodealias{newname}{A-west-interface} %<- Adding another name
-% \end{umlcomponent}
-% \draw[blue,ultra thick] (newname) -- (0,-1); %<- using new name
-% \end{tikzpicture}
-% 
+%
+%
+
+  
+  \bibliographystyle{apalike}
+  \bibliography{$HOME/Documents/ARTICLES/Articles-1}
+
 \end{document}
