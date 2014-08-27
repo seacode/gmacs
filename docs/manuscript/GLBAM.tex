@@ -152,6 +152,11 @@
   \multicolumn{2}{l}{\underline{Size schedule information}}\\
       $w_{h,l}$   & Mean weight-at-length $l$ \\
       $m_{h,l}$   & Average proportion mature-at-length $l$ \\
+  \multicolumn{2}{l}{\underline{Per recruit incidence functions}} \\
+      $\phi_B$    & Spawning biomass per recruit \\
+      $\phi_{Q_k}$& Yield per recruit for fishery $k$\\
+      $\phi_{Y_k}$& Retained catch per recruit for fishery $k$ \\
+      $\phi_{D_k}$& Discarded catch per recruit for fishery $k$ \\
   \hline
   \end{tabular}
 \end{table}
@@ -279,13 +284,55 @@
     \begin{equation}
       SPR = \tilde{B}/B_0.
     \end{equation}
-    Fishing mortality rates that results in SPR values of 0.3-0.4 are often desirable for approximating maximum sustainable yield \citep{clark2002f}.  To calculate \fspr\ an iterative solution is required to determine the instantaneous fishing mortality rate that is required to achieve the desired SPR level.  For a single fishery this is relatively simple; the fishing mortality rate at length vector is the product of selectivity-at-length and fishing effort.  A simple bisection algorithm can then be used to iteratively solve for the value of \fspr\ that results in the target SPR.  In cases where there are one or more fisheries involved and the selectivities differ among fisheries, then target \fspr\ will depend on the relative differences in selectivities among gears.  Moreover, the allocation of total fishing mortality to each gear has to be specified \textit{a priori}.  The solution to this problem must be negotiated as part of the management process.  Given a vector of fishing mortality rate ratios, \fspr\ can then be numerically determined using the same algorithm as the single fishery example.
+    Fishing mortality rates that results in SPR values of 0.3-0.4 are often desirable for approximating maximum sustainable yield \citep{clark2002f}.  To calculate \fspr\ an iterative solution is required to determine the instantaneous fishing mortality rate that is required to achieve the desired SPR level.  For a single fishery this is relatively simple; the fishing mortality rate-at-length vector is the product of selectivity-at-length and fishing effort.  A simple bisection algorithm can then be used to iteratively solve for the value of \fspr\ that results in the target SPR.  In cases where there is one or more fisheries involved, and the selectivities differ among fisheries, the target \fspr\ will depend on the relative differences in selectivities among gears.  Moreover, the allocation of total fishing mortality to each gear has to be specified \textit{a priori}.  The solution to this problem must be negotiated as part of the management process as there are an infinite number of allocation combinations that would result in achieving \fspr.  Given a vector of predefined fishing mortality rate ratios, \fspr\ can then be numerically determined using the same algorithm as the single fishery example.
 
-    The expected spawning biomass level when fishing at \fspr\ is referred to as \bspr.  To calculate \bspr we first evaluate \eqref{T1.12} using \fspr\ and then calculate the steady state biomass using \eqref{T1.16}.
+    The expected spawning biomass level when fishing at \fspr\ is referred to as \bspr.  To calculate \bspr\ we first evaluate \eqref{T1.12} using \fspr\ and then calculate the steady state biomass using \eqref{T1.16}. An alternative way to calculate the SPR-based reference points is to use per recruit quantities, or incidence functions (Table \ref{tab:incidence_fucntions}). For example, the SPR is the ratio of spawning biomass per recruit in fished and unfished populations, or \eqref{T2.3}. For each incidence function the primary difference between the fished and unfished states is the equilibrium numbers at length.  In Table \ref{tab:incidence_fucntions} we used $\phi$ and $\tilde{\phi}$ to represent fished and unfished states.    \bspr\ is given by \eqref{T2.4} and the total catch at \fspr\ is given by \eqref{T2.5}.  Other quantities such as the equilibrium  retained catch, or discards,  when fishing at \fspr\ or any other rate can easily be computed using survivorship-at-length schedules and the equilibrium recruitment (Table \ref{tab:incidence_fucntions}).
+
+    \begin{table}
+      \centering
+      \caption{Incidence functions for equilibrium calculations based on unfished and fished conditions, and SPR-based reference points.}
+      \label{tab:incidence_fucntions}
+      \tableEq
+      \begin{align}
+      \hline \nonumber
+      &\mbox{\underline{Incidence functions}} \nonumber \\
+      &\mbox{\underline{unfished}} &\mbox{\underline{fished}}\nonumber \\
+      %% Biomass Per Recruit
+      &\phi_B = \sum_h \lambda_h \sum_l u_{h,l} w_{h,l} m_{h,l}, \qquad
+      &\tilde{\phi}_B = \sum_h \lambda_h \sum_l v_{h,l} w_{h,l} m_{h,l} \\
+      %%
+      %% Yield Per Recruit
+      &\phi_{Q_k} = 0, \qquad
+      &\tilde{\phi}_{Q_k} = \sum_h  \sum_l \frac{v_{h,l}  w_{h,l} s_{h,k,l} (1-\exp(-Z_{h,l}))}{Z_{h,l}} \\
+      %%
+      %% Retained catch per recruit
+      &\phi_{Y_k} = 0, \qquad
+      &\tilde{\phi}_{Y_k} = \sum_h  \sum_l \frac{v_{h,l}  w_{h,l} y_{h,k,l} (1-\exp(-Z_{h,l}))}{Z_{h,l}} \\
+      %% Discarded catch per recruit
+      &\phi_{D_k} = 0, \qquad
+      &\tilde{\phi}_{D_k} = \sum_h  \sum_l \frac{v_{h,l}  w_{h,l} d_{h,k,l} (1-\exp(-Z_{h,l}))}{Z_{h,l}} \\
+      %%
+      %%
+      &\mbox{\underline{SPR-based reference points}} \nonumber \\
+      & SPR = \tilde{\phi}_B/ \phi_B \label{T2.3}\\
+      & B_{\textnormal{SPR\%}} = \tilde{R} \tilde{\phi}_B \bigr\rvert _{F=F_{\textnormal{SPR}}} \label{T2.4}\\[1ex]
+      & C_{\textnormal{SPR\%}} = \tilde{R} \tilde{\phi}_Q \bigr\rvert _{F=F_{\textnormal{SPR}}} \label{T2.5}\\[1ex]
+      \hline \hline \nonumber
+      \end{align}
+      \normalEq
+    \end{table}
 
     % subsection spr_based_reference_points (end)
 
+    \subsection*{Fishing mortality} % (fold)
+    \label{sub:fishing_mortality}
 
+    Many large crab fisheries impose a minimum size limits and prohibit the retention of female crabs as a conservation tool.  The probability dying due to fishing comes in two forms, an individual is captured and retained, or the same individual is discarded and dies prematurely due to handling effects.  The retained portion of the catch is generally a measurable quantity; however the discard mortality component cannot be directly measured.  To account for these to mutually exclusive events we use the following joint probability to model vulnerability due to fishing mortality by gear $k$ at length category $l$ (ignoring sex for clarity)
+    \begin{equation}\label{eq:selectivity}
+      \nu_{k,l}  = s_{k,l} [y_{k,l} + (1-y_{k,l})\xi_{k}],
+    \end{equation}
+    where $s_{k,l}$ is the probability of catching an animal of length $l$, $y_{k,l}$ is the probability of retaining an individual in fishery $k$, and $\xi_{k}$ is the discard mortality rate for fishery $k$.
+    % subsection fishing_mortality (end)
 
   % section methods (end)
 

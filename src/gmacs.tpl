@@ -636,6 +636,8 @@ FUNCTION initialize_model_parameters
 	 * Maintain the possibility of estimating selectivity independently for
 	 * each sex; assumes there are data to estimate female selex.
 	 * 
+	 * BUG: There should be no retention of female crabs in the directed fishery.
+	 * 
 	 * Psuedocode:
 	 * 	-# Loop over each gear:
 	 * 	-# Create a pointer array with length = number of blocks
