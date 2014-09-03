@@ -245,6 +245,7 @@ DATA_SECTION
 	!! nc = 13;
 	init_ivector slx_nsel_blocks(1,nr);
 	!! nslx = sum(slx_nsel_blocks);
+	init_imatrix slx_nret(1,nsex,1,nfleet);
 
 	init_matrix slx_control(1,nslx,1,nc);
 
@@ -760,8 +761,8 @@ FUNCTION calc_fishing_mortality
 					lambda = dmr(i,k);
 
 					sel = exp(log_slx_capture(k)(h)(i));
-					ret = exp(log_slx_retaind(k)(h)(i));
-					tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
+					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k);
+					tmp = elem_prod(sel,ret + (1.0 - ret) * lambda);
 
 					F(h)(i) += ft(k,h,i) * tmp;
 				}
