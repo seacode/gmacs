@@ -354,19 +354,50 @@
       &\mbox{\underline{Selectivity \& retention}} \nonumber \\
       &s_{h,k,l} = (1 + \exp(-(l-a_{h,k} )/ \sigma_{s_{h,k}}))^{-1}\label{T4.3}\\
       &y_{h,k,l} = (1 + \exp(-(r_{h,k} - l) / \sigma_{y_{h,k}}))^{-1}\label{T4.4}\\
-      &\nu_{h,k,l}  = s_{h,k,l} [y_{h,k,l} + (1-y_{h,k,l})\xi_{h,k}]\label{T4.5}\\
+      &\nu_{h,k,l}  = s_{h,k,l} [y_{h,k,l} + (1-y_{h,k,l})\xi_{h,k}]\label{T4.5}\\[1ex]
       %%
       %%
       &\mbox{\underline{Fishing mortality}} \nonumber \\
-      & \bm{F}_{k,i} = \exp(\bm{\bar{f}_k + \bm{\Psi_{k,i}}})\\
-      &\bm{f}_{h,i,l} = \sum_k \bm{F}_{k,i} \nu_{h,k,l} \\
+      & \bm{F}_{k,i} = \exp(\bm{\bar{f}_k + \bm{\Psi_{k,i}}}) \label{T4.6}\\
+      &\bm{f}_{h,i,l} = \sum_k \bm{F}_{k,i} \nu_{h,k,l} \label{T4.7}\\
+      %%
+      %%
+      &\mbox{\underline{Penalized negative loglikelihoods}} \nonumber\\
+      &\ell_{F_k} = 0.5 \ln(2 \pi) + \ln(\sigma_{F_k}) 
+      + 0.5 (\bar{F}_k - \hat{F})^2 / \sigma_{F_k}^2 \label{T4.8}\\
       \hline \hline \nonumber
       \end{align}
       \normalEq
     \end{table}
-    In cases where only one sex is allowed to be retained (i.e., male only fisheries) the retention probability $y_{h,k,l} = 0$ for all size-classes.  In this case, it is not necessary to estimate parameters for the retention curve, as all females for example, would be discarded.
+    In cases where only one sex is allowed to be retained (i.e., male only fisheries) the retention probability $y_{h,k,l} = 0$ for all size-classes.  In this case, it is not necessary to estimate parameters for a sex-specific retention curve, as all females for example, would be discarded.
+
+    To improve numerical stability during early phases of the parameter estimation scheme, a penalized likelihood component \eqref{T4.8} is used to constrain the average fishing mortality $\bar{F}_k$ to some user defined value of $\hat{F}_k$, where the weight associated with this penalty is defined by $\sigma_{F_k}$.  During the last phase of estimation, the value of $\sigma_{F_k}$ is arbitrarily set to a large value (e.g., 2.0) to ensure its is not influencing the overall estimate of the mean fishing mortality rate.
 
     % subsection fishing_mortality (end)
+
+    \subsection*{Natural mortality} % (fold)
+    \label{sub:natural_mortality}
+    Natural mortality is assumed to be sex-specific, size-independent, and may or may not be constant over time.  In the case of time-varying natural mortality, the model assumes that changes in $M_{h,i}$ is a random walk process 
+    \[M_{h,i+1} = M_{h,i} e^{\delta_{i}}\]
+    where $\delta_i$ is assumed to be normal with a known variance $\sigma^2_M$. There is an additional constraint where $\sum_i \delta_i = 0$ to ensure that the scale of $M_h$ remains estimable. The model further assumes that deviations in natural mortality rate are independent of sex.
+
+    Two alternative methods are used to constrain the natural mortality rate deviations: (1) the first is using a penalized likelihood, and (2) using cubic spline interpolation with a fixed number of nodes. There are two options for penalizing the likelihood for deviations in natural mortality: (a) allow for deviations around a mean, and (b) allow for drift in natural mortality rate using a likelihood penalizes the first differences in $\delta_i$.
+
+    \begin{table}
+      \centering
+      \caption{Model and constraints for natural mortality}
+      \label{tab:natural_mortality}
+      \tableEq
+      \begin{align}
+      \hline \nonumber
+      &\mbox{Parameters} \nonumber \\
+      & M_h, \bm{\delta}_i, \sigma_{M_h} \\
+      \hline \hline \nonumber
+      \end{align}
+      \normalEq
+    \end{table}
+
+    % subsection natural_mortality (end)
 
   % section methods (end)
 
