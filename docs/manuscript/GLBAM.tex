@@ -91,7 +91,7 @@
 
 
 \title{Gmacs: A size-structured assessment modeling framework for hard-to-age species}
-\author{Athol Whitten, Steve Martell, Dave Fournier, and James Ianelli}
+\author{Athol Whitten, Andre Punt, Dave Fournier, and James Ianelli}
 % Andre should probably be on here too, check with others.
 % I understand the problem with using the name Gmacs, and thus the relationship with Alaskan Crab stocks, 
 %   but it's probably too late to change. Thus Gmacs is now written as a name, not an acronym.
@@ -109,7 +109,7 @@
   \maketitle
 
   \begin{abstract}
-    Gmacs is a statistical size-structured stock assessment modelling framework for hard-to-age crustacean and mollusc species. The framework makes use of a wide variety of data, including both fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs has initially been designed for application to the king crab stocks of Alaska. Models of these stocks serve as a testing ground for the first versions of the modeling framework. Gmacs is coded using Auto-Differentiation Model Builder, so inherits its capability to efficiently estimate hundreds of parameters using maximum likelihood. In this paper we describe details of the underlying population dynamics and statistical framework. The description is based upon modelling for crustaceans that undergo molting and with each subsequent molt increase in length.
+    Gmacs is a statistical size-structured stock assessment modelling framework for molting crustacean species. The framework makes use of a wide variety of data, including both fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs has initially been designed for application to the king crab stocks of Alaska. Models of these stocks serve as a testing ground for the first versions of the modeling framework. Gmacs is coded using Auto-Differentiation Model Builder, so inherits its capability to efficiently estimate hundreds of parameters using maximum likelihood. In this paper we describe details of the underlying population dynamics and statistical framework. The description is based upon modelling for crustaceans that undergo molting and with each subsequent molt increase in size.
 
   \end{abstract}
 
@@ -381,9 +381,11 @@
     \label{sub:natural_mortality}
     Natural mortality is assumed to be sex-specific, size-independent, and may or may not be constant over time.  In the case of time-varying natural mortality, the model assumes that changes in $M_{h,i}$ is a random walk process 
     \[M_{h,i+1} = M_{h,i} e^{\delta_{i}}\]
-    where $\delta_i$ is assumed to be normal with a known variance $\sigma^2_M$. There is an additional constraint where $\sum_i \delta_i = 0$ to ensure that the scale of $M_h$ remains estimable. The model further assumes that deviations in natural mortality rate are independent of sex.
+    where $\delta_i$ is assumed to be normal with a known variance $\sigma^2_M$. There is an additional constraint where $\sum_i \delta_i = 0$ to ensure that the scale of $M_h$ remains estimable. The model further assumes that deviations in natural mortality rate are independent of sex.  Key parameters for parameterizing natural mortality are defined in \eqref{T5.1}.  Note that $\sigma_{M_h}$ is not estimable and mused either be fixed or use an informative prior.
 
-    Two alternative methods are used to constrain the natural mortality rate deviations: (1) the first is using a penalized likelihood, and (2) using cubic spline interpolation with a fixed number of nodes. There are two options for penalizing the likelihood for deviations in natural mortality: (a) allow for deviations around a mean, and (b) allow for drift in natural mortality rate using a likelihood penalizes the first differences in $\delta_i$.
+    The parameter vector $\bm{delta}_i$ is either fixed with all elements set equal to 0 is equivalent to time-invariant $M$.
+
+    Two alternative methods are used to constrain the natural mortality rate deviations: (1) the first is using a penalized likelihood, and (2) using cubic spline interpolation with a fixed number of nodes. There are two options for penalizing the likelihood \eqref{T5.3} for deviations in natural mortality: (a) allow for deviations around a mean, and (b) allow for drift in natural mortality rate using a likelihood penalizes the first differences in $\delta_i$.
 
     \begin{table}
       \centering
@@ -393,7 +395,25 @@
       \begin{align}
       \hline \nonumber
       &\mbox{Parameters} \nonumber \\
-      & M_h, \bm{\delta}_i, \sigma_{M_h} \\
+      & M_h, \bm{\delta}_i, \sigma_{M_h} \label{T5.1} \\
+      &\mbox{Natural mortality} \nonumber \\
+      & M_{h,i} =
+      \begin{cases}
+        M_h, &i=1\\
+        M_{h,i-1} \exp(\delta_i) &i>1
+      \end{cases} \label{T5.2} \\
+      %%
+      %%
+      &\mbox{Penalized negative log-likelihood} \nonumber \\
+      &\ell_{M_h} = 
+      \begin{cases}
+      0.5 \ln(2 \pi) + \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2} \sum_{i=1}^{N} \delta_{i}^2, & \mbox{or}  \\[1ex]
+      %%
+      0.5 \ln(2 \pi) + \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2}\sum_{i=1}^{N-1}(\delta_{i+1} - \delta{i})^{2}  \\
+      \end{cases}\label{T5.3}\\
+      %%
       \hline \hline \nonumber
       \end{align}
       \normalEq
