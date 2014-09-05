@@ -461,7 +461,7 @@
         &\pmb{A}_h = \pmb{G}_h [\exp(-M_h) (\pmb{I}_n)_{l,l'}]\label{T6.8}\\[1ex]
         %% Initial numbers-at-length
         &\mbox{Initial numbers-at-length $i=1$} \nonumber \\
-        &N_{h,i,l} = [-(\bm{A}_h - (\bm{I}_n)_{l,l'})^{-1} (\bm{r}_h)] e^{\bm{\upsilon}} \label{T6.9}\\[1ex]
+        &\bm{n}_{h,i} = [-(\bm{A}_h - (\bm{I}_n)_{l,l'})^{-1} (\bm{r}_h)] e^{\bm{\upsilon}} \label{T6.9}\\[1ex]
         \hline \hline \nonumber
       \end{align}
       \normalEq
@@ -470,6 +470,15 @@
       It is also possible to assume unfished equilibrium conditions for this model, where $\ddot{R}$ is replace with $R_0$ in \eqref{T6.7}, and the vector of deviates $\bm{\upsilon} = 0$.  In this case, the length-based model, with any number of size-classes, is initialized with just seven parameters assuming sex-independent growth and survival, and just 11 parameters with sex-dependent growth and survival.
 
     % subsection initial_conditions (end)
+
+    \subsection*{Population dynamics} % (fold)
+    \label{sub:population_dynamics}
+    Updating the numbers ($\bm{n}_{h,i}$) in each size-class at each time step is the product of size-specific growth and survival ($\bm{A}_h$) times the numbers-at-length plus new recruitment ($\bm{r}_{h,i}$):
+    \begin{equation}\label{eq:update_numbers_at_length}
+      \bm{n}_{h,i+1} = \bm{n}_{h,i} \bm{A}_h + \bm{r}_{h,i}
+    \end{equation}
+    
+    % subsection population_dynamics (end)
 
   % section methods (end)
 
