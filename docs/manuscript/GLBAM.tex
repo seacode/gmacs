@@ -211,10 +211,10 @@
     &\mbox{\underline{recruitment size-distribution}} \nonumber \\
     & \alpha = \alpha_r / \beta_r  \\
     % Size distribution of new recruits
-    &p(\boldsymbol{r}) = \int_{x-0.5\Delta x}^{x_l+0.5\Delta x}
+    &p[\bm{r}] = \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x}
       \frac{x^{(\alpha-1)}\exp(x / \beta_r)}{\Gamma(\alpha)x^\alpha}dx
         \label{T1.7}\\
-    &\pmb{r}_h = 0.5 p(\boldsymbol{r}) \ddot{R} \label{T1.8}\\
+    &\pmb{r}_h = 0.5 p[\bm{r}] \ddot{R} \label{T1.8}\\
     %%
     %%
     &\mbox{\underline{growth and survival}} \nonumber \\
@@ -227,8 +227,8 @@
     %%
     %%
     &\mbox{\underline{survivorship to length}} \nonumber \\
-    & \bm{u}_h   = -(\bm{A}_h - (\bm{I}_n)_{l,l'})^{-1} p(\bm{r}) \label{T1.13a}\\
-    & \bm{v}_h   = -(\bm{B}_h - (\bm{I}_n)_{l,l'})^{-1} p(\bm{r}) \label{T1.13b}\\
+    & \bm{u}_h   = -(\bm{A}_h - (\bm{I}_n)_{l,l'})^{-1} (p[\bm{r}]) \label{T1.13a}\\
+    & \bm{v}_h   = -(\bm{B}_h - (\bm{I}_n)_{l,l'})^{-1} (p[\bm{r}]) \label{T1.13b}\\
     %%
     %%
     &\mbox{\underline{steady-state conditions}}\nonumber \\
@@ -383,7 +383,7 @@
     \[M_{h,i+1} = M_{h,i} e^{\delta_{i}}\]
     where $\delta_i$ is assumed to be normal with a known variance $\sigma^2_M$. There is an additional constraint where $\sum_i \delta_i = 0$ to ensure that the scale of $M_h$ remains estimable. The model further assumes that deviations in natural mortality rate are independent of sex.  Key parameters for parameterizing natural mortality are defined in \eqref{T5.1}.  Note that $\sigma_{M_h}$ is not estimable and mused either be fixed or use an informative prior.
 
-    The parameter vector $\bm{delta}_i$ is either fixed with all elements set equal to 0 is equivalent to time-invariant $M$.
+    The parameter vector $\bm{\delta}_i$ with all elements set equal to 0 is equivalent to time-invariant $M$. To implement time-varying changes in natural mortality rates,  $\bm{\delta}$ is treated as an estimated vector of parameters; one parameter for each year in the model, or a fixed number of nodes and the series is interpolated using a bicubic spline. The number of nodes and the placement of the nodes is specified \emph{a priori}.
 
     Two alternative methods are used to constrain the natural mortality rate deviations: (1) the first is using a penalized likelihood, and (2) using cubic spline interpolation with a fixed number of nodes. There are two options for penalizing the likelihood \eqref{T5.3} for deviations in natural mortality: (a) allow for deviations around a mean, and (b) allow for drift in natural mortality rate using a likelihood penalizes the first differences in $\delta_i$.
 
@@ -395,13 +395,13 @@
       \begin{align}
       \hline \nonumber
       &\mbox{Parameters} \nonumber \\
-      & M_h, \bm{\delta}_i, \sigma_{M_h} \label{T5.1} \\
+      & M_h, \bm{\delta}_i, \sigma_{M_h} \label{T5.1} \\[1ex]
       &\mbox{Natural mortality} \nonumber \\
       & M_{h,i} =
       \begin{cases}
         M_h, &i=1\\
         M_{h,i-1} \exp(\delta_i) &i>1
-      \end{cases} \label{T5.2} \\
+      \end{cases} \label{T5.2} \\[1ex]
       %%
       %%
       &\mbox{Penalized negative log-likelihood} \nonumber \\
@@ -412,7 +412,7 @@
       %%
       0.5 \ln(2 \pi) + \ln(\sigma_{M_h}) 
       + 0.5 \sigma_{M_h}^{-2}\sum_{i=1}^{N-1}(\delta_{i+1} - \delta{i})^{2}  \\
-      \end{cases}\label{T5.3}\\
+      \end{cases}\label{T5.3}\\[1ex]
       %%
       \hline \hline \nonumber
       \end{align}
@@ -420,6 +420,56 @@
     \end{table}
 
     % subsection natural_mortality (end)
+
+    \subsection*{Initial conditions} % (fold)
+    \label{sub:initial_conditions}
+      Initialization of the numbers-at-length, annual recruitment, can either be done assuming steady-state conditions using the equations laid out in Table \ref{tab:equilibrium_model}, or treated as unknown parameters to be estimated by fitting the model to data.  The ladder method requires size-composition data in the initial years in order to estimate the initial numbers-at-length.  Table \ref{tab:initial_numbers} summarizes the proceeding steps required to initialize the number-at-length for the initial conditions.
+
+      Estimated parameters at this stage include the natural mortality rate, the initial recruits, parameters for the size distribution of new recruits, and a vector of deviates $\bm{\upsilon}$, which are constrained to sum to zero, that represent historical variation in recruitment and or mortality \eqref{T6.1}.  The initial numbers-at-length can be found by solving the same matrix equation outlined in Table \ref{tab:equilibrium_model}; however, in this case the total number of recruits is used, rather than assuming unit recruitment.  This first proceeds by calculating the growth transition matrix \eqref{T6.4}, the distribution of new recruits \eqref{T6.6}, and assume a 50:50 sex ratio \eqref{T6.7} for the new recruits in each size class.  The transition and survival from length class $l$ to $l'$ is assumed to involve only natural mortality $M_h$ in \eqref{T6.8}.  Note that $(\bm{I}_n)_{l,l'}$ is the identity matrix.  The initial numbers at length, for each sex, is given by \eqref{T6.9}, which is just the equilibrium vector of numbers-at-length multiplied by a vector of deviates $\bm{\upsilon}$.
+
+      \begin{table}
+      \centering
+      \caption{ Initialize population model $\{i=1\}$ }
+      \label{tab:initial_numbers}
+      \tableEq
+      \begin{align}
+        \hline \nonumber
+        &\mbox{ Parameters } \\
+        &\Theta = (M_h,\ddot{R},\alpha_r,\beta_r, \bm{\upsilon})
+        ,\quad\mbox{where} \sum_l \bm{\upsilon}_l = 0 \label{T6.1} \\
+        &\Phi = (\alpha_h,\beta_h,\varphi_h)\\[1ex]
+        %%
+        %%
+        &\mbox{Growth transition}\nonumber \\
+        % Growth increment
+        &a_{h,l} = (\alpha_h + \beta_h l)/\varphi_h \label{T6.3} \\
+        %Size transition matrix
+        &\pmb{G}_h= \int_{l}^{l+\Delta l}
+        \frac{ l^{(a_{h,l}-1)} \exp(l/\varphi_h) }
+        { \Gamma(a_{h,l}) l^{(a_{h,l})} } dl \label{T6.4} \\[1ex]
+        %%
+        &\mbox{Recruitment vector} \nonumber \\
+        & \alpha = \alpha_r / \beta_r \label{T6.5} \\
+        % Size distribution of new recruits
+        &p(\boldsymbol{r}) = \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x}
+        \frac{x^{(\alpha-1)}\exp(x / \beta_r)}{\Gamma(\alpha)x^\alpha}dx
+        \label{T6.6}\\
+        &\pmb{r}_h = 0.5 p(\boldsymbol{r}) \ddot{R} \label{T6.7}\\[1ex]
+        %%
+         &\mbox{Growth and survival} \nonumber \\
+        %unfished
+        &\pmb{A}_h = \pmb{G}_h [\exp(-M_h) (\pmb{I}_n)_{l,l'}]\label{T6.8}\\[1ex]
+        %% Initial numbers-at-length
+        &\mbox{Initial numbers-at-length $i=1$} \nonumber \\
+        &N_{h,i,l} = [-(\bm{A}_h - (\bm{I}_n)_{l,l'})^{-1} (\bm{r}_h)] e^{\bm{\upsilon}} \label{T6.9}\\[1ex]
+        \hline \hline \nonumber
+      \end{align}
+      \normalEq
+      \end{table}
+
+      It is also possible to assume unfished equilibrium conditions for this model, where $\ddot{R}$ is replace with $R_0$ in \eqref{T6.7}, and the vector of deviates $\bm{\upsilon} = 0$.  In this case, the length-based model, with any number of size-classes, is initialized with just seven parameters assuming sex-independent growth and survival, and just 11 parameters with sex-dependent growth and survival.
+
+    % subsection initial_conditions (end)
 
   % section methods (end)
 
