@@ -1,11 +1,11 @@
 // ==================================================================================== //
-//   Gmacs: a size-based stock assessment modeling framework.
+//   Gmacs: A generalized size-based stock assessment modeling framework.
 //
 //   Authors: Athol Whitten and Jim Ianelli
 //            University of Washington, Seattle
-//            and Alaska Fisheries Science Centre, NOAA, Seattle
+//            and Alaska Fisheries Science Centre, Seattle
 //
-//   Info: https://github.com/awhitten/gmacs Copyright (C) 2014. All rights reserved.
+//   Info: https://github.com/seacode/gmacs Copyright (C) 2014. All rights reserved.
 //
 //  INDEXES:
 //    g = group
@@ -15,7 +15,8 @@
 //    k = gear or fleet
 //    l = index for length class
 //    m = index for maturity state
-//    n = index for shell condition
+//    o = index for shell condition.
+
 // ==================================================================================== //
 
 DATA_SECTION
@@ -94,37 +95,59 @@ DATA_SECTION
 	//init_int nCatchRows;						// number of rows in dCatchData
 	init_int nCatchDF;
 	init_ivector nCatchRows(1,nCatchDF);
-	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,10);	// array of catch data
+	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11);	// array of catch data
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix  catch_cv(1,nCatchDF,1,nCatchRows);
+	matrix  catch_dm(1,nCatchDF,1,nCatchRows);
 	LOC_CALCS
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
 			obs_catch(k) = column(dCatchData(k),5);
 			catch_cv(k)  = column(dCatchData(k),6);
+			catch_dm(k)  = column(dCatchData(k),11);
 		}
 	END_CALCS
 	//!! ECHO(obs_catch); ECHO(catch_cv);
 
 	// From the catch series determine the number of fishing mortality
 	// rate parameters that need to be estimated.  Note that  there is
-	// a number of combinations which require a F to be estimated. 
+	// a number of combinations which require a F to be estimated. The
+	// ivector nFparams is the number of deviations required for each 
+	// fleet, and nYparams is the number of deviations for female Fs.
 	ivector nFparams(1,nfleet);
+	ivector nYparams(1,nfleet);
+	ivector foff_phz(1,nfleet);
 	imatrix fhit(syr,nyr,1,nfleet);
+	imatrix yhit(syr,nyr,1,nfleet);
+	matrix  dmr(syr,nyr,1,nfleet);
+
 
 	LOC_CALCS
 		nFparams.initialize();
+		nYparams.initialize();
 		fhit.initialize();
+		yhit.initialize();
+		dmr.initialize();
+		foff_phz = -1;
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
 			for(int i = 1; i <= nCatchRows(k); i++ )
 			{
 				int g = dCatchData(k)(i,3);
 				int y = dCatchData(k)(i,1);
+				int h = dCatchData(k)(i,4);
 				if(!fhit(y,g))
 				{
 					fhit(y,g)   ++;
 					nFparams(g) ++;
+					dmr(y,g) = catch_dm(k)(i);
+				}
+				if(!yhit(y,g) && h == 2)
+				{
+					yhit(y,g)   ++;
+					nYparams(g) ++;
+					foff_phz(g) = 1;
+					dmr(y,g) = catch_dm(k)(i);
 				}
 			}
 		}
@@ -204,6 +227,7 @@ DATA_SECTION
 	!! nc = 13;
 	init_ivector slx_nsel_blocks(1,nr);
 	!! nslx = sum(slx_nsel_blocks);
+	init_imatrix slx_nret(1,nsex,1,nfleet);
 
 	init_matrix slx_control(1,nslx,1,nc);
 
@@ -284,6 +308,18 @@ DATA_SECTION
 		for(int i=1; i<=2; i++)
 			pen_fstd(i) = trans(f_controls)(i+1);
 		f_phz    = ivector(column(f_controls,4));
+		// Set foff_phz to f_phz
+		for(int k = 1; k <= nfleet; k++ )
+		{
+			for(int i = syr; i <= nyr; i++ )
+			{
+				if( yhit(i,k) ) 
+				{
+					foff_phz(k) = f_phz(k);
+					break;
+				}
+			}			
+		}
 	END_CALCS
 
 
@@ -292,6 +328,7 @@ DATA_SECTION
 	// |-----------------------------------|
 	init_ivector nAgeCompType(1,nSizeComps);
 	init_ivector bTailCompression(1,nSizeComps);
+	init_ivector nvn_phz(1,nSizeComps);
 
 
 
@@ -324,20 +361,42 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
-	init_vector model_controls(1,3);
+	init_vector model_controls(1,8);
 	int rdv_phz; 										///> Estimated rec_dev phase
 	int verbose;										///> Flag to print to screen
 	int bInitializeUnfished;				///> Flag to initialize at unfished conditions
+	int spr_syr;
+	int spr_nyr;
+	number spr_target;
+	int spr_fleet;
+	number spr_lambda;
 	LOC_CALCS
-		rdv_phz = int(model_controls(1));
-		verbose = int(model_controls(2));
+		rdv_phz             = int(model_controls(1));
+		verbose             = int(model_controls(2));
 		bInitializeUnfished = int(model_controls(3));
+		spr_syr             = int(model_controls(4));
+		spr_nyr             = int(model_controls(5));
+		spr_target          =     model_controls(6);
+		spr_fleet           = int(model_controls(7));
+		spr_lambda          =     model_controls(8);
 	END_CALCS
+
+	init_int eof_ctl;
+	!! if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
+
 	!! cout<<"end of control section"<<endl;
 
 	int nf;
 	!! nf = 0;
 
+	// |----------------------|
+	// | SPR Reference points |
+	// |----------------------|
+	number spr_fspr;
+	number spr_bspr;
+	number spr_rbar;
+	number spr_cofl;
+	number spr_fofl;
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
@@ -388,6 +447,8 @@ PARAMETER_SECTION
 	// Fishing mortality rate parameters
 	init_number_vector log_fbar(1,nfleet,f_phz);
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
+	init_number_vector log_foff(1,nfleet,foff_phz);
+	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
@@ -397,7 +458,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
 
 	// Effective sample size parameter for multinomial
-	init_vector log_vn(1,nSizeComps,4);
+	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
 	vector nloglike(1,4);
 	vector nlogPenalty(1,4);
@@ -512,7 +573,8 @@ FUNCTION calc_sdreport
 	int h = 1;
 	for(int i = syr; i <= nyr; i++ )
 	{
-		sd_log_mmb(i) = log( N(h)(i) * fecundity );
+		// sd_log_mmb(i) = log( N(h)(i) * fecundity );
+		sd_log_mmb(i) = log(N(h)(i)*elem_prod(mean_wt(h),maturity(h)));
 	}
 	
 	
@@ -541,6 +603,8 @@ FUNCTION initialize_model_parameters
 	 * Maintain the possibility of estimating selectivity independently for
 	 * each sex; assumes there are data to estimate female selex.
 	 * 
+	 * BUG: There should be no retention of female crabs in the directed fishery.
+	 * 
 	 * Psuedocode:
 	 * 	-# Loop over each gear:
 	 * 	-# Create a pointer array with length = number of blocks
@@ -557,7 +621,6 @@ FUNCTION calc_selectivities
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
 
-	
 
 	for( k = 1; k <= nslx; k++ )
 	{	
@@ -632,12 +695,15 @@ FUNCTION calc_selectivities
 	 * Note also that Jie estimates F for retained fishery, f for male discards and
 	 * f for female discards.  Not recommended to have separate F' for retained and 
 	 * discard fisheries, but might be ok to have sex-specific F's.  
+	 * 
+	 * TODO fix discard mortality rate.
 	 */
 FUNCTION calc_fishing_mortality
-	int h,i,k,ik;
-	double lambda = 1.0;  // discard mortality rate from control file
+	int h,i,k,ik,yk;
+	double lambda = 0.2;  // discard mortality rate from control file
 	F.initialize();
 	ft.initialize();
+	dvariable log_ftmp;
 	dvar_vector sel(1,nclass);
 	dvar_vector ret(1,nclass);
 	dvar_vector tmp(1,nclass);
@@ -646,16 +712,23 @@ FUNCTION calc_fishing_mortality
 	{
 		for( h = 1; h <= nsex; h++ )
 		{
-			ik=1;
+			ik=1; yk=1;
 			for( i = syr; i <= nyr; i++ )
 			{
 				if(fhit(i,k))
 				{
-					ft(k)(h)(i) = mfexp(log_fbar(k)+log_fdev(k,ik++));
+					log_ftmp    = log_fbar(k) + log_fdev(k,ik++);
+					if(yhit(i,k))
+					{
+						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
+					}
+					ft(k)(h)(i) = mfexp(log_ftmp);
 					
+					lambda = dmr(i,k);
+
 					sel = exp(log_slx_capture(k)(h)(i));
-					ret = exp(log_slx_retaind(k)(h)(i));
-					tmp = elem_prod(sel,ret+(1.0 - ret)*lambda);
+					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k);
+					tmp = elem_prod(sel,ret + (1.0 - ret) * lambda);
 
 					F(h)(i) += ft(k,h,i) * tmp;
 				}
@@ -663,7 +736,6 @@ FUNCTION calc_fishing_mortality
 		}
 	}
 
-	
 
 
 
@@ -905,6 +977,7 @@ FUNCTION calc_initial_numbers_at_length
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 	}
 	
+	if(verbose) COUT(N(1)(syr));
 	
 
 
@@ -947,6 +1020,7 @@ FUNCTION update_population_numbers_at_length
 		}
 	}
 	
+	if(verbose) COUT(N(1)(nyr));
 
 
 
@@ -1001,7 +1075,7 @@ FUNCTION calc_predicted_catch
 					break;
 				}
 				tmp_ft = ft(k)(h)(i);
-				unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+				nal = (unit==1) ? elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
 
 				pre_catch(kk)(j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 			}
@@ -1021,7 +1095,7 @@ FUNCTION calc_predicted_catch
 						break;
 					}
 					tmp_ft = ft(k)(h)(i);
-					unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+					nal = (unit==1) ? elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
 
 					pre_catch(kk)(j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 				}
@@ -1029,6 +1103,7 @@ FUNCTION calc_predicted_catch
 		}
 		// Catch residuals
 		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
+		if(verbose)COUT(pre_catch(kk)(1));
 	}
 
 
@@ -1054,6 +1129,7 @@ FUNCTION calc_relative_abundance
 	dvar_vector nal(1,nclass);	// numbers at length
 	dvar_vector sel(1,nclass);	// selectivity at length
 
+
 	for( k = 1; k <= nSurveys; k++ )
 	{
 		dvar_vector V(1,nSurveyRows(k));	
@@ -1064,12 +1140,20 @@ FUNCTION calc_relative_abundance
 			i = dSurveyData(k)(j)(1);		// year index
 			g = dSurveyData(k)(j)(3);		// gear index
 			h = dSurveyData(k)(j)(4);		//  sex index
-			unit = dSurveyData(k)(j)(7);	// units 1==biomass
+			unit = dSurveyData(k)(j)(7);	// units 1==biomass 2==Numbers
 
 			if(h)
 			{
 				sel = exp(log_slx_capture(g)(h)(i));
-				unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+				switch(unit)
+				{
+					case 1:
+						nal=elem_prod(N(h)(i),mean_wt(h));
+					break;
+					case 2:
+						nal=N(h)(i);
+					break;
+				}
 				V(j) = nal * sel;
 			}
 			else
@@ -1077,7 +1161,15 @@ FUNCTION calc_relative_abundance
 				for( h = 1; h <= nsex; h++ )
 				{
 					sel = exp(log_slx_capture(g)(h)(i));
-					unit==1?nal=elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+					switch(unit)
+					{
+						case 1:
+							nal=elem_prod(N(h)(i),mean_wt(h));
+						break;
+						case 2:
+							nal=N(h)(i);
+						break;
+					}
 					V(j) += nal * sel;
 				}
 			}
@@ -1268,6 +1360,7 @@ FUNCTION calc_objective_function
 	nloglike.initialize();
 	
 	// 1) Likelihood of the catch data.
+	if(verbose) COUT(res_catch(1));
 	for(int k = 1; k <= nCatchDF; k++ )
 	{
 		dvector catch_sd = sqrt( log( 1.0+square(catch_cv(k)) ) );
@@ -1278,6 +1371,7 @@ FUNCTION calc_objective_function
 
 
 	// 2) Likelihood of the relative abundance data.
+  if(verbose) COUT(res_cpue(1));
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
@@ -1292,20 +1386,19 @@ FUNCTION calc_objective_function
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
+		dvar_vector log_effn  = log(exp(log_vn(ii)) * size_comp_sample_size(ii));
 
 		bool bCmp = bTailCompression(ii);
 		acl::negativeLogLikelihood *ploglike;
 		switch(nAgeCompType(ii))
 		{
-			case 1: // multinomial with fixed n
-
-			break;
-
-			case 2: // multinomial with estimated n
+			case 1: // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
-				nloglike(3) 				 += ploglike->nloglike(log_vn(ii),P);
-				d3_res_size_comps(ii) = ploglike->residual(log_vn(ii),P);
+				
+				nloglike(3) 				 += ploglike->nloglike(log_effn,P);
+				d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 			break;
+
 		}
 		
 
@@ -1338,6 +1431,9 @@ FUNCTION calc_objective_function
 	{
 		dvariable s    = mean(log_fdev(k));
 		nlogPenalty(1) += 10000.0*s*s;
+
+		          s    = mean(log_fdov(k));
+		nlogPenalty(1) += 10000.0*s*s;		       
 	}
 
 
@@ -1482,8 +1578,22 @@ REPORT_SECTION
 	REPORT(recruits);
 	REPORT(N);
 	REPORT(M);
+	REPORT(mean_wt);
 	dvector mmb = calc_mmb();
 	REPORT(mmb);
+
+	if(last_phase())
+	{
+		int refyear = nyr-1;
+		calc_spr_reference_points(refyear,spr_fleet);
+		//calc_ofl(refyear,spr_fspr);
+		REPORT(spr_fspr);
+		REPORT(spr_bspr);
+		REPORT(spr_rbar);
+		REPORT(spr_fofl);
+		REPORT(spr_cofl);
+	}
+
 
 
 	/**
@@ -1499,9 +1609,90 @@ FUNCTION dvector calc_mmb()
 	int h = 1;  // males
 	for(int i = syr; i <= nyr; i++ )
 	{
-		mmb(i) = value(N(h)(i)) * fecundity;
+		mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h));
 	}
 	return(mmb);
+
+
+
+	/**
+	 * @brief calculate spr-based reference points.
+	 * @details Calculate the SPR-ration for a given value of F.
+	 * 
+	 * Psuedocode:
+	 * 	-# calculate average recruitment over reference period.
+	 * 	-# compute the ratio of F's based on reference year (nyr)
+	 * 	-# calculate fishing mortality vector.
+	 * 	-# calculate equibrium total mortality vector.
+	 * 	-# calculate growth/survival transition matrix.
+	 * 	
+	 * 	ARGS:
+	 * 	@param iyr Reference year for selectivity and fishing mortality ratios
+	 * 	@param ifleet index for gear to compute SPR values, other fleets with const F
+	 * 	
+	 * 	got response from andre, “The convention is to fix F for all 
+	 * 	non-directed fisheries to a recent average and to solve for 
+	 * 	the F for the directed fishery so that you achieve B35%.” but 
+	 * 	I think he meant F35
+	 * 	
+	 * 	Use bisection method to find SPR_target.
+	 */
+FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
+	
+	// Average recruitment
+	spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
+
+	double   _r = spr_rbar;
+	dvector _rx = value(rec_sdd);
+	dmatrix _M(1,nsex,1,nclass);
+	dmatrix _N(1,nsex,1,nclass);
+	dmatrix _wa(1,nsex,1,nclass);
+	d3_array _A = value(size_transition);
+	for(int h = 1; h <= nsex; h++ )
+	{
+		_M(h) = value(M(h)(iyr));
+		_N(h) = value(N(h)(nyr));
+		_wa(h) = elem_prod(mean_wt(h),maturity(h));
+	}
+	
+	dmatrix  _fhk(1,nsex,1,nfleet);
+	d3_array _sel(1,nsex,1,nfleet,1,nclass);
+	d3_array _ret(1,nsex,1,nfleet,1,nclass);
+	for(int h = 1; h <= nsex; h++ )
+	{
+		for(int k=1;k<=nfleet;k++)
+		{
+			_fhk(h)(k) = value(ft(k)(h)(iyr));
+			_sel(h)(k) = exp(value(log_slx_capture(k)(h)(iyr)));
+			_ret(h)(k) = exp(value(log_slx_retaind(k)(h)(iyr)));
+		}
+	}
+
+	// Discard Mortality rates
+	dvector  _dmr(1,nfleet);
+	_dmr.initialize();
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		_dmr(k) = dmr(iyr,k);
+	}
+	
+
+	// SPR reference points
+	spr c_spr(_r,spr_lambda,_rx,_M,_wa,_A);
+	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
+	spr_bspr = c_spr.get_bspr();
+
+	// OFL Calculations
+	dvector mmb = calc_mmb();
+	double cuttoff = 0.1;
+	double limit = 0.25;
+	spr_fofl = c_spr.get_fofl(cuttoff,limit,mmb(nyr));
+	spr_cofl = c_spr.get_cofl(_N);
+	COUT("Finished SPR Calcs")
+	
+	
+	
+	
 
 RUNTIME_SECTION
     maximum_function_evaluations 500,  500,   1500, 25000, 25000
@@ -1513,7 +1704,10 @@ GLOBALS_SECTION
 	#include <time.h>
 	#include <contrib.h>
 	#include "nloglike.h"
+	
+	#include "spr.h"
 	#include "../../CSTAR/include/cstar.h"
+
 
 	// acl::negativeLogLikelihood *agecomplike;
 
@@ -1548,6 +1742,10 @@ GLOBALS_SECTION
 	 #define ECHO(object) echoinput << #object << "\n" << object << endl;
 	 // #define ECHO(object,text) echoinput << object << "\t" << text << endl;
  
+	#undef MAXIT
+	#undef TOL
+ 	#define MAXIT 100
+ 	#define TOL 1.0e-4
 	 /**
 	 \def check(object)
 	 Prints name and value of \a object on checkfile %ofstream output file.

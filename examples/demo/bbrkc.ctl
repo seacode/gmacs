@@ -4,19 +4,21 @@
 #                  0 -> uniform
 #                  1 -> normal
 #                  2 -> lognormal
+#                  3 -> beta
+#                  4 -> gamma
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ntheta
 7
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  0.18      0.01         1          2       2   0.18    0.02         # M
-   3.0       -10        20         -1       1    3.0     1.0         # logR0
-   3.0       -10        20          1       1    3.0     1.0         # logR1      
-   3.0       -10        20          1       1    3.0     1.0         # logRbar      
+  0.18      0.01         1          4       2   0.18    0.04         # M
+   7.0       -10        20         -1       1    3.0     5.0         # logR0
+   7.0       -10        20          2       1    3.0     5.0         # logR1      
+   7.0       -10        20          2       1    3.0     5.0         # logRbar      
   72.5        65       100          2       1   72.5    7.25         # Recruitment mBeta
-  1.50       0.1         5          3       0    0.1       5         # Recruitment m50
- -0.51       -10      0.75          4       0    -10    0.75         # ln(sigma_R)
+  1.50       0.1         5          2       0    0.1       5         # Recruitment m50
+ -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
 # —————————————————————————————————————————————————————————————————————————————————————— #
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -29,6 +31,8 @@
 ## Gear-1    Gear-2    Gear-3   Gear-4    
    1         1         1        1         #Selectivity blocks
    1         1         1        1         #Retention blocks 
+   1         0         0        0         #male   retention flag (0 -> no, 1 -> yes)
+   0         0         0        0         #female retention flag (0 -> no, 1 -> yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ##        sel   sel  sel sex  size   year  phz                       start  end         ##
 ## Index  type  mu   sd  dep  nodes  nodes mirror lam1  lam2  lam3 | block  block       ##
@@ -51,7 +55,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Trap  Trawl NMFS  BSFRF
 ## Mean_F  STD_PHZ1  STD_PHZ2  PHZ
-     0.20      0.10      0.10    1
+     0.20      0.10      1.10    1
      0.10      0.10      1.10    1
      0.00      2.00      2.00   -1
      0.00      2.00      2.00   -1
@@ -60,13 +64,15 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
-##          -1) multinomial with fixed sample size
-##          -2) multinomial with estimated sample size
-##          -3) logistic normal
-##          -4) multivariate-t
+##   -1) multinomial with estimated/fixed sample size
+##   -2) logistic normal
+##   -3) multivariate-t
+## AUTOTAIL COMPRESSION:
+##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-2   2   2   2   2   2   2   2   2   # Type of likelihood.
-0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
+ 1   1   1   1   1   1   1   1   1   # Type of likelihood.
+ 0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
+ 4   4   4   4   4   4   4   4   4   # Phz for estimating effective sample size (if appl.)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -94,6 +100,18 @@
   3       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
+  1984    # First year for average recruitment for Bspr calculation.
+  2013    # Last year for average recruitment for Bspr calculation.
+  0.35    # Target SPR ratio for Bmsy proxy.
+  1       # Gear index for SPR calculations (i.e., directed fishery).
+  1       # Lambda (proportion of mature male biomass for SPR reference points.)
+
+## EOF
+9999
+
+
+
+
 
 
 

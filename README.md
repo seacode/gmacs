@@ -3,7 +3,6 @@
 Gmacs is currently under development. A simple working release version of Gmacs is available via `Tag V1.0` and has been tested using the BBRKC model available in the examples folder. The next major release of Gmacs is planned for September 2014.
 
 ## Table of contents
-- [TODO List](#todo-list)
 - [Introduction](#generalized-modeling-for-alaskan-crab-stocks)
 - [Input File Structure](#input-file-structure)
 - [Gmacs R Package](#r-package-for-gmacs)
@@ -40,34 +39,3 @@ An R package, called `gmr` is under development for Gmacs: a full pilot version 
 
 ## Development
 This software is under development and is not yet intended for general use. If you would like to contribute to the project, please contact [Athol Whitten](mailto:whittena@uw.edu). 
-
-<!-- TODO list created by Martell and Whitten -->
-### TODO List ###
-
-#### Project
-- [x] Create makefile for building and installing Gmacs (debug & release)
-  - [x] Test makefile on Windows box (batch file)
-- [x] Create commandline option for simulation model (-sim seedNo.)
-- [ ] Perform simulation testing
-- [ ] Update documentation
-  - [ ] Extend existing Doxygen comments and create Doxygen output
-  - [x] Continue working on Gmacs Wiki, pdf version = user-guide
-- [ ] Test scripts with simulated data and examples
-
-#### Gmacs Executable
-- [x] Get code to compile.
-- [ ] Document data structures.
-- [ ] Implement alternative likelihoods for composition data
-- [x] Develop alternative models for time-varying parameters
-- [x] Implement spline functions as alternative to 'piecewise linear' functions in current model.
-- [ ] Consider cumulative normal distribution (and/or others) as alternatives to gamma function for size-at-recruitment and/or growth increment.
-- [ ] Incorporate option to use tagging data to estimate growth.
-- [x] Implement the capacity to change functional form for selectivity (and other factors) over time
-- [ ] Implement the capacity for penalties to be placed on the extent to which parameters change over time
-- [ ] Implement time-varying recruitment using deviations from a SR-relationship as alternative to using deviations from a mean
-- [ ] Allow time-varying M to depdend on maturity state *and* length
-- [ ] Implement **hybrid** method as an option for calculating annual fishing mortality rates
-- [x] Add options for implementing cubic splines
-  - [ ] splines for selectivity,
-  - [ ] splines for initial size-distribution,
-  - [ ] splines of time-varying parameters.

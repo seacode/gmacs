@@ -17,7 +17,9 @@ CXXFLAGS:=-g -Wall -D__GNUDOS__ -Dlinux -DUSE_LAPLACE  \
 	      -I$(ADMB_HOME)/include                       \
 	      -I$(ADMB_HOME)/contrib/include               \
 	      -I$(LIBINCLUDE)                              \
-	      -I/usr/include/libxml2
+	      -I/usr/include/libxml2                       \
+	      -std=c++11                                   \
+	      -stdlib=libc++
 LDFLAGS:= 
 
 # Release specific flags.

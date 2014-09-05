@@ -1,7 +1,3 @@
-# GLOBAL SETTINGS
-#.THEME <- theme_classic()
-.THEME <- theme_bw()
-#.THEME <- theme_minimal()
 
 # REPORT FILE
 source("./lib/read.admb.R")
@@ -14,14 +10,20 @@ A <- read.admb(repfile)
 for(nm in .RFILES) source(file.path(.LIB, nm), echo=FALSE)
 
 
+# GLOBAL SETTINGS
+#.THEME <- theme_classic()
+.THEME <- theme_bw()
+#.THEME <- theme_minimal()
 
 #  Very Simple functions such that you can build a shiny app
 #  or a tck/tk interface to plot results.
 # Plot catch
-print(pCatch + .THEME)
+print(pCatch[[1]] + .THEME)
+print(pCatch[[2]] + .THEME)
 
 # Plot catch residuals
-print(pCatchRes + .THEME)
+print(pCatchRes[[1]] + .THEME)
+print(pCatchRes[[2]] + .THEME)
 
 # Plot cpue
 print(pCPUE + .THEME)
