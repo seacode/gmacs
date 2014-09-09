@@ -1,0 +1,50 @@
+---
+title: "Gmacs Example Stock Assessment"
+author: "Athol R. Whitten, Steven J.D. Martell, James N. Ianelli, André E. Punt"
+date: "September 2014"
+output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  html_document:
+    theme: readable
+    toc: yes
+---
+
+## Introduction
+
+Gmacs is a generalized size-structured assessment modeling framework applied here to data for Bristol Bay Red King Crab (BBRKC). This analysis serves as a test-case for the development of Gmacs: the example assessment is intended to match closely with that presented to the Spring 2014 BSAI Crab Plan Team Meeting by the Alaska Department of Fish and Game (ADFG) (Zheng and Siddeek, 2014).
+
+The Gmacs BBRKC model and report serves as the first example of what should follow for other crab stocks, that is, direct model comparisons to (1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in practice to closely match the outputs of the ADFG stock assessment models. 
+
+The data used was very similar to the data upon which the 2014 assessment model for BBRKC was based (Which model of Jie's is being replicated here? It has a number, like 4nb). 
+
+In what follws, we demonstrate the use of the `gmr` package to process the output of the Gmacs BBRKC model.
+
+```{r, echo=TRUE}
+# Load gmr package for Gmacs:
+library(gmr)
+
+# Set working directory to that containing Gmacs model results:
+setwd("c:/dropbox/github/seacode/gmacs/examples/demo/")
+
+# Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
+set_ggtheme('bw')
+
+# Read report file and create gmacs report object (a list):
+gmrep <- read_admb('gmacs')
+
+# Plot the catch data:
+plot_catch(gmrep)
+
+# Plot catch model fit residuals:
+# plot_catch_res(gmrep)
+
+# Plot the observed and estimated size composition:
+plot_sizecomp(gmrep)
+
+# Plot the size composition model fit residuals:
+# plot_sizecomp_res(gmrep)
+```
+
+This is where the discussion would do.
