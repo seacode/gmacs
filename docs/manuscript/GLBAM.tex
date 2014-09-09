@@ -1,8 +1,5 @@
 \documentclass[12pt,letterpaper]{article}
 
-
-
-
 % Use utf-8 encoding for foreign characters
 \usepackage[utf8]{inputenc}
 
@@ -109,7 +106,7 @@
   \maketitle
 
   \begin{abstract}
-    Gmacs is a statistical size-structured stock assessment modelling framework for molting crustacean species. The framework makes use of a wide variety of data, including both fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs has initially been designed for application to the king crab stocks of Alaska. Models of these stocks serve as a testing ground for the first versions of the modeling framework. Gmacs is coded using Auto-Differentiation Model Builder, so inherits its capability to efficiently estimate hundreds of parameters using maximum likelihood. In this paper we describe details of the underlying population dynamics and statistical framework. The description is based upon modelling for crustaceans that undergo molting and with each subsequent molt increase in size.
+    Gmacs is a statistical size-structured stock assessment modelling framework for molting crustacean species. The framework makes use of a wide variety of data, including both fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs has initially been designed for application to the king crab stocks of Alaska. Models of these stocks serve as a testing ground for the first versions of the modeling framework. Gmacs is coded using AD Model Builder, so inherits its capability to efficiently estimate hundreds of parameters. In this paper we describe details of the underlying population dynamics and statistical framework. The description is based upon modelling for crustaceans that undergo molting and with each subsequent molt increase in size.
 
   \end{abstract}
 
@@ -381,7 +378,7 @@
     \label{sub:natural_mortality}
     Natural mortality is assumed to be sex-specific, size-independent, and may or may not be constant over time.  In the case of time-varying natural mortality, the model assumes that changes in $M_{h,i}$ is a random walk process 
     \[M_{h,i+1} = M_{h,i} e^{\delta_{i}}\]
-    where $\delta_i$ is assumed to be normal with a known variance $\sigma^2_M$. There is an additional constraint where $\sum_i \delta_i = 0$ to ensure that the scale of $M_h$ remains estimable. The model further assumes that deviations in natural mortality rate are independent of sex.  Key parameters for parameterizing natural mortality are defined in \eqref{T5.1}.  Note that $\sigma_{M_h}$ is not estimable and mused either be fixed or use an informative prior.
+    where $\delta_i$ is assumed to be normal with a known variance $\sigma^2_M$. There is an additional constraint where $\sum_i \delta_i = 0$ to ensure that the scale of $M_h$ remains estimable. The model further assumes that deviations in natural mortality rate are independent of sex.  Key parameters for parameterizing natural mortality are defined in \eqref{T5.1}.  Note that $\sigma_{M_h}$ is not estimable and must either be fixed or use an informative prior.
 
     The parameter vector $\bm{\delta}_i$ with all elements set equal to 0 is equivalent to time-invariant $M$. To implement time-varying changes in natural mortality rates,  $\bm{\delta}$ is treated as an estimated vector of parameters; one parameter for each year in the model, or a fixed number of nodes and the series is interpolated using a bicubic spline. The number of nodes and the placement of the nodes is specified \emph{a priori}.
 
@@ -423,7 +420,7 @@
 
     \subsection*{Initial conditions} % (fold)
     \label{sub:initial_conditions}
-      Initialization of the numbers-at-length, annual recruitment, can either be done assuming steady-state conditions using the equations laid out in Table \ref{tab:equilibrium_model}, or treated as unknown parameters to be estimated by fitting the model to data.  The ladder method requires size-composition data in the initial years in order to estimate the initial numbers-at-length.  Table \ref{tab:initial_numbers} summarizes the proceeding steps required to initialize the number-at-length for the initial conditions.
+      Initialization of the numbers-at-length, annual recruitment, can either be done assuming steady-state conditions using the equations laid out in Table \ref{tab:equilibrium_model}, or treated as unknown parameters to be estimated by fitting the model to data.  The latter method requires size-composition data in the initial years in order to estimate the initial numbers-at-length.  Table \ref{tab:initial_numbers} summarizes the proceeding steps required to initialize the number-at-length for the initial conditions.
 
       Estimated parameters at this stage include the natural mortality rate, the initial recruits, parameters for the size distribution of new recruits, and a vector of deviates $\bm{\upsilon}$, which are constrained to sum to zero, that represent historical variation in recruitment and or mortality \eqref{T6.1}.  The initial numbers-at-length can be found by solving the same matrix equation outlined in Table \ref{tab:equilibrium_model}; however, in this case the total number of recruits is used, rather than assuming unit recruitment.  This first proceeds by calculating the growth transition matrix \eqref{T6.4}, the distribution of new recruits \eqref{T6.6}, and assume a 50:50 sex ratio \eqref{T6.7} for the new recruits in each size class.  The transition and survival from length class $l$ to $l'$ is assumed to involve only natural mortality $M_h$ in \eqref{T6.8}.  Note that $(\bm{I}_n)_{l,l'}$ is the identity matrix.  The initial numbers at length, for each sex, is given by \eqref{T6.9}, which is just the equilibrium vector of numbers-at-length multiplied by a vector of deviates $\bm{\upsilon}$.
 
@@ -479,6 +476,50 @@
     \end{equation}
     
     % subsection population_dynamics (end)
+    \subsection*{Model fitting} % (fold)
+    \label{sub:Model fitting}
+    \subsubsection*{Data components}
+    \label{subsub:Data components}
+    \subsubsection*{Prior distributions}
+    \label{subsub:Prior distributions}
+    As noted in reference to \eqref{T5.3} some penalties are relaxed at the final stages of estimation to provide stability. There are other prior assumptions in the model. Namely the prior for the stock-recruit relationship (in specification of $\sigma_{R}$)
+
+\begin{table}
+      \centering
+      \caption{Likelihoods and prior distributions}
+      \label{tab:likelihoods}
+      \tableEq
+      \begin{align}
+      \hline \nonmember
+      &\mbox{Negative log-likehoods} \nonumber \\
+      &\mbox{Indices} \nonumber \\
+      & l_i =  \bm{\delta}_i, \sigma_{M_h}  \label{T5.1} \\[1ex]
+      &\mbox{Size compositions} \nonumber \\
+      & M_{h,i} =0.5 \sigma_{M_h}^{-2} \sum_{i=1}^{N} \delta_{i}^2, 
+      \begin{cases}
+        M_h, &i=1\\
+        M_{h,i-1} \exp(\delta_i) &i>1
+      \end{cases} \label{T5.2} \\[1ex]
+      %%
+      %%
+      &\mbox{(negative log) Priors (ignoring constants)} \nonumber \\
+      &\ell_{M_h} = 
+      \begin{cases}
+      \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2} \sum_{i=1}^{N} \delta_{i}^2, & \mbox{or}  \\[1ex]
+      %%
+      0.5 \ln(2 \pi) + \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2}\sum_{i=1}^{N-1}(\delta_{i+1} - \delta{i})^{2}  \\
+      \end{cases}\label{T5.3}\\[1ex]
+      %%
+      \hline \hline \nonumber
+      \end{align}
+      \normalEq
+    \end{table}
+
+% subsection Model fitting (end)
+
+% subsection population_dynamics (end)
 
   % section methods (end)
 
@@ -487,6 +528,15 @@
 
 %
 %
+  \subsection*{Application to Bristol Bay red king crab} % (fold)
+  The data set used for this application was set to be the same as that used for the 2013 assessment [ref?]
+  
+  
+  \section*{Results} % (fold)
+  Data 
+  
+  \section*{Discussion} % (fold)
+  
 
 
   \bibliographystyle{apalike}
