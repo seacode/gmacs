@@ -1,27 +1,56 @@
 ---
 title: "Gmacs Example Stock Assessment"
-author: "Athol R. Whitten, Steven J.D. Martell, James N. Ianelli, André E. Punt"
+author: "Athol R. Whitten, James N. Ianelli, André E. Punt"
 date: "September 2014"
 output:
   pdf_document:
     highlight: zenburn
     toc: yes
   html_document:
-    theme: readable
+    theme: flatly
     toc: yes
+  word_document: default
+bibliography: bbrkc.bib
 ---
 
 ## Introduction
 
-Gmacs is a generalized size-structured assessment modeling framework applied here to data for Bristol Bay Red King Crab (BBRKC). This analysis serves as a test-case for the development of Gmacs: the example assessment is intended to match closely with that presented to the Spring 2014 BSAI Crab Plan Team Meeting by the Alaska Department of Fish and Game (ADFG) (Zheng and Siddeek, 2014).
+Gmacs is a generalized size-structured stock assessment modeling framework [more here on Gmacs]. Crab stocks of Alaska are managed by the North Pacific Fisheries Management Council [NPFMC](http://npfmc.org). Some stocks are assessed with integrated size-structured assessment models of the form described by @Punt2012. Currenlty, each stock is assessed using a stock-specific assessment model. The Gmacs project aims to provide software that will allow each stock to be assessed inside a single modelling framework.
 
-The Gmacs BBRKC model and report serves as the first example of what should follow for other crab stocks, that is, direct model comparisons to (1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in practice to closely match the outputs of the ADFG stock assessment models. 
+Gmacs is used here to develop an assessment model for the Bristol Bay Red King Crab (BBRKC) stock. This analysis serves as a test-case for the development of Gmacs: the example assessment is intended to match closely with a model scenario presented to the Spring 2014 BSAI Crab Plan Team Meeting by @Zheng2014.
 
-The data used was very similar to the data upon which the 2014 assessment model for BBRKC was based (Which model of Jie's is being replicated here? It has a number, like 4nb). 
+Together, the Gmacs-BBRKC model and this report serve as the first example of what should follow for other crab stocks: that is, direct model comparisons to (1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in practice to closely match the outputs of existing ADFG stock assessment models. 
 
-In what follws, we demonstrate the use of the `gmr` package to process the output of the Gmacs BBRKC model.
+## Comparison of Data and Model Specifications
 
-```{r, echo=TRUE}
+The data and model specifications used in the Gmacs-BBRKC model are very similar to those used in the '4nb' scenario developed by @Zheng2014, herein referred to as the ADFG-BBRKC model.
+
+<!--- (check that the latesst gmacs-bbrkc model uses the data and specs of Jie's 4nb model). -->
+
+### Population Dynamics
+
+Life History Trait  | Parameter | ADFG Value | Gmacs Value | Comments
+------------------  | --------- | ---------- | ----------- | --------
+Natural Mortality   | M         | Fixed      | Fixed       | M is fixed in both models
+
+
+### Fishery Dynamics
+
+Specification       | Parameter | ADFG Value | Gmacs Value | Comments
+------------------  | --------- | ---------- | ----------- | --------
+No. Fleets          |           | 5          | 5           |
+
+There are five separate fishing fleets accounted for in the ADFG model:
+
+## Comparison of Model Results
+
+The results of the ADFG-BBRKC model are compared here to the results of the Gmacs-BBRKC model. 
+
+### Gmacs Results
+
+In what follws, we demonstrate the use of the `gmr` package to process the output of the Gmacs-BBRKC model and produce plots that can be used in assessment reports.
+
+```{r, echo=FALSE}
 # Load gmr package for Gmacs:
 library(gmr)
 
@@ -41,10 +70,14 @@ plot_catch(gmrep)
 # plot_catch_res(gmrep)
 
 # Plot the observed and estimated size composition:
-plot_sizecomp(gmrep)
+# plot_sizecomp(gmrep)
 
 # Plot the size composition model fit residuals:
 # plot_sizecomp_res(gmrep)
 ```
 
-This is where the discussion would do.
+## Discussion
+
+This discussion will focus on the challenges in developing a Gmacs version of the BBRKC model: those met, and those yet to be met. 
+
+## References
