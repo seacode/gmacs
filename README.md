@@ -3,8 +3,7 @@
 Gmacs is currently under development. A simple working release version of Gmacs is available via `Tag V1.0` and has been tested using the BBRKC model available in the examples folder. The next major release of Gmacs is planned for September 2014.
 
 ## Table of contents
-- [Introduction](#generalized-modeling-for-alaskan-crab-stocks)
-- [Input File Structure](#input-file-structure)
+- [About Gmacs](#about-gmacs)
 - [Gmacs R Package](#r-package-for-gmacs)
 - [Development](#development)
 
@@ -17,7 +16,7 @@ Data must be supplied via the `model.dat` file in a *flat format* to enable easy
 Model specifcations are controlled through the `model.ctl` file. Information read from files is printed to a separate file called `echoinput.rep` allowing users to check and debug their input. For more information see the [Gmacs Wiki](https://github.com/seacode/gmacs/wiki).
 
 ## R Package for Gmacs
-An R package, called `gmr` is under development in support of Gmacs. The package provides functions for creating plots from Gmacs output files. A full pilot version is intended for release in September 2014, timed to coincide with the next stable release of Gmacs. Current development versions of the package can be downloaded from Github directly through R, see https://github.com/seacode/gmr for details.
+An R package, called `gmr` is under development in support of Gmacs. The package provides functions for creating plots from Gmacs output files. A full pilot version is intended for release in September 2014, timed to coincide with the next stable release of Gmacs. Current development versions of the package can be downloaded from Github directly through R, see https://github.com/seacode/gmr for more details.
 
 ## Simulation Mode
 A simulation-estimation procedure can be performed with Gmacs, by using the `gmacs -sim` flag. For example, try `gmacs -sim 123`, where 123 is a random number seed.
