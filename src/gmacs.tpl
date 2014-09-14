@@ -1564,10 +1564,20 @@ REPORT_SECTION
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
 	REPORT(res_cpue);
+	report << "slx_capture"<<endl;
+	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+	 	report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) <<endl;
+	report << "slx_retaind"<<endl;
+	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+	 	report << i << " " << h << " " << j << " " << exp(log_slx_retaind(j,h,i)) <<endl;
+	report << "slx_discard"<<endl;
+	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+	 	report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
 	REPORT(d3_SizeComps);
+
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
 	REPORT(d3_res_size_comps);
