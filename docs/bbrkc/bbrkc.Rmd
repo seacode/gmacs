@@ -27,6 +27,43 @@ The data and model specifications used in the Gmacs-BBRKC model are very similar
 
 <!--- (check that the latesst gmacs-bbrkc model uses the data and specs of Jie's 4nb model). -->
 
+Parameterization of the Bristol Bay red king crab
+
+Parameter Number of estimated parameters  Value
+Natural mortality 1 
+Males (1980-84) 1 
+Females (1980-84) 1 
+Females (1976-79; 1984-1993)    0.18 yr-1
+Other years   
+Growth    
+Transition matrix   Pre-specified
+Molt probability (slope and intercept) (1975-78) Females? 2 
+Molt probability (slope and intercept) (1979+) Females? 2 
+Molt probability (slope and intercept) Males?   Pre-specified
+Recruitment   
+Gamma distribution parameters 4 
+Annual deviations ??  
+Fishing mortality   
+Mean fishing mortality (directed fishery) 1 
+Annual fishery deviations (directed fishery)  ??  
+Mean fishing mortality (groundfish fishery) 1 
+Annual fishery deviations (groundfish fishery)  ??  
+Mean fishing mortality (Tanner fishery) 1 
+Annual fishery deviations (Tanner fishery)  ??  
+Fishery selectivity   
+Directed fishery slope and intercept (by sex) 4 
+Groundfishery slope and intercept (both sexes)  2 
+Tanner crab fishery slope and intercept (both sexes)  4 
+Retention   
+Slope, inflection point, asymptote  3 
+Initial conditions  ??  
+Survey catchability   1
+Survey selectivity    
+NMFS Slope and intercept (1975-81) by sex 4 
+NMFS Slope and intercept (1982+) by sex 4 
+BSFRF selectivity   Pre-specified
+BSFRF CV  1 
+
 ### Population Dynamics
 
 Life History Trait  | Parameter | ADFG Value | Gmacs Value | Comments
