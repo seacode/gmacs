@@ -8,7 +8,7 @@ Gmacs is currently under development. A simple working release version of Gmacs 
 - [Development](#development)
 
 ## About Gmacs
-**Gmacs** is a generalized modelling framework for developing size-structured stock assessment models. The framework is designed with similar flexibility to that provided by other general stock assessment modelling frameworks, like Stock Synthesis and CASAL. Gmacs can fit to a wide-variety of data for single sex or sex-specific population dynamics and fishery models: data can include survey and fishery indices of abundance and fishery- and survey-based size-composition data.
+**Gmacs** is a generalized size-structured stock assessment modelling framework. The framework is designed with similar flexibility to that provided by age-structured stock assessment modelling frameworks like Stock Synthesis and CASAL. Gmacs can fit to a wide-variety of data for single sex or sex-specific population dynamics and fishery models: data can include survey and fishery indices of abundance and fishery- and survey-based size-composition data.
 
 ### Data Requirements
 Data must be supplied via the `model.dat` file in a *flat format* to enable easy indexing and simple preparation. Each record for catch, abundance, length-structure etc. should be held in an individual row, with information relating to year, fleet, sex and more.

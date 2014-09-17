@@ -1,5 +1,5 @@
 // ==================================================================================== //
-//   Gmacs: A generalized size-based stock assessment modeling framework.
+//   Gmacs: A generalized size-structured stock assessment modeling framework.
 //
 //   Authors: Athol Whitten and Jim Ianelli
 //            University of Washington, Seattle
