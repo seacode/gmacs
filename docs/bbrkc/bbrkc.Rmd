@@ -14,15 +14,113 @@ bibliography: bbrkc.bib
 ---
 
 ## Introduction
-
 Gmacs is a generalized size-structured stock assessment modeling framework [more here on Gmacs]. Crab stocks of Alaska are managed by the North Pacific Fisheries Management Council [NPFMC](http://npfmc.org). Some stocks are assessed with integrated size-structured assessment models of the form described by @Punt2012. Currenlty, each stock is assessed using a stock-specific assessment model. The Gmacs project aims to provide software that will allow each stock to be assessed inside a single modelling framework.
 
 Gmacs is used here to develop an assessment model for the Bristol Bay Red King Crab (BBRKC) stock. This analysis serves as a test-case for the development of Gmacs: the example assessment is intended to match closely with a model scenario presented to the Spring 2014 BSAI Crab Plan Team Meeting by @Zheng2014.
 
 Together, the Gmacs-BBRKC model and this report serve as the first example of what should follow for other crab stocks: that is, direct model comparisons to (1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in practice to closely match the outputs of existing ADFG stock assessment models. 
 
+## Summary of analytical approach
+Need to ask Jie about his size-comp data: are the discard males size-comps being fit in the model?
+
+Industry is concerned that the ADFG-model does not respond to the survey data soon enough. But the model seems to fit to the variance around the survey data points (CV?), so this poses two questions, (1) how is the survey biomass CV determined and is this a good analysis, and (2) what would the model do if we were to reduce the CV on the survey data points (say the last one) and if we could get better survey data for the future ones? And how is the weighting of the different components of the data handled? Has this been done in an objective manner? Is there some kind of tuning method? Need to check this from Jie's document.
+
+### ADFG-BBRKC
+1. History of Modeling Approaches
+To reduce annual measurement errors associated with abundance estimates derived from the area-swept method, the ADF&G developed a length-based analysis (LBA) in 1994 that incorporates multiple years of data and multiple data sources in the estimation procedure (Zheng et al. 1995a). Annual abundance estimates of the Bristol Bay RKC stock from the LBA have been used to manage the directed crab fishery and to set crab bycatch limits in the groundfish fisheries since 1995 (Figure 1). An alternative LBA (research model) was developed in 2004 to include small size groups for federal overfishing limits. The crab abundance declined sharply during the early 1980s. The LBA estimated natural mortality for different periods of years, whereas the research model estimated additional mortality beyond a basic constant natural mortality during 1976-1993. In this report, we present only the research model that was fit to the data from 1975 to 2013.
+2. Model Description
+The original LBA model was described in detail by Zheng et al. (1995a, 1995b) and Zheng and Kruse (2002). The model combines multiple sources of survey, catch, and bycatch data using a maximum likelihood approach to estimate abundance, recruitment, catchabilities, catches, and bycatch of the commercial pot fisheries and groundfish trawl fisheries. A full model description is provided in Appendix A.
+
+g. Critical assumptions of the model:
+i. The base natural mortality is constant over shell condition and length and was estimated assuming a maximum age of 25 and applying the 1% rule (Zheng 2005).
+ii. Survey and fisheries selectivities are a function of length and were constant over shell condition. Selectivities are a function of sex except for trawl bycatch selectivities, which are the same for both sexes. Two different survey selectivities were estimated: (1) 1975-1981 and (2) 1982-2013 based on modifications to the trawl gear used in the assessment survey.
+iii. Growth is a function of length and did not change over time for males. For females, three growth increments per molt as a function of length were estimated based on sizes at maturity (1975-1982, 1983-1993, and 1994-2013). Once mature, female red king crabs grow with a much smaller growth increment per molt.
+iv. Molting probabilities are an inverse logistic function of length for males. Females molt annually.
+v. Annual fishing seasons for the directed fishery are short.
+vi. Survey catchability (Q) was estimated to be 0.896, based on a trawl experiment by Weinberg et al. (2004) with a standard deviation of 0.025. Q was assumed to be constant over time. Some scenarios estimate Q in the model.
+vii. Males mature at sizes ≥120 mm CL. For convenience, female abundance was summarized at sizes ≥90 mm CL as an index of mature females.
+viii. For summer trawl survey data, shell ages of newshell crabs were 12 months or less, and shell ages of oldshell and very oldshell crabs were more than 12 months.
+ix. Measurement errors were assumed to be normally distributed for length compositions and were log-normally distributed for biomasses.
+h. Changes to the above since previous assessment: see Section A.3. Changes to the assessment methodology.
+i. Outline of methods used to validate the code used to implement the model and whether the code is available: The code is available.
+3. Model Selection and Evaluation
+a. Alternative model configurations:
+Several scenarios were compared for this report:
+Scenario 4: base scenario. Scenario 4 includes:
+(1) Basic M = 0.18, and additional mortalities as one level (1980-1984) for males and two levels (1980-1984 and 76-79 & 85-93) for females.
+(2) Including BSFRF survey data in 2007 and 2008.
+(3) Assuming survey catchability to be 0.896 for all other years.
+(4) Two levels of molting probabilities for males: one before 1980 and one after 1979,
+based on survey shell condition data. Each level has two parameters.
+(5) Estimating effective sample size from observed sample sizes. Effective sample
+sizes are estimated as min(0.5*observed-size, N) for trawl surveys and min(0.1*
+observed-size, N) for catch and bycatch, where N is the maximum sample size (200
+for trawl surveys, 100 for males from the pot fishery and 50 for females from pot
+fishery and both males and females from the trawl fisheries. Effective sample sizes are
+plotted against those implied effective sample sizes estimated as follows:
+where y l P ,
+ˆ and Py,l are estimated and observed size compositions in year y and
+length group l, respectively.
+(6) Standard survey data for males and retow data for females.
+(7) Estimating initial year length compositions.
+Scenario 4b: the same as scenario 4 except estimating trawl survey catchability.
+Scenarios 4na and 4nb: the same as scenarios 4 and 4b except that newly revised NMFS
+estimates of time series of biomass, length/sex compositions and biomass CV of the
+trawl survey data are used.
+Scenarios 4nb0.5 and 4nb2: the same as scenario 4nb except that the CV of trawl survey
+catchability is 0.5 and 2 times of the estimated value.
+Scenario 4nb7: the same as scenario 4nb except estimating one additional natural
+mortality parameter for both males and females during 2006-2010.
+Only the full results for scenarios 4 and 4nb are presented in this report. Each figure or
+table is indicated with a scenario. If not indicating scenario, it is for scenario 4.
+b. Progression of results: See the new results at the beginning of the report.
+c. Evidence of search for balance between realistic and simpler models: NA.
+d. Convergence status/criteria: ADMB default convergence criteria.
+e. Sample sizes for length composition data. Estimated sample sizes and effective sample
+sizes are summarized in tables.
+f. Credible parameter estimates: all estimated parameters seem to be credible.
+g. Model selection criteria. The likelihood values were used to select among alternatives
+that could be legitimately compared by that criterion.
+h. Residual analysis. Residual plots are illustrated in figures.
+i. Model evaluation is provided under Results, below.
+
+### Gmacs-BBRK
+How Gmacs deals with retention and selectivity: this is an important part to add, as there 
+
 ## Comparison of Data and Model Specifications
 
+### ADFG
+### Survey Data
+
+The `survey_data` folder contains 'less processed' data from Jie. Each file is
+named appropriately and can be used for checking the more formatted data
+in the `*.dat` files. The 'Survey_Proportions' file contains both whole-number 
+and proportional (sum-to-one) estimates for the survey size composition data. 
+These were prepared by Jie with the following notes:
+
+*The survey proportions are computed from the total estimated abundance >64 mm, 
+while the sample sizes are total measured crabs greater than 64 mm. Because area-swept 
+is slightly different from tow to tow, and in some years (a few years, I believe) 
+there were subsamples, so the survey proportions are not exactly from the number of 
+measured crabs. The survey proportions have been weighted by the area-swept and 
+subsampling factors. ... For a given year, the sum of newshell males, oldshell 
+males and females (for example) are equal to 1.0. --Jie*
+
+### Catch Data
+Jie provided the following advice regarding weights in his data file:
+
+*For the catch and bycatch, ... multiply the sample sizes to the proportions directly. 
+Even for trawl bycatch, just multiply male sample sizes to male proportions, and 
+the same for female trawl bycatch.  --Jie*
+
+### Weight and Fecundity
+For the length-weight relationships, Jie's data file `rk7513s1.dat` has information on the weight-at-length parameters for BBRKC. He suggests we use the 'new' parameters listed (see line 339 onwards): these parameters were estimated by NMFS.
+ 
+Fecundity-at-length is a little more complicated: This information was provided by Jie:
+
+From Jie: Fecundity-at-length depends on clutch fullness, which changes from year to year. Right now, we do not use fecundity in the management, so no fecundity is used in the model. The “fecundity” used in Andre's simplified model looks like the male mean weight by length with the “old" parameters”. If GMACS needs fecundity, maybe just input mean weight by length of mature females, or mature males (please use “new” parameters). As to the maturity by length, right now, it is 0 for lengths less than 90 mm and 1 for lengths 90 or larger for females and 0 for lengths less than  120mm and 1 for lengths greater than 119 mm for males. In the future, I plan to estimate maturity by length for females over time to improve estimation of growth.
+
+### Gmacs
 The data and model specifications used in the Gmacs-BBRKC model are very similar to those used in the '4nb' scenario developed by @Zheng2014, herein referred to as the ADFG-BBRKC model.
 
 <!--- (check that the latesst gmacs-bbrkc model uses the data and specs of Jie's 4nb model). -->
@@ -65,6 +163,13 @@ BSFRF selectivity   Pre-specified
 BSFRF CV  1 
 
 ### Population Dynamics
+The table below currently just uses basic markdown table formatting. There is an option for Rmd to use something like this:
+
+```{r, results='asis'}
+knitr::kable(mtcars)
+```
+
+The above is the output of an R data.frame. This could be useful for reproducing model results or inputs from Gmacs i/o files.
 
 Life History Trait  | Parameter | ADFG Value | Gmacs Value | Comments
 ------------------  | --------- | ---------- | ----------- | --------
@@ -80,10 +185,12 @@ No. Fleets          |           | 5          | 5           |
 There are five separate fishing fleets accounted for in the ADFG model:
 
 ## Comparison of Model Results
-
 The results of the ADFG-BBRKC model are compared here to the results of the Gmacs-BBRKC model. 
 
 ### Gmacs Results
+Priorities for Gmacs results: plot of the data input as per r4ss data summary plot: get code from r4ss GitHub. Plot of MMB from Gmacs versus ADFG, see Gmacs shared folder with ADFG_MMB.dat. See jie's latest files and check data of those versus that which we are using. Should be using version 4nB. Check specs of data and model specs between Gmacs- and ADFG-BBRKC b/c need to be sure about that as we produce more outputs. Get these updated into the gmr package, so we can be running that via the final report and updating as necessary. Add comments to the TPL and update on GitHub. Check the Gmacs version of time-varying M. No blocks anymore, but there are blocks for other functions, can we get blocks for M too?
+
+We need to be able to produce a table of the comparative likelihoods (by component) of the alternative models. For best practice, just try and do what we do with SS models for SESSF stocks anyway. See the pink link report, and enter a section for each of those, and see if we can emulate a report of that type.
 
 In what follws, we demonstrate the use of the `gmr` package to process the output of the Gmacs-BBRKC model and produce plots that can be used in assessment reports.
 
@@ -92,7 +199,7 @@ In what follws, we demonstrate the use of the `gmr` package to process the outpu
 library(gmr)
 
 # Set working directory to that containing Gmacs model results:
-setwd("c:/dropbox/github/seacode/gmacs/examples/demo-b/")
+setwd("c:/seacode/gmacs/examples/demo/")
 
 # Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
 set_ggtheme('bw')
@@ -100,21 +207,52 @@ set_ggtheme('bw')
 # Read report file and create gmacs report object (a list):
 gmrep <- read_admb('gmacs')
 
-# Plot the catch data:
+# Set working directory to that containing Gmacs model results:
+setwd("c:/seacode/gmacs/examples/demo")
+
+# Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
+set_ggtheme('bw')
+
+# Read report file and create gmacs report object (a list):
+gmrep <- read_admb('gmacs')
+
+# Get plots of interest:
 plot_catch(gmrep)
+plot_catch(gmrep,plot_res=T)
 
-# Plot catch model fit residuals:
-# plot_catch_res(gmrep)
-
-# Plot the observed and estimated size composition:
-# plot_sizecomp(gmrep)
-
-# Plot the size composition model fit residuals:
+# plot_sizecomp(gmrep,which_plots=c(1))
 # plot_sizecomp_res(gmrep)
+# 
+# plot_sizecomp(gmrep,which_plots=c(11))
+# plot_sizecomp_res(gmrep)
+# plot_sizetransition(gmrep)
+# 
+# plot_selectivity(gmrep)
+# plot_recruitment(gmrep)
+# plot_mmb(gmrep)
 ```
 
-## Discussion
+## Comparison of Assessment Processes
+### File Description
 
+  * The `*.tpl` file is working, it builds and the `*.exe` file runs successfully.
+  * The main `*.dat` file is read in as expected (comments within).
+  * There is a second data file `rksize13s.dat` with sample sizes for 
+    various rows of size-comp data. See lines 81-87 of `*.tpl`. 
+  * Input sample sizes appear to be capped to the constant numbers entered in 
+    the main data file under 'number of samples' or 'sample sizes' (variously).
+  * There is a third data file `tc7513s.dat` specifically for data from the
+    tanner crab fishery (with red crab bycatch).
+  * There is a standard control file `*.ctl` with internal comments.
+  * There is an excel spreadsheet which can be used to read in the model
+    output files and display related plots (it's a bit clunky).
+
+  * There are two batch files in the model directory: `clean.bat` and `scratch.bat`.
+    The 'clean' batch file deletes files related to a single model run. The
+    'scratch' batch file deletes all files relating to the model build and 
+    leaves only source and data files.
+
+## Discussion
 This discussion will focus on the challenges in developing a Gmacs version of the BBRKC model: those met, and those yet to be met. 
 
 ## References
