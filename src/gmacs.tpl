@@ -737,9 +737,6 @@ FUNCTION calc_fishing_mortality
 	}
 
 
-
-
-
 	/**
 	 * @brief Molt increment as a linear function of pre-molt size.
 	 */
@@ -753,10 +750,6 @@ FUNCTION calc_growth_increments
 			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
 		}
 	}
-	
-
-
-
 
 
 
@@ -804,7 +797,6 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
-		
 	}
 	
 	//cout<<"End of calc_size_transition_matrix"<<endl;
@@ -980,14 +972,6 @@ FUNCTION calc_initial_numbers_at_length
 	if(verbose) COUT(N(1)(syr));
 	
 
-
-
-
-
-
-
-
-
 	/**
 	 * @brief Update numbers-at-length
 	 * @author Steve Martell
@@ -1021,10 +1005,6 @@ FUNCTION update_population_numbers_at_length
 	}
 	
 	if(verbose) COUT(N(1)(nyr));
-
-
-
-
 
 
 
@@ -1548,12 +1528,11 @@ FUNCTION simulation_model
 	// COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
-
 	dvector mod_yrs(syr,nyr); 
 	mod_yrs.fill_seqadd(syr,1);
 
 	REPORT(mod_yrs);
-	REPORT(mid_points);
+	REPORT(mid_points); 
 	REPORT(nloglike);
 	REPORT(nlogPenalty);
 	REPORT(dCatchData);
@@ -1602,6 +1581,23 @@ REPORT_SECTION
 		REPORT(spr_rbar);
 		REPORT(spr_fofl);
 		REPORT(spr_cofl);
+  	dvar_matrix mean_size(1,nsex,1,nclass);
+  	///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
+  	dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
+  	for (int isex=1;isex<=nsex;isex++)
+  	{
+  		int iage=1;
+  		// Set the initial size frequency
+    	growth_matrix(isex,iage) = size_transition(isex,iage);
+  	  mean_size(isex,iage)  = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
+  	  for (iage=2;iage<=nclass;iage++)
+  	  {
+  	  	growth_matrix(isex,iage)     = growth_matrix(isex,iage-1)*size_transition(isex);
+  	  	mean_size(isex,iage) = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
+  	  }
+  	}
+  	REPORT(growth_matrix);
+  	REPORT(mean_size);
 	}
 
 
