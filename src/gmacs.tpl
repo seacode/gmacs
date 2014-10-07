@@ -1599,7 +1599,8 @@ REPORT_SECTION
 
 	dvector mod_yrs(syr,nyr); 
 	mod_yrs.fill_seqadd(syr,1);
-
+	REPORT(name_read_flt);
+	REPORT(name_read_srv);
 	REPORT(mod_yrs);
 	REPORT(mid_points);
 	REPORT(nloglike);
