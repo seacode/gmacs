@@ -1713,7 +1713,7 @@ GLOBALS_SECTION
 	// #include "nloglike.h"
 	
 	#include "./include/libgmacs.h"
-	#include "../../CSTAR/include/cstar.h"
+	//#include "../../CSTAR/include/cstar.h"
 
 
 	// acl::negativeLogLikelihood *agecomplike;
