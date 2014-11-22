@@ -1,19 +1,11 @@
 // ==================================================================================== //
-//   ETHOS -> new model name after Chateau Ste Michelle Reserve wines
-//   Gmacs: Generalized Modeling for Alaskan Crab Stocks.
+//   Gmacs: A generalized size-structured stock assessment modeling framework.
 //
 //   Authors: Athol Whitten and Jim Ianelli
 //            University of Washington, Seattle
-//            and Alaska Fisheries Science Centre, NOAA, Seattle
+//            and Alaska Fisheries Science Centre, Seattle
 //
-//   Info: https://github.com/awhitten/gmacs or write to whittena@uw.edu
-//   Copyright (c) 2014. All rights reserved.
-//
-//   Acknowledgement: The format of this code, and many of the details,
-//   were adapted from code developed for the NPFMC by Andre Punt (2012), 
-//   and on the 'LSMR' model by Steven Martell (2011).
-//
-//  NOTE: This is current development version. As at 6pm Seattle time, June 6th 2014.
+//   Info: https://github.com/seacode/gmacs Copyright (C) 2014. All rights reserved.
 //
 //  INDEXES:
 //    g = group
@@ -24,6 +16,7 @@
 //    l = index for length class
 //    m = index for maturity state
 //    o = index for shell condition.
+
 // ==================================================================================== //
 
 DATA_SECTION
@@ -204,17 +197,6 @@ DATA_SECTION
 	// |------------------|
 	init_int eof;
 	!! if (eof != 9999) {cout<<"Error reading data"<<endl; exit(1);}
-
-	
-
-
-
-
-
-
-
-
-
 
 
 	!! ad_comm::change_datafile_name(controlfile);
@@ -424,21 +406,10 @@ INITIALIZATION_SECTION
 	log_fbar  log_pen_fbar;
 	
 
-
-
-
-
-
-
-
-
-
-
-
 PARAMETER_SECTION
 	
 	// Leading parameters
-	//      M   = theta(1)
+	// M        = theta(1)
 	// ln(Ro)   = theta(2)
 	// ln(R1)   = theta(3)
 	// ln(Rbar) = theta(4)
@@ -535,8 +506,6 @@ PARAMETER_SECTION
 	sdreport_vector sd_log_mmb(syr,nyr);
 
 
-	
-
 PRELIMINARY_CALCS_SECTION
 	if( simflag )
 	{
@@ -594,9 +563,6 @@ PROCEDURE_SECTION
 		calc_sdreport();
 	}
 	nf++;
-
-
-
 
 
 	/**
@@ -771,9 +737,6 @@ FUNCTION calc_fishing_mortality
 	}
 
 
-
-
-
 	/**
 	 * @brief Molt increment as a linear function of pre-molt size.
 	 */
@@ -787,10 +750,6 @@ FUNCTION calc_growth_increments
 			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
 		}
 	}
-	
-
-
-
 
 
 
@@ -838,17 +797,10 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
-		
 	}
 	
 	//cout<<"End of calc_size_transition_matrix"<<endl;
 	
-	
-
-
-
-
-
 
 
 	/**
@@ -905,8 +857,6 @@ FUNCTION calc_natural_mortality
 	}
 
 
-
-
 	/**
 	 * @brief Calculate total instantaneous mortality rate and survival rate
 	 * @details \f$ S = exp(-Z) \f$
@@ -945,10 +895,6 @@ FUNCTION calc_molting_probability
 		//molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
 		molt_probability(h) = 1.0 - 1.0/(1+exp((mid_points-mu)/sd));
 	}
-
-
-
-
 
 
 
@@ -1026,16 +972,6 @@ FUNCTION calc_initial_numbers_at_length
 	if(verbose) COUT(N(1)(syr));
 	
 
-
-	
-	
-
-
-
-
-
-
-
 	/**
 	 * @brief Update numbers-at-length
 	 * @author Steve Martell
@@ -1069,10 +1005,6 @@ FUNCTION update_population_numbers_at_length
 	}
 	
 	if(verbose) COUT(N(1)(nyr));
-
-
-
-
 
 
 
@@ -1596,13 +1528,12 @@ FUNCTION simulation_model
 	// COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
-
 	dvector mod_yrs(syr,nyr); 
 	mod_yrs.fill_seqadd(syr,1);
 	REPORT(name_read_flt);
 	REPORT(name_read_srv);
 	REPORT(mod_yrs);
-	REPORT(mid_points);
+	REPORT(mid_points); 
 	REPORT(nloglike);
 	REPORT(nlogPenalty);
 	REPORT(dCatchData);
@@ -1613,10 +1544,20 @@ REPORT_SECTION
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
 	REPORT(res_cpue);
+	report << "slx_capture"<<endl;
+	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+	 	report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) <<endl;
+	report << "slx_retaind"<<endl;
+	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+	 	report << i << " " << h << " " << j << " " << exp(log_slx_retaind(j,h,i)) <<endl;
+	report << "slx_discard"<<endl;
+	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+	 	report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
 	REPORT(d3_SizeComps);
+
 	REPORT(d3_obs_size_comps);
 	REPORT(d3_pre_size_comps);
 	REPORT(d3_res_size_comps);
@@ -1641,6 +1582,23 @@ REPORT_SECTION
 		REPORT(spr_rbar);
 		REPORT(spr_fofl);
 		REPORT(spr_cofl);
+  	dvar_matrix mean_size(1,nsex,1,nclass);
+  	///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
+  	dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
+  	for (int isex=1;isex<=nsex;isex++)
+  	{
+  		int iage=1;
+  		// Set the initial size frequency
+    	growth_matrix(isex,iage) = size_transition(isex,iage);
+  	  mean_size(isex,iage)  = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
+  	  for (iage=2;iage<=nclass;iage++)
+  	  {
+  	  	growth_matrix(isex,iage)     = growth_matrix(isex,iage-1)*size_transition(isex);
+  	  	mean_size(isex,iage) = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
+  	  }
+  	}
+  	REPORT(growth_matrix);
+  	REPORT(mean_size);
 	}
 
 
@@ -1822,7 +1780,7 @@ FINAL_SECTION
 	minute=long(elapsed_time)%3600/60;
 	second=(long(elapsed_time)%3600)%60;
 	cout<<endl<<endl<<"*******************************************"<<endl;
-	cout<<endl<<endl<<"———————————————————————————————————————————"<<endl;
+	cout<<endl<<endl<<"-------------------------------------------"<<endl;
 	cout<<"--Start time: "<<ctime(&start)<<endl;
 	cout<<"--Finish time: "<<ctime(&finish)<<endl;
 	cout<<"--Runtime: ";
