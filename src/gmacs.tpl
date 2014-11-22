@@ -1710,9 +1710,9 @@ GLOBALS_SECTION
 	#include <admodel.h>
 	#include <time.h>
 	#include <contrib.h>
-	#include "nloglike.h"
+	// #include "nloglike.h"
 	
-	#include "spr.h"
+	#include "./include/libgmacs.h"
 	#include "../../CSTAR/include/cstar.h"
 
 

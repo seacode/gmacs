@@ -2,12 +2,13 @@
 OUTPUT:=gmacs
 LIBINCLUDE = ../../CSTAR/build
 # Global source files from current dir.
+LIBS:=$(wildcard ./lib/*.cpp)
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx ) 
 
 
 # Path to ADMB distribution directory
 export ADMB_HOME=/Users/stevenmartell1/admb-trunk/build/dist
-export ADMB_HOME=/Users/jim/admb/build/dist
+# export ADMB_HOME=/Users/jim/admb/build/dist
 
 # Compiler
 CXX:=clang++
@@ -27,12 +28,14 @@ LDFLAGS:=
 RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
 RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contribo.a            \
 	              $(LIBINCLUDE)/release/libcstar.a               \
+	              build/release/libgmacs.a 						 \
 	              -lxml2
 
 # Debug specific flags.
 DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
 DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contrib.a               \
-	            $(LIBINCLUDE)/debug/libcstar.a                 \
+	            $(LIBINCLUDE)/debug/libcstar.a                   \
+	            build/debug/libgmacs.a                           \
 	            -lxml2
 
 # Name of text file containing build number.
@@ -46,7 +49,10 @@ RELEASE_OBJS:=$(addprefix build/release/,$(addsuffix .o,$(BASEFILES)))
 DEPFILES:=$(addprefix build/deps/,$(addsuffix .d,$(BASEFILES)))
 
 # Default to release build.
-all: $(OUTPUT).cpp debug release
+all: library $(OUTPUT).cpp debug release
+
+library: $(LIBS)
+	@$(MAKE) --directory=./lib
 
 $(OUTPUT).cpp: $(OUTPUT).tpl
 	$(ADMB_HOME)/bin/tpl2cpp $(OUTPUT)

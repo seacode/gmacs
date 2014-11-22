@@ -1,5 +1,5 @@
 #include <admodel.h>
-#include "spr.h"
+#include "../include/spr.h"
 
 
 spr::spr(const double& _r, const double& _lambda,
@@ -11,7 +11,6 @@ spr::spr(const double& _r, const double& _lambda,
 	m_nsex     = m_M.rowmax();
 	m_nclass   = m_rx.indexmax();
 	//dmatrix Id = identity_matrix(1,m_nclass);
-	
 	
 	// get unfished mature male biomass per recruit.
 	m_ssb0 = 0.0;

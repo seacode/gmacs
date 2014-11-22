@@ -1,4 +1,4 @@
-#include "nloglike.h"
+#include "../include/nloglike.h"
 using namespace likelihoods;
 
 

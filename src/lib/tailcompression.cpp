@@ -1,5 +1,5 @@
 #include <admodel.h>
-#include "nloglike.h"
+#include "../include/nloglike.h"
 
 
 /**

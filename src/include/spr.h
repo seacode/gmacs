@@ -1,5 +1,8 @@
 #include <admodel.h>
 
+#ifndef _SPR_H_
+#define _SPR_H_
+
 #define MAXIT 100
 #define TOL   1.e-4
 
@@ -60,3 +63,6 @@ public:
 	
 	dvector calc_equilibrium(const dvector& surv, const int& sex);
 };
+
+
+#endif
