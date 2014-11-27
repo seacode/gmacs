@@ -1,102 +1,100 @@
+# Name of archive.
 OUTPUT:=libgmacs.a
-# export ADMB_HOME=/Users/steveyou nmartell1/admb-trunk/build/dist
 
-CXX:=clang++
-
-# Compiler and linker flags.
-CXXFLAGS:=-g -Wall -D__GNUDOS__ -Dlinux -DUSE_LAPLACE  \
-					-I.                                          \
-					-I$(ADMB_HOME)/include                       \
-					-I$(ADMB_HOME)/contrib/include               \
-					-I/usr/include/libxml2
-
-# Debug specific flags.
-DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
-DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contrib.a               \
-	           
-
-# Release specific flags.
-RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
-RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contribo.a            \
-	              
 
 
 # Global source files from current dir.
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx )
 
+# Path to ADMB distribution directory
+# export ADMB_HOME=/Users/stevenmartell1/admb-trunk/bin/dist
+
+# Compiler
+CXX:=clang++
+
+# Compiler and linker flags.
+CXXFLAGS:=-g -Wall -D__GNUDOS__ -Dlinux -DUSE_LAPLACE  \
+	      -I.                                          \
+	      -I$(ADMB_HOME)/include                       \
+	      -I/usr/include/libxml2
+LDFLAGS:= 
+
+# Release specific flags.
+RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
+RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contribo.a -lxml2
+
+# Debug specific flags.
+DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
+DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contrib.a -lxml2
+
 
 # ======================= END OF CONFIGURABLE THINGS ===========================
-OBJS:=$(SRCS:.cpp=.obj)
+# Create debug & release list of object files as well as dep files.
 BASEFILES:=$(basename $(SRCS))
-DEBUG_OBJS:=$(addprefix ../build/debug/,$(OBJS))
-RELEASE_OBJS:=$(addprefix ../build/release/,$(OBJS))
+DEBUG_OBJS:=$(addprefix bin/debug/,$(addsuffix .o,$(BASEFILES)))
+RELEASE_OBJS:=$(addprefix bin/release/,$(addsuffix .o,$(BASEFILES)))
+DEPFILES:=$(addprefix bin/deps/,$(addsuffix .d,$(BASEFILES)))
 
-all: debug release
-
-# all:
-# 	$(MAKE) libcstar.a
-
-# libcstar.a: $(SRCS)
-# 	$(ADMB_HOME)/admb -c $^
-# 	$(AR) -rs  $@ $(OBJS)
+# Default to release bin.
+all:  debug release
 
 
 # Directory targets
-../build/debug:
-	@echo creating debug Directory
-	@mkdir -p ../build/debug ../build/deps
+bin/debug:
+	@echo creating debug directory
+	@mkdir -p bin/debug bin/deps
 
-../build/release:
+bin/release:
 	@echo creating release directory
-	@mkdir -p ../build/release ../build/deps
+	@mkdir -p bin/release bin/deps
 
-
-# ================================ DEBUG RECIPE ================================
+# Debug route.
 .PHONY: debug
 debug: CXXFLAGS+= $(DEBUG_CXXFLAGS)
-debug: LDFLAGS += $(DEBUG_LDFLAGS)
-debug: ../build/debug/$(OUTPUT)
+debug: LDFLAGS+= $(DEBUG_LDFLAGS)
+debug: bin/debug/$(OUTPUT)
 
-../build/debug/$(OUTPUT): ../build/debug/ $(DEBUG_OBJS)
-	@echo 'linking' ../build/debug/$(OUTPUT)
-	$(AR) -rs $@ $(DEBUG_OBJS) $(LDFLAGS)
+bin/debug/$(OUTPUT): bin/debug $(DEBUG_OBJS)
+	@echo 'linking ' bin/debug/$(OUTPUT)
+	$(AR) -rs  $@ $(DEBUG_OBJS)
+	# @$(CXX) -o bin/debug/$(OUTPUT) $(DEBUG_OBJS) $(LDFLAGS)
 
 -include $(DEPFILES)
 
-../build/debug/%.obj : %.cpp
+bin/debug/%.o : %.cpp
 	@echo 'compiling ' $<
-	@$(CXX) -c  $(CXXFLAGS) $< -o $@
-	@$(CXX) -MM $(CXXFLAGS) $< -o ../build/deps/$*.d
-	@mv -f ../build/deps/$*.d ../build/deps/$*.d.tmp
-	@sed -e 's|.*:|../build/release/$*.o:|' < ../build/deps/$*.d.tmp \
-	  > ../build/deps/$*.d
-	@sed -e 's/.*://' -e 's/\\$$//' < ../build/deps/$*.d.tmp | fmt -1 | \
-	  sed -e 's/^ *//' -e 's/$$/:/' >> ../build/deps/$*.d
-	@rm -f ../build/deps/$*.d.tmp
+	@$(CXX) -c $(CXXFLAGS) $< -o $@
+	@$(CXX) -MM $(CXXFLAGS) $< -o bin/deps/$*.d
+	@mv -f bin/deps/$*.d bin/deps/$*.d.tmp
+	@sed -e 's|.*:|bin/debug/$*.o:|' < bin/deps/$*.d.tmp \
+	  > bin/deps/$*.d
+	@sed -e 's/.*://' -e 's/\\$$//' < bin/deps/$*.d.tmp | fmt -1 \
+	  | sed -e 's/^ *//' -e 's/$$/:/' >> bin/deps/$*.d
+	@rm -f bin/deps/$*.d.tmp	
 
-# =============================== RELEASE RECIPE ===============================
+# Release route.
 .PHONY: release
 release: CXXFLAGS+= $(RELEASE_CXXFLAGS)
-release: LDFLAGS += $(RELEASE_LDFLAGS)
-release: ../build/release/$(OUTPUT)
+release: LDFLAGS+= $(RELEASE_LDFLAGS)
+release: bin/release/$(OUTPUT)
 
-../build/release/$(OUTPUT): ../build/release/ $(RELEASE_OBJS)
-	@echo 'linking' ../build/release/$(OUTPUT)
-	$(AR) -rs $@ $(RELEASE_OBJS) $(LDFLAGS)
+bin/release/$(OUTPUT): bin/release $(RELEASE_OBJS)
+	@echo 'linking ' bin/release/$(OUTPUT)
+	$(AR) -rs  $@ $(RELEASE_OBJS)
+	# @$(CXX) -o bin/release/$(OUTPUT) $(RELEASE_OBJS) $(LDFLAGS)
 
-../build/release/%.obj : %.cpp
+bin/release/%.o : %.cpp
 	@echo 'compiling ' $<
-	@$(CXX) -c  $(CXXFLAGS) $< -o $@
-	@$(CXX) -MM $(CXXFLAGS) $< -o ../build/deps/$*.d
-	@mv -f ../build/deps/$*.d ../build/deps/$*.d.tmp
-	@sed -e 's|.*:|../build/release/$*.o:|' < ../build/deps/$*.d.tmp \
-	  > ../build/deps/$*.d
-	@sed -e 's/.*://' -e 's/\\$$//' < ../build/deps/$*.d.tmp | fmt -1 | \
-	  sed -e 's/^ *//' -e 's/$$/:/' >> ../build/deps/$*.d
-	@rm -f ../build/deps/$*.d.tmp
-
+	@$(CXX) -c $(CXXFLAGS) $< -o $@
+	@$(CXX) -MM $(CXXFLAGS) $< -o bin/deps/$*.d
+	@mv -f bin/deps/$*.d bin/deps/$*.d.tmp
+	@sed -e 's|.*:|bin/release/$*.o:|' < bin/deps/$*.d.tmp \
+	  > bin/deps/$*.d
+	@sed -e 's/.*://' -e 's/\\$$//' < bin/deps/$*.d.tmp | fmt -1 | \
+	  sed -e 's/^ *//' -e 's/$$/:/' >> bin/deps/$*.d
+	@rm -f bin/deps/$*.d.tmp
 
 .PHONY: clean
 clean:
-	@echo 'removing build directory'
-	@rm -rf ../build
+	@echo 'removing bin directory'
+	@rm -rf bin

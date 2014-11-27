@@ -1709,7 +1709,7 @@ RUNTIME_SECTION
 GLOBALS_SECTION
 	#include <admodel.h>
 	#include <time.h>
-	#include <contrib.h>
+	//#include <contrib.h>
 	#include "./include/libgmacs.h"
 	
 	// #include "nloglike.h"

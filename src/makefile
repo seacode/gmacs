@@ -1,6 +1,6 @@
 # Name of executable.
 OUTPUT:=gmacs
-LIBINCLUDE = ../../CSTAR/build
+LIBINCLUDE = lib/bin
 # Global source files from current dir.
 LIBS:=$(wildcard ./lib/*.cpp)
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx ) 
@@ -27,15 +27,15 @@ LDFLAGS:=
 # Release specific flags.
 RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
 RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contribo.a            \
-	              $(LIBINCLUDE)/release/libcstar.a               \
-	              build/release/libgmacs.a 						 \
+	              $(LIBINCLUDE)/release/libgmacs.a               \
+	              lib/bin/release/libgmacs.a 						 \
 	              -lxml2
 
 # Debug specific flags.
 DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
 DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contrib.a               \
-	            $(LIBINCLUDE)/debug/libcstar.a                   \
-	            build/debug/libgmacs.a                           \
+	            $(LIBINCLUDE)/debug/libgmacs.a                   \
+	            lib/bin/debug/libgmacs.a                           \
 	            -lxml2
 
 # Name of text file containing build number.
@@ -49,7 +49,7 @@ RELEASE_OBJS:=$(addprefix build/release/,$(addsuffix .o,$(BASEFILES)))
 DEPFILES:=$(addprefix build/deps/,$(addsuffix .d,$(BASEFILES)))
 
 # Default to release build.
-all: library $(OUTPUT).cpp debug release
+all: $(OUTPUT).cpp library  debug release
 
 library: $(LIBS)
 	@$(MAKE) --directory=./lib
