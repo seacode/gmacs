@@ -1710,12 +1710,10 @@ GLOBALS_SECTION
 	#include <admodel.h>
 	#include <time.h>
 	#include <contrib.h>
-	// #include "nloglike.h"
-	
 	#include "./include/libgmacs.h"
-	//#include "../../CSTAR/include/cstar.h"
-
-
+	
+	// #include "nloglike.h"
+	// #include "../../CSTAR/include/cstar.h"
 	// acl::negativeLogLikelihood *agecomplike;
 
 	time_t start,finish;
