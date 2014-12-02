@@ -1,5 +1,5 @@
-#include "../include/nloglike.h"
 #include <admodel.h>
+#include "../include/nloglike.h"
 
 /**
  * @brief multinomial desity function with estimated effective sample size.

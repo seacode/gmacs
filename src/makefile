@@ -6,8 +6,17 @@ LIBS:=$(wildcard ./lib/*.cpp)
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx ) 
 
 
-# Path to ADMB distribution directory
-export ADMB_HOME=/Users/stevenmartell1/admb-trunk/build/dist
+# Portable makefiles (http://skramm.blogspot.com/2013/04/writing-portable-makefiles.html)
+# Windows users: download http://gnuwin32.sourceforge.net/packages/make.htm
+ifdef ComSpec
+    RM=del /F /Q
+else
+    RM=rm -rf
+endif 
+
+
+# Path to ADMB distribution directory if ADMB_HOME is not declared in your evironment variables
+# export ADMB_HOME=/Users/stevenmartell1/admb-trunk/build/dist
 # export ADMB_HOME=/Users/jim/admb/build/dist
 
 # Compiler
@@ -113,4 +122,4 @@ build/release/%.o : %.cpp
 .PHONY: clean
 clean:
 	@echo 'removing build directory'
-	@rm -rf build
+	@$(RM) -rf build

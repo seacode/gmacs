@@ -1,7 +1,13 @@
 # Name of archive.
 OUTPUT:=libgmacs.a
 
-
+# Portable makefiles (http://skramm.blogspot.com/2013/04/writing-portable-makefiles.html)
+# Windows users: download http://gnuwin32.sourceforge.net/packages/make.htm
+ifdef ComSpec
+    RM=del /F /Q
+else
+    RM=rm -rf
+endif
 
 # Global source files from current dir.
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx )

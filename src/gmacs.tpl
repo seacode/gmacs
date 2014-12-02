@@ -1709,13 +1709,18 @@ RUNTIME_SECTION
 GLOBALS_SECTION
 	#include <admodel.h>
 	#include <time.h>
-	//#include <contrib.h>
-	#include "./include/libgmacs.h"
 	
-	// #include "nloglike.h"
-	// #include "../../CSTAR/include/cstar.h"
-	// acl::negativeLogLikelihood *agecomplike;
+	#if defined __APPLE__ || defined __linux
+	#include "./include/libgmacs.h"
+	#endif
 
+	#if defined _WIN32 || defined _WIN64
+	#include "\include\libgmacs.h"
+	#endif
+
+
+	
+	
 	time_t start,finish;
 	long hour,minute,second;
 	double elapsed_time;
