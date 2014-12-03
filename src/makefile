@@ -10,8 +10,10 @@ SRCS:=$(wildcard *.cpp *.c *.cc *.cxx )
 # Windows users: download http://gnuwin32.sourceforge.net/packages/make.htm
 ifdef ComSpec
     RM=del /F /Q
+    CXX:=g++
 else
     RM=rm -rf
+		CXX:=clang++
 endif 
 
 
@@ -20,7 +22,7 @@ endif
 # export ADMB_HOME=/Users/jim/admb/build/dist
 
 # Compiler
-CXX:=clang++
+# CXX:=clang++
 
 # Compiler and linker flags.
 CXXFLAGS:=-g -Wall -D__GNUDOS__ -Dlinux -DUSE_LAPLACE  \
