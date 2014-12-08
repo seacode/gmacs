@@ -238,7 +238,7 @@
     &\mbox{\underline{stock-recruitment parameters}}\nonumber\\
     &s_o = \kappa R_0 / B_0 \label{T1.17}\\
     &\beta = (\kappa -1)/B_0 \label{T1.18}\\
-    &\tilde{R} = \frac{s_o \phi -1}{\beta \phi} \label{T1.19}\\
+    &\tilde{R} = \frac{s_o \tilde{\phi}_B -1}{\beta \tilde{\phi}_B} \label{T1.19}\\
     %%
     %%
     \hline \hline \nonumber
@@ -258,11 +258,11 @@
     \begin{equation} \label{eq:BevertonHolt}
       \tilde{R} = \frac{s_o \tilde{B}}{1 + \beta \tilde{B}},
     \end{equation}
-    where $\tilde{B}$ is the equilibrium spawning biomass, $s_o$ is the slope at the origin, and $s_o/\beta$ is the asymptote of the function. The parameters of this model can be derived from the unfished recruitment $R_0$ and the recruitment compensation ratio $\kappa$.  The slope at the origin, or $s_o$, is defined as \eqref{T1.18} with the additional constraint that $\kappa > 1$ for an extant population.  Substituting \eqref{T1.18} into the Beverton-Holt model \eqref{eq:BevertonHolt}, and solving  for $\beta$ yields \eqref{T1.19}.
+    where $\tilde{B}$ is the equilibrium spawning biomass, $s_o$ is the slope at the origin, and $s_o/\beta$ is the asymptote of the function. The parameters of this model can be derived from the unfished recruitment $R_0$ and the recruitment compensation ratio $\kappa$.  The slope at the origin, or $s_o$, is defined as \eqref{T1.17} with the additional constraint that $\kappa > 1$ for an extant population.  Substituting \eqref{T1.17} into the Beverton-Holt model \eqref{eq:BevertonHolt}, and solving  for $\beta$ yields \eqref{T1.18}.  For a given level of survivorship, the equilibrium recruitment is defined by \eqref{T1.19}, where $\tilde{\phi}_B$ is defined by \eqref{T3.1}.
 
     Given \eqref{T1.13b} is defined as the vector of individuals per recruit in a fished population, the relative reproductive potential per individual recruit is defined as the sum of products of weight-at-length, maturity-at-length and survivorship-to-length:
     \[
-    \phi = \sum_h \lambda_h \sum_l  \bm{v}_{h,l} w_{h,l} m_{h,l}
+    \tilde{\phi}_B = \sum_h \lambda_h \sum_l  \bm{v}_{h,l} w_{h,l} m_{h,l}
     \]
     The total equilibrium spawning biomass is defined as $\tilde{B} = \tilde{R} \phi$.  Substituting this expression into \eqref{eq:BevertonHolt} and solving for $\tilde{R}$ results in \eqref{T1.19}.
 
@@ -285,9 +285,9 @@
 
     \subsection*{SPR-based reference points} % (fold)
     \label{sub:spr_based_reference_points}
-    Reference points based on the Spawning Potential Ratio (SPR) are frequently used as proxies to determine Maximum Sustainable Yield (MSY).  The spawning potential ratio is defined as the ratio of reproductive output in fished conditions relative to unfished conditions.  In the notation used in Table \ref{tab:equilibrium_model} the SPR is defined as
+    Reference points based on the Spawning Potential Ratio (SPR) are frequently used as proxies to determine Maximum Sustainable Yield (MSY).  The spawning potential ratio is defined as the ratio of reproductive output in fished conditions relative to unfished conditions.  In the notation used in Table  \ref{tab:incidence_fucntions} the SPR is defined as
     \begin{equation}
-      SPR = \tilde{B}/B_0.
+      SPR = \tilde{\phi}_B/\phi_B
     \end{equation}
     Fishing mortality rates that results in SPR values of 0.3-0.4 are often desirable for approximating maximum sustainable yield \citep{clark2002f}.  To calculate \fspr\ an iterative solution is required to determine the instantaneous fishing mortality rate that is required to achieve the desired SPR level.  For a single fishery this is relatively simple; the fishing mortality rate-at-length vector is the product of selectivity-at-length and fishing effort.  A simple bisection algorithm can then be used to iteratively solve for the value of \fspr\ that results in the target SPR.  In cases where there is one or more fisheries involved, and the selectivities differ among fisheries, the target \fspr\ will depend on the relative differences in selectivities among gears.  Moreover, the allocation of total fishing mortality to each gear has to be specified \textit{a priori}.  The solution to this problem must be negotiated as part of the management process as there are an infinite number of allocation combinations that would result in achieving \fspr.  Given a vector of predefined fishing mortality rate ratios, \fspr\ can then be numerically determined using the same algorithm as the single fishery example.
 
@@ -304,7 +304,7 @@
       &\mbox{\underline{unfished}} &\mbox{\underline{fished}}\nonumber \\
       %% Biomass Per Recruit
       &\phi_B = \sum_h \lambda_h \sum_l u_{h,l} w_{h,l} m_{h,l}, \qquad
-      &\tilde{\phi}_B = \sum_h \lambda_h \sum_l v_{h,l} w_{h,l} m_{h,l} \\
+      &\tilde{\phi}_B = \sum_h \lambda_h \sum_l v_{h,l} w_{h,l} m_{h,l}  \label{T3.1}\\
       %%
       %% Yield Per Recruit
       &\phi_{Q_k} = 0, \qquad

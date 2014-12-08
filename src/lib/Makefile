@@ -76,7 +76,7 @@ bin/debug/%.o : %.cpp
 	  > bin/deps/$*.d
 	@sed -e 's/.*://' -e 's/\\$$//' < bin/deps/$*.d.tmp | fmt -1 \
 	  | sed -e 's/^ *//' -e 's/$$/:/' >> bin/deps/$*.d
-	@rm -f bin/deps/$*.d.tmp	
+	@$(RM) -f bin/deps/$*.d.tmp	
 
 # Release route.
 .PHONY: release
@@ -98,9 +98,9 @@ bin/release/%.o : %.cpp
 	  > bin/deps/$*.d
 	@sed -e 's/.*://' -e 's/\\$$//' < bin/deps/$*.d.tmp | fmt -1 | \
 	  sed -e 's/^ *//' -e 's/$$/:/' >> bin/deps/$*.d
-	@rm -f bin/deps/$*.d.tmp
+	@$(RM) -f bin/deps/$*.d.tmp
 
 .PHONY: clean
 clean:
 	@echo 'removing bin directory'
-	@rm -rf bin
+	@$(RM) -rf bin
