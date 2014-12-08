@@ -59,7 +59,7 @@ DATA_SECTION
 
 	init_vector size_breaks(1,nclass+1);
 	vector       mid_points(1,nclass);
-	!! mid_points = size_breaks(1,nclass) + first_difference(size_breaks);
+	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
 	!! ECHO(syr); ECHO(nyr); ECHO(nfleet); ECHO(nsex); ECHO(nshell);ECHO(nmature); ECHO(nclass);
 
 	// |-----------|

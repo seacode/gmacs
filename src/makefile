@@ -5,6 +5,7 @@ LIBINCLUDE = lib/bin
 LIBS:=$(wildcard ./lib/*.cpp)
 SRCS:=$(wildcard *.cpp *.c *.cc *.cxx ) 
 
+vpath %.h /include
 
 # Portable makefiles (http://skramm.blogspot.com/2013/04/writing-portable-makefiles.html)
 # Windows users: download http://gnuwin32.sourceforge.net/packages/make.htm
