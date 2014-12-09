@@ -87,8 +87,8 @@
 \usepackage{tikz-uml}
 
 
-\title{Gmacs: A size-structured assessment modeling framework for hard-to-age species}
-\author{Athol Whitten, Andre Punt, Dave Fournier, and James Ianelli}
+\title{A generalized size-structured assessment model for hard-to-age species}
+\author{Athol Whitten, Andre Punt, Dave Fournier, James Ianelli, and Steve Martell}
 % Andre should probably be on here too, check with others.
 % I understand the problem with using the name Gmacs, and thus the relationship with Alaskan Crab stocks, 
 %   but it's probably too late to change. Thus Gmacs is now written as a name, not an acronym.
@@ -120,7 +120,9 @@
 
   \section*{Methods} % (fold)
   \label{sec:methods}
-  The analytical details of the generalized model is summarized using tables of equations (e.g., Table \ref{tab:equilibrium_model}).   These tables serve two purposes: (1) to clearly provide the logical order in which calculations proceed, and (2) organization of a relatively large integrated model into a series of sub-models that represent specific components such as population dynamics, observation models, reference point calculations, fisheries dynamics, and the objective function.  We first start with a description of the population dynamics under steady-state (equilibrium) conditions.  Model notation and a description of symbols are provided in Table \ref{tab:notation}.
+  The analytical details of the generalized model is summarized using tables of equations (e.g., Table \ref{tab:equilibrium_model}).   These tables serve two purposes: (1) to clearly provide the logical order in which calculations proceed, and (2) organization of a relatively large integrated model into a series of sub-models that represent specific components such as population dynamics, observation models, reference point calculations, fisheries dynamics, and the objective function.  We first start with a description of the population dynamics under steady-state (equilibrium) conditions.  
+
+  For model notation, vectors and matrixes are given in bold using lower and upper case notation, respectively.  Model notation and a description of symbols are provided in Table \ref{tab:notation}.
 
 
 \begin{table}
@@ -464,7 +466,7 @@
       \normalEq
       \end{table}
 
-      It is also possible to assume unfished equilibrium conditions for this model, where $\ddot{R}$ is replace with $R_0$ in \eqref{T6.7}, and the vector of deviates $\bm{\upsilon} = 0$.  In this case, the length-based model, with any number of size-classes, is initialized with just seven parameters assuming sex-independent growth and survival, and just 11 parameters with sex-dependent growth and survival.
+      It is also possible to assume unfished equilibrium conditions for this model, where $\ddot{R}$ is replace with $R_0$ in \eqref{T6.7}, and the vector of deviates $\bm{\upsilon} = 0$.  In this case, the size-structured model, with any number of size-classes, is initialized with just seven parameters assuming sex-independent growth and survival, and just 11 parameters with sex-dependent growth and survival.
 
     % subsection initial_conditions (end)
 
@@ -474,6 +476,20 @@
     \begin{equation}\label{eq:update_numbers_at_length}
       \bm{n}_{h,i+1} = \bm{n}_{h,i} \bm{A}_h + \bm{r}_{h,i}
     \end{equation}
+
+    \begin{table}
+    \centering
+    \caption{ Population dynamics. }
+    \label{tab:population_dynamics}
+    \tableEq
+    \begin{align}
+      \hline \nonumber
+      &\mbox{ Parameters } \\
+      &Theta
+      \hline \hline \nonumber
+    \end{align}
+    \normalEq
+    \end{table}
     
     % subsection population_dynamics (end)
     \subsection*{Model fitting} % (fold)
