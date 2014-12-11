@@ -421,11 +421,13 @@ PARAMETER_SECTION
 	// Need molt increment data to estimate these parameters
 	init_bounded_vector alpha(1,nsex,0,20.,-3);
 	init_bounded_vector beta(1,nsex,0,10,-3);
-	init_bounded_vector scale(1,nsex,1,20.,-4);
+	init_bounded_vector scale(1,nsex,1,10.,-4);
 
 	// Molt probability parameters
-	init_bounded_vector molt_mu(1,nsex,0,100,-1);
-	init_bounded_vector molt_cv(1,nsex,0,50,-1);
+	!! double lb = min(size_breaks);
+	!! double ub = max(size_breaks);
+	init_bounded_vector molt_mu(1,nsex,lb,ub,-1);
+	init_bounded_vector molt_cv(1,nsex,0,1,-1);
 
 	// Selectivity parameters
 	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
@@ -468,33 +470,35 @@ PARAMETER_SECTION
 
 	number M0;				///> natural mortality rate
 	number logR0;			///> logarithm of unfished recruits.
-	number logRbar;		///> logarithm of average recruits(syr+1,nyr)
-	number logRini;   ///> logarithm of initial recruitment(syr).
+	number logRbar;			///> logarithm of average recruits(syr+1,nyr)
+	number logRini;   		///> logarithm of initial recruitment(syr).
 	number ra;				///> shape parameter for recruitment distribution
 	number rbeta;			///> rate parameter for recruitment distribution
-	number logSigmaR; ///> standard deviation of recruitment deviations.
+	number logSigmaR; 		///> standard deviation of recruitment deviations.
 
 	vector rec_sdd(1,nclass);			///> recruitment size_density_distribution
 	vector recruits(syr,nyr);			///> vector of estimated recruits
-	vector survey_q(1,nSurveys);	///> scalers for relative abundance indices (q)
+	vector survey_q(1,nSurveys);		///> scalers for relative abundance indices (q)
 
-	matrix pre_catch(1,nCatchDF,1,nCatchRows);		///> predicted catch (Baranov eq)
-	matrix res_catch(1,nCatchDF,1,nCatchRows);		///> catch residuals in log-space
+	matrix pre_catch(1,nCatchDF,1,nCatchRows);	///> predicted catch (Baranov eq)
+	matrix res_catch(1,nCatchDF,1,nCatchRows);	///> catch residuals in log-space
 
 	matrix pre_cpue(1,nSurveys,1,nSurveyRows);	///> predicted relative abundance index
 	matrix res_cpue(1,nSurveys,1,nSurveyRows);	///> relative abundance residuals
 	
 	matrix molt_increment(1,nsex,1,nclass);		///> linear molt increment
-	matrix molt_probability(1,nsex,1,nclass); ///> probability of molting
+	matrix molt_probability(1,nsex,1,nclass); 	///> probability of molting
 
 	3darray size_transition(1,nsex,1,nclass,1,nclass);
-	3darray M(1,nsex,syr,nyr,1,nclass);		///> Natural mortality
-	3darray Z(1,nsex,syr,nyr,1,nclass);		///> Total mortality
-	3darray S(1,nsex,syr,nyr,1,nclass);		///> Surival Rate (S=exp(-Z))
-	3darray F(1,nsex,syr,nyr,1,nclass);		///> Fishing mortality
+	3darray M(1,nsex,syr,nyr,1,nclass);			///> Natural mortality
+	3darray Z(1,nsex,syr,nyr,1,nclass);			///> Total mortality
+	3darray S(1,nsex,syr,nyr,1,nclass);			///> Surival Rate (S=exp(-Z))
+	3darray F(1,nsex,syr,nyr,1,nclass);			///> Fishing mortality
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		///> Numbers-at-length
 	3darray ft(1,nfleet,1,nsex,syr,nyr);		///> Fishing mortality by gear
+	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
+	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass);	///> Old shell crabs-at-length.
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
@@ -557,6 +561,7 @@ PROCEDURE_SECTION
 	calculate_prior_densities();
 	calc_objective_function();
 	if( verbose ) cout<<"Ok after objective function ..."<<endl;
+
 	// sd_report variables
 	if( last_phase() ) 
 	{
@@ -870,7 +875,7 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		 Z(h) = M(h) + F(h);
+		 Z(h) = M(h);// + F(h);
 		 S(h) = mfexp(-Z(h));
 		 //COUT(F(h)(syr));
 	}
@@ -892,8 +897,7 @@ FUNCTION calc_molting_probability
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu* molt_cv(h);
-		//molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
-		molt_probability(h) = 1.0 - 1.0/(1+exp((mid_points-mu)/sd));
+		molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
 	}
 
 
@@ -931,14 +935,29 @@ FUNCTION calc_recruitment_size_distribution
 	 * 
 	 * Psuedocode:  See note from Dave Fournier.
 	 * 
-	 * Athol, I think a better option here is to estimate a vector of 
-	 * deviates, one for each size class, and have the option to initialize
+	 * For the initial numbers-at-lengt a vector of deviates is estimated,
+	 * one for each size class, and have the option to initialize
 	 * the model at unfished equilibrium, or some other steady state condition.
+	 * 	
+	 * 	Dec 11, 2014. Martell & Ianelli at snowgoose.  We had a discussion regarding
+	 * 	how to deal with the joint probability of molting and growing to a new size
+	 * 	interval for a given length, and the probability of not molting.  We settled 
+	 * 	on using the size-tranistion matrix to represent this joint probability, where
+	 * 	the diagonal of the matrix to represent the probability of surviving and 
+	 * 	molting to a new size interval. The upper diagonal of the size-transition matrix
+	 * 	represent the probability of growing to size interval j' given size interval j.
+	 * 	
+	 * 	Oldshell crabs are then the column vector of 1-molt_probabiltiy times the 
+	 * 	numbers-at-length, and the Newshell crabs is the column vector of molt_probability
+	 * 	times the number-at-length.
 	 * 	
 	 */
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
 	N.initialize();
+	d3_newShell.initialize();
+	d3_oldShell.initialize();
+
 	// Initial recrutment.
 	if ( bInitializeUnfished )
 	{
@@ -955,6 +974,7 @@ FUNCTION calc_initial_numbers_at_length
 	// Equilibrium soln.
 	dmatrix Id=identity_matrix(1,nclass);
 	dvar_vector x(1,nclass);
+	
 	dvar_matrix At(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	for(int h = 1; h <= nsex; h++ )
@@ -967,6 +987,10 @@ FUNCTION calc_initial_numbers_at_length
 		A = trans(At);
 		x = -solve(A-Id,rt);
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
+
+		// prob. of molting to a new shell (1-diagnonal of sizetransition matrix)
+		d3_newShell(h)(syr) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(syr));
+		d3_oldShell(h)(syr) = elem_prod(diagonal(size_transition(h)) , N(h)(syr));
 	}
 	
 	if(verbose) COUT(N(1)(syr));
@@ -1001,8 +1025,16 @@ FUNCTION update_population_numbers_at_length
 			}
 			N(h)(i+1)   = (0.5 * recruits(i)) * rec_sdd;
 			N(h)(i+1)   += N(h)(i) * At;
+
+			d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(i+1));
+			d3_oldShell(h)(i+1) = elem_prod(diagonal(size_transition(h)) , N(h)(i+1));
 		}
 	}
+	COUT(N(1)(syr));
+	COUT(d3_newShell(1)(syr));
+	COUT(d3_oldShell(1));
+	COUT(1.0-diagonal(size_transition(1)));
+	exit(1);
 	
 	if(verbose) COUT(N(1)(nyr));
 

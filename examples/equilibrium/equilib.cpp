@@ -25,11 +25,15 @@ int main(int charc, char * argv[])
   dmatrix Id=identity_matrix(1,n);
   dvector x(1,n);
   dvector r(1,n);
+  dvector p(1,n);      // probability of molting.
+  dvector os(1,n);     // oldshell
+  dvector ns(1,n);     // newshell
   x.initialize();
   r.initialize();
-  
+  p.initialize();
   At.initialize();
-
+  dvector bin(1,n);
+  bin.fill_seqadd(1,1);
 
   // recruitment is like a litte normal bump over the first 5 intervals
   r(1)=1.0;
@@ -40,6 +44,10 @@ int main(int charc, char * argv[])
 
   r/=sum(r); // normalize to a total recruitment of 1
   
+  // probability of molting
+  p = 1.0 / (1.0+exp(-(3.0-bin)/0.85));
+  COUT(p);
+
   for (int i=1;i<=n;i++)
   {
     for (int j=i;j<=i+10;j++)   // permit a bit of shrinkage
@@ -50,10 +58,18 @@ int main(int charc, char * argv[])
     At(i)/=1.00*sum(At(i));
     // At(i)/=sum(At(i));
   }
+
+  // Replace diagonal of size transition matrix with the probability of molting.
+  for (int i = 1; i <= n; ++i)
+  {
+     At(i,i) = p(i);
+  }
+
   COUT(rowsum(trans(At)));
 
   dmatrix A=trans(At);  // now transpose to get A
-  
+  dmatrix G=trans(At);
+  COUT(A);
 
   //dvector lx(1,n);
   for(int i=1;i<=n;i++)
@@ -84,12 +100,19 @@ int main(int charc, char * argv[])
 
   x=-solve(A-Id,r);
 
+  ns = elem_prod(diagonal(G),x);
+  os = elem_prod(1.-diagonal(G),x);
 
   cout << endl;
   COUT(N);
   COUT(x)
   COUT(A*x+r);
+  COUT(os);
+  COUT(ns);
+  COUT(sum(os+ns));
 
+  COUT(sum(N));
+  COUT(sum(x));
   cout << endl;
   cout << "||A*x+r-x||^2" << endl;
   cout << "The next number should equal 0.0 it actually equals "  << norm2(A*x+r-x) << endl;
