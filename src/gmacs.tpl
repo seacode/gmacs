@@ -995,8 +995,8 @@ FUNCTION calc_initial_numbers_at_length
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 
 		// prob. of molting to a new shell (1-diagnonal of sizetransition matrix)
-		d3_newShell(h)(syr) = elem_prod(diagonal(size_transition(h)) , N(h)(syr));
-		d3_oldShell(h)(syr) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(syr));
+		d3_newShell(h)(syr) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(syr));
+		d3_oldShell(h)(syr) = elem_prod(diagonal(size_transition(h)) , N(h)(syr));
 	}
 	
 	if(verbose) COUT(N(1)(syr));
