@@ -542,10 +542,10 @@ PROCEDURE_SECTION
 
 	// Population dynamics ...
 	calc_growth_increments();
+	calc_molting_probability();
 	calc_size_transition_matrix();
 	calc_natural_mortality();
 	calc_total_mortality();
-	calc_molting_probability();
 	calc_recruitment_size_distribution();
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
@@ -772,6 +772,10 @@ FUNCTION calc_growth_increments
 	 * size l to size ll is based on the vector molt_increment and the 
 	 * scale parameter. In all there are three parameters that define the size
 	 * transition matrix (alpha, beta, scale) for each sex.
+	 * 
+	 * Modified Dec 11, 2014.  Diagonal of the matrix now represents probability
+	 * of not molting, and upper triangle is the probability of growing to the next
+	 * size interval given you molted.  
 	 */
 FUNCTION calc_size_transition_matrix
 	//cout<<"Start of calc_size_transition_matrix"<<endl;
@@ -792,13 +796,15 @@ FUNCTION calc_size_transition_matrix
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
-				if( ll<=nclass+1 )
+				if( ll <= nclass+1 )
 				{
 					psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
 				}
 			}
 			
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
+			At(l)(l,nclass) /= sum(At(l));
+			At(l,l) = 1.0 - molt_probability(h)(l);
 			At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
@@ -989,8 +995,8 @@ FUNCTION calc_initial_numbers_at_length
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
 
 		// prob. of molting to a new shell (1-diagnonal of sizetransition matrix)
-		d3_newShell(h)(syr) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(syr));
-		d3_oldShell(h)(syr) = elem_prod(diagonal(size_transition(h)) , N(h)(syr));
+		d3_newShell(h)(syr) = elem_prod(diagonal(size_transition(h)) , N(h)(syr));
+		d3_oldShell(h)(syr) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(syr));
 	}
 	
 	if(verbose) COUT(N(1)(syr));
@@ -1501,10 +1507,10 @@ FUNCTION simulation_model
 
 	// Population dynamics ...
 	calc_growth_increments();
+	calc_molting_probability();
 	calc_size_transition_matrix();
 	calc_natural_mortality();
 	calc_total_mortality();
-	calc_molting_probability();
 	calc_recruitment_size_distribution();
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
