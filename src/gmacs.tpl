@@ -1036,11 +1036,7 @@ FUNCTION update_population_numbers_at_length
 			d3_oldShell(h)(i+1) = elem_prod(diagonal(size_transition(h)) , N(h)(i+1));
 		}
 	}
-	COUT(N(1)(syr));
-	COUT(d3_newShell(1)(syr));
-	COUT(d3_oldShell(1));
-	COUT(1.0-diagonal(size_transition(1)));
-	exit(1);
+	
 	
 	if(verbose) COUT(N(1)(nyr));
 
@@ -1248,8 +1244,9 @@ FUNCTION calc_predicted_composition
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				dvar_vector tmp = N(h)(i);
         
-        if( shell   ) tmp = elem_prod(tmp,molt_probability(h));
-        if( bmature ) tmp = elem_prod(tmp,maturity(h));
+		        if( shell==1 ) tmp = d3_newShell(h)(i);
+		        if( shell==2 ) tmp = d3_oldShell(h)(i);
+		        if( bmature )  tmp = elem_prod(tmp,maturity(h));
         
 				switch (type)
 				{
