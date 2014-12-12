@@ -44,28 +44,31 @@ int main(int charc, char * argv[])
 
   r/=sum(r); // normalize to a total recruitment of 1
   
-  // probability of molting
-  p = 1.0 / (1.0+exp(-(3.0-bin)/0.85));
+  // probability of not molting
+  p = 1.0 / (1.0+exp(-(bin-3.0)/1.85));
   COUT(p);
 
   for (int i=1;i<=n;i++)
   {
-    for (int j=i;j<=i+10;j++)   // permit a bit of shrinkage
+    for (int j=i;j<=n;j++)   // permit a bit of shrinkage
     {
-      if ( j>=1 && j<=n )
+      if ( j>i && j<=n )
        At(i,j)=(1.0/j);
+
+      if ( j == i)
+        At(j,j) = p(i);
     }
     At(i)/=1.00*sum(At(i));
     // At(i)/=sum(At(i));
   }
 
   // Replace diagonal of size transition matrix with the probability of molting.
-  for (int i = 1; i <= n; ++i)
-  {
-     At(i,i) = p(i);
-  }
+  // for (int i = 1; i <= n; ++i)
+  // {
+  //    At(i,i) = p(i);
+  // }
 
-  COUT(rowsum(trans(At)));
+  COUT(colsum(trans(At)));
 
   dmatrix A=trans(At);  // now transpose to get A
   dmatrix G=trans(At);
@@ -100,8 +103,8 @@ int main(int charc, char * argv[])
 
   x=-solve(A-Id,r);
 
-  ns = elem_prod(diagonal(G),x);
-  os = elem_prod(1.-diagonal(G),x);
+  ns = elem_prod(1.-diagonal(G),x);
+  os = elem_prod(diagonal(G),x);
 
   cout << endl;
   COUT(N);
