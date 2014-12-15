@@ -1,0 +1,17 @@
+Package: gmr
+Title: Plotting and analysis tools for the Gmacs stock assessment framework
+Description: gmr is a set of tools for analysing data and outputs from Gmacs
+    stock assessment models. The package streamlines the process of taking
+    text-based ADMB output files and creating visual plots of both input data
+    and fitted model results.
+Authors@R: c(person("Whitten", "Athol", email = "athol.whitten@gmail.com", role
+    = c("aut","cre")), person("Ianelli", "Jim", email = "jim.ianelli@noaa.gov",
+    role = c("aut","cre")), person("Martell", "Steve", role = "aut"))
+URL: https://github.com/seacode/gmr
+Version: 0.2
+Depends:
+    R (>= 3.0.0),
+    ggplot2 (>= 0.9.3.1)
+Imports:
+    reshape2 (>= 1.2.2),
+License: MIT
