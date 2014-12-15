@@ -6,7 +6,7 @@ The `gmr` R package is under development in support of the [Gmacs](https://githu
 The most recent release of the `gmr` package can be downloaded and installed from Github through R:
 ```S
 install.packages("devtools")
-devtools::install_github("seacode/gmr")
+devtools::install_github("seacode/gmacs/Rsrc")
 ```
 
 Once the `gmr` package is installed, it can be loaded in the regular manner:
@@ -18,13 +18,13 @@ library(gmr)
 To install previous release versions of `gmr`, use, for example:
 
 ```S
-devtools::install_github("seacode/gmr", ref = "V1.0")
+devtools::install_github("seacode/gmacs/Rsrc", ref = "V1.0")
 ````
 
 To install current development versions of `gmr`, use:
 
 ```S
-devtools::install_github("seacode/gmr", ref = "develop")
+devtools::install_github("seacode/gmacs/Rsrc", ref = "develop")
 ```
 
 ### Useage note 
