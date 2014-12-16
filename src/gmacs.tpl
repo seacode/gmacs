@@ -48,9 +48,9 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	init_int syr;				///> initial year
-	init_int nyr;				///> terminal year
-	init_number jstep;  ///> time step (years)
+	init_int syr;			///> initial year
+	init_int nyr;			///> terminal year
+	init_number jstep;  	///> time step (years)
 	init_int nfleet;		///> number of gears
 	init_int nsex;			///> number of sexes
 	init_int nshell;		///> number of shell conditions
@@ -80,7 +80,7 @@ DATA_SECTION
 	// | FECUNDITY FOR MMB CALCULATION |
 	// |-------------------------------|
 	init_vector fecundity(1,nclass);
-  init_matrix maturity(1,nsex,1,nclass);
+  	init_matrix maturity(1,nsex,1,nclass);
 
 	// |-------------|
 	// | FLEET NAMES |
@@ -426,8 +426,8 @@ PARAMETER_SECTION
 	// Molt probability parameters
 	!! double lb = min(size_breaks);
 	!! double ub = max(size_breaks);
-	init_bounded_vector molt_mu(1,nsex,lb,ub,-1);
-	init_bounded_vector molt_cv(1,nsex,0,1,-1);
+	init_bounded_vector molt_mu(1,nsex,lb,ub,1);
+	init_bounded_vector molt_cv(1,nsex,0,1,1);
 
 	// Selectivity parameters
 	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
@@ -881,7 +881,7 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		 Z(h) = M(h);// + F(h);
+		 Z(h) = M(h) + F(h);
 		 S(h) = mfexp(-Z(h));
 		 //COUT(F(h)(syr));
 	}
@@ -1410,7 +1410,7 @@ FUNCTION calc_objective_function
 			case 1: // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
 				
-				nloglike(3) 				 += ploglike->nloglike(log_effn,P);
+				nloglike(3) += ploglike->nloglike(log_effn,P);
 				d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 			break;
 
@@ -1624,13 +1624,13 @@ REPORT_SECTION
   	{
   		int iage=1;
   		// Set the initial size frequency
-    	growth_matrix(isex,iage) = size_transition(isex,iage);
-  	  mean_size(isex,iage)  = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
-  	  for (iage=2;iage<=nclass;iage++)
-  	  {
-  	  	growth_matrix(isex,iage)     = growth_matrix(isex,iage-1)*size_transition(isex);
-  	  	mean_size(isex,iage) = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
-  	  }
+		growth_matrix(isex,iage) = size_transition(isex,iage);
+		mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
+  	  	for (iage=2;iage<=nclass;iage++)
+  	  	{
+			growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
+			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
+  	  	}
   	}
   	REPORT(growth_matrix);
   	REPORT(mean_size);
