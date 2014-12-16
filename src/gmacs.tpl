@@ -203,8 +203,11 @@ DATA_SECTION
 	// |----------------------------|
 	// | LEADING PARAMETER CONTROLS |
 	// |----------------------------|
+	!! cout<<"*** Reading control file ***"<<endl;
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
+
+	ivector ipar_vector(1,ntheta);
 	vector theta_ival(1,ntheta);
 	vector theta_lb(1,ntheta);
 	vector theta_ub(1,ntheta);
@@ -214,6 +217,9 @@ DATA_SECTION
 		theta_lb   = column(theta_control,2);
 		theta_ub   = column(theta_control,3);
 		theta_phz  = ivector(column(theta_control,4));
+		ipar_vector(1,6)  = 1;
+		ipar_vector(7,11) = nsex;
+		ipar_vector(12)   = 1;
 	END_CALCS
 	
 
@@ -292,7 +298,6 @@ DATA_SECTION
 			// slx_blks(k) = tmp.shift(1);
 		}
 	END_CALCS
-
 
 	// |---------------------------------------------------------|
 	// | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
@@ -400,9 +405,9 @@ DATA_SECTION
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
-	alpha     16.56211;  //16.56211     -0.05496
-	beta      0.05496;
-	scale     12.1;
+	//alpha     16.56211;  //16.56211     -0.05496
+	//beta      0.05496;
+	//scale     12.1;
 	log_fbar  log_pen_fbar;
 	
 
@@ -415,19 +420,26 @@ PARAMETER_SECTION
 	// ln(Rbar) = theta(4)
 	// ra       = theta(5)
 	// rbeta    = theta(6)
-	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+	// alpha    = theta(7)
+	// beta     = theta(8)
+	// scale    = theta(9)
+	// molt_mu  = theta(10)
+	// molt_cv  = theta(11)
+	// sigma_R  = theta(12)
+	//init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+	init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
 
 	// Molt increment parameters
 	// Need molt increment data to estimate these parameters
-	init_bounded_vector alpha(1,nsex,0,20.,-3);
-	init_bounded_vector beta(1,nsex,0,10,-3);
-	init_bounded_vector scale(1,nsex,1,10.,-4);
+	// init_bounded_vector alpha(1,nsex,0,20.,-3);
+	// init_bounded_vector beta(1,nsex,0,10,-3);
+	// init_bounded_vector scale(1,nsex,1,10.,-4);
 
 	// Molt probability parameters
-	!! double lb = min(size_breaks);
-	!! double ub = max(size_breaks);
-	init_bounded_vector molt_mu(1,nsex,lb,ub,1);
-	init_bounded_vector molt_cv(1,nsex,0,1,1);
+	// !! double lb = min(size_breaks);
+	// !! double ub = max(size_breaks);
+	// init_bounded_vector molt_mu(1,nsex,lb,ub,1);
+	// init_bounded_vector molt_cv(1,nsex,0,1,1);
 
 	// Selectivity parameters
 	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
@@ -475,6 +487,13 @@ PARAMETER_SECTION
 	number ra;				///> shape parameter for recruitment distribution
 	number rbeta;			///> rate parameter for recruitment distribution
 	number logSigmaR; 		///> standard deviation of recruitment deviations.
+
+	vector alpha(1,nsex);   ///> intercept for linear growth increment model.
+	vector beta(1,nsex);    ///> slope for the linear growth increment model.
+	vector gscale(1,nsex);	///> scale parameter for the gamma distribution.
+
+	vector molt_mu(1,nsex); ///> 50% probability of molting at length each year.
+	vector molt_cv(1,nsex); ///> CV in molting probabilility.
 
 	vector rec_sdd(1,nclass);			///> recruitment size_density_distribution
 	vector recruits(syr,nyr);			///> vector of estimated recruits
@@ -590,14 +609,20 @@ FUNCTION calc_sdreport
 	 */
 FUNCTION initialize_model_parameters
 	 // Get parameters from theta control matrix:
-	M0        = theta(1);
-	logR0     = theta(2);
-	logRini   = theta(3);
-	logRbar   = theta(4);
-	ra        = theta(5);
-	rbeta     = theta(6);
-	logSigmaR = theta(7);
-
+	
+	M0        = theta(1,1);
+	logR0     = theta(2,1);
+	logRini   = theta(3,1);
+	logRbar   = theta(4,1);
+	ra        = theta(5,1);
+	rbeta     = theta(6,1);
+	alpha     = theta(7)(1,nsex);
+	beta      = theta(8)(1,nsex);
+	gscale    = theta(9)(1,nsex);
+	molt_mu   = theta(10)(1,nsex);
+	molt_cv   = theta(11)(1,nsex);
+	logSigmaR = theta(12,1);
+	
 
 	/**
 	 * @brief Calculate selectivies for each gear.
@@ -791,26 +816,29 @@ FUNCTION calc_size_transition_matrix
 		At.initialize();
 		for( l = 1; l <= nclass; l++ )
 		{
-			tmp = molt_increment(h)(l)/scale(h);
+			tmp = molt_increment(h)(l)/gscale(h);
 			
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
 				if( ll <= nclass+1 )
 				{
-					psi(ll) = cumd_gamma(size_breaks(ll)/scale(h),tmp);
+					psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
 				}
 			}
+				
 			
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
 			At(l)(l,nclass) /= sum(At(l));
+
+			// molt probability; use only when newshell/oldshell data exists.
 			At(l,l) = 1.0 - molt_probability(h)(l);
 			At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
 	}
 	
-	//cout<<"End of calc_size_transition_matrix"<<endl;
+	///cout<<"End of calc_size_transition_matrix"<<endl;
 	
 
 
@@ -1308,39 +1336,43 @@ FUNCTION calculate_prior_densities
 	
 	for(int i = 1; i <= ntheta; i++ )
 	{
-		int priorType = theta_control(i,5);
-		p1 = theta_control(i,6);
-		p2 = theta_control(i,7);
-		switch(priorType)
+		for(int j = 1; j <= ipar_vector(i); j++ )
 		{
-			// uniform
-			case 0: 
-				p1 = theta_control(i,2);
-				p2 = theta_control(i,3);
-				priorDensity(i) = -log(1.0 / (p2-p1));
-			break;
+		
+			int priorType = theta_control(i,5);
+			p1 = theta_control(i,6);
+			p2 = theta_control(i,7);
+			switch(priorType)
+			{
+				// uniform
+				case 0: 
+					p1 = theta_control(i,2);
+					p2 = theta_control(i,3);
+					priorDensity(i) = -log(1.0 / (p2-p1));
+				break;
 
-			// normal
-			case 1:
-				priorDensity(i) = dnorm(theta(i),p1,p2);
-			break;
+				// normal
+				case 1:
+					priorDensity(i) = dnorm(theta(i,j),p1,p2);
+				break;
 
-			// lognormal
-			case 2:
-				priorDensity(i) = dlnorm(theta(i),log(p1),p2);
-			break;
+				// lognormal
+				case 2:
+					priorDensity(i) = dlnorm(theta(i,j),log(p1),p2);
+				break;
 
-			// beta
-			case 3:
-				lb = theta_control(i,2);
-				ub = theta_control(i,3);
-				priorDensity(i) = dbeta((theta(i)-lb)/(ub-lb),p1,p2);
-			break;
+				// beta
+				case 3:
+					lb = theta_control(i,2);
+					ub = theta_control(i,3);
+					priorDensity(i) = dbeta((theta(i,j)-lb)/(ub-lb),p1,p2);
+				break;
 
-			// gamma
-			case 4:
-				priorDensity(i) = dgamma(theta(i),p1,p2);
-			break;
+				// gamma
+				case 4:
+					priorDensity(i) = dgamma(theta(i,j),p1,p2);
+				break;
+			}
 		}
 	}
 
