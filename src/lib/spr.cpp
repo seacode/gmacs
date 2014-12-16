@@ -1,5 +1,10 @@
 #include <admodel.h>
-#include "../include/spr.h"
+	#if defined __APPLE__ || defined __linux
+  #include "../include/spr.h"
+	#endif
+	#if defined _WIN32 || defined _WIN64
+  #include "include\spr.h"
+	#endif
 
 
 spr::spr(const double& _r, const double& _lambda,
