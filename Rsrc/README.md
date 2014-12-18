@@ -6,8 +6,10 @@ The `gmr` R package is under development in support of the [Gmacs](https://githu
 The most recent release of the `gmr` package can be downloaded and installed from Github through R:
 ```S
 install.packages("devtools")
+install.packages("shiny")
 devtools::install_github("seacode/gmacs",subdir="/Rsrc",ref="develop")
 ```
+
 
 Once the `gmr` package is installed, it can be loaded in the regular manner:
 
