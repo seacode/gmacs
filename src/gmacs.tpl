@@ -1666,7 +1666,12 @@ REPORT_SECTION
   	}
   	REPORT(growth_matrix);
   	REPORT(mean_size);
-	}
+	  for(int ii = 1; ii <= nSizeComps; ii++)
+	  {
+	  	// Set final sample-size for composition data for comparisons
+	    size_comp_sample_size(ii) *= exp(log_vn(ii));
+	  }
+  	REPORT(size_comp_sample_size);
 
 
 
