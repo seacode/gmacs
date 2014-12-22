@@ -1656,22 +1656,23 @@ REPORT_SECTION
   	{
   		int iage=1;
   		// Set the initial size frequency
-		growth_matrix(isex,iage) = size_transition(isex,iage);
-		mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
-  	  	for (iage=2;iage<=nclass;iage++)
-  	  	{
-			growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
-			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
-  	  	}
+		  growth_matrix(isex,iage) = size_transition(isex,iage);
+		  mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
+  		for (iage=2;iage<=nclass;iage++)
+  		{
+		  	growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
+			  mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
+  	  }
   	}
   	REPORT(growth_matrix);
   	REPORT(mean_size);
 	  for(int ii = 1; ii <= nSizeComps; ii++)
 	  {
-	  	// Set final sample-size for composition data for comparisons
-	    size_comp_sample_size(ii) *= exp(log_vn(ii));
+	   // Set final sample-size for composition data for comparisons
+	    size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
 	  }
   	REPORT(size_comp_sample_size);
+	}
 
 
 
