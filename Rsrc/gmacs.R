@@ -18,14 +18,17 @@ set_ggtheme('bw')
 
 # Read report file and create gmacs report object (a list):
 gmrep <- read_admb('gmacs')
+gmrep2 <- read_admb('gmacs')
 
 # Get plots of interest:
 plot_catch(gmrep)
+plot_growth(gmrep)
 plot_catch(gmrep,plot_res=T)
 
 plot_sizecomp(gmrep,which_plots=c(1))
 plot_sizecomp(gmrep)
 plot_sizecomp_res(gmrep, which_plots=c(1))
+
 
 plot_sizecomp(gmrep,which_plots=c(11))
 plot_sizecomp_res(gmrep)
@@ -33,7 +36,14 @@ plot_sizetransition(gmrep)
 
 plot_selectivity(gmrep)
 plot_recruitment(gmrep)
-plot_ssb(gmrep)
+p <- plot_ssb(gmrep)
+dftmp = get_ssb(gmrep2)
+  p <- p + geom_line(aes(x=year,y=exp(log_mmb)),data=dftmp)
+  plot(p)
+names(gmrep2$mmb)
+(gmrep2$mmb)
+lines(gmrep2$mod_yrs,gmrep2$mmb)
+  p <- p + geom_line(aes(x=year,y=exp(log_mmb)))
 plot_naturalmortality(gmrep)
 plot_naturalmortality(gmrep)
 
