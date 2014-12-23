@@ -1,3 +1,4 @@
+# Model 1, fixed multinomial sample sizes
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # Controls for leading parameter vector theta   
 # LEGEND FOR PRIOR:
@@ -70,14 +71,14 @@
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
 ##   -1) multinomial with estimated/fixed sample size
-##   -2) logistic normal
+##   -2) robust multinomial (as in BBRKC case)
 ##   -3) multivariate-t
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 1   1   1   1   1   1   1   1   1   # Type of likelihood.
+ 2   2   2   2   2   2   2   2   2   # Type of likelihood.
  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
- 4   4   4   4   4   4   4   4   4   # Phz for estimating effective sample size (if appl.)
+-4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
