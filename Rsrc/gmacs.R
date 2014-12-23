@@ -36,6 +36,7 @@ plot_sizetransition(gmrep)
 
 plot_selectivity(gmrep)
 plot_recruitment(gmrep)
+plot_datarange(gmrep)
 p <- plot_ssb(gmrep)
 dftmp = get_ssb(gmrep2)
   p <- p + geom_line(aes(x=year,y=exp(log_mmb)),data=dftmp)
