@@ -800,7 +800,11 @@ FUNCTION calc_growth_increments
 	 * 
 	 * Modified Dec 11, 2014.  Diagonal of the matrix now represents probability
 	 * of not molting, and upper triangle is the probability of growing to the next
-	 * size interval given you molted.  
+	 * size interval given you molted. 
+	 * 
+	 * Dec 20.  Undid the above modification after correspondence with Jack Turnock.
+	 * He rightly pointed out that it is possible to molt and remain in the same bin
+	 * interval (if the intervals are sufficiently large). 
 	 */
 FUNCTION calc_size_transition_matrix
 	//cout<<"Start of calc_size_transition_matrix"<<endl;
@@ -832,8 +836,8 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass) /= sum(At(l));
 
 			// molt probability; use only when newshell/oldshell data exists.
-			At(l,l) = 1.0 - molt_probability(h)(l);
-			At(l)(l,nclass) /= sum(At(l));
+			// At(l,l) = 1.0 - molt_probability(h)(l);
+			// At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
 	}
@@ -909,7 +913,7 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		 Z(h) = M(h) + F(h);
+		 Z(h) = M(h) + 0*F(h);
 		 S(h) = mfexp(-Z(h));
 		 //COUT(F(h)(syr));
 	}
@@ -1008,23 +1012,35 @@ FUNCTION calc_initial_numbers_at_length
 	// Equilibrium soln.
 	dmatrix Id=identity_matrix(1,nclass);
 	dvar_vector x(1,nclass);
+	dvar_vector y(1,nclass);
+	dvar_vector t1(1,nclass);
 	
 	dvar_matrix At(1,nclass,1,nclass);
+	dvar_matrix An(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
+	dvar_matrix  B(1,nclass,1,nclass);
 	for(int h = 1; h <= nsex; h++ )
 	{
 		At = size_transition(h);
+		An = size_transition(h);
 		for(int l = 1; l <= nclass; l++ )
 		{
 			At(l) *= S(h)(syr)(l);
+			An(l) *= S(h)(syr)(l) * molt_probability(h)(l);
+
 		}
 		A = trans(At);
 		x = -solve(A-Id,rt);
 		N(h)(syr) = elem_prod(x,exp(rec_ini));
+		
+		// New-shell Old-shell accounting.
+		d3_newShell(h)(syr) = elem_prod(      molt_probability(h) , N(h)(syr));
+		d3_oldShell(h)(syr) = elem_prod(1.0 - molt_probability(h) , N(h)(syr));
+		t1 = elem_prod(d3_oldShell(h)(syr),S(h)(syr)) + rt;
 
-		// prob. of molting to a new shell (1-diagnonal of sizetransition matrix)
-		d3_newShell(h)(syr) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(syr));
-		d3_oldShell(h)(syr) = elem_prod(diagonal(size_transition(h)) , N(h)(syr));
+		B = trans(An);
+		y = -solve(B-Id,t1);
+		COUT(y);
 	}
 	
 	if(verbose) COUT(N(1)(syr));
@@ -1054,20 +1070,26 @@ FUNCTION update_population_numbers_at_length
 			At = size_transition(h);
 			for( l = 1; l <= nclass; l++ )
 			{
-				//A(l) = elem_prod( A(l), S(h)(i) );
 				At(l) *= S(h)(i)(l);
 			}
-			N(h)(i+1)   = (0.5 * recruits(i)) * rec_sdd;
-			N(h)(i+1)   += N(h)(i) * At;
 
-			d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(i+1));
-			d3_oldShell(h)(i+1) = elem_prod(diagonal(size_transition(h)) , N(h)(i+1));
+			// New-shell Old-shell accounting
+			dvar_vector tmpNew  = elem_prod(molt_probability(h),N(h)(i));
+			dvar_vector tmpOld  = N(h)(i) - tmpNew;
+			d3_newShell(h)(i+1) = tmpNew * At;
+			d3_oldShell(h)(i+1) = elem_prod(tmpOld,S(h)(i));
+
+			N(h)(i+1)  = (0.5 * recruits(i)) * rec_sdd;
+			N(h)(i+1) += d3_newShell(h)(i+1) + d3_oldShell(h)(i+1);
+
+			// d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(i+1));
+			// d3_oldShell(h)(i+1) = elem_prod(diagonal(size_transition(h)) , N(h)(i+1));
 		}
 	}
 	
 	
-	if(verbose) COUT(N(1)(nyr));
-
+	if(verbose) COUT(N(1));
+	exit(1);
 
 
 
