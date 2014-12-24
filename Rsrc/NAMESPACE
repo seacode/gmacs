@@ -2,9 +2,11 @@
 
 export(get_selectivity)
 export(get_sizecomp)
+export(get_ssb)
 export(plot_catch)
 export(plot_cpue)
 export(plot_cpue_res)
+export(plot_datarange)
 export(plot_growth)
 export(plot_multiple)
 export(plot_naturalmortality)

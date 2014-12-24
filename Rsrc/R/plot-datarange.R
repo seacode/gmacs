@@ -5,7 +5,10 @@
 #' @export
 plot_datarange <-function(replist)
 {
-    narepfile <- strsplit(scan("gmacs.rep",what="character",flush=TRUE,blank.lines.skip=FALSE,quiet=TRUE)[1:4],':')
+    #repfile   <- paste(deparse(substitute(replist)),".rep",sep="")
+    repfile   <- replist$run_name
+    print(repfile)
+    narepfile <- strsplit(scan(repfile,what="character",flush=TRUE,blank.lines.skip=FALSE,quiet=TRUE)[1:4],':')
     
     startyr       <- replist$mod_yrs[1]
     endyr         <- replist$mod_yrs[length(replist$mod_yrs)]

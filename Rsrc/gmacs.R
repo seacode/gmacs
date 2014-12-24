@@ -18,7 +18,6 @@ set_ggtheme('bw')
 
 # Read report file and create gmacs report object (a list):
 gmrep <- read_admb('gmacs')
-gmrep2 <- read_admb('gmacs')
 
 # Get plots of interest:
 plot_catch(gmrep)
@@ -37,15 +36,7 @@ plot_sizetransition(gmrep)
 plot_selectivity(gmrep)
 plot_recruitment(gmrep)
 plot_datarange(gmrep)
-p <- plot_ssb(gmrep)
-dftmp = get_ssb(gmrep2)
-  p <- p + geom_line(aes(x=year,y=exp(log_mmb)),data=dftmp)
-  plot(p)
-names(gmrep2$mmb)
-(gmrep2$mmb)
-lines(gmrep2$mod_yrs,gmrep2$mmb)
-  p <- p + geom_line(aes(x=year,y=exp(log_mmb)))
-plot_naturalmortality(gmrep)
+plot_ssb(gmrep)
 plot_naturalmortality(gmrep)
 
 shiny_gmacs(gmrep)

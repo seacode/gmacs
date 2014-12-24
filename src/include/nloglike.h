@@ -31,7 +31,6 @@ public:
 	nloglike(const dmatrix& _O, const dvar_matrix& _P);
 
 	void tail_compression();
-	dvariable robust_multi(const dvector& dSampleSize);
 	dvariable multinomial(const dvector& dSampleSize);
 	dvariable dmultinom(const dvector& x, const dvar_vector& p);
 
