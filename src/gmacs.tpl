@@ -1468,7 +1468,10 @@ FUNCTION calc_objective_function
 			break;
 
 			case 2:  // robust approximation to the multinomial
-				ploglike = new acl::robust_multi(O,bCmp);
+				if(current_phase() <= 3)
+					ploglike = new acl::multinomial(O,bCmp);
+				else
+					ploglike = new acl::robust_multi(O,bCmp);
 			break;
 		}
 
