@@ -23,7 +23,7 @@ const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
 {
 	if(o.colsize()!=p.colsize() || o.rowsize()!=p.rowsize())
 	{
-		cerr<<"Error in multivariate_t_likelihood, "
+		cerr<<"Error in dmultinom, "
 		" observed and predicted matrixes"
 		" are not the same size"<<endl;
 		ad_exit(1);
@@ -54,8 +54,8 @@ const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
 
 
 const dmatrix acl::multinomial::pearson_residuals(const dvar_vector& log_vn,
-                                									const dmatrix& o,
-                                									const dvar_matrix p) const
+                                				const dmatrix& o,
+                                				const dvar_matrix p) const
 {
 	dvector vn = value(mfexp(log_vn));
 	dmatrix res = o - value(p);

@@ -1443,7 +1443,7 @@ FUNCTION calc_objective_function
 			case 1: // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
 				nloglike(3) += ploglike->nloglike(log_effn,P);
-		    if(last_phase())
+		    	if(last_phase())
 				  d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 			  break;
 
@@ -1453,8 +1453,8 @@ FUNCTION calc_objective_function
 				  nloglike(3) += ploglike->nloglike(log_effn,P);
 				else
 				  nloglike(3) += robust_multi(O,P,log_effn);
-		    if(last_phase())
-			  	d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
+		    	if(last_phase())
+			  		d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 			  break;
 		}
 		
@@ -1717,8 +1717,8 @@ FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar
 	RETURN_ARRAYS_INCREMENT();
 	dvariable nll = 0;
 	double tiny = 1.e-14;
-  double  a  = .1/size_count(O(1));
-  dvar_vector b  = exp(lnN);
+  	double  a  = .1/size_count(O(1));
+  	dvar_vector b  = exp(lnN);
 
 	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
 	{
@@ -1727,10 +1727,10 @@ FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar
 		o /= sum(o);
 		p /= sum(p);
 
-    dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
-    dvar_vector l  =  elem_div(square(p - o), v );
-    nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
-    nll += 0.5 * sum(log(v));
+    	dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
+    	dvar_vector l  =  elem_div(square(p - o), v );
+    	nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
+    	nll += 0.5 * sum(log(v));
 
 	}
 	RETURN_ARRAYS_DECREMENT();
