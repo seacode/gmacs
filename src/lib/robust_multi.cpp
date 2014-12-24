@@ -1,10 +1,10 @@
 #include <admodel.h>
-	#if defined __APPLE__ || defined __linux
-  #include "../include/nloglike.h"
-	#endif
-	#if defined _WIN32 || defined _WIN64
+#if defined __APPLE__ || defined __linux
+	#include "../include/nloglike.h"
+#endif
+#if defined _WIN32 || defined _WIN64
 	#include "include\nloglike.h"
-	#endif
+#endif
 	
 	
 
@@ -29,14 +29,14 @@ const dvariable acl::robust_multi::pdf(const dmatrix& O,
 	}
 	RETURN_ARRAYS_INCREMENT();
 	dvariable nll = 0;
-	double tiny = 1.e-14;
+	// double tiny = 1.e-14;
   	double  a  = .1/size_count(O(1));
   	dvar_vector b  = exp(lnN);
 
 	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
 	{
-		dvector      o =  O(i) + tiny;
-		dvar_vector  p =  P(i) + tiny;
+		dvector      o =  O(i) + TINY;
+		dvar_vector  p =  P(i) + TINY;
 		o /= sum(o);
 		p /= sum(p);
 
@@ -48,4 +48,22 @@ const dvariable acl::robust_multi::pdf(const dmatrix& O,
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return nll;
+}
+
+const dmatrix acl::robust_multi::pearson_residuals(const dmatrix& O,
+                                				const dvar_matrix P,
+                                				const dvar_vector& log_vn) const
+{
+	dvector vn = value(mfexp(log_vn));
+	dmatrix res = O - value(P);
+	
+	
+	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
+	{
+		dvector o   = O(i) + TINY;
+		dvector p   = value(P(i)) + TINY;
+		dvector var = elem_prod(o,1.0-o) / vn(i);
+		res(i)      = elem_div(o - p,sqrt(var));
+	}
+	return res;
 }

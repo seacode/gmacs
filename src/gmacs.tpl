@@ -1430,6 +1430,10 @@ FUNCTION calc_objective_function
 
 
 	// 3) Likelihood for size composition data.
+    // SM: Jim, because we are using virtual method here, you can 
+    // just use the switch statement to choose which distribution to
+    // use. the calculate the likelihood below.  I've commented out,
+    // what you had below and implemented it below.  
 	for(int ii = 1; ii <= nSizeComps; ii++)
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
@@ -1438,25 +1442,41 @@ FUNCTION calc_objective_function
 
 		bool bCmp = bTailCompression(ii);
 		acl::negativeLogLikelihood *ploglike;
+		//switch(nAgeCompType(ii))
+		//{
+		//	case 1: // multinomial with fixed or estimated n
+		//		ploglike = new acl::multinomial(O,bCmp);
+		//		nloglike(3) += ploglike->nloglike(log_effn,P);
+		//    	if(last_phase())
+		//		  d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
+		//	  break;
+		//
+		//	case 2: // Robust case multinomial with fixed or estimated n
+		//		ploglike = new acl::multinomial(O,bCmp);
+		//		if (current_phase()<=3)
+		//		  nloglike(3) += ploglike->nloglike(log_effn,P);
+		//		else
+		//		  nloglike(3) += robust_multi(O,P,log_effn);
+		//    	if(last_phase())
+		//	  		d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
+		//	  break;
+		//}
 		switch(nAgeCompType(ii))
 		{
-			case 1: // multinomial with fixed or estimated n
+			case 1:  // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
-				nloglike(3) += ploglike->nloglike(log_effn,P);
-		    	if(last_phase())
-				  d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
-			  break;
+			break;
 
-			case 2: // Robust case multinomial with fixed or estimated n
-				ploglike = new acl::multinomial(O,bCmp);
-				if (current_phase()<=3)
-				  nloglike(3) += ploglike->nloglike(log_effn,P);
-				else
-				  nloglike(3) += robust_multi(O,P,log_effn);
-		    	if(last_phase())
-			  		d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
-			  break;
+			case 2:  // robust approximation to the multinomial
+				ploglike = new acl::robust_multi(O,bCmp);
+			break;
 		}
+
+		// now compute the likelihood.
+		nloglike(3) += ploglike->nloglike(log_effn,P);
+
+		// Compute residuals in the last phase.
+		if(last_phase()) d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 		
 		//if(last_phase())
 		//{

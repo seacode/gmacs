@@ -291,22 +291,19 @@ namespace acl
 		}
 
 		// pearson residuals
-		// const   dmatrix residual(const dvar_vector& _n, const dvar_matrix& _P) const
-		// {
-		// 	return pearson_residuals(_n,this->get_O(),_P);
-		// }
+		const   dmatrix residual(const dvar_vector& _n, const dvar_matrix& _P) const
+		{
+			return pearson_residuals(this->get_O(),_P,_n);
+		}
 		
 		const dvariable pdf(const dmatrix& O, 
 		                    const dvar_matrix& P, 
 		                    const dvar_vector& lnN) const;
 		
-		// const dvariable dmultinom(const dvar_vector& log_vn,
-	 //                          const dmatrix& o, 
-	 //                          const dvar_matrix& p) const;
 
-		// const dmatrix pearson_residuals(const dvar_vector& log_vn,
-  //                 									const dmatrix& o,
-  //                 									const dvar_matrix p) const;
+		const dmatrix pearson_residuals(const dmatrix& o,
+                  						const dvar_matrix p,
+                  						const dvar_vector& log_vn) const;
 		
 	};
 
