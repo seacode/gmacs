@@ -1,3 +1,4 @@
+# Model 1, fixed multinomial sample sizes
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # Controls for leading parameter vector theta   
 # LEGEND FOR PRIOR:
@@ -70,9 +71,8 @@
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
 ##   -1) multinomial with estimated/fixed sample size
-##   -2) robust_multi. Robust approximation to multinomial
-##   -3) logistic normal  (NIY)
-##   -4) multivariate-t   (NIY)
+##   -2) robust multinomial (as in BBRKC case)
+##   -3) multivariate-t
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -104,7 +104,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
-  1       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2013    # Last year for average recruitment for Bspr calculation.

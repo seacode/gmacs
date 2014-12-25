@@ -21,11 +21,13 @@ gmrep <- read_admb('gmacs')
 
 # Get plots of interest:
 plot_catch(gmrep)
+plot_growth(gmrep)
 plot_catch(gmrep,plot_res=T)
 
 plot_sizecomp(gmrep,which_plots=c(1))
 plot_sizecomp(gmrep)
 plot_sizecomp_res(gmrep, which_plots=c(1))
+
 
 plot_sizecomp(gmrep,which_plots=c(11))
 plot_sizecomp_res(gmrep)
@@ -33,8 +35,8 @@ plot_sizetransition(gmrep)
 
 plot_selectivity(gmrep)
 plot_recruitment(gmrep)
+plot_datarange(gmrep)
 plot_ssb(gmrep)
-plot_naturalmortality(gmrep)
 plot_naturalmortality(gmrep)
 
 shiny_gmacs(gmrep)

@@ -12,6 +12,7 @@ read_admb <- function(repfile){
 
 	A 		<- read_rep(fn)
 	A$fit <- ret
+	A$run_name <- fn
 
 	pfn <- paste(repfile, '.psv', sep='')
 	if(file.exists(pfn))

@@ -872,6 +872,7 @@ FUNCTION calc_natural_mortality
 
 		switch( m_type )
 		{
+			// would this line ever occur if m_dev active?
 			case 0:  // constant natural mortality
 				delta = 0;
 			break;
@@ -1450,7 +1451,7 @@ FUNCTION calc_objective_function
 
 
 
-	// 3) Likelihood for size composition data.
+	// 3) Likelihood for size composition data. 
 	for(int ii = 1; ii <= nSizeComps; ii++)
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
@@ -1459,27 +1460,33 @@ FUNCTION calc_objective_function
 
 		bool bCmp = bTailCompression(ii);
 		acl::negativeLogLikelihood *ploglike;
+		
 		switch(nAgeCompType(ii))
 		{
-			case 1: // multinomial with fixed or estimated n
+			case 1:  // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
-				
-				nloglike(3) += ploglike->nloglike(log_effn,P);
-				d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 			break;
 
+			case 2:  // robust approximation to the multinomial
+				if( current_phase() <= 3 || !last_phase() )
+					ploglike = new acl::multinomial(O,bCmp);
+				else
+					ploglike = new acl::robust_multi(O,bCmp);
+			break;
+		}
+
+		// now compute the likelihood.
+		nloglike(3) += ploglike->nloglike(log_effn,P);
+
+		// Compute residuals in the last phase.
+		if(last_phase()) 
+		{
+			d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 		}
 		
+		
 
-		//likelihoods::nloglike myfun(O,P);
-		//nloglike(3)  += myfun.multinomial(size_comp_sample_size(ii));
-
-		//if(last_phase())
-		//{
-		//	d3_res_size_comps(ii) = myfun.residuals(size_comp_sample_size(ii));
-		//}
-
-		//nloglike(3)  += myfun.dmvlogistic();
+		
 	}
 
 
@@ -1678,16 +1685,22 @@ REPORT_SECTION
   	{
   		int iage=1;
   		// Set the initial size frequency
-		growth_matrix(isex,iage) = size_transition(isex,iage);
-		mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
-  	  	for (iage=2;iage<=nclass;iage++)
-  	  	{
-			growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
-			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
-  	  	}
+		  growth_matrix(isex,iage) = size_transition(isex,iage);
+		  mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
+  		for (iage=2;iage<=nclass;iage++)
+  		{
+		  	growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
+			  mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
+  	  }
   	}
   	REPORT(growth_matrix);
   	REPORT(mean_size);
+	  for(int ii = 1; ii <= nSizeComps; ii++)
+	  {
+	   // Set final sample-size for composition data for comparisons
+	    size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
+	  }
+  	REPORT(size_comp_sample_size);
 	}
 
 
@@ -1709,6 +1722,42 @@ FUNCTION dvector calc_mmb()
 	}
 	return(mmb);
 
+
+FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar_vector lnN)
+  /**
+   * @brief Robustified Multinomial likleihood for composition data.
+   * @details Follows Fournier's approach
+   * 
+   * @param lnN The assumed log of sample size 
+   * @return returns the negative log likelihood.
+   */	
+	if( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )
+	{
+		cerr<<"Sample size index do not match row index in\
+		       observed size composition matrix."<<endl;
+		ad_exit(1);
+	}
+	RETURN_ARRAYS_INCREMENT();
+	dvariable nll = 0;
+	double tiny = 1.e-14;
+  	double  a  = .1/size_count(O(1));
+  	dvar_vector b  = exp(lnN);
+
+	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
+	{
+		dvector      o =  O(i) + tiny;
+		dvar_vector  p =  P(i) + tiny;
+		o /= sum(o);
+		p /= sum(p);
+
+    	dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
+    	dvar_vector l  =  elem_div(square(p - o), v );
+    	nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
+    	nll += 0.5 * sum(log(v));
+
+	}
+	RETURN_ARRAYS_DECREMENT();
+	return nll;
 
 
 	/**

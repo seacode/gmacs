@@ -211,6 +211,7 @@ namespace acl
 
 		~multinomial();
 
+
 		dvariable get_n()      const { return m_log_vn;    }
 		void      set_n(dvariable _n){ this->m_log_vn = _n;}
 
@@ -248,7 +249,66 @@ namespace acl
                   									const dmatrix& o,
                   									const dvar_matrix p) const;
 	};
-}
+
+
+	class robust_multi: public negativeLogLikelihood
+	{
+	private:
+		bool        m_bCompress;
+		dvariable   m_log_vn;
+		dvar_matrix m_P;
+
+	public:
+		
+		robust_multi(const dmatrix &_O,const bool bCompress=false)
+		: negativeLogLikelihood(_O),m_bCompress(bCompress) 
+		{
+			if(m_bCompress) tail_compression();
+		}
+
+		~robust_multi();
+
+		dvariable get_n()      const { return m_log_vn;    }
+		void      set_n(dvariable _n){ this->m_log_vn = _n;}
+
+		dvar_matrix get_P()         const { return m_P;    }
+		void        set_P(dvar_matrix _P) { this->m_P = _P;}
+
+	
+		// negative log likelihood
+		const dvariable nloglike(const dvar_vector& log_vn, const dvar_matrix& _P) const 
+		{
+			if(m_bCompress)
+			{
+				dmatrix     Or = compress(this->get_O());
+				dvar_matrix Pr = compress(_P);
+				return pdf(Or,Pr,log_vn);
+			}
+			else
+			{
+				return pdf(this->get_O(),_P,log_vn);	
+			}
+		}
+
+		// pearson residuals
+		const   dmatrix residual(const dvar_vector& _n, const dvar_matrix& _P) const
+		{
+			return pearson_residuals(this->get_O(),_P,_n);
+		}
+		
+		const dvariable pdf(const dmatrix& O, 
+		                    const dvar_matrix& P, 
+		                    const dvar_vector& lnN) const;
+		
+
+		const dmatrix pearson_residuals(const dmatrix& o,
+                  						const dvar_matrix p,
+                  						const dvar_vector& log_vn) const;
+		
+	};
+
+
+} // end of acl namespace
 
 
 
