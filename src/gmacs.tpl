@@ -35,6 +35,13 @@ DATA_SECTION
 			simflag = 1;
 			rseed   = atoi(ad_comm::argv[on+1]);
 		}
+
+		if((on=option_match(ad_comm::argc,ad_comm::argv,"-info",opt))>-1)
+		{
+			cout<<"Financial support for this project was provided by ";
+			cout<<"the National Marine Fisheries Service and the Bering ";
+			cout<<"Sea Fisheries Research Foundation."<<endl;
+		}
 	END_CALCS
 
 	// |------------------------|
@@ -56,6 +63,35 @@ DATA_SECTION
 	init_int nshell;		///> number of shell conditions
 	init_int nmature;		///> number of maturity types
 	init_int nclass;		///> number of size-classes
+	int n_grp;				///> number of sex/newshell/oldshell groups
+	!! n_grp = nsex * nshell * nmature;
+
+	// Set up index pointers
+	ivector isex(1,n_grp);
+	ivector ishell(1,n_grp);
+	ivector imature(1,n_grp);
+	3darray pntr_hmo(1,nsex,1,nmature,1,nshell);
+	LOC_CALCS
+		int h,m,o;
+		int hmo=1;
+		for( h = 1; h <= nsex; h++ )
+		{
+			for( m = 1; m <= nmature; m++ )
+			{
+				for( o = 1; o <= nshell; o++ )
+				{
+					isex(hmo) = h;
+					ishell(hmo) = o;
+					imature(hmo) = m;
+					pntr_hmo(h,m,o) = hmo++;
+				}
+			}
+		}
+		COUT(isex);
+		COUT(pntr_hmo);
+	END_CALCS
+
+
 
 	init_vector size_breaks(1,nclass+1);
 	vector       mid_points(1,nclass);
@@ -1895,10 +1931,10 @@ GLOBALS_SECTION
  	#define MAXIT 100
  	#define TOL 1.0e-4
 	 /**
-	 \def check(object)
+	 \def CHECK(object)
 	 Prints name and value of \a object on checkfile %ofstream output file.
 	 */
-	 #define check(object) checkfile << #object << "\n" << object << endl;
+	 #define CHECK(object) checkfile << #object << "\n" << object << endl;
 	 // Open output files using ofstream
 	 ofstream echoinput("echoinput.rep");
 	 ofstream checkfile("checkfile.rep");
