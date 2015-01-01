@@ -551,6 +551,7 @@ PARAMETER_SECTION
 	3darray F(1,nsex,syr,nyr,1,nclass);			///> Fishing mortality
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		///> Numbers-at-length
+	3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);	///> Numbers-at-sex/mature/shell/length.
 	3darray ft(1,nfleet,1,nsex,syr,nyr);		///> Fishing mortality by gear
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
 	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass);	///> Old shell crabs-at-length.
@@ -1046,16 +1047,59 @@ FUNCTION calc_initial_numbers_at_length
 	// COUT(log_initial_recruits);
 	dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
 
-	// Equilibrium soln.
+	// Solve for stable distribution.
+	int ig,h,o,m;
+	int iter=0;
+	d3_N.initialize();
 	dmatrix Id=identity_matrix(1,nclass);
-	dvar_vector x(1,nclass);
-	dvar_vector y(1,nclass);
+	dvar_vector  x(1,nclass);
+	dvar_vector  y(1,nclass);
 	dvar_vector t1(1,nclass);
-	
-	dvar_matrix At(1,nclass,1,nclass);
-	dvar_matrix An(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix  B(1,nclass,1,nclass);
+	dvar_matrix At(1,nclass,1,nclass);
+	dvar_matrix Bt(1,nclass,1,nclass);
+
+	do
+	{
+		for( ig = 1; ig <= n_grp; ig++ )
+		{
+			h = isex(ig);
+			m = imature(ig);
+			o = ishell(ig);
+			
+			if( o == 1 )	// newshell
+			{
+				At = size_transition(h);
+				for(int l = 1; l <= nclass; l++ )
+				{
+					At(l) *= S(h)(syr)(l);
+				}
+				x = d3_N(ig)(syr);
+				d3_N(ig)(syr) = elem_prod(molt_probability(h), x) * At + rt;
+			}
+
+			if( o == 2 )	// oldshell
+			{
+				x  = d3_N(ig)(syr);
+				y  = d3_N(ig-1)(syr);
+				t1 = elem_prod(1.0 - molt_probability(h),S(h)(syr));
+				
+				// add to newshell
+				d3_N(ig-1)(syr) += elem_prod(molt_probability(h), x) * At;
+
+				// oldshell
+				d3_N(ig)(syr) = elem_prod(t1,x+y);
+			}
+
+		}
+	}while(iter++ < 20);
+	COUT(d3_N(3)(syr));
+	COUT(d3_N(4)(syr));
+
+	// Equilibrium soln.
+	
+	dvar_matrix An(1,nclass,1,nclass);
 	for(int h = 1; h <= nsex; h++ )
 	{
 		At = size_transition(h);
