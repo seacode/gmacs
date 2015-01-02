@@ -1045,7 +1045,7 @@ FUNCTION calc_initial_numbers_at_length
 	}
 	recruits(syr) = exp(log_initial_recruits);
 	// COUT(log_initial_recruits);
-	dvar_vector rt = 0.5 * mfexp( log_initial_recruits ) * rec_sdd;
+	dvar_vector rt = 0.5 * recruits(syr) * rec_sdd;
 
 	// Solve for stable distribution.
 	int ig,h,o,m;
@@ -1075,6 +1075,7 @@ FUNCTION calc_initial_numbers_at_length
 				{
 					At(l) *= S(h)(syr)(l);
 				}
+
 				x = d3_N(ig)(syr);
 				d3_N(ig)(syr) = elem_prod(molt_probability(h), x) * At + rt;
 			}
@@ -1085,17 +1086,27 @@ FUNCTION calc_initial_numbers_at_length
 				y  = d3_N(ig-1)(syr);
 				t1 = elem_prod(1.0 - molt_probability(h),S(h)(syr));
 				
-				// add to newshell
+				// add oldshell non-terminal molts to newshell
 				d3_N(ig-1)(syr) += elem_prod(molt_probability(h), x) * At;
 
 				// oldshell
-				d3_N(ig)(syr) = elem_prod(t1,x+y);
+				d3_N(ig)(syr) = elem_prod(t1,x+d3_N(ig-1)(syr));
+			}
+
+			if ( o == 1 && m == 2 )		// terminal molt to new shell.
+			{
+
+			}
+
+			if ( o == 2 && m == 2 )		// terminal molt newshell to oldshell.
+			{
+
 			}
 
 		}
-	}while(iter++ < 20);
-	COUT(d3_N(3)(syr));
-	COUT(d3_N(4)(syr));
+	}while(iter++ <= 100);
+	COUT(d3_N(2)(syr));
+	
 
 	// Equilibrium soln.
 	
@@ -1137,14 +1148,64 @@ FUNCTION calc_initial_numbers_at_length
 	 * annual deviate, multiplied by a vector of size-proportions (rec_sdd).
 	 */
 FUNCTION update_population_numbers_at_length
-	int h,i,l;
+	int h,i,l,ig,o,m;
+	dvar_vector rt(1,nclass);
+	dvar_vector  x(1,nclass);
+	dvar_vector  y(1,nclass);
+	dvar_vector t1(1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
 	recruits(syr+1,nyr) = mfexp(logRbar);
 
 	for( i = syr; i <= nyr; i++ )
 	{
-		if( i > syr ) 
+		if( i > syr )
+		{
 			recruits(i) *= mfexp(rec_dev(i));
+		}
+		rt = (0.5 * recruits(i)) * rec_sdd;
+
+		for( ig = 1; ig <= n_grp; ig++ )
+		{
+			h = isex(ig);
+			m = imature(ig);
+			o = ishell(ig);
+			
+			if( o == 1 )	// newshell
+			{
+				At = size_transition(h);
+				for(int l = 1; l <= nclass; l++ )
+				{
+					At(l) *= S(h)(i)(l);
+				}
+				x = d3_N(ig)(i);
+				d3_N(ig)(i+1) = elem_prod(molt_probability(h), x) * At + rt;
+			}
+
+			if( o == 2 )	// oldshell
+			{
+				x  = d3_N(ig)(i);
+				y  = d3_N(ig-1)(i);
+				t1 = elem_prod(1.0 - molt_probability(h),S(h)(i));
+				
+				// add oldshell non-terminal molts to newshell
+				d3_N(ig-1)(i+1) += elem_prod(molt_probability(h), x) * At;
+
+				// oldshell
+				d3_N(ig)(i+1) = elem_prod(t1,x+d3_N(ig-1)(i));
+			}
+
+			if ( o == 1 && m == 2 )		// terminal molt to new shell.
+			{
+
+			}
+
+			if ( o == 2 && m == 2 )		// terminal molt newshell to oldshell.
+			{
+
+			}
+
+		}
+
 
 		for( h = 1; h <= nsex; h++ )
 		{
@@ -1169,7 +1230,7 @@ FUNCTION update_population_numbers_at_length
 	}
 	
 	
-	if(verbose) COUT(N(1));
+	if(verbose) COUT(d3_N(2));
 	exit(1);
 
 
