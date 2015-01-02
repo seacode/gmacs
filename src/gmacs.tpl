@@ -767,7 +767,7 @@ FUNCTION calc_selectivities
 	 */
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik,yk;
-	double lambda = 0.2;  // discard mortality rate from control file
+	double lambda; 		// discard mortality rate
 	F.initialize();
 	ft.initialize();
 	dvariable log_ftmp;
@@ -951,9 +951,8 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		 Z(h) = M(h) + 0*F(h);
+		 Z(h) = M(h) + F(h);
 		 S(h) = mfexp(-Z(h));
-		 //COUT(F(h)(syr));
 	}
 
 
@@ -986,7 +985,7 @@ FUNCTION calc_molting_probability
 	 * @param rbeta scales the variance of the distribution
 	 */
 FUNCTION calc_recruitment_size_distribution
-	//cout<<"Start of calc_recruitment_size_distribution"<<endl;
+	
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
 	for(int l = 1; l <= nclass+1; l++ )
@@ -995,11 +994,7 @@ FUNCTION calc_recruitment_size_distribution
 	}
 	rec_sdd  = first_difference(x);
 	rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
-	//COUT(ra);
-	//COUT(rbeta);
-	//COUT(ralpha);
-	//COUT(rec_sdd);
-	//cout<<"End of calc_recruitment_size_distribution"<<endl;
+	
 
 
 
@@ -1026,6 +1021,9 @@ FUNCTION calc_recruitment_size_distribution
 	 * 	Oldshell crabs are then the column vector of 1-molt_probabiltiy times the 
 	 * 	numbers-at-length, and the Newshell crabs is the column vector of molt_probability
 	 * 	times the number-at-length.
+	 * 	
+	 * 	Jan 1, 2015.  Changed how the equilibrium calculation is done.  Use a numerical
+	 * 	approach to solve the newshell oldshell initial abundance.
 	 * 	
 	 */
 FUNCTION calc_initial_numbers_at_length
@@ -1104,8 +1102,12 @@ FUNCTION calc_initial_numbers_at_length
 			}
 
 		}
-	}while(iter++ <= 100);
-	COUT(d3_N(1)(syr)+d3_N(2)(syr));
+	}while(iter++ <= 4*nclass);
+	// COUT(At);
+	// COUT(molt_probability(2));
+	// COUT(S(2)(syr));
+	// COUT(rt);
+	// COUT(d3_N(1)(syr)+d3_N(2)(syr));
 	
 
 	// Equilibrium soln.
@@ -1231,7 +1233,7 @@ FUNCTION update_population_numbers_at_length
 	
 	
 	if(verbose) COUT(d3_N(1)+d3_N(2));
-	exit(1);
+	
 
 
 
@@ -1240,11 +1242,18 @@ FUNCTION update_population_numbers_at_length
 	 * @details The function uses the Baranov catch equation to predict the retained
 	 * and discarded catch.
 	 * 
+	 * Assumptions:
+	 * 	1) retained (landed catch) is assume to be newshell male only.
+	 * 	2) discards are all females (new and old) and male only crab.
+	 * 	3) Natural and fishing mortality occur simultaneously.
+	 * 	4) discard is the total number of crab caught and discarded.
+	 * 	
+	 * 
 	 * @param  [description]
-	 * @return [description]
+	 * @return NULL
 	 */
 FUNCTION calc_predicted_catch
-	int h,i,j,k;
+	int h,i,j,k,ig;
 	int type,unit;
 	pre_catch.initialize();
 	dvariable tmp_ft;
@@ -1269,41 +1278,72 @@ FUNCTION calc_predicted_catch
 			// Total catch
 			if(h)	// sex specific 
 			{
+				nal.initialize();
 				sel = log_slx_capture(k)(h)(i);
 				switch(type)
 				{
 					case 1:		// retained catch
 						sel = exp( sel + log_slx_retaind(k)(h)(i) );
+						for(int m = 1; m <= nmature; m++ )
+						{
+							ig   = pntr_hmo(h,m,1); //indexes new shell.
+							nal += d3_N(ig)(i);
+						}
 					break;
 
 					case 2:		// discard catch
 						sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+						for(int m = 1; m <= nmature; m++ )
+						{
+							for(int o = 1; o <= nshell; o++ )
+							{
+								ig   = pntr_hmo(h,m,o);
+								nal += d3_N(ig)(i);
+							}
+						}
 					break;
 				}
 				tmp_ft = ft(k)(h)(i);
-				nal = (unit==1) ? elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+				nal = (unit==1) ? elem_prod(nal,mean_wt(h)) : nal;
 
-				pre_catch(kk)(j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+				pre_catch(kk)(j) = nal 
+						* elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 			}
 			else 	// sexes combibed
 			{
 				for( h = 1; h <= nsex; h++ )
 				{
+					nal.initialize();
 					sel = log_slx_capture(k)(h)(i);
 					switch(type)
 					{
 						case 1:		// retained catch
 							sel = exp( sel + log_slx_retaind(k)(h)(i) );
+							for(int m = 1; m <= nmature; m++ )
+							{
+								ig   = pntr_hmo(h,m,1); //indexes new shell.
+								nal += d3_N(ig)(i);
+							}
 						break;
 
 						case 2:		// discard catch
-							sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+							sel = 
+								elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+							for(int m = 1; m <= nmature; m++ )
+							{
+								for(int o = 1; o <= nshell; o++ )
+								{
+									ig   = pntr_hmo(h,m,o);
+									nal += d3_N(ig)(i);
+								}
+							}
 						break;
 					}
 					tmp_ft = ft(k)(h)(i);
-					nal = (unit==1) ? elem_prod(N(h)(i),mean_wt(h)):N(h)(i);
+					nal = (unit==1) ? elem_prod(nal,mean_wt(h)) : nal;
 
-					pre_catch(kk)(j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+					pre_catch(kk)(j) += nal 
+							* elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 				}
 			}
 		}
@@ -1312,7 +1352,7 @@ FUNCTION calc_predicted_catch
 		if(verbose)COUT(pre_catch(kk)(1));
 	}
 
-
+	exit(1);
 
 
 
@@ -1871,6 +1911,8 @@ FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar
    * 
    * @param lnN The assumed log of sample size 
    * @return returns the negative log likelihood.
+   * 
+   * TO BE Deprecated, now lives in robust_multi.cpp
    */	
 	if( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )
 	{

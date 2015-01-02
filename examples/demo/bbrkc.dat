@@ -51,8 +51,8 @@ NMFS_Trawl:BSFRF
 ## Units of catch:	1 = biomass,  2 = numbers
 ## for BBRKC Units are in 1000 mt for landed & million crabs for discards.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## year seas fleet sex       obs   cv type units mult  effort  discard_mortality
 ## Male Retained
+## year seas fleet sex       obs   cv type units mult  effort  discard_mortality
    1975    1     1   1 23.287794 0.05    1     1    1       0                  0
    1976    1     1   1 29.001814 0.05    1     1    1       0                  0
    1977    1     1   1 31.745871 0.05    1     1    1       0                  0
