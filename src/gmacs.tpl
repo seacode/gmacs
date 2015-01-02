@@ -1105,7 +1105,7 @@ FUNCTION calc_initial_numbers_at_length
 
 		}
 	}while(iter++ <= 100);
-	COUT(d3_N(2)(syr));
+	COUT(d3_N(1)(syr)+d3_N(2)(syr));
 	
 
 	// Equilibrium soln.
@@ -1230,7 +1230,7 @@ FUNCTION update_population_numbers_at_length
 	}
 	
 	
-	if(verbose) COUT(d3_N(2));
+	if(verbose) COUT(d3_N(1)(syr)+d3_N(2)(syr));
 	exit(1);
 
 
