@@ -1352,7 +1352,7 @@ FUNCTION calc_predicted_catch
 		if(verbose)COUT(pre_catch(kk)(1));
 	}
 
-	exit(1);
+	
 
 
 
@@ -1368,9 +1368,14 @@ FUNCTION calc_predicted_catch
 	 * the population to the relative abundance index.  Assumed errors in 
 	 * relative abundance are lognormal.  Currently assumes that the CPUE
 	 * index is made up of both retained and discarded crabs.
+	 * 
+	 * Question regarding use of shell condition in the relative abundance index.
+	 * Currenlty there is no shell condition information in the CPUE data, should
+	 * there be? Similarly, there is no mature immature information, should there be?
+	 * 
 	 */
 FUNCTION calc_relative_abundance
-	int g,h,i,j,k;
+	int g,h,i,j,k,ig;
 	int unit;
 	dvar_vector nal(1,nclass);	// numbers at length
 	dvar_vector sel(1,nclass);	// selectivity at length
@@ -1379,10 +1384,10 @@ FUNCTION calc_relative_abundance
 	for( k = 1; k <= nSurveys; k++ )
 	{
 		dvar_vector V(1,nSurveyRows(k));	
-		nal.initialize();
 		V.initialize();
 		for( j = 1; j <= nSurveyRows(k); j++ )
 		{
+			nal.initialize();
 			i = dSurveyData(k)(j)(1);		// year index
 			g = dSurveyData(k)(j)(3);		// gear index
 			h = dSurveyData(k)(j)(4);		//  sex index
@@ -1391,15 +1396,26 @@ FUNCTION calc_relative_abundance
 			if(h)
 			{
 				sel = exp(log_slx_capture(g)(h)(i));
-				switch(unit)
+				for(int m = 1; m <= nmature; m++ )
 				{
-					case 1:
-						nal=elem_prod(N(h)(i),mean_wt(h));
-					break;
-					case 2:
-						nal=N(h)(i);
-					break;
+					for(int o = 1; o <= nshell; o++ )
+					{
+						ig   = pntr_hmo(h,m,o);
+						nal +=	(unit==1)? 
+								elem_prod(d3_N(ig)(i),mean_wt(h)):
+								d3_N(ig)(i);
+					}
 				}
+
+				// switch(unit)
+				// {
+				// 	case 1:
+				// 		nal=elem_prod(N(h)(i),mean_wt(h));
+				// 	break;
+				// 	case 2:
+				// 		nal=N(h)(i);
+				// 	break;
+				// }
 				V(j) = nal * sel;
 			}
 			else
@@ -1407,15 +1423,26 @@ FUNCTION calc_relative_abundance
 				for( h = 1; h <= nsex; h++ )
 				{
 					sel = exp(log_slx_capture(g)(h)(i));
-					switch(unit)
+					for(int m = 1; m <= nmature; m++ )
 					{
-						case 1:
-							nal=elem_prod(N(h)(i),mean_wt(h));
-						break;
-						case 2:
-							nal=N(h)(i);
-						break;
+						for(int o = 1; o <= nshell; o++ )
+						{
+							ig   = pntr_hmo(h,m,o);
+							nal +=	(unit==1)? 
+									elem_prod(d3_N(ig)(i),mean_wt(h)): 
+									d3_N(ig)(i);
+						}
 					}
+					
+					// switch(unit)
+					// {
+					// 	case 1:
+					// 		nal=elem_prod(N(h)(i),mean_wt(h));
+					// 	break;
+					// 	case 2:
+					// 		nal=N(h)(i);
+					// 	break;
+					// }
 					V(j) += nal * sel;
 				}
 			}
@@ -1427,7 +1454,7 @@ FUNCTION calc_relative_abundance
 		pre_cpue(k)    = survey_q(k) * V;
 	}
 
-
+	exit(1);
 
 
 
