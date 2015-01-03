@@ -951,7 +951,7 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		 Z(h) = M(h) + F(h);
+		 Z(h) = M(h) +0* F(h);
 		 S(h) = mfexp(-Z(h));
 	}
 
@@ -1025,6 +1025,7 @@ FUNCTION calc_recruitment_size_distribution
 	 * 	Jan 1, 2015.  Changed how the equilibrium calculation is done.  Use a numerical
 	 * 	approach to solve the newshell oldshell initial abundance.
 	 * 	
+	 * 	–––-—————————————————————————————————————————————————————————————————————————----
 	 * 	Jan 3, 2015.  Working with John Levitt on analytical solution instead of the 
 	 * 	numerical approach.  Think we have a soln.  
 	 * 	
@@ -1054,7 +1055,8 @@ FUNCTION calc_recruitment_size_distribution
 	 * 	let C = (I - PSA - (I-P)SBPSA)
 	 * 	
 	 * 	then n = C^(-1) r							(4)
-	 * 		
+	 * 	–––-—————————————————————————————————————————————————————————————————————————----
+	 * 	–––-—————————————————————————————————————————————————————————————————————————----	
 	 * 	
 	 * 	
 	 */
@@ -1079,14 +1081,12 @@ FUNCTION calc_initial_numbers_at_length
 
 	// Solve for stable distribution.
 	int ig,h,o,m;
-	int iter=0;
+	int iter = 0;
 	d3_N.initialize();
-	dmatrix Id=identity_matrix(1,nclass);
+	dmatrix Id = identity_matrix(1,nclass);
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
 	dvar_vector t1(1,nclass);
-	dvar_matrix  A(1,nclass,1,nclass);
-	dvar_matrix  B(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
 	dvar_matrix Bt(1,nclass,1,nclass);
 
@@ -1135,13 +1135,37 @@ FUNCTION calc_initial_numbers_at_length
 
 		}
 	}while(iter++ <= 4*nclass);
-	// COUT(At);
-	// COUT(molt_probability(2));
-	// COUT(S(2)(syr));
-	// COUT(rt);
-	// COUT(d3_N(1)(syr)+d3_N(2)(syr));
 	
+	// Analytical equilibrium soln.
+	dvar_matrix  P(1,nclass,1,nclass);
+	dvar_matrix  Z(1,nclass,1,nclass);
+	dvar_matrix  A(1,nclass,1,nclass);
+	dvar_matrix  B(1,nclass,1,nclass);
+	dvar_matrix  C(1,nclass,1,nclass);
+	dvar_matrix  D(1,nclass,1,nclass);
 
+	for(int h = 1; h <= nsex; h++ )
+	{
+		A = size_transition(h);
+		for(int l = 1; l <= nclass; l++ )
+		{
+			Z(l,l) = S(h)(syr)(l);
+			P(l,l) = molt_probability(h)(l);
+		}
+
+		B = inv(Id - (Id-P)*Z);
+		C = P*Z*A;
+		D = trans(Id - C - (Id-P)*Z*B*C);
+
+		x = solve(D,rt);
+		y = x*((Id-P)*Z*B);
+	}
+	COUT(D);
+	COUT(x);
+	COUT(y);
+	COUT(x+y)
+	COUT(d3_N(3)(syr)+d3_N(4)(syr));
+	
 	// Equilibrium soln.
 	
 	dvar_matrix An(1,nclass,1,nclass);
@@ -1265,7 +1289,7 @@ FUNCTION update_population_numbers_at_length
 	
 	
 	if(verbose) COUT(d3_N(1)+d3_N(2));
-	
+	exit(1);
 
 
 
