@@ -1025,6 +1025,38 @@ FUNCTION calc_recruitment_size_distribution
 	 * 	Jan 1, 2015.  Changed how the equilibrium calculation is done.  Use a numerical
 	 * 	approach to solve the newshell oldshell initial abundance.
 	 * 	
+	 * 	Jan 3, 2015.  Working with John Levitt on analytical solution instead of the 
+	 * 	numerical approach.  Think we have a soln.  
+	 * 	
+	 * 	Notation:
+	 * 		n = vector of newshell crabs
+	 * 		o = vector of oldshell crabs
+	 * 		P = diagonal matrix of molting probabilities by size
+	 * 		S = diagonal matrix of survival rates by size
+	 * 		A = Size transition matrix.
+	 * 		r = vector of new recruits (newshell)
+	 * 		I = identity matrix.
+	 * 	
+	 * 	The following equations represent the dynamics of newshell and oldshell crabs.
+	 * 		n = nSPA + oSPA + r						(1)
+	 * 		o = oS(I-P)A + nS(I-P)A					(2)
+	 * 	Objective is to solve the above equations for n and o repsectively.  Starting
+	 * 	with o:
+	 * 		o = n(I-P)S[I-(I-P)S]^(-1)				(3)
+	 * 	next substitute (3) into (1) and solve for n
+	 * 		n = nPSA + n(I-P)S[I-(I-P)S]^(-1)PSA + r
+	 * 	
+	 * 	let B = [I-(I-P)S]^(-1)
+	 * 		
+	 * 		n - nPSA - n(I-P)SBPSA = r
+	 * 		n(I - PSA - (I-P)SBPSA) = r
+	 * 	
+	 * 	let C = (I - PSA - (I-P)SBPSA)
+	 * 	
+	 * 	then n = C^(-1) r							(4)
+	 * 		
+	 * 	
+	 * 	
 	 */
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
@@ -1454,7 +1486,7 @@ FUNCTION calc_relative_abundance
 		pre_cpue(k)    = survey_q(k) * V;
 	}
 
-	exit(1);
+	
 
 
 
@@ -1477,7 +1509,7 @@ FUNCTION calc_relative_abundance
    *    I think there should just be newshell/old shell.
 	 */
 FUNCTION calc_predicted_composition
-	int h,i,j,k;
+	int h,i,j,k,ig;
 	int type,shell,bmature ;
 	d3_pre_size_comps.initialize();
 	dvar_vector dNtmp(1,nclass);
@@ -1502,7 +1534,9 @@ FUNCTION calc_predicted_composition
 				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				dvar_vector tmp = N(h)(i);
-        
+        		
+				// ig = pntr_hmo(h,bmature,shell);
+
 		        if( shell==1 ) tmp = d3_newShell(h)(i);
 		        if( shell==2 ) tmp = d3_oldShell(h)(i);
 		        if( bmature )  tmp = elem_prod(tmp,maturity(h));
@@ -1548,7 +1582,7 @@ FUNCTION calc_predicted_composition
 		}
 	}
 
-
+	exit(1);
 
 
 	/**
