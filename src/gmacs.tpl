@@ -547,7 +547,6 @@ PARAMETER_SECTION
 	3darray size_transition(1,nsex,1,nclass,1,nclass);
 	3darray M(1,nsex,syr,nyr,1,nclass);			///> Natural mortality
 	3darray Z(1,nsex,syr,nyr,1,nclass);			///> Total mortality
-	3darray S(1,nsex,syr,nyr,1,nclass);			///> Surival Rate (S=exp(-Z))
 	3darray F(1,nsex,syr,nyr,1,nclass);			///> Fishing mortality
 	3darray P(1,nsex,1,nclass,1,nclass);		///> Diagonal matrix of molt probabilities
 
@@ -559,6 +558,7 @@ PARAMETER_SECTION
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
+	4darray S(1,nsex,syr,nyr,1,nclass,1,nclass);			///> Surival Rate (S=exp(-Z))
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -952,9 +952,19 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		 Z(h) = M(h) +0* F(h);
-		 S(h) = mfexp(-Z(h));
+		Z(h) = M(h) +0* F(h);
+		// S(h) = mfexp(-Z(h));
+		for(int i = syr; i <= nyr; i++ )
+		{
+			for(int l = 1; l <= nclass; l++ )
+			{
+				S(h)(i)(l,l) = mfexp(-Z(h)(i)(l));
+			}
+		}
+
 	}
+
+
 
 
 
@@ -1092,7 +1102,7 @@ FUNCTION calc_initial_numbers_at_length
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
 	//dvar_matrix  P(1,nclass,1,nclass);
-	dvar_matrix  Z(1,nclass,1,nclass);
+	//dvar_matrix  Z(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 
 
@@ -1101,16 +1111,16 @@ FUNCTION calc_initial_numbers_at_length
 
 
 		A = size_transition(h);
-		for(int l = 1; l <= nclass; l++ )
-		{
-			Z(l,l) = S(h)(syr)(l);
-			//P(l,l) = molt_probability(h)(l);
-		}
+		//for(int l = 1; l <= nclass; l++ )
+		//{
+		//	Z(l,l) = S(h)(syr)(l);
+		//	//P(l,l) = molt_probability(h)(l);
+		//}
 
 		// Single shell condition
 		if ( nshell == 1 && nmature == 1)
 		{
-			calc_equilibrium(x,A,Z,rt);
+			calc_equilibrium(x,A,S(h)(syr),rt);
 			ig = pntr_hmo(h,1,1);
 			d3_N(ig)(syr) = x;
 		}
@@ -1118,7 +1128,7 @@ FUNCTION calc_initial_numbers_at_length
 		// Continuous molt (newshell/oldshell)
 		if ( nshell == 2 && nmature == 1)
 		{
-			calc_equilibrium(x,y,A,Z,P(h),rt);
+			calc_equilibrium(x,y,A,S(h)(syr),P(h),rt);
 			ig = pntr_hmo(h,1,1);
 			d3_N(ig)(syr) = x;
 			d3_N(ig+1)(syr) = y;
@@ -1228,10 +1238,13 @@ FUNCTION calc_initial_numbers_at_length
 	 */
 FUNCTION update_population_numbers_at_length
 	int h,i,l,ig,o,m;
+	dmatrix Id = identity_matrix(1,nclass);	
 	dvar_vector rt(1,nclass);
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
-	dvar_vector t1(1,nclass);
+	//dvar_vector t1(1,nclass);
+	dvar_matrix t1(1,nclass,1,nclass);
+	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
 	recruits(syr+1,nyr) = mfexp(logRbar);
 
@@ -1251,26 +1264,23 @@ FUNCTION update_population_numbers_at_length
 			
 			if( o == 1 )	// newshell
 			{
-				At = size_transition(h);
-				for(int l = 1; l <= nclass; l++ )
-				{
-					At(l) *= S(h)(i)(l);
-				}
+				A  = size_transition(h) * S(h)(i);
 				x = d3_N(ig)(i);
-				d3_N(ig)(i+1) = elem_prod(molt_probability(h), x) * At + rt;
+				d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
+			
 			}
 
 			if( o == 2 )	// oldshell
 			{
 				x  = d3_N(ig)(i);
 				y  = d3_N(ig-1)(i);
-				t1 = elem_prod(1.0 - molt_probability(h),S(h)(i));
+				t1 = (Id - P(h)) * S(h)(i);
 				
 				// add oldshell non-terminal molts to newshell
-				d3_N(ig-1)(i+1) += elem_prod(molt_probability(h), x) * At;
-
+				d3_N(ig-1)(i+1) += elem_prod(x,diagonal(P(h))) * A;
+				
 				// oldshell
-				d3_N(ig)(i+1) = elem_prod(t1,x+d3_N(ig-1)(i));
+				d3_N(ig)(i+1) = (x+d3_N(ig-1)(i)) * t1;
 			}
 
 			if ( o == 1 && m == 2 )		// terminal molt to new shell.
@@ -1288,17 +1298,17 @@ FUNCTION update_population_numbers_at_length
 
 		for( h = 1; h <= nsex; h++ )
 		{
-			At = size_transition(h);
-			for( l = 1; l <= nclass; l++ )
-			{
-				At(l) *= S(h)(i)(l);
-			}
+			At = size_transition(h) * S(h)(i);
+			//for( l = 1; l <= nclass; l++ )
+			//{
+			//	At(l) *= S(h)(i)(l);
+			//}
 
 			// New-shell Old-shell accounting
 			dvar_vector tmpNew  = elem_prod(molt_probability(h),N(h)(i));
 			dvar_vector tmpOld  = N(h)(i) - tmpNew;
 			d3_newShell(h)(i+1) = tmpNew * At;
-			d3_oldShell(h)(i+1) = elem_prod(tmpOld,S(h)(i));
+			d3_oldShell(h)(i+1) = elem_prod(tmpOld,diagonal(S(h)(i)));
 
 			N(h)(i+1)  = (0.5 * recruits(i)) * rec_sdd;
 			N(h)(i+1) += d3_newShell(h)(i+1) + d3_oldShell(h)(i+1);
