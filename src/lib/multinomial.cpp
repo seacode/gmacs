@@ -1,11 +1,11 @@
 #include <admodel.h>
-	#if defined __APPLE__ || defined __linux
-  #include "../include/nloglike.h"
-	#endif
-	#if defined _WIN32 || defined _WIN64
+#if defined __APPLE__ || defined __linux
+	#include "../include/nloglike.h"
+#endif
+#if defined _WIN32 || defined _WIN64
 	#include "include\nloglike.h"
-	#endif
-	
+#endif
+
 	
 
 /**

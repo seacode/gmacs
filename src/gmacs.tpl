@@ -549,6 +549,7 @@ PARAMETER_SECTION
 	3darray Z(1,nsex,syr,nyr,1,nclass);			///> Total mortality
 	3darray S(1,nsex,syr,nyr,1,nclass);			///> Surival Rate (S=exp(-Z))
 	3darray F(1,nsex,syr,nyr,1,nclass);			///> Fishing mortality
+	3darray P(1,nsex,1,nclass,1,nclass);		///> Diagonal matrix of molt probabilities
 
 	3darray N(1,nsex,syr,nyr+1,1,nclass);		///> Numbers-at-length
 	3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);	///> Numbers-at-sex/mature/shell/length.
@@ -965,14 +966,19 @@ FUNCTION calc_total_mortality
 	 * estimated in cases where there is new shell and old shell data.
 	 */
 FUNCTION calc_molting_probability
-	int h;
+	int l,h;
 	molt_probability.initialize();
+	P.initialize();
 
 	for( h = 1; h <= nsex; h++ )
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu* molt_cv(h);
 		molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
+		for( l = 1; l <= nclass; l++ )
+		{
+			P(h)(l,l) = molt_probability(h)(l);
+		}
 	}
 
 
@@ -1079,119 +1085,134 @@ FUNCTION calc_initial_numbers_at_length
 	// COUT(log_initial_recruits);
 	dvar_vector rt = 0.5 * recruits(syr) * rec_sdd;
 
-	// Solve for stable distribution.
-	int ig,h,o,m;
-	int iter = 0;
+	// Analytical equilibrium soln.
+	int ig;
 	d3_N.initialize();
 	dmatrix Id = identity_matrix(1,nclass);
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
-	dvar_vector t1(1,nclass);
-	dvar_matrix At(1,nclass,1,nclass);
-	dvar_matrix Bt(1,nclass,1,nclass);
-
-	do
-	{
-		for( ig = 1; ig <= n_grp; ig++ )
-		{
-			h = isex(ig);
-			m = imature(ig);
-			o = ishell(ig);
-			
-			if( o == 1 )	// newshell
-			{
-				At = size_transition(h);
-				for(int l = 1; l <= nclass; l++ )
-				{
-					At(l) *= S(h)(syr)(l);
-				}
-
-				x = d3_N(ig)(syr);
-				d3_N(ig)(syr) = elem_prod(molt_probability(h), x) * At + rt;
-			}
-
-			if( o == 2 )	// oldshell
-			{
-				x  = d3_N(ig)(syr);
-				y  = d3_N(ig-1)(syr);
-				t1 = elem_prod(1.0 - molt_probability(h),S(h)(syr));
-				
-				// add oldshell non-terminal molts to newshell
-				d3_N(ig-1)(syr) += elem_prod(molt_probability(h), x) * At;
-
-				// oldshell
-				d3_N(ig)(syr) = elem_prod(t1,x+d3_N(ig-1)(syr));
-			}
-
-			if ( o == 1 && m == 2 )		// terminal molt to new shell.
-			{
-
-			}
-
-			if ( o == 2 && m == 2 )		// terminal molt newshell to oldshell.
-			{
-
-			}
-
-		}
-	}while(iter++ <= 4*nclass);
-	
-	// Analytical equilibrium soln.
-	dvar_matrix  P(1,nclass,1,nclass);
+	//dvar_matrix  P(1,nclass,1,nclass);
 	dvar_matrix  Z(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
-	dvar_matrix  B(1,nclass,1,nclass);
-	dvar_matrix  C(1,nclass,1,nclass);
-	dvar_matrix  D(1,nclass,1,nclass);
+
 
 	for(int h = 1; h <= nsex; h++ )
 	{
+
+
 		A = size_transition(h);
 		for(int l = 1; l <= nclass; l++ )
 		{
 			Z(l,l) = S(h)(syr)(l);
-			P(l,l) = molt_probability(h)(l);
+			//P(l,l) = molt_probability(h)(l);
 		}
 
-		B = inv(Id - (Id-P)*Z);
-		C = P*Z*A;
-		D = trans(Id - C - (Id-P)*Z*B*C);
+		// Single shell condition
+		if ( nshell == 1 && nmature == 1)
+		{
+			calc_equilibrium(x,A,Z,rt);
+			ig = pntr_hmo(h,1,1);
+			d3_N(ig)(syr) = x;
+		}
 
-		x = solve(D,rt);
-		y = x*((Id-P)*Z*B);
+		// Continuous molt (newshell/oldshell)
+		if ( nshell == 2 && nmature == 1)
+		{
+			calc_equilibrium(x,y,A,Z,P(h),rt);
+			ig = pntr_hmo(h,1,1);
+			d3_N(ig)(syr) = x;
+			d3_N(ig+1)(syr) = y;
+		}
+
+		// Insert terminal molt case here.
 	}
-	COUT(D);
-	COUT(x);
-	COUT(y);
-	COUT(x+y)
-	COUT(d3_N(3)(syr)+d3_N(4)(syr));
+
+
+
+
+
+	// DEPRECATE, used for checking analytical soln.
+	// Solve for stable distribution numerically.
+	// int ig,h,o,m;
+	// int iter = 0;
+//	dvar_vector t1(1,nclass);
+//	dvar_matrix At(1,nclass,1,nclass);
+//	dvar_matrix Bt(1,nclass,1,nclass);
+//
+//	do
+//	{
+//		for( ig = 1; ig <= n_grp; ig++ )
+//		{
+//			h = isex(ig);
+//			m = imature(ig);
+//			o = ishell(ig);
+//			
+//			if( o == 1 )	// newshell
+//			{
+//				At = size_transition(h);
+//				for(int l = 1; l <= nclass; l++ )
+//				{
+//					At(l) *= S(h)(syr)(l);
+//				}
+//
+//				x = d3_N(ig)(syr);
+//				d3_N(ig)(syr) = elem_prod(molt_probability(h), x) * At + rt;
+//			}
+//
+//			if( o == 2 )	// oldshell
+//			{
+//				x  = d3_N(ig)(syr);
+//				y  = d3_N(ig-1)(syr);
+//				t1 = elem_prod(1.0 - molt_probability(h),S(h)(syr));
+//				
+//				// add oldshell non-terminal molts to newshell
+//				d3_N(ig-1)(syr) += elem_prod(molt_probability(h), x) * At;
+//
+//				// oldshell
+//				d3_N(ig)(syr) = elem_prod(t1,x+d3_N(ig-1)(syr));
+//			}
+//
+//			if ( o == 1 && m == 2 )		// terminal molt to new shell.
+//			{
+//
+//			}
+//
+//			if ( o == 2 && m == 2 )		// terminal molt newshell to oldshell.
+//			{
+//
+//			}
+//
+//		}
+//	}while(iter++ <= 4*nclass);
+	
+
 	
 	// Equilibrium soln.
 	
-	dvar_matrix An(1,nclass,1,nclass);
-	for(int h = 1; h <= nsex; h++ )
-	{
-		At = size_transition(h);
-		An = size_transition(h);
-		for(int l = 1; l <= nclass; l++ )
-		{
-			At(l) *= S(h)(syr)(l);
-			An(l) *= S(h)(syr)(l) * molt_probability(h)(l);
-
-		}
-		A = trans(At);
-		x = -solve(A-Id,rt);
-		N(h)(syr) = elem_prod(x,exp(rec_ini));
-		
-		// New-shell Old-shell accounting.
-		d3_newShell(h)(syr) = elem_prod(      molt_probability(h) , N(h)(syr));
-		d3_oldShell(h)(syr) = elem_prod(1.0 - molt_probability(h) , N(h)(syr));
-		t1 = elem_prod(d3_oldShell(h)(syr),S(h)(syr)) + rt;
-
-		B = trans(An);
-		y = -solve(B-Id,t1);
-		COUT(y);
-	}
+//	dvar_matrix An(1,nclass,1,nclass);
+//	for(int h = 1; h <= nsex; h++ )
+//	{
+//		At = size_transition(h);
+//		An = size_transition(h);
+//		for(int l = 1; l <= nclass; l++ )
+//		{
+//			At(l) *= S(h)(syr)(l);
+//			An(l) *= S(h)(syr)(l) * molt_probability(h)(l);
+//
+//		}
+//		A = trans(At);
+//		x = -solve(A-Id,rt);
+//		N(h)(syr) = elem_prod(x,exp(rec_ini));
+//		
+//		// New-shell Old-shell accounting.
+//		d3_newShell(h)(syr) = elem_prod(      molt_probability(h) , N(h)(syr));
+//		d3_oldShell(h)(syr) = elem_prod(1.0 - molt_probability(h) , N(h)(syr));
+//		t1 = elem_prod(d3_oldShell(h)(syr),S(h)(syr)) + rt;
+//
+//		B = trans(An);
+//		y = -solve(B-Id,t1);
+//		COUT(y);
+//	}
 	
 	if(verbose) COUT(N(1)(syr));
 	
