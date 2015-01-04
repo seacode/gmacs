@@ -1238,11 +1238,12 @@ FUNCTION calc_initial_numbers_at_length
 	 */
 FUNCTION update_population_numbers_at_length
 	int h,i,l,ig,o,m;
+
 	dmatrix Id = identity_matrix(1,nclass);	
 	dvar_vector rt(1,nclass);
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
-	//dvar_vector t1(1,nclass);
+	
 	dvar_matrix t1(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
@@ -1296,6 +1297,7 @@ FUNCTION update_population_numbers_at_length
 		}
 
 
+		// TO BE DEPRECATED
 		for( h = 1; h <= nsex; h++ )
 		{
 			At = size_transition(h) * S(h)(i);
