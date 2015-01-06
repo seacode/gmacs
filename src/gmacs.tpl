@@ -191,6 +191,25 @@ DATA_SECTION
 		ECHO(nSizeComps); 
 		ECHO(d3_obs_size_comps); 
 	END_CALCS
+	// |-----------------------|
+	// | Growth increment data |
+	// |-----------------------|
+	init_int nGrowthObs;
+	init_matrix dGrowthData(1,nGrowthObs,1,4)
+	vector  dPreMoltSize(1,nGrowthObs)
+	vector  iMoltIncSex(1,nGrowthObs)
+	vector  dMoltInc(1,nGrowthObs)
+	vector  dMoltIncCV(1,nGrowthObs)
+	LOC_CALCS
+	  dPreMoltSize = column(dGrowthData,1);
+	  iMoltIncSex  = column(dGrowthData,2);
+	  dMoltInc     = column(dGrowthData,3);
+	  dMoltIncCV   = column(dGrowthData,4);
+		ECHO(dPreMoltSize); 
+		ECHO(iMoltIncSex); 
+		ECHO(dMoltInc); 
+		ECHO(dMoltIncCV); 
+	END_CALCS
 
 	// |------------------|
 	// | END OF DATA FILE |
@@ -474,7 +493,7 @@ PARAMETER_SECTION
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
-	vector nloglike(1,4);
+	vector nloglike(1,5);
 	vector nlogPenalty(1,4);
 	vector priorDensity(1,ntheta);
 
@@ -772,7 +791,6 @@ FUNCTION calc_fishing_mortality
 	 */
 FUNCTION calc_growth_increments
 	int h,l;
-
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( l = 1; l <= nclass; l++ )
@@ -781,6 +799,31 @@ FUNCTION calc_growth_increments
 		}
 	}
 
+FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
+ /**
+   * @brief Compute growth increments 
+   * @details Presently based on liner form
+   * 
+   * @param vSizes is a vector of size data from which to compute predicted values
+   * @param iSex   is an integer vector indexing sex (1 = male, 2 = female )
+   * @return dvar_vector of predicted growth increments
+   */	
+	if( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
+	{
+		cerr<<"indices don't match..."<<endl;
+		ad_exit(1);
+	}
+	RETURN_ARRAYS_INCREMENT();
+	dvar_vector pMoltInc(1,vSizes.indexmax());
+	pMoltInc.initialize();
+	int h,i;
+	for( i = 1; i <= nGrowthObs; i++ )
+	{
+		h = int(iMoltIncSex(i));
+		pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
+	}
+	RETURN_ARRAYS_DECREMENT();
+	return pMoltInc;
 
 
 	/**
@@ -1479,6 +1522,7 @@ FUNCTION calc_objective_function
 		nloglike(3) += ploglike->nloglike(log_effn,P);
 
 		// Compute residuals in the last phase.
+		// But move to the report section???
 		if(last_phase()) d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 		
 		//if(last_phase())
@@ -1494,7 +1538,9 @@ FUNCTION calc_objective_function
 	dvariable sigR = mfexp(logSigmaR);
 	nloglike(4)    = dnorm(rec_dev,sigR);
 
-
+	// 5) Likelihood for growth increment data
+	dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
+	nloglike(5)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
 
 
 	// |---------------------------------------------------------------------------------|
@@ -1702,7 +1748,11 @@ REPORT_SECTION
 	  }
   	REPORT(size_comp_sample_size);
 	}
-
+	REPORT(dPreMoltSize)
+	REPORT(iMoltIncSex)
+	REPORT(dMoltInc)
+	dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
+	REPORT(pMoltInc)
 
 
 	/**
@@ -1723,6 +1773,7 @@ FUNCTION dvector calc_mmb()
 	return(mmb);
 
 
+// To be deprecated?
 FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar_vector lnN)
   /**
    * @brief Robustified Multinomial likleihood for composition data.
