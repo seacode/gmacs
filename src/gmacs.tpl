@@ -550,7 +550,7 @@ PARAMETER_SECTION
 	3darray F(1,nsex,syr,nyr,1,nclass);			///> Fishing mortality
 	3darray P(1,nsex,1,nclass,1,nclass);		///> Diagonal matrix of molt probabilities
 
-	3darray N(1,nsex,syr,nyr+1,1,nclass);		///> Numbers-at-length
+	//3darray N(1,nsex,syr,nyr+1,1,nclass);		///> Numbers-at-length
 	3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);	///> Numbers-at-sex/mature/shell/length.
 	3darray ft(1,nfleet,1,nsex,syr,nyr);		///> Fishing mortality by gear
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
@@ -636,7 +636,7 @@ FUNCTION calc_sdreport
 	for(int i = syr; i <= nyr; i++ )
 	{
 		// sd_log_mmb(i) = log( N(h)(i) * fecundity );
-		sd_log_mmb(i) = log(N(h)(i)*elem_prod(mean_wt(h),maturity(h)));
+		//sd_log_mmb(i) = log(N(h)(i)*elem_prod(mean_wt(h),maturity(h)));
 	}
 	
 	
@@ -952,8 +952,8 @@ FUNCTION calc_total_mortality
 	S.initialize();
 	for( h = 1; h <= nsex; h++ )
 	{
-		Z(h) = M(h) +0* F(h);
-		// S(h) = mfexp(-Z(h));
+		Z(h) = M(h) + F(h);
+	
 		for(int i = syr; i <= nyr; i++ )
 		{
 			for(int l = 1; l <= nclass; l++ )
@@ -1078,7 +1078,7 @@ FUNCTION calc_recruitment_size_distribution
 	 */
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
-	N.initialize();
+	//N.initialize();
 	d3_newShell.initialize();
 	d3_oldShell.initialize();
 
@@ -1224,7 +1224,7 @@ FUNCTION calc_initial_numbers_at_length
 //		COUT(y);
 //	}
 	
-	if(verbose) COUT(N(1)(syr));
+	if(verbose) COUT(d3_N(1)(syr));
 	
 
 	/**
@@ -1237,7 +1237,7 @@ FUNCTION calc_initial_numbers_at_length
 	 * annual deviate, multiplied by a vector of size-proportions (rec_sdd).
 	 */
 FUNCTION update_population_numbers_at_length
-	int h,i,l,ig,o,m;
+	int h,i,ig,o,m;
 
 	dmatrix Id = identity_matrix(1,nclass);	
 	dvar_vector rt(1,nclass);
@@ -1298,31 +1298,31 @@ FUNCTION update_population_numbers_at_length
 
 
 		// TO BE DEPRECATED
-		for( h = 1; h <= nsex; h++ )
-		{
-			At = size_transition(h) * S(h)(i);
-			//for( l = 1; l <= nclass; l++ )
-			//{
-			//	At(l) *= S(h)(i)(l);
-			//}
-
-			// New-shell Old-shell accounting
-			dvar_vector tmpNew  = elem_prod(molt_probability(h),N(h)(i));
-			dvar_vector tmpOld  = N(h)(i) - tmpNew;
-			d3_newShell(h)(i+1) = tmpNew * At;
-			d3_oldShell(h)(i+1) = elem_prod(tmpOld,diagonal(S(h)(i)));
-
-			N(h)(i+1)  = (0.5 * recruits(i)) * rec_sdd;
-			N(h)(i+1) += d3_newShell(h)(i+1) + d3_oldShell(h)(i+1);
-
-			// d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(i+1));
-			// d3_oldShell(h)(i+1) = elem_prod(diagonal(size_transition(h)) , N(h)(i+1));
-		}
+//		for( h = 1; h <= nsex; h++ )
+//		{
+//			At = size_transition(h) * S(h)(i);
+//			//for( l = 1; l <= nclass; l++ )
+//			//{
+//			//	At(l) *= S(h)(i)(l);
+//			//}
+//
+//			// New-shell Old-shell accounting
+//			dvar_vector tmpNew  = elem_prod(molt_probability(h),N(h)(i));
+//			dvar_vector tmpOld  = N(h)(i) - tmpNew;
+//			d3_newShell(h)(i+1) = tmpNew * At;
+//			d3_oldShell(h)(i+1) = elem_prod(tmpOld,diagonal(S(h)(i)));
+//
+//			N(h)(i+1)  = (0.5 * recruits(i)) * rec_sdd;
+//			N(h)(i+1) += d3_newShell(h)(i+1) + d3_oldShell(h)(i+1);
+//
+//			// d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(i+1));
+//			// d3_oldShell(h)(i+1) = elem_prod(diagonal(size_transition(h)) , N(h)(i+1));
+//		}
 	}
 	
 	
 	if(verbose) COUT(d3_N(1)+d3_N(2));
-	exit(1);
+	
 
 
 
@@ -1562,42 +1562,74 @@ FUNCTION calc_relative_abundance
 	 * TODO: 
 	 * 	- add pointers for shell type.   DONE
 	 * 	- add pointers for maturity state. DONE
-   *  - need to come proper way to handle shell condition.
-   *    I think there should just be newshell/old shell.
+	 * 	
+	 * 	Jan 5, 2015.
+	 * 	Size compostion data can come in a number of forms.
+	 * 	Given sex, maturity and 3 shell conditions, there are 12 possible
+	 * 	combinations for adding up the numbers at length (nal).
+	 * 							Shell
+	 * 	Sex		Maturity		condition	Description
+	 * 	_____________________________________________________________
+	 * 	Male	0				1			immature, new shell
+	 * 	Male	0				2			immature, old shell
+	 * 	Male    0				0 			immature, new & old shell				1				Male, immature, new shell
+	 * 	Male	1				1			  mature, new shell
+	 * 	Male    1				2 			  mature, old shell
+	 *  Male    1				0 			  mature, new & old shell
+	 *Female    0				1 			immature, new shell
+	 *Female    0				2 			immature, old shell
+	 *Female    0				0 			immature, new & old shell
+	 *Female    1				1 			  mature, new shell
+	 *Female    1				2 			  mature, old shell
+	 *Female    1				0 			  mature, new & old shell
+	 * 	_____________________________________________________________
+	 * 	
+	 * 	Call function to get the appropriate numbers-at-length.
+	 * 	
+	 * 	TODO:
+	 * 	[ ]	Check to ensure new shell old shell is working.
+	 * 	[ ]	Add maturity component for data sets with mature old and mature new.
 	 */
 FUNCTION calc_predicted_composition
 	int h,i,j,k,ig;
 	int type,shell,bmature ;
 	d3_pre_size_comps.initialize();
 	dvar_vector dNtmp(1,nclass);
-
+	dvar_vector   nal(1,nclass);
 
 	for(int ii = 1; ii <= nSizeComps; ii++ )
 	{
 		for(int jj = 1; jj <= nSizeCompRows(ii); jj++ )
 		{
 			dNtmp.initialize();
+			nal.initialize();
 			i        = d3_SizeComps(ii)(jj,-7);		// year
 			j        = d3_SizeComps(ii)(jj,-6);		// seas
 			k        = d3_SizeComps(ii)(jj,-5);		// gear
 			h        = d3_SizeComps(ii)(jj,-4);		// sex
-			type     = d3_SizeComps(ii)(jj,-3);		
-			shell    = d3_SizeComps(ii)(jj,-2);	
-			bmature  = d3_SizeComps(ii)(jj,-1);
-
+			type     = d3_SizeComps(ii)(jj,-3);		// retained or discard
+			shell    = d3_SizeComps(ii)(jj,-2);		// shell condition
+			bmature  = d3_SizeComps(ii)(jj,-1);		// boolean for maturity
+				
+			
 			if(h) // sex specific
 			{
 				dvar_vector sel = exp(log_slx_capture(k)(h)(i));
 				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
-				dvar_vector tmp = N(h)(i);
-        		
-				// ig = pntr_hmo(h,bmature,shell);
+				// dvar_vector tmp = N(h)(i);
 
-		        if( shell==1 ) tmp = d3_newShell(h)(i);
-		        if( shell==2 ) tmp = d3_oldShell(h)(i);
-		        if( bmature )  tmp = elem_prod(tmp,maturity(h));
-        
+				for(int m = 1; m <= nmature; m++ )
+				{
+					for(int o = 1; o <= nshell; o++ )
+					{
+						ig   = pntr_hmo(h,m,o);
+						if(shell == 0) nal += d3_N(ig)(i);
+						if(shell == o) nal += d3_N(ig)(i);
+					}
+				}
+				dvar_vector tmp = nal;
+        		
 				switch (type)
 				{
 					case 1:		// retained
@@ -1612,14 +1644,25 @@ FUNCTION calc_predicted_composition
 				}
 
 			}
-			else
+			else // sexes combined in the observations
 			{
 				for( h = 1; h <= nsex; h++ )
 				{
 					dvar_vector sel = exp(log_slx_capture(k)(h)(i));
 					dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 					dvar_vector dis = exp(log_slx_discard(k)(h)(i));
-					dvar_vector tmp = N(h)(i);
+					// dvar_vector tmp = N(h)(i);
+
+					for(int m = 1; m <= nmature; m++ )
+					{
+						for(int o = 1; o <= nshell; o++ )
+						{
+							ig   = pntr_hmo(h,m,o);
+							if(shell == 0) nal += d3_N(ig)(i);
+							if(shell == o) nal += d3_N(ig)(i);
+						}
+					}
+					dvar_vector tmp = nal;
 
 					switch (type)
 					{
@@ -1637,10 +1680,9 @@ FUNCTION calc_predicted_composition
 			}
 			d3_pre_size_comps(ii)(jj) = dNtmp / sum(dNtmp);
 		}
+		
 	}
-
-	exit(1);
-
+	
 
 	/**
 	 * @brief Calculate prior density functions for leading parameters.
@@ -1961,7 +2003,7 @@ REPORT_SECTION
 	REPORT(size_transition);
 	REPORT(rec_dev);
 	REPORT(recruits);
-	REPORT(N);
+	REPORT(d3_N);
 	REPORT(M);
 	REPORT(mean_wt);
 	dvector mmb = calc_mmb();
@@ -2017,7 +2059,7 @@ FUNCTION dvector calc_mmb()
 	int h = 1;  // males
 	for(int i = syr; i <= nyr; i++ )
 	{
-		mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h));
+		//mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h));
 	}
 	return(mmb);
 
@@ -2097,7 +2139,8 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	for(int h = 1; h <= nsex; h++ )
 	{
 		_M(h) = value(M(h)(iyr));
-		_N(h) = value(N(h)(nyr));
+		//todo fix me.
+		_N(h) = value(d3_N(1)(nyr));
 		_wa(h) = elem_prod(mean_wt(h),maturity(h));
 	}
 	

@@ -104,7 +104,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
-  1       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2013    # Last year for average recruitment for Bspr calculation.
