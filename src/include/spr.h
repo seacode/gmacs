@@ -57,7 +57,7 @@ public:
 	                const dvector _dmr);
 	double get_bspr() {return m_bspr;}
 
-	// TODO add the following functions.
+	
 	double get_fofl(const double& alpha, const double& limit, const double& ssb);
 	double get_cofl(const dmatrix& N);
 	

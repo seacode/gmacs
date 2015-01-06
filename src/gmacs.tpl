@@ -632,12 +632,8 @@ PROCEDURE_SECTION
 	 */
 FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
-	int h = 1;
-	for(int i = syr; i <= nyr; i++ )
-	{
-		// sd_log_mmb(i) = log( N(h)(i) * fecundity );
-		//sd_log_mmb(i) = log(N(h)(i)*elem_prod(mean_wt(h),maturity(h)));
-	}
+	sd_log_mmb = log(calc_mmb());
+	
 	
 	
 
@@ -2006,7 +2002,7 @@ REPORT_SECTION
 	REPORT(d3_N);
 	REPORT(M);
 	REPORT(mean_wt);
-	dvector mmb = calc_mmb();
+	dvector mmb = value(calc_mmb());
 	REPORT(mmb);
 
 	if(last_phase())
@@ -2046,20 +2042,37 @@ REPORT_SECTION
 
 
 
+
+
 	/**
 	 * @brief Calculate mature male biomass
-	 * @details Calculate mature male biomass based on numbers N array.
+	 * @details Calculate mature male biomass based on numbers d3_N array.
+	 * 
 	 * 
 	 * TODO correct for timing of when the MMB is calculated
+	 * 
+	 * @return dvar_vector
 	 */
-FUNCTION dvector calc_mmb()
-	dvector mmb(syr,nyr);
+FUNCTION dvar_vector calc_mmb()
+	dvar_vector mmb(syr,nyr);
 	mmb.initialize();
-
+	int ig,m,o;
 	int h = 1;  // males
 	for(int i = syr; i <= nyr; i++ )
 	{
-		//mmb(i) = value(N(h)(i)) * elem_prod(mean_wt(h),maturity(h));
+		if( nmature == 1 )		// continous molt
+		{
+			m = 1;
+		}
+		else if( nmature == 2 )	// terminal molt males only
+		{
+			m = 2;
+		}
+		for( o = 1; o <= nshell; o++ )
+		{
+			ig = pntr_hmo(h,m,o);
+			mmb(i) += d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
+		}
 	}
 	return(mmb);
 
@@ -2172,7 +2185,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	spr_bspr = c_spr.get_bspr();
 
 	// OFL Calculations
-	dvector mmb = calc_mmb();
+	dvector mmb = value(calc_mmb());
 	double cuttoff = 0.1;
 	double limit = 0.25;
 	spr_fofl = c_spr.get_fofl(cuttoff,limit,mmb(nyr));
