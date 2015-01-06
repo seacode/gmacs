@@ -50,7 +50,7 @@ void calc_equilibrium(dvar_vector& n,
  * 	
  * 	The following equations represent the dynamics of newshell and oldshell crabs.
  * 		n = nSPA + oSPA + r						(1)
- * 		o = oS(I-P)A + nS(I-P)A					(2)
+ * 		o = oS(I-P) + nS(I-P)					(2)
  * 	Objective is to solve the above equations for n and o repsectively.  Starting
  * 	with o:
  * 		o = n(I-P)S[I-(I-P)S]^(-1)				(3)
@@ -87,3 +87,4 @@ void calc_equilibrium(dvar_vector& n,
 	n = solve(D,r);			// newshell
 	o = n*((Id-P)*S*B);		// oldshell
 }
+

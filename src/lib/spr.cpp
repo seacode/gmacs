@@ -7,31 +7,75 @@
 	#endif
 
 
-spr::spr(const double& _r, const double& _lambda,
+
+/**
+ * @brief constructor for SPR class
+ * @details Constructor for SRR class
+ * 
+ * @param _r equilibrium recruitment
+ * @param _lambda fraction of females that contribute to the Spawning potential ratio
+ * @param _rx size distribution of new recruits
+ * @param _M natural mortality at size by sex
+ * @param _wa weight-at-length interval
+ * @param _A size-transition matrix
+ */
+spr::spr(const double& _r, 
+         const double& _lambda,
          const dvector& _rx, 
-         const dmatrix& _M, const dmatrix& _wa, 
+         const dmatrix& _wa, 
+         const d3_array& _M, 
          const d3_array& _A)
-:m_rbar(_r),m_lambda(_lambda),m_rx(_rx),m_M(_M),m_wa(_wa),m_A(_A)
+:m_rbar(_r),m_lambda(_lambda),m_rx(_rx),m_wa(_wa),m_M(_M),m_A(_A)
 {
-	m_nsex     = m_M.rowmax();
+
+	m_nsex     = m_M.slicemax();
 	m_nclass   = m_rx.indexmax();
-	//dmatrix Id = identity_matrix(1,m_nclass);
+	
 	
 	// get unfished mature male biomass per recruit.
 	m_ssb0 = 0.0;
 	for(int h = 1; h <= m_nsex; h++ )
 	{
-		dvector surv = exp(-m_M(h));
-		// dmatrix At = m_A(h);
-		// for(int l = 1; l <= m_nclass; l++ )
-		// {
-		// 	At(l) *= surv(l);
-		// }
-		// dmatrix A = trans(At);
-		// dvector r = m_rbar/m_nsex * m_rx;
-		//dvector x = -solve(A-Id,r);
+		dmatrix S = exp(-m_M(h));
+		dvector x = calc_equilibrium(S,h);
 
-		dvector x = calc_equilibrium(surv,h);
+		double lam;
+		h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
+		m_ssb0 += lam * x * m_wa(h);
+	}
+	
+}
+
+/**
+ * @brief constructor for SPR class
+ * @details Constructor for SRR class
+ * 
+ * @param _r equilibrium recruitment
+ * @param _lambda fraction of females that contribute to the Spawning potential ratio
+ * @param _rx size distribution of new recruits
+ * @param _M natural mortality at size by sex
+ * @param _wa weight-at-length interval
+ * @param _A size-transition matrix
+ */
+spr::spr(const double& _r, 
+         const double& _lambda,
+         const dvector& _rx, 
+         const dmatrix& _wa, 
+         const d3_array& _M, 
+         const d3_array& _P,
+         const d3_array& _A)
+:m_rbar(_r),m_lambda(_lambda),m_rx(_rx),m_wa(_wa),m_M(_M),m_A(_A),m_P(_P)
+{
+	m_nsex     = m_M.slicemax();
+	m_nclass   = m_rx.indexmax();
+	
+	
+	// get unfished mature male biomass per recruit.
+	m_ssb0 = 0.0;
+	for(int h = 1; h <= m_nsex; h++ )
+	{
+		dmatrix S = exp(-m_M(h));
+		dvector x = calc_equilibrium(S,h);
 
 		double lam;
 		h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
@@ -43,7 +87,7 @@ spr::spr(const double& _r, const double& _lambda,
 spr::~spr()
 {}
 
-dvector spr::calc_equilibrium(const dvector& surv, const int& sex)
+dvector spr::calc_equilibrium(const dmatrix& S, const int& sex)
 {
 
 		int h = sex;
@@ -51,17 +95,16 @@ dvector spr::calc_equilibrium(const dvector& surv, const int& sex)
 		// use copy constructor for At.
 		dmatrix At(1,m_nclass,1,m_nclass);
 		At.initialize();
-		At = m_A(h);
-		for(int l = 1; l <= m_nclass; l++ )
-		{
-			At(l) *= surv(l);
-		}
-		dmatrix A = trans(At);
+		At = trans(m_A(h)*S);
+		
+		
 		dvector r = m_rbar/m_nsex * m_rx;
-		dvector x = -solve(A-Id,r);
+		dvector x = -solve(At-Id,r);
 		
 		return(x);
 }
+
+
 
 /**
  * @brief Calculate f_spr reference point.
@@ -75,9 +118,12 @@ dvector spr::calc_equilibrium(const dvector& surv, const int& sex)
  * @param _ret [description]
  * @return [description]
  */
-double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix& _fhk,
-	                const d3_array _sel, const d3_array _ret,
-	                const dvector _dmr)
+double spr::get_fspr(const int& ifleet, 
+                     const double& spr_target, 
+                     const dmatrix& _fhk,
+                     const d3_array _sel, 
+                     const d3_array _ret,
+                     const dvector _dmr)
 {
 	m_nfleet  = _fhk.colmax();
 	m_ifleet  = ifleet;
@@ -94,6 +140,8 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 	m_ret.allocate(_ret);
 	m_sel = _sel;
 	m_ret = _ret;
+	dmatrix S(1,m_nclass,1,m_nclass);
+	
 	
 
 	do
@@ -110,19 +158,22 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 			dmatrix sel = _sel(h);
 			dmatrix ret = _ret(h);
 			// double dmr = 0.8;
-			dvector ftmp(1,m_nclass);
-			dvector surv(1,m_nclass);
+			//dvector ftmp(1,m_nclass);
+			//dvector surv(1,m_nclass);
 
-			ftmp.initialize();
-			surv.initialize();
+			S = m_M(h);
 			for( k = 1; k <= m_nfleet; k++ )
 			{
 				dvector vul = elem_prod(sel(k),ret(k)+(1.0-ret(k))*m_dmr(k));
-				ftmp += (fc * fratio(k)) * vul;
+				//ftmp += (fc * fratio(k)) * vul;
+				for (int l = 1; l <= m_nclass; ++l)
+				{
+					S(l,l) += (fc * fratio(k)) * vul(l);
+				}
 			}
-			surv = exp( -m_M(h) - ftmp);
+			S = exp(-S);
 		
-			dvector x = calc_equilibrium(surv,h);
+			dvector x = calc_equilibrium(S,h);
 			
 			double lam;
 			h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
@@ -152,7 +203,7 @@ double spr::get_fspr(const int& ifleet, const double& spr_target, const dmatrix&
 		{
 			fb = fc;
 		}
-		// cout<<"iter = "<<iter<<"\tfc = "<<fc<<"\t"<<m_spr<<" - "<<spr_target<<" "<<t1<<endl;
+		cout<<"iter = "<<iter<<"\tfc = "<<fc<<"\t"<<m_spr<<" - "<<spr_target<<" "<<t1<<endl;
 		fc = 0.5*(fa+fb);
 	} while (iter++ < MAXIT);
 
@@ -211,7 +262,7 @@ double spr::get_cofl(const dmatrix& N)
 			dvector vul = elem_prod(m_sel(h)(k),m_ret(h)(k)+(1.0-m_ret(h)(k))*m_dmr(k));
 
 			dvector   f = ftmp * vul;
-			dvector   z = m_M(h) + f;
+			dvector   z = diagonal(m_M(h)) + f;
 			dvector   o = 1.0-exp(-z);
 			ctmp += elem_prod(N(h),m_wa(h)) * elem_div(elem_prod(f,o),z);
 		}

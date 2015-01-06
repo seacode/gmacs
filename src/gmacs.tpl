@@ -1118,7 +1118,7 @@ FUNCTION calc_initial_numbers_at_length
 		{
 			calc_equilibrium(x,A,S(h)(syr),rt);
 			ig = pntr_hmo(h,1,1);
-			d3_N(ig)(syr) = x;
+			d3_N(ig)(syr) = elem_prod(x , exp(rec_ini));
 		}
 
 		// Continuous molt (newshell/oldshell)
@@ -1126,8 +1126,8 @@ FUNCTION calc_initial_numbers_at_length
 		{
 			calc_equilibrium(x,y,A,S(h)(syr),P(h),rt);
 			ig = pntr_hmo(h,1,1);
-			d3_N(ig)(syr) = x;
-			d3_N(ig+1)(syr) = y;
+			d3_N(ig)(syr) = elem_prod(x , exp(rec_ini));;
+			d3_N(ig+1)(syr) = elem_prod(y , exp(rec_ini));;
 		}
 
 		// Insert terminal molt case here.
@@ -1368,11 +1368,17 @@ FUNCTION calc_predicted_catch
 				switch(type)
 				{
 					case 1:		// retained catch
+						// Question here about what the retained catch is.
+						// Should probably include shell condition here as well.
+						// Now assuming both old and new shell are retained.
 						sel = exp( sel + log_slx_retaind(k)(h)(i) );
 						for(int m = 1; m <= nmature; m++ )
-						{
-							ig   = pntr_hmo(h,m,1); //indexes new shell.
-							nal += d3_N(ig)(i);
+						{	
+							for(int o = 1; o <= nshell; o++ )
+							{
+								ig   = pntr_hmo(h,m,o); 
+								nal += d3_N(ig)(i);
+							}
 						}
 					break;
 
@@ -2015,29 +2021,30 @@ REPORT_SECTION
 		REPORT(spr_rbar);
 		REPORT(spr_fofl);
 		REPORT(spr_cofl);
-  	dvar_matrix mean_size(1,nsex,1,nclass);
-  	///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
-  	dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
-  	for (int isex=1;isex<=nsex;isex++)
-  	{
-  		int iage=1;
-  		// Set the initial size frequency
-		  growth_matrix(isex,iage) = size_transition(isex,iage);
-		  mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
-  		for (iage=2;iage<=nclass;iage++)
-  		{
-		  	growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
-			  mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
-  	  }
-  	}
-  	REPORT(growth_matrix);
-  	REPORT(mean_size);
-	  for(int ii = 1; ii <= nSizeComps; ii++)
-	  {
-	   // Set final sample-size for composition data for comparisons
-	    size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
-	  }
-  	REPORT(size_comp_sample_size);
+
+	  	dvar_matrix mean_size(1,nsex,1,nclass);
+	  	///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
+	  	dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
+	  	for (int isex=1;isex<=nsex;isex++)
+	  	{
+	  		int iage=1;
+	  		// Set the initial size frequency
+			growth_matrix(isex,iage) = size_transition(isex,iage);
+			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
+	  		for (iage=2;iage<=nclass;iage++)
+	  		{
+			  	growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
+				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
+	  	  	}
+  		}
+	  	REPORT(growth_matrix);
+	  	REPORT(mean_size);
+		for(int ii = 1; ii <= nSizeComps; ii++)
+		{
+			// Set final sample-size for composition data for comparisons
+			size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
+		}
+	  	REPORT(size_comp_sample_size);
 	}
 
 
@@ -2118,7 +2125,7 @@ FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar
 
 	/**
 	 * @brief calculate spr-based reference points.
-	 * @details Calculate the SPR-ration for a given value of F.
+	 * @details Calculate the SPR-ratio for a given value of F.
 	 * 
 	 * Psuedocode:
 	 * 	-# calculate average recruitment over reference period.
@@ -2137,6 +2144,12 @@ FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar
 	 * 	I think he meant F35
 	 * 	
 	 * 	Use bisection method to find SPR_target.
+	 * 	
+	 * 	Three possible states
+	 * 	nshell = 1,
+	 * 	nshell = 2 && nmaturity = 1,
+	 * 	nshell = 2 && nmaturity = 2.
+	 * 	
 	 */
 FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	
@@ -2145,15 +2158,18 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 
 	double   _r = spr_rbar;
 	dvector _rx = value(rec_sdd);
-	dmatrix _M(1,nsex,1,nclass);
+	d3_array _M(1,nsex,1,nclass,1,nclass);
 	dmatrix _N(1,nsex,1,nclass);
 	dmatrix _wa(1,nsex,1,nclass);
 	d3_array _A = value(size_transition);
 	for(int h = 1; h <= nsex; h++ )
 	{
-		_M(h) = value(M(h)(iyr));
+		for(int l = 1; l <= nclass; l++ )
+		{
+			_M(h)(l,l) = value(M(h)(iyr)(l));
+		}
 		//todo fix me.
-		_N(h) = value(d3_N(1)(nyr));
+		_N(h) = value(d3_N(1)(iyr));
 		_wa(h) = elem_prod(mean_wt(h),maturity(h));
 	}
 	
@@ -2178,9 +2194,9 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		_dmr(k) = dmr(iyr,k);
 	}
 	
-
 	// SPR reference points
-	spr c_spr(_r,spr_lambda,_rx,_M,_wa,_A);
+	spr c_spr(_r,spr_lambda,_rx,_wa,_M,_A);
+	COUT("GOt to here dude")
 	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
 	spr_bspr = c_spr.get_bspr();
 
