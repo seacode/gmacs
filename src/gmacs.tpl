@@ -231,14 +231,14 @@ DATA_SECTION
 	// | Growth increment data |
 	// |-----------------------|
 	init_int nGrowthObs;
-	init_matrix dGrowthData(1,nGrowthObs,1,4)
-	vector  dPreMoltSize(1,nGrowthObs)
-	vector  iMoltIncSex(1,nGrowthObs)
-	vector  dMoltInc(1,nGrowthObs)
-	vector  dMoltIncCV(1,nGrowthObs)
+	init_matrix dGrowthData(1,nGrowthObs,1,4);
+	vector  dPreMoltSize(1,nGrowthObs);
+	ivector  iMoltIncSex(1,nGrowthObs);
+	vector  dMoltInc(1,nGrowthObs);
+	vector  dMoltIncCV(1,nGrowthObs);
 	LOC_CALCS
 	  dPreMoltSize = column(dGrowthData,1);
-	  iMoltIncSex  = column(dGrowthData,2);
+	  iMoltIncSex  = ivector(column(dGrowthData,2));
 	  dMoltInc     = column(dGrowthData,3);
 	  dMoltIncCV   = column(dGrowthData,4);
 		ECHO(dPreMoltSize); 
@@ -853,7 +853,7 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	int h,i;
 	for( i = 1; i <= nGrowthObs; i++ )
 	{
-		h = int(iMoltIncSex(i));
+		h = iMoltIncSex(i);
 		pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
 	}
 	RETURN_ARRAYS_DECREMENT();
@@ -1131,7 +1131,6 @@ FUNCTION calc_initial_numbers_at_length
 		log_initial_recruits = logRini;
 	}
 	recruits(syr) = exp(log_initial_recruits);
-	// COUT(log_initial_recruits);
 	dvar_vector rt = 0.5 * recruits(syr) * rec_sdd;
 
 	// Analytical equilibrium soln.
@@ -1140,8 +1139,6 @@ FUNCTION calc_initial_numbers_at_length
 	dmatrix Id = identity_matrix(1,nclass);
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
-	//dvar_matrix  P(1,nclass,1,nclass);
-	//dvar_matrix  Z(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 
 
@@ -1150,11 +1147,7 @@ FUNCTION calc_initial_numbers_at_length
 
 
 		A = size_transition(h);
-		//for(int l = 1; l <= nclass; l++ )
-		//{
-		//	Z(l,l) = S(h)(syr)(l);
-		//	//P(l,l) = molt_probability(h)(l);
-		//}
+		
 
 		// Single shell condition
 		if ( nshell == 1 && nmature == 1)
