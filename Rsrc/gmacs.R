@@ -26,6 +26,7 @@ plot_growth(gmrep)
 plot_catch(gmrep,plot_res=T)
 
 plot_growth_inc(gmrep)
+plot_cpue(gmrep)
 
 plot_sizecomp(gmrep,which_plots=c(1))
 plot_sizecomp(gmrep)
