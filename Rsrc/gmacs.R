@@ -12,6 +12,7 @@ library(gmr)
 # Set working directory to that containing Gmacs model results:
 setwd("c:/seacode/gmacs/examples/demo")
 setwd("~/_mymods/seacode/gmacs/examples/demo")
+setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
 
 # Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
 set_ggtheme('bw')
@@ -23,6 +24,8 @@ gmrep <- read_admb('gmacs')
 plot_catch(gmrep)
 plot_growth(gmrep)
 plot_catch(gmrep,plot_res=T)
+
+plot_growth_inc(gmrep)
 
 plot_sizecomp(gmrep,which_plots=c(1))
 plot_sizecomp(gmrep)
