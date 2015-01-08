@@ -71,8 +71,9 @@
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
 ##   -1) multinomial with estimated/fixed sample size
-##   -2) robust multinomial (as in BBRKC case)
-##   -3) multivariate-t
+##   -2) robust_multi. Robust approximation to multinomial
+##   -3) logistic normal  (NIY)
+##   -4) multivariate-t   (NIY)
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

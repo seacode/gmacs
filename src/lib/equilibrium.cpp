@@ -86,5 +86,6 @@ void calc_equilibrium(dvar_vector& n,
 
 	n = solve(D,r);			// newshell
 	o = n*((Id-P)*S*B);		// oldshell
+
 }
 

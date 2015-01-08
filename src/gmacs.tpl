@@ -520,8 +520,8 @@ PARAMETER_SECTION
 	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);
 
 	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-5.0,5.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-5.0,5.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
+	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
@@ -1013,17 +1013,20 @@ FUNCTION calc_total_mortality
 	 * \brief Calculate the probability of moulting vs carapace width.
 	 * \details Note that the parameters molt_mu and molt cv can only be
 	 * estimated in cases where there is new shell and old shell data.
+	 * 
+	 * Note that the diagonal of the P matrix != 0, otherwise the matrix
+	 * is singular in inv(P).
 	 */
 FUNCTION calc_molting_probability
 	int l,h;
 	molt_probability.initialize();
 	P.initialize();
-
+	double tiny = 0.001;
 	for( h = 1; h <= nsex; h++ )
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu* molt_cv(h);
-		molt_probability(h) = 1.0 - plogis(mid_points,mu,sd);
+		molt_probability(h) = 1.0 - ((1.0-2.*tiny)*plogis(mid_points,mu,sd) + tiny);
 		for( l = 1; l <= nclass; l++ )
 		{
 			P(h)(l,l) = molt_probability(h)(l);
@@ -2041,11 +2044,13 @@ REPORT_SECTION
 	REPORT(ft);
 	REPORT(rec_sdd);
 	REPORT(size_transition);
+	REPORT(rec_ini);
 	REPORT(rec_dev);
 	REPORT(recruits);
 	REPORT(d3_N);
 	REPORT(M);
 	REPORT(mean_wt);
+	REPORT(molt_probability);
 	dvector mmb = value(calc_mmb());
 	REPORT(mmb);
 
@@ -2197,14 +2202,16 @@ FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar
 FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	
 	// Average recruitment
-	spr_rbar = 0.5 * mean(value(recruits(spr_syr,spr_nyr)));
+	spr_rbar =  mean(value(recruits(spr_syr,spr_nyr)));
 
 	double   _r = spr_rbar;
 	dvector _rx = value(rec_sdd);
 	d3_array _M(1,nsex,1,nclass,1,nclass);
+	_M.initialize();
 	dmatrix _N(1,nsex,1,nclass);
 	dmatrix _wa(1,nsex,1,nclass);
 	d3_array _A = value(size_transition);
+	d3_array _P = value(P);
 	for(int h = 1; h <= nsex; h++ )
 	{
 		for(int l = 1; l <= nclass; l++ )
@@ -2237,20 +2244,33 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		_dmr(k) = dmr(iyr,k);
 	}
 	
-	// SPR reference points
-	spr c_spr(_r,spr_lambda,_rx,_wa,_M,_A);
-	COUT("GOt to here dude")
-	spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
-	spr_bspr = c_spr.get_bspr();
-
-	// OFL Calculations
-	dvector mmb = value(calc_mmb());
-	double cuttoff = 0.1;
-	double limit = 0.25;
-	spr_fofl = c_spr.get_fofl(cuttoff,limit,mmb(nyr));
-	spr_cofl = c_spr.get_cofl(_N);
-	COUT("Finished SPR Calcs")
+	// SPR reference points for a single shell condition.
+	if(nshell == 1)
+	{
+		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_A);
+		spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
+		spr_bspr = c_spr.get_bspr();
+		
 	
+
+		// OFL Calculations
+		dvector mmb = value(calc_mmb());
+		double cuttoff = 0.1;
+		double limit = 0.25;
+		spr_fofl = c_spr.get_fofl(cuttoff,limit,mmb(nyr));
+		spr_cofl = c_spr.get_cofl(_N);
+	}
+	
+
+	// SPR reference points for new and old shell condition.
+	if(nshell == 2)
+	{
+		
+		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_P,_A);
+		spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
+
+	}
+
 	
 	
 	

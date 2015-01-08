@@ -27,16 +27,20 @@ spr::spr(const double& _r,
          const d3_array& _A)
 :m_rbar(_r),m_lambda(_lambda),m_rx(_rx),m_wa(_wa),m_M(_M),m_A(_A)
 {
-
+	m_nshell   = 1;
 	m_nsex     = m_M.slicemax();
 	m_nclass   = m_rx.indexmax();
-	
+	dmatrix S(1,m_nclass,1,m_nclass);
+	S.initialize();
 	
 	// get unfished mature male biomass per recruit.
 	m_ssb0 = 0.0;
 	for(int h = 1; h <= m_nsex; h++ )
 	{
-		dmatrix S = exp(-m_M(h));
+		for (int l = 1; l <= m_nclass; ++l)
+		{
+			S(l,l) = exp(-m_M(h)(l,l));
+		}
 		dvector x = calc_equilibrium(S,h);
 
 		double lam;
@@ -66,44 +70,104 @@ spr::spr(const double& _r,
          const d3_array& _A)
 :m_rbar(_r),m_lambda(_lambda),m_rx(_rx),m_wa(_wa),m_M(_M),m_A(_A),m_P(_P)
 {
+	m_nshell   = 2;
 	m_nsex     = m_M.slicemax();
 	m_nclass   = m_rx.indexmax();
-	
+	dvector n(1,m_nclass);
+	dvector o(1,m_nclass);
+	dmatrix S(1,m_nclass,1,m_nclass);
+	S.initialize();
+
+	cout<<"inside Constructor"<<endl;
 	
 	// get unfished mature male biomass per recruit.
 	m_ssb0 = 0.0;
 	for(int h = 1; h <= m_nsex; h++ )
 	{
-		dmatrix S = exp(-m_M(h));
-		dvector x = calc_equilibrium(S,h);
+		for (int l = 1; l <= m_nclass; ++l)
+		{
+			S(l,l) = exp(-m_M(h)(l,l));
+		}
+		dmatrix P = m_P(h);
+		dmatrix A = m_A(h);
+		dvector r = m_rbar/m_nsex * m_rx;
 
+		
+
+		calc_equilibrium(n,o,A,S,P,r);
 		double lam;
 		h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
-		m_ssb0 += lam * x * m_wa(h);
+		m_ssb0 += lam * (n+o) * m_wa(h);
+		
 	}
-	
+	COUT(m_ssb0);
 }
 
 spr::~spr()
 {}
 
+
+/**
+ * @brief equilibrium vector of numbers at length
+ * @details Solve for the equilibrium numbers at length for a single shell condition.
+ * 
+ * @param S diagonal matrix of survival rates at length
+ * @param sex index for which sex
+ * 
+ * @return vector of numbers at length.
+ */
 dvector spr::calc_equilibrium(const dmatrix& S, const int& sex)
 {
 
-		int h = sex;
-		dmatrix Id = identity_matrix(1,m_nclass);
-		// use copy constructor for At.
-		dmatrix At(1,m_nclass,1,m_nclass);
-		At.initialize();
-		At = trans(m_A(h)*S);
-		
-		
-		dvector r = m_rbar/m_nsex * m_rx;
-		dvector x = -solve(At-Id,r);
-		
-		return(x);
+	int h = sex;
+	dmatrix Id = identity_matrix(1,m_nclass);
+	// use copy constructor for At.
+	dmatrix At(1,m_nclass,1,m_nclass);
+	At.initialize();
+	At = trans(m_A(h)*S);
+	
+	
+	dvector r = m_rbar/m_nsex * m_rx;
+	dvector x = -solve(At-Id,r);
+	
+	return(x);
 }
 
+
+/**
+ * @brief Calculate numbers at length in new and old shell categories
+ * @details Equlibrium number of new and old shell crabs at each length interval.
+ * 
+ * @param n vector of new shell crabs
+ * @param o vector of old shell crabs
+ * @param A size-transition matrix
+ * @param S diagonal matrix of survival at length
+ * @param P diagonal matrix of molting probability at length
+ * @param r vector of new shell recruits
+ */
+void spr::calc_equilibrium(dvector& n,
+                      	   dvector& o,
+                      	   const dmatrix& A,
+                      	   const dmatrix& S,
+                      	   const dmatrix& P,
+                      	   const dvector& r)
+{
+	n.initialize();
+	o.initialize();
+	int nclass = m_nclass;
+	dmatrix Id = identity_matrix(1,nclass);
+	dmatrix B(1,nclass,1,nclass);
+	dmatrix C(1,nclass,1,nclass);
+	dmatrix D(1,nclass,1,nclass);
+
+	B = inv(Id - (Id-P)*S);
+	C = P * S * A;
+	D = trans(Id - C - (Id-P)*S*B*C);
+
+	n = solve(D,r);			// newshell
+	o = n*((Id-P)*S*B);		// oldshell
+	
+}
 
 
 /**
@@ -140,8 +204,13 @@ double spr::get_fspr(const int& ifleet,
 	m_ret.allocate(_ret);
 	m_sel = _sel;
 	m_ret = _ret;
+	dvector n(1,m_nclass);
+	dvector o(1,m_nclass);
 	dmatrix S(1,m_nclass,1,m_nclass);
-	
+	dmatrix Z(1,m_nclass,1,m_nclass);
+	Z.initialize();
+	S.initialize();
+	dmatrix Id=identity_matrix(1,m_nclass);
 	
 
 	do
@@ -157,27 +226,44 @@ double spr::get_fspr(const int& ifleet,
 
 			dmatrix sel = _sel(h);
 			dmatrix ret = _ret(h);
-			// double dmr = 0.8;
-			//dvector ftmp(1,m_nclass);
-			//dvector surv(1,m_nclass);
+			
 
-			S = m_M(h);
+			
+			Z = m_M(h);
 			for( k = 1; k <= m_nfleet; k++ )
 			{
 				dvector vul = elem_prod(sel(k),ret(k)+(1.0-ret(k))*m_dmr(k));
-				//ftmp += (fc * fratio(k)) * vul;
 				for (int l = 1; l <= m_nclass; ++l)
 				{
-					S(l,l) += (fc * fratio(k)) * vul(l);
+					Z(l,l) += (fc * fratio(k)) * vul(l);
 				}
+
 			}
-			S = exp(-S);
-		
-			dvector x = calc_equilibrium(S,h);
 			
-			double lam;
-			h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
-			m_ssb += lam * x * m_wa(h);
+			for (int l = 1; l <= m_nclass; ++l)
+			{
+				S(l,l) = exp(-diagonal(Z)(l));
+			}
+
+
+			if(m_nshell == 1)
+			{
+				dvector x = calc_equilibrium(S,h);
+				
+				double lam;
+				h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
+				m_ssb += lam * x * m_wa(h);
+			}
+			
+			if(m_nshell == 2)
+			{
+				dvector r = m_rbar/m_nsex * m_rx;
+				calc_equilibrium(n,o,m_A(h),S,m_P(h),r);
+				
+				double lam;
+				h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
+				m_ssb += lam * (n+o) * m_wa(h);
+			}
 
 		
 		}	

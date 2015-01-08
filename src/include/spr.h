@@ -15,6 +15,7 @@ class spr
 {
 private:
 	int m_nsex;
+	int m_nshell;
 	int m_nfleet;
 	int m_nclass;
 	int m_ifleet;
@@ -78,7 +79,15 @@ public:
 	double get_fofl(const double& alpha, const double& limit, const double& ssb);
 	double get_cofl(const dmatrix& N);
 	
+	
+	void calc_equilibrium(dvector& n,
+                      	  dvector& o,
+                      	  const dmatrix& A,
+                      	  const dmatrix& S,
+                      	  const dmatrix& P,
+                      	  const dvector& r);
 	dvector calc_equilibrium(const dmatrix& M, const int& sex);
+
 };
 
 
