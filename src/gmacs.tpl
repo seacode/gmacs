@@ -365,6 +365,9 @@ DATA_SECTION
 		prior_qtype = column(q_controls,1);
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
+		ECHO(prior_qtype); 
+		ECHO(prior_qbar); 
+		ECHO(prior_qsd); 
 	END_CALCS
 
 
