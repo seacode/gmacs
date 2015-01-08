@@ -2280,32 +2280,47 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		_dmr(k) = dmr(iyr,k);
 	}
 	
+
+	spr *ptrSPR=nullptr;
+
+
+
 	// SPR reference points for a single shell condition.
 	if(nshell == 1)
 	{
 		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_A);
-		spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
-		spr_bspr = c_spr.get_bspr();
-		
-	
-
-		// OFL Calculations
-		dvector mmb = value(calc_mmb());
-		double cuttoff = 0.1;
-		double limit = 0.25;
-		spr_fofl = c_spr.get_fofl(cuttoff,limit,mmb(nyr));
-		spr_cofl = c_spr.get_cofl(_N);
+		ptrSPR = &c_spr;
 	}
-	
-
 	// SPR reference points for new and old shell condition.
 	if(nshell == 2)
 	{
-		
 		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_P,_A);
-		spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
-
+		ptrSPR = &c_spr;	
 	}
+	spr_fspr = ptrSPR->get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
+	spr_bspr = ptrSPR->get_bspr();
+
+	// OFL Calculations
+	dvector mmb = value(calc_mmb());
+	double cuttoff = 0.1;
+	double limit = 0.25;
+	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,mmb(nyr));
+	spr_cofl = ptrSPR->get_cofl(_N);
+
+	
+
+		
+		//spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
+		//spr_fspr = c_spr.get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
+		//spr_bspr = c_spr.get_bspr();
+
+		//// OFL Calculations
+		//dvector mmb = value(calc_mmb());
+		//double cuttoff = 0.1;
+		//double limit = 0.25;
+		//spr_fofl = c_spr.get_fofl(cuttoff,limit,mmb(nyr));
+		//spr_cofl = c_spr.get_cofl(_N);
+
 
 	
 	
