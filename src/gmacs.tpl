@@ -355,6 +355,21 @@ DATA_SECTION
 	END_CALCS
 
 	// |---------------------------------------------------------|
+	// | PRIORS FOR CATCHABILITIES FOR INDICES                   |
+	// |---------------------------------------------------------|
+	init_matrix q_controls(1,nSurveys,1,3);
+	vector prior_qbar(1,nSurveys);
+	vector prior_qsd(1,nSurveys);
+	vector prior_qtype(1,nSurveys);
+	LOC_CALCS
+		prior_qtype = column(q_controls,1);
+		prior_qbar  = column(q_controls,2);
+		prior_qsd   = column(q_controls,3);
+	END_CALCS
+
+
+
+	// |---------------------------------------------------------|
 	// | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
 	// |---------------------------------------------------------|
 	init_matrix f_controls(1,nfleet,1,4);
@@ -531,7 +546,7 @@ PARAMETER_SECTION
 
 	vector nloglike(1,5);
 	vector nlogPenalty(1,4);
-	vector priorDensity(1,ntheta);
+	vector priorDensity(1,ntheta+nSurveys);
 
 	objective_function_value objfun;
 
@@ -1784,6 +1799,23 @@ FUNCTION calculate_prior_densities
 			}
 		}
 	}
+	// ---Continue with catchability priors-----------------------
+	int iprior = ntheta + 1; 
+	for (int i=1;i<=nSurveys;i++)
+	{
+		int itype = int(prior_qtype(i));
+		switch(itype)
+		{
+			// Analytical soln, no prior (uniform, uniformative)
+			case 0:
+			break;
+			// Prior on analytical soln, log-normal
+			case 1:
+				priorDensity(iprior) = dnorm(log(survey_q(i)),log(prior_qbar(i)),prior_qsd(i));
+			break;
+		}
+		iprior++;
+	}
 
 
 
@@ -2020,6 +2052,7 @@ REPORT_SECTION
 	REPORT(mid_points); 
 	REPORT(nloglike);
 	REPORT(nlogPenalty);
+	REPORT(priorDensity);
 	REPORT(dCatchData);
 	REPORT(obs_catch);
 	REPORT(pre_catch);
@@ -2091,12 +2124,12 @@ REPORT_SECTION
 		}
 	  	REPORT(size_comp_sample_size);
 	}
-	REPORT(dPreMoltSize)
-	REPORT(iMoltIncSex)
-	REPORT(dMoltInc)
+	REPORT(dPreMoltSize);
+	REPORT(iMoltIncSex);
+	REPORT(dMoltInc);
 	dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
-	REPORT(pMoltInc)
-
+	REPORT(pMoltInc);
+	REPORT(survey_q);
 
 
 
