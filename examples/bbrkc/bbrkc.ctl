@@ -19,8 +19,8 @@
    7.0       -10        20          2       1    3.0     5.0         # logRbar      
   72.5        65       100          4       1   72.5    7.25         # Recruitment mBeta
   1.50       0.1         5          4       0    0.1       5         # Recruitment m50
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta
+  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha
+  0.10       0.0       0.5         -3       0    0.0    10.0         # beta
   26.0      10.0      30.0         -3       0    0.0     3.0         # gscale
   115.      65.0     165.0          2       0    0.0     3.0         # molt_mu
    0.2       0.0       1.0          3       0    0.0     3.0         # molt_cv
@@ -123,9 +123,37 @@
   0.35    # Target SPR ratio for Bmsy proxy.
   1       # Gear index for SPR calculations (i.e., directed fishery).
   1       # Lambda (proportion of mature male biomass for SPR reference points.)
-
+  1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
 ## EOF
 9999
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
