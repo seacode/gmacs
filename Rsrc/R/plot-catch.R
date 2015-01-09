@@ -24,7 +24,7 @@ plot_catch <- function(replist, plot_res=FALSE)
     p <- ggplot(df,aes(x=factor(year),y=residuals,fill=factor(sex)))
     p <- p + geom_bar(stat = "identity", position="dodge")
     p <- p + scale_x_discrete(breaks=pretty(df$year))
-    p <- p + labs(x="Year",y="Residuals ln(million lbs)",fill="Sex")
+    p <- p + labs(x="Year",y="Residuals ln(kt)",fill="Sex")
     p <- p + facet_wrap(~fleet~type,scales="free")
   }
   else
@@ -32,7 +32,7 @@ plot_catch <- function(replist, plot_res=FALSE)
     p <- ggplot(df,aes(x=factor(year),y=obs,fill=factor(sex)))
     p <- p + geom_bar(stat = "identity")
     p <- p + scale_x_discrete(breaks=pretty(df$year))
-    p <- p + labs(x="Year",y="Catch (million lbs)",fill="Sex")
+    p <- p + labs(x="Year",y="Catch (kt)",fill="Sex")
     p <- p + facet_wrap(~fleet,scales="free")
   }
   # This line applies the plotting over all unique types...
