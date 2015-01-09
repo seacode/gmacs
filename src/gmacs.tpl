@@ -511,6 +511,9 @@ DATA_SECTION
 			case 2:
 				nMdev = m_nNodes;
 			break;
+			case 3:
+				nMdev = m_nNodes;
+			break;
 		}
 	END_CALCS
 
@@ -1095,12 +1098,20 @@ FUNCTION calc_natural_mortality
 			break;
 
 			case 2:  // cubic splines
+			{
 				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
 				dvector jyr(syr+1,nyr);
 				jyr.fill_seqadd(0,1./(nyr-syr-1));
 				vcubic_spline_function csf(iyr,m_dev);
 				delta = csf(jyr);
+			}
 			break;
+
+			case 3:  // Specific break points
+			  for (int idev=1;idev<=nMdev;idev++)
+  				delta(idev) = m_dev(idev);
+			break;
+
 		}
 
 		// Update M by year.

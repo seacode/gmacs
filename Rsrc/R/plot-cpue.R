@@ -9,7 +9,7 @@ plot_cpue <- function(replist){
 # p  <- p + geom_point(aes(col=sex))
 	p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb,col=sex))
 	p  <- p + labs(x="Year",y="CPUE",col="Sex")
-	pCPUE  <- p + facet_wrap(~fleet,scales="free")
+	pCPUE  <- p + facet_wrap(~fleet+sex,scales="free")
 # Fitted CPUE
 	pCPUEfit <- pCPUE + geom_line(data=df,aes(year,pred))
   return(pCPUEfit)
