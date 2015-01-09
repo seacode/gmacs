@@ -1109,7 +1109,7 @@ FUNCTION calc_natural_mortality
 
 			case 3:  // Specific break points
 			  for (int idev=1;idev<=nMdev;idev++)
-  				delta(idev) = m_dev(idev);
+  				delta(m_nodeyear(idev)) = m_dev(idev);
 			break;
 
 		}
