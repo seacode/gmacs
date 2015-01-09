@@ -44,7 +44,11 @@ DATA_SECTION
 			cout<<"  | Name:                        Organization:               |\n";
 			cout<<"  | Steven Martell,              IPHC                        |\n";
 			cout<<"  | James Ianelli,               NOAA-NMFS                   |\n";
+			cout<<"  | Jack Turnock,                NOAA-NMFS                   |\n";
+			cout<<"  | Jie Zheng,	                ADF&G                       |\n";
+			cout<<"  | Hamachan Hamazaki,	        ADF&G                       |\n";
 			cout<<"  | Athol Whitten,               University of Washington    |\n";
+			cout<<"  | Andre Punt,                  University of Washington    |\n";
 			cout<<"  | Dave Fournier,               Otter Research              |\n";
 			cout<<"  | John Levitt,                 Male Porn Star              |\n";
 			cout<<"  |----------------------------------------------------------|\n";
@@ -251,15 +255,59 @@ DATA_SECTION
 	// |-----------------------|
 	init_int nGrowthObs;
 	init_matrix dGrowthData(1,nGrowthObs,1,4);
-	vector  dPreMoltSize(1,nGrowthObs);
-	ivector  iMoltIncSex(1,nGrowthObs);
-	vector  dMoltInc(1,nGrowthObs);
-	vector  dMoltIncCV(1,nGrowthObs);
+	vector     dPreMoltSize(1,nGrowthObs);
+	ivector     iMoltIncSex(1,nGrowthObs);
+	vector         dMoltInc(1,nGrowthObs);
+	vector       dMoltIncCV(1,nGrowthObs);
+	vector mle_alpha(1,nsex);
+	vector mle_beta(1,nsex);
 	LOC_CALCS
-	  dPreMoltSize = column(dGrowthData,1);
-	  iMoltIncSex  = ivector(column(dGrowthData,2));
-	  dMoltInc     = column(dGrowthData,3);
-	  dMoltIncCV   = column(dGrowthData,4);
+		dPreMoltSize = column(dGrowthData,1);
+		iMoltIncSex  = ivector(column(dGrowthData,2));
+		dMoltInc     = column(dGrowthData,3);
+		dMoltIncCV   = column(dGrowthData,4);
+
+		dvector xybar(1,nsex);
+		dvector xx(1,nsex);
+		dvector xbar(1,nsex);
+		dvector ybar(1,nsex);
+		ivector nh(1,nsex);
+
+		nh.initialize();
+		xybar.initialize();
+		xbar.initialize();
+		ybar.initialize();
+		xx.initialize();
+
+		// come up with mle estimates for alpha and beta
+		// for the linear growth increment model.
+		if(nGrowthObs)
+		{
+			for(int i = 1; i <= nGrowthObs; i++ )
+			{
+				int h = iMoltIncSex(i);
+				
+				nh(h)++;
+				xybar(h) += dPreMoltSize(i) * dMoltInc(i);
+				xbar(h)  += dPreMoltSize(i); 
+				ybar(h)  += dMoltInc(i);
+				xx(h)    += square(dPreMoltSize(i));
+			}
+			for( h = 1; h <= nsex; h++ )
+			{
+				xybar(h) /= nh(h);
+				xbar(h)  /= nh(h);
+				ybar(h)  /= nh(h);
+				xx(h)    /= nh(h);
+
+				double slp = (xybar(h) - xbar(h)*ybar(h)) / (xx(h) - square(xbar(h)));
+				double alp = ybar(h) - slp*xbar(h);
+				mle_alpha(h) = alp;
+				mle_beta(h)  = -slp;
+			}
+						
+		}
+
 		ECHO(dPreMoltSize); 
 		ECHO(iMoltIncSex); 
 		ECHO(dMoltInc); 
@@ -271,6 +319,14 @@ DATA_SECTION
 	// |------------------|
 	init_int eof;
 	!! if (eof != 9999) {cout<<"Error reading data"<<endl; exit(1);}
+
+
+
+
+
+
+
+
 
 
 	!! ad_comm::change_datafile_name(controlfile);
@@ -497,9 +553,6 @@ DATA_SECTION
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
-	//alpha     16.56211;  //16.56211     -0.05496
-	//beta      0.05496;
-	//scale     12.1;
 	log_fbar  log_pen_fbar;
 	
 
@@ -572,6 +625,7 @@ PARAMETER_SECTION
 
 	objective_function_value objfun;
 
+	number fpen;
 	number M0;              ///> natural mortality rate
 	number logR0;           ///> logarithm of unfished recruits.
 	number logRbar;         ///> logarithm of average recruits(syr+1,nyr)
@@ -708,6 +762,26 @@ FUNCTION initialize_model_parameters
 	rbeta     = theta(6,1);
 	alpha     = theta(7)(1,nsex);
 	beta      = theta(8)(1,nsex);
+//	if(active(theta(7)))
+//	{
+//		alpha     = theta(7)(1,nsex);
+//	}
+//	else
+//	{
+//		alpha     = mle_alpha;
+//	}
+//
+//	if(active(theta(8)))
+//	{
+//		beta      = theta(8)(1,nsex);
+//	}
+//	else
+//	{
+//		beta      = mle_beta;
+//	}
+//	COUT(alpha);
+//	COUT(beta);
+
 	gscale    = theta(9)(1,nsex);
 	molt_mu   = theta(10)(1,nsex);
 	molt_cv   = theta(11)(1,nsex);
@@ -859,26 +933,43 @@ FUNCTION calc_fishing_mortality
 
 	/**
 	 * @brief Molt increment as a linear function of pre-molt size.
+	 * 
+	 * TO DO
+	 * Need to ensure that molt increments cannot be negative.
 	 */
 FUNCTION calc_growth_increments
 	int h,l;
+	
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( l = 1; l <= nclass; l++ )
 		{
 			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
 		}
+		if(min(molt_increment(h)) <0 )
+		{
+			cout<<"WARNING Negative molt increment"<<endl;
+
+			//exit(1);
+		}
+		// SM FIX THIS WITH FUNCTION THAT DOES NOT GO NEG
+		for( l = 1; l <= nclass; l++ )
+		{
+			molt_increment(h)(l)= posfun(molt_increment(h)(l),0.001,fpen);
+		}
 	}
 
+
+
+	/**
+	 * @brief Compute growth increments 
+	 * @details Presently based on liner form
+	 * 
+	 * @param vSizes is a vector of size data from which to compute predicted values
+	 * @param iSex   is an integer vector indexing sex (1 = male, 2 = female )
+	 * @return dvar_vector of predicted growth increments
+	 */   
 FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
- /**
-   * @brief Compute growth increments 
-   * @details Presently based on liner form
-   * 
-   * @param vSizes is a vector of size data from which to compute predicted values
-   * @param iSex   is an integer vector indexing sex (1 = male, 2 = female )
-   * @return dvar_vector of predicted growth increments
-   */   
 	if( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
 	{
 		cerr<<"indices don't match..."<<endl;
@@ -890,7 +981,7 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	int h,i;
 	for( i = 1; i <= nGrowthObs; i++ )
 	{
-		h = iMoltIncSex(i);
+		h = iSex(i);
 		pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
 	}
 	RETURN_ARRAYS_DECREMENT();
@@ -925,6 +1016,7 @@ FUNCTION calc_size_transition_matrix
 	int h,l,ll;
 	dvariable tmp;
 	dvar_vector psi(1,nclass+1);
+	dvar_vector sbi(1,nclass+1);
 	dvar_matrix At(1,nclass,1,nclass);
 	size_transition.initialize();
 
@@ -932,19 +1024,25 @@ FUNCTION calc_size_transition_matrix
 	for( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
+		sbi = size_breaks/1000; // gscale(h);
 		for( l = 1; l <= nclass; l++ )
 		{
 			tmp = molt_increment(h)(l)/gscale(h);
+			
+			
 			
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
 				if( ll <= nclass+1 )
 				{
-					psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
+					//psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
+					
+					psi(ll) = cumd_gamma(sbi(ll),tmp);
+					//cout<<ll<<"\t"<<sbi(ll)<<"\t"<<tmp<<"\t"<<psi(ll)<<endl;	
 				}
 			}
-				
+			
 			
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
 			At(l)(l,nclass) /= sum(At(l));
@@ -956,7 +1054,7 @@ FUNCTION calc_size_transition_matrix
 		size_transition(h) = At;
 	}
 	
-	///cout<<"End of calc_size_transition_matrix"<<endl;
+	// cout<<"End of calc_size_transition_matrix"<<endl;
 	
 
 
@@ -1209,7 +1307,7 @@ FUNCTION calc_initial_numbers_at_length
 		// Insert terminal molt case here.
 	}
 
-
+	// cout<<"End of calc_initial_numbers_at_length"<<endl;
 
 
 
@@ -1268,33 +1366,7 @@ FUNCTION calc_initial_numbers_at_length
 //  }while(iter++ <= 4*nclass);
 	
 
-	
-	// Equilibrium soln.
-	
-//  dvar_matrix An(1,nclass,1,nclass);
-//  for(int h = 1; h <= nsex; h++ )
-//  {
-//      At = size_transition(h);
-//      An = size_transition(h);
-//      for(int l = 1; l <= nclass; l++ )
-//      {
-//          At(l) *= S(h)(syr)(l);
-//          An(l) *= S(h)(syr)(l) * molt_probability(h)(l);
-//
-//      }
-//      A = trans(At);
-//      x = -solve(A-Id,rt);
-//      N(h)(syr) = elem_prod(x,exp(rec_ini));
-//      
-//      // New-shell Old-shell accounting.
-//      d3_newShell(h)(syr) = elem_prod(      molt_probability(h) , N(h)(syr));
-//      d3_oldShell(h)(syr) = elem_prod(1.0 - molt_probability(h) , N(h)(syr));
-//      t1 = elem_prod(d3_oldShell(h)(syr),S(h)(syr)) + rt;
-//
-//      B = trans(An);
-//      y = -solve(B-Id,t1);
-//      COUT(y);
-//  }
+
 	
 	if(verbose) COUT(d3_N(1)(syr));
 	
@@ -1930,9 +2002,13 @@ FUNCTION calc_objective_function
 	dvariable sigR = mfexp(logSigmaR);
 	nloglike(4)    = dnorm(rec_dev,sigR);
 
+
 	// 5) Likelihood for growth increment data
-	dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
-	nloglike(5)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
+	if( active(theta(7)) || active(theta(8)) )
+	{
+		dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
+		//nloglike(5)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
+	}
 
 
 	// |---------------------------------------------------------------------------------|

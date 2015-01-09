@@ -80,12 +80,17 @@ void calc_equilibrium(dvar_vector& n,
 	dvar_matrix C(1,nclass,1,nclass);
 	dvar_matrix D(1,nclass,1,nclass);
 
+	
+
 	B = inv(Id - (Id-P)*S);
 	C = P * S * A;
 	D = trans(Id - C - (Id-P)*S*B*C);
 
+	// COUT(A);
+	// COUT(inv(D)*r);
+
 	n = solve(D,r);			// newshell
 	o = n*((Id-P)*S*B);		// oldshell
 
-}
+}	
 
