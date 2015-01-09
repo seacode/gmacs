@@ -212,6 +212,7 @@ DATA_SECTION
 		}
 	END_CALCS
 
+
 	// |----------------------------|
 	// | RELATIVE ABUNDANCE INDICES |
 	// |----------------------------|
@@ -229,10 +230,10 @@ DATA_SECTION
 		ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
+
 	// |-----------------------|
 	// | SIZE COMPOSITION DATA |
 	// |-----------------------|
-
 	init_int nSizeComps;
 	init_ivector nSizeCompRows(1,nSizeComps);
 	init_ivector nSizeCompCols(1,nSizeComps);
@@ -250,6 +251,9 @@ DATA_SECTION
 		ECHO(nSizeComps); 
 		ECHO(d3_obs_size_comps); 
 	END_CALCS
+
+
+
 	// |-----------------------|
 	// | Growth increment data |
 	// |-----------------------|
@@ -514,7 +518,7 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
-	init_vector model_controls(1,8);
+	init_vector model_controls(1,9);
 	int rdv_phz;                                        ///> Estimated rec_dev phase
 	int verbose;                                        ///> Flag to print to screen
 	int bInitializeUnfished;                ///> Flag to initialize at unfished conditions
@@ -523,6 +527,7 @@ DATA_SECTION
 	number spr_target;
 	int spr_fleet;
 	number spr_lambda;
+	int bEmpericalGrowth;
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -532,6 +537,7 @@ DATA_SECTION
 		spr_target          =     model_controls(6);
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
+		bEmpericalGrowth    = int(model_controls(9));
 	END_CALCS
 
 	init_int eof_ctl;
@@ -692,10 +698,18 @@ PRELIMINARY_CALCS_SECTION
 		simulation_model();
 		//exit(1);
 	}
-	// Must declare the abstract base class in GLOBALS_SECTION
-	// acl::negativeLogLikelihood *agecomplike;
-	// agecomplike = new acl::multinomial(d3_obs_size_comps(1));
 	
+	if(bEmpericalGrowth)
+	{
+		int l = 1;
+		for(int i = 1; i <= nGrowthObs; i++ )
+		{
+
+			int h = dGrowthData(i,2);
+			molt_increment(h)(l++) = dGrowthData(i,3);
+			if(l > nclass) l=1;
+		}
+	}
 
 PROCEDURE_SECTION
 	// Initialize model parameters
@@ -708,7 +722,10 @@ PROCEDURE_SECTION
 	if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
 
 	// Population dynamics ...
-	calc_growth_increments();
+	if(!bEmpericalGrowth)
+	{
+		calc_growth_increments();
+	}
 	calc_molting_probability();
 	calc_size_transition_matrix();
 	calc_natural_mortality();
@@ -762,26 +779,21 @@ FUNCTION initialize_model_parameters
 	rbeta     = theta(6,1);
 	alpha     = theta(7)(1,nsex);
 	beta      = theta(8)(1,nsex);
-//	if(active(theta(7)))
-//	{
-//		alpha     = theta(7)(1,nsex);
-//	}
-//	else
-//	{
-//		alpha     = mle_alpha;
-//	}
-//
-//	if(active(theta(8)))
-//	{
-//		beta      = theta(8)(1,nsex);
-//	}
-//	else
-//	{
-//		beta      = mle_beta;
-//	}
-//	COUT(alpha);
-//	COUT(beta);
 
+	// set initial values of linear growth increment function to MLE values.
+	if( bEmpericalGrowth )
+	{
+		alpha     = theta(7)(1,nsex);
+		beta      = theta(8)(1,nsex);
+	}
+	else
+	{
+		alpha     = mle_alpha;
+		beta      = mle_beta;
+	}
+
+	
+	
 	gscale    = theta(9)(1,nsex);
 	molt_mu   = theta(10)(1,nsex);
 	molt_cv   = theta(11)(1,nsex);
@@ -934,8 +946,8 @@ FUNCTION calc_fishing_mortality
 	/**
 	 * @brief Molt increment as a linear function of pre-molt size.
 	 * 
-	 * TO DO
-	 * Need to ensure that molt increments cannot be negative.
+	 * TODO
+	 * Option for empirical molt increments.
 	 */
 FUNCTION calc_growth_increments
 	int h,l;
@@ -945,17 +957,6 @@ FUNCTION calc_growth_increments
 		for( l = 1; l <= nclass; l++ )
 		{
 			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
-		}
-		if(min(molt_increment(h)) <0 )
-		{
-			cout<<"WARNING Negative molt increment"<<endl;
-
-			//exit(1);
-		}
-		// SM FIX THIS WITH FUNCTION THAT DOES NOT GO NEG
-		for( l = 1; l <= nclass; l++ )
-		{
-			molt_increment(h)(l)= posfun(molt_increment(h)(l),0.001,fpen);
 		}
 	}
 
@@ -2004,10 +2005,10 @@ FUNCTION calc_objective_function
 
 
 	// 5) Likelihood for growth increment data
-	if( active(theta(7)) || active(theta(8)) )
+	if( !bEmpericalGrowth && ( active(theta(7)) || active(theta(8)) ) )
 	{
 		dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
-		//nloglike(5)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
+		nloglike(5)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
 	}
 
 
@@ -2223,8 +2224,16 @@ REPORT_SECTION
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
 	REPORT(dMoltInc);
-	dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
-	REPORT(pMoltInc);
+	if(bEmpericalGrowth)
+	{
+		dvector pMoltInc = dMoltInc;
+		REPORT(pMoltInc);
+	}
+	else
+	{
+		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
+		REPORT(pMoltInc);
+	}
 	REPORT(survey_q);
 
 

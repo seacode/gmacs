@@ -17,14 +17,14 @@
    7.0       -10        20         -1       1    3.0     5.0         # logR0
    7.0       -10        20          2       1    3.0     5.0         # logR1      
    7.0       -10        20          2       1    3.0     5.0         # logRbar      
-  72.5        65       150          4       1   72.5    7.25         # Recruitment mBeta
-  1.50       0.1         5          4       0    0.1       5         # Recruitment m50
-  17.5      10.0      20.0          4       0    0.0    20.0         # alpha
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta
-  14.0      10.0      30.0         -3       0    0.0     3.0         # gscale
-  115.      45.0     165.0          2       0    0.0     3.0         # molt_mu
+  72.5        65       100          2       1   72.5    7.25         # Recruitment mBeta
+  1.50       0.1         5          2       0    0.1       5         # Recruitment m50
+  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha
+  0.10       0.0       0.5         -3       0    0.0    10.0         # beta
+  26.0      10.0      30.0         -3       0    0.0     3.0         # gscale
+  115.      65.0     165.0          2       0    0.0     3.0         # molt_mu
    0.2       0.0       1.0          3       0    0.0     3.0         # molt_cv
- -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+ -0.51       -10      0.75          4       0    -10    0.75         # ln(sigma_R)
 # —————————————————————————————————————————————————————————————————————————————————————— #
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -82,8 +82,9 @@
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
 ##   -1) multinomial with estimated/fixed sample size
-##   -2) robust multinomial (as in BBRKC case)
-##   -3) multivariate-t
+##   -2) robust_multi. Robust approximation to multinomial
+##   -3) logistic normal  (NIY)
+##   -4) multivariate-t   (NIY)
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -122,9 +123,37 @@
   0.35    # Target SPR ratio for Bmsy proxy.
   1       # Gear index for SPR calculations (i.e., directed fishery).
   1       # Lambda (proportion of mature male biomass for SPR reference points.)
-
+  1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
 ## EOF
 9999
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
