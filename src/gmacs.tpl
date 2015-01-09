@@ -458,7 +458,7 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
-	init_vector model_controls(1,8);
+	init_vector model_controls(1,9);
 	int rdv_phz;                                        ///> Estimated rec_dev phase
 	int verbose;                                        ///> Flag to print to screen
 	int bInitializeUnfished;                ///> Flag to initialize at unfished conditions
@@ -467,6 +467,7 @@ DATA_SECTION
 	number spr_target;
 	int spr_fleet;
 	number spr_lambda;
+	int growth_inc_type;
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -476,6 +477,13 @@ DATA_SECTION
 		spr_target          =     model_controls(6);
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
+		growth_inc_type     = int(model_controls(9));
+		// be sure theta for 7, 8 turned off
+		if (growth_inc_type != 1)
+		{
+			theta_phz(7) = -4;
+			theta_phz(8) = -4;
+		}
 	END_CALCS
 
 	init_int eof_ctl;
@@ -2149,6 +2157,7 @@ REPORT_SECTION
 	REPORT(dMoltInc);
 	dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
 	REPORT(pMoltInc);
+	REPORT(molt_increment);
 	REPORT(survey_q);
 
 
