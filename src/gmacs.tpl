@@ -212,6 +212,7 @@ DATA_SECTION
 		}
 	END_CALCS
 
+
 	// |----------------------------|
 	// | RELATIVE ABUNDANCE INDICES |
 	// |----------------------------|
@@ -229,10 +230,10 @@ DATA_SECTION
 		ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
+
 	// |-----------------------|
 	// | SIZE COMPOSITION DATA |
 	// |-----------------------|
-
 	init_int nSizeComps;
 	init_ivector nSizeCompRows(1,nSizeComps);
 	init_ivector nSizeCompCols(1,nSizeComps);
@@ -250,6 +251,9 @@ DATA_SECTION
 		ECHO(nSizeComps); 
 		ECHO(d3_obs_size_comps); 
 	END_CALCS
+
+
+
 	// |-----------------------|
 	// | Growth increment data |
 	// |-----------------------|
@@ -692,10 +696,12 @@ PRELIMINARY_CALCS_SECTION
 		simulation_model();
 		//exit(1);
 	}
-	// Must declare the abstract base class in GLOBALS_SECTION
-	// acl::negativeLogLikelihood *agecomplike;
-	// agecomplike = new acl::multinomial(d3_obs_size_comps(1));
 	
+	// Use growth data to get smoothed molt increment 
+	// if( nGrowthObs > 3)
+	// {
+	// 	molt_increment = get_empirical_molt_increment(mid_points,dGrowthData);
+	// }
 
 PROCEDURE_SECTION
 	// Initialize model parameters
