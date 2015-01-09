@@ -779,26 +779,21 @@ FUNCTION initialize_model_parameters
 	rbeta     = theta(6,1);
 	alpha     = theta(7)(1,nsex);
 	beta      = theta(8)(1,nsex);
-//	if(active(theta(7)))
-//	{
-//		alpha     = theta(7)(1,nsex);
-//	}
-//	else
-//	{
-//		alpha     = mle_alpha;
-//	}
-//
-//	if(active(theta(8)))
-//	{
-//		beta      = theta(8)(1,nsex);
-//	}
-//	else
-//	{
-//		beta      = mle_beta;
-//	}
-//	COUT(alpha);
-//	COUT(beta);
 
+	// set initial values of linear growth increment function to MLE values.
+	if( bEmpericalGrowth )
+	{
+		alpha     = theta(7)(1,nsex);
+		beta      = theta(8)(1,nsex);
+	}
+	else
+	{
+		alpha     = mle_alpha;
+		beta      = mle_beta;
+	}
+
+	
+	
 	gscale    = theta(9)(1,nsex);
 	molt_mu   = theta(10)(1,nsex);
 	molt_cv   = theta(11)(1,nsex);
