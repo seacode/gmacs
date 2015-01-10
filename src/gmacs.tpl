@@ -1056,7 +1056,7 @@ FUNCTION calc_size_transition_matrix
 	for( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
-		sbi = size_breaks/1000; // gscale(h);
+		// sbi = size_breaks/1000; // gscale(h);
 		for( l = 1; l <= nclass; l++ )
 		{
 			tmp = molt_increment(h)(l)/gscale(h);
@@ -1068,9 +1068,9 @@ FUNCTION calc_size_transition_matrix
 			{
 				if( ll <= nclass+1 )
 				{
-					//psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
+					psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
 					
-					psi(ll) = cumd_gamma(sbi(ll),tmp);
+					//psi(ll) = cumd_gamma(sbi(ll),tmp);
 					//cout<<ll<<"\t"<<sbi(ll)<<"\t"<<tmp<<"\t"<<psi(ll)<<endl;	
 				}
 			}
@@ -2271,6 +2271,15 @@ REPORT_SECTION
 		}
 		REPORT(size_comp_sample_size);
 	}
+	// Print total numbers at length
+	dvar_matrix N_len(syr,nyr+1,1,nclass);
+	N_len.initialize();
+	for (int i=syr;i<=nyr+1;i++)
+	  for (int j=1;j<=nclass;j++)
+	    for (int k=1;k<=n_grp;k++)
+	    	N_len(i,j) += d3_N(k,i,j);
+
+	REPORT(N_len);
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);

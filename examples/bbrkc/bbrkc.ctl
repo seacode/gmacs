@@ -17,8 +17,8 @@
    7.0       -10        20         -1       1    3.0     5.0         # logR0
    7.0       -10        20          2       1    3.0     5.0         # logR1      
    7.0       -10        20          2       1    3.0     5.0         # logRbar      
-  72.5        65       100          2       1   72.5    7.25         # Recruitment mBeta
-  1.50       0.1         5          2       0    0.1       5         # Recruitment m50
+  72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
+  0.40       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -50,7 +50,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ivector for number of year blocks or nodes                                           ##
 ## Gear-1    Gear-2    Gear-3   Gear-4    
-   1         1         1        1         #Selectivity blocks
+   1         1         2        1         #Selectivity blocks
    1         1         1        1         #Retention blocks 
    1         0         0        0         #male   retention flag (0 -> no, 1 -> yes)
    0         0         0        0         #female retention flag (0 -> no, 1 -> yes)
@@ -61,7 +61,8 @@
 ## Selectivity P(capture of all sizes)
    1      2    180   10  0    1      1     2      12.5  12.5  12.5   1975   2013
    2      2     90   10  0    1      1     2      12.5  12.5  12.5   1975   2013 
-   3      2     80   10  1    1      1     2      12.5  12.5  12.5   1975   2013
+   3      2     80   10  1    1      1     2      12.5  12.5  12.5   1975   1981
+   3      2     80   10  1    1      1     2      12.5  12.5  12.5   1982   2013
    4      2     80   10  0    1      1    -2      12.5  12.5  12.5   1975   2013
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
@@ -121,10 +122,10 @@
   3
 ## STDEV in m_dev for Random walk
   0.60
-## Number of nodes for cubic spline
+## Number of nodes for cubic spline or number of step-changes for option 3
   2
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1982 1986 
+   1980 1985 
 
 
 
