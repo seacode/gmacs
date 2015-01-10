@@ -663,7 +663,7 @@ PARAMETER_SECTION
 	number logR0;           ///> logarithm of unfished recruits.
 	number logRbar;         ///> logarithm of average recruits(syr+1,nyr)
 	number logRini;         ///> logarithm of initial recruitment(syr).
-	number ra;              ///> shape parameter for recruitment distribution
+	number ra;              ///> Expected value of recruitment distribution
 	number rbeta;           ///> rate parameter for recruitment distribution
 	number logSigmaR;       ///> standard deviation of recruitment deviations.
 
