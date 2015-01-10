@@ -808,8 +808,8 @@ FUNCTION calc_sdreport
 	 * @details Set global variable equal to the estimated parameter vectors.
 	 */
 FUNCTION initialize_model_parameters
-	 // Get parameters from theta control matrix:
 	
+	// Get parameters from theta control matrix:
 	M0        = theta(1);
 	logR0     = theta(2);
 	logRini   = theta(3);
@@ -818,30 +818,25 @@ FUNCTION initialize_model_parameters
 	rbeta     = theta(6);
 	logSigmaR = theta(7);
 
-// 	init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
-  for (int h=1;h<=nsex;h++)
-  {
-  	int icnt=h;
-	  alpha(h)     = Grwth(icnt);
-	  icnt += nsex;
-	  beta(h)      = Grwth(icnt);
-	  icnt += nsex;
-	  gscale(h)    = Grwth(icnt);
-	  icnt += nsex;
-	  molt_mu(h)   = Grwth(icnt);
-	  icnt += nsex;
-	  molt_cv(h)   = Grwth(icnt);
-  }
-  // ECHO(alpha); ECHO(beta); ECHO(gscale); ECHO(molt_mu); ECHO(molt_cv); exit(1);
-
-	// set initial values of linear growth increment function to MLE values.
-	if( bEmpericalGrowth )
+	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
+	// Get Growth & Molting parameters 
+	for (int h=1;h<=nsex;h++)
 	{
-		// THis isn't needed if empirical (alpha and beta not used...)
-		  // alpha(h)     = Grwth(icnt);
-		  // beta(h)      = Grwth(1)(1,nsex);
+		int icnt=h;
+		alpha(h)     = Grwth(icnt);
+		icnt += nsex;
+		beta(h)      = Grwth(icnt);
+		icnt += nsex;
+		gscale(h)    = Grwth(icnt);
+		icnt += nsex;
+		molt_mu(h)   = Grwth(icnt);
+		icnt += nsex;
+		molt_cv(h)   = Grwth(icnt);
 	}
-	else
+	
+
+	
+	if( ! bEmpericalGrowth )
 	{
 		alpha     = mle_alpha;
 		beta      = mle_beta;
@@ -1152,9 +1147,17 @@ FUNCTION calc_natural_mortality
 			}
 			break;
 
+			/*
+			JIm Question about below.  I'm not sure if you were intending to
+			have this set up as a random walk, where the shift occurs in a specifc year
+			to a new state.  I think what Jie had  was just a block wiht a different
+			M and it then returns back to the previous state.
+			*/
 			case 3:  // Specific break points
 			  for (int idev=1;idev<=nMdev;idev++)
+			  {
   				delta(m_nodeyear(idev)) = m_dev(idev);
+			  }
 			break;
 
 		}
@@ -1225,6 +1228,9 @@ FUNCTION calc_molting_probability
 	 * @brief calculate size distribution for new recuits.
 	 * @details Based on the gamma distribution, calculates the probability
 	 * of a new recruit being in size-interval size.
+	 * 
+	 * TODO: fix the scale on cumd_gamma distribution so beta rbeta is estimable.
+	 * 
 	 * @param ra is the mean of the distribution.
 	 * @param rbeta scales the variance of the distribution
 	 */
@@ -1893,6 +1899,14 @@ FUNCTION calc_predicted_composition
 	 *  - case 2 is a lognormal density with mean = log(p1) and sd = p2
 	 *  - case 3 is a beta density bounded between lb-ub with p1 and p2 as alpha & beta
 	 *  - case 4 is a gamma density with parameters p1 and p2.
+	 *  
+	 *  TODO
+	 *  Make this a generic function.
+	 *  Agrs would be vector of parameters, and matrix of controls
+	 *  @param theta a vector of parameters
+	 *  @param C matrix of controls (priorType, p1, p2, lb, ub)
+	 *  @return vector of prior densities for each parameter
+	 *  
 	 */
 FUNCTION calculate_prior_densities
 	double p1,p2;
@@ -1937,6 +1951,7 @@ FUNCTION calculate_prior_densities
 			}
 		}
 	}
+
 	// ---Continue with catchability priors-----------------------
 	int iprior = ntheta + 1; 
 	for (int i=1;i<=nSurveys;i++)
