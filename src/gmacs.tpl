@@ -820,12 +820,7 @@ FUNCTION initialize_model_parameters
 	  icnt += nsex;
 	  molt_cv(h)   = Grwth(icnt);
   }
-  ECHO(alpha);
-  ECHO(beta);
-  ECHO(gscale);
-  ECHO(molt_mu);
-  ECHO(molt_cv);
-  exit(1);
+  // ECHO(alpha); ECHO(beta); ECHO(gscale); ECHO(molt_mu); ECHO(molt_cv); exit(1);
 
 	// set initial values of linear growth increment function to MLE values.
 	if( bEmpericalGrowth )
