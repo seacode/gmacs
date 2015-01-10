@@ -10,9 +10,10 @@
 library(gmr)
 
 # Set working directory to that containing Gmacs model results:
-setwd("c:/seacode/gmacs/examples/demo")
-setwd("~/_mymods/seacode/gmacs/examples/demo")
-setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
+# setwd("c:/seacode/gmacs/examples/demo")
+# setwd("~/_mymods/seacode/gmacs/examples/demo")
+# setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
+setwd("/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/examples/bbrkc")
 
 # Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
 set_ggtheme('bw')
