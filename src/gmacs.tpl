@@ -1025,11 +1025,17 @@ FUNCTION calc_size_transition_matrix
 	for( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
-		sbi = size_breaks/1000; // gscale(h);
+		//sbi = (size_breaks - min(size_breaks))/(max(size_breaks)-min(size_breaks)); // gscale(h);
+		//cout<<sbi<<endl<<endl;
 		for( l = 1; l <= nclass; l++ )
 		{
+			dvector sbi(l,nclass+1);
+			double lb = size_breaks(l);
+			double ub = size_breaks(nclass+1);
+			sbi = (size_breaks(l,nclass+1) - lb)/(ub-lb);
+
 			tmp = molt_increment(h)(l)/gscale(h);
-			
+				
 			
 			
 			psi.initialize();
@@ -1040,19 +1046,21 @@ FUNCTION calc_size_transition_matrix
 					//psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
 					
 					psi(ll) = cumd_gamma(sbi(ll),tmp);
-					//cout<<ll<<"\t"<<sbi(ll)<<"\t"<<tmp<<"\t"<<psi(ll)<<endl;	
+					// cout<<ll<<"\t"<<sbi(ll)<<"\t"<<tmp<<"\t"<<psi(ll)<<endl;	
 				}
 			}
 			
-			
+			//cout<<psi<<endl;
+
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
+			//cout<<At(l)<<endl;
 			At(l)(l,nclass) /= sum(At(l));
 
-			// molt probability; use only when newshell/oldshell data exists.
-			// At(l,l) = 1.0 - molt_probability(h)(l);
-			// At(l)(l,nclass) /= sum(At(l));
 		}
 		size_transition(h) = At;
+		
+
+		
 	}
 	
 	// cout<<"End of calc_size_transition_matrix"<<endl;
