@@ -88,6 +88,9 @@ DATA_SECTION
 	init_int nclass;        ///> number of size-classes
 	int n_grp;              ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
+	int nlikes
+                 //   1      2       3         4          5             
+	!! nlikes = 5; // (catch, cpue, sizecomps, recruits, molt_increment data)
 
 	// Set up index pointers
 	ivector isex(1,n_grp);
@@ -250,6 +253,14 @@ DATA_SECTION
 		}
 		ECHO(nSizeComps); 
 		ECHO(d3_obs_size_comps); 
+	END_CALCS
+	ivector ilike_vector(1,nlikes)
+	LOC_CALCS
+	  ilike_vector(1) = nCatchDF;
+	  ilike_vector(2) = nSurveys;
+	  ilike_vector(3) = nSizeComps;
+	  ilike_vector(4) = 1;
+	  ilike_vector(5) = 1;
 	END_CALCS
 
 
@@ -654,7 +665,8 @@ PARAMETER_SECTION
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
-	vector nloglike(1,5);
+
+	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,4);
 	vector priorDensity(1,ntheta+nGrwth+nSurveys);
 
@@ -1995,7 +2007,7 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nCatchDF; k++ )
 	{
 		dvector catch_sd = sqrt( log( 1.0+square(catch_cv(k)) ) );
-		nloglike(1) += dnorm(res_catch(k),catch_sd);
+		nloglike(1,k) += dnorm(res_catch(k),catch_sd);
 	}
 
 
@@ -2006,7 +2018,7 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
-		nloglike(2) += dnorm(res_cpue(k),cpue_sd(k));
+		nloglike(2,k) += dnorm(res_cpue(k),cpue_sd(k));
 	}
 
 
@@ -2037,7 +2049,7 @@ FUNCTION calc_objective_function
 		}
 
 		// now compute the likelihood.
-		nloglike(3) += ploglike->nloglike(log_effn,P);
+		nloglike(3,ii) += ploglike->nloglike(log_effn,P);
 
 		// Compute residuals in the last phase.
 		if(last_phase()) 
@@ -2053,14 +2065,14 @@ FUNCTION calc_objective_function
 
 	// 4) Likelihood for recruitment deviations.
 	dvariable sigR = mfexp(logSigmaR);
-	nloglike(4)    = dnorm(rec_dev,sigR);
+	nloglike(4,1)    = dnorm(rec_dev,sigR);
 
 
 	// 5) Likelihood for growth increment data
 	if( !bEmpericalGrowth && ( active(theta(7)) || active(theta(8)) ) )
 	{
 		dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
-		nloglike(5)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
+		nloglike(5,1)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
 	}
 
 
