@@ -370,6 +370,7 @@ DATA_SECTION
 	// |----------------------------|
 	// | GROWTH PARAMETER CONTROLS  |
 	// |----------------------------|
+	// | Note that if bUseEmpiricalGrowth data is TRUE, then cannot estimate alpa & beta.
 	int nGrwth;
 	!! nGrwth = nsex*5;
 	init_matrix Grwth_control(1,nGrwth,1,7);
@@ -562,7 +563,7 @@ DATA_SECTION
 	number spr_target;
 	int spr_fleet;
 	number spr_lambda;
-	int bEmpericalGrowth;
+	int bUseEmpiricalGrowth;
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -572,13 +573,31 @@ DATA_SECTION
 		spr_target          =     model_controls(6);
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
-		bEmpericalGrowth    = int(model_controls(9));
+		bUseEmpiricalGrowth = int(model_controls(9));
 	END_CALCS
 
 	init_int eof_ctl;
 	!! if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
 
 	!! cout<<"end of control section"<<endl;
+
+
+	LOC_CALCS
+		// ensure the phase for alpha & beta is -ve for GrowhtPars if bUseEmpiricalGrowth
+		COUT(Grwth_phz);
+		if(bUseEmpiricalGrowth)
+		{
+			cerr << "WARNING:\n \tUsing empirical growth increment data,\n";
+			cerr << "\talpha & beta parameters will not be estimated."<<endl;
+			for (int h=1;h<=nsex;h++)
+			{
+				int icnt=h;
+				Grwth_phz(icnt) = -1;
+				icnt += nsex;
+				Grwth_phz(icnt) = -1;
+			}
+		}
+	END_CALCS
 
 	int nf;
 	!! nf = 0;
@@ -740,7 +759,7 @@ PRELIMINARY_CALCS_SECTION
 		//exit(1);
 	}
 	
-	if(bEmpericalGrowth)
+	if(bUseEmpiricalGrowth)
 	{
 		int l = 1;
 		for(int i = 1; i <= nGrowthObs; i++ )
@@ -763,7 +782,7 @@ PROCEDURE_SECTION
 	if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
 
 	// Population dynamics ...
-	if(!bEmpericalGrowth)
+	if(!bUseEmpiricalGrowth)
 	{
 		calc_growth_increments();
 	}
@@ -808,6 +827,11 @@ FUNCTION calc_sdreport
 	/**
 	 * @brief Initialize model parameters
 	 * @details Set global variable equal to the estimated parameter vectors.
+	 * 
+	 * SM:  Note if using empirical growth increment data, then alpha and beta
+     * Growth parameters should not be estimated.  Need to warn the user
+     * if the following condition is true:
+     * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
 	 */
 FUNCTION initialize_model_parameters
 	
@@ -838,7 +862,7 @@ FUNCTION initialize_model_parameters
 	
 
 	
-	if( ! bEmpericalGrowth )
+	if( ! bUseEmpiricalGrowth )
 	{
 		alpha     = mle_alpha;
 		beta      = mle_beta;
@@ -1100,7 +1124,14 @@ FUNCTION calc_size_transition_matrix
 		size_transition(h) = At;
 	}
 	
-	// cout<<"End of calc_size_transition_matrix"<<endl;
+	COUT(cumd_gamma(0.5,0.5));
+	COUT(cumd_gamma(1,1));
+	COUT(cumd_gamma(1,0.5));
+	COUT(cumd_gamma(0.5,1));
+
+
+	cout<<"End of calc_size_transition_matrix"<<endl;
+	exit(1);
 	
 
 
@@ -2069,7 +2100,7 @@ FUNCTION calc_objective_function
 
 
 	// 5) Likelihood for growth increment data
-	if( !bEmpericalGrowth && ( active(theta(7)) || active(theta(8)) ) )
+	if( !bUseEmpiricalGrowth && ( active(theta(7)) || active(theta(8)) ) )
 	{
 		dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
 		nloglike(5,1)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
@@ -2298,7 +2329,7 @@ REPORT_SECTION
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
 	REPORT(dMoltInc);
-	if(bEmpericalGrowth)
+	if(bUseEmpiricalGrowth)
 	{
 		dvector pMoltInc = dMoltInc;
 		REPORT(pMoltInc);
