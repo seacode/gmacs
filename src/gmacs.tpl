@@ -340,6 +340,7 @@ DATA_SECTION
 	!! cout<<"*** Reading control file ***"<<endl;
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
+	
 
 	vector theta_ival(1,ntheta);
 	vector theta_lb(1,ntheta);
@@ -362,13 +363,13 @@ DATA_SECTION
 	!! nGrwth = nsex*5;
 	init_matrix Grwth_control(1,nGrwth,1,7);
 
-	ivector ipar_vector(1,nGrwth);
 	vector  Grwth_ival(1,nGrwth);
 	vector  Grwth_lb(1,nGrwth);
 	vector  Grwth_ub(1,nGrwth);
 	ivector Grwth_phz(1,nGrwth);
+	// ivector ipar_vector(1,nGrwth);
 	LOC_CALCS
-		ipar_vector = nsex;
+		// ipar_vector = nsex;
 		Grwth_ival  = column(Grwth_control,1);
 		Grwth_lb    = column(Grwth_control,2);
 		Grwth_ub    = column(Grwth_control,3);
@@ -603,6 +604,7 @@ PARAMETER_SECTION
 	// molt_cv  = Grwth(5)
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+	
 	init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
 	//init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
