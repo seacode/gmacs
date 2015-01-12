@@ -2069,17 +2069,14 @@ FUNCTION calc_objective_function
 					ploglike = new acl::robust_multi(O,bCmp);
 			break;
 		}
-
-		// now compute the likelihood.
-		nloglike(3,ii) += ploglike->nloglike(log_effn,P);
-
 		// Compute residuals in the last phase.
 		if(last_phase()) 
 		{
-			d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
+		  d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 		}
-		
-		
+
+		// now compute the likelihood.
+		nloglike(3,ii) += ploglike->nloglike(log_effn,P);
 
 		
 	}
@@ -2307,13 +2304,32 @@ REPORT_SECTION
 	}
 	// Print total numbers at length
 	dvar_matrix N_len(syr,nyr+1,1,nclass);
+	dvar_matrix N_mm(syr,nyr+1,1,nclass);
+	dvar_matrix N_males(syr,nyr+1,1,nclass);
+	dvar_matrix N_males_old(syr,nyr+1,1,nclass);
 	N_len.initialize();
+	N_males.initialize();
+	N_mm.initialize();
+	N_males_old.initialize();
 	for (int i=syr;i<=nyr+1;i++)
 	  for (int j=1;j<=nclass;j++)
 	    for (int k=1;k<=n_grp;k++)
+	    {	
+				if (isex(k)==1)
+	    	{
+	    		N_males(i,j) += d3_N(k,i,j);
+					if (ishell(k)==2)
+		    		N_males_old(i,j) += d3_N(k,i,j);
+					if (imature(k)==1)
+		    		N_mm(i,j) += d3_N(k,i,j);
+	    	}
 	    	N_len(i,j) += d3_N(k,i,j);
+	    }
 
 	REPORT(N_len);
+	REPORT(N_mm);
+	REPORT(N_males);
+	REPORT(N_males_old);
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
