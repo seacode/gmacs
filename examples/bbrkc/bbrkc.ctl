@@ -34,8 +34,8 @@
   17.5      10.0      30.0          3       0    0.0    20.0         # alpha
   0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
   0.10       0.0       0.5          3       0    0.0    10.0         # beta
-   3.0       1.0      30.0          3       0    0.0     3.0         # gscale males or combined
-   3.0       1.0      30.0          3       0    0.0     3.0         # gscale
+   6.0       1.0      30.0          3       0    0.0     3.0         # gscale males or combined
+   6.0       1.0      30.0          3       0    0.0     3.0         # gscale
   115.      65.0     165.0          2       0    0.0     3.0         # molt_mu males or combined
   159.      65.0     165.0         -2       0    0.0     3.0         # molt_mu
    0.2       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined

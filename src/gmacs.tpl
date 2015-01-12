@@ -1113,16 +1113,13 @@ FUNCTION calc_size_transition_matrix
 					psi(ll) = cumd_gamma(sbi(ll),dMeanSizeAfterMolt);
 				}
 			}
-			
-			
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
 			At(l)(l,nclass)  = At(l)(l,nclass) / sum(At(l));
 		}
-		
 		size_transition(h) = At;
 	}
 	
-	//cout<<"End of calc_size_transition_matrix"<<endl;
+	// cout<<"End of calc_size_transition_matrix"<<endl;
 	
 	
 
