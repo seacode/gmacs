@@ -1080,58 +1080,50 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	 * Dec 20.  Undid the above modification after correspondence with Jack Turnock.
 	 * He rightly pointed out that it is possible to molt and remain in the same bin
 	 * interval (if the intervals are sufficiently large). 
+	 * 
+	 * Jan 11, 2015. Checked cumd_gamma function in ADMB with R.  This is the same
+	 * function as pgamma with the rate parameter set at its default value 1.0.  The 
+	 * mean value of the function is the second argument of cumd_gamma, and the vector 
+	 * of quantiles is the first argument.  Both arguments are scaled by gscale.
 	 */
 FUNCTION calc_size_transition_matrix
 	//cout<<"Start of calc_size_transition_matrix"<<endl;
 	int h,l,ll;
-	dvariable tmp;
+	dvariable dMeanSizeAfterMolt;
 	dvar_vector psi(1,nclass+1);
 	dvar_vector sbi(1,nclass+1);
 	dvar_matrix At(1,nclass,1,nclass);
 	size_transition.initialize();
 
+
 	
 	for( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
-		// sbi = size_breaks/1000; // gscale(h);
+		sbi = size_breaks / gscale(h);
 		for( l = 1; l <= nclass; l++ )
 		{
-			tmp = molt_increment(h)(l)/gscale(h);
-			
-			
-			
+			dMeanSizeAfterMolt = (sbi(l) + molt_increment(h)(l)) / gscale(h);
+
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
 				if( ll <= nclass+1 )
 				{
-					psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
-					
-					//psi(ll) = cumd_gamma(sbi(ll),tmp);
-					//cout<<ll<<"\t"<<sbi(ll)<<"\t"<<tmp<<"\t"<<psi(ll)<<endl;	
+					psi(ll) = cumd_gamma(sbi(ll),dMeanSizeAfterMolt);
 				}
 			}
 			
 			
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
-			At(l)(l,nclass) /= sum(At(l));
-
-			// molt probability; use only when newshell/oldshell data exists.
-			// At(l,l) = 1.0 - molt_probability(h)(l);
-			// At(l)(l,nclass) /= sum(At(l));
+			At(l)(l,nclass)  = At(l)(l,nclass) / sum(At(l));
 		}
+		
 		size_transition(h) = At;
 	}
 	
-	COUT(cumd_gamma(0.5,0.5));
-	COUT(cumd_gamma(1,1));
-	COUT(cumd_gamma(1,0.5));
-	COUT(cumd_gamma(0.5,1));
-
-
-	cout<<"End of calc_size_transition_matrix"<<endl;
-	exit(1);
+	//cout<<"End of calc_size_transition_matrix"<<endl;
+	
 	
 
 
