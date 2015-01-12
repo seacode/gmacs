@@ -2104,11 +2104,8 @@ FUNCTION calc_objective_function
 	// 1) Penalty on log_fdev to ensure they sum to zero 
 	for(int k = 1; k <= nfleet; k++ )
 	{
-		dvariable s    = mean(log_fdev(k));
+		dvariable s     = mean(log_fdev(k));
 		nlogPenalty(1) += 10000.0*s*s;
-
-				  s    = mean(log_fdov(k));
-		nlogPenalty(1) += 10000.0*s*s;             
 	}
 
 
@@ -2252,6 +2249,7 @@ REPORT_SECTION
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
+	REPORT(F);
 	REPORT(d3_SizeComps);
 
 	REPORT(d3_obs_size_comps);
