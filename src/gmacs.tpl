@@ -1012,6 +1012,38 @@ FUNCTION calc_fishing_mortality
 	}
 
 
+
+
+	/**
+	 * @brief Compute growth increments 
+	 * @details Presently based on liner form
+	 * 
+	 * @param vSizes is a vector of size data from which to compute predicted values
+	 * @param iSex   is an integer vector indexing sex (1 = male, 2 = female )
+	 * @return dvar_vector of predicted growth increments
+	 */   
+FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
+	{
+	if( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
+	{
+		cerr<<"indices don't match..."<<endl;
+		ad_exit(1);
+	}
+	RETURN_ARRAYS_INCREMENT();
+	dvar_vector pMoltInc(1,vSizes.indexmax());
+	pMoltInc.initialize();
+	int h,i;
+	for( i = 1; i <= nGrowthObs; i++ )
+	{
+		h = iSex(i);
+		pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
+	}
+	RETURN_ARRAYS_DECREMENT();
+	return pMoltInc;
+		
+	}
+
+
 	/**
 	 * @brief Molt increment as a linear function of pre-molt size.
 	 * 
@@ -1029,33 +1061,6 @@ FUNCTION calc_growth_increments
 		}
 	}
 
-
-
-	/**
-	 * @brief Compute growth increments 
-	 * @details Presently based on liner form
-	 * 
-	 * @param vSizes is a vector of size data from which to compute predicted values
-	 * @param iSex   is an integer vector indexing sex (1 = male, 2 = female )
-	 * @return dvar_vector of predicted growth increments
-	 */   
-FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
-	if( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
-	{
-		cerr<<"indices don't match..."<<endl;
-		ad_exit(1);
-	}
-	RETURN_ARRAYS_INCREMENT();
-	dvar_vector pMoltInc(1,vSizes.indexmax());
-	pMoltInc.initialize();
-	int h,i;
-	for( i = 1; i <= nGrowthObs; i++ )
-	{
-		h = iSex(i);
-		pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
-	}
-	RETURN_ARRAYS_DECREMENT();
-	return pMoltInc;
 
 
 	/**
