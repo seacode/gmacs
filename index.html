@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Gmacs : A generic size-structured stock assessment model">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Gmacs</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/seacode/gmacs">View on GitHub</a>
+
+          <h1 id="project_title">Gmacs</h1>
+          <h2 id="project_tagline">A generic size-structured stock assessment model</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/seacode/gmacs/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/seacode/gmacs/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="gmacs" class="anchor" href="#gmacs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gmacs</h1>
+
+<p>Gmacs is currently under development. A simple working release version of Gmacs is available via <code>Tag V1.0</code> and has been tested using the BBRKC model available in the examples folder. The next major release of Gmacs is planned for September 2014.</p>
+
+<h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of contents</h2>
+
+<ul>
+<li><a href="#about-gmacs">About Gmacs</a></li>
+<li><a href="#r-package-for-gmacs">Gmacs R Package</a></li>
+<li><a href="#development">Development</a></li>
+</ul>
+
+<h2>
+<a id="about-gmacs" class="anchor" href="#about-gmacs" aria-hidden="true"><span class="octicon octicon-link"></span></a>About Gmacs</h2>
+
+<p><strong>Gmacs</strong> is a generalized size-structured stock assessment modelling framework. The framework is designed with similar flexibility to that provided by age-structured stock assessment modelling frameworks like Stock Synthesis and CASAL. Gmacs can fit to a wide-variety of data for single sex or sex-specific population dynamics and fishery models: data can include survey and fishery indices of abundance and fishery- and survey-based size-composition data.</p>
+
+<h3>
+<a id="data-requirements" class="anchor" href="#data-requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Requirements</h3>
+
+<p>Data must be supplied via the <code>model.dat</code> file in a <em>flat format</em> to enable easy indexing and simple preparation. Each record for catch, abundance, length-structure etc. should be held in an individual row, with information relating to year, fleet, sex and more.</p>
+
+<p>Model specifcations are controlled through the <code>model.ctl</code> file. Information read from files is printed to a separate file called <code>echoinput.rep</code> allowing users to check and debug their input. For more information see the <a href="https://github.com/seacode/gmacs/wiki">Gmacs Wiki</a>.</p>
+
+<h2>
+<a id="r-package-for-gmacs" class="anchor" href="#r-package-for-gmacs" aria-hidden="true"><span class="octicon octicon-link"></span></a>R Package for Gmacs</h2>
+
+<p>An R package, called <code>gmr</code> is under development in support of Gmacs. The package provides functions for creating plots from Gmacs output files. A full pilot version is intended for release in September 2014, timed to coincide with the next stable release of Gmacs. Current development versions of the package can be downloaded from Github directly through R, see <a href="https://github.com/seacode/gmr">https://github.com/seacode/gmr</a> for more details.</p>
+
+<h2>
+<a id="simulation-mode" class="anchor" href="#simulation-mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simulation Mode</h2>
+
+<p>A simulation-estimation procedure can be performed with Gmacs, by using the <code>gmacs -sim</code> flag. For example, try <code>gmacs -sim 123</code>, where 123 is a random number seed.</p>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<p>This software is under development and is not yet intended for general use. If you would like to contribute to the project, please see the <a href="https://github.com/seacode/gmacs/wiki/5.-Developers">Developers Guide</a>.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Gmacs maintained by <a href="https://github.com/seacode">seacode</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
