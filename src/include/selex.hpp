@@ -1,13 +1,3 @@
-/**
-*
-* \file selex.hpp
-* \brief Various selectivity functions 
-* \ingroup CSTAR
-*
-* \author Athol Whitten & Steve Martell
-* \date 03/18/2014
-*
- */
 
 #ifndef SELEX_HPP
 #define SELEX_HPP
@@ -18,7 +8,9 @@
 /**
  * @defgroup Selectivities
  * @Selectivities Alternative selectivity functions in the cstar namespace are
- * derived from the cstar::Selex base class.  
+ * derived from the cstar::Selex base class. 
+ * 
+ * @file selex.hpp 
  * 
  * @author Steven Martell
  * @date   Feb 10, 2014

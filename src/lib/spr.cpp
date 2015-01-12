@@ -1,3 +1,8 @@
+/**
+ * \file spr.cpp
+ * \author Steve Martell
+ */
+
 #include <admodel.h>
 #if defined __APPLE__ || defined __linux
 	#include "../include/spr.h"

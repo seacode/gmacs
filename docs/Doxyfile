@@ -96,7 +96,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../src/ ../src/lib ../src/include
+INPUT                  = ../src/ ../src/lib ../src/include DoxMainPage.dox
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.tpl *.cpp *.h *.hpp
 RECURSIVE              = NO
@@ -174,7 +174,7 @@ GENERATE_TREEVIEW      = NO
 ENUM_VALUES_PER_LINE   = 4
 TREEVIEW_WIDTH         = 250
 EXT_LINKS_IN_WINDOW    = NO
-FORMULA_FONTSIZE       = 10
+FORMULA_FONTSIZE       = 12
 FORMULA_TRANSPARENT    = YES
 USE_MATHJAX            = YES
 MATHJAX_FORMAT         = HTML-CSS
