@@ -30,12 +30,12 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta
-   6.0       1.0      30.0          3       0    0.0     3.0         # gscale males or combined
-   6.0       1.0      30.0          3       0    0.0     3.0         # gscale
+  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha males or combined
+  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha
+  0.10       0.0       0.5         -3       0    0.0    10.0         # beta males or combined
+  0.10       0.0       0.5         -3       0    0.0    10.0         # beta
+  16.0      05.0      30.0         -3       0    0.0     3.0         # gscale males or combined
+   6.0      05.0      30.0         -3       0    0.0     3.0         # gscale
   115.      65.0     165.0          2       0    0.0     3.0         # molt_mu males or combined
   159.      65.0     165.0         -2       0    0.0     3.0         # molt_mu
    0.2       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
@@ -47,11 +47,10 @@
 ##    -Each gear must have a selectivity and a retention selectivity                    ##
 ## LEGEND sel_type:1=coefficients,2=logistic,3=logistic95                               ##
 ##        Index: use +ve for selectivity, -ve for retention
-##        sex dep: 0 for sex-independent, 1 for sex-dependent.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ivector for number of year blocks or nodes                                           ##
 ## Gear-1    Gear-2    Gear-3   Gear-4    
-   1         1         1        1         #Selectivity blocks
+   1         1         2        1         #Selectivity blocks
    1         1         1        1         #Retention blocks 
    1         0         0        0         #male   retention flag (0 -> no, 1 -> yes)
    0         0         0        0         #female retention flag (0 -> no, 1 -> yes)
@@ -60,16 +59,17 @@
 ## Index  type  mu   sd  dep  nodes  nodes mirror lam1  lam2  lam3 | block  block       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
-   1      2    180   10  0    1      1     2      12.5  12.5  12.5   1975   2014
-   2      2     90   10  0    1      1     2      12.5  12.5  12.5   1975   2014 
-   3      2     80   10  1    1      1     2      12.5  12.5  12.5   1975   2014
-   4      2     80   10  0    1      1    -3      12.5  12.5  12.5   1975   2014
+   1      2    180   10  0    1      1     2      12.5  12.5  12.5   1975   2013
+   2      2     90   10  0    1      1     2      12.5  12.5  12.5   1975   2013 
+   3      2     80   10  1    1      1     2      12.5  12.5  12.5   1975   1981
+   3      2     80   10  1    1      1     2      12.5  12.5  12.5   1982   2013
+   4      2     80   10  0    1      1    -2      12.5  12.5  12.5   1975   2013
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
-  -1      2    135    2  0    1      1    -2      12.5  12.5  12.5   1975   2014
-  -2      2     95   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
-  -3      2     90   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
-  -4      2     90   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
+  -1      2    135    2  0    1      1    -2      12.5  12.5  12.5   1975   2013
+  -2      2     95   10  0    1      1    -2      12.5  12.5  12.5   1975   2013
+  -3      2     90   10  0    1      1    -2      12.5  12.5  12.5   1975   2013
+  -4      2     90   10  0    1      1    -2      12.5  12.5  12.5   1975   2013
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -136,7 +136,7 @@
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
-  2014    # Last year for average recruitment for Bspr calculation.
+  2013    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
   1       # Gear index for SPR calculations (i.e., directed fishery).
   1       # Lambda (proportion of mature male biomass for SPR reference points.)

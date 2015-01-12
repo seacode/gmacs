@@ -88,6 +88,9 @@ DATA_SECTION
 	init_int nclass;        ///> number of size-classes
 	int n_grp;              ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
+	int nlikes
+                 //   1      2       3         4          5             
+	!! nlikes = 5; // (catch, cpue, sizecomps, recruits, molt_increment data)
 
 	// Set up index pointers
 	ivector isex(1,n_grp);
@@ -251,6 +254,14 @@ DATA_SECTION
 		ECHO(nSizeComps); 
 		ECHO(d3_obs_size_comps); 
 	END_CALCS
+	ivector ilike_vector(1,nlikes)
+	LOC_CALCS
+	  ilike_vector(1) = nCatchDF;
+	  ilike_vector(2) = nSurveys;
+	  ilike_vector(3) = nSizeComps;
+	  ilike_vector(4) = 1;
+	  ilike_vector(5) = 1;
+	END_CALCS
 
 
 
@@ -340,8 +351,8 @@ DATA_SECTION
 	!! cout<<"*** Reading control file ***"<<endl;
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
+	
 
-	ivector ipar_vector(1,ntheta);
 	vector theta_ival(1,ntheta);
 	vector theta_lb(1,ntheta);
 	vector theta_ub(1,ntheta);
@@ -351,10 +362,32 @@ DATA_SECTION
 		theta_lb   = column(theta_control,2);
 		theta_ub   = column(theta_control,3);
 		theta_phz  = ivector(column(theta_control,4));
-		ipar_vector(1,6)  = 1;
-		ipar_vector(7,11) = nsex;
-		ipar_vector(12)   = 1;
+		// ipar_vector(1,7)  = 1;
+		// ipar_vector(7,11) = nsex;
+		// ipar_vector(12)   = 1;
 	END_CALCS
+
+	// |----------------------------|
+	// | GROWTH PARAMETER CONTROLS  |
+	// |----------------------------|
+	// | Note that if bUseEmpiricalGrowth data is TRUE, then cannot estimate alpa & beta.
+	int nGrwth;
+	!! nGrwth = nsex*5;
+	init_matrix Grwth_control(1,nGrwth,1,7);
+
+	vector  Grwth_ival(1,nGrwth);
+	vector  Grwth_lb(1,nGrwth);
+	vector  Grwth_ub(1,nGrwth);
+	ivector Grwth_phz(1,nGrwth);
+	// ivector ipar_vector(1,nGrwth);
+	LOC_CALCS
+		// ipar_vector = nsex;
+		Grwth_ival  = column(Grwth_control,1);
+		Grwth_lb    = column(Grwth_control,2);
+		Grwth_ub    = column(Grwth_control,3);
+		Grwth_phz   = ivector(column(Grwth_control,4));
+	END_CALCS
+
 	
 
 	// |--------------------------------|
@@ -530,7 +563,7 @@ DATA_SECTION
 	number spr_target;
 	int spr_fleet;
 	number spr_lambda;
-	int bEmpericalGrowth;
+	int bUseEmpiricalGrowth;
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -540,13 +573,31 @@ DATA_SECTION
 		spr_target          =     model_controls(6);
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
-		bEmpericalGrowth    = int(model_controls(9));
+		bUseEmpiricalGrowth = int(model_controls(9));
 	END_CALCS
 
 	init_int eof_ctl;
 	!! if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
 
 	!! cout<<"end of control section"<<endl;
+
+
+	LOC_CALCS
+		// ensure the phase for alpha & beta is -ve for GrowhtPars if bUseEmpiricalGrowth
+		COUT(Grwth_phz);
+		if(bUseEmpiricalGrowth)
+		{
+			cerr << "WARNING:\n \tUsing empirical growth increment data,\n";
+			cerr << "\talpha & beta parameters will not be estimated."<<endl;
+			for (int h=1;h<=nsex;h++)
+			{
+				int icnt=h;
+				Grwth_phz(icnt) = -1;
+				icnt += nsex;
+				Grwth_phz(icnt) = -1;
+			}
+		}
+	END_CALCS
 
 	int nf;
 	!! nf = 0;
@@ -562,6 +613,7 @@ DATA_SECTION
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
+	Grwth     Grwth_ival;
 	log_fbar  log_pen_fbar;
 	
 
@@ -574,14 +626,18 @@ PARAMETER_SECTION
 	// ln(Rbar) = theta(4)
 	// ra       = theta(5)
 	// rbeta    = theta(6)
-	// alpha    = theta(7)
-	// beta     = theta(8)
-	// scale    = theta(9)
-	// molt_mu  = theta(10)
-	// molt_cv  = theta(11)
-	// sigma_R  = theta(12)
-	//init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
-	init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
+	// sigma_R  = theta(7)
+	// alpha    = Grwth(1)
+	// beta     = Grwth(2)
+	// scale    = Grwth(3)
+	// molt_mu  = Grwth(4)
+	// molt_cv  = Grwth(5)
+	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
+	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+	
+	init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
+	// init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
+	//init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
 
 	// Molt increment parameters
 	// Need molt increment data to estimate these parameters
@@ -628,9 +684,10 @@ PARAMETER_SECTION
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
-	vector nloglike(1,5);
+
+	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,4);
-	vector priorDensity(1,ntheta+nSurveys);
+	vector priorDensity(1,ntheta+nGrwth+nSurveys);
 
 	objective_function_value objfun;
 
@@ -639,7 +696,7 @@ PARAMETER_SECTION
 	number logR0;           ///> logarithm of unfished recruits.
 	number logRbar;         ///> logarithm of average recruits(syr+1,nyr)
 	number logRini;         ///> logarithm of initial recruitment(syr).
-	number ra;              ///> shape parameter for recruitment distribution
+	number ra;              ///> Expected value of recruitment distribution
 	number rbeta;           ///> rate parameter for recruitment distribution
 	number logSigmaR;       ///> standard deviation of recruitment deviations.
 
@@ -702,7 +759,7 @@ PRELIMINARY_CALCS_SECTION
 		//exit(1);
 	}
 	
-	if(bEmpericalGrowth)
+	if(bUseEmpiricalGrowth)
 	{
 		int l = 1;
 		for(int i = 1; i <= nGrowthObs; i++ )
@@ -725,7 +782,7 @@ PROCEDURE_SECTION
 	if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
 
 	// Population dynamics ...
-	if(!bEmpericalGrowth)
+	if(!bUseEmpiricalGrowth)
 	{
 		calc_growth_increments();
 	}
@@ -770,37 +827,46 @@ FUNCTION calc_sdreport
 	/**
 	 * @brief Initialize model parameters
 	 * @details Set global variable equal to the estimated parameter vectors.
+	 * 
+	 * SM:  Note if using empirical growth increment data, then alpha and beta
+     * Growth parameters should not be estimated.  Need to warn the user
+     * if the following condition is true:
+     * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
 	 */
 FUNCTION initialize_model_parameters
-	 // Get parameters from theta control matrix:
 	
-	M0        = theta(1,1);
-	logR0     = theta(2,1);
-	logRini   = theta(3,1);
-	logRbar   = theta(4,1);
-	ra        = theta(5,1);
-	rbeta     = theta(6,1);
-	alpha     = theta(7)(1,nsex);
-	beta      = theta(8)(1,nsex);
+	// Get parameters from theta control matrix:
+	M0        = theta(1);
+	logR0     = theta(2);
+	logRini   = theta(3);
+	logRbar   = theta(4);
+	ra        = theta(5);
+	rbeta     = theta(6);
+	logSigmaR = theta(7);
 
-	// set initial values of linear growth increment function to MLE values.
-	if( bEmpericalGrowth )
+	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
+	// Get Growth & Molting parameters 
+	for (int h=1;h<=nsex;h++)
 	{
-		alpha     = theta(7)(1,nsex);
-		beta      = theta(8)(1,nsex);
+		int icnt=h;
+		alpha(h)     = Grwth(icnt);
+		icnt += nsex;
+		beta(h)      = Grwth(icnt);
+		icnt += nsex;
+		gscale(h)    = Grwth(icnt);
+		icnt += nsex;
+		molt_mu(h)   = Grwth(icnt);
+		icnt += nsex;
+		molt_cv(h)   = Grwth(icnt);
 	}
-	else
+	
+
+	
+	if( ! bUseEmpiricalGrowth )
 	{
 		alpha     = mle_alpha;
 		beta      = mle_beta;
 	}
-
-	
-	
-	gscale    = theta(9)(1,nsex);
-	molt_mu   = theta(10)(1,nsex);
-	molt_cv   = theta(11)(1,nsex);
-	logSigmaR = theta(12,1);
 	
 
 	/**
@@ -1014,51 +1080,40 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	 * Dec 20.  Undid the above modification after correspondence with Jack Turnock.
 	 * He rightly pointed out that it is possible to molt and remain in the same bin
 	 * interval (if the intervals are sufficiently large). 
+	 * 
+	 * Jan 11, 2015. Checked cumd_gamma function in ADMB with R.  This is the same
+	 * function as pgamma with the rate parameter set at its default value 1.0.  The 
+	 * mean value of the function is the second argument of cumd_gamma, and the vector 
+	 * of quantiles is the first argument.  Both arguments are scaled by gscale.
 	 */
 FUNCTION calc_size_transition_matrix
 	//cout<<"Start of calc_size_transition_matrix"<<endl;
 	int h,l,ll;
-	dvariable tmp;
+	dvariable dMeanSizeAfterMolt;
 	dvar_vector psi(1,nclass+1);
 	dvar_vector sbi(1,nclass+1);
 	dvar_matrix At(1,nclass,1,nclass);
 	size_transition.initialize();
 
+
 	
 	for( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
-		//sbi = (size_breaks - min(size_breaks))/(max(size_breaks)-min(size_breaks)); // gscale(h);
-		//cout<<sbi<<endl<<endl;
+		sbi = size_breaks / gscale(h);
 		for( l = 1; l <= nclass; l++ )
 		{
-			dvector sbi(l,nclass+1);
-			double lb = size_breaks(l);
-			double ub = size_breaks(nclass+1);
-			sbi = (size_breaks(l,nclass+1) - lb)/(ub-lb);
-
-			tmp = molt_increment(h)(l)/gscale(h);
-				
-			
-			
+			dMeanSizeAfterMolt = (sbi(l) + molt_increment(h)(l)) / gscale(h);
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
 				if( ll <= nclass+1 )
 				{
-					//psi(ll) = cumd_gamma(size_breaks(ll)/gscale(h),tmp);
-					
-					psi(ll) = cumd_gamma(sbi(ll),tmp);
-					// cout<<ll<<"\t"<<sbi(ll)<<"\t"<<tmp<<"\t"<<psi(ll)<<endl;	
+					psi(ll) = cumd_gamma(sbi(ll),dMeanSizeAfterMolt);
 				}
 			}
-			
-			//cout<<psi<<endl;
-
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
-			//cout<<At(l)<<endl;
-			At(l)(l,nclass) /= sum(At(l));
-
+			At(l)(l,nclass)  = At(l)(l,nclass) / sum(At(l));
 		}
 		size_transition(h) = At;
 		
@@ -1067,6 +1122,7 @@ FUNCTION calc_size_transition_matrix
 	}
 	
 	// cout<<"End of calc_size_transition_matrix"<<endl;
+	
 	
 
 
@@ -1115,9 +1171,17 @@ FUNCTION calc_natural_mortality
 			}
 			break;
 
+			/*
+			JIm Question about below.  I'm not sure if you were intending to
+			have this set up as a random walk, where the shift occurs in a specifc year
+			to a new state.  I think what Jie had  was just a block wiht a different
+			M and it then returns back to the previous state.
+			*/
 			case 3:  // Specific break points
 			  for (int idev=1;idev<=nMdev;idev++)
+			  {
   				delta(m_nodeyear(idev)) = m_dev(idev);
+			  }
 			break;
 
 		}
@@ -1160,10 +1224,6 @@ FUNCTION calc_total_mortality
 
 
 
-
-
-
-
 	/**
 	 * \brief Calculate the probability of moulting vs carapace width.
 	 * \details Note that the parameters molt_mu and molt cv can only be
@@ -1188,12 +1248,13 @@ FUNCTION calc_molting_probability
 		}
 	}
 
-
-
 	/**
 	 * @brief calculate size distribution for new recuits.
 	 * @details Based on the gamma distribution, calculates the probability
 	 * of a new recruit being in size-interval size.
+	 * 
+	 * TODO: fix the scale on cumd_gamma distribution so beta rbeta is estimable.
+	 * 
 	 * @param ra is the mean of the distribution.
 	 * @param rbeta scales the variance of the distribution
 	 */
@@ -1862,6 +1923,14 @@ FUNCTION calc_predicted_composition
 	 *  - case 2 is a lognormal density with mean = log(p1) and sd = p2
 	 *  - case 3 is a beta density bounded between lb-ub with p1 and p2 as alpha & beta
 	 *  - case 4 is a gamma density with parameters p1 and p2.
+	 *  
+	 *  TODO
+	 *  Make this a generic function.
+	 *  Agrs would be vector of parameters, and matrix of controls
+	 *  @param theta a vector of parameters
+	 *  @param C matrix of controls (priorType, p1, p2, lb, ub)
+	 *  @return vector of prior densities for each parameter
+	 *  
 	 */
 FUNCTION calculate_prior_densities
 	double p1,p2;
@@ -1870,45 +1939,43 @@ FUNCTION calculate_prior_densities
 	
 	for(int i = 1; i <= ntheta; i++ )
 	{
-		for(int j = 1; j <= ipar_vector(i); j++ )
+		// for(int j = 1; j <= ipar_vector(i); j++ )
 		{
-		
-			int priorType = theta_control(i,5);
+			int priorType = int(theta_control(i,5));
 			p1 = theta_control(i,6);
 			p2 = theta_control(i,7);
 			switch(priorType)
 			{
 				// uniform
 				case 0: 
-					p1 = theta_control(i,2);
-					p2 = theta_control(i,3);
 					priorDensity(i) = -log(1.0 / (p2-p1));
 				break;
 
 				// normal
 				case 1:
-					priorDensity(i) = dnorm(theta(i,j),p1,p2);
+					priorDensity(i) = dnorm(theta(i),p1,p2);
 				break;
 
 				// lognormal
 				case 2:
-					priorDensity(i) = dlnorm(theta(i,j),log(p1),p2);
+					priorDensity(i) = dlnorm(theta(i),log(p1),p2);
 				break;
 
 				// beta
 				case 3:
 					lb = theta_control(i,2);
 					ub = theta_control(i,3);
-					priorDensity(i) = dbeta((theta(i,j)-lb)/(ub-lb),p1,p2);
+					priorDensity(i) = dbeta((theta(i)-lb)/(ub-lb),p1,p2);
 				break;
 
 				// gamma
 				case 4:
-					priorDensity(i) = dgamma(theta(i,j),p1,p2);
+					priorDensity(i) = dgamma(theta(i),p1,p2);
 				break;
 			}
 		}
 	}
+
 	// ---Continue with catchability priors-----------------------
 	int iprior = ntheta + 1; 
 	for (int i=1;i<=nSurveys;i++)
@@ -1962,7 +2029,7 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nCatchDF; k++ )
 	{
 		dvector catch_sd = sqrt( log( 1.0+square(catch_cv(k)) ) );
-		nloglike(1) += dnorm(res_catch(k),catch_sd);
+		nloglike(1,k) += dnorm(res_catch(k),catch_sd);
 	}
 
 
@@ -1973,7 +2040,7 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
-		nloglike(2) += dnorm(res_cpue(k),cpue_sd(k));
+		nloglike(2,k) += dnorm(res_cpue(k),cpue_sd(k));
 	}
 
 
@@ -2002,17 +2069,14 @@ FUNCTION calc_objective_function
 					ploglike = new acl::robust_multi(O,bCmp);
 			break;
 		}
-
-		// now compute the likelihood.
-		nloglike(3) += ploglike->nloglike(log_effn,P);
-
 		// Compute residuals in the last phase.
 		if(last_phase()) 
 		{
-			d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
+		  d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 		}
-		
-		
+
+		// now compute the likelihood.
+		nloglike(3,ii) += ploglike->nloglike(log_effn,P);
 
 		
 	}
@@ -2020,14 +2084,14 @@ FUNCTION calc_objective_function
 
 	// 4) Likelihood for recruitment deviations.
 	dvariable sigR = mfexp(logSigmaR);
-	nloglike(4)    = dnorm(rec_dev,sigR);
+	nloglike(4,1)    = dnorm(rec_dev,sigR);
 
 
 	// 5) Likelihood for growth increment data
-	if( !bEmpericalGrowth && ( active(theta(7)) || active(theta(8)) ) )
+	if( !bUseEmpiricalGrowth && ( active(theta(7)) || active(theta(8)) ) )
 	{
 		dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
-		nloglike(5)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
+		nloglike(5,1)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
 	}
 
 
@@ -2039,11 +2103,8 @@ FUNCTION calc_objective_function
 	// 1) Penalty on log_fdev to ensure they sum to zero 
 	for(int k = 1; k <= nfleet; k++ )
 	{
-		dvariable s    = mean(log_fdev(k));
+		dvariable s     = mean(log_fdev(k));
 		nlogPenalty(1) += 10000.0*s*s;
-
-				  s    = mean(log_fdov(k));
-		nlogPenalty(1) += 10000.0*s*s;             
 	}
 
 
@@ -2187,6 +2248,7 @@ REPORT_SECTION
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
+	REPORT(F);
 	REPORT(d3_SizeComps);
 
 	REPORT(d3_obs_size_comps);
@@ -2240,10 +2302,39 @@ REPORT_SECTION
 		}
 		REPORT(size_comp_sample_size);
 	}
+	// Print total numbers at length
+	dvar_matrix N_len(syr,nyr+1,1,nclass);
+	dvar_matrix N_mm(syr,nyr+1,1,nclass);
+	dvar_matrix N_males(syr,nyr+1,1,nclass);
+	dvar_matrix N_males_old(syr,nyr+1,1,nclass);
+	N_len.initialize();
+	N_males.initialize();
+	N_mm.initialize();
+	N_males_old.initialize();
+	for (int i=syr;i<=nyr+1;i++)
+	  for (int j=1;j<=nclass;j++)
+	    for (int k=1;k<=n_grp;k++)
+	    {	
+				if (isex(k)==1)
+	    	{
+	    		N_males(i,j) += d3_N(k,i,j);
+					if (ishell(k)==2)
+		    		N_males_old(i,j) += d3_N(k,i,j);
+					if (imature(k)==1)
+		    		N_mm(i,j) += d3_N(k,i,j);
+	    	}
+	    	N_len(i,j) += d3_N(k,i,j);
+	    }
+
+	REPORT(N_len);
+	REPORT(N_mm);
+	REPORT(N_males);
+	REPORT(N_males_old);
+	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
 	REPORT(dMoltInc);
-	if(bEmpericalGrowth)
+	if(bUseEmpiricalGrowth)
 	{
 		dvector pMoltInc = dMoltInc;
 		REPORT(pMoltInc);
