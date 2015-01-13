@@ -1942,109 +1942,110 @@ $(document).ready(function(){initNavTree('dd/d2c/gmacs_8cpp_source.html','../../
 <div class="line"><a name="l02197"></a><span class="lineno"> 2197</span>&#160;    {</div>
 <div class="line"><a name="l02198"></a><span class="lineno"> 2198</span>&#160;        _dmr(k) = dmr(iyr,k);</div>
 <div class="line"><a name="l02199"></a><span class="lineno"> 2199</span>&#160;    }</div>
-<div class="line"><a name="l02200"></a><span class="lineno"> 2200</span>&#160;    <a class="code" href="../../df/d47/classspr.html">spr</a> *ptrSPR=<span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l02201"></a><span class="lineno"> 2201</span>&#160;    <span class="comment">// SPR reference points for a single shell condition.</span></div>
-<div class="line"><a name="l02202"></a><span class="lineno"> 2202</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 1)</div>
-<div class="line"><a name="l02203"></a><span class="lineno"> 2203</span>&#160;    {</div>
-<div class="line"><a name="l02204"></a><span class="lineno"> 2204</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,spr_lambda,_rx,_wa,_M,_A);</div>
-<div class="line"><a name="l02205"></a><span class="lineno"> 2205</span>&#160;        ptrSPR = &amp;c_spr;</div>
-<div class="line"><a name="l02206"></a><span class="lineno"> 2206</span>&#160;    }</div>
-<div class="line"><a name="l02207"></a><span class="lineno"> 2207</span>&#160;    <span class="comment">// SPR reference points for new and old shell condition.</span></div>
-<div class="line"><a name="l02208"></a><span class="lineno"> 2208</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 2)</div>
-<div class="line"><a name="l02209"></a><span class="lineno"> 2209</span>&#160;    {</div>
-<div class="line"><a name="l02210"></a><span class="lineno"> 2210</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,spr_lambda,_rx,_wa,_M,_P,_A);</div>
-<div class="line"><a name="l02211"></a><span class="lineno"> 2211</span>&#160;        ptrSPR = &amp;c_spr;    </div>
-<div class="line"><a name="l02212"></a><span class="lineno"> 2212</span>&#160;    }</div>
-<div class="line"><a name="l02213"></a><span class="lineno"> 2213</span>&#160;    spr_fspr = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#ac21f4b9bd58b8cf097e8ece186fa0735" title="Calculate f_spr reference point. ">get_fspr</a>(ifleet,spr_target,_fhk,_sel,_ret,_dmr);</div>
-<div class="line"><a name="l02214"></a><span class="lineno"> 2214</span>&#160;    spr_bspr = ptrSPR-&gt;get_bspr();</div>
-<div class="line"><a name="l02215"></a><span class="lineno"> 2215</span>&#160;    <span class="comment">// OFL Calculations</span></div>
-<div class="line"><a name="l02216"></a><span class="lineno"> 2216</span>&#160;    dvector mmb = value(calc_mmb());</div>
-<div class="line"><a name="l02217"></a><span class="lineno"> 2217</span>&#160;    <span class="keywordtype">double</span> cuttoff = 0.1;</div>
-<div class="line"><a name="l02218"></a><span class="lineno"> 2218</span>&#160;    <span class="keywordtype">double</span> limit = 0.25;</div>
-<div class="line"><a name="l02219"></a><span class="lineno"> 2219</span>&#160;    spr_fofl = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#af73697b13ba0e7887b80d01cd0d29a62" title="Calculate fishing mortality rate for OFL. ">get_fofl</a>(cuttoff,limit,mmb(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3" title="initial year ">nyr</a>));</div>
-<div class="line"><a name="l02220"></a><span class="lineno"> 2220</span>&#160;    spr_cofl = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#afccf9131ac27f116ee38adb492b6c2b4" title="Calculate OFL. ">get_cofl</a>(_N);</div>
-<div class="line"><a name="l02221"></a><span class="lineno"> 2221</span>&#160;}</div>
-<div class="line"><a name="l02222"></a><span class="lineno"> 2222</span>&#160;</div>
-<div class="line"><a name="l02223"></a><span class="lineno"> 2223</span>&#160;<span class="keywordtype">void</span> model_parameters::set_runtime(<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l02224"></a><span class="lineno"> 2224</span>&#160;{</div>
-<div class="line"><a name="l02225"></a><span class="lineno"> 2225</span>&#160;  dvector temp1(<span class="stringliteral">&quot;{500,  500,   1500, 25000, 25000}&quot;</span>);</div>
-<div class="line"><a name="l02226"></a><span class="lineno"> 2226</span>&#160;  maximum_function_evaluations.allocate(temp1.indexmin(),temp1.indexmax());</div>
-<div class="line"><a name="l02227"></a><span class="lineno"> 2227</span>&#160;  maximum_function_evaluations=temp1;</div>
-<div class="line"><a name="l02228"></a><span class="lineno"> 2228</span>&#160;  dvector temp(<span class="stringliteral">&quot;{1.e-4, 1.e-4, 1.e-4, 1.e-4, 1.e-4, }&quot;</span>);</div>
-<div class="line"><a name="l02229"></a><span class="lineno"> 2229</span>&#160;  convergence_criteria.allocate(temp.indexmin(),temp.indexmax());</div>
-<div class="line"><a name="l02230"></a><span class="lineno"> 2230</span>&#160;  convergence_criteria=temp;</div>
-<div class="line"><a name="l02231"></a><span class="lineno"> 2231</span>&#160;}</div>
-<div class="line"><a name="l02232"></a><span class="lineno"> 2232</span>&#160;</div>
-<div class="line"><a name="l02233"></a><span class="lineno"> 2233</span>&#160;<span class="keywordtype">void</span> model_parameters::final_calcs()</div>
-<div class="line"><a name="l02234"></a><span class="lineno"> 2234</span>&#160;{</div>
-<div class="line"><a name="l02235"></a><span class="lineno"> 2235</span>&#160;    <span class="comment">//  Print run time statistics to the screen.</span></div>
-<div class="line"><a name="l02236"></a><span class="lineno"> 2236</span>&#160;    time(&amp;finish);</div>
-<div class="line"><a name="l02237"></a><span class="lineno"> 2237</span>&#160;    elapsed_time=difftime(finish,start);</div>
-<div class="line"><a name="l02238"></a><span class="lineno"> 2238</span>&#160;    hour=long(elapsed_time)/3600;</div>
-<div class="line"><a name="l02239"></a><span class="lineno"> 2239</span>&#160;    minute=long(elapsed_time)%3600/60;</div>
-<div class="line"><a name="l02240"></a><span class="lineno"> 2240</span>&#160;    second=(long(elapsed_time)%3600)%60;</div>
-<div class="line"><a name="l02241"></a><span class="lineno"> 2241</span>&#160;    cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;<span class="stringliteral">&quot;*******************************************&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l02242"></a><span class="lineno"> 2242</span>&#160;    cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;<span class="stringliteral">&quot;-------------------------------------------&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l02243"></a><span class="lineno"> 2243</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Start time: &quot;</span>&lt;&lt;ctime(&amp;start)&lt;&lt;endl;</div>
-<div class="line"><a name="l02244"></a><span class="lineno"> 2244</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Finish time: &quot;</span>&lt;&lt;ctime(&amp;finish)&lt;&lt;endl;</div>
-<div class="line"><a name="l02245"></a><span class="lineno"> 2245</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Runtime: &quot;</span>;</div>
-<div class="line"><a name="l02246"></a><span class="lineno"> 2246</span>&#160;    cout&lt;&lt;hour&lt;&lt;<span class="stringliteral">&quot; hours, &quot;</span>&lt;&lt;minute&lt;&lt;<span class="stringliteral">&quot; minutes, &quot;</span>&lt;&lt;second&lt;&lt;<span class="stringliteral">&quot; seconds&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l02247"></a><span class="lineno"> 2247</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Number of function evaluations: &quot;</span>&lt;&lt;nf&lt;&lt;endl;</div>
-<div class="line"><a name="l02248"></a><span class="lineno"> 2248</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;*******************************************&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l02249"></a><span class="lineno"> 2249</span>&#160;}</div>
-<div class="line"><a name="l02250"></a><span class="lineno"> 2250</span>&#160;</div>
-<div class="line"><a name="l02251"></a><span class="lineno"> 2251</span>&#160;model_data::~model_data()</div>
-<div class="line"><a name="l02252"></a><span class="lineno"> 2252</span>&#160;{}</div>
-<div class="line"><a name="l02253"></a><span class="lineno"> 2253</span>&#160;</div>
-<div class="line"><a name="l02254"></a><span class="lineno"> 2254</span>&#160;model_parameters::~model_parameters()</div>
-<div class="line"><a name="l02255"></a><span class="lineno"> 2255</span>&#160;{}</div>
-<div class="line"><a name="l02256"></a><span class="lineno"> 2256</span>&#160;</div>
-<div class="line"><a name="l02257"></a><span class="lineno"> 2257</span>&#160;<span class="preprocessor">#ifdef _BORLANDC_</span></div>
-<div class="line"><a name="l02258"></a><span class="lineno"> 2258</span>&#160;<span class="preprocessor"></span>  <span class="keyword">extern</span> <span class="keywordtype">unsigned</span> _stklen=10000U;</div>
-<div class="line"><a name="l02259"></a><span class="lineno"> 2259</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l02260"></a><span class="lineno"> 2260</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l02261"></a><span class="lineno"> 2261</span>&#160;</div>
-<div class="line"><a name="l02262"></a><span class="lineno"> 2262</span>&#160;<span class="preprocessor">#ifdef __ZTC__</span></div>
-<div class="line"><a name="l02263"></a><span class="lineno"> 2263</span>&#160;<span class="preprocessor"></span>  <span class="keyword">extern</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _stack=10000U;</div>
-<div class="line"><a name="l02264"></a><span class="lineno"> 2264</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l02265"></a><span class="lineno"> 2265</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l02266"></a><span class="lineno"> 2266</span>&#160;  <span class="keywordtype">long</span> <span class="keywordtype">int</span> arrmblsize=0;</div>
-<div class="line"><a name="l02267"></a><span class="lineno"> 2267</span>&#160;</div>
-<div class="line"><a name="l02268"></a><span class="lineno"> 2268</span>&#160;<span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc,<span class="keywordtype">char</span> * argv[])</div>
-<div class="line"><a name="l02269"></a><span class="lineno"> 2269</span>&#160;{</div>
-<div class="line"><a name="l02270"></a><span class="lineno"> 2270</span>&#160;    ad_set_new_handler();</div>
-<div class="line"><a name="l02271"></a><span class="lineno"> 2271</span>&#160;  ad_exit=&amp;ad_boundf;</div>
-<div class="line"><a name="l02272"></a><span class="lineno"> 2272</span>&#160;    time(&amp;start);</div>
-<div class="line"><a name="l02273"></a><span class="lineno"> 2273</span>&#160;    arrmblsize = 50000000;</div>
-<div class="line"><a name="l02274"></a><span class="lineno"> 2274</span>&#160;    gradient_structure::set_GRADSTACK_BUFFER_SIZE(1.e7);</div>
-<div class="line"><a name="l02275"></a><span class="lineno"> 2275</span>&#160;    gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);</div>
-<div class="line"><a name="l02276"></a><span class="lineno"> 2276</span>&#160;    gradient_structure::set_MAX_NVAR_OFFSET(5000);</div>
-<div class="line"><a name="l02277"></a><span class="lineno"> 2277</span>&#160;    gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);</div>
-<div class="line"><a name="l02278"></a><span class="lineno"> 2278</span>&#160;    gradient_structure::set_MAX_DLINKS(50000); </div>
-<div class="line"><a name="l02279"></a><span class="lineno"> 2279</span>&#160;    gradient_structure::set_NO_DERIVATIVES();</div>
-<div class="line"><a name="l02280"></a><span class="lineno"> 2280</span>&#160;    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();</div>
-<div class="line"><a name="l02281"></a><span class="lineno"> 2281</span>&#160;    <span class="keywordflow">if</span> (!arrmblsize) arrmblsize=15000000;</div>
-<div class="line"><a name="l02282"></a><span class="lineno"> 2282</span>&#160;    model_parameters mp(arrmblsize,argc,argv);</div>
-<div class="line"><a name="l02283"></a><span class="lineno"> 2283</span>&#160;    mp.iprint=10;</div>
-<div class="line"><a name="l02284"></a><span class="lineno"> 2284</span>&#160;    mp.preliminary_calculations();</div>
-<div class="line"><a name="l02285"></a><span class="lineno"> 2285</span>&#160;    mp.computations(argc,argv);</div>
-<div class="line"><a name="l02286"></a><span class="lineno"> 2286</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02287"></a><span class="lineno"> 2287</span>&#160;}</div>
-<div class="line"><a name="l02288"></a><span class="lineno"> 2288</span>&#160;</div>
-<div class="line"><a name="l02289"></a><span class="lineno"> 2289</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>  {</div>
-<div class="line"><a name="l02290"></a><span class="lineno"> 2290</span>&#160;  <span class="keywordtype">void</span> ad_boundf(<span class="keywordtype">int</span> i)</div>
-<div class="line"><a name="l02291"></a><span class="lineno"> 2291</span>&#160;  {</div>
-<div class="line"><a name="l02292"></a><span class="lineno"> 2292</span>&#160;    <span class="comment">/* so we can stop here */</span></div>
-<div class="line"><a name="l02293"></a><span class="lineno"> 2293</span>&#160;    exit(i);</div>
-<div class="line"><a name="l02294"></a><span class="lineno"> 2294</span>&#160;  }</div>
-<div class="line"><a name="l02295"></a><span class="lineno"> 2295</span>&#160;}</div>
+<div class="line"><a name="l02200"></a><span class="lineno"> 2200</span>&#160;    <span class="comment">//spr *ptrSPR=nullptr;</span></div>
+<div class="line"><a name="l02201"></a><span class="lineno"> 2201</span>&#160;    <a class="code" href="../../df/d47/classspr.html">spr</a> *ptrSPR=0;</div>
+<div class="line"><a name="l02202"></a><span class="lineno"> 2202</span>&#160;    <span class="comment">// SPR reference points for a single shell condition.</span></div>
+<div class="line"><a name="l02203"></a><span class="lineno"> 2203</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 1)</div>
+<div class="line"><a name="l02204"></a><span class="lineno"> 2204</span>&#160;    {</div>
+<div class="line"><a name="l02205"></a><span class="lineno"> 2205</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,spr_lambda,_rx,_wa,_M,_A);</div>
+<div class="line"><a name="l02206"></a><span class="lineno"> 2206</span>&#160;        ptrSPR = &amp;c_spr;</div>
+<div class="line"><a name="l02207"></a><span class="lineno"> 2207</span>&#160;    }</div>
+<div class="line"><a name="l02208"></a><span class="lineno"> 2208</span>&#160;    <span class="comment">// SPR reference points for new and old shell condition.</span></div>
+<div class="line"><a name="l02209"></a><span class="lineno"> 2209</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 2)</div>
+<div class="line"><a name="l02210"></a><span class="lineno"> 2210</span>&#160;    {</div>
+<div class="line"><a name="l02211"></a><span class="lineno"> 2211</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,spr_lambda,_rx,_wa,_M,_P,_A);</div>
+<div class="line"><a name="l02212"></a><span class="lineno"> 2212</span>&#160;        ptrSPR = &amp;c_spr;    </div>
+<div class="line"><a name="l02213"></a><span class="lineno"> 2213</span>&#160;    }</div>
+<div class="line"><a name="l02214"></a><span class="lineno"> 2214</span>&#160;    spr_fspr = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#ac21f4b9bd58b8cf097e8ece186fa0735" title="Calculate f_spr reference point. ">get_fspr</a>(ifleet,spr_target,_fhk,_sel,_ret,_dmr);</div>
+<div class="line"><a name="l02215"></a><span class="lineno"> 2215</span>&#160;    spr_bspr = ptrSPR-&gt;get_bspr();</div>
+<div class="line"><a name="l02216"></a><span class="lineno"> 2216</span>&#160;    <span class="comment">// OFL Calculations</span></div>
+<div class="line"><a name="l02217"></a><span class="lineno"> 2217</span>&#160;    dvector mmb = value(calc_mmb());</div>
+<div class="line"><a name="l02218"></a><span class="lineno"> 2218</span>&#160;    <span class="keywordtype">double</span> cuttoff = 0.1;</div>
+<div class="line"><a name="l02219"></a><span class="lineno"> 2219</span>&#160;    <span class="keywordtype">double</span> limit = 0.25;</div>
+<div class="line"><a name="l02220"></a><span class="lineno"> 2220</span>&#160;    spr_fofl = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#af73697b13ba0e7887b80d01cd0d29a62" title="Calculate fishing mortality rate for OFL. ">get_fofl</a>(cuttoff,limit,mmb(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3" title="initial year ">nyr</a>));</div>
+<div class="line"><a name="l02221"></a><span class="lineno"> 2221</span>&#160;    spr_cofl = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#afccf9131ac27f116ee38adb492b6c2b4" title="Calculate OFL. ">get_cofl</a>(_N);</div>
+<div class="line"><a name="l02222"></a><span class="lineno"> 2222</span>&#160;}</div>
+<div class="line"><a name="l02223"></a><span class="lineno"> 2223</span>&#160;</div>
+<div class="line"><a name="l02224"></a><span class="lineno"> 2224</span>&#160;<span class="keywordtype">void</span> model_parameters::set_runtime(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l02225"></a><span class="lineno"> 2225</span>&#160;{</div>
+<div class="line"><a name="l02226"></a><span class="lineno"> 2226</span>&#160;  dvector temp1(<span class="stringliteral">&quot;{500,  500,   1500, 25000, 25000}&quot;</span>);</div>
+<div class="line"><a name="l02227"></a><span class="lineno"> 2227</span>&#160;  maximum_function_evaluations.allocate(temp1.indexmin(),temp1.indexmax());</div>
+<div class="line"><a name="l02228"></a><span class="lineno"> 2228</span>&#160;  maximum_function_evaluations=temp1;</div>
+<div class="line"><a name="l02229"></a><span class="lineno"> 2229</span>&#160;  dvector temp(<span class="stringliteral">&quot;{1.e-4, 1.e-4, 1.e-4, 1.e-4, 1.e-4, }&quot;</span>);</div>
+<div class="line"><a name="l02230"></a><span class="lineno"> 2230</span>&#160;  convergence_criteria.allocate(temp.indexmin(),temp.indexmax());</div>
+<div class="line"><a name="l02231"></a><span class="lineno"> 2231</span>&#160;  convergence_criteria=temp;</div>
+<div class="line"><a name="l02232"></a><span class="lineno"> 2232</span>&#160;}</div>
+<div class="line"><a name="l02233"></a><span class="lineno"> 2233</span>&#160;</div>
+<div class="line"><a name="l02234"></a><span class="lineno"> 2234</span>&#160;<span class="keywordtype">void</span> model_parameters::final_calcs()</div>
+<div class="line"><a name="l02235"></a><span class="lineno"> 2235</span>&#160;{</div>
+<div class="line"><a name="l02236"></a><span class="lineno"> 2236</span>&#160;    <span class="comment">//  Print run time statistics to the screen.</span></div>
+<div class="line"><a name="l02237"></a><span class="lineno"> 2237</span>&#160;    time(&amp;finish);</div>
+<div class="line"><a name="l02238"></a><span class="lineno"> 2238</span>&#160;    elapsed_time=difftime(finish,start);</div>
+<div class="line"><a name="l02239"></a><span class="lineno"> 2239</span>&#160;    hour=long(elapsed_time)/3600;</div>
+<div class="line"><a name="l02240"></a><span class="lineno"> 2240</span>&#160;    minute=long(elapsed_time)%3600/60;</div>
+<div class="line"><a name="l02241"></a><span class="lineno"> 2241</span>&#160;    second=(long(elapsed_time)%3600)%60;</div>
+<div class="line"><a name="l02242"></a><span class="lineno"> 2242</span>&#160;    cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;<span class="stringliteral">&quot;*******************************************&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l02243"></a><span class="lineno"> 2243</span>&#160;    cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;<span class="stringliteral">&quot;-------------------------------------------&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l02244"></a><span class="lineno"> 2244</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Start time: &quot;</span>&lt;&lt;ctime(&amp;start)&lt;&lt;endl;</div>
+<div class="line"><a name="l02245"></a><span class="lineno"> 2245</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Finish time: &quot;</span>&lt;&lt;ctime(&amp;finish)&lt;&lt;endl;</div>
+<div class="line"><a name="l02246"></a><span class="lineno"> 2246</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Runtime: &quot;</span>;</div>
+<div class="line"><a name="l02247"></a><span class="lineno"> 2247</span>&#160;    cout&lt;&lt;hour&lt;&lt;<span class="stringliteral">&quot; hours, &quot;</span>&lt;&lt;minute&lt;&lt;<span class="stringliteral">&quot; minutes, &quot;</span>&lt;&lt;second&lt;&lt;<span class="stringliteral">&quot; seconds&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l02248"></a><span class="lineno"> 2248</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;--Number of function evaluations: &quot;</span>&lt;&lt;nf&lt;&lt;endl;</div>
+<div class="line"><a name="l02249"></a><span class="lineno"> 2249</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;*******************************************&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l02250"></a><span class="lineno"> 2250</span>&#160;}</div>
+<div class="line"><a name="l02251"></a><span class="lineno"> 2251</span>&#160;</div>
+<div class="line"><a name="l02252"></a><span class="lineno"> 2252</span>&#160;model_data::~model_data()</div>
+<div class="line"><a name="l02253"></a><span class="lineno"> 2253</span>&#160;{}</div>
+<div class="line"><a name="l02254"></a><span class="lineno"> 2254</span>&#160;</div>
+<div class="line"><a name="l02255"></a><span class="lineno"> 2255</span>&#160;model_parameters::~model_parameters()</div>
+<div class="line"><a name="l02256"></a><span class="lineno"> 2256</span>&#160;{}</div>
+<div class="line"><a name="l02257"></a><span class="lineno"> 2257</span>&#160;</div>
+<div class="line"><a name="l02258"></a><span class="lineno"> 2258</span>&#160;<span class="preprocessor">#ifdef _BORLANDC_</span></div>
+<div class="line"><a name="l02259"></a><span class="lineno"> 2259</span>&#160;<span class="preprocessor"></span>  <span class="keyword">extern</span> <span class="keywordtype">unsigned</span> _stklen=10000U;</div>
+<div class="line"><a name="l02260"></a><span class="lineno"> 2260</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l02261"></a><span class="lineno"> 2261</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l02262"></a><span class="lineno"> 2262</span>&#160;</div>
+<div class="line"><a name="l02263"></a><span class="lineno"> 2263</span>&#160;<span class="preprocessor">#ifdef __ZTC__</span></div>
+<div class="line"><a name="l02264"></a><span class="lineno"> 2264</span>&#160;<span class="preprocessor"></span>  <span class="keyword">extern</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _stack=10000U;</div>
+<div class="line"><a name="l02265"></a><span class="lineno"> 2265</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l02266"></a><span class="lineno"> 2266</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l02267"></a><span class="lineno"> 2267</span>&#160;  <span class="keywordtype">long</span> <span class="keywordtype">int</span> arrmblsize=0;</div>
+<div class="line"><a name="l02268"></a><span class="lineno"> 2268</span>&#160;</div>
+<div class="line"><a name="l02269"></a><span class="lineno"> 2269</span>&#160;<span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc,<span class="keywordtype">char</span> * argv[])</div>
+<div class="line"><a name="l02270"></a><span class="lineno"> 2270</span>&#160;{</div>
+<div class="line"><a name="l02271"></a><span class="lineno"> 2271</span>&#160;    ad_set_new_handler();</div>
+<div class="line"><a name="l02272"></a><span class="lineno"> 2272</span>&#160;  ad_exit=&amp;ad_boundf;</div>
+<div class="line"><a name="l02273"></a><span class="lineno"> 2273</span>&#160;    time(&amp;start);</div>
+<div class="line"><a name="l02274"></a><span class="lineno"> 2274</span>&#160;    arrmblsize = 50000000;</div>
+<div class="line"><a name="l02275"></a><span class="lineno"> 2275</span>&#160;    gradient_structure::set_GRADSTACK_BUFFER_SIZE(1.e7);</div>
+<div class="line"><a name="l02276"></a><span class="lineno"> 2276</span>&#160;    gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);</div>
+<div class="line"><a name="l02277"></a><span class="lineno"> 2277</span>&#160;    gradient_structure::set_MAX_NVAR_OFFSET(5000);</div>
+<div class="line"><a name="l02278"></a><span class="lineno"> 2278</span>&#160;    gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);</div>
+<div class="line"><a name="l02279"></a><span class="lineno"> 2279</span>&#160;    gradient_structure::set_MAX_DLINKS(50000); </div>
+<div class="line"><a name="l02280"></a><span class="lineno"> 2280</span>&#160;    gradient_structure::set_NO_DERIVATIVES();</div>
+<div class="line"><a name="l02281"></a><span class="lineno"> 2281</span>&#160;    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();</div>
+<div class="line"><a name="l02282"></a><span class="lineno"> 2282</span>&#160;    <span class="keywordflow">if</span> (!arrmblsize) arrmblsize=15000000;</div>
+<div class="line"><a name="l02283"></a><span class="lineno"> 2283</span>&#160;    model_parameters mp(arrmblsize,argc,argv);</div>
+<div class="line"><a name="l02284"></a><span class="lineno"> 2284</span>&#160;    mp.iprint=10;</div>
+<div class="line"><a name="l02285"></a><span class="lineno"> 2285</span>&#160;    mp.preliminary_calculations();</div>
+<div class="line"><a name="l02286"></a><span class="lineno"> 2286</span>&#160;    mp.computations(argc,argv);</div>
+<div class="line"><a name="l02287"></a><span class="lineno"> 2287</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02288"></a><span class="lineno"> 2288</span>&#160;}</div>
+<div class="line"><a name="l02289"></a><span class="lineno"> 2289</span>&#160;</div>
+<div class="line"><a name="l02290"></a><span class="lineno"> 2290</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>  {</div>
+<div class="line"><a name="l02291"></a><span class="lineno"> 2291</span>&#160;  <span class="keywordtype">void</span> ad_boundf(<span class="keywordtype">int</span> i)</div>
+<div class="line"><a name="l02292"></a><span class="lineno"> 2292</span>&#160;  {</div>
+<div class="line"><a name="l02293"></a><span class="lineno"> 2293</span>&#160;    <span class="comment">/* so we can stop here */</span></div>
+<div class="line"><a name="l02294"></a><span class="lineno"> 2294</span>&#160;    exit(i);</div>
+<div class="line"><a name="l02295"></a><span class="lineno"> 2295</span>&#160;  }</div>
+<div class="line"><a name="l02296"></a><span class="lineno"> 2296</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>gmacs.cpp</b></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:42:39 for GMACS by
+    <li class="footer">Generated on Tue Jan 13 2015 09:16:00 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

@@ -717,109 +717,6 @@ END_CALCS int&#160;</td><td class="memItemRight" valign="bottom"><b>nf</b></td><
 <tr class="memitem:ga14d83b0e37f0f6e54bbeb2eeb4d65c40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga14d83b0e37f0f6e54bbeb2eeb4d65c40"></a>
 <a class="el" href="../../d9/d28/classnumber.html">number</a>&#160;</td><td class="memItemRight" valign="bottom"><b>spr_fofl</b> = ptrSPR-&gt;get_fofl(cuttoff,limit,mmb(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>))</td></tr>
 <tr class="separator:ga14d83b0e37f0f6e54bbeb2eeb4d65c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4ed50ccf5aefdf5764ef4a0679f5f80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf4ed50ccf5aefdf5764ef4a0679f5f80"></a>
-report&lt;&lt; &quot;slx_capture&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; exp(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(j, <br class="typebreak"/>
-h, i))&lt;&lt; endl;report<br class="typebreak"/>
-&lt;&lt; &quot;slx_retaind&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_retaind(j, <br class="typebreak"/>
-h, i))&lt;&lt; endl;report<br class="typebreak"/>
-&lt;&lt; &quot;slx_discard&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_discard(j, <br class="typebreak"/>
-h, i))&lt;&lt; endl;REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>);REPORT(log_slx_retaind);REPORT(log_slx_discard);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga55e662f32ff984a525bbd362c2f3d617">F</a>);REPORT(d3_SizeComps);REPORT(d3_obs_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga919b77c84402d3231070eeb331e03432">d3_pre_size_comps</a>);REPORT(d3_res_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>);REPORT(rec_ini);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf6b70811670344074685f5a1eac1ded7">rec_dev</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>);REPORT(M);REPORT(mean_wt);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d">molt_probability</a>);dvector <br class="typebreak"/>
-mmb=value(calc_mmb());REPORT(mmb);if(last_phase()){int <br class="typebreak"/>
-refyear=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>-1;calc_spr_reference_points(refyear, <br class="typebreak"/>
-spr_fleet);REPORT(spr_fspr);REPORT(spr_bspr);REPORT(spr_rbar);REPORT(spr_fofl);REPORT(spr_cofl);dvar_matrix <br class="typebreak"/>
-mean_size(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar3_array <br class="typebreak"/>
-growth_matrix(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <br class="typebreak"/>
-1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>=1;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>++){int <br class="typebreak"/>
-iage=1;growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage));for(iage=2;iage&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;iage++){growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage-1)*<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage));}}REPORT(growth_matrix);REPORT(mean_size);for(int <br class="typebreak"/>
-ii=1;ii&lt;=nSizeComps;ii++){size_comp_sample_size(ii)=value(exp(log_vn(ii)))*size_comp_sample_size(ii);}REPORT(size_comp_sample_size);}dvar_matrix <br class="typebreak"/>
-N_len(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
-N_mm(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
-N_males(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
-N_males_old(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, <br class="typebreak"/>
-1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);N_len.initialize();N_males.initialize();N_mm.initialize();N_males_old.initialize();for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1;i++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;j++) for(int k=1;k<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a>;k++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>(k)==1){N_males(i, <br class="typebreak"/>
-j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, j);if(ishell(k)==2) <br class="typebreak"/>
-N_males_old(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
-j);if(imature(k)==1) N_mm(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, <br class="typebreak"/>
-i, j);}N_len(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
-j);}REPORT(N_len);REPORT(N_mm);REPORT(N_males);REPORT(N_males_old);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf71db134fc9fe7b5356dc9d5bfb164f9">molt_increment</a>);REPORT(dPreMoltSize);REPORT(iMoltIncSex);REPORT(dMoltInc);if(bUseEmpiricalGrowth){dvector <br class="typebreak"/>
-pMoltInc=dMoltInc;REPORT(pMoltInc);}else{dvar_vector <br class="typebreak"/>
-pMoltInc=<a class="el" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga77467279a6b22df4773716a1cb576619">calc_growth_increments</a>(dPreMoltSize, <br class="typebreak"/>
-iMoltIncSex);REPORT(pMoltInc);}REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def">survey_q</a>);dvar_vector <br class="typebreak"/>
-calc_mmb(){dvar_vector mmb(syr, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>);mmb.initialize();int ig, <br class="typebreak"/>
-m, o;int h=1;for(int i=syr;i<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==1){m=1;}else <br class="typebreak"/>
-if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==2){m=2;}for(o=1;o<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>;o++){ig=pntr_hmo(h, m, <br class="typebreak"/>
-o);mmb(i)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(ig)(i)*elem_prod(mean_wt(h), <br class="typebreak"/>
-maturity(h));}}return(mmb);}dvariable <br class="typebreak"/>
-robust_multi(const dmatrix O, <br class="typebreak"/>
-const dvar_matrix <a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>, const <br class="typebreak"/>
-dvar_vector lnN){if(lnN.indexmin()!=O.rowmin()||lnN.indexmax()!=O.rowmax()){cerr<br class="typebreak"/>
-&lt;&lt;&quot;Sample size index do not <br class="typebreak"/>
-match row index in\ observed <br class="typebreak"/>
-size composition matrix.&quot;<br class="typebreak"/>
-&lt;&lt; endl;ad_exit(1);}RETURN_ARRAYS_INCREMENT();dvariable <br class="typebreak"/>
-nll=0;double tiny=1.e-14;double <br class="typebreak"/>
-a=.1/size_count(O(1));dvar_vector <br class="typebreak"/>
-b=exp(lnN);for(int i=O.rowmin();i<br class="typebreak"/>
-&lt;=O.rowmax();i++){dvector o=O(i)+tiny;dvar_vector <br class="typebreak"/>
-p=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>(i)+tiny;o/=sum(o);p/=sum(p);dvar_vector <br class="typebreak"/>
-v=a+2.*elem_prod(o,1.-o);dvar_vector <br class="typebreak"/>
-l=elem_div(square(p-o), v);nll-=sum(log(mfexp(-1.*b(i)*l)+.01));nll+=0.5 <br class="typebreak"/>
-*sum(log(v));}RETURN_ARRAYS_DECREMENT();return <br class="typebreak"/>
-nll;}void <br class="typebreak"/>
-calc_spr_reference_points(const <br class="typebreak"/>
-int iyr, const int ifleet){spr_rbar=mean(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gadaf024d5c035a2c102be085f903db5bc">spr_syr</a>, <br class="typebreak"/>
-spr_nyr)));double _r=spr_rbar;dvector <br class="typebreak"/>
-_rx=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);d3_array _M(1, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);_M.initialize();dmatrix <br class="typebreak"/>
-_N(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dmatrix <br class="typebreak"/>
-_wa(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
-_A=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>);d3_array <br class="typebreak"/>
-_P=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>);for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int l=1;l<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;l++){_M(h)(l, l)=value(M(h)(iyr)(l));}_N(h)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(1)(iyr));_wa(h)=elem_prod(mean_wt(h), <br class="typebreak"/>
-maturity(h));}dmatrix _fhk(1, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>);d3_array _sel(1, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
-_ret(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, <br class="typebreak"/>
-1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int h=1;h&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int <br class="typebreak"/>
-k=1;k&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;k++){_fhk(h)(k)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>(k)(h)(iyr));_sel(h)(k)=exp(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(k)(h)(iyr)));_ret(h)(k)=exp(value(log_slx_retaind(k)(h)(iyr)));}}dvector <br class="typebreak"/>
-_dmr(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>);_dmr.initialize();for(int <br class="typebreak"/>
-k=1;k&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;k++){_dmr(k)=dmr(iyr, <br class="typebreak"/>
-k);}<a class="el" href="../../df/d47/classspr.html">spr</a> *ptrSPR=nullptr;if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==1){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
-c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
-_M, _A);ptrSPR=&amp;c_spr;}if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==2){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
-c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
-_M, _P, _A);ptrSPR=&amp;c_spr;}spr_fspr=ptrSPR-&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_fspr</b> (ifleet, spr_target, _fhk, _sel, _ret, _dmr)</td></tr>
-<tr class="separator:gaf4ed50ccf5aefdf5764ef4a0679f5f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3e550940d10f5dca7793504911944a99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3e550940d10f5dca7793504911944a99"></a>
 dvector&#160;</td><td class="memItemRight" valign="bottom"><b>mmb</b> = value(calc_mmb())</td></tr>
 <tr class="separator:ga3e550940d10f5dca7793504911944a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -886,6 +783,93 @@ mod_yrs&#160;</td><td class="memItemRight" valign="bottom"><b>fill_seqadd</b> (s
 <tr class="memitem:gafc57022de6e9a97b51e83084d8050824"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafc57022de6e9a97b51e83084d8050824"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>REPORT</b> (<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga704f894a8c0d3e262863341f6eb95e93">res_cpue</a>)</td></tr>
 <tr class="separator:gafc57022de6e9a97b51e83084d8050824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7514854eec162af9f299314b280492ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7514854eec162af9f299314b280492ef"></a>
+report&lt;&lt; &quot;slx_capture&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
+i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; exp(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(j, <br class="typebreak"/>
+h, i))&lt;&lt; endl;report<br class="typebreak"/>
+&lt;&lt; &quot;slx_retaind&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
+i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_retaind(j, <br class="typebreak"/>
+h, i))&lt;&lt; endl;report<br class="typebreak"/>
+&lt;&lt; &quot;slx_discard&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
+i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_discard(j, <br class="typebreak"/>
+h, i))&lt;&lt; endl;REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>);REPORT(log_slx_retaind);REPORT(log_slx_discard);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga55e662f32ff984a525bbd362c2f3d617">F</a>);REPORT(d3_SizeComps);REPORT(d3_obs_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga919b77c84402d3231070eeb331e03432">d3_pre_size_comps</a>);REPORT(d3_res_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>);REPORT(rec_ini);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf6b70811670344074685f5a1eac1ded7">rec_dev</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>);REPORT(M);REPORT(mean_wt);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d">molt_probability</a>);dvector <br class="typebreak"/>
+mmb=value(calc_mmb());REPORT(mmb);if(last_phase()){int <br class="typebreak"/>
+refyear=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>-1;calc_spr_reference_points(refyear, <br class="typebreak"/>
+spr_fleet);REPORT(spr_fspr);REPORT(spr_bspr);REPORT(spr_rbar);REPORT(spr_fofl);REPORT(spr_cofl);dvar_matrix <br class="typebreak"/>
+mean_size(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar3_array <br class="typebreak"/>
+growth_matrix(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>=1;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>++){int <br class="typebreak"/>
+iage=1;growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage));for(iage=2;iage&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;iage++){growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage-1)*<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage));}}REPORT(growth_matrix);REPORT(mean_size);for(int <br class="typebreak"/>
+ii=1;ii&lt;=nSizeComps;ii++){size_comp_sample_size(ii)=value(exp(log_vn(ii)))*size_comp_sample_size(ii);}REPORT(size_comp_sample_size);}dvar_matrix <br class="typebreak"/>
+N_len(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
+N_mm(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
+N_males(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
+N_males_old(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);N_len.initialize();N_males.initialize();N_mm.initialize();N_males_old.initialize();for(int <br class="typebreak"/>
+i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1;i++) for(int j=1;j<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;j++) for(int k=1;k<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a>;k++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>(k)==1){N_males(i, <br class="typebreak"/>
+j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, j);if(ishell(k)==2) <br class="typebreak"/>
+N_males_old(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
+j);if(imature(k)==1) N_mm(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, <br class="typebreak"/>
+i, j);}N_len(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
+j);}REPORT(N_len);REPORT(N_mm);REPORT(N_males);REPORT(N_males_old);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf71db134fc9fe7b5356dc9d5bfb164f9">molt_increment</a>);REPORT(dPreMoltSize);REPORT(iMoltIncSex);REPORT(dMoltInc);if(bUseEmpiricalGrowth){dvector <br class="typebreak"/>
+pMoltInc=dMoltInc;REPORT(pMoltInc);}else{dvar_vector <br class="typebreak"/>
+pMoltInc=<a class="el" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga77467279a6b22df4773716a1cb576619">calc_growth_increments</a>(dPreMoltSize, <br class="typebreak"/>
+iMoltIncSex);REPORT(pMoltInc);}REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def">survey_q</a>);dvar_vector <br class="typebreak"/>
+calc_mmb(){dvar_vector mmb(syr, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>);mmb.initialize();int ig, <br class="typebreak"/>
+m, o;int h=1;for(int i=syr;i<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==1){m=1;}else <br class="typebreak"/>
+if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==2){m=2;}for(o=1;o<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>;o++){ig=pntr_hmo(h, m, <br class="typebreak"/>
+o);mmb(i)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(ig)(i)*elem_prod(mean_wt(h), <br class="typebreak"/>
+maturity(h));}}return(mmb);}void <br class="typebreak"/>
+calc_spr_reference_points(const <br class="typebreak"/>
+int iyr, const int ifleet){spr_rbar=mean(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gadaf024d5c035a2c102be085f903db5bc">spr_syr</a>, <br class="typebreak"/>
+spr_nyr)));double _r=spr_rbar;dvector <br class="typebreak"/>
+_rx=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);d3_array _M(1, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);_M.initialize();dmatrix <br class="typebreak"/>
+_N(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dmatrix <br class="typebreak"/>
+_wa(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
+_A=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>);d3_array <br class="typebreak"/>
+_P=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>);for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int l=1;l<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;l++){_M(h)(l, l)=value(M(h)(iyr)(l));}_N(h)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(1)(iyr));_wa(h)=elem_prod(mean_wt(h), <br class="typebreak"/>
+maturity(h));}dmatrix _fhk(1, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>);d3_array _sel(1, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
+_ret(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int h=1;h&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int <br class="typebreak"/>
+k=1;k&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;k++){_fhk(h)(k)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>(k)(h)(iyr));_sel(h)(k)=exp(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(k)(h)(iyr)));_ret(h)(k)=exp(value(log_slx_retaind(k)(h)(iyr)));}}dvector <br class="typebreak"/>
+_dmr(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>);_dmr.initialize();for(int <br class="typebreak"/>
+k=1;k&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;k++){_dmr(k)=dmr(iyr, <br class="typebreak"/>
+k);}<a class="el" href="../../df/d47/classspr.html">spr</a> *ptrSPR=0;if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==1){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
+c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
+_M, _A);ptrSPR=&amp;c_spr;}if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==2){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
+c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
+_M, _P, _A);ptrSPR=&amp;c_spr;}spr_fspr=ptrSPR-&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_fspr</b> (ifleet, spr_target, _fhk, _sel, _ret, _dmr)</td></tr>
+<tr class="separator:ga7514854eec162af9f299314b280492ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -1061,7 +1045,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model</p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02375">2375</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02378">2378</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1131,7 +1115,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p> Male 0 1 immature, new shell Male 0 2 immature, old shell Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell Female 0 2 immature, old shell Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
 <hr/>
 <p>Call function to get the appropriate numbers-at-length.</p>
-<p>TODO: [ ] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. </p>
+<p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond) </p>
 <p>Calculate prior density functions for leading parameters.</p>
 <ul>
 <li>case 0 is a uniform density between the lower and upper bounds.</li>
@@ -1150,7 +1134,7 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>vector of prior densities for each parameter</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02167">2167</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02168">2168</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1383,7 +1367,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Penalty to constrain random walk in natural mortaliy rates</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02284">2284</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02287">2287</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1460,7 +1444,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 12 2015 16:42:39 for GMACS by
+    <li class="footer">Generated on Tue Jan 13 2015 09:16:00 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
