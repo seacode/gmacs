@@ -47,7 +47,9 @@ NMFS_Trawl:BSFRF
 #0.5	# Time between survey and fishery
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## CATCH DATA
-## Type of catch: 	1 = retained, 2 = discard, 3 = 
+## Dockside sampling is very close to the retained sampling.
+## At sea sampling represents discard and retained.
+## Type of catch: 	1 = retained, 2 = discard, 3 = total catch (discards + retained = at sea sampling data)
 ## Units of catch:	1 = biomass,  2 = numbers
 ## for BBRKC Units are in 1000 mt for landed & million crabs for discards.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

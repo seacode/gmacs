@@ -1,16 +1,17 @@
 #========================================================================================================																				
+#  THESE ARE JUST NOTES TO CONFUSE PAUL STARR
 #	Gmacs	Main	Data	File	Version	1.1:	BBRKC	Example												
 #	Fisheries:	1	Pot	Fishery,	2	Pot	Discard,	3	Trawl	by-catch										
 #	Surveys:	1	NMFS	Trawl	Survey,	2	BSFRF	Survey												
 #========================================================================================================																				
 1976	#	Start	year																	
 2014	#	End	year																	
-1	#	Time-step	(years)																	
-6	#	Number	of	distinct	data	groups	(among	fishing	fleets	and	surveys)									
-1	#	Number	of	sexes																
-2	#	Number	of	shell	condition	types														
-1	#	Number	of	maturity	types															
-6	#	Number	of	size-classes	in	the	model													
+1		#	Time-step	(years)																	
+6		#	Number	of	distinct	data	groups	(among	fishing	fleets	and	surveys)									
+1		#	Number	of	sexes																
+2		#	Number	of	shell	condition	types														
+1		#	Number	of	maturity	types															
+6		#	Number	of	size-classes	in	the	model													
 #	size_breaks	(a	vector	giving	the	break	points	between	size	intervals,	dim=nclass+1)									
 74	84	94	104	114	124 134															
 #	weight-at-length	allometry	w_l	=	a•l^b															

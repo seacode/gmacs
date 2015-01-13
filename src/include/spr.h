@@ -1,3 +1,9 @@
+
+/**
+ * \file spr.h
+ * \author Steve Martell
+ */
+
 #include <admodel.h>
 
 #ifndef _SPR_H_
@@ -45,7 +51,19 @@ private:
 public:
 	// constructors
 	spr();
-	// constructor where nshell == 1
+	
+
+	/**
+	 * @brief constructor for SPR class
+	 * @details Constructor for SRR class
+	 * 
+	 * @param _r equilibrium recruitment
+	 * @param _lambda fraction of females that contribute to the Spawning potential ratio
+	 * @param _rx size distribution of new recruits
+	 * @param _M natural mortality at size by sex
+	 * @param _wa weight-at-length interval
+	 * @param _A size-transition matrix
+	 */
 	spr(const double&   _r, 
 	    const double&   _lambda,
 	    const dvector&  _rx, 

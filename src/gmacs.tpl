@@ -55,7 +55,7 @@ DATA_SECTION
 			cout<<"  | Athol Whitten,               University of Washington    |\n";
 			cout<<"  | Andre Punt,                  University of Washington    |\n";
 			cout<<"  | Dave Fournier,               Otter Research              |\n";
-			cout<<"  | John Levitt,                 Male Porn Star              |\n";
+			cout<<"  | John Levitt,                 Mathemetician               |\n";
 			cout<<"  |----------------------------------------------------------|\n";
 
 			cout<<"\n";
@@ -984,7 +984,8 @@ FUNCTION calc_selectivities
 	 * f for female discards.  Not recommended to have separate F' for retained and 
 	 * discard fisheries, but might be ok to have sex-specific F's.  
 	 * 
-	 * TODO fix discard mortality rate.
+	 * TODO 
+	 * -[ ] fix discard mortality rate.
 	 */
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik,yk;
@@ -1817,21 +1818,21 @@ FUNCTION calc_relative_abundance
 	 *  Given sex, maturity and 3 shell conditions, there are 12 possible
 	 *  combinations for adding up the numbers at length (nal).
 	 *                          Shell
-	 *  Sex     Maturity        condition   Description
-	 *  _____________________________________________________________
-	 *  Male    0               1           immature, new shell
-	 *  Male    0               2           immature, old shell
-	 *  Male    0               0           immature, new & old shell               1               Male, immature, new shell
-	 *  Male    1               1             mature, new shell
-	 *  Male    1               2             mature, old shell
-	 *  Male    1               0             mature, new & old shell
-	 *Female    0               1           immature, new shell
-	 *Female    0               2           immature, old shell
-	 *Female    0               0           immature, new & old shell
-	 *Female    1               1             mature, new shell
-	 *Female    1               2             mature, old shell
-	 *Female    1               0             mature, new & old shell
-	 *  _____________________________________________________________
+	 *    Sex     Maturity        condition   Description
+	 *    _____________________________________________________________
+	 *    Male    0               1           immature, new shell
+	 * !  Male    0               2           immature, old shell
+	 * !  Male    0               0           immature, new & old shell               1               Male, immature, new shell
+	 *    Male    1               1             mature, new shell
+	 *    Male    1               2             mature, old shell
+	 *    Male    1               0             mature, new & old shell
+	 *  Female    0               1           immature, new shell
+	 * !Female    0               2           immature, old shell
+	 * !Female    0               0           immature, new & old shell
+	 *  Female    1               1             mature, new shell
+	 *  Female    1               2             mature, old shell
+	 *  Female    1               0             mature, new & old shell
+	 *    _____________________________________________________________
 	 *  
 	 *  Call function to get the appropriate numbers-at-length.
 	 *  
