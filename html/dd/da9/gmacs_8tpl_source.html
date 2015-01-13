@@ -897,12 +897,12 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;</div>
 <div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;PROCEDURE_SECTION</div>
 <div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;    <span class="comment">// Initialize model parameters</span></div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae85542b46a8aa3f80a416a544aac0bbd" title="Initialize model parameters. ">initialize_model_parameters</a>();</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga508f35365cfe210b06cec46a0b82f069" title="Initialize model parameters. ">initialize_model_parameters</a>();</div>
 <div class="line"><a name="l00790"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa9e289eddb591991c9bc7321dc5b186b">  790</a></span>&#160;    <span class="keywordflow">if</span>( verbose ) cout&lt;&lt;<span class="stringliteral">&quot;Ok after initializing model parameters ...&quot;</span>&lt;&lt;endl;</div>
 <div class="line"><a name="l00791"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaae5ebb403ffa2a1ad5ced233a454fa59">  791</a></span>&#160;    </div>
 <div class="line"><a name="l00792"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gadaf024d5c035a2c102be085f903db5bc">  792</a></span>&#160;    <span class="comment">// Fishing fleet dynamics ...</span></div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa035770d06c219d3c64d64c178289b80" title="Calculate selectivies for each gear. ">calc_selectivities</a>();</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga77262a9f728d0ed54b8fbea2493603a9" title="Calculate fishing mortality rates for each fleet. ">calc_fishing_mortality</a>();</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf400624093b07bbcec88ab9cf3356285" title="Calculate selectivies for each gear. ">calc_selectivities</a>();</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad85d770a6686c174986ecab5fc544393" title="Calculate fishing mortality rates for each fleet. ">calc_fishing_mortality</a>();</div>
 <div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;    <span class="keywordflow">if</span>( verbose ) cout&lt;&lt;<span class="stringliteral">&quot;Ok after fleet dynamics ...&quot;</span>&lt;&lt;endl;</div>
 <div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;</div>
 <div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;    <span class="comment">// Population dynamics ...</span></div>
@@ -910,24 +910,24 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;    {</div>
 <div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;        <a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#gab6ce8eaf8d318c1d10155888cd1bb8dc" title="Compute growth increments. ">calc_growth_increments</a>();</div>
 <div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;    }</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga865bc170e18ca7280bd96a9ff7e424b4" title="Calculate the probability of moulting vs carapace width. ">calc_molting_probability</a>();</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac1a6684e8544e37f2989b1f388c1275f" title="Calclate the size transtion matrix.  Steven Martell. ">calc_size_transition_matrix</a>();</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga326df5834d3e690b6c81daac1c3ffe23" title="Calculate natural mortality array. ">calc_natural_mortality</a>();</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9452e86de816c0c965273a0e38033ea6" title="Calculate total instantaneous mortality rate and survival rate. ">calc_total_mortality</a>();</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga8b2e44a401baa0eb9bac5c30dcf017c4" title="calculate size distribution for new recuits. ">calc_recruitment_size_distribution</a>();</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa38ab7820a92f3ed99b6a69a28e04649" title="initialiaze populations numbers-at-length in syr ">calc_initial_numbers_at_length</a>();</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab3680df9e34f65fca8c25d4f67857108" title="Update numbers-at-length. ">update_population_numbers_at_length</a>();</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga12c55650ae56743d78da63e00311d0bf" title="Calculate the probability of moulting vs carapace width. ">calc_molting_probability</a>();</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga26efae9f37fec1521bcf56c6f4791027" title="Calclate the size transtion matrix.  Steven Martell. ">calc_size_transition_matrix</a>();</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca0927142e0652e5e5f97cfd9b60e477" title="Calculate natural mortality array. ">calc_natural_mortality</a>();</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5eae2625710326f707f516e3b01a02f5" title="Calculate total instantaneous mortality rate and survival rate. ">calc_total_mortality</a>();</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5afcf7f330636c244505ede70260df10" title="calculate size distribution for new recuits. ">calc_recruitment_size_distribution</a>();</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf35a569842bc00252c3e20581ae43cc8" title="initialiaze populations numbers-at-length in syr ">calc_initial_numbers_at_length</a>();</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga89f92aac09d89c896ccfb08c24ef982f" title="Update numbers-at-length. ">update_population_numbers_at_length</a>();</div>
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;    <span class="keywordflow">if</span>( verbose ) cout&lt;&lt;<span class="stringliteral">&quot;Ok after population dynamcs ...&quot;</span>&lt;&lt;endl;</div>
 <div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;</div>
 <div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;    <span class="comment">// observation models ...</span></div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7507930a25ff4d0e9441f9067b09250f" title="Calculate predicted catch observations. ">calc_predicted_catch</a>();</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f38a22aed2071f65143eeedeb247441" title="Calculate predicted relative abundance and residuals. ">calc_relative_abundance</a>();</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab57c8791f16f8993c86a02ecc28c6a06" title="Calculate predicted size composition data. ">calc_predicted_composition</a>();</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad7bde20a454a1a7df3a5a20ee97a60eb" title="Calculate predicted catch observations. ">calc_predicted_catch</a>();</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7b76adeff63d163d4b3710afeec9ec21" title="Calculate predicted relative abundance and residuals. ">calc_relative_abundance</a>();</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae0aeca6d064f3c5b594f02bd8a84d46b" title="Calculate predicted size composition data. ">calc_predicted_composition</a>();</div>
 <div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;    <span class="keywordflow">if</span>( verbose ) cout&lt;&lt;<span class="stringliteral">&quot;Ok after observation models ...&quot;</span>&lt;&lt;endl;</div>
 <div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;</div>
 <div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;    <span class="comment">// objective function ...</span></div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa7ba0662d9d1f96922dad9831a0eba75" title="Calculate prior density functions for leading parameters. ">calculate_prior_densities</a>();</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga075ae026c3da2bbd3fb02f2aca36905f" title="calculate objective function ">calc_objective_function</a>();</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1cbd411d40776b0950388c7107e4ccf8" title="Calculate prior density functions for leading parameters. ">calculate_prior_densities</a>();</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f0b92ca6c71217a81f6a3b108d15088" title="calculate objective function ">calc_objective_function</a>();</div>
 <div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;    <span class="keywordflow">if</span>( verbose ) cout&lt;&lt;<span class="stringliteral">&quot;Ok after objective function ...&quot;</span>&lt;&lt;endl;</div>
 <div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;</div>
 <div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;    <span class="comment">// sd_report variables</span></div>
@@ -945,7 +945,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;    </div>
 <div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;    </div>
 <div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae85542b46a8aa3f80a416a544aac0bbd" title="Initialize model parameters. ">initialize_model_parameters</a></div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga508f35365cfe210b06cec46a0b82f069" title="Initialize model parameters. ">initialize_model_parameters</a></div>
 <div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;    </div>
 <div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;    <span class="comment">// Get parameters from theta control matrix:</span></div>
 <div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;    M0        = theta(1);</div>
@@ -981,7 +981,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;    }</div>
 <div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;    </div>
 <div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa035770d06c219d3c64d64c178289b80" title="Calculate selectivies for each gear. ">calc_selectivities</a></div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf400624093b07bbcec88ab9cf3356285" title="Calculate selectivies for each gear. ">calc_selectivities</a></div>
 <div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;    <span class="keywordtype">int</span> h,i,j,k;</div>
 <div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;    <span class="keywordtype">int</span> block;</div>
 <div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;    dvariable p1,p2;</div>
@@ -1047,7 +1047,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;</div>
 <div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;</div>
 <div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;</div>
-<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga77262a9f728d0ed54b8fbea2493603a9" title="Calculate fishing mortality rates for each fleet. ">calc_fishing_mortality</a></div>
+<div class="line"><a name="l00989"></a><span class="lineno">  989</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad85d770a6686c174986ecab5fc544393" title="Calculate fishing mortality rates for each fleet. ">calc_fishing_mortality</a></div>
 <div class="line"><a name="l00990"></a><span class="lineno">  990</span>&#160;    <span class="keywordtype">int</span> h,i,k,ik,yk;</div>
 <div class="line"><a name="l00991"></a><span class="lineno">  991</span>&#160;    <span class="keywordtype">double</span> lambda;      <span class="comment">// discard mortality rate</span></div>
 <div class="line"><a name="l00992"></a><span class="lineno">  992</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga55e662f32ff984a525bbd362c2f3d617" title="Total mortality ">F</a>.initialize();</div>
@@ -1123,7 +1123,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;</div>
 <div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;</div>
 <div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;</div>
-<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac1a6684e8544e37f2989b1f388c1275f" title="Calclate the size transtion matrix.  Steven Martell. ">calc_size_transition_matrix</a></div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga26efae9f37fec1521bcf56c6f4791027" title="Calclate the size transtion matrix.  Steven Martell. ">calc_size_transition_matrix</a></div>
 <div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;    <span class="comment">//cout&lt;&lt;&quot;Start of calc_size_transition_matrix&quot;&lt;&lt;endl;</span></div>
 <div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;    <span class="keywordtype">int</span> h,l,ll;</div>
 <div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;    dvariable dMeanSizeAfterMolt;</div>
@@ -1163,7 +1163,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;    </div>
 <div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;</div>
 <div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160;</div>
-<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga326df5834d3e690b6c81daac1c3ffe23" title="Calculate natural mortality array. ">calc_natural_mortality</a></div>
+<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca0927142e0652e5e5f97cfd9b60e477" title="Calculate natural mortality array. ">calc_natural_mortality</a></div>
 <div class="line"><a name="l01158"></a><span class="lineno"> 1158</span>&#160;    <span class="keywordtype">int</span> h;</div>
 <div class="line"><a name="l01159"></a><span class="lineno"> 1159</span>&#160;    M.initialize();</div>
 <div class="line"><a name="l01160"></a><span class="lineno"> 1160</span>&#160;    <span class="keywordflow">for</span>( h = 1; h &lt;= <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6" title="number of gears ">nsex</a>; h++ )</div>
@@ -1224,7 +1224,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01215"></a><span class="lineno"> 1215</span>&#160;    }</div>
 <div class="line"><a name="l01216"></a><span class="lineno"> 1216</span>&#160;</div>
 <div class="line"><a name="l01217"></a><span class="lineno"> 1217</span>&#160;</div>
-<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9452e86de816c0c965273a0e38033ea6" title="Calculate total instantaneous mortality rate and survival rate. ">calc_total_mortality</a></div>
+<div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5eae2625710326f707f516e3b01a02f5" title="Calculate total instantaneous mortality rate and survival rate. ">calc_total_mortality</a></div>
 <div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;    <span class="keywordtype">int</span> h;</div>
 <div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5a43083584974671b2f3d341e101c733" title="Natural mortality ">Z</a>.initialize();</div>
 <div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;    S.initialize();</div>
@@ -1241,10 +1241,10 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;        }</div>
 <div class="line"><a name="l01240"></a><span class="lineno"> 1240</span>&#160;</div>
 <div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;    }</div>
-<div class="line"><a name="l01242"></a><span class="lineno"> 1242</span>&#160;</div>
+<div class="line"><a name="l01242"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad85d770a6686c174986ecab5fc544393"> 1242</a></span>&#160;</div>
 <div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;</div>
 <div class="line"><a name="l01244"></a><span class="lineno"> 1244</span>&#160;</div>
-<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga865bc170e18ca7280bd96a9ff7e424b4" title="Calculate the probability of moulting vs carapace width. ">calc_molting_probability</a></div>
+<div class="line"><a name="l01253"></a><span class="lineno"> 1253</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga12c55650ae56743d78da63e00311d0bf" title="Calculate the probability of moulting vs carapace width. ">calc_molting_probability</a></div>
 <div class="line"><a name="l01254"></a><span class="lineno"> 1254</span>&#160;    <span class="keywordtype">int</span> l,h;</div>
 <div class="line"><a name="l01255"></a><span class="lineno"> 1255</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d" title="linear molt increment ">molt_probability</a>.initialize();</div>
 <div class="line"><a name="l01256"></a><span class="lineno"> 1256</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>.initialize();</div>
@@ -1260,7 +1260,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;        }</div>
 <div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;    }</div>
 <div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;</div>
-<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga8b2e44a401baa0eb9bac5c30dcf017c4" title="calculate size distribution for new recuits. ">calc_recruitment_size_distribution</a></div>
+<div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5afcf7f330636c244505ede70260df10" title="calculate size distribution for new recuits. ">calc_recruitment_size_distribution</a></div>
 <div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160;    </div>
 <div class="line"><a name="l01281"></a><span class="lineno"> 1281</span>&#160;    dvariable ralpha = ra / <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1eafc6de99274e8253e2dbdd63f9746e" title="Expected value of recruitment distribution ">rbeta</a>;</div>
 <div class="line"><a name="l01282"></a><span class="lineno"> 1282</span>&#160;    dvar_vector x(1,nclass+1);</div>
@@ -1274,7 +1274,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01290"></a><span class="lineno"> 1290</span>&#160;</div>
 <div class="line"><a name="l01291"></a><span class="lineno"> 1291</span>&#160;</div>
 <div class="line"><a name="l01292"></a><span class="lineno"> 1292</span>&#160;</div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa38ab7820a92f3ed99b6a69a28e04649" title="initialiaze populations numbers-at-length in syr ">calc_initial_numbers_at_length</a></div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf35a569842bc00252c3e20581ae43cc8" title="initialiaze populations numbers-at-length in syr ">calc_initial_numbers_at_length</a></div>
 <div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160;    dvariable log_initial_recruits;</div>
 <div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;    <span class="comment">//N.initialize();</span></div>
 <div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga392baa5af413ffcb0b15616fec7fe8b8" title="Fishing mortality by gear ">d3_newShell</a>.initialize();</div>
@@ -1297,7 +1297,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e" title="Diagonal matrix of molt probabilities ">d3_N</a>.initialize();</div>
 <div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;    dmatrix Id = identity_matrix(1,nclass);</div>
 <div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;    dvar_vector  x(1,nclass);</div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;    dvar_vector  y(1,nclass);</div>
+<div class="line"><a name="l01378"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga26efae9f37fec1521bcf56c6f4791027"> 1378</a></span>&#160;    dvar_vector  y(1,nclass);</div>
 <div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;    dvar_matrix  A(1,nclass,1,nclass);</div>
 <div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;</div>
 <div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;</div>
@@ -1353,7 +1353,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;<span class="comment">//              At = size_transition(h);</span></div>
 <div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;<span class="comment">//              for(int l = 1; l &lt;= nclass; l++ )</span></div>
 <div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160;<span class="comment">//              {</span></div>
-<div class="line"><a name="l01434"></a><span class="lineno"> 1434</span>&#160;<span class="comment">//                  At(l) *= S(h)(syr)(l);</span></div>
+<div class="line"><a name="l01434"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca0927142e0652e5e5f97cfd9b60e477"> 1434</a></span>&#160;<span class="comment">//                  At(l) *= S(h)(syr)(l);</span></div>
 <div class="line"><a name="l01435"></a><span class="lineno"> 1435</span>&#160;<span class="comment">//              }</span></div>
 <div class="line"><a name="l01436"></a><span class="lineno"> 1436</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l01437"></a><span class="lineno"> 1437</span>&#160;<span class="comment">//              x = d3_N(ig)(syr);</span></div>
@@ -1392,7 +1392,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160;    <span class="keywordflow">if</span>(verbose) COUT(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e" title="Diagonal matrix of molt probabilities ">d3_N</a>(1)(syr));</div>
 <div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;    </div>
 <div class="line"><a name="l01472"></a><span class="lineno"> 1472</span>&#160;</div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab3680df9e34f65fca8c25d4f67857108" title="Update numbers-at-length. ">update_population_numbers_at_length</a></div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga89f92aac09d89c896ccfb08c24ef982f" title="Update numbers-at-length. ">update_population_numbers_at_length</a></div>
 <div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160;    <span class="keywordtype">int</span> h,i,ig,o,m;</div>
 <div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;</div>
 <div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;    dmatrix Id = identity_matrix(1,nclass); </div>
@@ -1418,7 +1418,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;            h = <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8" title="number of sex/newshell/oldshell groups ">isex</a>(ig);</div>
 <div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;            m = imature(ig);</div>
 <div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160;            o = ishell(ig);</div>
-<div class="line"><a name="l01508"></a><span class="lineno"> 1508</span>&#160;            </div>
+<div class="line"><a name="l01508"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5eae2625710326f707f516e3b01a02f5"> 1508</a></span>&#160;            </div>
 <div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;            <span class="keywordflow">if</span>( o == 1 )    <span class="comment">// newshell</span></div>
 <div class="line"><a name="l01510"></a><span class="lineno"> 1510</span>&#160;            {</div>
 <div class="line"><a name="l01511"></a><span class="lineno"> 1511</span>&#160;                A  = <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7" title="probability of molting ">size_transition</a>(h) * S(h)(i);</div>
@@ -1452,7 +1452,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160;</div>
 <div class="line"><a name="l01540"></a><span class="lineno"> 1540</span>&#160;        }</div>
 <div class="line"><a name="l01541"></a><span class="lineno"> 1541</span>&#160;</div>
-<div class="line"><a name="l01542"></a><span class="lineno"> 1542</span>&#160;</div>
+<div class="line"><a name="l01542"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga12c55650ae56743d78da63e00311d0bf"> 1542</a></span>&#160;</div>
 <div class="line"><a name="l01543"></a><span class="lineno"> 1543</span>&#160;        <span class="comment">// TO BE DEPRECATED</span></div>
 <div class="line"><a name="l01544"></a><span class="lineno"> 1544</span>&#160;<span class="comment">//      for( h = 1; h &lt;= nsex; h++ )</span></div>
 <div class="line"><a name="l01545"></a><span class="lineno"> 1545</span>&#160;<span class="comment">//      {</span></div>
@@ -1482,7 +1482,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01569"></a><span class="lineno"> 1569</span>&#160;</div>
 <div class="line"><a name="l01570"></a><span class="lineno"> 1570</span>&#160;</div>
 <div class="line"><a name="l01571"></a><span class="lineno"> 1571</span>&#160;</div>
-<div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7507930a25ff4d0e9441f9067b09250f" title="Calculate predicted catch observations. ">calc_predicted_catch</a></div>
+<div class="line"><a name="l01587"></a><span class="lineno"> 1587</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad7bde20a454a1a7df3a5a20ee97a60eb" title="Calculate predicted catch observations. ">calc_predicted_catch</a></div>
 <div class="line"><a name="l01588"></a><span class="lineno"> 1588</span>&#160;    <span class="keywordtype">int</span> h,i,j,k,ig;</div>
 <div class="line"><a name="l01589"></a><span class="lineno"> 1589</span>&#160;    <span class="keywordtype">int</span> type,unit;</div>
 <div class="line"><a name="l01590"></a><span class="lineno"> 1590</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gacca515e00e0948b4aef06584907e04f7" title="scalers for relative abundance indices (q) ">pre_catch</a>.initialize();</div>
@@ -1551,7 +1551,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;                {</div>
 <div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160;                    nal.initialize();</div>
 <div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160;                    sel = <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1" title="Surival Rate (S=exp(-Z)) ">log_slx_capture</a>(k)(h)(i);</div>
-<div class="line"><a name="l01656"></a><span class="lineno"> 1656</span>&#160;                    <span class="keywordflow">switch</span>(type)</div>
+<div class="line"><a name="l01656"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf35a569842bc00252c3e20581ae43cc8"> 1656</a></span>&#160;                    <span class="keywordflow">switch</span>(type)</div>
 <div class="line"><a name="l01657"></a><span class="lineno"> 1657</span>&#160;                    {</div>
 <div class="line"><a name="l01658"></a><span class="lineno"> 1658</span>&#160;                        <span class="keywordflow">case</span> 1:     <span class="comment">// retained catch</span></div>
 <div class="line"><a name="l01659"></a><span class="lineno"> 1659</span>&#160;                            sel = exp( sel + log_slx_retaind(k)(h)(i) );</div>
@@ -1596,7 +1596,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;</div>
 <div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;</div>
 <div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;</div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f38a22aed2071f65143eeedeb247441" title="Calculate predicted relative abundance and residuals. ">calc_relative_abundance</a></div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7b76adeff63d163d4b3710afeec9ec21" title="Calculate predicted relative abundance and residuals. ">calc_relative_abundance</a></div>
 <div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;    <span class="keywordtype">int</span> g,h,i,j,k,ig;</div>
 <div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;    <span class="keywordtype">int</span> unit;</div>
 <div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;    dvar_vector nal(1,nclass);  <span class="comment">// numbers at length</span></div>
@@ -1670,7 +1670,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01786"></a><span class="lineno"> 1786</span>&#160;            }</div>
 <div class="line"><a name="l01787"></a><span class="lineno"> 1787</span>&#160;        } <span class="comment">// nSurveyRows(k)</span></div>
 <div class="line"><a name="l01788"></a><span class="lineno"> 1788</span>&#160;        dvar_vector zt = log(obs_cpue(k)) - log(V);</div>
-<div class="line"><a name="l01789"></a><span class="lineno"> 1789</span>&#160;        dvariable zbar = mean(zt);</div>
+<div class="line"><a name="l01789"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga89f92aac09d89c896ccfb08c24ef982f"> 1789</a></span>&#160;        dvariable zbar = mean(zt);</div>
 <div class="line"><a name="l01790"></a><span class="lineno"> 1790</span>&#160;        <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga704f894a8c0d3e262863341f6eb95e93" title="predicted relative abundance index ">res_cpue</a>(k)    = zt - zbar;</div>
 <div class="line"><a name="l01791"></a><span class="lineno"> 1791</span>&#160;        <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def" title="vector of estimated recruits ">survey_q</a>(k)    = mfexp(zbar);</div>
 <div class="line"><a name="l01792"></a><span class="lineno"> 1792</span>&#160;        <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga979b0539a7129c70c1bcfe2905558a80" title="catch residuals in log-space ">pre_cpue</a>(k)    = <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def" title="vector of estimated recruits ">survey_q</a>(k) * V;</div>
@@ -1680,7 +1680,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01796"></a><span class="lineno"> 1796</span>&#160;</div>
 <div class="line"><a name="l01797"></a><span class="lineno"> 1797</span>&#160;</div>
 <div class="line"><a name="l01798"></a><span class="lineno"> 1798</span>&#160;</div>
-<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab57c8791f16f8993c86a02ecc28c6a06" title="Calculate predicted size composition data. ">calc_predicted_composition</a></div>
+<div class="line"><a name="l01842"></a><span class="lineno"> 1842</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae0aeca6d064f3c5b594f02bd8a84d46b" title="Calculate predicted size composition data. ">calc_predicted_composition</a></div>
 <div class="line"><a name="l01843"></a><span class="lineno"> 1843</span>&#160;    <span class="keywordtype">int</span> h,i,j,k,ig;</div>
 <div class="line"><a name="l01844"></a><span class="lineno"> 1844</span>&#160;    <span class="keywordtype">int</span> type,shell,bmature ;</div>
 <div class="line"><a name="l01845"></a><span class="lineno"> 1845</span>&#160;    <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga919b77c84402d3231070eeb331e03432" title="Old shell crabs-at-length. ">d3_pre_size_comps</a>.initialize();</div>
@@ -1738,7 +1738,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01897"></a><span class="lineno"> 1897</span>&#160;            {</div>
 <div class="line"><a name="l01898"></a><span class="lineno"> 1898</span>&#160;                <span class="keywordflow">for</span>( h = 1; h &lt;= <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6" title="number of gears ">nsex</a>; h++ )</div>
 <div class="line"><a name="l01899"></a><span class="lineno"> 1899</span>&#160;                {</div>
-<div class="line"><a name="l01900"></a><span class="lineno"> 1900</span>&#160;                    dvar_vector sel = exp(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1" title="Surival Rate (S=exp(-Z)) ">log_slx_capture</a>(k)(h)(i));</div>
+<div class="line"><a name="l01900"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad7bde20a454a1a7df3a5a20ee97a60eb"> 1900</a></span>&#160;                    dvar_vector sel = exp(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1" title="Surival Rate (S=exp(-Z)) ">log_slx_capture</a>(k)(h)(i));</div>
 <div class="line"><a name="l01901"></a><span class="lineno"> 1901</span>&#160;                    dvar_vector ret = exp(log_slx_retaind(k)(h)(i));</div>
 <div class="line"><a name="l01902"></a><span class="lineno"> 1902</span>&#160;                    dvar_vector dis = exp(log_slx_discard(k)(h)(i));</div>
 <div class="line"><a name="l01903"></a><span class="lineno"> 1903</span>&#160;                    <span class="comment">// dvar_vector tmp = N(h)(i);</span></div>
@@ -1774,7 +1774,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l01933"></a><span class="lineno"> 1933</span>&#160;    }</div>
 <div class="line"><a name="l01934"></a><span class="lineno"> 1934</span>&#160;    </div>
 <div class="line"><a name="l01935"></a><span class="lineno"> 1935</span>&#160;</div>
-<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa7ba0662d9d1f96922dad9831a0eba75" title="Calculate prior density functions for leading parameters. ">calculate_prior_densities</a></div>
+<div class="line"><a name="l01953"></a><span class="lineno"> 1953</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1cbd411d40776b0950388c7107e4ccf8" title="Calculate prior density functions for leading parameters. ">calculate_prior_densities</a></div>
 <div class="line"><a name="l01954"></a><span class="lineno"> 1954</span>&#160;    <span class="keywordtype">double</span> p1,p2;</div>
 <div class="line"><a name="l01955"></a><span class="lineno"> 1955</span>&#160;    <span class="keywordtype">double</span> lb,ub;</div>
 <div class="line"><a name="l01956"></a><span class="lineno"> 1956</span>&#160;    priorDensity.initialize();</div>
@@ -1844,7 +1844,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l02020"></a><span class="lineno"> 2020</span>&#160;</div>
 <div class="line"><a name="l02021"></a><span class="lineno"> 2021</span>&#160;</div>
 <div class="line"><a name="l02022"></a><span class="lineno"> 2022</span>&#160;</div>
-<div class="line"><a name="l02038"></a><span class="lineno"> 2038</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga075ae026c3da2bbd3fb02f2aca36905f" title="calculate objective function ">calc_objective_function</a></div>
+<div class="line"><a name="l02038"></a><span class="lineno"> 2038</span>&#160;FUNCTION <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f0b92ca6c71217a81f6a3b108d15088" title="calculate objective function ">calc_objective_function</a></div>
 <div class="line"><a name="l02039"></a><span class="lineno"> 2039</span>&#160;</div>
 <div class="line"><a name="l02040"></a><span class="lineno"> 2040</span>&#160;    <span class="comment">// |---------------------------------------------------------------------------------|</span></div>
 <div class="line"><a name="l02041"></a><span class="lineno"> 2041</span>&#160;    <span class="comment">// | NEGATIVE LOGLIKELIHOOD COMPONENTS FOR THE OBJECTIVE FUNCTION                    |</span></div>
@@ -1966,12 +1966,12 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l02164"></a><span class="lineno"> 2164</span>&#160;    <span class="comment">// random number generator</span></div>
 <div class="line"><a name="l02165"></a><span class="lineno"> 2165</span>&#160;    <a class="code" href="../../da/d50/classrandom__number__generator.html">random_number_generator</a> rng(rseed);</div>
 <div class="line"><a name="l02166"></a><span class="lineno"> 2166</span>&#160;    </div>
-<div class="line"><a name="l02167"></a><span class="lineno"> 2167</span>&#160;    <span class="comment">// Initialize model parameters</span></div>
-<div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae85542b46a8aa3f80a416a544aac0bbd" title="Initialize model parameters. ">initialize_model_parameters</a>();</div>
+<div class="line"><a name="l02167"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae0aeca6d064f3c5b594f02bd8a84d46b"> 2167</a></span>&#160;    <span class="comment">// Initialize model parameters</span></div>
+<div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga508f35365cfe210b06cec46a0b82f069" title="Initialize model parameters. ">initialize_model_parameters</a>();</div>
 <div class="line"><a name="l02169"></a><span class="lineno"> 2169</span>&#160;</div>
 <div class="line"><a name="l02170"></a><span class="lineno"> 2170</span>&#160;    <span class="comment">// Fishing fleet dynamics ...</span></div>
-<div class="line"><a name="l02171"></a><span class="lineno"> 2171</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa035770d06c219d3c64d64c178289b80" title="Calculate selectivies for each gear. ">calc_selectivities</a>();</div>
-<div class="line"><a name="l02172"></a><span class="lineno"> 2172</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga77262a9f728d0ed54b8fbea2493603a9" title="Calculate fishing mortality rates for each fleet. ">calc_fishing_mortality</a>();</div>
+<div class="line"><a name="l02171"></a><span class="lineno"> 2171</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf400624093b07bbcec88ab9cf3356285" title="Calculate selectivies for each gear. ">calc_selectivities</a>();</div>
+<div class="line"><a name="l02172"></a><span class="lineno"> 2172</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad85d770a6686c174986ecab5fc544393" title="Calculate fishing mortality rates for each fleet. ">calc_fishing_mortality</a>();</div>
 <div class="line"><a name="l02173"></a><span class="lineno"> 2173</span>&#160;</div>
 <div class="line"><a name="l02174"></a><span class="lineno"> 2174</span>&#160;    </div>
 <div class="line"><a name="l02175"></a><span class="lineno"> 2175</span>&#160;    dvector drec_dev(syr+1,nyr);</div>
@@ -1980,18 +1980,18 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l02178"></a><span class="lineno"> 2178</span>&#160;</div>
 <div class="line"><a name="l02179"></a><span class="lineno"> 2179</span>&#160;    <span class="comment">// Population dynamics ...</span></div>
 <div class="line"><a name="l02180"></a><span class="lineno"> 2180</span>&#160;    <a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#gab6ce8eaf8d318c1d10155888cd1bb8dc" title="Compute growth increments. ">calc_growth_increments</a>();</div>
-<div class="line"><a name="l02181"></a><span class="lineno"> 2181</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga865bc170e18ca7280bd96a9ff7e424b4" title="Calculate the probability of moulting vs carapace width. ">calc_molting_probability</a>();</div>
-<div class="line"><a name="l02182"></a><span class="lineno"> 2182</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac1a6684e8544e37f2989b1f388c1275f" title="Calclate the size transtion matrix.  Steven Martell. ">calc_size_transition_matrix</a>();</div>
-<div class="line"><a name="l02183"></a><span class="lineno"> 2183</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga326df5834d3e690b6c81daac1c3ffe23" title="Calculate natural mortality array. ">calc_natural_mortality</a>();</div>
-<div class="line"><a name="l02184"></a><span class="lineno"> 2184</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9452e86de816c0c965273a0e38033ea6" title="Calculate total instantaneous mortality rate and survival rate. ">calc_total_mortality</a>();</div>
-<div class="line"><a name="l02185"></a><span class="lineno"> 2185</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga8b2e44a401baa0eb9bac5c30dcf017c4" title="calculate size distribution for new recuits. ">calc_recruitment_size_distribution</a>();</div>
-<div class="line"><a name="l02186"></a><span class="lineno"> 2186</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa38ab7820a92f3ed99b6a69a28e04649" title="initialiaze populations numbers-at-length in syr ">calc_initial_numbers_at_length</a>();</div>
-<div class="line"><a name="l02187"></a><span class="lineno"> 2187</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab3680df9e34f65fca8c25d4f67857108" title="Update numbers-at-length. ">update_population_numbers_at_length</a>();</div>
+<div class="line"><a name="l02181"></a><span class="lineno"> 2181</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga12c55650ae56743d78da63e00311d0bf" title="Calculate the probability of moulting vs carapace width. ">calc_molting_probability</a>();</div>
+<div class="line"><a name="l02182"></a><span class="lineno"> 2182</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga26efae9f37fec1521bcf56c6f4791027" title="Calclate the size transtion matrix.  Steven Martell. ">calc_size_transition_matrix</a>();</div>
+<div class="line"><a name="l02183"></a><span class="lineno"> 2183</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca0927142e0652e5e5f97cfd9b60e477" title="Calculate natural mortality array. ">calc_natural_mortality</a>();</div>
+<div class="line"><a name="l02184"></a><span class="lineno"> 2184</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5eae2625710326f707f516e3b01a02f5" title="Calculate total instantaneous mortality rate and survival rate. ">calc_total_mortality</a>();</div>
+<div class="line"><a name="l02185"></a><span class="lineno"> 2185</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5afcf7f330636c244505ede70260df10" title="calculate size distribution for new recuits. ">calc_recruitment_size_distribution</a>();</div>
+<div class="line"><a name="l02186"></a><span class="lineno"> 2186</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf35a569842bc00252c3e20581ae43cc8" title="initialiaze populations numbers-at-length in syr ">calc_initial_numbers_at_length</a>();</div>
+<div class="line"><a name="l02187"></a><span class="lineno"> 2187</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga89f92aac09d89c896ccfb08c24ef982f" title="Update numbers-at-length. ">update_population_numbers_at_length</a>();</div>
 <div class="line"><a name="l02188"></a><span class="lineno"> 2188</span>&#160;</div>
 <div class="line"><a name="l02189"></a><span class="lineno"> 2189</span>&#160;    <span class="comment">// observation models ...</span></div>
-<div class="line"><a name="l02190"></a><span class="lineno"> 2190</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7507930a25ff4d0e9441f9067b09250f" title="Calculate predicted catch observations. ">calc_predicted_catch</a>();</div>
-<div class="line"><a name="l02191"></a><span class="lineno"> 2191</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f38a22aed2071f65143eeedeb247441" title="Calculate predicted relative abundance and residuals. ">calc_relative_abundance</a>();</div>
-<div class="line"><a name="l02192"></a><span class="lineno"> 2192</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab57c8791f16f8993c86a02ecc28c6a06" title="Calculate predicted size composition data. ">calc_predicted_composition</a>();</div>
+<div class="line"><a name="l02190"></a><span class="lineno"> 2190</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad7bde20a454a1a7df3a5a20ee97a60eb" title="Calculate predicted catch observations. ">calc_predicted_catch</a>();</div>
+<div class="line"><a name="l02191"></a><span class="lineno"> 2191</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7b76adeff63d163d4b3710afeec9ec21" title="Calculate predicted relative abundance and residuals. ">calc_relative_abundance</a>();</div>
+<div class="line"><a name="l02192"></a><span class="lineno"> 2192</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae0aeca6d064f3c5b594f02bd8a84d46b" title="Calculate predicted size composition data. ">calc_predicted_composition</a>();</div>
 <div class="line"><a name="l02193"></a><span class="lineno"> 2193</span>&#160;</div>
 <div class="line"><a name="l02194"></a><span class="lineno"> 2194</span>&#160;    </div>
 <div class="line"><a name="l02195"></a><span class="lineno"> 2195</span>&#160;    <span class="comment">// add observation errors to catch.</span></div>
@@ -2083,7 +2083,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div class="line"><a name="l02281"></a><span class="lineno"> 2281</span>&#160;    REPORT(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e" title="Diagonal matrix of molt probabilities ">d3_N</a>);</div>
 <div class="line"><a name="l02282"></a><span class="lineno"> 2282</span>&#160;    REPORT(M);</div>
 <div class="line"><a name="l02283"></a><span class="lineno"> 2283</span>&#160;    REPORT(mean_wt);</div>
-<div class="line"><a name="l02284"></a><span class="lineno"> 2284</span>&#160;    REPORT(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d" title="linear molt increment ">molt_probability</a>);</div>
+<div class="line"><a name="l02284"></a><span class="lineno"><a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1cbd411d40776b0950388c7107e4ccf8"> 2284</a></span>&#160;    REPORT(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d" title="linear molt increment ">molt_probability</a>);</div>
 <div class="line"><a name="l02285"></a><span class="lineno"> 2285</span>&#160;    dvector mmb = value(calc_mmb());</div>
 <div class="line"><a name="l02286"></a><span class="lineno"> 2286</span>&#160;    REPORT(mmb);</div>
 <div class="line"><a name="l02287"></a><span class="lineno"> 2287</span>&#160;</div>
@@ -2379,7 +2379,7 @@ $(document).ready(function(){initNavTree('dd/da9/gmacs_8tpl_source.html','../../
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dd/da9/gmacs_8tpl.html">gmacs.tpl</a></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:39:06 for GMACS by
+    <li class="footer">Generated on Mon Jan 12 2015 16:42:39 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
