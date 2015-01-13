@@ -287,29 +287,8 @@ Functions</h2></td></tr>
 <p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
 <p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01292">1292</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
-<div class="fragment"><div class="line"><a name="l01294"></a><span class="lineno"> 1294</span>&#160;                 :  See note from Dave Fournier.</div>
-<div class="line"><a name="l01295"></a><span class="lineno"> 1295</span>&#160;     * </div>
-<div class="line"><a name="l01296"></a><span class="lineno"> 1296</span>&#160;     * For the initial numbers-at-lengt a <a class="code" href="../../d7/dfc/classvector.html">vector</a> of deviates is estimated,</div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;     * one <span class="keywordflow">for each</span> size <span class="keyword">class</span>, and have the option to <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1c8d300ba5a9ed99a19aa82caabe1e52">initialize</a></div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;     * the model at unfished equilibrium, or some other steady state condition.</div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;     *  </div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;     *  Dec 11, 2014. Martell &amp; Ianelli at snowgoose.  We had a discussion regarding</div>
-<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;     *  how to deal with the joint probability of molting and growing to a <span class="keyword">new</span> size</div>
-<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;     *  interval <span class="keywordflow">for</span> a given length, and the probability of not molting.  We settled </div>
-<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160;     *  <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9392df7611996191b89d2b75dd0ce5ae">on</a> <span class="keyword">using</span> the size-tranistion <a class="code" href="../../d1/d8d/classmatrix.html">matrix</a> to represent <span class="keyword">this</span> joint probability, where</div>
-<div class="line"><a name="l01304"></a><span class="lineno"> 1304</span>&#160;     *  the diagonal of the <a class="code" href="../../d1/d8d/classmatrix.html">matrix</a> to represent the probability of surviving and </div>
-<div class="line"><a name="l01305"></a><span class="lineno"> 1305</span>&#160;     *  molting to a <span class="keyword">new</span> size interval. The upper diagonal of the size-transition <a class="code" href="../../d1/d8d/classmatrix.html">matrix</a></div>
-<div class="line"><a name="l01306"></a><span class="lineno"> 1306</span>&#160;     *  represent the probability of growing to size interval j<span class="stringliteral">&#39; given size interval j.</span></div>
-<div class="line"><a name="l01307"></a><span class="lineno"> 1307</span>&#160;<span class="stringliteral">     *  </span></div>
-<div class="line"><a name="l01308"></a><span class="lineno"> 1308</span>&#160;<span class="stringliteral">     *  Oldshell crabs are then the column vector of 1-molt_probabiltiy times the </span></div>
-<div class="line"><a name="l01309"></a><span class="lineno"> 1309</span>&#160;<span class="stringliteral">     *  numbers-at-length, and the Newshell crabs is the column vector of molt_probability</span></div>
-<div class="line"><a name="l01310"></a><span class="lineno"> 1310</span>&#160;<span class="stringliteral">     *  times the number-at-length.</span></div>
-<div class="line"><a name="l01311"></a><span class="lineno"> 1311</span>&#160;<span class="stringliteral">     *  </span></div>
-<div class="line"><a name="l01312"></a><span class="lineno"> 1312</span>&#160;<span class="stringliteral">     *  Jan 1, 2015.  Changed how the equilibrium calculation is done.  Use a numerical</span></div>
-<div class="line"><a name="l01313"></a><span class="lineno"> 1313</span>&#160;<span class="stringliteral">     *  approach to solve the newshell oldshell initial abundance.</span></div>
-<div class="line"><a name="l01314"></a><span class="lineno"> 1314</span>&#160;<span class="stringliteral">     *  </span></div>
-<div class="line"><a name="l01315"></a><span class="lineno"> 1315</span>&#160;<span class="stringliteral">     *  –––-—————————————————————————————————————————————————————————————————————————----</span></div>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01293">1293</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<div class="fragment"><div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;    {</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -340,16 +319,12 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01326">1326</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
-<div class="fragment"><div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;              :</div>
-<div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160;     *      <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a> = n(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>[I-(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>]^(-1)              (3)</div>
-<div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;     *  next substitute (3) into (1) and solve <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca32198ffddfeb45143f7de92bb456f7">for</a> n</div>
-<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;     *      n = nPSA + n(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>[I-(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>]^(-1)PSA + r</div>
-<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;     *  </div>
-<div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;     *  let B = [I-(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>]^(-1)</div>
-<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;     *      </div>
-<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;     *      n - nPSA - n(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)SBPSA = r</div>
-<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;     *      n(I - PSA - (I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)SBPSA) = r</div>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01327">1327</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<div class="fragment"><div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;              :</div>
+<div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;     *      <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a> = n(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>[I-(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>]^(-1)              (3)</div>
+<div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;     *  next substitute (3) into (1) and solve <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca32198ffddfeb45143f7de92bb456f7">for</a> n</div>
+<div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;     *      n = nPSA + n(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>[I-(I-<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>)<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>]^(-1)PSA + r</div>
+<div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160;     *  </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1156,14 +1131,10 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Set global variable equal to the estimated parameter vectors.</p>
 <p>SM: Note if using empirical growth increment data, then alpha and beta Growth parameters should not be estimated. Need to warn the user if the following condition is true: if( bUseEmpiricalGrowth &amp;&amp; ( acitve(alpha) || active(beta) ) )</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01063">1063</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
-<div class="fragment"><div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;    {</div>
-<div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160;        <span class="keywordflow">for</span>( l = 1; l &lt;= <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807" title="number of maturity types ">nclass</a>; l++ )</div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;        {</div>
-<div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;            <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf71db134fc9fe7b5356dc9d5bfb164f9" title="relative abundance residuals ">molt_increment</a>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga96705569863df5e41d53eaf354239f48">h</a>)(l) = <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga83a49f729a94b763359a19498f5b01eb" title="standard deviation of recruitment deviations. ">alpha</a>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga96705569863df5e41d53eaf354239f48">h</a>) - <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga3ecbda63cc0db3ec24303fa49f69a0a8" title="intercept for linear growth increment model. ">beta</a>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga96705569863df5e41d53eaf354239f48">h</a>) * <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga0101a69ff108b57f15aa165d1747b08d">mid_points</a>(l);</div>
-<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;        }</div>
-<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;    }</div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;</div>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01064">1064</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<div class="fragment"><div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;    {</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;        <span class="keywordflow">for</span>( l = 1; l &lt;= <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807" title="number of maturity types ">nclass</a>; l++ )</div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;        {</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1553,74 +1524,73 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model. </p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data. </p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02501">2501</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
-<div class="fragment"><div class="line"><a name="l02506"></a><span class="lineno"> 2506</span>&#160;    {</div>
-<div class="line"><a name="l02507"></a><span class="lineno"> 2507</span>&#160;        _dmr(k) = <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabe3ac618bb61130b9e09ce8686db938c">dmr</a>(iyr,k);</div>
-<div class="line"><a name="l02508"></a><span class="lineno"> 2508</span>&#160;    }</div>
-<div class="line"><a name="l02509"></a><span class="lineno"> 2509</span>&#160;    </div>
-<div class="line"><a name="l02510"></a><span class="lineno"> 2510</span>&#160;</div>
-<div class="line"><a name="l02511"></a><span class="lineno"> 2511</span>&#160;    <a class="code" href="../../df/d47/classspr.html">spr</a> *ptrSPR=<span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l02512"></a><span class="lineno"> 2512</span>&#160;</div>
-<div class="line"><a name="l02513"></a><span class="lineno"> 2513</span>&#160;</div>
-<div class="line"><a name="l02514"></a><span class="lineno"> 2514</span>&#160;</div>
-<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160;    <span class="comment">// SPR reference points for a single shell condition.</span></div>
-<div class="line"><a name="l02516"></a><span class="lineno"> 2516</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 1)</div>
-<div class="line"><a name="l02517"></a><span class="lineno"> 2517</span>&#160;    {</div>
-<div class="line"><a name="l02518"></a><span class="lineno"> 2518</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga184a6dd97e44466cde21f5b471dc0089">spr_lambda</a>,_rx,_wa,_M,_A);</div>
-<div class="line"><a name="l02519"></a><span class="lineno"> 2519</span>&#160;        ptrSPR = &amp;c_spr;</div>
-<div class="line"><a name="l02520"></a><span class="lineno"> 2520</span>&#160;    }</div>
-<div class="line"><a name="l02521"></a><span class="lineno"> 2521</span>&#160;    <span class="comment">// SPR reference points for new and old shell condition.</span></div>
-<div class="line"><a name="l02522"></a><span class="lineno"> 2522</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 2)</div>
-<div class="line"><a name="l02523"></a><span class="lineno"> 2523</span>&#160;    {</div>
-<div class="line"><a name="l02524"></a><span class="lineno"> 2524</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga184a6dd97e44466cde21f5b471dc0089">spr_lambda</a>,_rx,_wa,_M,_P,_A);</div>
-<div class="line"><a name="l02525"></a><span class="lineno"> 2525</span>&#160;        ptrSPR = &amp;c_spr;    </div>
-<div class="line"><a name="l02526"></a><span class="lineno"> 2526</span>&#160;    }</div>
-<div class="line"><a name="l02527"></a><span class="lineno"> 2527</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga6ab367b6169da210da1687bb48b7edb3">spr_fspr</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#ac21f4b9bd58b8cf097e8ece186fa0735" title="Calculate f_spr reference point. ">get_fspr</a>(ifleet,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad44c7c17f325bec7c979e590ab7037b7">spr_target</a>,_fhk,_sel,_ret,_dmr);</div>
-<div class="line"><a name="l02528"></a><span class="lineno"> 2528</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad8bc1b311a4294690b9462fac091ee1d">spr_bspr</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#ab3c896c132e2084dc91ffa8d4881ba49">get_bspr</a>();</div>
-<div class="line"><a name="l02529"></a><span class="lineno"> 2529</span>&#160;</div>
-<div class="line"><a name="l02530"></a><span class="lineno"> 2530</span>&#160;    <span class="comment">// OFL Calculations</span></div>
-<div class="line"><a name="l02531"></a><span class="lineno"> 2531</span>&#160;    dvector <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga3e550940d10f5dca7793504911944a99">mmb</a> = value(calc_mmb());</div>
-<div class="line"><a name="l02532"></a><span class="lineno"> 2532</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9c27cc23d0ba55441471abc9f69483e8">cuttoff</a> = 0.1;</div>
-<div class="line"><a name="l02533"></a><span class="lineno"> 2533</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab6e1fbde91d4eed5fc908aebbe727bef">limit</a> = 0.25;</div>
-<div class="line"><a name="l02534"></a><span class="lineno"> 2534</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga14d83b0e37f0f6e54bbeb2eeb4d65c40">spr_fofl</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#af73697b13ba0e7887b80d01cd0d29a62" title="Calculate fishing mortality rate for OFL. ">get_fofl</a>(cuttoff,limit,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga3e550940d10f5dca7793504911944a99">mmb</a>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3" title="initial year ">nyr</a>));</div>
-<div class="line"><a name="l02535"></a><span class="lineno"> 2535</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf83c9e82f541e1af8483e04e1015e29a">spr_cofl</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#afccf9131ac27f116ee38adb492b6c2b4" title="Calculate OFL. ">get_cofl</a>(_N);</div>
-<div class="line"><a name="l02536"></a><span class="lineno"> 2536</span>&#160;</div>
-<div class="line"><a name="l02537"></a><span class="lineno"> 2537</span>&#160;    </div>
-<div class="line"><a name="l02538"></a><span class="lineno"> 2538</span>&#160;</div>
-<div class="line"><a name="l02539"></a><span class="lineno"> 2539</span>&#160;</div>
-<div class="line"><a name="l02540"></a><span class="lineno"> 2540</span>&#160;    </div>
-<div class="line"><a name="l02541"></a><span class="lineno"> 2541</span>&#160;    </div>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02502">2502</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<div class="fragment"><div class="line"><a name="l02511"></a><span class="lineno"> 2511</span>&#160;    {</div>
+<div class="line"><a name="l02512"></a><span class="lineno"> 2512</span>&#160;        _dmr(k) = <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabe3ac618bb61130b9e09ce8686db938c">dmr</a>(iyr,k);</div>
+<div class="line"><a name="l02513"></a><span class="lineno"> 2513</span>&#160;    }</div>
+<div class="line"><a name="l02514"></a><span class="lineno"> 2514</span>&#160;    </div>
+<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160;</div>
+<div class="line"><a name="l02516"></a><span class="lineno"> 2516</span>&#160;    <a class="code" href="../../df/d47/classspr.html">spr</a> *ptrSPR=<span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l02517"></a><span class="lineno"> 2517</span>&#160;</div>
+<div class="line"><a name="l02518"></a><span class="lineno"> 2518</span>&#160;</div>
+<div class="line"><a name="l02519"></a><span class="lineno"> 2519</span>&#160;</div>
+<div class="line"><a name="l02520"></a><span class="lineno"> 2520</span>&#160;    <span class="comment">// SPR reference points for a single shell condition.</span></div>
+<div class="line"><a name="l02521"></a><span class="lineno"> 2521</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 1)</div>
+<div class="line"><a name="l02522"></a><span class="lineno"> 2522</span>&#160;    {</div>
+<div class="line"><a name="l02523"></a><span class="lineno"> 2523</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga184a6dd97e44466cde21f5b471dc0089">spr_lambda</a>,_rx,_wa,_M,_A);</div>
+<div class="line"><a name="l02524"></a><span class="lineno"> 2524</span>&#160;        ptrSPR = &amp;c_spr;</div>
+<div class="line"><a name="l02525"></a><span class="lineno"> 2525</span>&#160;    }</div>
+<div class="line"><a name="l02526"></a><span class="lineno"> 2526</span>&#160;    <span class="comment">// SPR reference points for new and old shell condition.</span></div>
+<div class="line"><a name="l02527"></a><span class="lineno"> 2527</span>&#160;    <span class="keywordflow">if</span>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e" title="number of sexes ">nshell</a> == 2)</div>
+<div class="line"><a name="l02528"></a><span class="lineno"> 2528</span>&#160;    {</div>
+<div class="line"><a name="l02529"></a><span class="lineno"> 2529</span>&#160;        <a class="code" href="../../df/d47/classspr.html">spr</a> c_spr(_r,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga184a6dd97e44466cde21f5b471dc0089">spr_lambda</a>,_rx,_wa,_M,_P,_A);</div>
+<div class="line"><a name="l02530"></a><span class="lineno"> 2530</span>&#160;        ptrSPR = &amp;c_spr;    </div>
+<div class="line"><a name="l02531"></a><span class="lineno"> 2531</span>&#160;    }</div>
+<div class="line"><a name="l02532"></a><span class="lineno"> 2532</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga6ab367b6169da210da1687bb48b7edb3">spr_fspr</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#ac21f4b9bd58b8cf097e8ece186fa0735" title="Calculate f_spr reference point. ">get_fspr</a>(ifleet,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad44c7c17f325bec7c979e590ab7037b7">spr_target</a>,_fhk,_sel,_ret,_dmr);</div>
+<div class="line"><a name="l02533"></a><span class="lineno"> 2533</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad8bc1b311a4294690b9462fac091ee1d">spr_bspr</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#ab3c896c132e2084dc91ffa8d4881ba49">get_bspr</a>();</div>
+<div class="line"><a name="l02534"></a><span class="lineno"> 2534</span>&#160;</div>
+<div class="line"><a name="l02535"></a><span class="lineno"> 2535</span>&#160;    <span class="comment">// OFL Calculations</span></div>
+<div class="line"><a name="l02536"></a><span class="lineno"> 2536</span>&#160;    dvector <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga3e550940d10f5dca7793504911944a99">mmb</a> = value(calc_mmb());</div>
+<div class="line"><a name="l02537"></a><span class="lineno"> 2537</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9c27cc23d0ba55441471abc9f69483e8">cuttoff</a> = 0.1;</div>
+<div class="line"><a name="l02538"></a><span class="lineno"> 2538</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab6e1fbde91d4eed5fc908aebbe727bef">limit</a> = 0.25;</div>
+<div class="line"><a name="l02539"></a><span class="lineno"> 2539</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga14d83b0e37f0f6e54bbeb2eeb4d65c40">spr_fofl</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#af73697b13ba0e7887b80d01cd0d29a62" title="Calculate fishing mortality rate for OFL. ">get_fofl</a>(cuttoff,limit,<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga3e550940d10f5dca7793504911944a99">mmb</a>(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3" title="initial year ">nyr</a>));</div>
+<div class="line"><a name="l02540"></a><span class="lineno"> 2540</span>&#160;    <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf83c9e82f541e1af8483e04e1015e29a">spr_cofl</a> = ptrSPR-&gt;<a class="code" href="../../df/d47/classspr.html#afccf9131ac27f116ee38adb492b6c2b4" title="Calculate OFL. ">get_cofl</a>(_N);</div>
+<div class="line"><a name="l02541"></a><span class="lineno"> 2541</span>&#160;</div>
 <div class="line"><a name="l02542"></a><span class="lineno"> 2542</span>&#160;    </div>
 <div class="line"><a name="l02543"></a><span class="lineno"> 2543</span>&#160;</div>
-<div class="line"><a name="l02544"></a><span class="lineno"> 2544</span>&#160;RUNTIME_SECTION</div>
-<div class="line"><a name="l02545"></a><span class="lineno"> 2545</span>&#160;  <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9c37c6aa242174fcda17ed45da14502a">maximum_function_evaluations</a> 500,  500,   1500, 25000, 25000</div>
-<div class="line"><a name="l02546"></a><span class="lineno"> 2546</span>&#160;  convergence_criteria        1.e-4, 1.e-4, 1.e-4, 1.e-4, 1.e-4, </div>
-<div class="line"><a name="l02547"></a><span class="lineno"> 2547</span>&#160;</div>
+<div class="line"><a name="l02544"></a><span class="lineno"> 2544</span>&#160;</div>
+<div class="line"><a name="l02545"></a><span class="lineno"> 2545</span>&#160;    </div>
+<div class="line"><a name="l02546"></a><span class="lineno"> 2546</span>&#160;    </div>
+<div class="line"><a name="l02547"></a><span class="lineno"> 2547</span>&#160;    </div>
 <div class="line"><a name="l02548"></a><span class="lineno"> 2548</span>&#160;</div>
-<div class="line"><a name="l02549"></a><span class="lineno"> 2549</span>&#160;GLOBALS_SECTION</div>
-<div class="line"><a name="l02550"></a><span class="lineno"> 2550</span>&#160;<span class="preprocessor">    #include &lt;admodel.h&gt;</span></div>
-<div class="line"><a name="l02551"></a><span class="lineno"> 2551</span>&#160;<span class="preprocessor">    #include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l02552"></a><span class="lineno"> 2552</span>&#160;    <span class="comment">//#include &lt;contrib.h&gt;</span></div>
-<div class="line"><a name="l02553"></a><span class="lineno"> 2553</span>&#160;<span class="preprocessor">    #if defined __APPLE__ || defined __linux</span></div>
-<div class="line"><a name="l02554"></a><span class="lineno"> 2554</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #include &quot;<a class="code" href="../../dd/d6f/libgmacs_8h.html">./include/libgmacs.h</a>&quot;</span></div>
-<div class="line"><a name="l02555"></a><span class="lineno"> 2555</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l02556"></a><span class="lineno"> 2556</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l02557"></a><span class="lineno"> 2557</span>&#160;<span class="preprocessor">    #if defined _WIN32 || defined _WIN64</span></div>
-<div class="line"><a name="l02558"></a><span class="lineno"> 2558</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #include &quot;include\libgmacs.h&quot;</span></div>
-<div class="line"><a name="l02559"></a><span class="lineno"> 2559</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l02560"></a><span class="lineno"> 2560</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l02561"></a><span class="lineno"> 2561</span>&#160;</div>
-<div class="line"><a name="l02562"></a><span class="lineno"> 2562</span>&#160;    </div>
-<div class="line"><a name="l02563"></a><span class="lineno"> 2563</span>&#160;    </div>
-<div class="line"><a name="l02564"></a><span class="lineno"> 2564</span>&#160;    time_t <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a9894a4e56382d5b5bc32d117b4001215">start</a>,<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a10221b2e4cd42d30fab60f4b9f971546">finish</a>;</div>
-<div class="line"><a name="l02565"></a><span class="lineno"> 2565</span>&#160;    <span class="keywordtype">long</span> <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a3eee8087b30e1a3d769aa3df20c7367b">hour</a>,<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a2f04e361145d1fc25d8a3c19f685b155">minute</a>,<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a088751ace15b39f884eb863cbed3a9fb">second</a>;</div>
-<div class="line"><a name="l02566"></a><span class="lineno"> 2566</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../dd/d2c/gmacs_8cpp.html#ae0b00447734bbd9264fdbe9f063fb0fb">elapsed_time</a>;</div>
-<div class="line"><a name="l02567"></a><span class="lineno"> 2567</span>&#160;</div>
-<div class="line"><a name="l02568"></a><span class="lineno"> 2568</span>&#160;    <span class="comment">// Define objects for report file, echoinput, etc.</span></div>
-<div class="line"><a name="l02573"></a><span class="lineno"> 2573</span>&#160;<span class="comment"></span><span class="preprocessor">    #undef REPORT</span></div>
-<div class="line"><a name="l02574"></a><span class="lineno"> 2574</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #define REPORT(object) report &lt;&lt; #object &quot;\n&quot; &lt;&lt; setw(8) \</span></div>
-<div class="line"><a name="l02575"></a><span class="lineno"> 2575</span>&#160;<span class="preprocessor">    &lt;&lt; setprecision(4) &lt;&lt; setfixed() &lt;&lt; object &lt;&lt; endl;</span></div>
-<div class="line"><a name="l02576"></a><span class="lineno"> 2576</span>&#160;<span class="preprocessor"></span></div><!-- fragment -->
+<div class="line"><a name="l02549"></a><span class="lineno"> 2549</span>&#160;RUNTIME_SECTION</div>
+<div class="line"><a name="l02550"></a><span class="lineno"> 2550</span>&#160;  <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9c37c6aa242174fcda17ed45da14502a">maximum_function_evaluations</a> 500,  500,   1500, 25000, 25000</div>
+<div class="line"><a name="l02551"></a><span class="lineno"> 2551</span>&#160;  convergence_criteria        1.e-4, 1.e-4, 1.e-4, 1.e-4, 1.e-4, </div>
+<div class="line"><a name="l02552"></a><span class="lineno"> 2552</span>&#160;</div>
+<div class="line"><a name="l02553"></a><span class="lineno"> 2553</span>&#160;</div>
+<div class="line"><a name="l02554"></a><span class="lineno"> 2554</span>&#160;GLOBALS_SECTION</div>
+<div class="line"><a name="l02555"></a><span class="lineno"> 2555</span>&#160;<span class="preprocessor">    #include &lt;admodel.h&gt;</span></div>
+<div class="line"><a name="l02556"></a><span class="lineno"> 2556</span>&#160;<span class="preprocessor">    #include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l02557"></a><span class="lineno"> 2557</span>&#160;    <span class="comment">//#include &lt;contrib.h&gt;</span></div>
+<div class="line"><a name="l02558"></a><span class="lineno"> 2558</span>&#160;<span class="preprocessor">    #if defined __APPLE__ || defined __linux</span></div>
+<div class="line"><a name="l02559"></a><span class="lineno"> 2559</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #include &quot;<a class="code" href="../../dd/d6f/libgmacs_8h.html">./include/libgmacs.h</a>&quot;</span></div>
+<div class="line"><a name="l02560"></a><span class="lineno"> 2560</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l02561"></a><span class="lineno"> 2561</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l02562"></a><span class="lineno"> 2562</span>&#160;<span class="preprocessor">    #if defined _WIN32 || defined _WIN64</span></div>
+<div class="line"><a name="l02563"></a><span class="lineno"> 2563</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #include &quot;include\libgmacs.h&quot;</span></div>
+<div class="line"><a name="l02564"></a><span class="lineno"> 2564</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l02565"></a><span class="lineno"> 2565</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l02566"></a><span class="lineno"> 2566</span>&#160;</div>
+<div class="line"><a name="l02567"></a><span class="lineno"> 2567</span>&#160;    </div>
+<div class="line"><a name="l02568"></a><span class="lineno"> 2568</span>&#160;    </div>
+<div class="line"><a name="l02569"></a><span class="lineno"> 2569</span>&#160;    time_t <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a9894a4e56382d5b5bc32d117b4001215">start</a>,<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a10221b2e4cd42d30fab60f4b9f971546">finish</a>;</div>
+<div class="line"><a name="l02570"></a><span class="lineno"> 2570</span>&#160;    <span class="keywordtype">long</span> <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a3eee8087b30e1a3d769aa3df20c7367b">hour</a>,<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a2f04e361145d1fc25d8a3c19f685b155">minute</a>,<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a088751ace15b39f884eb863cbed3a9fb">second</a>;</div>
+<div class="line"><a name="l02571"></a><span class="lineno"> 2571</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../dd/d2c/gmacs_8cpp.html#ae0b00447734bbd9264fdbe9f063fb0fb">elapsed_time</a>;</div>
+<div class="line"><a name="l02572"></a><span class="lineno"> 2572</span>&#160;</div>
+<div class="line"><a name="l02573"></a><span class="lineno"> 2573</span>&#160;    <span class="comment">// Define objects for report file, echoinput, etc.</span></div>
+<div class="line"><a name="l02578"></a><span class="lineno"> 2578</span>&#160;<span class="comment"></span><span class="preprocessor">    #undef REPORT</span></div>
+<div class="line"><a name="l02579"></a><span class="lineno"> 2579</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #define REPORT(object) report &lt;&lt; #object &quot;\n&quot; &lt;&lt; setw(8) \</span></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="gab3680df9e34f65fca8c25d4f67857108"></a>
@@ -1709,7 +1679,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 12 2015 16:31:24 for GMACS by
+    <li class="footer">Generated on Mon Jan 12 2015 16:33:04 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
