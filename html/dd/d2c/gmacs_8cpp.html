@@ -294,11 +294,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l02264">2264</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02265"></a><span class="lineno"> 2265</span>&#160;  {</div>
-<div class="line"><a name="l02266"></a><span class="lineno"> 2266</span>&#160;    <span class="comment">/* so we can stop here */</span></div>
-<div class="line"><a name="l02267"></a><span class="lineno"> 2267</span>&#160;    exit(i);</div>
-<div class="line"><a name="l02268"></a><span class="lineno"> 2268</span>&#160;  }</div>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l02290">2290</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02291"></a><span class="lineno"> 2291</span>&#160;  {</div>
+<div class="line"><a name="l02292"></a><span class="lineno"> 2292</span>&#160;    <span class="comment">/* so we can stop here */</span></div>
+<div class="line"><a name="l02293"></a><span class="lineno"> 2293</span>&#160;    exit(i);</div>
+<div class="line"><a name="l02294"></a><span class="lineno"> 2294</span>&#160;  }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -326,26 +326,26 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l02242">2242</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l02243"></a><span class="lineno"> 2243</span>&#160;{</div>
-<div class="line"><a name="l02244"></a><span class="lineno"> 2244</span>&#160;    ad_set_new_handler();</div>
-<div class="line"><a name="l02245"></a><span class="lineno"> 2245</span>&#160;  ad_exit=&amp;<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a0f351f6dd3acc8674a112783ea24f44c">ad_boundf</a>;</div>
-<div class="line"><a name="l02246"></a><span class="lineno"> 2246</span>&#160;    time(&amp;<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a9894a4e56382d5b5bc32d117b4001215">start</a>);</div>
-<div class="line"><a name="l02247"></a><span class="lineno"> 2247</span>&#160;    <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a> = 50000000;</div>
-<div class="line"><a name="l02248"></a><span class="lineno"> 2248</span>&#160;    gradient_structure::set_GRADSTACK_BUFFER_SIZE(1.e7);</div>
-<div class="line"><a name="l02249"></a><span class="lineno"> 2249</span>&#160;    gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);</div>
-<div class="line"><a name="l02250"></a><span class="lineno"> 2250</span>&#160;    gradient_structure::set_MAX_NVAR_OFFSET(5000);</div>
-<div class="line"><a name="l02251"></a><span class="lineno"> 2251</span>&#160;    gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);</div>
-<div class="line"><a name="l02252"></a><span class="lineno"> 2252</span>&#160;    gradient_structure::set_MAX_DLINKS(50000); </div>
-<div class="line"><a name="l02253"></a><span class="lineno"> 2253</span>&#160;    gradient_structure::set_NO_DERIVATIVES();</div>
-<div class="line"><a name="l02254"></a><span class="lineno"> 2254</span>&#160;    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();</div>
-<div class="line"><a name="l02255"></a><span class="lineno"> 2255</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a>) <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a>=15000000;</div>
-<div class="line"><a name="l02256"></a><span class="lineno"> 2256</span>&#160;    model_parameters mp(<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a>,argc,argv);</div>
-<div class="line"><a name="l02257"></a><span class="lineno"> 2257</span>&#160;    mp.iprint=10;</div>
-<div class="line"><a name="l02258"></a><span class="lineno"> 2258</span>&#160;    mp.preliminary_calculations();</div>
-<div class="line"><a name="l02259"></a><span class="lineno"> 2259</span>&#160;    mp.computations(argc,argv);</div>
-<div class="line"><a name="l02260"></a><span class="lineno"> 2260</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02261"></a><span class="lineno"> 2261</span>&#160;}</div>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l02268">2268</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l02269"></a><span class="lineno"> 2269</span>&#160;{</div>
+<div class="line"><a name="l02270"></a><span class="lineno"> 2270</span>&#160;    ad_set_new_handler();</div>
+<div class="line"><a name="l02271"></a><span class="lineno"> 2271</span>&#160;  ad_exit=&amp;<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a0f351f6dd3acc8674a112783ea24f44c">ad_boundf</a>;</div>
+<div class="line"><a name="l02272"></a><span class="lineno"> 2272</span>&#160;    time(&amp;<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a9894a4e56382d5b5bc32d117b4001215">start</a>);</div>
+<div class="line"><a name="l02273"></a><span class="lineno"> 2273</span>&#160;    <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a> = 50000000;</div>
+<div class="line"><a name="l02274"></a><span class="lineno"> 2274</span>&#160;    gradient_structure::set_GRADSTACK_BUFFER_SIZE(1.e7);</div>
+<div class="line"><a name="l02275"></a><span class="lineno"> 2275</span>&#160;    gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);</div>
+<div class="line"><a name="l02276"></a><span class="lineno"> 2276</span>&#160;    gradient_structure::set_MAX_NVAR_OFFSET(5000);</div>
+<div class="line"><a name="l02277"></a><span class="lineno"> 2277</span>&#160;    gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);</div>
+<div class="line"><a name="l02278"></a><span class="lineno"> 2278</span>&#160;    gradient_structure::set_MAX_DLINKS(50000); </div>
+<div class="line"><a name="l02279"></a><span class="lineno"> 2279</span>&#160;    gradient_structure::set_NO_DERIVATIVES();</div>
+<div class="line"><a name="l02280"></a><span class="lineno"> 2280</span>&#160;    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();</div>
+<div class="line"><a name="l02281"></a><span class="lineno"> 2281</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a>) <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a>=15000000;</div>
+<div class="line"><a name="l02282"></a><span class="lineno"> 2282</span>&#160;    model_parameters mp(<a class="code" href="../../dd/d2c/gmacs_8cpp.html#a82e64ac8b0ab88f7ec62b66e4f1a9acf">arrmblsize</a>,argc,argv);</div>
+<div class="line"><a name="l02283"></a><span class="lineno"> 2283</span>&#160;    mp.iprint=10;</div>
+<div class="line"><a name="l02284"></a><span class="lineno"> 2284</span>&#160;    mp.preliminary_calculations();</div>
+<div class="line"><a name="l02285"></a><span class="lineno"> 2285</span>&#160;    mp.computations(argc,argv);</div>
+<div class="line"><a name="l02286"></a><span class="lineno"> 2286</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02287"></a><span class="lineno"> 2287</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -360,7 +360,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l02240">2240</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l02266">2266</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 
 </div>
 </div>
@@ -478,7 +478,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dd/d2c/gmacs_8cpp.html">gmacs.cpp</a></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:33:04 for GMACS by
+    <li class="footer">Generated on Mon Jan 12 2015 16:34:42 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
