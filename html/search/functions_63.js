@@ -16,8 +16,5 @@ var searchData=
   ['calc_5fsize_5ftransition_5fmatrix',['calc_size_transition_matrix',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac1a6684e8544e37f2989b1f388c1275f',1,'gmacs.cpp']]],
   ['calc_5ftotal_5fmortality',['calc_total_mortality',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9452e86de816c0c965273a0e38033ea6',1,'gmacs.cpp']]],
   ['calculate_5fprior_5fdensities',['calculate_prior_densities',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa7ba0662d9d1f96922dad9831a0eba75',1,'gmacs.cpp']]],
-  ['coefficients',['coefficients',['../da/d9f/namespacecstar.html#a7659e890caa75ccb504019e7ab531020',1,'cstar']]],
-  ['compress',['compress',['../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9',1,'acl::negativeLogLikelihood']]],
-  ['constant_5fquadratic_5fpenalty',['constant_quadratic_penalty',['../df/dcc/classconstant__quadratic__penalty.html#afca1b0223510873f3152dc310bbe2d18',1,'constant_quadratic_penalty']]],
-  ['cout',['COUT',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1f68ac0a46892307f9da32f1c02d57ea',1,'COUT(isex):&#160;gmacs.tpl'],['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5b7acb1e1f2bbf3d1dbbebeb36bd150a',1,'COUT(pntr_hmo):&#160;gmacs.tpl'],['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gafbeae226c2b5a3768faa0f113ff0beb0',1,'COUT(Grwth_phz):&#160;gmacs.tpl']]]
+  ['compress',['compress',['../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9',1,'acl::negativeLogLikelihood']]]
 ];

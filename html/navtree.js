@@ -2,30 +2,21 @@ var NAVTREE =
 [
   [ "GMACS", "index.html", [
     [ "Modules", "modules.html", "modules" ],
-    [ "Namespaces", null, [
-      [ "Namespace List", "namespaces.html", "namespaces" ],
-      [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ]
-      ] ]
-    ] ],
     [ "Classes", null, [
       [ "Class List", "annotated.html", "annotated" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Typedefs", "functions_type.html", null ]
+        [ "Functions", "functions_func.html", null ]
       ] ]
     ] ],
     [ "Files", null, [
       [ "File List", "files.html", "files" ],
       [ "File Members", "globals.html", [
-        [ "All", "globals.html", "globals_dup" ],
+        [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
-        [ "Variables", "globals_vars.html", null ],
-        [ "Macros", "globals_defs.html", null ]
+        [ "Variables", "globals_vars.html", null ]
       ] ]
     ] ]
   ] ]
@@ -33,10 +24,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"d9/d49/selex_8hpp_source.html",
-"dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaea1c719089a4d978472a361bd064264e",
-"dd/da9/gmacs_8tpl.html#gaae5ebb403ffa2a1ad5ced233a454fa59"
+".html",
+"da/dc8/classsplus__int.html",
+"dd/da9/gmacs_8tpl.html#gaa035770d06c219d3c64d64c178289b80"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

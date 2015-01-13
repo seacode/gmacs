@@ -1,8 +1,23 @@
 var annotated =
 [
-    [ "acl", "dc/d28/namespaceacl.html", "dc/d28/namespaceacl" ],
-    [ "cstar", "da/d9f/namespacecstar.html", "da/d9f/namespacecstar" ],
-    [ "likelihoods", "d9/d15/namespacelikelihoods.html", "d9/d15/namespacelikelihoods" ],
+    [ "acl", null, [
+      [ "negativeLogLikelihood", "d3/d8c/classacl_1_1negative_log_likelihood.html", "d3/d8c/classacl_1_1negative_log_likelihood" ],
+      [ "multinomial", "d6/d28/classacl_1_1multinomial.html", "d6/d28/classacl_1_1multinomial" ],
+      [ "robust_multi", "df/dea/classacl_1_1robust__multi.html", "df/dea/classacl_1_1robust__multi" ]
+    ] ],
+    [ "cstar", null, [
+      [ "Selex", "dc/d0a/classcstar_1_1_selex.html", "dc/d0a/classcstar_1_1_selex" ],
+      [ "logisticTrait", "db/d9a/classcstar_1_1logistic_trait.html", null ],
+      [ "logisticTrait< double >", "d4/d03/classcstar_1_1logistic_trait_3_01double_01_4.html", "d4/d03/classcstar_1_1logistic_trait_3_01double_01_4" ],
+      [ "logisticTrait< named_dvariable >", "d9/d47/classcstar_1_1logistic_trait_3_01named__dvariable_01_4.html", "d9/d47/classcstar_1_1logistic_trait_3_01named__dvariable_01_4" ],
+      [ "LogisticCurve", "de/d7b/classcstar_1_1_logistic_curve.html", "de/d7b/classcstar_1_1_logistic_curve" ],
+      [ "LogisticCurve95", "d4/d0a/classcstar_1_1_logistic_curve95.html", "d4/d0a/classcstar_1_1_logistic_curve95" ],
+      [ "SelectivityCoefficients", "de/d60/classcstar_1_1_selectivity_coefficients.html", "de/d60/classcstar_1_1_selectivity_coefficients" ],
+      [ "ParameterPerClass", "d9/df4/classcstar_1_1_parameter_per_class.html", "d9/df4/classcstar_1_1_parameter_per_class" ]
+    ] ],
+    [ "likelihoods", null, [
+      [ "nloglike", "d2/d6d/classlikelihoods_1_1nloglike.html", "d2/d6d/classlikelihoods_1_1nloglike" ]
+    ] ],
     [ "_3darray", "dd/de8/class__3darray.html", "dd/de8/class__3darray" ],
     [ "_4darray", "da/d6c/class__4darray.html", "da/d6c/class__4darray" ],
     [ "_5darray", "d7/dd1/class__5darray.html", "d7/dd1/class__5darray" ],

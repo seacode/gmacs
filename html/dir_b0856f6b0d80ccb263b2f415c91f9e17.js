@@ -1,7 +1,7 @@
 var dir_b0856f6b0d80ccb263b2f415c91f9e17 =
 [
-    [ "libgmacs.h", "dd/d6f/libgmacs_8h.html", "dd/d6f/libgmacs_8h" ],
-    [ "nloglike.h", "de/d33/nloglike_8h.html", "de/d33/nloglike_8h" ],
+    [ "libgmacs.h", "dd/d6f/libgmacs_8h_source.html", null ],
+    [ "nloglike.h", "de/d33/nloglike_8h_source.html", null ],
     [ "selex.hpp", "d9/d49/selex_8hpp.html", "d9/d49/selex_8hpp" ],
-    [ "spr.h", "d5/d0a/spr_8h.html", "d5/d0a/spr_8h" ]
+    [ "spr.h", "d5/d0a/spr_8h_source.html", null ]
 ];

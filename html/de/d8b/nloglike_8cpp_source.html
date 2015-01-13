@@ -54,7 +54,6 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="../../modules.html"><span>Modules</span></a></li>
-      <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="../../files.html"><span>Files</span></a></li>
       <li>
@@ -101,7 +100,7 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,7 +114,7 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <div class="title">nloglike.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="../../de/d8b/nloglike_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#if defined __APPLE__ || defined __linux</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #include &quot;../include/nloglike.h&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#endif</span></div>
@@ -125,23 +124,23 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="keyword">using namespace </span>likelihoods;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a4f4ddc116f6d3c360aad55e0a542b960">   11</a></span>&#160;<a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a4f4ddc116f6d3c360aad55e0a542b960">nloglike::nloglike</a>(<span class="keyword">const</span> dmatrix&amp; _O, <span class="keyword">const</span> dvar_matrix&amp; _P)</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;nloglike::nloglike(<span class="keyword">const</span> dmatrix&amp; _O, <span class="keyword">const</span> dvar_matrix&amp; _P)</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;:m_O(_O),m_P(_P)</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    r1 = m_O.rowmin();</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    r2 = m_O.rowmax();</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    c1 = m_O.colmin();</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    c2 = m_O.colmax();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a686d492d738900cf723b215ce8b00180" title="Tail compression. ">tail_compression</a>();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a10f4175a1f51ecff3e14d37213ab8748" title="Determine non-zero array elements for tail compression. ">tail_compression</a>();</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    m_residual.allocate(r1,r2,c1,c2);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a593fd2bd706672c0d80a4ae8395a6063">   22</a></span>&#160;<a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a593fd2bd706672c0d80a4ae8395a6063">nloglike::~nloglike</a>()</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;nloglike::~nloglike()</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ac342b2c8b2a4401edc9ebd1c27f11b4c">   35</a></span>&#160;dvariable <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ac342b2c8b2a4401edc9ebd1c27f11b4c" title="Multivariate logistic likelihood. ">nloglike::dmvlogistic</a>()</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ac342b2c8b2a4401edc9ebd1c27f11b4c">   35</a></span>&#160;dvariable nloglike::dmvlogistic()</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">int</span> n = 0;</div>
@@ -163,7 +162,7 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span> nll;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#af660c0fc634cb865d86b463e3bc4be03">   64</a></span>&#160;dvariable <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#af660c0fc634cb865d86b463e3bc4be03" title="Multinomial likleihood for composition data. ">nloglike::multinomial</a>(<span class="keyword">const</span> dvector&amp; dSampleSize)</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#af660c0fc634cb865d86b463e3bc4be03">   64</a></span>&#160;dvariable nloglike::multinomial(<span class="keyword">const</span> dvector&amp; dSampleSize)</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;{</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>( dSampleSize.indexmin() != m_Or.rowmin() || dSampleSize.indexmax() != m_Or.rowmax() )</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div>
@@ -176,20 +175,20 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">double</span> tiny = 1.e-14;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = r1; i &lt;= r2; i++ )</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        dvector <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a> = m_Or(i) + tiny;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        dvector o = m_Or(i) + tiny;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        dvar_vector p = m_Pr(i) + tiny;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        o /= sum(o);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        p /= sum(p);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        dvector n = dSampleSize(i) * <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        nll += <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ae84c60f4a787a51ad4abf3b4873de0c7">dmultinom</a>(n,p);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        dvector n = dSampleSize(i) * o;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        nll += dmultinom(n,p);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    RETURN_ARRAYS_DECREMENT();</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">return</span> nll;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ae84c60f4a787a51ad4abf3b4873de0c7">   90</a></span>&#160;dvariable <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ae84c60f4a787a51ad4abf3b4873de0c7">nloglike::dmultinom</a>(<span class="keyword">const</span> dvector&amp; x, <span class="keyword">const</span> dvar_vector&amp; p)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;dvariable nloglike::dmultinom(<span class="keyword">const</span> dvector&amp; x, <span class="keyword">const</span> dvar_vector&amp; p)</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span>(x.indexmin() != p.indexmin() || x.indexmax() != p.indexmax())</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
@@ -202,7 +201,7 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">return</span> -gammln(n+1.)+sum(gammln(x+1.))-x*log(p/sum(p));</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a236a258fa5be18a93b1535c6b3f65a7a">  103</a></span>&#160;dmatrix <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a236a258fa5be18a93b1535c6b3f65a7a">nloglike::residuals</a>(<span class="keyword">const</span> dvector&amp; dSampleSize)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;dmatrix nloglike::residuals(<span class="keyword">const</span> dvector&amp; dSampleSize)</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    m_residual.initialize();</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = r1; i &lt;= r2; i++ )</div>
@@ -214,7 +213,7 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">return</span> (m_residual);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a686d492d738900cf723b215ce8b00180">  122</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a686d492d738900cf723b215ce8b00180" title="Tail compression. ">nloglike::tail_compression</a>()</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a686d492d738900cf723b215ce8b00180">  122</a></span>&#160;<span class="keywordtype">void</span> nloglike::tail_compression()</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;{</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    </div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">double</span> pmin = 0.001;</div>
@@ -226,7 +225,7 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = r1; i &lt;= r2; i++ )</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    {</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        dvector <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a> = m_O(i);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        dvector o = m_O(i);</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        jmin(i) = c1+1;     <span class="comment">// index for min column</span></div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        jmax(i) = c2;           <span class="comment">// index for max column</span></div>
@@ -269,8 +268,8 @@ $(document).ready(function(){initNavTree('de/d8b/nloglike_8cpp_source.html','../
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_c85d3e3c5052e9ad9ce18c6863244a25.html">lib</a></li><li class="navelem"><a class="el" href="../../de/d8b/nloglike_8cpp.html">nloglike.cpp</a></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:34:42 for GMACS by
+    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_c85d3e3c5052e9ad9ce18c6863244a25.html">lib</a></li><li class="navelem"><b>nloglike.cpp</b></li>
+    <li class="footer">Generated on Mon Jan 12 2015 16:39:06 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

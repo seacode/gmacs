@@ -54,7 +54,6 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="../../modules.html"><span>Modules</span></a></li>
-      <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="../../files.html"><span>Files</span></a></li>
       <li>
@@ -101,7 +100,7 @@ $(document).ready(function(){initNavTree('d1/db8/multinomial_8cpp_source.html','
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,7 +114,7 @@ $(document).ready(function(){initNavTree('d1/db8/multinomial_8cpp_source.html','
 <div class="title">multinomial.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="../../d1/db8/multinomial_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#if defined __APPLE__ || defined __linux</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #include &quot;../include/nloglike.h&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#endif</span></div>
@@ -125,8 +124,8 @@ $(document).ready(function(){initNavTree('d1/db8/multinomial_8cpp_source.html','
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4">   20</a></span>&#160;<span class="keyword">const</span> dvariable <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4" title="multinomial desity function with estimated effective sample size. ">acl::multinomial::dmultinom</a>(<span class="keyword">const</span> dvar_vector&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga9b1cfe807f06ca7f746b6ce7f1efddc3">log_vn</a>,</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                            <span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>, </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4">   20</a></span>&#160;<span class="keyword">const</span> dvariable <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4" title="multinomial desity function with estimated effective sample size. ">acl::multinomial::dmultinom</a>(<span class="keyword">const</span> dvar_vector&amp; log_vn,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                            <span class="keyword">const</span> dmatrix&amp; o, </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                                            <span class="keyword">const</span> dvar_matrix&amp; p)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword"></span>{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">if</span>(o.colsize()!=p.colsize() || o.rowsize()!=p.rowsize())</div>
@@ -144,25 +143,25 @@ $(document).ready(function(){initNavTree('d1/db8/multinomial_8cpp_source.html','
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">int</span> r2 = o.rowmax();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = r1; i &lt;= r2; i++ )</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">int</span> c1 = <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>(i).indexmin();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      <span class="keywordtype">int</span> c2 = <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>(i).indexmax();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">int</span> c1 = o(i).indexmin();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      <span class="keywordtype">int</span> c2 = o(i).indexmax();</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="comment">//scale observed numbers by effective sample size.</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        dvar_vector sobs = vn(i) * <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>(i)/sum(<a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>(i));  </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        dvar_vector sobs = vn(i) * o(i)/sum(o(i));  </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        ff -= gammln(vn(i));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> j = c1; j &lt;= c2; j++ )</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        {</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">if</span>( value(sobs(j)) &gt; 0.0 )</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                ff += gammln(sobs(j));</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        ff -= sobs * log(<a class="code" href="../../de/d33/nloglike_8h.html#acf1c38f71f39386356edb151a131ad11">TINY</a> + p(i));</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        ff -= sobs * log(TINY + p(i));</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> ff;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a71ff4895f418f1f2dfd6d94dce080d21">   56</a></span>&#160;<span class="keyword">const</span> dmatrix <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a71ff4895f418f1f2dfd6d94dce080d21">acl::multinomial::pearson_residuals</a>(<span class="keyword">const</span> dvar_vector&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga9b1cfe807f06ca7f746b6ce7f1efddc3">log_vn</a>,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                                                <span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">const</span> dmatrix acl::multinomial::pearson_residuals(<span class="keyword">const</span> dvar_vector&amp; log_vn,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                                                <span class="keyword">const</span> dmatrix&amp; o,</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                                                <span class="keyword">const</span> dvar_matrix p)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword"></span>{</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    dvector vn = value(mfexp(log_vn));</div>
@@ -171,7 +170,7 @@ $(document).ready(function(){initNavTree('d1/db8/multinomial_8cpp_source.html','
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = o.rowmin(); i &lt;= o.rowmax(); i++ )</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        dvector var = value(elem_prod(p(i),1.0-p(i))) / vn(i);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        res(i) = elem_div(res(i),sqrt(var+<a class="code" href="../../de/d33/nloglike_8h.html#acf1c38f71f39386356edb151a131ad11">TINY</a>));</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        res(i) = elem_div(res(i),sqrt(var+TINY));</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> res;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
@@ -183,8 +182,8 @@ $(document).ready(function(){initNavTree('d1/db8/multinomial_8cpp_source.html','
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_c85d3e3c5052e9ad9ce18c6863244a25.html">lib</a></li><li class="navelem"><a class="el" href="../../d1/db8/multinomial_8cpp.html">multinomial.cpp</a></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:34:42 for GMACS by
+    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_c85d3e3c5052e9ad9ce18c6863244a25.html">lib</a></li><li class="navelem"><b>multinomial.cpp</b></li>
+    <li class="footer">Generated on Mon Jan 12 2015 16:39:06 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

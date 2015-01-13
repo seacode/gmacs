@@ -54,7 +54,6 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="../../modules.html"><span>Modules</span></a></li>
-      <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="../../files.html"><span>Files</span></a></li>
       <li>
@@ -101,7 +100,7 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,14 +114,14 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="title">nloglike.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="../../de/d33/nloglike_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifndef NLOGLIKE_H</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define NLOGLIKE_H</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="code" href="../../de/d33/nloglike_8h.html#acf1c38f71f39386356edb151a131ad11">    6</a></span>&#160;<span class="preprocessor">#define TINY     1.e-08</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define TINY     1.e-08</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="code" href="../../d9/d15/namespacelikelihoods.html">    8</a></span>&#160;<span class="keyword">namespace </span>likelihoods</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>likelihoods</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno"><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html">nloglike</a></div>
@@ -144,16 +143,16 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    dvar_matrix m_Pr;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a593fd2bd706672c0d80a4ae8395a6063">~nloglike</a>();</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a4f4ddc116f6d3c360aad55e0a542b960">nloglike</a>(<span class="keyword">const</span> dmatrix&amp; _O, <span class="keyword">const</span> dvar_matrix&amp; _P);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    ~<a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html">nloglike</a>();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html">nloglike</a>(<span class="keyword">const</span> dmatrix&amp; _O, <span class="keyword">const</span> dvar_matrix&amp; _P);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a686d492d738900cf723b215ce8b00180" title="Tail compression. ">tail_compression</a>();</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    dvariable <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#af660c0fc634cb865d86b463e3bc4be03" title="Multinomial likleihood for composition data. ">multinomial</a>(<span class="keyword">const</span> dvector&amp; dSampleSize);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    dvariable <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ae84c60f4a787a51ad4abf3b4873de0c7">dmultinom</a>(<span class="keyword">const</span> dvector&amp; x, <span class="keyword">const</span> dvar_vector&amp; p);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    dvariable dmultinom(<span class="keyword">const</span> dvector&amp; x, <span class="keyword">const</span> dvar_vector&amp; p);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    dvariable <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#ac342b2c8b2a4401edc9ebd1c27f11b4c" title="Multivariate logistic likelihood. ">dmvlogistic</a>();</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    dmatrix <a class="code" href="../../d2/d6d/classlikelihoods_1_1nloglike.html#a236a258fa5be18a93b1535c6b3f65a7a">residuals</a>(<span class="keyword">const</span> dvector&amp; dSampleSize);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    dmatrix residuals(<span class="keyword">const</span> dvector&amp; dSampleSize);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;};</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
@@ -163,7 +162,7 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="code" href="../../dc/d28/namespaceacl.html">   49</a></span>&#160;<span class="keyword">namespace </span>acl</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">namespace </span>acl</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
@@ -181,11 +180,11 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="comment">//virtual const dvariable nloglike(const dmatrix&amp; _O) const = 0;</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="comment">//virtual const   dmatrix residual(const dmatrix&amp; _O) const = 0;</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> dvariable <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#ae03a7bc9d2e84625b6a0fbc3782df337">nloglike</a>(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span>   dmatrix <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#ad2ec390ac6f5791b7fd2270986a3b6b3">residual</a>(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> dvariable nloglike(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span>   dmatrix residual(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P) <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a968dfd25b647c864ab97c2f298d52c56">   75</a></span>&#160;        <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a968dfd25b647c864ab97c2f298d52c56">negativeLogLikelihood</a>(){}</div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#ae2dad29adc09add15c650537f4ce04f5">   76</a></span>&#160;        <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#ae2dad29adc09add15c650537f4ce04f5">negativeLogLikelihood</a>(<span class="keyword">const</span> dmatrix&amp; _O)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html">negativeLogLikelihood</a>(){}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html">negativeLogLikelihood</a>(<span class="keyword">const</span> dmatrix&amp; _O)</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        :m_O(_O) </div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        {</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            r1 = m_O.rowmin();</div>
@@ -193,16 +192,16 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            c1 = m_O.colmin();</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            c2 = m_O.colmax();</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a218fc17d0ee9a3f9a3007cf3a8c3cd67">   84</a></span>&#160;        <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a218fc17d0ee9a3f9a3007cf3a8c3cd67">~negativeLogLikelihood</a>(){}</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        ~<a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html">negativeLogLikelihood</a>(){}</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">   86</a></span>&#160;        dmatrix <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">get_O</a>()<span class="keyword">     const</span>{ <span class="keywordflow">return</span> m_O;    }</div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a9c3578abee5fb0f156ce7dff1b30f418">   87</a></span>&#160;        <span class="keywordtype">void</span>    <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a9c3578abee5fb0f156ce7dff1b30f418">set_O</a>(dmatrix _O){ this-&gt;m_O = _O;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        dmatrix get_O()<span class="keyword">     const</span>{ <span class="keywordflow">return</span> m_O;    }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">void</span>    set_O(dmatrix _O){ this-&gt;m_O = _O;}</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af666d1a2e5d67a2fb2f9ac2a4d94ffbb">   89</a></span>&#160;        dmatrix <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af666d1a2e5d67a2fb2f9ac2a4d94ffbb">get_Or</a>()<span class="keyword">     const</span>{ <span class="keywordflow">return</span> m_Or;    }</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a30cbb08fbfd64dee21af02b3421c4b05">   90</a></span>&#160;        <span class="keywordtype">void</span>    <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a30cbb08fbfd64dee21af02b3421c4b05">set_Or</a>(dmatrix _O){ this-&gt;m_Or = _O;}</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        dmatrix get_Or()<span class="keyword">     const</span>{ <span class="keywordflow">return</span> m_Or;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">void</span>    set_Or(dmatrix _O){ this-&gt;m_Or = _O;}</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a421f7a603474b37020cb6485b8b262f1">   92</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="../../de/d39/classivector.html">ivector</a> <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a421f7a603474b37020cb6485b8b262f1">get_jmin</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_jmin; }</div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a62f2fb1309ff041ab5fb3905ee61c879">   93</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="../../de/d39/classivector.html">ivector</a> <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a62f2fb1309ff041ab5fb3905ee61c879">get_jmax</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_jmax; }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">const</span> <a class="code" href="../../de/d39/classivector.html">ivector</a> get_jmin()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_jmin; }</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">const</span> <a class="code" href="../../de/d39/classivector.html">ivector</a> get_jmax()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_jmax; }</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a10f4175a1f51ecff3e14d37213ab8748" title="Determine non-zero array elements for tail compression. ">tail_compression</a>();    </div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
@@ -220,19 +219,19 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="comment">// cout&lt;&lt;&quot;In compress&quot;&lt;&lt;endl;</span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    </div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        T R;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        T <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga137c806a67d411f1a12e49bdfec4429c">M</a> = _M;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        T M = _M;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        R.allocate(r1,r2,m_jmin,m_jmax);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        R.initialize();</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="comment">// fill ragged array R</span></div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = r1; i &lt;= r2; i++ )</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga137c806a67d411f1a12e49bdfec4429c">M</a>(i) /= sum(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga137c806a67d411f1a12e49bdfec4429c">M</a>(i));</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            R(i)(m_jmin(i),m_jmax(i)) = <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga137c806a67d411f1a12e49bdfec4429c">M</a>(i)(m_jmin(i),m_jmax(i));</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            M(i) /= sum(M(i));</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            R(i)(m_jmin(i),m_jmax(i)) = M(i)(m_jmin(i),m_jmax(i));</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="comment">// add cumulative sum to tails.</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            R(i)(m_jmin(i)) = sum(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga137c806a67d411f1a12e49bdfec4429c">M</a>(i)(c1,m_jmin(i)));</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            R(i)(m_jmax(i)) = sum(<a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga137c806a67d411f1a12e49bdfec4429c">M</a>(i)(m_jmax(i),c2));</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            R(i)(m_jmin(i)) = sum(M(i)(c1,m_jmin(i)));</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            R(i)(m_jmax(i)) = sum(M(i)(m_jmax(i),c2));</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        }</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordflow">return</span> R;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
@@ -302,50 +301,50 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00206"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a95c54bae00acd9d6be58320559e6bcec">  206</a></span>&#160;        <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a95c54bae00acd9d6be58320559e6bcec">multinomial</a>(<span class="keyword">const</span> dmatrix &amp;_O,<span class="keyword">const</span> <span class="keywordtype">bool</span> bCompress=<span class="keyword">false</span>)</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <a class="code" href="../../d6/d28/classacl_1_1multinomial.html" title="Class for multinomial negative loglikelihood. ">multinomial</a>(<span class="keyword">const</span> dmatrix &amp;_O,<span class="keyword">const</span> <span class="keywordtype">bool</span> bCompress=<span class="keyword">false</span>)</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        : <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html">negativeLogLikelihood</a>(_O),m_bCompress(bCompress) </div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        {</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            <span class="keywordflow">if</span>(m_bCompress) <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a10f4175a1f51ecff3e14d37213ab8748" title="Determine non-zero array elements for tail compression. ">tail_compression</a>();</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        }</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#ae12f6f17401bf870557e16bf284c9245">~multinomial</a>();</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        ~<a class="code" href="../../d6/d28/classacl_1_1multinomial.html" title="Class for multinomial negative loglikelihood. ">multinomial</a>();</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00215"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#adcd286316c81fb17897bdc8c03a6f0ac">  215</a></span>&#160;        dvariable <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#adcd286316c81fb17897bdc8c03a6f0ac">get_n</a>()<span class="keyword">      const </span>{ <span class="keywordflow">return</span> m_log_vn;    }</div>
-<div class="line"><a name="l00216"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a8d6f3512c33d034876b92327707dc2e9">  216</a></span>&#160;        <span class="keywordtype">void</span>      <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a8d6f3512c33d034876b92327707dc2e9">set_n</a>(dvariable _n){ this-&gt;m_log_vn = _n;}</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        dvariable get_n()<span class="keyword">      const </span>{ <span class="keywordflow">return</span> m_log_vn;    }</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        <span class="keywordtype">void</span>      set_n(dvariable _n){ this-&gt;m_log_vn = _n;}</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#ac504d7d8e791c4d76998d5e054c1f846">  218</a></span>&#160;        dvar_matrix <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#ac504d7d8e791c4d76998d5e054c1f846">get_P</a>()<span class="keyword">         const </span>{ <span class="keywordflow">return</span> m_P;    }</div>
-<div class="line"><a name="l00219"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#af42a48c5016a489112498c71972643b9">  219</a></span>&#160;        <span class="keywordtype">void</span>        <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#af42a48c5016a489112498c71972643b9">set_P</a>(dvar_matrix _P) { this-&gt;m_P = _P;}</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        dvar_matrix get_P()<span class="keyword">         const </span>{ <span class="keywordflow">return</span> m_P;    }</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordtype">void</span>        set_P(dvar_matrix _P) { this-&gt;m_P = _P;}</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    </div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="comment">// negative log likelihood</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a400c7c321d606e7c72021a8f12ca2fe1">  223</a></span>&#160;        <span class="keyword">const</span> dvariable <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a400c7c321d606e7c72021a8f12ca2fe1">nloglike</a>(<span class="keyword">const</span> dvar_vector&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga9b1cfe807f06ca7f746b6ce7f1efddc3">log_vn</a>, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const </span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keyword">const</span> dvariable nloglike(<span class="keyword">const</span> dvar_vector&amp; log_vn, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const </span></div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="keyword">        </span>{</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            <span class="keywordflow">if</span>(m_bCompress)</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                dmatrix     Or = <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9" title="get indexes for ragged objects ">compress</a>(this-&gt;<a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">get_O</a>());</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                dmatrix     Or = <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9" title="get indexes for ragged objects ">compress</a>(this-&gt;get_O());</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;                dvar_matrix Pr = <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9" title="get indexes for ragged objects ">compress</a>(_P);</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4" title="multinomial desity function with estimated effective sample size. ">dmultinom</a>(log_vn,Or,Pr);</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            }</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;            <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            {</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4" title="multinomial desity function with estimated effective sample size. ">dmultinom</a>(log_vn,this-&gt;<a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">get_O</a>(),_P);  </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4" title="multinomial desity function with estimated effective sample size. ">dmultinom</a>(log_vn,this-&gt;get_O(),_P);  </div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            }</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        }</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="comment">// pearson residuals</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno"><a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a98a02b157e32b45e0d186e2ada91ae89">  238</a></span>&#160;        <span class="keyword">const</span>   dmatrix <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a98a02b157e32b45e0d186e2ada91ae89">residual</a>(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        <span class="keyword">const</span>   dmatrix residual(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a71ff4895f418f1f2dfd6d94dce080d21">pearson_residuals</a>(_n,this-&gt;<a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">get_O</a>(),_P);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;            <span class="keywordflow">return</span> pearson_residuals(_n,this-&gt;get_O(),_P);</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        }</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        </div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <span class="keyword">const</span> dvariable <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4" title="multinomial desity function with estimated effective sample size. ">dmultinom</a>(<span class="keyword">const</span> dvar_vector&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga9b1cfe807f06ca7f746b6ce7f1efddc3">log_vn</a>,</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                              <span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>, </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <span class="keyword">const</span> dvariable <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4" title="multinomial desity function with estimated effective sample size. ">dmultinom</a>(<span class="keyword">const</span> dvar_vector&amp; log_vn,</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                              <span class="keyword">const</span> dmatrix&amp; o, </div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;                              <span class="keyword">const</span> dvar_matrix&amp; p) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keyword">const</span> dmatrix <a class="code" href="../../d6/d28/classacl_1_1multinomial.html#a71ff4895f418f1f2dfd6d94dce080d21">pearson_residuals</a>(<span class="keyword">const</span> dvar_vector&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga9b1cfe807f06ca7f746b6ce7f1efddc3">log_vn</a>,</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                                                    <span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>,</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keyword">const</span> dmatrix pearson_residuals(<span class="keyword">const</span> dvar_vector&amp; log_vn,</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                                                    <span class="keyword">const</span> dmatrix&amp; o,</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                                                    <span class="keyword">const</span> dvar_matrix p) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    };</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
@@ -359,40 +358,40 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        </div>
-<div class="line"><a name="l00263"></a><span class="lineno"><a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a6aadd5b2109f70f9532f664720d5aacb">  263</a></span>&#160;        <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a6aadd5b2109f70f9532f664720d5aacb">robust_multi</a>(<span class="keyword">const</span> dmatrix &amp;_O,<span class="keyword">const</span> <span class="keywordtype">bool</span> bCompress=<span class="keyword">false</span>)</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        <a class="code" href="../../df/dea/classacl_1_1robust__multi.html">robust_multi</a>(<span class="keyword">const</span> dmatrix &amp;_O,<span class="keyword">const</span> <span class="keywordtype">bool</span> bCompress=<span class="keyword">false</span>)</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        : <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html">negativeLogLikelihood</a>(_O),m_bCompress(bCompress) </div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        {</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            <span class="keywordflow">if</span>(m_bCompress) <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a10f4175a1f51ecff3e14d37213ab8748" title="Determine non-zero array elements for tail compression. ">tail_compression</a>();</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        }</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#ab0e30e7e66c3e1011ef9c12d611dd3ab">~robust_multi</a>();</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        ~<a class="code" href="../../df/dea/classacl_1_1robust__multi.html">robust_multi</a>();</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a2cbc04289a3a52f7300b7d5f1b3eacdc">  271</a></span>&#160;        dvariable <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a2cbc04289a3a52f7300b7d5f1b3eacdc">get_n</a>()<span class="keyword">      const </span>{ <span class="keywordflow">return</span> m_log_vn;    }</div>
-<div class="line"><a name="l00272"></a><span class="lineno"><a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a5d5ed7b9c719cefbce73708ea1330144">  272</a></span>&#160;        <span class="keywordtype">void</span>      <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a5d5ed7b9c719cefbce73708ea1330144">set_n</a>(dvariable _n){ this-&gt;m_log_vn = _n;}</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        dvariable get_n()<span class="keyword">      const </span>{ <span class="keywordflow">return</span> m_log_vn;    }</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordtype">void</span>      set_n(dvariable _n){ this-&gt;m_log_vn = _n;}</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
-<div class="line"><a name="l00274"></a><span class="lineno"><a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a930ed981ead8199d993856f29beac5a0">  274</a></span>&#160;        dvar_matrix <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a930ed981ead8199d993856f29beac5a0">get_P</a>()<span class="keyword">         const </span>{ <span class="keywordflow">return</span> m_P;    }</div>
-<div class="line"><a name="l00275"></a><span class="lineno"><a class="code" href="../../df/dea/classacl_1_1robust__multi.html#afbd22301bf6e4911f495c49cc768a3c1">  275</a></span>&#160;        <span class="keywordtype">void</span>        <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#afbd22301bf6e4911f495c49cc768a3c1">set_P</a>(dvar_matrix _P) { this-&gt;m_P = _P;}</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        dvar_matrix get_P()<span class="keyword">         const </span>{ <span class="keywordflow">return</span> m_P;    }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="keywordtype">void</span>        set_P(dvar_matrix _P) { this-&gt;m_P = _P;}</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    </div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <span class="comment">// negative log likelihood</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno"><a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a6dfc25e24447924512dfc9dcdf861e93">  279</a></span>&#160;        <span class="keyword">const</span> dvariable <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a6dfc25e24447924512dfc9dcdf861e93">nloglike</a>(<span class="keyword">const</span> dvar_vector&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga9b1cfe807f06ca7f746b6ce7f1efddc3">log_vn</a>, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const </span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keyword">const</span> dvariable nloglike(<span class="keyword">const</span> dvar_vector&amp; log_vn, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const </span></div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keyword">        </span>{</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;            <span class="keywordflow">if</span>(m_bCompress)</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;            {</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                dmatrix     Or = <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9" title="get indexes for ragged objects ">compress</a>(this-&gt;<a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">get_O</a>());</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                dmatrix     Or = <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9" title="get indexes for ragged objects ">compress</a>(this-&gt;get_O());</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                dvar_matrix Pr = <a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9" title="get indexes for ragged objects ">compress</a>(_P);</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51" title="robust multinomial desity function with estimated effective sample size. ">pdf</a>(Or,Pr,log_vn);</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;            }</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;            <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;            {</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51" title="robust multinomial desity function with estimated effective sample size. ">pdf</a>(this-&gt;<a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">get_O</a>(),_P,log_vn);    </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51" title="robust multinomial desity function with estimated effective sample size. ">pdf</a>(this-&gt;get_O(),_P,log_vn);    </div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;            }</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        }</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="comment">// pearson residuals</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno"><a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a8cdd647185e355a6ff4348d6ca09705f">  294</a></span>&#160;        <span class="keyword">const</span>   dmatrix <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a8cdd647185e355a6ff4348d6ca09705f">residual</a>(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keyword">const</span>   dmatrix residual(<span class="keyword">const</span> dvar_vector&amp; _n, <span class="keyword">const</span> dvar_matrix&amp; _P)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#ad70d8248cc8ab0c96385263cd60bd469">pearson_residuals</a>(this-&gt;<a class="code" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html#af14a48362477c095f695a58bd4bda060">get_O</a>(),_P,_n);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            <span class="keywordflow">return</span> pearson_residuals(this-&gt;get_O(),_P,_n);</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        }</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        </div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keyword">const</span> dvariable <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51" title="robust multinomial desity function with estimated effective sample size. ">pdf</a>(<span class="keyword">const</span> dmatrix&amp; O, </div>
@@ -400,9 +399,9 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                            <span class="keyword">const</span> dvar_vector&amp; lnN) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        </div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keyword">const</span> dmatrix <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#ad70d8248cc8ab0c96385263cd60bd469">pearson_residuals</a>(<span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>,</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keyword">const</span> dmatrix pearson_residuals(<span class="keyword">const</span> dmatrix&amp; o,</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                                        <span class="keyword">const</span> dvar_matrix p,</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                                        <span class="keyword">const</span> dvar_vector&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga9b1cfe807f06ca7f746b6ce7f1efddc3">log_vn</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                                        <span class="keyword">const</span> dvar_vector&amp; log_vn) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        </div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    };</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
@@ -418,8 +417,8 @@ $(document).ready(function(){initNavTree('de/d33/nloglike_8h_source.html','../..
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><a class="el" href="../../de/d33/nloglike_8h.html">nloglike.h</a></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:34:42 for GMACS by
+    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><b>nloglike.h</b></li>
+    <li class="footer">Generated on Mon Jan 12 2015 16:39:06 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

@@ -1,12 +1,4 @@
 var searchData=
 [
-  ['likeprof_5fnumber',['likeprof_number',['../d4/dd7/classlikeprof__number.html#ad4170b7b791a9c289bd178b416c8a884',1,'likeprof_number']]],
-  ['log_5ffbar',['log_fbar',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gade838fe8107f4bcb05f2550d82295798',1,'gmacs.tpl']]],
-  ['log_5fslx_5fcapture',['log_slx_capture',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1',1,'gmacs.tpl']]],
-  ['log_5fslx_5fdiscard',['log_slx_discard',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1a76d4b33b13d09d33fdf3b716f9eec9',1,'gmacs.tpl']]],
-  ['log_5fslx_5fretaind',['log_slx_retaind',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4008505c171b2d40aca864ee55a6be3c',1,'gmacs.tpl']]],
-  ['logisticcurve',['LogisticCurve',['../de/d7b/classcstar_1_1_logistic_curve.html#ae8be7cd0822341b66ed4f51e80640dba',1,'cstar::LogisticCurve']]],
-  ['logisticcurve95',['LogisticCurve95',['../d4/d0a/classcstar_1_1_logistic_curve95.html#a2aec639cb794026c9de5890fcbccf13f',1,'cstar::LogisticCurve95']]],
-  ['logselectivity',['logSelectivity',['../dc/d0a/classcstar_1_1_selex.html#a48b62f6c567fc12e3337ade119dfc967',1,'cstar::Selex::logSelectivity()'],['../de/d7b/classcstar_1_1_logistic_curve.html#a9ce75c2e7f1b19dc2c0977a031681006',1,'cstar::LogisticCurve::logSelectivity()'],['../d4/d0a/classcstar_1_1_logistic_curve95.html#ad66bff436a2d3583e5f62d9c8bfce8a6',1,'cstar::LogisticCurve95::logSelectivity()'],['../de/d60/classcstar_1_1_selectivity_coefficients.html#a5cf0db958d00ec9b0eb810693928d95a',1,'cstar::SelectivityCoefficients::logSelectivity()'],['../d9/df4/classcstar_1_1_parameter_per_class.html#a5f86fc7bd5bbb31ed0cbdcdc45596c1c',1,'cstar::ParameterPerClass::logSelectivity()']]],
-  ['logselexmeanone',['logSelexMeanOne',['../dc/d0a/classcstar_1_1_selex.html#af72b263a45ffb212910457f664147607',1,'cstar::Selex::logSelexMeanOne()'],['../de/d7b/classcstar_1_1_logistic_curve.html#a1d609597f90558c3545d559c58e469db',1,'cstar::LogisticCurve::logSelexMeanOne()'],['../d4/d0a/classcstar_1_1_logistic_curve95.html#adb08e71740e6a78890de81a2e1e12f39',1,'cstar::LogisticCurve95::logSelexMeanOne()'],['../de/d60/classcstar_1_1_selectivity_coefficients.html#adfe162505c5fd9186fe8efcacab7f1a3',1,'cstar::SelectivityCoefficients::logSelexMeanOne()'],['../d9/df4/classcstar_1_1_parameter_per_class.html#ab1ff60a26a30ff18b76a419e548671f6',1,'cstar::ParameterPerClass::logSelexMeanOne()']]]
+  ['log_5fslx_5fcapture',['log_slx_capture',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1',1,'gmacs.tpl']]]
 ];
