@@ -54,7 +54,6 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="../../modules.html"><span>Modules</span></a></li>
-      <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="../../files.html"><span>Files</span></a></li>
       <li>
@@ -101,7 +100,7 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h.html','../../');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -118,6 +117,9 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h.html','../../');});
 <div class="title">spr.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Header file for SPR calculations.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;admodel.h&gt;</code><br/>
 </div>
 <p><a href="../../d5/d0a/spr_8h_source.html">Go to the source code of this file.</a></p>
@@ -129,14 +131,21 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ae560427a74987e946bbf68724c45d5a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d0a/spr_8h.html#ae560427a74987e946bbf68724c45d5a1">MAXIT</a>&#160;&#160;&#160;100</td></tr>
+<tr class="memitem:ae560427a74987e946bbf68724c45d5a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae560427a74987e946bbf68724c45d5a1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAXIT</b>&#160;&#160;&#160;100</td></tr>
 <tr class="separator:ae560427a74987e946bbf68724c45d5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a156b862ebf6d213f5da19b9e3ccb779e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d0a/spr_8h.html#a156b862ebf6d213f5da19b9e3ccb779e">TOL</a>&#160;&#160;&#160;1.<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac0ac46f14427ff54d6def863230c8083">e</a>-4</td></tr>
+<tr class="memitem:a156b862ebf6d213f5da19b9e3ccb779e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a156b862ebf6d213f5da19b9e3ccb779e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TOL</b>&#160;&#160;&#160;1.e-4</td></tr>
 <tr class="separator:a156b862ebf6d213f5da19b9e3ccb779e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63517c11ad73b1912e42c60169661159"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d0a/spr_8h.html#a63517c11ad73b1912e42c60169661159">COUT</a>(object)</td></tr>
+<tr class="memitem:a63517c11ad73b1912e42c60169661159"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>COUT</b>(object)</td></tr>
 <tr class="separator:a63517c11ad73b1912e42c60169661159"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Header file for SPR calculations. </p>
+<dl class="section author"><dt>Author</dt><dd>Steve Martell </dd></dl>
+
+<p>Definition in file <a class="el" href="../../d5/d0a/spr_8h_source.html">spr.h</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a63517c11ad73b1912e42c60169661159"></a>
 <div class="memitem">
 <div class="memproto">
@@ -153,35 +162,7 @@ Macros</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">cout &lt;&lt; #<span class="keywordtype">object</span> <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; setw(6) \</div>
 <div class="line">&lt;&lt; setprecision(3) &lt;&lt; setfixed() &lt;&lt; <span class="keywordtype">object</span> &lt;&lt; endl;</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../d5/d0a/spr_8h_source.html#l00010">10</a> of file <a class="el" href="../../d5/d0a/spr_8h_source.html">spr.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ae560427a74987e946bbf68724c45d5a1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAXIT&#160;&#160;&#160;100</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../d5/d0a/spr_8h_source.html#l00006">6</a> of file <a class="el" href="../../d5/d0a/spr_8h_source.html">spr.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a156b862ebf6d213f5da19b9e3ccb779e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TOL&#160;&#160;&#160;1.<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac0ac46f14427ff54d6def863230c8083">e</a>-4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../d5/d0a/spr_8h_source.html#l00007">7</a> of file <a class="el" href="../../d5/d0a/spr_8h_source.html">spr.h</a>.</p>
+<p>Definition at line <a class="el" href="../../d5/d0a/spr_8h_source.html#l00018">18</a> of file <a class="el" href="../../d5/d0a/spr_8h_source.html">spr.h</a>.</p>
 
 </div>
 </div>
@@ -191,7 +172,7 @@ Macros</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><a class="el" href="../../d5/d0a/spr_8h.html">spr.h</a></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:34:42 for GMACS by
+    <li class="footer">Generated on Tue Jan 13 2015 09:41:49 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

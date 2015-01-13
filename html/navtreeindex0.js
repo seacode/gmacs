@@ -144,6 +144,10 @@ var NAVTREEINDEX0 =
 "d4/da1/class_s_pinit__ivector.html#a53fd58d1a124af7fadf85444713df2ed":[0,3,1,13,0],
 "d4/dd7/classlikeprof__number.html":[0,3,1,66],
 "d4/dd7/classlikeprof__number.html#ad4170b7b791a9c289bd178b416c8a884":[0,3,1,66,0],
+"d5/d0a/spr_8h.html":[2,0,0,0,3],
+"d5/d0a/spr_8h.html#a156b862ebf6d213f5da19b9e3ccb779e":[2,0,0,0,3,3],
+"d5/d0a/spr_8h.html#a63517c11ad73b1912e42c60169661159":[2,0,0,0,3,1],
+"d5/d0a/spr_8h.html#ae560427a74987e946bbf68724c45d5a1":[2,0,0,0,3,2],
 "d5/d0a/spr_8h_source.html":[2,0,0,0,3],
 "d5/d3c/group___l_i_b.html":[0,3],
 "d5/d8a/class_s_pint.html":[0,3,1,17],
@@ -245,9 +249,5 @@ var NAVTREEINDEX0 =
 "da/d53/classrandom__effects__vector.html":[0,3,1,76],
 "da/d53/classrandom__effects__vector.html#a1219bd57a419f6c6f67e015915369950":[0,3,1,76,0],
 "da/d59/classequality__constraint__vector.html":[0,3,1,39],
-"da/d59/classequality__constraint__vector.html#a5ecc9aee47e7bb41143d5605ac75590c":[0,3,1,39,0],
-"da/d6c/class__4darray.html":[0,3,1,1],
-"da/d6c/class__4darray.html#afafcb5293df80a0938840d9f12689c6c":[0,3,1,1,0],
-"da/d98/classrandom__effects__bounded__matrix.html":[0,3,1,73],
-"da/d98/classrandom__effects__bounded__matrix.html#aa73ef5cb69e411d87ce1b7410d3323d8":[0,3,1,73,0]
+"da/d59/classequality__constraint__vector.html#a5ecc9aee47e7bb41143d5605ac75590c":[0,3,1,39,0]
 };

@@ -40,6 +40,7 @@ var searchData=
   ['spnumber',['SPnumber',['../de/d12/class_s_pnumber.html',1,'']]],
   ['spr',['spr',['../df/d47/classspr.html',1,'spr'],['../df/d47/classspr.html#ab4ae833a7352d4d416731ac44e2efc8a',1,'spr::spr(const double &amp;_r, const double &amp;_lambda, const dvector &amp;_rx, const dmatrix &amp;_wa, const d3_array &amp;_M, const d3_array &amp;_A)'],['../df/d47/classspr.html#adaff487e1c7c4bd4fe7cb3599cfbafc9',1,'spr::spr(const double &amp;_r, const double &amp;_lambda, const dvector &amp;_rx, const dmatrix &amp;_wa, const d3_array &amp;_M, const d3_array &amp;_P, const d3_array &amp;_A)']]],
   ['spr_2ecpp',['spr.cpp',['../d4/d4f/spr_8cpp.html',1,'']]],
+  ['spr_2eh',['spr.h',['../d5/d0a/spr_8h.html',1,'']]],
   ['spr_5fsyr',['spr_syr',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gadaf024d5c035a2c102be085f903db5bc',1,'gmacs.tpl']]],
   ['spvector',['SPvector',['../d6/d72/class_s_pvector.html',1,'']]],
   ['survey_5fq',['survey_q',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def',1,'gmacs.tpl']]]
