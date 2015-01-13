@@ -903,7 +903,8 @@ _M, _P, _A);ptrSPR=&amp;c_spr;}spr_fspr=ptrSPR-&gt;&#160;</td><td class="memItem
  f for female discards.  Not recommended to have separate F' for retained and 
  discard fisheries, but might be ok to have sex-specific F's.  
 
- TODO fix discard mortality rate.</pre> <p>Compute growth increments</p>
+ TODO 
+ -[ ] fix discard mortality rate.</pre> <p>Compute growth increments</p>
 <p>Presently based on liner form</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -914,7 +915,7 @@ _M, _P, _A);ptrSPR=&amp;c_spr;}spr_fspr=ptrSPR-&gt;&#160;</td><td class="memItem
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01242">1242</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01243">1243</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -952,7 +953,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
 <p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a sclaer). New recruits are added based on the estimated aveerage recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01656">1656</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01657">1657</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -984,7 +985,7 @@ n(I - PSA - (I-P)SBPSA) = r
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01542">1542</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01543">1543</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1011,7 +1012,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>\( S = exp(-Z) \) </p>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01434">1434</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01435">1435</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1045,7 +1046,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model</p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02378">2378</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02379">2379</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1078,7 +1079,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>This function uses the conditional mle for q to scale the population to the relative abundance index. Assumed errors in relative abundance are lognormal. Currently assumes that the CPUE index is made up of both retained and discarded crabs.</p>
 <p>Question regarding use of shell condition in the relative abundance index. Currenlty there is no shell condition information in the CPUE data, should there be? Similarly, there is no mature immature information, should there be?</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01900">1900</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01901">1901</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1134,7 +1135,7 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>vector of prior densities for each parameter</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02168">2168</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02169">2169</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1179,7 +1180,7 @@ n(I - PSA - (I-P)SBPSA) = r
 </pre><p>let C = (I - PSA - (I-P)SBPSA)</p>
 <p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash; –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01574">1574</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01575">1575</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1222,7 +1223,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Call function to get the appropriate numbers-at-length.</p>
 <p>TODO: [ ] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02034">2034</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02035">2035</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1292,7 +1293,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Size-dependent mortality</li>
 </ul>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01378">1378</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01379">1379</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1317,7 +1318,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data.</p>
 <p>Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01508">1508</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01509">1509</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1367,7 +1368,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Penalty to constrain random walk in natural mortaliy rates</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02287">2287</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02288">2288</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1435,7 +1436,7 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01789">1789</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01790">1790</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -1444,7 +1445,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jan 13 2015 09:46:33 for GMACS by
+    <li class="footer">Generated on Tue Jan 13 2015 10:20:34 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
