@@ -1836,14 +1836,16 @@ FUNCTION calc_relative_abundance
 	 *  Call function to get the appropriate numbers-at-length.
 	 *  
 	 *  TODO:
-	 *  [ ] Check to ensure new shell old shell is working.
+	 *  [x] Check to ensure new shell old shell is working.
 	 *  [ ] Add maturity component for data sets with mature old and mature new.
+	 *  [ ] Issue 53, comps/total(sex,shell cond) 
 	 */
 FUNCTION calc_predicted_composition
 	int h,i,j,k,ig;
 	int type,shell,bmature ;
 	d3_pre_size_comps.initialize();
 	dvar_vector dNtmp(1,nclass);
+	dvar_vector dNtot(1,nclass);
 	dvar_vector   nal(1,nclass);
 
 	for(int ii = 1; ii <= nSizeComps; ii++ )
@@ -1851,6 +1853,7 @@ FUNCTION calc_predicted_composition
 		for(int jj = 1; jj <= nSizeCompRows(ii); jj++ )
 		{
 			dNtmp.initialize();
+			dNtot.initialize();
 			nal.initialize();
 			i        = d3_SizeComps(ii)(jj,-7);     // year
 			j        = d3_SizeComps(ii)(jj,-6);     // seas
@@ -1887,7 +1890,7 @@ FUNCTION calc_predicted_composition
 					case 2:     // discarded
 						dNtmp = elem_prod(tmp,elem_prod(sel,dis));
 					break;
-					default:  // both retained and discarded
+					default:	// both retained and discarded
 						dNtmp = elem_prod(tmp,sel);
 					break;
 				}
@@ -2400,43 +2403,43 @@ FUNCTION dvar_vector calc_mmb()
 
 
 // To be deprecated?
-FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar_vector lnN)
-  /**
-   * @brief Robustified Multinomial likleihood for composition data.
-   * @details Follows Fournier's approach
-   * 
-   * @param lnN The assumed log of sample size 
-   * @return returns the negative log likelihood.
-   * 
-   * TO BE Deprecated, now lives in robust_multi.cpp
-   */   
-	if( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )
-	{
-		cerr<<"Sample size index do not match row index in\
-			   observed size composition matrix."<<endl;
-		ad_exit(1);
-	}
-	RETURN_ARRAYS_INCREMENT();
-	dvariable nll = 0;
-	double tiny = 1.e-14;
-	double  a  = .1/size_count(O(1));
-	dvar_vector b  = exp(lnN);
-
-	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
-	{
-		dvector      o =  O(i) + tiny;
-		dvar_vector  p =  P(i) + tiny;
-		o /= sum(o);
-		p /= sum(p);
-
-		dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
-		dvar_vector l  =  elem_div(square(p - o), v );
-		nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
-		nll += 0.5 * sum(log(v));
-
-	}
-	RETURN_ARRAYS_DECREMENT();
-	return nll;
+//FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar_vector lnN)
+//  /**
+//   * @brief Robustified Multinomial likleihood for composition data.
+//   * @details Follows Fournier's approach
+//   * 
+//   * @param lnN The assumed log of sample size 
+//   * @return returns the negative log likelihood.
+//   * 
+//   * TO BE Deprecated, now lives in robust_multi.cpp
+//   */   
+//	if( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )
+//	{
+//		cerr<<"Sample size index do not match row index in\
+//			   observed size composition matrix."<<endl;
+//		ad_exit(1);
+//	}
+//	RETURN_ARRAYS_INCREMENT();
+//	dvariable nll = 0;
+//	double tiny = 1.e-14;
+//	double  a  = .1/size_count(O(1));
+//	dvar_vector b  = exp(lnN);
+//
+//	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
+//	{
+//		dvector      o =  O(i) + tiny;
+//		dvar_vector  p =  P(i) + tiny;
+//		o /= sum(o);
+//		p /= sum(p);
+//
+//		dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
+//		dvar_vector l  =  elem_div(square(p - o), v );
+//		nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
+//		nll += 0.5 * sum(log(v));
+//
+//	}
+//	RETURN_ARRAYS_DECREMENT();
+//	return nll;
 
 
 	/**
@@ -2513,7 +2516,8 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	}
 	
 
-	spr *ptrSPR=nullptr;
+	//spr *ptrSPR=nullptr;
+	spr *ptrSPR=0;
 
 
 
