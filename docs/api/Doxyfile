@@ -8,7 +8,7 @@ PROJECT_NAME           = "GMACS"
 PROJECT_NUMBER         = 0.1
 PROJECT_BRIEF          = "Length structured assessment model for crustaceans"
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       = 
+OUTPUT_DIRECTORY       = html
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -86,7 +86,7 @@ CITE_BIB_FILES         =
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
 #---------------------------------------------------------------------------
-QUIET                  = NO
+QUIET                  = YES
 WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
@@ -96,7 +96,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = ../../src/ ../../src/lib ../../src/include DoxMainPage.dox
+INPUT                  = ../../src/gmacs.tpl ../../src/ ../../src/lib ../../src/include DoxMainPage.dox
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.tpl *.cpp *.h *.hpp
 RECURSIVE              = NO
@@ -170,7 +170,7 @@ QHG_LOCATION           =
 GENERATE_ECLIPSEHELP   = NO
 ECLIPSE_DOC_ID         = org.doxygen.Project
 DISABLE_INDEX          = NO
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 ENUM_VALUES_PER_LINE   = 4
 TREEVIEW_WIDTH         = 250
 EXT_LINKS_IN_WINDOW    = NO
