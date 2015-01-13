@@ -9,6 +9,6 @@ default: Doxyfile
 
 
 clean:
-	rm -rf html
+	#rm -rf html
 
 	
