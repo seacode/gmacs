@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="../../modules.html"><span>Modules</span></a></li>
+      <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="../../files.html"><span>Files</span></a></li>
       <li>
@@ -100,7 +101,7 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h_source.html','../../');}
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -114,16 +115,16 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h_source.html','../../');}
 <div class="title">spr.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
+<a href="../../d5/d0a/spr_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;admodel.h&gt;</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifndef _SPR_H_</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _SPR_H_</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define MAXIT 100</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TOL   1.e-4</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="code" href="../../d5/d0a/spr_8h.html#ae560427a74987e946bbf68724c45d5a1">    6</a></span>&#160;<span class="preprocessor">#define MAXIT 100</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="code" href="../../d5/d0a/spr_8h.html#a156b862ebf6d213f5da19b9e3ccb779e">    7</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TOL   1.e-4</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#undef COUT</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define COUT(object) cout &lt;&lt; #object &quot;\n&quot; &lt;&lt; setw(6) \</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="code" href="../../d5/d0a/spr_8h.html#a63517c11ad73b1912e42c60169661159">   10</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define COUT(object) cout &lt;&lt; #object &quot;\n&quot; &lt;&lt; setw(6) \</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">&lt;&lt; setprecision(3) &lt;&lt; setfixed() &lt;&lt; object &lt;&lt; endl;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
@@ -160,9 +161,9 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h_source.html','../../');}
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    d3_array m_ret;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">// constructors</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="../../df/d47/classspr.html">spr</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="../../df/d47/classspr.html#afed224210decd29671d3735e3502d3e6">spr</a>();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">// constructor where nshell == 1</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="../../df/d47/classspr.html">spr</a>(<span class="keyword">const</span> <span class="keywordtype">double</span>&amp;   _r, </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="../../df/d47/classspr.html#afed224210decd29671d3735e3502d3e6">spr</a>(<span class="keyword">const</span> <span class="keywordtype">double</span>&amp;   _r, </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span>&amp;   _lambda,</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">const</span> dvector&amp;  _rx, </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> dmatrix&amp;  _wa, </div>
@@ -170,7 +171,7 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h_source.html','../../');}
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">const</span> d3_array&amp; _A);</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">// constructor where nshell == 2 &amp; continous molting</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="../../df/d47/classspr.html">spr</a>(<span class="keyword">const</span> <span class="keywordtype">double</span>&amp;   _r, </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="../../df/d47/classspr.html#afed224210decd29671d3735e3502d3e6">spr</a>(<span class="keyword">const</span> <span class="keywordtype">double</span>&amp;   _r, </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">double</span> &amp;  _lambda,</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">const</span> dvector&amp;  _rx, </div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">const</span> dmatrix&amp;  _wa,</div>
@@ -179,30 +180,30 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h_source.html','../../');}
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">const</span> d3_array&amp; _A);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">// destructor</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    ~<a class="code" href="../../df/d47/classspr.html">spr</a>();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="../../df/d47/classspr.html#ac8569cc59fd015105d9d0e99fbe998cc">~spr</a>();</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">// getters</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../df/d47/classspr.html#ac21f4b9bd58b8cf097e8ece186fa0735" title="Calculate f_spr reference point. ">get_fspr</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>&amp; ifleet, </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; spr_target, </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                    <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad44c7c17f325bec7c979e590ab7037b7">spr_target</a>, </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    <span class="keyword">const</span> dmatrix&amp; _fhk,</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                    <span class="keyword">const</span> d3_array _sel, </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                    <span class="keyword">const</span> d3_array _ret,</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                    <span class="keyword">const</span> dvector _dmr);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">double</span> get_bspr() {<span class="keywordflow">return</span> m_bspr;}</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="../../df/d47/classspr.html#ab3c896c132e2084dc91ffa8d4881ba49">   76</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../df/d47/classspr.html#ab3c896c132e2084dc91ffa8d4881ba49">get_bspr</a>() {<span class="keywordflow">return</span> m_bspr;}</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../df/d47/classspr.html#af73697b13ba0e7887b80d01cd0d29a62" title="Calculate fishing mortality rate for OFL. ">get_fofl</a>(<span class="keyword">const</span> <span class="keywordtype">double</span>&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga83a49f729a94b763359a19498f5b01eb" title="standard deviation of recruitment deviations. ">alpha</a>, <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; limit, <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; ssb);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../df/d47/classspr.html#af73697b13ba0e7887b80d01cd0d29a62" title="Calculate fishing mortality rate for OFL. ">get_fofl</a>(<span class="keyword">const</span> <span class="keywordtype">double</span>&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga83a49f729a94b763359a19498f5b01eb" title="standard deviation of recruitment deviations. ">alpha</a>, <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab6e1fbde91d4eed5fc908aebbe727bef">limit</a>, <span class="keyword">const</span> <span class="keywordtype">double</span>&amp; ssb);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="../../df/d47/classspr.html#afccf9131ac27f116ee38adb492b6c2b4" title="Calculate OFL. ">get_cofl</a>(<span class="keyword">const</span> dmatrix&amp; N);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    </div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    </div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="../../df/d47/classspr.html#a307af597e3364c701ea886b3322a1d31" title="Calculate numbers at length in new and old shell categories. ">calc_equilibrium</a>(dvector&amp; n,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                          dvector&amp; o,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                          dvector&amp; <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa90e4e3ccb730f1a303263bd6a158a86">o</a>,</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                          <span class="keyword">const</span> dmatrix&amp; A,</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                          <span class="keyword">const</span> dmatrix&amp; S,</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;                          <span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4026f602b9b9f810824317c1de57ce57">S</a>,</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                          <span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>,</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                          <span class="keyword">const</span> dvector&amp; r);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    dvector <a class="code" href="../../df/d47/classspr.html#a307af597e3364c701ea886b3322a1d31" title="Calculate numbers at length in new and old shell categories. ">calc_equilibrium</a>(<span class="keyword">const</span> dmatrix&amp; M, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; sex);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    dvector <a class="code" href="../../df/d47/classspr.html#a307af597e3364c701ea886b3322a1d31" title="Calculate numbers at length in new and old shell categories. ">calc_equilibrium</a>(<span class="keyword">const</span> dmatrix&amp; <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga137c806a67d411f1a12e49bdfec4429c">M</a>, <span class="keyword">const</span> <span class="keywordtype">int</span>&amp; sex);</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
@@ -213,8 +214,8 @@ $(document).ready(function(){initNavTree('d5/d0a/spr_8h_source.html','../../');}
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><b>spr.h</b></li>
-    <li class="footer">Generated on Mon Jan 12 2015 16:27:33 for GMACS by
+    <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li><li class="navelem"><a class="el" href="../../d5/d0a/spr_8h.html">spr.h</a></li>
+    <li class="footer">Generated on Mon Jan 12 2015 16:31:24 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
