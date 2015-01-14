@@ -1,7 +1,7 @@
 #' Plot cpue or other indices
 #'
 #' @param replist List object created by read_admb function
-#' @return Plot of observed and predicted incices
+#' @return Plot of all observed and predicted incices
 #' @export
 plot_cpue <- function(replist){
 	df <- get_cpue(replist)

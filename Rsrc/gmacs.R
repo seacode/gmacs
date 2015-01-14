@@ -14,7 +14,7 @@ library(gmr)
 # setwd("~/_mymods/seacode/gmacs/examples/demo")
 # setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
 setwd("/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/examples/bbrkc")
-
+setwd("c:/Users/Crab2015/gmacs/examples/bbrkc")
 # Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
 set_ggtheme('bw')
 
@@ -25,7 +25,7 @@ gmrep <- read_admb('gmacs')
 plot_catch(gmrep)
 plot_growth(gmrep)
 plot_catch(gmrep,plot_res=T)
-
+names(gmrep$fit)
 plot_growth_inc(gmrep)
 plot_cpue(gmrep)
 
