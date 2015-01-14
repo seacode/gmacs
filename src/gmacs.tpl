@@ -86,6 +86,7 @@ DATA_SECTION
 	init_adstring datafile;
 	init_adstring controlfile;
 
+	
 	!! ad_comm::change_datafile_name(datafile); ECHO(datafile);ECHO(controlfile);
 
 	// |------------------|
