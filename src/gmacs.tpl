@@ -1382,10 +1382,7 @@ FUNCTION calc_initial_numbers_at_length
 
 	for(int h = 1; h <= nsex; h++ )
 	{
-
-
 		A = size_transition(h);
-		
 
 		// Single shell condition
 		if ( nshell == 1 && nmature == 1)
@@ -1405,8 +1402,10 @@ FUNCTION calc_initial_numbers_at_length
 		}
 
 		// Insert terminal molt case here.
-	}
 
+		
+	}
+	if(verbose) COUT(d3_N(1))
 	// cout<<"End of calc_initial_numbers_at_length"<<endl;
 
 
