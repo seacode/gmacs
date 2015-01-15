@@ -6,6 +6,11 @@
 #' @export
 get_recruitment <- function(replist){
   A <- replist
+  if(length(A$fit$est[A$fit$names == "sd_log_recruits"]) == 0) {
+      stop("Appears that the Hessian was not positive definite\n
+            thus estimates of recruitment do not exist.\n
+            See this in replist$fit.")
+  }
   dfpar   <- data.frame(par=A$fit$names,log_rec=A$fit$est,log_sd=A$fit$std)
   df      <- subset(dfpar,par=="sd_log_recruits")[,-1]
   df$year <- A$mod_yrs
