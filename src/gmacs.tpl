@@ -1,4 +1,4 @@
-// ==================================================================================== //
+/// ==================================================================================== //
 //   Gmacs: A generalized size-structured stock assessment modeling framework.
 //
 //   Authors: Athol Whitten and Jim Ianelli
@@ -136,7 +136,7 @@ DATA_SECTION
 	init_vector size_breaks(1,nclass+1);
 	vector       mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
-	!! ECHO(syr); ECHO(nyr); ECHO(nfleet); ECHO(nsex); ECHO(nshell);ECHO(nmature); ECHO(nclass);
+	!! ECHO(syr); ECHO(nyr); ECHO(nfleet); ECHO(nsex); ECHO(nshell);ECHO(nmature); ECHO(nclass); ECHO(size_breaks);
 
 	// |-----------|
 	// | ALLOMETRY |
@@ -157,6 +157,7 @@ DATA_SECTION
 	// |-------------------------------|
 	init_vector fecundity(1,nclass);
 	init_matrix maturity(1,nsex,1,nclass);
+	!! ECHO(fecundity); ECHO(maturity); 
 
 	// |-------------|
 	// | FLEET NAMES |
@@ -182,6 +183,7 @@ DATA_SECTION
 			catch_cv(k)  = column(dCatchData(k),6);
 			catch_dm(k)  = column(dCatchData(k),11);
 		}
+	  ECHO(nCatchDF); ECHO(nCatchRows); ECHO(dCatchData);
 	END_CALCS
 	//!! ECHO(obs_catch); ECHO(catch_cv);
 
@@ -244,7 +246,7 @@ DATA_SECTION
 			obs_cpue(k) = column(dSurveyData(k),5);
 			 cpue_cv(k) = column(dSurveyData(k),6);
 		}
-		ECHO(obs_cpue); ECHO(cpue_cv); 
+		ECHO(nSurveys);ECHO(nSurveyRows),ECHO(dSurveyData); ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
 
@@ -263,12 +265,12 @@ DATA_SECTION
 		{
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
+			// NOTE This normalizes all observations by row--may be incorrect if shell condition
 			for (int i=1;i<=nSizeCompRows(k);i++)
 			  d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
-		ECHO(nSizeComps); 
-		ECHO(d3_obs_size_comps); 
+		ECHO(nSizeComps);ECHO(nSizeCompRows);  ECHO(nSizeCompCols); ECHO(d3_SizeComps); ECHO(d3_obs_size_comps); 
 	END_CALCS
 	ivector ilike_vector(1,nlikes)
 	LOC_CALCS
@@ -338,11 +340,7 @@ DATA_SECTION
 			}
 						
 		}
-
-		ECHO(dPreMoltSize); 
-		ECHO(iMoltIncSex); 
-		ECHO(dMoltInc); 
-		ECHO(dMoltIncCV); 
+	  ECHO(nGrowthObs); ECHO(dGrowthData); ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV); 
 	END_CALCS
 
 	// |------------------|
@@ -402,6 +400,7 @@ DATA_SECTION
 		Grwth_lb    = column(Grwth_control,2);
 		Grwth_ub    = column(Grwth_control,3);
 		Grwth_phz   = ivector(column(Grwth_control,4));
+		ECHO(theta_control); ECHO(Grwth_control);
 	END_CALCS
 
 	
@@ -419,6 +418,7 @@ DATA_SECTION
 	init_imatrix slx_nret(1,nsex,1,nfleet);
 
 	init_matrix slx_control(1,nslx,1,nc);
+	!! 	ECHO(slx_nsel_blocks); ECHO(slx_nret); ECHO(slx_control);
 
 	ivector slx_indx(1,nslx);
 	ivector slx_type(1,nslx);
@@ -493,9 +493,7 @@ DATA_SECTION
 		prior_qtype = column(q_controls,1);
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
-		ECHO(prior_qtype); 
-		ECHO(prior_qbar); 
-		ECHO(prior_qsd); 
+		ECHO(q_controls); ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); 
 	END_CALCS
 
 
@@ -526,6 +524,7 @@ DATA_SECTION
 				}
 			}           
 		}
+		ECHO(f_controls); ECHO(f_phz); 
 	END_CALCS
 
 
@@ -535,6 +534,7 @@ DATA_SECTION
 	init_ivector nAgeCompType(1,nSizeComps);
 	init_ivector bTailCompression(1,nSizeComps);
 	init_ivector nvn_phz(1,nSizeComps);
+  !!	ECHO(nAgeCompType); ECHO(bTailCompression); ECHO(nvn_phz); 
 
 
 
@@ -564,6 +564,7 @@ DATA_SECTION
 				nMdev = m_nNodes;
 			break;
 		}
+		ECHO(m_type); ECHO(Mdev_phz); ECHO(m_stdev); ECHO(m_nNodes); ECHO(m_nodeyear); 
 	END_CALCS
 
 
@@ -590,11 +591,11 @@ DATA_SECTION
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
 		bUseEmpiricalGrowth = int(model_controls(9));
+		ECHO(model_controls); 
 	END_CALCS
 
 	init_int eof_ctl;
-	!! if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
-
+	!!	ECHO(model_controls); if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
 	!! cout<<"end of control section"<<endl;
 
 
