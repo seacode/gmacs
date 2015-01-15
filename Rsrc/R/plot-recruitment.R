@@ -23,9 +23,14 @@ plot_recruitment <- function(replist){
 #' @return Plot of predicted recruitment compared across models
 #' @author Cole Monnahan Kelli Johnson
 #' @export
-plot_models_recruitment <- function(data, modnames){
-    recs <- lapply(data, get_recruitment)
-    df <- do.call("rbind", Map(cbind, recs, modname = modnames))
+plot_models_recruitment <- function(data, modnames=NULL ){
+  if (is.null(modnames))
+    modnames = paste("Model ",1:length(data))
+  if (length(data)!=length(modnames)) 
+    stop("Holy moly, unequal object lengths") 
+
+  recs <- lapply(data, get_recruitment)
+  df <- do.call("rbind", Map(cbind, recs, modname = modnames))
 
   p <- ggplot(df,aes(x=factor(year),y=exp(log_rec), group=modname, colour=modname))
   p <- p + geom_line(stat = "identity", alpha=0.4)

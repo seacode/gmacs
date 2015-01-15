@@ -1,14 +1,14 @@
 #
-#	——————————————————————————————————————————————————————————————————————————————————————	#																
-#	Controls	for	leading	parameter	vector	theta												
-#	LEGEND	FOR	PRIOR:															
-#	0	->	uniform															
-#	1	->	normal															
-#	2	->	lognormal															
-#	3	->	beta															
-#	4	->	gamma															
-#	——————————————————————————————————————————————————————————————————————————————————————	#																
-#	ntheta																	
+#  ——————————————————————————————————————————————————————————————————————————————————————  #                                
+#  Controls  for  leading  parameter  vector  theta                        
+#  LEGEND  FOR  PRIOR:                              
+#  0  ->  uniform                              
+#  1  ->  normal                              
+#  2  ->  lognormal                              
+#  3  ->  beta                              
+#  4  ->  gamma                              
+#  ——————————————————————————————————————————————————————————————————————————————————————  #                                
+#  ntheta                                  
 7
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
@@ -36,93 +36,100 @@
   115.      65.0     165.0          2       0    0.0     3.0         # molt_mu males or combined
    0.2       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
 # ———————————————————————————————————————————————————————————————————————————————————— ##
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	SELECTIVITY	CONTROLS	##															
-##	-Each	gear	must	have	a	selectivity	and	a	retention	selectivity	##							
-##	LEGEND	sel_type:1=coefficients	2=logistic	3=logistic95	##													
-##	Index:	use	#NAME?	for	selectivity	#NAME?	for	retention										
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	ivector	for	number	of	year	blocks	or	nodes	##									
-##	Gear-1	Gear-2	Gear-3	Gear-4														
-	1	1			#Selectivity	blocks												
-	1	1			#Retention	blocks												
-	1	0			#male	retention	flag	(0	->	no	1	->	yes)					
-	0	0			#female	retention	flag	(0	->	no	1	->	yes)					
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	sel	sel	sel	sex	size	year	phz	start	end	##								
-##	Index	type	mu	sd	dep	nodes	nodes	mirror	lam1	lam2	lam3	|	block	block	##			
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	Selectivity	P(capture	of	all	sizes)													
-	1	2	180	10	0	1	1	2	12.5	12.5	12.5	1975	2013					
-	2	2	90	10	0	1	1	2	12.5	12.5	12.5	1975	2013					
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  SELECTIVITY  CONTROLS  ##                              
+##  -Each  gear  must  have  a  selectivity  and  a  retention  selectivity  ##              
+##  LEGEND  sel_type:1=coefficients  2=logistic  3=logistic95  ##                          
+##  Index:  use  #NAME?  for  selectivity  #NAME?  for  retention                    
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  ivector  for  number  of  year  blocks  or  nodes  ##                  
+##  Gear-1  Gear-2  Gear-3  ...                            
+  1  1 1 1 1 1   #Selectivity  blocks                        
+  1  0 0 0 0 0   #Retention  blocks                        
+  1  0 0 0 0 0   #male   retention flag (0 -> no, 1 -> yes)
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  sel  sel  sel  sex  size  year  phz  start  end  ##                
+##  Index  type  mu  sd  dep  nodes  nodes  mirror  lam1  lam2  lam3  |  block  block  ##      
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  Selectivity  P(capture  of  all  sizes)                          
+  1  2  180  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+  2  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+  3  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+  4  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+  5  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+  6  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
 ##
 ##
-##	Retained																	
-	-1	2	135	2	0	1	1	2	12.5	12.5	12.5	1975	2013					
-	-2	2	95	10	0	1	1	-2	12.5	12.5	12.5	1975	2013					
+##  Retained                                  
 ##
-
-##
-##
+ -1  2  180  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -2  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -3  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -4  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -5  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -6  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
 ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
 ##  TYPE: 0 = UNINFORMATIVE, 1 - NORMAL (log-space), 2 = time-varying (nyi)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SURVEYS/INDICES ONLY
-## NMFS  BSFRF
+## NMFS_Trawl:ADFG:STCPUE                                        
 ## TYPE     Mean_q    SD_q       
-     1      0.896     0.03      
+     1      0.896      0.23      
+     1      0.896     10.23      
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	PENALTIES	FOR	AVERAGE	FISHING	MORTALITY	RATE	FOR	EACH	GEAR									
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	Trap	Trawl	NMFS	BSFRF														
-##	Mean_F	STD_PHZ1	STD_PHZ2	PHZ														
-	0.2	0.1	1.1	1														
-	0.1	0.1	1.1	1														
-	0	2	2	-1														
-	0	2	2	-1														
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	OPTIONS	FOR	SIZE	COMPOSTION	DATA	(COLUMN	FOR	EACH	MATRIX)									
-##	LIKELIHOOD	OPTIONS:																
-##	-1)	multinomial	with	estimated/fixed	sample	size												
-##	-2)	logistic	normal															
-##	-3)	multivariate-t																
-##	AUTOTAIL	COMPRESSION:																
-##	-	pmin	is	the	cumulative	proportion	used	in	tail	compression.								
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-	1	1	1	1	1	1	1	1	1	#	Type	of	likelihood.					
-	0	0	0	0	0	0	0	0	0	#	Auto	tail	compression	(pmin)				
-	4	4	4	4	4	4	4	4	4	#	Phz	for	estimating	effective	sample	size	(if	appl.)
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	TIME	VARYING	NATURAL	MORTALIIY	RATES	##												
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	TYPE:																	
-##	0	=	constant	natural	mortality													
-##	1	=	Random	walk	(deviates	constrained	by	variance	in	M)								
-##	2	=	Cubic	Spline	(deviates	constrined	by	nodes	&	node-placement)								
-	2																	
-##	Phase	of	estimation															
-	3																	
-##	STDEV	in	m_dev	for	Random	walk												
-	0.01																	
-##	Number	of	nodes	for	cubic	spline												
-	6																	
-##	Year	position	of	the	knots	(vector	must	be	equal	to	the	number	of	nodes)				
-	1975	1982	1985	1991	2002	2013												
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-##	OTHER	CONTROLS																
-##	————————————————————————————————————————————————————————————————————————————————————	##																
-	3	#	Estimated	rec_dev	phase													
-	0	#	VERBOSE	FLAG	(0	=	off	1	=	on	2	=	objective	func)				
-	0	#	INITIALIZE	MODEL	AT	UNFISHED	RECRUITS	(0=FALSE	1=TRUE)									
-	1984	#	First	year	for	average	recruitment	for	Bspr	calculation.								
-	2013	#	Last	year	for	average	recruitment	for	Bspr	calculation.								
-	0.35	#	Target	SPR	ratio	for	Bmsy	proxy.										
-	1	#	Gear	index	for	SPR	calculations	(i.e.	directed	fishery).								
-	1	#	Lambda	(proportion	of	mature	male	biomass	for	SPR	reference	points.)						
-##	EOF																	
-9999																		
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  PENALTIES  FOR  AVERAGE  FISHING  MORTALITY  RATE  FOR  EACH  GEAR                  
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  Trap  Trawl  NMFS  BSFRF                            
+##  Mean_F  STD_PHZ1  STD_PHZ2  PHZ                            
+  0.2         0.1       1.1      1                            
+  0.1         0.1       1.1      1                            
+  0.01        2         2        1                            
+  0.01        2         2        1                            
+  0.01        2         2       -1                            
+  0.01        2         2       -1                            
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  OPTIONS  FOR  SIZE  COMPOSTION  DATA  (COLUMN  FOR  EACH  MATRIX)                  
+##  LIKELIHOOD  OPTIONS:                                
+##  -1)  multinomial  with  estimated/fixed  sample  size                        
+##  -2)  logistic  normal                              
+##  -3)  multivariate-t                                
+##  AUTOTAIL  COMPRESSION:                                
+##  -  pmin  is  the  cumulative  proportion  used  in  tail  compression.                
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+  1  1  1  1  # 1  1  #1  1  1  #  Type  of  likelihood.          
+  0  0  0  0  # 0  0  #0  0  0  #  Auto  tail  compression  (pmin)        
+  4  4  4  4  # 4  4  #4  4  4  #  Phz  for  estimating  effective  sample  size  (if  appl.)
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  TIME  VARYING  NATURAL  MORTALIIY  RATES  ##                        
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  TYPE:                                  
+##  0  =  constant  natural  mortality                          
+##  1  =  Random  walk  (deviates  constrained  by  variance  in  M)                
+##  2  =  Cubic  Spline  (deviates  constrined  by  nodes  &  node-placement)                
+  0                                  
+##  Phase  of  estimation                              
+-3                                  
+##  STDEV  in  m_dev  for  Random  walk                        
+  0.01                                  
+##  Number  of  nodes  for  cubic  spline                        
+  6                                  
+##  Year  position  of  the  knots  (vector  must  be  equal  to  the  number  of  nodes)        
+  1976  1982  1985  1991  2002  2014                        
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+##  OTHER  CONTROLS                                
+##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
+  3  #  Estimated  rec_dev  phase                          
+  0  #  VERBOSE  FLAG  (0  =  off  1  =  on  2  =  objective  func)        
+  0  #  INITIALIZE  MODEL  AT  UNFISHED  RECRUITS  (0=FALSE  1=TRUE)                  
+  1984  #  First  year  for  average  recruitment  for  Bspr  calculation.                
+  2013  #  Last  year  for  average  recruitment  for  Bspr  calculation.                
+  0.35  #  Target  SPR  ratio  for  Bmsy  proxy.                    
+  1  #  Gear  index  for  SPR  calculations  (i.e.  directed  fishery).                
+  1  #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
+  1  #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
+##  EOF                                  
+9999                                    
