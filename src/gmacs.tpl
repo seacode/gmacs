@@ -1128,7 +1128,7 @@ FUNCTION calc_growth_transition
 		sbi = size_breaks / gscale(h);
 		for( l = 1; l <= nclass; l++ )
 		{
-			dMeanSizeAfterMolt = (sbi(l) + molt_increment(h)(l)) / gscale(h);
+			dMeanSizeAfterMolt = (size_breaks(l) + molt_increment(h)(l)) / gscale(h);
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
@@ -2375,9 +2375,11 @@ REPORT_SECTION
 	REPORT(P);
 	dmatrix size_transition_M(1,nclass,1,nclass);
 	dmatrix size_transition_F(1,nclass,1,nclass);
+
 	size_transition_M = value(P(1) * growth_transition(1));
 	for (int i=1;i<=nclass;i++)
 	  size_transition_M(i,i) += value(1.-P(1,i,i));
+
 	REPORT(size_transition_M);
 	
 	if (nsex==2)
