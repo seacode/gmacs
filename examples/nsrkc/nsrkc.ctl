@@ -47,7 +47,6 @@
 	1	1 1 1 1 1 1 			#Selectivity	blocks												
 	1	1 1 1 1 1 1 			#Retention	blocks												
 	1	0 0 0 0 0 0 			#male	retention	flag	(0	->	no	1	->	yes)					
-	0	0 0 0 0 0 0 			#female	retention	flag	(0	->	no	1	->	yes)					
 ##	————————————————————————————————————————————————————————————————————————————————————	##																
 ##	sel	sel	sel	sex	size	year	phz	start	end	##								
 ##	Index	type	mu	sd	dep	nodes	nodes	mirror	lam1	lam2	lam3	|	block	block	##			
@@ -105,9 +104,9 @@
 ##	AUTOTAIL	COMPRESSION:																
 ##	-	pmin	is	the	cumulative	proportion	used	in	tail	compression.								
 ##	————————————————————————————————————————————————————————————————————————————————————	##																
-	1	1	#1	1	1	1	1	1	1	#	Type	of	likelihood.					
-	0	0	#0	0	0	0	0	0	0	#	Auto	tail	compression	(pmin)				
-	4	4	#4	4	4	4	4	4	4	#	Phz	for	estimating	effective	sample	size	(if	appl.)
+	1	1	1	1	1	1	#1	1	1	#	Type	of	likelihood.					
+	0	0	0	0	0	0	#0	0	0	#	Auto	tail	compression	(pmin)				
+	4	4	4	4	4	4	#4	4	4	#	Phz	for	estimating	effective	sample	size	(if	appl.)
 ##	————————————————————————————————————————————————————————————————————————————————————	##																
 ##	TIME	VARYING	NATURAL	MORTALIIY	RATES	##												
 ##	————————————————————————————————————————————————————————————————————————————————————	##																
@@ -115,9 +114,9 @@
 ##	0	=	constant	natural	mortality													
 ##	1	=	Random	walk	(deviates	constrained	by	variance	in	M)								
 ##	2	=	Cubic	Spline	(deviates	constrined	by	nodes	&	node-placement)								
-	2																	
+	0																	
 ##	Phase	of	estimation															
-	3																	
+-3																	
 ##	STDEV	in	m_dev	for	Random	walk												
 	0.01																	
 ##	Number	of	nodes	for	cubic	spline												
