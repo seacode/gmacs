@@ -672,7 +672,7 @@ PARAMETER_SECTION
 	LOC_CALCS
 		for(int k = 1; k <= nslx; k++ )
 		{
-			if(slx_type(k) == 2)
+			if(slx_type(k) == 2 || slx_type(k) == 3)
 			{
 				for(int j = 1; j <= slx_rows(k); j++ )
 				{
