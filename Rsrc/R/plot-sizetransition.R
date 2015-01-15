@@ -5,9 +5,9 @@
 #' @export
 plot_sizetransition <- function(replist){
   A    <- replist
-  df   <- data.frame(stm = A$size_transition)
+  df   <- data.frame(stm = A$size_transition_M,stm_f = A$size_transition_F)
   colnames(df) <- A$mid_points
-  nrow   <- dim(A$size_transition)[2]
+  nrow   <- dim(A$size_transition_M)[2]
   df$sex <- c(rep(1,length=nrow),rep(2,length=nrow))
   df$col <- A$mid_points
   mdf    <- melt(df,id=c("sex","col"))
