@@ -672,7 +672,7 @@ PARAMETER_SECTION
 	LOC_CALCS
 		for(int k = 1; k <= nslx; k++ )
 		{
-			if(slx_type(k) == 2)
+			if(slx_type(k) == 2 || slx_type(k) == 3)
 			{
 				for(int j = 1; j <= slx_rows(k); j++ )
 				{
@@ -688,7 +688,7 @@ PARAMETER_SECTION
 	init_number_vector log_fbar(1,nfleet,f_phz);
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
 	init_number_vector log_foff(1,nfleet,foff_phz);
-	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);
+	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> WTF
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs

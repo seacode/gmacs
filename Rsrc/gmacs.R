@@ -34,7 +34,16 @@ plot_sizecomp(gmrep)
 plot_sizecomp_res(gmrep, which_plots=c(1))
 
 
-plot_sizecomp(gmrep,which_plots=c(11))
+plot_sizecomp(gmrep,which_plots=c(1))
+plot_sizecomp(gmrep,which_plots=c(2))
+plot_sizecomp(gmrep,which_plots=c(5))
+
+
+plot_sizecomp(gmrep,which_plots=c(7))
+plot_sizecomp(gmrep,which_plots=c(8))
+
+
+
 plot_sizecomp_res(gmrep)
 plot_sizetransition(gmrep)
 
