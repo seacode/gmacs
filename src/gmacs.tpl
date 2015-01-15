@@ -411,9 +411,9 @@ DATA_SECTION
 	int nr;
 	int nc;
 	int nslx;
-	// This seems off by a factor of 2...for single sex models...
-	// !! nr = 2 * nfleet;
-	!! nr = nsex * nfleet;
+	// This seems off by a factor of 2...for single sex models...???but maybe not...
+	!! nr = 2 * nfleet;
+	// !! nr = nsex * nfleet;
 	!! nc = 13;
 	init_ivector slx_nsel_blocks(1,nr);
 	!! nslx = sum(slx_nsel_blocks);

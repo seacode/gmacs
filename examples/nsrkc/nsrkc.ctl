@@ -45,7 +45,8 @@
 ##  ivector  for  number  of  year  blocks  or  nodes  ##                  
 ##  Gear-1  Gear-2  Gear-3  ...                            
   1  1 1 1 1 1   #Selectivity  blocks                        
-  1  0 0 0 0 0    #Retention  blocks                        
+  1  0 0 0 0 0   #Retention  blocks                        
+  1  0 0 0 0 0   #male   retention flag (0 -> no, 1 -> yes)
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 ##  sel  sel  sel  sex  size  year  phz  start  end  ##                
 ##  Index  type  mu  sd  dep  nodes  nodes  mirror  lam1  lam2  lam3  |  block  block  ##      
@@ -61,6 +62,12 @@
 ##
 ##  Retained                                  
 ##
+ -1  2  180  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -2  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -3  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -4  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -5  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ -6  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
 ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
