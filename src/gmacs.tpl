@@ -246,7 +246,7 @@ DATA_SECTION
 			obs_cpue(k) = column(dSurveyData(k),5);
 			 cpue_cv(k) = column(dSurveyData(k),6);
 		}
-		ECHO(nSurveys);ECHO(nSurveyRows),ECHO(dSurveyData); ECHO(obs_cpue); ECHO(cpue_cv); 
+		ECHO(nSurveys);ECHO(nSurveyRows);ECHO(dSurveyData); ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
 
