@@ -1,4 +1,4 @@
-// ==================================================================================== //
+/// ==================================================================================== //
 //   Gmacs: A generalized size-structured stock assessment modeling framework.
 //
 //   Authors: Athol Whitten and Jim Ianelli
@@ -157,6 +157,7 @@ DATA_SECTION
 	// |-------------------------------|
 	init_vector fecundity(1,nclass);
 	init_matrix maturity(1,nsex,1,nclass);
+	!! ECHO(fecundity); ECHO(maturity); 
 
 	// |-------------|
 	// | FLEET NAMES |
@@ -402,6 +403,7 @@ DATA_SECTION
 		Grwth_lb    = column(Grwth_control,2);
 		Grwth_ub    = column(Grwth_control,3);
 		Grwth_phz   = ivector(column(Grwth_control,4));
+		ECHO(theta_control);
 	END_CALCS
 
 	
@@ -437,6 +439,10 @@ DATA_SECTION
 	ivector slx_edyr(1,nslx);
 
 	LOC_CALCS
+		ECHO(slx_nsel_blocks);
+		ECHO(slx_nsel_blocks);
+		ECHO(slx_nret);
+		ECHO(slx_control);
 		slx_indx = ivector(column(slx_control,1));
 		slx_type = ivector(column(slx_control,2));
 		slx_mean = column(slx_control,3);
@@ -526,6 +532,8 @@ DATA_SECTION
 				}
 			}           
 		}
+		ECHO(f_controls); 
+		ECHO(f_phz); 
 	END_CALCS
 
 
@@ -564,6 +572,11 @@ DATA_SECTION
 				nMdev = m_nNodes;
 			break;
 		}
+		ECHO(m_type); 
+		ECHO(Mdev_phz); 
+		ECHO(m_stdev); 
+		ECHO(m_nNodes); 
+		ECHO(m_nodeyear); 
 	END_CALCS
 
 
@@ -590,6 +603,7 @@ DATA_SECTION
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
 		bUseEmpiricalGrowth = int(model_controls(9));
+		ECHO(model_controls); 
 	END_CALCS
 
 	init_int eof_ctl;
