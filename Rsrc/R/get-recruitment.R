@@ -6,7 +6,7 @@
 #' @export
 get_recruitment <- function(replist){
   A <- replist
-  if(length(A$fit$est[A$fit$names == "sd_log_recruits"]) == 0) {
+  if(is.null(A$fit$logDetHess)) {
       stop("Appears that the Hessian was not positive definite\n
             thus estimates of recruitment do not exist.\n
             See this in replist$fit.")
