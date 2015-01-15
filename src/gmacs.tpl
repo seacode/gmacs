@@ -685,14 +685,14 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_number_vector log_fbar(1,nfleet,f_phz);
-	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
-	init_number_vector log_foff(1,nfleet,foff_phz);
-	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> WTF
+	init_number_vector log_fbar(1,nfleet,f_phz);				///> Male mean fishing mortality
+	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);		///> Male f devs
+	init_number_vector log_foff(1,nfleet,foff_phz);				///> Female F offset to Male F
+	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);  ///> Female F offset to Male F
 
 	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz); ///> initial size devs
+	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz);///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
@@ -1010,6 +1010,7 @@ FUNCTION calc_fishing_mortality
 				if(fhit(i,k))
 				{
 					log_ftmp    = log_fbar(k) + log_fdev(k,ik++);
+					
 					if(yhit(i,k))
 					{
 						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
@@ -1021,7 +1022,7 @@ FUNCTION calc_fishing_mortality
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k);
 					tmp = elem_prod(sel,ret + (1.0 - ret) * lambda);
-
+					
 					F(h)(i) += ft(k,h,i) * tmp;
 				}
 			}
@@ -1138,7 +1139,7 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass)  = At(l)(l,nclass) / sum(At(l));
 		}
 		size_transition(h) = At;
-		
+	
 
 		
 	}
@@ -1224,6 +1225,8 @@ FUNCTION calc_natural_mortality
 	 * @details \f$ S = exp(-Z) \f$
 	 * @return NULL
 	 * 
+	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used.
+	 * Due to F.
 	 * 
 	 */
 FUNCTION calc_total_mortality
@@ -1241,7 +1244,7 @@ FUNCTION calc_total_mortality
 				S(h)(i)(l,l) = mfexp(-Z(h)(i)(l));
 			}
 		}
-
+		//COUT(F(h));
 	}
 
 
@@ -2369,6 +2372,7 @@ REPORT_SECTION
 		REPORT(pMoltInc);
 	}
 	REPORT(survey_q);
+	REPORT(P);
 
 
 
