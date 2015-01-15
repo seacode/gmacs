@@ -263,6 +263,8 @@ DATA_SECTION
 		{
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
+			for (int i=1;i<=nSizeCompRows(k);i++)
+			  d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
 		ECHO(nSizeComps); 
