@@ -46,7 +46,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ivector for number of year blocks or nodes                                           ##
 ## Gear-1    Gear-2    Gear-3   Gear-4    
-   1         1         1        1         #Selectivity blocks
+   1         1         2        1         #Selectivity blocks
    1         1         1        1         #Retention blocks 
    1         0         0        0         #male   retention flag (0 -> no, 1 -> yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -54,10 +54,11 @@
 ## Index  type  mu   sd  dep  nodes  nodes mirror lam1  lam2  lam3 | block  block       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
-   1      3    95   140  0    1      1    -2      12.5  12.5  12.5   1975   2014
-   2      3    110  150  0    1      1    -4      12.5  12.5  12.5   1975   2014 
-   3      2     90   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
-   4      2     70   10  0    1      1    -3      12.5  12.5  12.5   1975   2014
+   1      3    95   140  0    1      1     2      12.5  12.5  12.5   1975   2014
+   2      3    110  150  0    1      1    -2      12.5  12.5  12.5   1975   2014 
+   3      2     90   10  0    1      1     2      12.5  12.5  12.5   1975   1981
+   3      2     90   10  0    1      1     2      12.5  12.5  12.5   1982   2014
+   4      2     70   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
     -1      2    135    2  0    1      1    -2      12.5  12.5  12.5   1975   2014
@@ -97,7 +98,7 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 2   2   2   2   2   2 #  2   2   2   # Type of likelihood.
+ 1   1   1   1   1   1 #  2   2   2   # Type of likelihood.
  0   0   0   0   0   0 #  0   0   0   # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4 # -4  -4  -4   # Phz for estimating effective sample size (if appl.)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -110,7 +111,7 @@
 ##      1 = Random walk (deviates constrained by variance in M)
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
-  0
+  3
 ## Phase of estimation
   3
 ## STDEV in m_dev for Random walk

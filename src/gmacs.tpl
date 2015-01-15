@@ -739,7 +739,7 @@ PARAMETER_SECTION
 	matrix molt_increment(1,nsex,1,nclass);     ///> linear molt increment
 	matrix molt_probability(1,nsex,1,nclass);   ///> probability of molting
 
-	3darray size_transition(1,nsex,1,nclass,1,nclass);
+	3darray growth_transition(1,nsex,1,nclass,1,nclass);
 	3darray M(1,nsex,syr,nyr,1,nclass);         ///> Natural mortality
 	3darray Z(1,nsex,syr,nyr,1,nclass);         ///> Total mortality
 	3darray F(1,nsex,syr,nyr,1,nclass);         ///> Fishing mortality
@@ -806,7 +806,7 @@ PROCEDURE_SECTION
 		calc_growth_increments();
 	}
 	calc_molting_probability();
-	calc_size_transition_matrix();
+	calc_growth_transition();
 	calc_natural_mortality();
 	calc_total_mortality();
 	calc_recruitment_size_distribution();
@@ -1111,14 +1111,14 @@ FUNCTION calc_growth_increments
 	 * mean value of the function is the second argument of cumd_gamma, and the vector 
 	 * of quantiles is the first argument.  Both arguments are scaled by gscale.
 	 */
-FUNCTION calc_size_transition_matrix
-	//cout<<"Start of calc_size_transition_matrix"<<endl;
+FUNCTION calc_growth_transition
+	//cout<<"Start of calc_growth_transition"<<endl;
 	int h,l,ll;
 	dvariable dMeanSizeAfterMolt;
 	dvar_vector psi(1,nclass+1);
 	dvar_vector sbi(1,nclass+1);
 	dvar_matrix At(1,nclass,1,nclass);
-	size_transition.initialize();
+	growth_transition.initialize();
 
 
 	
@@ -1140,13 +1140,13 @@ FUNCTION calc_size_transition_matrix
 			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
 			At(l)(l,nclass)  = At(l)(l,nclass) / sum(At(l));
 		}
-		size_transition(h) = At;
+		growth_transition(h) = At;
 		
 
 		
 	}
 	
-	// cout<<"End of calc_size_transition_matrix"<<endl;
+	// cout<<"End of calc_growth_transition"<<endl;
 	
 	
 
@@ -1388,7 +1388,7 @@ FUNCTION calc_initial_numbers_at_length
 
 	for(int h = 1; h <= nsex; h++ )
 	{
-		A = size_transition(h);
+		A = growth_transition(h);
 
 		// Single shell condition
 		if ( nshell == 1 && nmature == 1)
@@ -1434,7 +1434,7 @@ FUNCTION calc_initial_numbers_at_length
 //          
 //          if( o == 1 )    // newshell
 //          {
-//              At = size_transition(h);
+//              At = growth_transition(h);
 //              for(int l = 1; l <= nclass; l++ )
 //              {
 //                  At(l) *= S(h)(syr)(l);
@@ -1514,7 +1514,7 @@ FUNCTION update_population_numbers_at_length
 			
 			if( o == 1 )    // newshell
 			{
-				A  = size_transition(h) * S(h)(i);
+				A  = growth_transition(h) * S(h)(i);
 				x = d3_N(ig)(i);
 				d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
 			
@@ -1549,7 +1549,7 @@ FUNCTION update_population_numbers_at_length
 		// TO BE DEPRECATED
 //      for( h = 1; h <= nsex; h++ )
 //      {
-//          At = size_transition(h) * S(h)(i);
+//          At = growth_transition(h) * S(h)(i);
 //          //for( l = 1; l <= nclass; l++ )
 //          //{
 //          //  At(l) *= S(h)(i)(l);
@@ -1564,8 +1564,8 @@ FUNCTION update_population_numbers_at_length
 //          N(h)(i+1)  = (0.5 * recruits(i)) * rec_sdd;
 //          N(h)(i+1) += d3_newShell(h)(i+1) + d3_oldShell(h)(i+1);
 //
-//          // d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(size_transition(h)) , N(h)(i+1));
-//          // d3_oldShell(h)(i+1) = elem_prod(diagonal(size_transition(h)) , N(h)(i+1));
+//          // d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(growth_transition(h)) , N(h)(i+1));
+//          // d3_oldShell(h)(i+1) = elem_prod(diagonal(growth_transition(h)) , N(h)(i+1));
 //      }
 	}
 	
@@ -2188,7 +2188,7 @@ FUNCTION simulation_model
 	// Population dynamics ...
 	calc_growth_increments();
 	calc_molting_probability();
-	calc_size_transition_matrix();
+	calc_growth_transition();
 	calc_natural_mortality();
 	calc_total_mortality();
 	calc_recruitment_size_distribution();
@@ -2283,7 +2283,7 @@ REPORT_SECTION
 	REPORT(d3_res_size_comps);
 	REPORT(ft);
 	REPORT(rec_sdd);
-	REPORT(size_transition);
+	REPORT(growth_transition);
 	REPORT(rec_ini);
 	REPORT(rec_dev);
 	REPORT(recruits);
@@ -2312,11 +2312,11 @@ REPORT_SECTION
 		{
 			int iage=1;
 			// Set the initial size frequency
-			growth_matrix(isex,iage) = size_transition(isex,iage);
+			growth_matrix(isex,iage) = growth_transition(isex,iage);
 			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
 			for (iage=2;iage<=nclass;iage++)
 			{
-				growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*size_transition(isex);
+				growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*growth_transition(isex);
 				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
 			}
 		}
@@ -2372,12 +2372,25 @@ REPORT_SECTION
 		REPORT(pMoltInc);
 	}
 	REPORT(survey_q);
-
-
+	REPORT(P);
+	dmatrix size_transition_M(1,nclass,1,nclass);
+	dmatrix size_transition_F(1,nclass,1,nclass);
+	size_transition_M = value(P(1) * growth_transition(1));
+	for (int i=1;i<=nclass;i++)
+	  size_transition_M(i,i) += value(1.-P(1,i,i));
+	REPORT(size_transition_M);
+	
+	if (nsex==2)
+	{
+  	size_transition_F = value(P(2) * growth_transition(2));
+  	for (int i=1;i<=nclass;i++)
+	    size_transition_M(i,i) += value(1.-P(2,i,i));
+  	REPORT(size_transition_F);
+	}
 
 	/**
 	 * @brief Calculate mature male biomass
-	 * @details Calculate mature male biomass based on numbers d3_N array.
+	 
 	 * 
 	 * 
 	 * TODO correct for timing of when the MMB is calculated
@@ -2487,7 +2500,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	_M.initialize();
 	dmatrix _N(1,nsex,1,nclass);
 	dmatrix _wa(1,nsex,1,nclass);
-	d3_array _A = value(size_transition);
+	d3_array _A = value(growth_transition);
 	d3_array _P = value(P);
 	for(int h = 1; h <= nsex; h++ )
 	{
