@@ -1140,7 +1140,8 @@ FUNCTION calc_growth_transition
 		sbi = size_breaks / gscale(h);
 		for( l = 1; l <= nclass; l++ )
 		{
-			dMeanSizeAfterMolt = (sbi(l) + molt_increment(h)(l)) / gscale(h);
+			dMeanSizeAfterMolt = (size_breaks(l) + molt_increment(h)(l)) / gscale(h);
+			
 			psi.initialize();
 			for( ll = l; ll <= nclass+1; ll++ )
 			{
@@ -1275,7 +1276,7 @@ FUNCTION calc_molting_probability
 	int l,h;
 	molt_probability.initialize();
 	P.initialize();
-	double tiny = 0.001;
+	double tiny = 0.000;
 	for( h = 1; h <= nsex; h++ )
 	{
 		dvariable mu = molt_mu(h);
@@ -2387,6 +2388,7 @@ REPORT_SECTION
 	}
 	REPORT(survey_q);
 	REPORT(P);
+	REPORT(growth_transition);
 	dmatrix size_transition_M(1,nclass,1,nclass);
 	dmatrix size_transition_F(1,nclass,1,nclass);
 	size_transition_M = value(P(1) * growth_transition(1));
