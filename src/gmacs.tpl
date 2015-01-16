@@ -654,6 +654,14 @@ PARAMETER_SECTION
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 	
+
+
+	// Growth and molting probability parameters Sex-specific
+	// alpha    = Grwth(1);
+	// beta     = Grwth(2);
+	// gscale   = Grwth(3);
+	// molt_mu  = Grwth(4);
+	// molt_cv  = Grwth(5);
 	init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
 	//init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
@@ -688,14 +696,14 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_number_vector log_fbar(1,nfleet,f_phz);
-	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);
-	init_number_vector log_foff(1,nfleet,foff_phz);
-	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> WTF
+	init_number_vector log_fbar(1,nfleet,f_phz);				///> Male mean fishing mortality
+	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);		///> Male f devs
+	init_number_vector log_foff(1,nfleet,foff_phz);				///> Female F offset to Male F
+	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);  ///> Female F offset to Male F
 
 	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz); ///> initial size devs
+	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz);///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
@@ -789,6 +797,9 @@ PRELIMINARY_CALCS_SECTION
 			if(l > nclass) l=1;
 		}
 	}
+
+
+	
 
 PROCEDURE_SECTION
 	// Initialize model parameters
@@ -1013,6 +1024,7 @@ FUNCTION calc_fishing_mortality
 				if(fhit(i,k))
 				{
 					log_ftmp    = log_fbar(k) + log_fdev(k,ik++);
+					
 					if(yhit(i,k))
 					{
 						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
@@ -1024,7 +1036,7 @@ FUNCTION calc_fishing_mortality
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k);
 					tmp = elem_prod(sel,ret + (1.0 - ret) * lambda);
-
+					
 					F(h)(i) += ft(k,h,i) * tmp;
 				}
 			}
@@ -1227,6 +1239,8 @@ FUNCTION calc_natural_mortality
 	 * @details \f$ S = exp(-Z) \f$
 	 * @return NULL
 	 * 
+	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used.
+	 * Due to F.
 	 * 
 	 */
 FUNCTION calc_total_mortality
@@ -1244,7 +1258,7 @@ FUNCTION calc_total_mortality
 				S(h)(i)(l,l) = mfexp(-Z(h)(i)(l));
 			}
 		}
-
+		//COUT(F(h));
 	}
 
 
@@ -2373,6 +2387,7 @@ REPORT_SECTION
 	}
 	REPORT(survey_q);
 	REPORT(P);
+	REPORT(growth_transition);
 	dmatrix size_transition_M(1,nclass,1,nclass);
 	dmatrix size_transition_F(1,nclass,1,nclass);
 
