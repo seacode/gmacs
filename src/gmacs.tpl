@@ -1261,7 +1261,7 @@ FUNCTION calc_molting_probability
 	int l,h;
 	molt_probability.initialize();
 	P.initialize();
-	double tiny = 0.001;
+	double tiny = 0.000;
 	for( h = 1; h <= nsex; h++ )
 	{
 		dvariable mu = molt_mu(h);
