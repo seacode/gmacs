@@ -679,7 +679,7 @@ PARAMETER_SECTION
 	// init_bounded_vector molt_cv(1,nsex,0,1,1);
 
 	// Selectivity parameters
-	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-25,25,slx_phzm);
+	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,0.,5.2,slx_phzm);
 	LOC_CALCS
 		for(int k = 1; k <= nslx; k++ )
 		{
