@@ -1,0 +1,217 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Typeset by                  , Research Press, NRC
+%% Date: 
+%% NRC, <name of journal>
+%% 
+%%%%%%%%%%%%%%
+%%
+%% 1. See original preamble material (at bottom of file) for
+%%    details on source of current .tex file: conversion
+%%    from word-processing program or author-generated TeX
+%%    code. 
+%%
+%% 2. This template includes most options and packages used by 
+%%    all the NRC journals. UNcomment those packages and options
+%%    which are REQUIRED. 
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%% 1. Class file (nrc1 or nrc2) + options (see userguide, pp.1-2; p.9):
+\documentclass[
+               %% french,        %% use with \usepackage[french]{babel}
+               %% leqno,         %% only for nrc1 (default is right eqno)
+               %% reqno,         %% only for nrc2 (default is left eqno)
+               %% nonumbib,      %% biblio entries without nos.
+%
+               %% breakaddress,  %% linebreak btwn author(s) + address(es)
+               %% twocolid,      %% IDbox spans 2 cols
+               %% twocolid*,     %% 2-col IDbox
+               %% preprint,      %% removes identifying nos. from headers/footers
+               %% proof,         %% `Proof/Epreuve' in footer
+               %% pagnf,         %% `Pagination not final/Pagination non finale'
+               %% trimmarks,     %% add trimmarks
+               %% finalverso,    %% final blank verso NOT included in pagerange
+]{nrc2}                          %% choose one: nrc1 or nrc2
+
+%% NOTE: authors may use the following options, which should be
+%%       DELETED once the file comes in-house:
+%%      
+%%          usecmfonts    type1rest     genTeX
+
+
+%% 2. Frequently used packages -- see pp.2-3 of userguide: 
+%%    a. graphics-related:
+%%    \usepackage{graphicx}       %% color not usually needed
+%%    \usepackage[figuresright]{rotating} %% for landscape tables
+
+%%    b. math-related: 
+%%    \usepackage{amsmath}        %% math macros in wide use
+%%    \usepackage{amssymb}        %% additional math symbols
+%%    \usepackage{dcolumn}        %% decimal alignment for tables
+%%    \usepackage{bm}             %% `bold math' via \bm command
+
+%%    c. for website addresses:
+%%    \usepackage{url}            %% inserts linebreaks automatically
+%%    \NRCurl{url}
+
+%%    d. biblio-related:
+%%    \usepackage{cite}           %% enhances options for \cite commands
+
+%%    e. for English-language papers:
+%%    \usepackage[french,english]{babel}  
+
+%%    f. for French-language papers: 
+%%    \usepackage[english,french]{babel}  %% remember to add french as a
+                                          %% CLASS option, above
+%%    g. for ragged-right tables:
+%%    \usepackage{array}
+%%    \newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+%%    \let\PBS=\PreserveBackslash
+
+%%    h. for left curly brace to span several lines of equations:
+%%    \usepackage{cases}
+%%    \expandafter\let\csname numc@left\expandafter\endcsname\csname 
+%%                 z@\endcsname
+
+
+%% 3. Resetting float parameters: 
+%%    a. in nrc1:
+%%    \renewcommand{\topfraction}{.95}
+%%    \renewcommand{\textfraction}{.05}
+%%    \renewcommand{\floatpagefraction}{.95}
+
+%%    b. in nrc2:
+%%    \renewcommand{\topfraction}{.95}
+%%    \renewcommand{\floatpagefraction}{.95}
+%%    \renewcommand{\dbltopfraction}{.95}
+%%    \renewcommand{\textfraction}{.05}
+%%    \renewcommand{\dblfloatpagefraction}{.95}
+
+
+%% 4. Resetting journal-specific parameters:
+%%    a. eqn nos. with section nos.:
+%%    \numberby {equation}{section}
+%%    \setcounter{equation}{0}
+
+%%    b. in-line citations to use ( ) instead of default [ ]:
+%%   \renewcommand{\citeleft}{(}
+%%   \renewcommand{\citeright}{)}
+
+%%    c. for JEES (to expand inter-line spacing; see p.12 of guide):
+%%    \easebaselines
+
+
+%% 5. Miscellaneous macros to always have available:
+%%    a. shorthands:
+\let\p=\phantom
+\let\mc=\multicolumn
+
+%%    b. struts for vertical spacing above/below rules in tables:
+%%%%%%%%%%%%%%%%%%  beginning of Claudio Beccari's code:
+%% Spacing commands for {tabular} (from TTN 2,3:10 -- Claudio
+%%                                                    Beccari): 
+%% Usage: a. use \T to put space below a line 
+%%           (e.g., at top of a `cell' of text)
+%%        b. use \B to put space above a line 
+%%           (e.g., at bottom of a `cell' of text)
+\newcommand\T{\rule{0pt}{2.6ex}}            % = `top' strut
+\newcommand\B{\rule[-1.2ex]{0pt}{0pt}}      % = `bottom' strut
+%%%%%%%%%%%%%%%%%%  end of Claudio's code 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   end of class and package 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   options, additional macros
+
+
+%% Journal-specific information for opening page -- pp.9-11 of guide:
+%% a. numbers:
+\setcounter{page}{1}             %% replace 1 with starting page no.
+\volyear{XX}{2001}               %% volume, year of journal 
+\journal{}                       %% jrnl. abbrev. (see App.A of guide)
+\journalcode{}                   %% jrnl. acro    (see App.A of guide)
+\filenumber{}                    %% NRC file number
+%% \filenumber*{}                %% prefixes \filenumber to all page nos.
+                                 %% NOTE: COMMENT OUT class options
+                                 %%             pagnf
+                                 %%             proof
+                                 %%       once no longer needed
+
+
+%% b. dates:
+\received{}                      %% insert date, no period
+\revreceived{}                   %% <same>
+\accepted{}                      %% <same>
+\revaccepted{}                   %% <same>
+%% \IDdates{}                       %% <same>. Use for `Revised ...' etc.
+%% \webpub{}                        %% insert date
+%% \commdate{}                      %% <same>
+
+
+%% c. miscellaneous:
+%%   \assoced{}                  %% insert name of Associate ed.
+%%   \corred{}                   %% insert name of Corresponding ed.
+%%   \dedication{}               %% insert text as neede
+%%   \abbreviations{}            %% insert as needed
+
+
+\begin{document}
+
+%% Reversed titlebar -- see p.11 of userguide:
+%% \specialtitle{}      %% for black stripe + text + regular title
+%% \specialtitle*{}     %% black stripe + text only
+
+
+
+
+%% Title, Author(s), Address(es) -- see p.4 of userguide for 
+%%    various options to save time and keyboarding, esp. where
+%%    authors share same address(s). 
+
+\title{} 
+
+%% Author 1:
+\author[J.L. Humar]{John Larry Humar} %% opt. arg. ONLY if IDbox
+                                      %% name is diff. from
+                                      %% titleblock name 
+\address{}                            %% address of 1st author
+
+
+%% Author 2:
+\author{M.A. Rahgozar}
+\address{}
+
+%% Author 3:
+\author{Fred Murray}
+\address{}
+
+
+\shortauthor{Humar, Rahgozar, and Murray} %% for headers
+
+%%%%%%%%
+%% This line goes here in nrc1.
+%% \maketitle			
+%%%%%%%%
+
+
+%% Abstract/Resume area -- see pp.5,12 of userguide:
+\begin{abstract}
+   Abstract text
+%% \keywords{}
+%% \translation 
+\end{abstract}
+
+\begin{resume}
+   Texte du resume
+%% \motscles{}
+%% \Traduit %% or \traduit
+\end{resume}
+
+%%%%%%%%
+%% This line goes here in nrc2.
+%% \maketitle			
+%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%   END OF TEMPLATE   %%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,562 @@
+\documentclass[12pt,letterpaper]{article}
+
+% Use utf-8 encoding for foreign characters
+\usepackage[utf8]{inputenc}
+
+% Setup for fullpage use
+\usepackage{fullpage}
+\usepackage{lscape}
+
+% Uncomment some of the following if you use the features
+%
+% Running Headers and footers
+\usepackage{fancyhdr}
+
+% Multipart figures
+%\usepackage{subfigure}
+
+% Multicols
+\usepackage{multicol}
+\setlength{\columnseprule}{0.5pt}
+\setlength{\columnsep}{15pt}
+
+% More symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{bm}
+
+% Surround parts of graphics with box
+\usepackage{boxedminipage}
+
+% Longtables
+\usepackage{longtable}
+
+% Package for including code in the document
+\usepackage{listings}
+\usepackage{alltt}
+
+% If you want to generate a toc for each chapter (use with book)
+% \usepackage{minitoc}
+
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+% Natbib
+\usepackage[round]{natbib}
+
+
+%% -math-
+\def\bs#1{\boldsymbol{#1}}
+
+\newcounter{saveEq}
+  \def\putEq{\setcounter{saveEq}{\value{equation}}}
+  \def\getEq{\setcounter{equation}{\value{saveEq}}}
+  \def\tableEq{ % equations in tables
+    \putEq \setcounter{equation}{0}
+    \renewcommand{\theequation}{T\arabic{table}.\arabic{equation}}
+    \vspace{-5mm}
+    }
+  \def\normalEq{ % renew normal equations
+    \getEq
+    \renewcommand{\theequation}{\arabic{section}.\arabic{equation}}}
+
+  \def\puthrule{ %thick rule lines for equation tables
+    \hrule \hrule \hrule \hrule \hrule}
+
+% Hyperref
+% \usepackage{url}
+\usepackage[colorlinks,bookmarks,citecolor=magenta,linkcolor=blue]{hyperref}
+% \usepackage{hyperref}
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+
+
+\usepackage{tikz-uml}
+
+
+\title{A generalized size-structured assessment model for Crustaceans}
+\author{Athol Whitten, Andre Punt, Dave Fournier, James Ianelli, John Levitt, and Steve Martell}
+
+% Andre should probably be on here too, check with others.
+% I understand the problem with using the name Gmacs, and thus the relationship with Alaskan Crab stocks, 
+%   but it's probably too late to change. Thus Gmacs is now written as a name, not an acronym.
+% We must use 'size' instead of 'length' for all descriptions, as some species are measured via widths, not lengths.
+
+
+% my macros
+\newcommand{\fspr}{$F_{\textnormal{SPR}}$}
+\newcommand{\bspr}{$B_{\textnormal{SPR\%}}$}
+
+\newcommand{\fmsy}{$F_{\textnormal{MSY}}$}
+\newcommand{\bmsy}{$B_{\textnormal{MSY}}$}
+
+\begin{document}
+  \maketitle
+
+  \begin{abstract}
+    Gmacs is a statistical size-structured stock assessment modelling framework for molting crustacean species. The framework makes use of a wide variety of data, including both fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs has initially been designed for application to the king crab stocks of Alaska. Models of these stocks serve as a testing ground for the first versions of the modeling framework. Gmacs is coded using AD Model Builder, so inherits its capability to efficiently estimate hundreds of parameters. In this paper we describe details of the underlying population dynamics and statistical framework. The description is based upon modelling for crustaceans that undergo molting and with each subsequent molt increase in size.
+
+  \end{abstract}
+
+
+  \section*{Introduction} % (fold)
+  \label{sec:introduction}
+
+  Statistical catch age models have several advantages over simple production type models in that age and size composition data can be used to better inform structural features such as recruitment variability, and total mortality rates.  There are a number of generic age-structured models in use today, but there are very few generic size-based, or staged-based models that are used in stock assessment. In this paper we describe a generalized statistical catch-at-size model that is well suited for animals that cannot be aged, and where only precise length measurements are available. The description is based on a crustaceans that undergo molting and with each subsequent molt increase in length.
+
+  % section introduction (end)
+
+  \section*{Methods} % (fold)
+  \label{sec:methods}
+  The analytical details of the generalized model is summarized using tables of equations (e.g., Table \ref{tab:equilibrium_model}).   These tables serve two purposes: (1) to clearly provide the logical order in which calculations proceed, and (2) organization of a relatively large integrated model into a series of sub-models that represent specific components such as population dynamics, observation models, reference point calculations, fisheries dynamics, and the objective function.  We first start with a description of the population dynamics under steady-state (equilibrium) conditions.  
+
+  For model notation, vectors and matrixes are given in bold using lower and upper case notation, respectively.  Model notation and a description of symbols are provided in Table \ref{tab:notation}.
+
+
+\begin{table}
+  \centering
+  \caption{Mathematical notation, symbols and descriptions.}
+  \label{tab:notation}
+  \begin{tabular}{cl}
+  \hline
+  Symbol  & Description \\
+  \hline
+  \multicolumn{2}{l}{\underline{Index}}\\
+      $g$ & group \\
+      $h$ & sex \\
+      $i$ & year \\
+      $j$ & time step (years) \\
+      $k$ & gear or fleet \\
+      $l$ & index for length class \\
+      $m$ & index for maturity state \\
+      $o$ & index for shell condition. \\
+  \multicolumn{2}{l}{\underline{Leading Model Parameters}}\\
+      $M$         & Instantaneous natural mortality rate\\
+      $\bar{R}$   & Average recruitment\\
+      $\ddot{R}$  & Initial recruitment\\
+      $\alpha_r$  & Mode of size-at-recruitment\\
+      $\beta_r $  & Shape parameter for size-at-recruitment\\
+      $R_0$       & Unfished average recruitment\\
+      $\kappa$    & Recruitment compensation ratio\\
+  \multicolumn{2}{l}{\underline{Size schedule information}}\\
+      $w_{h,l}$   & Mean weight-at-length $l$ \\
+      $m_{h,l}$   & Average proportion mature-at-length $l$ \\
+  \multicolumn{2}{l}{\underline{Per recruit incidence functions}} \\
+      $\phi_B$    & Spawning biomass per recruit \\
+      $\phi_{Q_k}$& Yield per recruit for fishery $k$\\
+      $\phi_{Y_k}$& Retained catch per recruit for fishery $k$ \\
+      $\phi_{D_k}$& Discarded catch per recruit for fishery $k$ \\
+  \multicolumn{2}{l}{\underline{Selectivity parameters}} \\
+      $a_{h,k,l}$ & Length at 50\% selectivity in length interval $l$\\
+      $\sigma_{s_{h,k}}$ & Standard deviation in length-at-selectivity\\
+      $r_{h,k,l}$ & Length at 50\% retention\\
+      $\sigma_{y_{h,k}}$ & Standard deviation in length-at-retention\\
+      $\xi_{h,k}$ & Discard mortality rate for gear $k$ and sex $h$\\
+  \hline
+  \end{tabular}
+\end{table}
+
+
+    \subsection*{Equilibrium considerations} % (fold)
+    \label{sub:equilibrium_considerations}
+    Parameters for the population sub model are represented by the vector $\Theta$ (\ref{T1.1} in Table \ref{tab:equilibrium_model}), which consists of the natural mortality rate, average-recruitment, initial recruitment in the first year, parameters that describe the size-distribution of new recruits, and stock-recruitment parameters (see Table \ref{tab:notation} for notation).  Constraints for these model parameters are defined in \eqref{T1.2}.  Assuming the molt increments are linear, growth following each molt is a parametric function with the parameters defined in $\Phi$.
+
+    The model is based on a set of user defined size categories. We assume at any time the population consists of a vector where each component of the vector consists of a number of individuals in some size category. The size category intervals and mid points of those intervals are defined by \eqref{T1.3}.  Average molt increments from size category $l$ to the next is assumed to be sex-specific, and is defined by a linear function \eqref{T1.4}.  The probability of transitioning from  size category $l$ to $l'$ assumed that variation in molt increments follows a Gamma distribution \eqref{T1.5}, and the size-transition matrix for each sex $h$ is denoted as $\pmb{G}_h$.
+
+    The size distribution of new recruits is assumed to follow a gamma distribution \eqref{T1.7} with the parameters $\alpha_r$ and $\beta_r$.  The gamma distribution is scaled such that $\alpha_r$ is the mode of the distribution and could potentially be obtained from empirical size composition data.  The vector of new recruits at each time step \eqref{T1.8} assumes a 50:50 sex ratio.
+
+    For unfished conditions that are subject only to sex-specific natural mortality $M_h$ rates, we assume that each year members of the population grow and experience mortality.  The basic assumption is that this process is a linear function of the numbers in each size category, where the categories are separated by  sex to accommodate differential growth and survival rates.  Survival and growth at each time step in unfished conditions is based on \eqref{T1.10}, where $(\pmb{I}_n)_{l,l'}$ is the identity matrix and $M_h$ is a scaler. It's also possible to accommodate size-specific natural mortality rates in \eqref{T1.10} where $M_h$ represents a vector of length-specific natural mortality rates.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+  \centering
+\caption{Mathematical equations and notation for a steady-state length based model.}
+\label{tab:equilibrium_model}
+\tableEq
+  \begin{align}
+    \hline \nonumber \\
+    &\mbox{\underline{model parameters}} \nonumber\\
+    &\Theta = (M_h,\bar{R},\ddot{R},\alpha_r,\beta_r,R_0,\kappa) \label{T1.1}\\
+    &M_h > 0 , \bar{R} > 0, \ddot{R}>0, \alpha_r > 0, \beta_r > 0, R_0>0,\kappa > 1.0 \label{T1.2}\\
+    &\Phi = (\alpha_h,\beta_h,\varphi_h) \label{T1.3}\\
+    %%
+    %%
+    &\mbox{\underline{length-schedule information}} \nonumber \\
+    %vector of length intervals
+    &\vec{l},\vec{x} \quad \mbox{vector of length intervals and midpoints, respectively} \nonumber\\
+    % Growth increment
+    &a_{h,l} = (\alpha_h + \beta_h l)/\varphi_h \label{T1.4} \\
+    %Size transition matrix
+    &p({l},{l'})_h =\pmb{G}_h= \int_{l}^{l+\Delta l}
+        \frac{ l^{(a_{h,l}-1)} \exp(l/\varphi_h) }
+        { \Gamma(a_{h,l}) l^{(a_{h,l})} } dl \label{T1.5} \\
+    %%
+    %%
+    &\mbox{\underline{recruitment size-distribution}} \nonumber \\
+    & \alpha = \alpha_r / \beta_r  \\
+    % Size distribution of new recruits
+    &p[\bm{r}] = \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x}
+      \frac{x^{(\alpha-1)}\exp(- x / \beta_r)}{\Gamma(\alpha)\beta_r^\alpha}dx
+        \label{T1.7}\\
+    &\pmb{r}_h = 0.5 p[\bm{r}] \ddot{R} \label{T1.8}\\
+    %%
+    %%
+    &\mbox{\underline{growth and survival}} \nonumber \\
+    % &\pmb{U}_h = \exp(-M_h) (\pmb{I}_n)_{l,l'} \label{T1.9} \\
+    %unfished
+    &\pmb{A}_h = \pmb{G}_h [\exp(-M_h) (\pmb{I}_n)_{l,l'}]\label{T1.10}\\
+    % &\pmb{F}_h = \exp(-M_h - \pmb{f}_{h,l}) (\pmb{I}_n)_{l,l'} \label{T1.11}\\
+    %fished
+    &\pmb{B}_h = \pmb{G}_h [\exp(-M_h - \pmb{f}_{h,l}) (\pmb{I}_n)_{l,l'}] \label{T1.12}\\
+    %%
+    %%
+    &\mbox{\underline{survivorship to length}} \nonumber \\
+    & \bm{u}_h   = -(\bm{A}_h - (\bm{I}_n)_{l,l'})^{-1} (p[\bm{r}]) \label{T1.13a}\\
+    & \bm{v}_h   = -(\bm{B}_h - (\bm{I}_n)_{l,l'})^{-1} (p[\bm{r}]) \label{T1.13b}\\
+    %%
+    %%
+    &\mbox{\underline{steady-state conditions}}\nonumber \\
+    % & \pmb{v}_h = -(\pmb{A}_h-(\pmb{I}_n)_{l,l'})^{-1} (\pmb{r}_h)\label{T1.13}\\
+    & B_0 = R_0 \sum_h \lambda_h \sum_l \pmb{u}_{h,l} w_{h,l} m_{h,l} \label{T1.14}\\
+    % & \pmb{n}_h = -(\pmb{B}_h-(\pmb{I}_n)_{l,l'})^{-1} (\pmb{r}_h)\label{T1.15}\\
+    & \tilde{B} = \tilde{R}\sum_h \lambda_h \sum_l \pmb{v}_{h,l} w_{h,l} m_{h,l} \label{T1.16}\\
+    %%
+    %%
+    &\mbox{\underline{stock-recruitment parameters}}\nonumber\\
+    &s_o = \kappa R_0 / B_0 \label{T1.17}\\
+    &\beta = (\kappa -1)/B_0 \label{T1.18}\\
+    &\tilde{R} = \frac{s_o \tilde{\phi}_B -1}{\beta \tilde{\phi}_B} \label{T1.19}\\
+    %%
+    %%
+    \hline \hline \nonumber
+  \end{align}
+\normalEq
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    Assuming a non-zero steady-state fishing mortality rate vector $\pmb{f}$, the equilibrium growth and survival process is represented by \eqref{T1.12}.  The vector $\bm{f}_h$ represents all mortality associated with fishing, including mortality associated with discards in directed and non-directed fisheries.
+
+    Assuming unit recruitment, then the growth and survivorship in unfished and fished conditions is given by the solutions to the matrix equations \eqref{T1.13a} and \eqref{T1.13b}, respectively.   The vectors $\bm{u}_h$ and $\bm{v}_h$ represent the unique equilibrium solution for the numbers per recruit in each size category.  The total unfished numbers in each size category is defined as $R_0 \bm{u}_h$.
+
+    The unfished spawning stock biomass is defined as the equilibrium unfished recruitment multiplied by the sum of products of survivorship per recruit, weight-at-length, and proportion mature-at-length \eqref{T1.14}.  The definition of spawning  biomass may include only the females, or only males, or some combination thereof. To accommodate various definitions of spawning biomass the parameter $\lambda_h$, with the additional constraint $\sum_h \lambda_h = 1$, assigns the relative contribution of each sex to the spawning biomass.  For example, if $\lambda = 1$  then the definition of spawning biomass is determined by a single sex. If $\lambda = 0.5$, the spawning biomass consists of an equal sex ratio.
+
+    Under steady-state conditions where the fishing mortality rate is non zero, \eqref{T1.16} defines the equilibrium spawning biomass based on the survivorship of a fished population.  In this case the equilibrium recruitment $\tilde{R}$ must be defined based on a few additional assumptions; the first of which being the form of the stock-recruitment relationship.  Assuming recruitment follows the familiar asymptotic function, or Beverton-Holt relationship:
+    \begin{equation} \label{eq:BevertonHolt}
+      \tilde{R} = \frac{s_o \tilde{B}}{1 + \beta \tilde{B}},
+    \end{equation}
+    where $\tilde{B}$ is the equilibrium spawning biomass, $s_o$ is the slope at the origin, and $s_o/\beta$ is the asymptote of the function. The parameters of this model can be derived from the unfished recruitment $R_0$ and the recruitment compensation ratio $\kappa$.  The slope at the origin, or $s_o$, is defined as \eqref{T1.17} with the additional constraint that $\kappa > 1$ for an extant population.  Substituting \eqref{T1.17} into the Beverton-Holt model \eqref{eq:BevertonHolt}, and solving  for $\beta$ yields \eqref{T1.18}.  For a given level of survivorship, the equilibrium recruitment is defined by \eqref{T1.19}, where $\tilde{\phi}_B$ is defined by \eqref{T3.1}.
+
+    Given \eqref{T1.13b} is defined as the vector of individuals per recruit in a fished population, the relative reproductive potential per individual recruit is defined as the sum of products of weight-at-length, maturity-at-length and survivorship-to-length:
+    \[
+    \tilde{\phi}_B = \sum_h \lambda_h \sum_l  \bm{v}_{h,l} w_{h,l} m_{h,l}
+    \]
+    The total equilibrium spawning biomass is defined as $\tilde{B} = \tilde{R} \phi$.  Substituting this expression into \eqref{eq:BevertonHolt} and solving for $\tilde{R}$ results in \eqref{T1.19}.
+
+
+
+
+
+    % Given initial estimates of the unfished recruitment $R_0$ and the recruitment compensation parameter $\kappa$ we can then derive the stock recruitment parameters from the following Beverton-Holt recruitment model
+    % where $B_e$ is the equilibrium spawning biomass, $s_o$ is the maximum survival rate $R_e/B_e$ as $B_e$ tends towards 0, $\beta$ is a density dependent survival rate parameter, and $R_e$ is the equilibrium number of recruits of all size classes ($R_e = \sum_l r_l$). The maximum survival rate at the origin of the stock-recruitment curve is a multiple of the recruits per unit of spawning biomass at unfished conditions.  This results in \eqref{T1.17}, with the additional constraint that $\kappa > 1$.  Equation \ref{T1.18} is derived by solving the above equation for $\beta$, substituting \eqref{T1.17} for $s_o$ and simplifying. If we further assume unit recruitment (i.e., $\ddot{R} = 1$ in eq. \ref{T1.8}), the reproductive potential per recruit can be calculated as:
+    % where $\pmb{y}_h$ is the unique equilibrium solution corresponding to the unit recruitment.  This is calculated as
+    % \[
+    % \pmb{y}_h = -(\pmb{F}_h - (\pmb{I}_n)_{l,l'})^{-1} p(\pmb{r})
+    % \]
+    % The equilibrium recruitment given steady-state conditions with fishing mortality greater than 0 is defined by \eqref{T1.19}.
+
+    The equilibrium model defined  in Table \ref{tab:equilibrium_model} is a very concise system of equations from which fisheries reference points are easily derived.  The minimum amount of information that is necessary to derive SPR-based reference points is an estimate of the natural mortality rate, fisheries selectivity, the size-transition matrix (or growth based on molt increment information).  These data alone are sufficient enough to calculate $F_{\rm{SPR}}$, and the only additional requirement for $B_{\rm{SPR}}$ is to have an estimate of unfished recruitment or a specified average recruitment.
+
+    % subsection equilibrium_considerations (end)
+
+
+    \subsection*{SPR-based reference points} % (fold)
+    \label{sub:spr_based_reference_points}
+    Reference points based on the Spawning Potential Ratio (SPR) are frequently used as proxies to determine Maximum Sustainable Yield (MSY).  The spawning potential ratio is defined as the ratio of reproductive output in fished conditions relative to unfished conditions.  In the notation used in Table  \ref{tab:incidence_fucntions} the SPR is defined as
+    \begin{equation}
+      SPR = \tilde{\phi}_B/\phi_B
+    \end{equation}
+    Fishing mortality rates that results in SPR values of 0.3-0.4 are often desirable for approximating maximum sustainable yield \citep{clark2002f}.  To calculate \fspr\ an iterative solution is required to determine the instantaneous fishing mortality rate that is required to achieve the desired SPR level.  For a single fishery this is relatively simple; the fishing mortality rate-at-length vector is the product of selectivity-at-length and fishing effort.  A simple bisection algorithm can then be used to iteratively solve for the value of \fspr\ that results in the target SPR.  In cases where there is one or more fisheries involved, and the selectivities differ among fisheries, the target \fspr\ will depend on the relative differences in selectivities among gears.  Moreover, the allocation of total fishing mortality to each gear has to be specified \textit{a priori}.  The solution to this problem must be negotiated as part of the management process as there are an infinite number of allocation combinations that would result in achieving \fspr.  Given a vector of predefined fishing mortality rate ratios, \fspr\ can then be numerically determined using the same algorithm as the single fishery example.
+
+    The expected spawning biomass level when fishing at \fspr\ is referred to as \bspr.  To calculate \bspr\ we first evaluate \eqref{T1.12} using \fspr\ and then calculate the steady state biomass using \eqref{T1.16}. An alternative way to calculate the SPR-based reference points is to use per recruit quantities, or incidence functions (Table \ref{tab:incidence_fucntions}). For example, the SPR is the ratio of spawning biomass per recruit in fished and unfished populations, or \eqref{T2.3}. For each incidence function the primary difference between the fished and unfished states is the equilibrium numbers at length.  In Table \ref{tab:incidence_fucntions} we used $\phi$ and $\tilde{\phi}$ to represent fished and unfished states.    \bspr\ is given by \eqref{T2.4} and the total catch at \fspr\ is given by \eqref{T2.5}.  Other quantities such as the equilibrium  retained catch, or discards,  when fishing at \fspr\ or any other rate can easily be computed using survivorship-at-length schedules and the equilibrium recruitment (Table \ref{tab:incidence_fucntions}).
+
+    \begin{table}
+      \centering
+      \caption{Incidence functions for equilibrium calculations based on unfished and fished conditions, and SPR-based reference points.}
+      \label{tab:incidence_fucntions}
+      \tableEq
+      \begin{align}
+      \hline \nonumber
+      &\mbox{\underline{Incidence functions}} \nonumber \\
+      &\mbox{\underline{unfished}} &\mbox{\underline{fished}}\nonumber \\
+      %% Biomass Per Recruit
+      &\phi_B = \sum_h \lambda_h \sum_l u_{h,l} w_{h,l} m_{h,l}, \qquad
+      &\tilde{\phi}_B = \sum_h \lambda_h \sum_l v_{h,l} w_{h,l} m_{h,l}  \label{T3.1}\\
+      %%
+      %% Yield Per Recruit
+      &\phi_{Q_k} = 0, \qquad
+      &\tilde{\phi}_{Q_k} = \sum_h  \sum_l \frac{v_{h,l}  w_{h,l} s_{h,k,l} (1-\exp(-Z_{h,l}))}{Z_{h,l}} \\
+      %%
+      %% Retained catch per recruit
+      &\phi_{Y_k} = 0, \qquad
+      &\tilde{\phi}_{Y_k} = \sum_h  \sum_l \frac{v_{h,l}  w_{h,l} y_{h,k,l} (1-\exp(-Z_{h,l}))}{Z_{h,l}} \\
+      %% Discarded catch per recruit
+      &\phi_{D_k} = 0, \qquad
+      &\tilde{\phi}_{D_k} = \sum_h  \sum_l \frac{v_{h,l}  w_{h,l} d_{h,k,l} (1-\exp(-Z_{h,l}))}{Z_{h,l}} \\
+      %%
+      %%
+      &\mbox{\underline{SPR-based reference points}} \nonumber \\
+      & SPR = \tilde{\phi}_B/ \phi_B \label{T2.3}\\
+      & B_{\textnormal{SPR\%}} = \tilde{R} \tilde{\phi}_B \bigr\rvert _{F=F_{\textnormal{SPR}}} \label{T2.4}\\[1ex]
+      & C_{\textnormal{SPR\%}} = \tilde{R} \tilde{\phi}_Q \bigr\rvert _{F=F_{\textnormal{SPR}}} \label{T2.5}\\[1ex]
+      \hline \hline \nonumber
+      \end{align}
+      \normalEq
+    \end{table}
+
+    % subsection spr_based_reference_points (end)
+
+    \subsection*{Fishing mortality} % (fold)
+    \label{sub:fishing_mortality}
+
+    Many invertebrate fisheries  impose a minimum size limits and prohibit the retention of females as a conservation tool.  The probability dying due to fishing comes in two forms, an individual is captured and retained, or the same individual is discarded and dies prematurely due to handling effects.  The retained portion of the catch is generally a measurable quantity; however, the discard mortality component cannot be directly measured in situ.  To account for mortality associated with both retention and discarding we use the following joint probability to model vulnerability due to fishing mortality by gear $k$ at length category $l$ (ignoring sex for clarity)
+    \begin{equation}\label{eq:selectivity}
+      \nu_{k,l}  = s_{k,l} [y_{k,l} + (1-y_{k,l})\xi_{k}],
+    \end{equation}
+    where $s_{k,l}$ is the probability of catching an animal of length $l$ (or selectivity), $y_{k,l}$ is the probability of retaining an individual in fishery $k$, and $\xi_{k}$ is the discard mortality rate for fishery $k$.  Both parametric functions and non-parametric can be used to parameterize selectivity and retention functions.  In this application we use a simple logistic function to represent selectivity \eqref{T4.3}, and retention \eqref{T4.4} The discard mortality rate $\xi_k$ in \eqref{eq:selectivity} and \eqref{T4.5} assumes the rate is size-independent.  However, alternative size-based functions or other covariates such as temperature could be accommodated, but the estimates would have to be obtained independently as its not possible to quantify the discard mortality rate in situ.
+
+    \begin{table}
+      \centering
+      \caption{Size-based selectivity, retention and fishing mortality.}
+      \label{tab:fishing_mortality}
+      \tableEq
+      \begin{align}
+      \hline \nonumber
+      &\mbox{\underline{Parameters}} \nonumber \\
+      & \bm{\bar{f}}_k,\bm{\Psi}_{k,i}, a_{h,k},\sigma_{s_{h,k}},r_{h,k},\sigma_{y_{h,k}} \label{T4.1}\\
+      & \sum_i \bm\Psi_{k,i} = 0 \label{T4.2}\\
+      %%
+      %%
+      &\mbox{\underline{Selectivity \& retention}} \nonumber \\
+      &s_{h,k,l} = (1 + \exp(-(l-a_{h,k} )/ \sigma_{s_{h,k}}))^{-1}\label{T4.3}\\
+      &y_{h,k,l} = (1 + \exp(-(r_{h,k} - l) / \sigma_{y_{h,k}}))^{-1}\label{T4.4}\\
+      &\nu_{h,k,l}  = s_{h,k,l} [y_{h,k,l} + (1-y_{h,k,l})\xi_{h,k}]\label{T4.5}\\[1ex]
+      %%
+      %%
+      &\mbox{\underline{Fishing mortality}} \nonumber \\
+      & \bm{F}_{k,i} = \exp(\bm{\bar{f}_k + \bm{\Psi_{k,i}}}) \label{T4.6}\\
+      &\bm{f}_{h,i,l} = \sum_k \bm{F}_{k,i} \nu_{h,k,l} \label{T4.7}\\
+      %%
+      %%
+      &\mbox{\underline{Penalized negative loglikelihoods}} \nonumber\\
+      &\ell_{F_k} = 0.5 \ln(2 \pi) + \ln(\sigma_{F_k}) 
+      + 0.5 (\bar{F}_k - \hat{F})^2 / \sigma_{F_k}^2 \label{T4.8}\\
+      \hline \hline \nonumber
+      \end{align}
+      \normalEq
+    \end{table}
+    In cases where only one sex is allowed to be retained (i.e., male only fisheries) the retention probability $y_{h,k,l} = 0$ for all size-classes.  In this case, it is not necessary to estimate parameters for a sex-specific retention curve, as all females for example, would be discarded.
+
+    To improve numerical stability during early phases of the parameter estimation scheme, a penalized likelihood component \eqref{T4.8} is used to constrain the average fishing mortality $\bar{F}_k$ to some user defined value of $\hat{F}_k$, where the weight associated with this penalty is defined by $\sigma_{F_k}$.  During the last phase of estimation, the value of $\sigma_{F_k}$ is arbitrarily set to a large value (e.g., 2.0) to ensure its is not influencing the overall estimate of the mean fishing mortality rate.
+
+    % subsection fishing_mortality (end)
+
+    \subsection*{Natural mortality} % (fold)
+    \label{sub:natural_mortality}
+    Natural mortality is assumed to be sex-specific, size-independent, and may or may not be constant over time.  In the case of time-varying natural mortality, the model assumes that changes in $M_{h,i}$ is a random walk process 
+    \[M_{h,i+1} = M_{h,i} e^{\delta_{i}}\]
+    where $\delta_i$ is assumed to be normal with a known variance $\sigma^2_M$. There is an additional constraint where $\sum_i \delta_i = 0$ to ensure that the scale of $M_h$ remains estimable. The model further assumes that deviations in natural mortality rate are independent of sex.  Key parameters for parameterizing natural mortality are defined in \eqref{T5.1}.  Note that $\sigma_{M_h}$ is not estimable and must either be fixed or use an informative prior.
+
+    The parameter vector $\bm{\delta}_i$ with all elements set equal to 0 is equivalent to time-invariant $M$. To implement time-varying changes in natural mortality rates,  $\bm{\delta}$ is treated as an estimated vector of parameters; one parameter for each year in the model, or a fixed number of nodes and the series is interpolated using a bicubic spline. The number of nodes and the placement of the nodes is specified \emph{a priori}.
+
+    Two alternative methods are used to constrain the natural mortality rate deviations: (1) the first is using a penalized likelihood, and (2) using cubic spline interpolation with a fixed number of nodes. There are two options for penalizing the likelihood \eqref{T5.3} for deviations in natural mortality: (a) allow for deviations around a mean, and (b) allow for drift in natural mortality rate using a likelihood penalizes the first differences in $\delta_i$.
+
+    \begin{table}
+      \centering
+      \caption{Model and constraints for natural mortality}
+      \label{tab:natural_mortality}
+      \tableEq
+      \begin{align}
+      \hline \nonumber
+      &\mbox{Parameters} \nonumber \\
+      & M_h, \bm{\delta}_i, \sigma_{M_h} \label{T5.1} \\[1ex]
+      &\mbox{Natural mortality} \nonumber \\
+      & M_{h,i} =
+      \begin{cases}
+        M_h, &i=1\\
+        M_{h,i-1} \exp(\delta_i) &i>1
+      \end{cases} \label{T5.2} \\[1ex]
+      %%
+      %%
+      &\mbox{Penalized negative log-likelihood} \nonumber \\
+      &\ell_{M_h} = 
+      \begin{cases}
+      0.5 \ln(2 \pi) + \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2} \sum_{i=1}^{N} \delta_{i}^2, & \mbox{or}  \\[1ex]
+      %%
+      0.5 \ln(2 \pi) + \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2}\sum_{i=1}^{N-1}(\delta_{i+1} - \delta{i})^{2}  \\
+      \end{cases}\label{T5.3}\\[1ex]
+      %%
+      \hline \hline \nonumber
+      \end{align}
+      \normalEq
+    \end{table}
+
+    % subsection natural_mortality (end)
+
+    \subsection*{Initial conditions} % (fold)
+    \label{sub:initial_conditions}
+      Initialization of the numbers-at-length, annual recruitment, can either be done assuming steady-state conditions using the equations laid out in Table \ref{tab:equilibrium_model}, or treated as unknown parameters to be estimated by fitting the model to data.  The latter method requires size-composition data in the initial years in order to estimate the initial numbers-at-length.  Table \ref{tab:initial_numbers} summarizes the proceeding steps required to initialize the number-at-length for the initial conditions.
+
+      Estimated parameters at this stage include the natural mortality rate, the initial recruits, parameters for the size distribution of new recruits, and a vector of deviates $\bm{\upsilon}$, which are constrained to sum to zero, that represent historical variation in recruitment and or mortality \eqref{T6.1}.  The initial numbers-at-length can be found by solving the same matrix equation outlined in Table \ref{tab:equilibrium_model}; however, in this case the total number of recruits is used, rather than assuming unit recruitment.  This first proceeds by calculating the growth transition matrix \eqref{T6.4}, the distribution of new recruits \eqref{T6.6}, and assume a 50:50 sex ratio \eqref{T6.7} for the new recruits in each size class.  The transition and survival from length class $l$ to $l'$ is assumed to involve only natural mortality $M_h$ in \eqref{T6.8}.  Note that $(\bm{I}_n)_{l,l'}$ is the identity matrix.  The initial numbers at length, for each sex, is given by \eqref{T6.9}, which is just the equilibrium vector of numbers-at-length multiplied by a vector of deviates $\bm{\upsilon}$.
+
+      \begin{table}
+      \centering
+      \caption{ Initialize population model $\{i=1\}$ }
+      \label{tab:initial_numbers}
+      \tableEq
+      \begin{align}
+        \hline \nonumber
+        &\mbox{ Parameters } \\
+        &\Theta = (M_h,\ddot{R},\alpha_r,\beta_r, \bm{\upsilon})
+        ,\quad\mbox{where} \sum_l \bm{\upsilon}_l = 0 \label{T6.1} \\
+        &\Phi = (\alpha_h,\beta_h,\varphi_h)\\[1ex]
+        %%
+        %%
+        &\mbox{Growth transition}\nonumber \\
+        % Growth increment
+        &a_{h,l} = (\alpha_h + \beta_h l)/\varphi_h \label{T6.3} \\
+        %Size transition matrix
+        &\pmb{G}_h= \int_{l}^{l+\Delta l}
+        \frac{ l^{(a_{h,l}-1)} \exp(l/\varphi_h) }
+        { \Gamma(a_{h,l}) l^{(a_{h,l})} } dl \label{T6.4} \\[1ex]
+        %%
+        &\mbox{Recruitment vector} \nonumber \\
+        & \alpha = \alpha_r / \beta_r \label{T6.5} \\
+        % Size distribution of new recruits
+        &p(\boldsymbol{r}) = \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x}
+        \frac{x^{(\alpha-1)}\exp(x / \beta_r)}{\Gamma(\alpha)x^\alpha}dx
+        \label{T6.6}\\
+        &\pmb{r}_h = 0.5 p(\boldsymbol{r}) \ddot{R} \label{T6.7}\\[1ex]
+        %%
+         &\mbox{Growth and survival} \nonumber \\
+        %unfished
+        &\pmb{A}_h = \pmb{G}_h [\exp(-M_h) (\pmb{I}_n)_{l,l'}]\label{T6.8}\\[1ex]
+        %% Initial numbers-at-length
+        &\mbox{Initial numbers-at-length $i=1$} \nonumber \\
+        &\bm{n}_{h,i} = [-(\bm{A}_h - (\bm{I}_n)_{l,l'})^{-1} (\bm{r}_h)] e^{\bm{\upsilon}} \label{T6.9}\\[1ex]
+        \hline \hline \nonumber
+      \end{align}
+      \normalEq
+      \end{table}
+
+      It is also possible to assume unfished equilibrium conditions for this model, where $\ddot{R}$ is replace with $R_0$ in \eqref{T6.7}, and the vector of deviates $\bm{\upsilon} = 0$.  In this case, the size-structured model, with any number of size-classes, is initialized with just seven parameters assuming sex-independent growth and survival, and just 11 parameters with sex-dependent growth and survival.
+
+    % subsection initial_conditions (end)
+
+    \subsection*{Population dynamics} % (fold)
+    \label{sub:population_dynamics}
+    Updating the numbers ($\bm{n}_{h,i}$) in each size-class at each time step is the product of size-specific growth and survival ($\bm{A}_h$) times the numbers-at-length plus new recruitment ($\bm{r}_{h,i}$):
+    \begin{equation}\label{eq:update_numbers_at_length}
+      \bm{n}_{h,i+1} = \bm{n}_{h,i} \bm{A}_h + \bm{r}_{h,i}
+    \end{equation}
+
+    \begin{table}
+    \centering
+    \caption{ Population dynamics. }
+    \label{tab:population_dynamics}
+    \tableEq
+    \begin{align}
+      \hline \nonumber
+      &\mbox{ Parameters } \\
+      &\Theta = \\
+      \hline \hline \nonumber
+    \end{align}
+    \normalEq
+    \end{table}
+    
+    % subsection population_dynamics (end)
+    \subsection*{Model fitting} % (fold)
+    \label{sub:Model fitting}
+    \subsubsection*{Data components}
+    \label{subsub:Data components}
+    \subsubsection*{Prior distributions}
+    \label{subsub:Prior distributions}
+    As noted in reference to \eqref{T5.3} some penalties are relaxed at the final stages of estimation to provide stability. There are other prior assumptions in the model. Namely the prior for the stock-recruit relationship (in specification of $\sigma_{R}$)
+
+\begin{table}
+      \centering
+      \caption{Likelihoods and prior distributions}
+      \label{tab:likelihoods}
+      \tableEq
+      \begin{align}
+      \hline \nonumber
+      &\mbox{Negative log-likehoods} \nonumber \\
+      &\mbox{Indices} \nonumber \\
+      & l_i =  \bm{\delta}_i, \sigma_{M_h}  \label{T5.1} \\[1ex]
+      &\mbox{Size compositions} \nonumber \\
+      & M_{h,i} =0.5 \sigma_{M_h}^{-2} \sum_{i=1}^{N} \delta_{i}^2, 
+      \begin{cases}
+        M_h, &i=1\\
+        M_{h,i-1} \exp(\delta_i) &i>1
+      \end{cases} \label{T5.2} \\[1ex]
+      %%
+      %%
+      &\mbox{(negative log) Priors (ignoring constants)} \nonumber \\
+      &\ell_{M_h} = 
+      \begin{cases}
+      \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2} \sum_{i=1}^{N} \delta_{i}^2, & \mbox{or}  \\[1ex]
+      %%
+      0.5 \ln(2 \pi) + \ln(\sigma_{M_h}) 
+      + 0.5 \sigma_{M_h}^{-2}\sum_{i=1}^{N-1}(\delta_{i+1} - \delta{i})^{2}  \\
+      \end{cases}\label{T5.3}\\[1ex]
+      %%
+      \hline \hline \nonumber
+      \end{align}
+      \normalEq
+    \end{table}
+
+% subsection Model fitting (end)
+
+% subsection population_dynamics (end)
+
+  % section methods (end)
+
+	%\input{Methods}
+
+
+%
+%
+  \subsection*{Application to Bristol Bay red king crab} % (fold)
+  The data set used for this application was set to be the same as that used for the 2013 assessment [ref?]
+  
+  
+  \section*{Results} % (fold)
+  Data 
+  
+  \section*{Discussion} % (fold)
+  
+
+
+  \bibliographystyle{apalike}
+  \bibliography{$HOME/Documents/ARTICLES/Articles-1}
+
+\end{document}

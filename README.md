@@ -1,36 +1,25 @@
-# Gmacs Version 1.0 #
+# Gmacs
 
-This is the pilot release of Gmacs. Currently posted source files are compilable using ADMB 11.1 and have been tested using the BBRKC model available in the examples folder. This release will remain active until the current 'under development' version is released. **Updated February 2014, by Athol Whitten**
+Gmacs is currently under development. A simple working release version of Gmacs is available via `Tag V1.0` and has been tested using the BBRKC model available in the examples folder. The next major release of Gmacs is planned for September 2014.
 
-## Generalized Modeling for Alaskan Crab Stocks ##
+## Table of contents
+- [About Gmacs](#about-gmacs)
+- [Gmacs R Package](#r-package-for-gmacs)
+- [Development](#development)
 
-This repository holds source code, instructions, examples, and associated scripts for **Gmacs** (Generalized Modeling for Alaskan Crab Stocks), a generic size-based stock assessment model. 
+## About Gmacs
+**Gmacs** is a generalized size-structured stock assessment modelling framework. The framework is designed with similar flexibility to that provided by age-structured stock assessment modelling frameworks like Stock Synthesis and CASAL. Gmacs can fit to a wide-variety of data for single sex or sex-specific population dynamics and fishery models: data can include survey and fishery indices of abundance and fishery- and survey-based size-composition data.
 
-## Modeling structure and format ##
+### Data Requirements
+Data must be supplied via the `model.dat` file in a *flat format* to enable easy indexing and simple preparation. Each record for catch, abundance, length-structure etc. should be held in an individual row, with information relating to year, fleet, sex and more.
 
-Gmacs implements a size-structured modelling framework with flexibility similar to that provided by other general stock assessment modelling frameworks. Some effort has been made to maintain consistency with data and control file formats familiar to users of Stock Synthesis.
+Model specifcations are controlled through the `model.ctl` file. Information read from files is printed to a separate file called `echoinput.rep` allowing users to check and debug their input. For more information see the [Gmacs Wiki](https://github.com/seacode/gmacs/wiki).
 
-### Input file structure
+## R Package for Gmacs
+An R package, called `gmr` is under development in support of Gmacs. The package provides functions for creating plots from Gmacs output files. A full pilot version is intended for release in September 2014, timed to coincide with the next stable release of Gmacs. Current development versions of the package can be downloaded from Github directly through R, see https://github.com/seacode/gmr for more details.
 
-Data are supplied via the `model.dat` file in a *flat format* to enable easy indexing and simple preparation using spreadsheet software. Each record for catch, abundance, length-structure etc. should be held in an individual row, with information relating to year, fleet, sex and more:
+## Simulation Mode
+A simulation-estimation procedure can be performed with Gmacs, by using the `gmacs -sim` flag. For example, try `gmacs -sim 123`, where 123 is a random number seed.
 
-####  Catch data structure
- 
-  * Year, Season, Fleet, Sex, Observation    
-
-####  Survey data structure
- 
-  * Year, Season, Survey, Observation, Error
-
-####  Length frequency data structure  
-
-  * Year, Season, Fleet/Survey, Sex, Maturity, Shell Condition, No. Samples, Data
-
-Gmacs allows for the inclusion of an optional growth data file `growth.dat` to specify a fixed growth transtion matrix or year-specific growth transtion matrices. The program also reads a `starter.gm` file for specifying the overall model run conditions, and a control file `model.ctl` for specifications relating to parameter estimation. Finally, a `forecast.gm` file is read to specify the calculation of relevant reference points. This file will allow users to specify model projection options in later versions of Gmacs.
-
-During the read-in procedure, helpful messages are printed to screen and the information read in is printed to a separate file called `echoinput.gm` allowing users to check and debug their data and control files. 
-
-A general user-guide to the program is under development and will be made available with future releases.
-
-## Development ##
-This software is under development and is not yet intended for general use. If you would like to contribute to the project, please contact [Athol Whitten](mailto:whittena@uw.edu). 
+## Development
+This software is under development and is not yet intended for general use. If you would like to contribute to the project, please see the [Developers Guide](https://github.com/seacode/gmacs/wiki/5.-Developers).
