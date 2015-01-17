@@ -67,13 +67,94 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	init_int nbins;           ///> initial year
+	init_int syr
+	init_int nyr
+	init_int nclass;           ///> initial year
 	init_int nobs;           ///> terminal year
+	init_int nsex;
+	init_int nlikes;
+	init_int nfleet;
+
+	// |--------------------------------|
+	// | SELECTIVITY PARAMETER CONTROLS |
+	// |--------------------------------|
+	int nr;
+	int nc;
+	int nslx;
+	// This seems off by a factor of 2...for single sex models...???but maybe not...
+	!! nr = 2 * nfleet;
+	// !! nr = nsex * nfleet;
+	!! nc = 13;
+	init_ivector slx_nsel_blocks(1,nr);
+	!! nslx = sum(slx_nsel_blocks);
+	init_imatrix slx_nret(1,nsex,1,nfleet);
+
+	init_matrix slx_control(1,nslx,1,nc);
+	!! 	ECHO(slx_nsel_blocks); ECHO(slx_nret); ECHO(slx_control);
+
+	ivector slx_indx(1,nslx);
+	ivector slx_type(1,nslx);
+	ivector slx_phzm(1,nslx);
+	ivector slx_bsex(1,nslx);           // boolean 0 sex-independent, 1 sex-dependent
+	ivector slx_xnod(1,nslx);
+	ivector slx_inod(1,nslx);
+	ivector slx_rows(1,nslx);
+	ivector slx_cols(1,nslx);
+	 vector slx_mean(1,nslx);
+	 vector slx_stdv(1,nslx);
+	 vector slx_lam1(1,nslx);
+	 vector slx_lam2(1,nslx);
+	 vector slx_lam3(1,nslx);
+	ivector slx_styr(1,nslx);
+	ivector slx_edyr(1,nslx);
+
+	LOC_CALCS
+		slx_indx = ivector(column(slx_control,1));
+		slx_type = ivector(column(slx_control,2));
+		slx_mean = column(slx_control,3);
+		slx_stdv = column(slx_control,4);
+		slx_bsex = ivector(column(slx_control,5));
+		slx_xnod = ivector(column(slx_control,6));
+		slx_inod = ivector(column(slx_control,7));
+		slx_phzm = ivector(column(slx_control,8));
+		slx_lam1 = column(slx_control,9);
+		slx_lam2 = column(slx_control,10);
+		slx_lam3 = column(slx_control,11);
+		slx_styr = ivector(column(slx_control,12));
+		slx_edyr = ivector(column(slx_control,13));
+
+		// count up number of parameters required
+		slx_rows.initialize();
+		slx_cols.initialize();
+		for(int k = 1; k <= nslx; k++ )
+		{
+			/* multiplier for sex dependent selex */
+			int bsex = 1;
+			if(slx_bsex(k)) bsex = 2;   
+			
+			switch (slx_type(k))
+			{
+				case 1: // coefficients
+					slx_cols(k) = nclass - 1;
+					slx_rows(k) = bsex;
+				break;
+
+				case 2: // logistic
+					slx_cols(k) = 2;
+					slx_rows(k) = bsex;
+				break;
+
+				case 3: // logistic95
+					slx_cols(k) = 2;
+					slx_rows(k) = bsex;
+				break;
+			}
+			// ivector tmp = ivector(slx_control(k).sub(12,11+slx_nsel_blocks(k)));
+			// slx_blks(k) = tmp.shift(1);
+		}
+	END_CALCS
 
 INITIALIZATION_SECTION
-	theta     theta_ival;
-	Grwth     Grwth_ival;
-	log_fbar  log_pen_fbar;
 	
 
 PARAMETER_SECTION
@@ -94,79 +175,18 @@ PARAMETER_SECTION
 		}
 	END_CALCS
 
-	// Fishing mortality rate parameters
-	init_number_vector log_fbar(1,nfleet,f_phz);				///> Male mean fishing mortality
-	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);		///> Male f devs
-	init_number_vector log_foff(1,nfleet,foff_phz);				///> Female F offset to Male F
-	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);  ///> Female F offset to Male F
-
-	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz); ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz);///> recruitment deviations
-
-	// Time-varying natural mortality rate devs.
-	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
-
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
-
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,4);
-	vector priorDensity(1,ntheta+nGrwth+nSurveys);
 
 	objective_function_value objfun;
 
-	number fpen;
-	number M0;              ///> natural mortality rate
-	number logR0;           ///> logarithm of unfished recruits.
-	number logRbar;         ///> logarithm of average recruits(syr+1,nyr)
-	number logRini;         ///> logarithm of initial recruitment(syr).
-	number ra;              ///> Expected value of recruitment distribution
-	number rbeta;           ///> rate parameter for recruitment distribution
-	number logSigmaR;       ///> standard deviation of recruitment deviations.
-
-	vector alpha(1,nsex);   ///> intercept for linear growth increment model.
-	vector beta(1,nsex);    ///> slope for the linear growth increment model.
-	vector gscale(1,nsex);  ///> scale parameter for the gamma distribution.
-
-	vector molt_mu(1,nsex); ///> 50% probability of molting at length each year.
-	vector molt_cv(1,nsex); ///> CV in molting probabilility.
-
-	vector rec_sdd(1,nclass);           ///> recruitment size_density_distribution
-	vector recruits(syr,nyr);           ///> vector of estimated recruits
-	vector survey_q(1,nSurveys);        ///> scalers for relative abundance indices (q)
-
-	matrix pre_catch(1,nCatchDF,1,nCatchRows);  ///> predicted catch (Baranov eq)
-	matrix res_catch(1,nCatchDF,1,nCatchRows);  ///> catch residuals in log-space
-
-	matrix pre_cpue(1,nSurveys,1,nSurveyRows);  ///> predicted relative abundance index
-	matrix res_cpue(1,nSurveys,1,nSurveyRows);  ///> relative abundance residuals
-	
-	matrix molt_increment(1,nsex,1,nclass);     ///> linear molt increment
-	matrix molt_probability(1,nsex,1,nclass);   ///> probability of molting
-
-	3darray growth_transition(1,nsex,1,nclass,1,nclass);
-	3darray M(1,nsex,syr,nyr,1,nclass);         ///> Natural mortality
-	3darray Z(1,nsex,syr,nyr,1,nclass);         ///> Total mortality
-	3darray F(1,nsex,syr,nyr,1,nclass);         ///> Fishing mortality
-	3darray P(1,nsex,1,nclass,1,nclass);        ///> Diagonal matrix of molt probabilities
-
 	//3darray N(1,nsex,syr,nyr+1,1,nclass);     ///> Numbers-at-length
-	3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);   ///> Numbers-at-sex/mature/shell/length.
-	3darray ft(1,nfleet,1,nsex,syr,nyr);        ///> Fishing mortality by gear
-	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
-	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass); ///> Old shell crabs-at-length.
-	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
-	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
-
-	4darray S(1,nsex,syr,nyr,1,nclass,1,nclass);            ///> Surival Rate (S=exp(-Z))
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
-
-	sdreport_vector sd_log_recruits(syr,nyr);
-	sdreport_vector sd_log_mmb(syr,nyr);
 
 
 PRELIMINARY_CALCS_SECTION
@@ -188,7 +208,6 @@ PRELIMINARY_CALCS_SECTION
 
 PROCEDURE_SECTION
 	calc_selectivities();
-	calc_initial_numbers_at_length();
 
 	// observation models ...
 	calc_predicted_composition();
@@ -513,22 +532,6 @@ FUNCTION simulation_model
 	}
 	
 
-	// add observation errors to cpue. & fill in dSurveyData column 5
-	dmatrix err_cpue(1,nSurveys,1,nSurveyRows);
-	dmatrix cpue_sd = sqrt(log(1.0 + square(cpue_cv)));
-	err_cpue.fill_randn(rng);
-	obs_cpue = value(pre_cpue);
-	err_cpue = elem_prod(cpue_sd,err_cpue) - 0.5*square(cpue_sd);
-	obs_cpue = elem_prod(obs_cpue,exp(err_cpue));
-	for(int k = 1; k <= nSurveys; k++ )
-	{
-		for(int i = 1; i <= nSurveyRows(k); i++ )
-		{
-			dSurveyData(k)(i,5) = obs_cpue(k,i);
-		}
-	}
-	
-
 	// add sampling errors to size-composition.
 	// 3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	double tau;
@@ -558,7 +561,6 @@ REPORT_SECTION
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
-	REPORT(dSurveyData);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
 	REPORT(res_cpue);
@@ -670,7 +672,6 @@ REPORT_SECTION
 		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
 		REPORT(pMoltInc);
 	}
-	REPORT(survey_q);
 	REPORT(P);
 	REPORT(growth_transition);
 	dmatrix size_transition_M(1,nclass,1,nclass);
@@ -881,7 +882,7 @@ GLOBALS_SECTION
 	#include <time.h>
 	//#include <contrib.h>
 	#if defined __APPLE__ || defined __linux
-	#include "./include/libgmacs.h"
+	#include "../../src/include/libgmacs.h"
 	#endif
 
 	#if defined _WIN32 || defined _WIN64
