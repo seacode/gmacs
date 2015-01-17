@@ -2647,7 +2647,7 @@ GLOBALS_SECTION
 	 */
 	 #define CHECK(object) checkfile << #object << "\n" << object << endl;
 	 // Open output files using ofstream
-	 ofstream echoinput("echoinput.rep");
+	 ofstream echoinput("gmacs_in.dat");
 	 ofstream checkfile("checkfile.rep");
 
 TOP_OF_MAIN_SECTION
