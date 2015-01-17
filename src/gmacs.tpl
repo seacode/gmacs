@@ -16,7 +16,20 @@
 //    l = index for length class
 //    m = index for maturity state
 //    o = index for shell condition.
-
+// 
+//  OUTPUT FILES:
+//    gmacs.rep  Main result file for reading into R etc
+//    gmacs.std  Result file for reading into R etc
+//
+//   FOR DEBUGGING INPUT FILES:
+//    gmacs_files_in.dat  Which control and data files were specified for the current run
+//    gmacs_in.ctl        Code-generated copy of control file content (useful for checking read)
+//    gmacs_in.dat        Code-generated copy of data file content (useful for checking read)
+//
+//
+//    gmacs_data.rep      All of data read in (for accessing easily with read_admb() function)
+//
+//
 // ==================================================================================== //
 
 ///
@@ -87,7 +100,7 @@ DATA_SECTION
 	init_adstring controlfile;
 
 	
-	!! ad_comm::change_datafile_name(datafile); ECHO(datafile);ECHO(controlfile);
+	!! ad_comm::change_datafile_name(datafile); WriteFileName(datafile);WriteFileName(controlfile);
 
 	// |------------------|
 	// | MODEL DIMENSIONS |
@@ -100,6 +113,7 @@ DATA_SECTION
 	init_int nshell;        ///> number of shell conditions
 	init_int nmature;       ///> number of maturity types
 	init_int nclass;        ///> number of size-classes
+	!! WriteDat(syr); WriteDat(nyr); WriteDat(jstep); WriteDat(nfleet); WriteDat(nsex); WriteDat(nshell);WriteDat(nmature); WriteDat(nclass);
 	int n_grp;              ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
 	int nlikes
@@ -136,7 +150,7 @@ DATA_SECTION
 	init_vector size_breaks(1,nclass+1);
 	vector       mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
-	!! ECHO(syr); ECHO(nyr); ECHO(nfleet); ECHO(nsex); ECHO(nshell);ECHO(nmature); ECHO(nclass); ECHO(size_breaks);
+	!!  WriteDat(size_breaks);
 
 	// |-----------|
 	// | ALLOMETRY |
@@ -150,21 +164,21 @@ DATA_SECTION
 			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
 		}
 	END_CALCS
-	!! ECHO(lw_alfa); ECHO(lw_beta); ECHO(mean_wt);
+	!! WriteDat(lw_alfa); WriteDat(lw_beta); ECHO(mean_wt);
 
 	// |-------------------------------|
 	// | FECUNDITY FOR MMB CALCULATION |
 	// |-------------------------------|
 	init_vector fecundity(1,nclass);
 	init_matrix maturity(1,nsex,1,nclass);
-	!! ECHO(fecundity); ECHO(maturity); 
+	!! WriteDat(fecundity); WriteDat(maturity); 
 
 	// |-------------|
 	// | FLEET NAMES |
 	// |-------------|
 	init_adstring name_read_flt;        
 	init_adstring name_read_srv;
-	!! ECHO(name_read_srv); ECHO(name_read_flt);
+	!! WriteDat(name_read_srv); WriteDat(name_read_flt);
 
 	// |--------------|
 	// | CATCH SERIES |
@@ -183,7 +197,7 @@ DATA_SECTION
 			catch_cv(k)  = column(dCatchData(k),6);
 			catch_dm(k)  = column(dCatchData(k),11);
 		}
-	  ECHO(nCatchDF); ECHO(nCatchRows); ECHO(dCatchData);
+	  WriteDat(nCatchDF); WriteDat(nCatchRows); WriteDat(dCatchData);
 	END_CALCS
 	//!! ECHO(obs_catch); ECHO(catch_cv);
 
@@ -244,9 +258,10 @@ DATA_SECTION
 		for(int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
-			 cpue_cv(k) = column(dSurveyData(k),6);
+			cpue_cv(k) = column(dSurveyData(k),6);
 		}
-		ECHO(nSurveys);ECHO(nSurveyRows);ECHO(dSurveyData); ECHO(obs_cpue); ECHO(cpue_cv); 
+		WriteDat(nSurveys);WriteDat(nSurveyRows);WriteDat(dSurveyData); 
+		ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
 
@@ -270,7 +285,7 @@ DATA_SECTION
 			  d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
-		ECHO(nSizeComps);ECHO(nSizeCompRows);  ECHO(nSizeCompCols); ECHO(d3_SizeComps); ECHO(d3_obs_size_comps); 
+		WriteDat(nSizeComps);WriteDat(nSizeCompRows);  WriteDat(nSizeCompCols); WriteDat(d3_SizeComps); ECHO(d3_obs_size_comps); 
 	END_CALCS
 	ivector ilike_vector(1,nlikes)
 	LOC_CALCS
@@ -340,13 +355,14 @@ DATA_SECTION
 			}
 						
 		}
-	  ECHO(nGrowthObs); ECHO(dGrowthData); ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV); 
+	  WriteDat(nGrowthObs); WriteDat(dGrowthData); ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV); 
 	END_CALCS
 
 	// |------------------|
 	// | END OF DATA FILE |
 	// |------------------|
 	init_int eof;
+	!! WriteDat(eof);
 	!! if (eof != 9999) {cout<<"Error reading data"<<endl; exit(1);}
 
 
@@ -400,7 +416,9 @@ DATA_SECTION
 		Grwth_lb    = column(Grwth_control,2);
 		Grwth_ub    = column(Grwth_control,3);
 		Grwth_phz   = ivector(column(Grwth_control,4));
-		ECHO(theta_control); ECHO(Grwth_control);
+		WriteCtl(ntheta); 
+		WriteCtl(theta_control); 
+		WriteCtl(Grwth_control);
 	END_CALCS
 
 	
@@ -420,7 +438,7 @@ DATA_SECTION
 	init_imatrix slx_nret(1,nsex,1,nfleet);
 
 	init_matrix slx_control(1,nslx,1,nc);
-	!! 	ECHO(slx_nsel_blocks); ECHO(slx_nret); ECHO(slx_control);
+	!! 	WriteCtl(slx_nsel_blocks); WriteCtl(slx_nret); WriteCtl(slx_control);
 
 	ivector slx_indx(1,nslx);
 	ivector slx_type(1,nslx);
@@ -495,7 +513,7 @@ DATA_SECTION
 		prior_qtype = column(q_controls,1);
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
-		ECHO(q_controls); ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); 
+		WriteCtl(q_controls); ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); 
 	END_CALCS
 
 
@@ -526,7 +544,7 @@ DATA_SECTION
 				}
 			}           
 		}
-		ECHO(f_controls); ECHO(f_phz); 
+		WriteCtl(f_controls); ECHO(f_phz); 
 	END_CALCS
 
 
@@ -536,7 +554,7 @@ DATA_SECTION
 	init_ivector nAgeCompType(1,nSizeComps);
 	init_ivector bTailCompression(1,nSizeComps);
 	init_ivector nvn_phz(1,nSizeComps);
-  !!	ECHO(nAgeCompType); ECHO(bTailCompression); ECHO(nvn_phz); 
+  !!	WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz); 
 
 
 
@@ -566,7 +584,7 @@ DATA_SECTION
 				nMdev = m_nNodes;
 			break;
 		}
-		ECHO(m_type); ECHO(Mdev_phz); ECHO(m_stdev); ECHO(m_nNodes); ECHO(m_nodeyear); 
+		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear); 
 	END_CALCS
 
 
@@ -593,11 +611,12 @@ DATA_SECTION
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
 		bUseEmpiricalGrowth = int(model_controls(9));
-		ECHO(model_controls); 
+		WriteCtl(model_controls); 
 	END_CALCS
 
 	init_int eof_ctl;
-	!!	ECHO(model_controls); if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
+	!! WriteCtl(eof_ctl); 
+	!!	if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
 	!! cout<<"end of control section"<<endl;
 
 
@@ -2628,26 +2647,53 @@ GLOBALS_SECTION
 	 #undef COUT
 	 #define COUT(object) cout << #object "\n" << setw(6) \
 	 << setprecision(3) << setfixed() << object << endl;
-	/**
 
+	#undef MAXIT
+	#undef TOL
+	#define MAXIT 100
+	#define TOL 1.0e-4
+
+	/**
 	\def ECHO(object)
 	Prints name and value of \a object on echoinput %ofstream file.
 	*/
 	 #undef ECHO
 	 #define ECHO(object) echoinput << #object << "\n" << object << endl;
-	 // #define ECHO(object,text) echoinput << object << "\t" << text << endl;
+
+  /**
+	\def WriteFileName(object)
+	Prints name and value of \a object on control %ofstream file.
+	*/
+	 #undef WriteFileName
+	 #define WriteFileName(object) ECHO(object); gmacs_files << "# " << #object << "\n" << object << endl;
+
+  /**
+	\def WriteCtl(object)
+	Prints name and value of \a object on control %ofstream file.
+	*/
+	 #undef WriteCtl
+	 #define WriteCtl(object) ECHO(object); gmacs_ctl << "# " << #object << "\n" << object << endl;
+
+  /**
+	\def WriteDat(object)
+	Prints name and value of \a object on data %ofstream file.
+	*/
+	 #undef WriteDat
+	 #define WriteDat(object) ECHO(object); gmacs_data << "# " << #object << "\n" << object << endl;
  
-	#undef MAXIT
-	#undef TOL
-	#define MAXIT 100
-	#define TOL 1.0e-4
 	 /**
 	 \def CHECK(object)
 	 Prints name and value of \a object on checkfile %ofstream output file.
 	 */
 	 #define CHECK(object) checkfile << #object << "\n" << object << endl;
 	 // Open output files using ofstream
-	 ofstream echoinput("gmacs_in.dat");
+	 // This one for easy reading all input to R
+	 ofstream echoinput("gmacs_data.rep");
+	 // These ones for compatibility with ADMB (# comment included)
+	 ofstream gmacs_files("gmacs_files_in.dat");
+	 ofstream  gmacs_data("gmacs_in.dat");
+	 ofstream   gmacs_ctl("gmacs_in.ctl");
+
 	 ofstream checkfile("checkfile.rep");
 
 TOP_OF_MAIN_SECTION
