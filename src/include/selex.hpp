@@ -7,6 +7,7 @@
 
 /**
  * @defgroup Selectivities
+ * @title Selectivity functions
  * @Selectivities Alternative selectivity functions in the cstar namespace are
  * derived from the cstar::Selex base class. 
  * 
@@ -14,6 +15,7 @@
  * 
  * @author Steven Martell
  * @date   Feb 10, 2014
+ * 
  * 
  * <br> Available Selectivity options are: <br><br>
  * <br>Selectivity              FUNCTIONS                Class name
@@ -218,7 +220,7 @@ namespace cstar {
 	 * as the terminal sel_coeffs.
 	 * 
 	 * @param x Independent variable
-	 * @param sel_coeffs Vector of estimated selectivity coefficients.
+	 * @param sel_coeffs Vector of estimated selectivity coefficients logit transformed.
 	 * @return Selectivity coefficients.
 	 */
 	template<class T>
@@ -230,9 +232,9 @@ namespace cstar {
 		T y(x1,x2);
 		for(int i = x1; i < y2; i++ )
 		{
-			y(i) = sel_coeffs(i);
+			y(i) = exp(sel_coeffs(i)) / (1.0 + exp(sel_coeffs(i)));
 		}
-		y(y2,x2) = sel_coeffs(y2);
+		y(y2,x2) = exp(sel_coeffs(y2)) / (1.0 + exp(sel_coeffs(y2)));
 		return y;
 	}
 
@@ -346,7 +348,7 @@ namespace cstar {
 		}
 	};
 
-}//cstar
+}//cstar namespace
 
 
 #endif /* SELEX_HPP */   	

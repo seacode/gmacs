@@ -49,6 +49,10 @@ DATA_SECTION
 		simflag = 0;
 		rseed   = 0;
 		int opt,on;
+
+		/**
+		 * @brief command line option for simulating data.
+		 */
 		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
 		{
 			simflag = 1;
@@ -106,15 +110,29 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	init_int syr;           ///> initial year
-	init_int nyr;           ///> terminal year
-	init_number jstep;      ///> time step (years)
+	///> initial year
+	init_int syr;     
+
+	///> terminal year
+	init_int nyr;         
+
+	///> time step (years)
+	init_number jstep;      
 	init_int nfleet;        ///> number of gears
 	init_int nsex;          ///> number of sexes
 	init_int nshell;        ///> number of shell conditions
 	init_int nmature;       ///> number of maturity types
 	init_int nclass;        ///> number of size-classes
-	!! WriteDat(syr); WriteDat(nyr); WriteDat(jstep); WriteDat(nfleet); WriteDat(nsex); WriteDat(nshell);WriteDat(nmature); WriteDat(nclass);
+	LOC_CALCS
+		WRITEDAT(syr); 
+		WRITEDAT(nyr); 
+		WRITEDAT(jstep); 
+		WRITEDAT(nfleet); 
+		WRITEDAT(nsex); 
+		WRITEDAT(nshell);
+		WRITEDAT(nmature); 
+		WRITEDAT(nclass);
+	END_CALCS
 	int n_grp;              ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
 	int nlikes
@@ -151,7 +169,7 @@ DATA_SECTION
 	init_vector size_breaks(1,nclass+1);
 	vector       mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
-	!!  WriteDat(size_breaks);
+	!!  WRITEDAT(size_breaks);
 
 	// |-----------|
 	// | ALLOMETRY |
@@ -165,21 +183,21 @@ DATA_SECTION
 			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
 		}
 	END_CALCS
-	!! WriteDat(lw_alfa); WriteDat(lw_beta); ECHO(mean_wt);
+	!! WRITEDAT(lw_alfa); WRITEDAT(lw_beta); ECHO(mean_wt);
 
 	// |-------------------------------|
 	// | FECUNDITY FOR MMB CALCULATION |
 	// |-------------------------------|
 	init_vector fecundity(1,nclass);
 	init_matrix maturity(1,nsex,1,nclass);
-	!! WriteDat(fecundity); WriteDat(maturity); 
+	!! WRITEDAT(fecundity); WRITEDAT(maturity); 
 
 	// |-------------|
 	// | FLEET NAMES |
 	// |-------------|
 	init_adstring name_read_flt;        
 	init_adstring name_read_srv;
-	!! WriteDat(name_read_srv); WriteDat(name_read_flt);
+	!! WRITEDAT(name_read_srv); WRITEDAT(name_read_flt);
 
 	// |--------------|
 	// | CATCH SERIES |
@@ -198,7 +216,7 @@ DATA_SECTION
 			catch_cv(k)  = column(dCatchData(k),6);
 			catch_dm(k)  = column(dCatchData(k),11);
 		}
-	  WriteDat(nCatchDF); WriteDat(nCatchRows); WriteDat(dCatchData);
+	  WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 	END_CALCS
 	//!! ECHO(obs_catch); ECHO(catch_cv);
 
@@ -261,7 +279,7 @@ DATA_SECTION
 			obs_cpue(k) = column(dSurveyData(k),5);
 			cpue_cv(k) = column(dSurveyData(k),6);
 		}
-		WriteDat(nSurveys);WriteDat(nSurveyRows);WriteDat(dSurveyData); 
+		WRITEDAT(nSurveys);WRITEDAT(nSurveyRows);WRITEDAT(dSurveyData); 
 		ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
@@ -286,7 +304,7 @@ DATA_SECTION
 			  d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
-		WriteDat(nSizeComps);WriteDat(nSizeCompRows);  WriteDat(nSizeCompCols); WriteDat(d3_SizeComps); ECHO(d3_obs_size_comps); 
+		WRITEDAT(nSizeComps);WRITEDAT(nSizeCompRows);  WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps); 
 	END_CALCS
 	ivector ilike_vector(1,nlikes)
 	LOC_CALCS
@@ -356,14 +374,19 @@ DATA_SECTION
 			}
 						
 		}
-	  WriteDat(nGrowthObs); WriteDat(dGrowthData); ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV); 
+	  WRITEDAT(nGrowthObs); 
+	  WRITEDAT(dGrowthData); 
+	  ECHO(dPreMoltSize); 
+	  ECHO(iMoltIncSex); 
+	  ECHO(dMoltInc); 
+	  ECHO(dMoltIncCV); 
 	END_CALCS
 
 	// |------------------|
 	// | END OF DATA FILE |
 	// |------------------|
 	init_int eof;
-	!! WriteDat(eof);
+	!! WRITEDAT(eof);
 	!! if (eof != 9999) {cout<<"Error reading data"<<endl; exit(1);}
 
 
@@ -765,7 +788,9 @@ PARAMETER_SECTION
 	matrix res_cpue(1,nSurveys,1,nSurveyRows);  ///> relative abundance residuals
 	
 	matrix molt_increment(1,nsex,1,nclass);     ///> linear molt increment
-	matrix molt_probability(1,nsex,1,nclass);   ///> probability of molting
+
+	///> probability of molting
+	matrix molt_probability(1,nsex,1,nclass);   
 
 	3darray growth_transition(1,nsex,1,nclass,1,nclass);
 	3darray M(1,nsex,syr,nyr,1,nclass);         ///> Natural mortality
@@ -2297,6 +2322,7 @@ REPORT_SECTION
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
 	REPORT(res_cpue);
+
 	report << "slx_capture"<<endl;
 	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
 		report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) <<endl;
@@ -2306,9 +2332,11 @@ REPORT_SECTION
 	report << "slx_discard"<<endl;
 	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
 		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
+
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
+	
 	REPORT(F);
 	REPORT(d3_SizeComps);
 
@@ -2324,7 +2352,8 @@ REPORT_SECTION
 	REPORT(d3_N);
 	REPORT(M);
 	REPORT(mean_wt);
-	REPORT(molt_probability);
+	REPORT(molt_probability);	///> vector of molt probabilities
+
 	dvector mmb = value(calc_mmb());
 	REPORT(mmb);
 
@@ -2676,11 +2705,11 @@ GLOBALS_SECTION
 	 #define WriteCtl(object) ECHO(object); gmacs_ctl << "# " << #object << "\n" << object << endl;
 
   /**
-	\def WriteDat(object)
+	\def WRITEDAT(object)
 	Prints name and value of \a object on data %ofstream file.
 	*/
-	 #undef WriteDat
-	 #define WriteDat(object) ECHO(object); gmacs_data << "# " << #object << "\n" << object << endl;
+	 #undef WRITEDAT
+	 #define WRITEDAT(object) ECHO(object); gmacs_data << "# " << #object << "\n" << object << endl;
  
 	 /**
 	 \def CHECK(object)
