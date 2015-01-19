@@ -39,6 +39,7 @@
 
 DATA_SECTION
 	
+	friend_class gmacs_comm;
 	// |---------------------|
 	// | SIMULATION CONTROLS |
 	// |---------------------|
