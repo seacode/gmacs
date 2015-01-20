@@ -18,7 +18,9 @@ var searchData=
   ['calc_5fselectivities',['calc_selectivities',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf400624093b07bbcec88ab9cf3356285',1,'gmacs.tpl']]],
   ['calc_5ftotal_5fmortality',['calc_total_mortality',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5eae2625710326f707f516e3b01a02f5',1,'gmacs.tpl']]],
   ['calculate_5fprior_5fdensities',['calculate_prior_densities',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1cbd411d40776b0950388c7107e4ccf8',1,'gmacs.tpl']]],
+  ['coefficients',['coefficients',['../da/d9f/namespacecstar.html#a7659e890caa75ccb504019e7ab531020',1,'cstar']]],
   ['compress',['compress',['../d3/d8c/classacl_1_1negative_log_likelihood.html#a033cd596653ebf14759e64ced5a6a2c9',1,'acl::negativeLogLikelihood']]],
   ['constant_5fquadratic_5fpenalty',['constant_quadratic_penalty',['../df/dcc/classconstant__quadratic__penalty.html',1,'']]],
+  ['cstar',['cstar',['../da/d9f/namespacecstar.html',1,'']]],
   ['classes_20defined_20automatically_2e',['Classes defined automatically.',['../d5/d3c/group___l_i_b.html',1,'']]]
 ];

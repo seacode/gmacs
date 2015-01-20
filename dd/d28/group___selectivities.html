@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="../../modules.html"><span>Modules</span></a></li>
+      <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li><a href="../../files.html"><span>Files</span></a></li>
       <li>
@@ -94,7 +95,7 @@ $(document).ready(function(){initNavTree('dd/d28/group___selectivities.html','..
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -119,43 +120,12 @@ Classes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section author"><dt>Author</dt><dd>Steven Martell </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>Feb 10, 2014  Selectivity functions</dd></dl>
-<p>Alternative selectivity functions in the cstar namespace are derived from the <a class="el" href="../../dc/d0a/classcstar_1_1_selex.html" title="An abstract class for Selectivity functions. ">cstar::Selex</a> base class.</p>
-<p>The Selex class is an abstract class that contains 3 virtual methods.</p>
-<ul>
-<li><b>Selectivity</b> Arithmatic 0-1 values of selectivity values.</li>
-<li><b>logSelectivity</b> Returns selectivity vector in log-space.</li>
-<li><b>logSelexMeanOne</b> Returns selectivity in log-space and rescaled to have mean 1 in arithmatic space.</li>
-</ul>
-<p>Example of how to call this function </p>
-<pre class="fragment">    // declare a pointer to abstract class
-    // be sure to cast the type of variable that is used in the template class.
-    cstar::Selex&lt;dvector&gt; *pSLX;
-
-    // instantiate a new Logistic curve selectivity with parameters p1 &amp; p2
-    pSLX = new cstar::LogisticCurve&lt;dvector,double&gt;(p1,p2); 
-
-    // Call one of the available methods in the abstract class for size bins x
-    sex  = pSLX -&gt; Selectivity(x);
-</pre><p>Table 1. List of available selectivity functions, function names, and the class object. </p>
-<table class="doxtable">
-<tr>
-<th>Selectivity </th><th>FUNCTIONS </th><th>Class name  </th></tr>
-<tr>
-<td>Logistic </td><td>plogis </td><td>LogisticCurve </td></tr>
-<tr>
-<td>Logistic95 </td><td>plogis95 </td><td>LogisticCurve95 </td></tr>
-<tr>
-<td>Coefficients </td><td>selcoffs </td><td>SelectivityCoefficients </td></tr>
-<tr>
-<td>Nonparameteric </td><td>nonparametric </td><td>ParameterPerClass </td></tr>
-</table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 19 2015 16:39:13 for GMACS by
+    <li class="footer">Generated on Mon Jan 19 2015 16:43:08 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>

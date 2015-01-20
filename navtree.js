@@ -2,6 +2,13 @@ var NAVTREE =
 [
   [ "GMACS", "index.html", [
     [ "Modules", "modules.html", "modules" ],
+    [ "Namespaces", null, [
+      [ "Namespace List", "namespaces.html", "namespaces" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ]
+      ] ]
+    ] ],
     [ "Classes", null, [
       [ "Class List", "annotated.html", "annotated" ],
       [ "Class Index", "classes.html", null ],
@@ -24,7 +31,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"d7/dec/classinit__3darray.html#acef1be7bd24963291338f4cd8a159152",
+"d7/dfc/classvector.html",
 "df/db3/classdll__init__bounded__number.html#ac8548ec31c1367433aa5f4be319b8584"
 ];
 

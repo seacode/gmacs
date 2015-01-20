@@ -54,6 +54,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="../../modules.html"><span>Modules</span></a></li>
+      <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="../../files.html"><span>Files</span></a></li>
       <li>
@@ -100,7 +101,7 @@ $(document).ready(function(){initNavTree('dd/d2c/gmacs_8cpp_source.html','../../
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -1153,7 +1154,7 @@ $(document).ready(function(){initNavTree('dd/d2c/gmacs_8cpp_source.html','../../
 <div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;    {</div>
 <div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;        dvariable mu = <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga3069844c614bbb10dbbd3524697d62d4" title="scale parameter for the gamma distribution. ">molt_mu</a>(h);</div>
 <div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;        dvariable sd = mu* <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga736952a304ae8a0b15ea2b82e4da551e" title="50% probability of molting at length each year. ">molt_cv</a>(h);</div>
-<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;        <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d" title="linear molt increment ">molt_probability</a>(h) = 1.0 - ((1.0-2.*tiny)*plogis(mid_points,mu,sd) + tiny);</div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;        <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d" title="linear molt increment ">molt_probability</a>(h) = 1.0 - ((1.0-2.*tiny)*<a class="code" href="../../da/d9f/namespacecstar.html#abe22f916ca300eddd047cfcf9d78fb01" title="Logistic function. ">plogis</a>(mid_points,mu,sd) + tiny);</div>
 <div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;        <span class="keywordflow">for</span>( l = 1; l &lt;= <a class="code" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807" title="number of maturity types ">nclass</a>; l++ )</div>
 <div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;        {</div>
 <div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;            <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05" title="Fishing mortality ">P</a>(h)(l,l) = <a class="code" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d" title="linear molt increment ">molt_probability</a>(h)(l);</div>
@@ -2072,7 +2073,7 @@ $(document).ready(function(){initNavTree('dd/d2c/gmacs_8cpp_source.html','../../
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>gmacs.cpp</b></li>
-    <li class="footer">Generated on Mon Jan 19 2015 16:39:13 for GMACS by
+    <li class="footer">Generated on Mon Jan 19 2015 16:43:07 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
