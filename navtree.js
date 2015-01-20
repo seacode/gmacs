@@ -30,9 +30,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-".html",
+"annotated.html",
 "d7/dfc/classvector.html",
-"df/da9/classquadratic__penalty.html#a8778598e330b17d88354b253f798d497"
+"df/da9/classquadratic__penalty.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
