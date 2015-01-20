@@ -121,6 +121,12 @@ Classes</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Steven Martell </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>Feb 10, 2014  Selectivity functions</dd></dl>
 <p>Alternative selectivity functions in the cstar namespace are derived from the <a class="el" href="../../dc/d0a/classcstar_1_1_selex.html" title="An abstract class for Selectivity functions. ">cstar::Selex</a> base class.</p>
+<p>The Selex class is an abstract class that contains 3 virtual methods.</p>
+<ul>
+<li>Selectivity</li>
+<li>logSelectivity</li>
+<li>logSelexMeanOne</li>
+</ul>
 <p>Example of how to call this function </p>
 <pre class="fragment">    // declare a pointer to abstract class
     // be sure to cast the type of variable that is used in the template class.
@@ -140,14 +146,14 @@ Classes</h2></td></tr>
 <tr>
 <td>Logistic95 </td><td>plogis95 </td><td>LogisticCurve95 </td></tr>
 <tr>
-<td>Nonparametric </td><td>nonparametric </td><td>SelectivityCoefficients </td></tr>
+<td>Nonparametric </td><td>selcoffs </td><td>SelectivityCoefficients </td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 19 2015 16:05:28 for GMACS by
+    <li class="footer">Generated on Mon Jan 19 2015 16:19:41 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
