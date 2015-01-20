@@ -19,6 +19,7 @@
 /**
  * @ingroup GMACS
  * @brief Calculate equilibrium vector n given A, S and r
+ * @authors Steve Martell and Dave Fournier
  * @details Solving a matrix equation for the equilibrium number
  * of crabs in length interval.
  * 
