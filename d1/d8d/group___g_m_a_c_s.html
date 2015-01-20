@@ -8,6 +8,13 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/search.js"></script>
 <script type="text/javascript">
@@ -68,6 +75,20 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('d1/d8d/group___g_m_a_c_s.html','../../');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -138,6 +159,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calculate equilibrium vector n given A, S and r. </p>
+<dl class="section author"><dt>Authors</dt><dd>Steve Martell and Dave Fournier</dd></dl>
 <p>Solving a matrix equation for the equilibrium number of crabs in length interval.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -149,7 +171,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html#l00032">32</a> of file <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html">equilibrium.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html#l00033">33</a> of file <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html">equilibrium.cpp</a>.</p>
 
 </div>
 </div>
@@ -239,16 +261,19 @@ Functions</h2></td></tr>
 </p>
 <p> Note that \(C\) must be invertable to solve for the equilibrium solution for \(n\). So the diagonal elements of \(P\) and \(S\) must be positive non-zero numbers. </p>
 
-<p>Definition at line <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html#l00099">99</a> of file <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html">equilibrium.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html#l00100">100</a> of file <a class="el" href="../../d1/d92/equilibrium_8cpp_source.html">equilibrium.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:35 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="../../doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:11 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>

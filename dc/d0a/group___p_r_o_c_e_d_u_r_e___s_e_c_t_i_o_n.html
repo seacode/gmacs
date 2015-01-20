@@ -8,6 +8,13 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/search.js"></script>
 <script type="text/javascript">
@@ -68,6 +75,20 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html','../../');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -104,61 +125,61 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7b4343d51918847f59db06da7b0d0b3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga7b4343d51918847f59db06da7b0d0b3c">simulation_model</a> (void)</td></tr>
 <tr class="memdesc:ga7b4343d51918847f59db06da7b0d0b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulation model.  <a href="#ga7b4343d51918847f59db06da7b0d0b3c">More...</a><br/></td></tr>
 <tr class="separator:ga7b4343d51918847f59db06da7b0d0b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae85542b46a8aa3f80a416a544aac0bbd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae85542b46a8aa3f80a416a544aac0bbd">initialize_model_parameters</a> (void)</td></tr>
-<tr class="memdesc:gae85542b46a8aa3f80a416a544aac0bbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize model parameters.  <a href="#gae85542b46a8aa3f80a416a544aac0bbd">More...</a><br/></td></tr>
-<tr class="separator:gae85542b46a8aa3f80a416a544aac0bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa035770d06c219d3c64d64c178289b80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa035770d06c219d3c64d64c178289b80">calc_selectivities</a> (void)</td></tr>
-<tr class="memdesc:gaa035770d06c219d3c64d64c178289b80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate selectivies for each gear.  <a href="#gaa035770d06c219d3c64d64c178289b80">More...</a><br/></td></tr>
-<tr class="separator:gaa035770d06c219d3c64d64c178289b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77262a9f728d0ed54b8fbea2493603a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga77262a9f728d0ed54b8fbea2493603a9">calc_fishing_mortality</a> (void)</td></tr>
-<tr class="memdesc:ga77262a9f728d0ed54b8fbea2493603a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate fishing mortality rates for each fleet.  <a href="#ga77262a9f728d0ed54b8fbea2493603a9">More...</a><br/></td></tr>
-<tr class="separator:ga77262a9f728d0ed54b8fbea2493603a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1a6684e8544e37f2989b1f388c1275f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac1a6684e8544e37f2989b1f388c1275f">calc_size_transition_matrix</a> (void)</td></tr>
-<tr class="memdesc:gac1a6684e8544e37f2989b1f388c1275f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calclate the size transtion matrix.  Steven Martell.  <a href="#gac1a6684e8544e37f2989b1f388c1275f">More...</a><br/></td></tr>
-<tr class="separator:gac1a6684e8544e37f2989b1f388c1275f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga326df5834d3e690b6c81daac1c3ffe23"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga326df5834d3e690b6c81daac1c3ffe23">calc_natural_mortality</a> (void)</td></tr>
-<tr class="memdesc:ga326df5834d3e690b6c81daac1c3ffe23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate natural mortality array.  <a href="#ga326df5834d3e690b6c81daac1c3ffe23">More...</a><br/></td></tr>
-<tr class="separator:ga326df5834d3e690b6c81daac1c3ffe23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9452e86de816c0c965273a0e38033ea6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9452e86de816c0c965273a0e38033ea6">calc_total_mortality</a> (void)</td></tr>
-<tr class="memdesc:ga9452e86de816c0c965273a0e38033ea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total instantaneous mortality rate and survival rate.  <a href="#ga9452e86de816c0c965273a0e38033ea6">More...</a><br/></td></tr>
-<tr class="separator:ga9452e86de816c0c965273a0e38033ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga865bc170e18ca7280bd96a9ff7e424b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga865bc170e18ca7280bd96a9ff7e424b4">calc_molting_probability</a> (void)</td></tr>
-<tr class="memdesc:ga865bc170e18ca7280bd96a9ff7e424b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the probability of moulting vs carapace width.  <a href="#ga865bc170e18ca7280bd96a9ff7e424b4">More...</a><br/></td></tr>
-<tr class="separator:ga865bc170e18ca7280bd96a9ff7e424b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8b2e44a401baa0eb9bac5c30dcf017c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga8b2e44a401baa0eb9bac5c30dcf017c4">calc_recruitment_size_distribution</a> (void)</td></tr>
-<tr class="memdesc:ga8b2e44a401baa0eb9bac5c30dcf017c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate size distribution for new recuits.  <a href="#ga8b2e44a401baa0eb9bac5c30dcf017c4">More...</a><br/></td></tr>
-<tr class="separator:ga8b2e44a401baa0eb9bac5c30dcf017c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa38ab7820a92f3ed99b6a69a28e04649"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa38ab7820a92f3ed99b6a69a28e04649">calc_initial_numbers_at_length</a> (void)</td></tr>
-<tr class="memdesc:gaa38ab7820a92f3ed99b6a69a28e04649"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialiaze populations numbers-at-length in syr  <a href="#gaa38ab7820a92f3ed99b6a69a28e04649">More...</a><br/></td></tr>
-<tr class="separator:gaa38ab7820a92f3ed99b6a69a28e04649"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3680df9e34f65fca8c25d4f67857108"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab3680df9e34f65fca8c25d4f67857108">update_population_numbers_at_length</a> (void)</td></tr>
-<tr class="memdesc:gab3680df9e34f65fca8c25d4f67857108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update numbers-at-length.  <a href="#gab3680df9e34f65fca8c25d4f67857108">More...</a><br/></td></tr>
-<tr class="separator:gab3680df9e34f65fca8c25d4f67857108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7507930a25ff4d0e9441f9067b09250f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7507930a25ff4d0e9441f9067b09250f">calc_predicted_catch</a> (void)</td></tr>
-<tr class="memdesc:ga7507930a25ff4d0e9441f9067b09250f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted catch observations.  <a href="#ga7507930a25ff4d0e9441f9067b09250f">More...</a><br/></td></tr>
-<tr class="separator:ga7507930a25ff4d0e9441f9067b09250f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f38a22aed2071f65143eeedeb247441"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f38a22aed2071f65143eeedeb247441">calc_relative_abundance</a> (void)</td></tr>
-<tr class="memdesc:ga4f38a22aed2071f65143eeedeb247441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted relative abundance and residuals.  <a href="#ga4f38a22aed2071f65143eeedeb247441">More...</a><br/></td></tr>
-<tr class="separator:ga4f38a22aed2071f65143eeedeb247441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab57c8791f16f8993c86a02ecc28c6a06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab57c8791f16f8993c86a02ecc28c6a06">calc_predicted_composition</a> (void)</td></tr>
-<tr class="memdesc:gab57c8791f16f8993c86a02ecc28c6a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted size composition data.  <a href="#gab57c8791f16f8993c86a02ecc28c6a06">More...</a><br/></td></tr>
-<tr class="separator:gab57c8791f16f8993c86a02ecc28c6a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7ba0662d9d1f96922dad9831a0eba75"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa7ba0662d9d1f96922dad9831a0eba75">calculate_prior_densities</a> (void)</td></tr>
-<tr class="memdesc:gaa7ba0662d9d1f96922dad9831a0eba75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate prior density functions for leading parameters.  <a href="#gaa7ba0662d9d1f96922dad9831a0eba75">More...</a><br/></td></tr>
-<tr class="separator:gaa7ba0662d9d1f96922dad9831a0eba75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga075ae026c3da2bbd3fb02f2aca36905f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga075ae026c3da2bbd3fb02f2aca36905f">calc_objective_function</a> (void)</td></tr>
-<tr class="memdesc:ga075ae026c3da2bbd3fb02f2aca36905f"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate objective function  <a href="#ga075ae026c3da2bbd3fb02f2aca36905f">More...</a><br/></td></tr>
-<tr class="separator:ga075ae026c3da2bbd3fb02f2aca36905f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga508f35365cfe210b06cec46a0b82f069"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga508f35365cfe210b06cec46a0b82f069">initialize_model_parameters</a> (void)</td></tr>
+<tr class="memdesc:ga508f35365cfe210b06cec46a0b82f069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize model parameters.  <a href="#ga508f35365cfe210b06cec46a0b82f069">More...</a><br/></td></tr>
+<tr class="separator:ga508f35365cfe210b06cec46a0b82f069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf400624093b07bbcec88ab9cf3356285"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf400624093b07bbcec88ab9cf3356285">calc_selectivities</a> (void)</td></tr>
+<tr class="memdesc:gaf400624093b07bbcec88ab9cf3356285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate selectivies for each gear.  <a href="#gaf400624093b07bbcec88ab9cf3356285">More...</a><br/></td></tr>
+<tr class="separator:gaf400624093b07bbcec88ab9cf3356285"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad85d770a6686c174986ecab5fc544393"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad85d770a6686c174986ecab5fc544393">calc_fishing_mortality</a> (void)</td></tr>
+<tr class="memdesc:gad85d770a6686c174986ecab5fc544393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate fishing mortality rates for each fleet.  <a href="#gad85d770a6686c174986ecab5fc544393">More...</a><br/></td></tr>
+<tr class="separator:gad85d770a6686c174986ecab5fc544393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga825e78411d8523e50026198d3e4ca364"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga825e78411d8523e50026198d3e4ca364">calc_growth_transition</a> (void)</td></tr>
+<tr class="memdesc:ga825e78411d8523e50026198d3e4ca364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calclate the size transtion matrix.  Steven Martell.  <a href="#ga825e78411d8523e50026198d3e4ca364">More...</a><br/></td></tr>
+<tr class="separator:ga825e78411d8523e50026198d3e4ca364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca0927142e0652e5e5f97cfd9b60e477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca0927142e0652e5e5f97cfd9b60e477">calc_natural_mortality</a> (void)</td></tr>
+<tr class="memdesc:gaca0927142e0652e5e5f97cfd9b60e477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate natural mortality array.  <a href="#gaca0927142e0652e5e5f97cfd9b60e477">More...</a><br/></td></tr>
+<tr class="separator:gaca0927142e0652e5e5f97cfd9b60e477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5eae2625710326f707f516e3b01a02f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5eae2625710326f707f516e3b01a02f5">calc_total_mortality</a> (void)</td></tr>
+<tr class="memdesc:ga5eae2625710326f707f516e3b01a02f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total instantaneous mortality rate and survival rate.  <a href="#ga5eae2625710326f707f516e3b01a02f5">More...</a><br/></td></tr>
+<tr class="separator:ga5eae2625710326f707f516e3b01a02f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12c55650ae56743d78da63e00311d0bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga12c55650ae56743d78da63e00311d0bf">calc_molting_probability</a> (void)</td></tr>
+<tr class="memdesc:ga12c55650ae56743d78da63e00311d0bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the probability of moulting vs carapace width.  <a href="#ga12c55650ae56743d78da63e00311d0bf">More...</a><br/></td></tr>
+<tr class="separator:ga12c55650ae56743d78da63e00311d0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5afcf7f330636c244505ede70260df10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5afcf7f330636c244505ede70260df10">calc_recruitment_size_distribution</a> (void)</td></tr>
+<tr class="memdesc:ga5afcf7f330636c244505ede70260df10"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate size distribution for new recuits.  <a href="#ga5afcf7f330636c244505ede70260df10">More...</a><br/></td></tr>
+<tr class="separator:ga5afcf7f330636c244505ede70260df10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf35a569842bc00252c3e20581ae43cc8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf35a569842bc00252c3e20581ae43cc8">calc_initial_numbers_at_length</a> (void)</td></tr>
+<tr class="memdesc:gaf35a569842bc00252c3e20581ae43cc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialiaze populations numbers-at-length in syr  <a href="#gaf35a569842bc00252c3e20581ae43cc8">More...</a><br/></td></tr>
+<tr class="separator:gaf35a569842bc00252c3e20581ae43cc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89f92aac09d89c896ccfb08c24ef982f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga89f92aac09d89c896ccfb08c24ef982f">update_population_numbers_at_length</a> (void)</td></tr>
+<tr class="memdesc:ga89f92aac09d89c896ccfb08c24ef982f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update numbers-at-length.  <a href="#ga89f92aac09d89c896ccfb08c24ef982f">More...</a><br/></td></tr>
+<tr class="separator:ga89f92aac09d89c896ccfb08c24ef982f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7bde20a454a1a7df3a5a20ee97a60eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad7bde20a454a1a7df3a5a20ee97a60eb">calc_predicted_catch</a> (void)</td></tr>
+<tr class="memdesc:gad7bde20a454a1a7df3a5a20ee97a60eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted catch observations.  <a href="#gad7bde20a454a1a7df3a5a20ee97a60eb">More...</a><br/></td></tr>
+<tr class="separator:gad7bde20a454a1a7df3a5a20ee97a60eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b76adeff63d163d4b3710afeec9ec21"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7b76adeff63d163d4b3710afeec9ec21">calc_relative_abundance</a> (void)</td></tr>
+<tr class="memdesc:ga7b76adeff63d163d4b3710afeec9ec21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted relative abundance and residuals.  <a href="#ga7b76adeff63d163d4b3710afeec9ec21">More...</a><br/></td></tr>
+<tr class="separator:ga7b76adeff63d163d4b3710afeec9ec21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0aeca6d064f3c5b594f02bd8a84d46b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae0aeca6d064f3c5b594f02bd8a84d46b">calc_predicted_composition</a> (void)</td></tr>
+<tr class="memdesc:gae0aeca6d064f3c5b594f02bd8a84d46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted size composition data.  <a href="#gae0aeca6d064f3c5b594f02bd8a84d46b">More...</a><br/></td></tr>
+<tr class="separator:gae0aeca6d064f3c5b594f02bd8a84d46b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cbd411d40776b0950388c7107e4ccf8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1cbd411d40776b0950388c7107e4ccf8">calculate_prior_densities</a> (void)</td></tr>
+<tr class="memdesc:ga1cbd411d40776b0950388c7107e4ccf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate prior density functions for leading parameters.  <a href="#ga1cbd411d40776b0950388c7107e4ccf8">More...</a><br/></td></tr>
+<tr class="separator:ga1cbd411d40776b0950388c7107e4ccf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f0b92ca6c71217a81f6a3b108d15088"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f0b92ca6c71217a81f6a3b108d15088">calc_objective_function</a> (void)</td></tr>
+<tr class="memdesc:ga4f0b92ca6c71217a81f6a3b108d15088"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate objective function  <a href="#ga4f0b92ca6c71217a81f6a3b108d15088">More...</a><br/></td></tr>
+<tr class="separator:ga4f0b92ca6c71217a81f6a3b108d15088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>FUNCTIONS declared in the tpl PROCEDURE_SECTION. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga77262a9f728d0ed54b8fbea2493603a9"></a>
+<a class="anchor" id="gad85d770a6686c174986ecab5fc544393"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_fishing_mortality </td>
+          <td class="memname">void model_parameters::calc_fishing_mortality </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -183,10 +204,19 @@ Functions</h2></td></tr>
  f for female discards.  Not recommended to have separate F' for retained and 
  discard fisheries, but might be ok to have sex-specific F's.  
 
- TODO fix discard mortality rate.</pre> <p>Molt increment as a linear function of pre-molt size.</p>
-<p>TODO Option for empirical molt increments.</p>
+ TODO 
+ -[ ] fix discard mortality rate.</pre> <p>Compute growth increments</p>
+<p>Presently based on liner form</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vSizes</td><td>is a vector of size data from which to compute predicted values </td></tr>
+    <tr><td class="paramname">iSex</td><td>is an integer vector indexing sex (1 = male, 2 = female ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00877">877</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01302">1302</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -224,14 +254,10 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments </dd></dl>
-<p>Calclate the size transtion matrix.  Steven Martell</p>
-<p>Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution. This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.</p>
-<p>This function loops over sex, then loops over the rows of the size transition matrix for each sex. The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.</p>
-<p>Modified Dec 11, 2014. Diagonal of the matrix now represents probability of not molting, and upper triangle is the probability of growing to the next size interval given you molted.</p>
-<p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
-<p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale.</p>
+<p>Molt increment as a linear function of pre-molt size.</p>
+<p>TODO Option for empirical molt increments.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01284">1284</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01358">1358</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -251,27 +277,56 @@ Functions</h2></td></tr>
 
 <p>Molt increment as a linear function of pre-molt size. </p>
 <p>TODO Option for empirical molt increments. </p>
-<p>Compute growth increments</p>
-<p>Presently based on liner form</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vSizes</td><td>is a vector of size data from which to compute predicted values </td></tr>
-    <tr><td class="paramname">iSex</td><td>is an integer vector indexing sex (1 = male, 2 = female ) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments</dd></dl>
+<p>Calclate the size transtion matrix.  Steven Martell</p>
+<p>Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution. This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.</p>
+<p>This function loops over sex, then loops over the rows of the size transition matrix for each sex. The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.</p>
+<p>Modified Dec 11, 2014. Diagonal of the matrix now represents probability of not molting, and upper triangle is the probability of growing to the next size interval given you molted.</p>
+<p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
+<p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01318">1318</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01392">1392</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gaa38ab7820a92f3ed99b6a69a28e04649"></a>
+<a class="anchor" id="ga825e78411d8523e50026198d3e4ca364"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_initial_numbers_at_length </td>
+          <td class="memname">void model_parameters::calc_growth_transition </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calclate the size transtion matrix.  Steven Martell. </p>
+<p>Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution. This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.</p>
+<p>This function loops over sex, then loops over the rows of the size transition matrix for each sex. The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.</p>
+<p>Modified Dec 11, 2014. Diagonal of the matrix now represents probability of not molting, and upper triangle is the probability of growing to the next size interval given you molted.</p>
+<p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
+<p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale. </p>
+<p>Calculate natural mortality array</p>
+<p>Natural mortality (M) is a 3d array for sex, year and size. </p>
+<dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
+<p>todo:</p>
+<ul>
+<li>Add time varying components</li>
+<li>Size-dependent mortality</li>
+</ul>
+
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01439">1439</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gaf35a569842bc00252c3e20581ae43cc8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void model_parameters::calc_initial_numbers_at_length </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -300,16 +355,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
 <p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a sclaer). New recruits are added based on the estimated aveerage recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01219">1219</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01719">1719</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga865bc170e18ca7280bd96a9ff7e424b4"></a>
+<a class="anchor" id="ga12c55650ae56743d78da63e00311d0bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_molting_probability </td>
+          <td class="memname">void model_parameters::calc_molting_probability </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -332,16 +387,16 @@ n(I - PSA - (I-P)SBPSA) = r
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01117">1117</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01605">1605</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga326df5834d3e690b6c81daac1c3ffe23"></a>
+<a class="anchor" id="gaca0927142e0652e5e5f97cfd9b60e477"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_natural_mortality </td>
+          <td class="memname">void model_parameters::calc_natural_mortality </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -358,17 +413,18 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Calculate total instantaneous mortality rate and survival rate</p>
 <p>\( S = exp(-Z) \) </p>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
+<p>ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01029">1029</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01495">1495</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga075ae026c3da2bbd3fb02f2aca36905f"></a>
+<a class="anchor" id="ga4f0b92ca6c71217a81f6a3b108d15088"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_objective_function </td>
+          <td class="memname">void model_parameters::calc_objective_function </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -393,16 +449,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model</p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data.</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01755">1755</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02440">2440</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga7507930a25ff4d0e9441f9067b09250f"></a>
+<a class="anchor" id="gad7bde20a454a1a7df3a5a20ee97a60eb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_predicted_catch </td>
+          <td class="memname">void model_parameters::calc_predicted_catch </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -426,16 +482,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>This function uses the conditional mle for q to scale the population to the relative abundance index. Assumed errors in relative abundance are lognormal. Currently assumes that the CPUE index is made up of both retained and discarded crabs.</p>
 <p>Question regarding use of shell condition in the relative abundance index. Currenlty there is no shell condition information in the CPUE data, should there be? Similarly, there is no mature immature information, should there be?</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01346">1346</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01962">1962</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gab57c8791f16f8993c86a02ecc28c6a06"></a>
+<a class="anchor" id="gae0aeca6d064f3c5b594f02bd8a84d46b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_predicted_composition </td>
+          <td class="memname">void model_parameters::calc_predicted_composition </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -460,10 +516,10 @@ n(I - PSA - (I-P)SBPSA) = r
 </ul>
 <p>Jan 5, 2015. Size compostion data can come in a number of forms. Given sex, maturity and 3 shell conditions, there are 12 possible combinations for adding up the numbers at length (nal). Shell Sex Maturity condition Description </p>
 <hr/>
-<p> Male 0 1 immature, new shell Male 0 2 immature, old shell Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell Female 0 2 immature, old shell Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
+<p> Male 0 1 immature, new shell ! Male 0 2 immature, old shell ! Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell !Female 0 2 immature, old shell !Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
 <hr/>
 <p>Call function to get the appropriate numbers-at-length.</p>
-<p>TODO: [ ] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. </p>
+<p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond) </p>
 <p>Calculate prior density functions for leading parameters.</p>
 <ul>
 <li>case 0 is a uniform density between the lower and upper bounds.</li>
@@ -482,16 +538,16 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>vector of prior densities for each parameter</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01579">1579</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02230">2230</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga8b2e44a401baa0eb9bac5c30dcf017c4"></a>
+<a class="anchor" id="ga5afcf7f330636c244505ede70260df10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_recruitment_size_distribution </td>
+          <td class="memname">void model_parameters::calc_recruitment_size_distribution </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -527,16 +583,16 @@ n(I - PSA - (I-P)SBPSA) = r
 </pre><p>let C = (I - PSA - (I-P)SBPSA)</p>
 <p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash; –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01145">1145</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01637">1637</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga4f38a22aed2071f65143eeedeb247441"></a>
+<a class="anchor" id="ga7b76adeff63d163d4b3710afeec9ec21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_relative_abundance </td>
+          <td class="memname">void model_parameters::calc_relative_abundance </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -565,12 +621,12 @@ n(I - PSA - (I-P)SBPSA) = r
 </ul>
 <p>Jan 5, 2015. Size compostion data can come in a number of forms. Given sex, maturity and 3 shell conditions, there are 12 possible combinations for adding up the numbers at length (nal). Shell Sex Maturity condition Description </p>
 <hr/>
-<p> Male 0 1 immature, new shell Male 0 2 immature, old shell Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell Female 0 2 immature, old shell Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
+<p> Male 0 1 immature, new shell ! Male 0 2 immature, old shell ! Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell !Female 0 2 immature, old shell !Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
 <hr/>
 <p>Call function to get the appropriate numbers-at-length.</p>
-<p>TODO: [ ] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new.</p>
+<p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond)</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01459">1459</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02096">2096</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -593,16 +649,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Set global variable equal to the estimated parameter vectors.</p>
 <p>SM: Note if using empirical growth increment data, then alpha and beta Growth parameters should not be estimated. Need to warn the user if the following condition is true: if( bUseEmpiricalGrowth &amp;&amp; ( acitve(alpha) || active(beta) ) )</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01055">1055</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01127">1127</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gaa035770d06c219d3c64d64c178289b80"></a>
+<a class="anchor" id="gaf400624093b07bbcec88ab9cf3356285"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_selectivities </td>
+          <td class="memname">void model_parameters::calc_selectivities </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -628,51 +684,18 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>In the event that there is effort data and catch data, then it's possible to estimate a catchability coefficient and predict the catch for the period of missing catch/discard data. Best option for this would be to use F = q*E, where q = F/E. Then in the objective function, minimize the variance in the estimates of q, and use the mean q to predict catch. Or minimize the first difference and assume a random walk in q.</p>
 <p>Note that this function calculates the fishing mortality rate including deaths due to discards. Where lambda is the discard mortality rate.</p>
 <p>Note also that Jie estimates F for retained fishery, f for male discards and f for female discards. Not recommended to have separate F' for retained and discard fisheries, but might be ok to have sex-specific F's.</p>
-<p>TODO fix discard mortality rate.</p>
+<p>TODO -[ ] fix discard mortality rate.</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00799">799</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01209">1209</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gac1a6684e8544e37f2989b1f388c1275f"></a>
+<a class="anchor" id="ga5eae2625710326f707f516e3b01a02f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_size_transition_matrix </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname">)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calclate the size transtion matrix.  Steven Martell. </p>
-<p>Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution. This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.</p>
-<p>This function loops over sex, then loops over the rows of the size transition matrix for each sex. The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.</p>
-<p>Modified Dec 11, 2014. Diagonal of the matrix now represents probability of not molting, and upper triangle is the probability of growing to the next size interval given you molted.</p>
-<p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
-<p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale. </p>
-<p>Calculate natural mortality array</p>
-<p>Natural mortality (M) is a 3d array for sex, year and size. </p>
-<dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
-<p>todo:</p>
-<ul>
-<li>Add time varying components</li>
-<li>Size-dependent mortality</li>
-</ul>
-
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00987">987</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ga9452e86de816c0c965273a0e38033ea6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void calc_total_mortality </td>
+          <td class="memname">void model_parameters::calc_total_mortality </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -683,21 +706,22 @@ n(I - PSA - (I-P)SBPSA) = r
 
 <p>Calculate total instantaneous mortality rate and survival rate. </p>
 <p>\( S = exp(-Z) \) </p>
-<dl class="section return"><dt>Returns</dt><dd>NULL </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL <pre class="fragment"> ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used.
+ Due to F.</pre> </dd></dl>
 <p>Calculate the probability of moulting vs carapace width.</p>
 <p>Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data.</p>
 <p>Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01091">1091</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01571">1571</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gaa7ba0662d9d1f96922dad9831a0eba75"></a>
+<a class="anchor" id="ga1cbd411d40776b0950388c7107e4ccf8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calculate_prior_densities </td>
+          <td class="memname">void model_parameters::calculate_prior_densities </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -738,16 +762,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Penalty to constrain random walk in natural mortaliy rates</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01682">1682</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02349">2349</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gae85542b46a8aa3f80a416a544aac0bbd"></a>
+<a class="anchor" id="ga508f35365cfe210b06cec46a0b82f069"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initialize_model_parameters </td>
+          <td class="memname">void model_parameters::initialize_model_parameters </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -774,7 +798,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Loop over years and block-in the log_selectivity at mid points.</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00749">749</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01149">1149</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -795,16 +819,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model. </p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data. </p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02493">2493</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02571">2571</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gab3680df9e34f65fca8c25d4f67857108"></a>
+<a class="anchor" id="ga89f92aac09d89c896ccfb08c24ef982f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void update_population_numbers_at_length </td>
+          <td class="memname">void model_parameters::update_population_numbers_at_length </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -827,16 +851,19 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01280">1280</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01851">1851</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:35 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="../../doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:11 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>

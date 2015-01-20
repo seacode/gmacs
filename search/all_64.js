@@ -21,6 +21,5 @@ var searchData=
   ['dll_5fnumber',['dll_number',['../de/da1/classdll__number.html',1,'']]],
   ['dll_5frandom_5feffects_5fvector',['dll_random_effects_vector',['../d6/dd5/classdll__random__effects__vector.html',1,'']]],
   ['dll_5fvector',['dll_vector',['../d2/d52/classdll__vector.html',1,'']]],
-  ['dmultinom',['dmultinom',['../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4',1,'acl::multinomial']]],
-  ['dmvlogistic',['dmvlogistic',['../d2/d6d/classlikelihoods_1_1nloglike.html#ac342b2c8b2a4401edc9ebd1c27f11b4c',1,'likelihoods::nloglike']]]
+  ['dmultinom',['dmultinom',['../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4',1,'acl::multinomial']]]
 ];

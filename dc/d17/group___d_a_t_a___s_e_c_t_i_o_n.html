@@ -8,6 +8,13 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/search.js"></script>
 <script type="text/javascript">
@@ -68,6 +75,20 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html','../../');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -90,6 +111,9 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">DATA_SECTION</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>==================================================================================== //  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -99,8 +123,36 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3d9ef97795728024462c5270f5e4111b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3d9ef97795728024462c5270f5e4111b"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> ((on=option_match(ad_comm::argc, ad_comm::argv,&quot;-i&quot;, opt))&gt;-1)</td></tr>
 <tr class="separator:ga3d9ef97795728024462c5270f5e4111b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga263feec27886d290ab48e41dd99ae673"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga263feec27886d290ab48e41dd99ae673"></a>
+LOC_CALCS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga263feec27886d290ab48e41dd99ae673">WRITEDAT</a> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>)</td></tr>
+<tr class="memdesc:ga263feec27886d290ab48e41dd99ae673"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
+<p>number of size-classes </p>
+</blockquote>
+<br/></td></tr>
+<tr class="separator:ga263feec27886d290ab48e41dd99ae673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03228664f17fb72728ad31d993ee20a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga03228664f17fb72728ad31d993ee20a5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
+<tr class="separator:ga03228664f17fb72728ad31d993ee20a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e058bf7e131ba62b0b59f88a7ab5da8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2e058bf7e131ba62b0b59f88a7ab5da8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf6b95a2e1b886ff23f76bbab2f59256a">jstep</a>)</td></tr>
+<tr class="separator:ga2e058bf7e131ba62b0b59f88a7ab5da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga083f9cdf0237c33ab694a0b2b1f3d0a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga083f9cdf0237c33ab694a0b2b1f3d0a3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nfleet)</td></tr>
+<tr class="separator:ga083f9cdf0237c33ab694a0b2b1f3d0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf0c76e6882302930da495ab54416bc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabf0c76e6882302930da495ab54416bc6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>)</td></tr>
+<tr class="separator:gabf0c76e6882302930da495ab54416bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a0a3272338460c1143c65c9420092be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a0a3272338460c1143c65c9420092be"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>)</td></tr>
+<tr class="separator:ga5a0a3272338460c1143c65c9420092be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a5fdf83806162e9c0c7964276f93d4d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9a5fdf83806162e9c0c7964276f93d4d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>)</td></tr>
+<tr class="separator:ga9a5fdf83806162e9c0c7964276f93d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4dd9a49cc614f821a1060f6afb2b612"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf4dd9a49cc614f821a1060f6afb2b612"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+<tr class="separator:gaf4dd9a49cc614f821a1060f6afb2b612"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5486e634d10ef3d853cfd9a131db1be8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5486e634d10ef3d853cfd9a131db1be8"></a>
-int nlikes <a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a>)</td></tr>
+int nlikes <a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a> (1, n_grp)</td></tr>
 <tr class="memdesc:ga5486e634d10ef3d853cfd9a131db1be8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>number of sex/newshell/oldshell groups </p>
 </blockquote>
@@ -127,12 +179,30 @@ LOC_CALCS&#160;</td><td class="memItemRight" valign="bottom"><b>for</b> (int h=1
 <tr class="memitem:gac936733fbceda42d9e7a100c349c5cde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac936733fbceda42d9e7a100c349c5cde"></a>
 END_CALCS <a class="el" href="../../d6/dcf/classinit__vector.html">init_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>fecundity</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="separator:gac936733fbceda42d9e7a100c349c5cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga756a9c0635e08d5b4d97567eba372e51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga756a9c0635e08d5b4d97567eba372e51"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nCatchDF)</td></tr>
+<tr class="separator:ga756a9c0635e08d5b4d97567eba372e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4038343022cb3efbbc9c81160827845e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4038343022cb3efbbc9c81160827845e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nCatchRows)</td></tr>
+<tr class="separator:ga4038343022cb3efbbc9c81160827845e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf889f620c8a0cf2aeaf2b683105417a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf889f620c8a0cf2aeaf2b683105417a1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (dCatchData)</td></tr>
+<tr class="separator:gaf889f620c8a0cf2aeaf2b683105417a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad419a08a668aa2d7523dd6ae8b7bdd0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad419a08a668aa2d7523dd6ae8b7bdd0f"></a>
-END_CALCS <a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nFparams</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>)</td></tr>
+END_CALCS <a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nFparams</b> (1, nfleet)</td></tr>
 <tr class="separator:gad419a08a668aa2d7523dd6ae8b7bdd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1c8d300ba5a9ed99a19aa82caabe1e52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1c8d300ba5a9ed99a19aa82caabe1e52"></a>
 LOC_CALCS nFparams&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> ()</td></tr>
 <tr class="separator:ga1c8d300ba5a9ed99a19aa82caabe1e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcb5f285122e1d0a2e35e28d73c76660"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabcb5f285122e1d0a2e35e28d73c76660"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nSurveys)</td></tr>
+<tr class="separator:gabcb5f285122e1d0a2e35e28d73c76660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4fe77aef93279c9b1316542a23c2b19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf4fe77aef93279c9b1316542a23c2b19"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nSurveyRows)</td></tr>
+<tr class="separator:gaf4fe77aef93279c9b1316542a23c2b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d41b0552efadc307e6e66555dd8237f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8d41b0552efadc307e6e66555dd8237f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (dSurveyData)</td></tr>
+<tr class="separator:ga8d41b0552efadc307e6e66555dd8237f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac75b7e068a0e6397571d578121510fa1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac75b7e068a0e6397571d578121510fa1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (obs_cpue)</td></tr>
 <tr class="separator:gac75b7e068a0e6397571d578121510fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,9 +215,18 @@ LOC_CALCS nFparams&#160;</td><td class="memItemRight" valign="bottom"><b>initial
 <tr class="memitem:ga30658f5fa7c5fb674cb4bb3eb4916265"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga30658f5fa7c5fb674cb4bb3eb4916265"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>d3_res_size_comps</b> (1, nSizeComps, 1, nSizeCompRows, 1, nSizeCompCols)</td></tr>
 <tr class="separator:ga30658f5fa7c5fb674cb4bb3eb4916265"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga205608bfe400d3b349c3eddf088ae395"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga205608bfe400d3b349c3eddf088ae395"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (nSizeComps)</td></tr>
-<tr class="separator:ga205608bfe400d3b349c3eddf088ae395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14910bc7f3f23a897c28480c20500e02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga14910bc7f3f23a897c28480c20500e02"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nSizeComps)</td></tr>
+<tr class="separator:ga14910bc7f3f23a897c28480c20500e02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b7f41561fe9068d18ab82052755bb28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0b7f41561fe9068d18ab82052755bb28"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nSizeCompRows)</td></tr>
+<tr class="separator:ga0b7f41561fe9068d18ab82052755bb28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33d46a1e31671f16539f9ec358fec50d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga33d46a1e31671f16539f9ec358fec50d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nSizeCompCols)</td></tr>
+<tr class="separator:ga33d46a1e31671f16539f9ec358fec50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac600d9f0b3e14a47e1f8b2c067c54f32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac600d9f0b3e14a47e1f8b2c067c54f32"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (d3_SizeComps)</td></tr>
+<tr class="separator:gac600d9f0b3e14a47e1f8b2c067c54f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga34754761ac73d22b8341eebd8b7cb8fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga34754761ac73d22b8341eebd8b7cb8fa"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (d3_obs_size_comps)</td></tr>
 <tr class="separator:ga34754761ac73d22b8341eebd8b7cb8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +260,12 @@ dvector&#160;</td><td class="memItemRight" valign="bottom"><b>ybar</b> (1, <a cl
 <tr class="memitem:gafd6f29d6dcbb70d0c05942df748605a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd6f29d6dcbb70d0c05942df748605a9"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (nGrowthObs)</td></tr>
 <tr class="separator:gafd6f29d6dcbb70d0c05942df748605a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1214852b3e0b60e3efd3682552665a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa1214852b3e0b60e3efd3682552665a4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (nGrowthObs)</td></tr>
+<tr class="separator:gaa1214852b3e0b60e3efd3682552665a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1b5277952b4c8a436d34fb1dabcee94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad1b5277952b4c8a436d34fb1dabcee94"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WRITEDAT</b> (dGrowthData)</td></tr>
+<tr class="separator:gad1b5277952b4c8a436d34fb1dabcee94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3dbfbdf730ae27cd6c7d6ac98dc39b49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3dbfbdf730ae27cd6c7d6ac98dc39b49"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (dPreMoltSize)</td></tr>
 <tr class="separator:ga3dbfbdf730ae27cd6c7d6ac98dc39b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,9 +278,21 @@ dvector&#160;</td><td class="memItemRight" valign="bottom"><b>ybar</b> (1, <a cl
 <tr class="memitem:gaa5ffce994201881595d64c0053af3d60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa5ffce994201881595d64c0053af3d60"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (dMoltIncCV)</td></tr>
 <tr class="separator:gaa5ffce994201881595d64c0053af3d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ac8669eb0d2925fa99c63cc0e422150"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5ac8669eb0d2925fa99c63cc0e422150"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (ntheta)</td></tr>
+<tr class="separator:ga5ac8669eb0d2925fa99c63cc0e422150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab10dc48c203ef1f7db44322c5d898015"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab10dc48c203ef1f7db44322c5d898015"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (theta_control)</td></tr>
+<tr class="separator:gab10dc48c203ef1f7db44322c5d898015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga124a256b73a9664c3151e56bee1b3f1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga124a256b73a9664c3151e56bee1b3f1b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (Grwth_control)</td></tr>
+<tr class="separator:ga124a256b73a9664c3151e56bee1b3f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga869c18954a19391cc6c3bf007bf6d8f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga869c18954a19391cc6c3bf007bf6d8f7"></a>
 END_CALCS <a class="el" href="../../d3/db3/classinit__matrix.html">init_matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>q_controls</b> (1, nSurveys, 1, 3)</td></tr>
 <tr class="separator:ga869c18954a19391cc6c3bf007bf6d8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c856bfb0f48179eea130d0b094db654"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c856bfb0f48179eea130d0b094db654"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (q_controls)</td></tr>
+<tr class="separator:ga8c856bfb0f48179eea130d0b094db654"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ddea9a427e5268561c9c55fc631dae5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5ddea9a427e5268561c9c55fc631dae5"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (prior_qtype)</td></tr>
 <tr class="separator:ga5ddea9a427e5268561c9c55fc631dae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,23 +303,50 @@ END_CALCS <a class="el" href="../../d3/db3/classinit__matrix.html">init_matrix</
 &#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (prior_qsd)</td></tr>
 <tr class="separator:ga5288e215270c5887a74a6c084ce68830"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaefd06e680ebb6b837dfa1be2336d8f6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaefd06e680ebb6b837dfa1be2336d8f6f"></a>
-END_CALCS <a class="el" href="../../d3/db3/classinit__matrix.html">init_matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>f_controls</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, 4)</td></tr>
+END_CALCS <a class="el" href="../../d3/db3/classinit__matrix.html">init_matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>f_controls</b> (1, nfleet, 1, 4)</td></tr>
 <tr class="separator:gaefd06e680ebb6b837dfa1be2336d8f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54e39548d8809d91d7b2f8ad054e4bcb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga54e39548d8809d91d7b2f8ad054e4bcb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (f_controls)</td></tr>
+<tr class="separator:ga54e39548d8809d91d7b2f8ad054e4bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga833dfeeb01411355acc79e5ba01b584b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga833dfeeb01411355acc79e5ba01b584b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ECHO</b> (f_phz)</td></tr>
+<tr class="separator:ga833dfeeb01411355acc79e5ba01b584b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadbca3b5e2a48790a7781aa20823a28aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadbca3b5e2a48790a7781aa20823a28aa"></a>
 END_CALCS <a class="el" href="../../d9/d68/classinit__ivector.html">init_ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nAgeCompType</b> (1, nSizeComps)</td></tr>
 <tr class="separator:gadbca3b5e2a48790a7781aa20823a28aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14a8f73ba60c6000d0d2017780a3368d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga14a8f73ba60c6000d0d2017780a3368d"></a>
 LOC_CALCS&#160;</td><td class="memItemRight" valign="bottom"><b>switch</b> (m_type)</td></tr>
 <tr class="separator:ga14a8f73ba60c6000d0d2017780a3368d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga813522d590c647f3ce645f365c421089"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga813522d590c647f3ce645f365c421089"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (m_type)</td></tr>
+<tr class="separator:ga813522d590c647f3ce645f365c421089"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacc5b18b2755a9d7996c2d5302969988"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaacc5b18b2755a9d7996c2d5302969988"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (Mdev_phz)</td></tr>
+<tr class="separator:gaacc5b18b2755a9d7996c2d5302969988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b780187a468e94514b7678cf5cbb5da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8b780187a468e94514b7678cf5cbb5da"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (m_stdev)</td></tr>
+<tr class="separator:ga8b780187a468e94514b7678cf5cbb5da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd2fae08e35be10fcea44c9c56cccb08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd2fae08e35be10fcea44c9c56cccb08"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (m_nNodes)</td></tr>
+<tr class="separator:gafd2fae08e35be10fcea44c9c56cccb08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8dba57e79f67cf8f44d939ab21fb8c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf8dba57e79f67cf8f44d939ab21fb8c8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (m_nodeyear)</td></tr>
+<tr class="separator:gaf8dba57e79f67cf8f44d939ab21fb8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1b0240d7143b7052036e9fe0867e4ee9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1b0240d7143b7052036e9fe0867e4ee9"></a>
 END_CALCS <a class="el" href="../../d6/dcf/classinit__vector.html">init_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>model_controls</b> (1, 9)</td></tr>
 <tr class="separator:ga1b0240d7143b7052036e9fe0867e4ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85a5a1e3ad7a19df6df72950325ddd11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga85a5a1e3ad7a19df6df72950325ddd11"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>WriteCtl</b> (model_controls)</td></tr>
+<tr class="separator:ga85a5a1e3ad7a19df6df72950325ddd11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafbeae226c2b5a3768faa0f113ff0beb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafbeae226c2b5a3768faa0f113ff0beb0"></a>
 LOC_CALCS&#160;</td><td class="memItemRight" valign="bottom"><b>COUT</b> (Grwth_phz)</td></tr>
 <tr class="separator:gafbeae226c2b5a3768faa0f113ff0beb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:ga8c1f140d1b1c437d4b65994d6e1241b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c1f140d1b1c437d4b65994d6e1241b1"></a>
+friend_class&#160;</td><td class="memItemRight" valign="bottom"><b>gmacs_comm</b></td></tr>
+<tr class="separator:ga8c1f140d1b1c437d4b65994d6e1241b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0744c7e5b82181e692da730bc237c4bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0744c7e5b82181e692da730bc237c4bc"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>simflag</b> = 0</td></tr>
 <tr class="separator:ga0744c7e5b82181e692da730bc237c4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,28 +366,28 @@ END_CALCS <a class="el" href="../../df/dcc/classinit__adstring.html">init_adstri
 <a class="el" href="../../df/dcc/classinit__adstring.html">init_adstring</a>&#160;</td><td class="memItemRight" valign="bottom"><b>controlfile</b></td></tr>
 <tr class="separator:gad3493375ad5c3c8f397a056796f63fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf3fda9aeee1cfcce997db9ccd0c5a359"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf3fda9aeee1cfcce997db9ccd0c5a359"></a>
-<a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>syr</b></td></tr>
+<a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a></td></tr>
+<tr class="memdesc:gaf3fda9aeee1cfcce997db9ccd0c5a359"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
+<p>initial year </p>
+</blockquote>
+<br/></td></tr>
 <tr class="separator:gaf3fda9aeee1cfcce997db9ccd0c5a359"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf19890366959e62b9f5fd444807a2d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabf19890366959e62b9f5fd444807a2d3"></a>
 <a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a></td></tr>
 <tr class="memdesc:gabf19890366959e62b9f5fd444807a2d3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
-<p>initial year </p>
+<p>terminal year </p>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:gabf19890366959e62b9f5fd444807a2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6b95a2e1b886ff23f76bbab2f59256a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6b95a2e1b886ff23f76bbab2f59256a"></a>
 <a class="el" href="../../db/d72/classinit__number.html">init_number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf6b95a2e1b886ff23f76bbab2f59256a">jstep</a></td></tr>
 <tr class="memdesc:gaf6b95a2e1b886ff23f76bbab2f59256a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
-<p>terminal year </p>
+<p>time step (years) </p>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:gaf6b95a2e1b886ff23f76bbab2f59256a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga20b8c3de4b867dab041850cf0b25dfb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga20b8c3de4b867dab041850cf0b25dfb0"></a>
-<a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a></td></tr>
-<tr class="memdesc:ga20b8c3de4b867dab041850cf0b25dfb0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
-<p>time step (years) </p>
-</blockquote>
-<br/></td></tr>
+<a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nfleet</b></td></tr>
 <tr class="separator:ga20b8c3de4b867dab041850cf0b25dfb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabba2a6095b2a11a9007f29453bdc11e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabba2a6095b2a11a9007f29453bdc11e6"></a>
 <a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a></td></tr>
@@ -293,18 +417,14 @@ END_CALCS <a class="el" href="../../df/dcc/classinit__adstring.html">init_adstri
 </blockquote>
 <br/></td></tr>
 <tr class="separator:gacece24db44313d85a8a1a22119b00807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2aa83339d9da5c340798336500aab799"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2aa83339d9da5c340798336500aab799"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a></td></tr>
-<tr class="memdesc:ga2aa83339d9da5c340798336500aab799"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
-<p>number of size-classes </p>
-</blockquote>
-<br/></td></tr>
-<tr class="separator:ga2aa83339d9da5c340798336500aab799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd98e127cc0a281715499cebc483ad74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabd98e127cc0a281715499cebc483ad74"></a>
+END_CALCS int&#160;</td><td class="memItemRight" valign="bottom"><b>n_grp</b></td></tr>
+<tr class="separator:gabd98e127cc0a281715499cebc483ad74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f5ce1cd7408bb3e471ccb832f161bad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7f5ce1cd7408bb3e471ccb832f161bad"></a>
-<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ishell</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a>)</td></tr>
+<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ishell</b> (1, n_grp)</td></tr>
 <tr class="separator:ga7f5ce1cd7408bb3e471ccb832f161bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4caacf3f1e65fdacf96579399bc3e065"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4caacf3f1e65fdacf96579399bc3e065"></a>
-<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>imature</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a>)</td></tr>
+<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>imature</b> (1, n_grp)</td></tr>
 <tr class="separator:ga4caacf3f1e65fdacf96579399bc3e065"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga96705569863df5e41d53eaf354239f48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga96705569863df5e41d53eaf354239f48"></a>
 LOC_CALCS int&#160;</td><td class="memItemRight" valign="bottom"><b>h</b></td></tr>
@@ -358,19 +478,19 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>hmo</b> =1</td></tr>
 <a class="el" href="../../d1/d8d/classmatrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>catch_dm</b> (1, nCatchDF, 1, nCatchRows)</td></tr>
 <tr class="separator:ga130cd8fb22a8e1e4e9bcfda6d0341da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad4e12cc572a76f44e4686e2caaec9dd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad4e12cc572a76f44e4686e2caaec9dd3"></a>
-<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nYparams</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>)</td></tr>
+<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nYparams</b> (1, nfleet)</td></tr>
 <tr class="separator:gad4e12cc572a76f44e4686e2caaec9dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga755cf2f7122e3d88073962cfc933a3dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga755cf2f7122e3d88073962cfc933a3dd"></a>
-<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>foff_phz</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>) = -1</td></tr>
+<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>foff_phz</b> (1, nfleet) = -1</td></tr>
 <tr class="separator:ga755cf2f7122e3d88073962cfc933a3dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0f82a5772b50dad15385de4123603c6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0f82a5772b50dad15385de4123603c6b"></a>
-<a class="el" href="../../dc/d7e/classimatrix.html">imatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>fhit</b> (syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>)</td></tr>
+<a class="el" href="../../dc/d7e/classimatrix.html">imatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>fhit</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, nfleet)</td></tr>
 <tr class="separator:ga0f82a5772b50dad15385de4123603c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5d9f54052a509e0055271b37e488e66e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5d9f54052a509e0055271b37e488e66e"></a>
-<a class="el" href="../../dc/d7e/classimatrix.html">imatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>yhit</b> (syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>)</td></tr>
+<a class="el" href="../../dc/d7e/classimatrix.html">imatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>yhit</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, nfleet)</td></tr>
 <tr class="separator:ga5d9f54052a509e0055271b37e488e66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe3ac618bb61130b9e09ce8686db938c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabe3ac618bb61130b9e09ce8686db938c"></a>
-<a class="el" href="../../d1/d8d/classmatrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dmr</b> (syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>)</td></tr>
+<a class="el" href="../../d1/d8d/classmatrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dmr</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, nfleet)</td></tr>
 <tr class="separator:gabe3ac618bb61130b9e09ce8686db938c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga699271f6a38aa3b2b042769306aebffc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga699271f6a38aa3b2b042769306aebffc"></a>
 END_CALCS <a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nSurveys</b></td></tr>
@@ -475,7 +595,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nslx</b></td></tr>
 <a class="el" href="../../d9/d68/classinit__ivector.html">init_ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>slx_nsel_blocks</b> (1, nr)</td></tr>
 <tr class="separator:gaa5baa739d1c08be533ee8be2fd25afbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga97c02b835df58e1d24c737901f8a532d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga97c02b835df58e1d24c737901f8a532d"></a>
-<a class="el" href="../../da/dfd/classinit__imatrix.html">init_imatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>slx_nret</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>)</td></tr>
+<a class="el" href="../../da/dfd/classinit__imatrix.html">init_imatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>slx_nret</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, nfleet)</td></tr>
 <tr class="separator:ga97c02b835df58e1d24c737901f8a532d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaf8f3563b99318051cfd88358c550e23"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaf8f3563b99318051cfd88358c550e23"></a>
 <a class="el" href="../../d3/db3/classinit__matrix.html">init_matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>slx_control</b> (1, nslx, 1, nc)</td></tr>
@@ -535,13 +655,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>nslx</b></td></tr>
 <a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>prior_qtype</b> (1, nSurveys) = column(q_controls,1)</td></tr>
 <tr class="separator:gaaffa9052d86194178662b00ed6ba708b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa4cd7aaa7d397447450e69094b88bd5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafa4cd7aaa7d397447450e69094b88bd5"></a>
-<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>f_phz</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>) = <a class="el" href="../../de/d39/classivector.html">ivector</a>(column(f_controls,4))</td></tr>
+<a class="el" href="../../de/d39/classivector.html">ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>f_phz</b> (1, nfleet) = <a class="el" href="../../de/d39/classivector.html">ivector</a>(column(f_controls,4))</td></tr>
 <tr class="separator:gafa4cd7aaa7d397447450e69094b88bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac9cad0b60cec38a9fc4c6cc1b87aa47d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac9cad0b60cec38a9fc4c6cc1b87aa47d"></a>
-<a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pen_fbar</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>) = column(f_controls,1)</td></tr>
+<a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pen_fbar</b> (1, nfleet) = column(f_controls,1)</td></tr>
 <tr class="separator:gac9cad0b60cec38a9fc4c6cc1b87aa47d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55990d6eedd07c22f94ba60a11b637ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55990d6eedd07c22f94ba60a11b637ed"></a>
-<a class="el" href="../../d1/d8d/classmatrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pen_fstd</b> (1, 2, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>)</td></tr>
+<a class="el" href="../../d1/d8d/classmatrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pen_fstd</b> (1, 2, 1, nfleet)</td></tr>
 <tr class="separator:ga55990d6eedd07c22f94ba60a11b637ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3939bf3a7af47b9f57fe9dd13f1f481d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3939bf3a7af47b9f57fe9dd13f1f481d"></a>
 <a class="el" href="../../d9/d68/classinit__ivector.html">init_ivector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>bTailCompression</b> (1, nSizeComps)</td></tr>
@@ -615,6 +735,12 @@ END_CALCS <a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#16
 <tr class="memitem:gaa74219d7026f200fb089d8631753002f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa74219d7026f200fb089d8631753002f"></a>
 <a class="el" href="../../d9/d28/classnumber.html">number</a>&#160;</td><td class="memItemRight" valign="bottom"><b>spr_rbar</b></td></tr>
 <tr class="separator:gaa74219d7026f200fb089d8631753002f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ccf51c4cc99045798ddfdc8ac3ea7e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7ccf51c4cc99045798ddfdc8ac3ea7e7"></a>
+<a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>n</b></td></tr>
+<tr class="separator:ga7ccf51c4cc99045798ddfdc8ac3ea7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8cd453e1dcd1e06edd20f7bd1711d219"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8cd453e1dcd1e06edd20f7bd1711d219"></a>
+<a class="el" href="../../d6/dcf/classinit__vector.html">init_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> (1, n)</td></tr>
+<tr class="separator:ga8cd453e1dcd1e06edd20f7bd1711d219"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9729b8ef60abae7e2ef37568381b9c35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9729b8ef60abae7e2ef37568381b9c35"></a>
 <a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>theta_ival</b> (1, ntheta) = column(theta_control,1)</td></tr>
 <tr class="separator:ga9729b8ef60abae7e2ef37568381b9c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -622,7 +748,7 @@ END_CALCS <a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#16
 <a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Grwth_ival</b> (1, nGrwth) = column(Grwth_control,1)</td></tr>
 <tr class="separator:ga418b125a9051f550eab726a0c1a3ca44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacf964643d7cabfd57c1cf146a1b79f56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacf964643d7cabfd57c1cf146a1b79f56"></a>
-<a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_pen_fbar</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>) = log(pen_fbar+1.0e-14)</td></tr>
+<a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_pen_fbar</b> (1, nfleet) = log(pen_fbar+1.0e-14)</td></tr>
 <tr class="separator:gacf964643d7cabfd57c1cf146a1b79f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7da948b95d7f6186685e78a372538691"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7da948b95d7f6186685e78a372538691"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (bUseEmpiricalGrowth)</td></tr>
@@ -633,57 +759,57 @@ END_CALCS <a class="el" href="../../d4/d6d/classinit__int.html">init_int</a>&#16
 <tr class="memitem:ga9d8e7ce856160426f38956bc38d7a2f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9d8e7ce856160426f38956bc38d7a2f3"></a>
 END_CALCS int&#160;</td><td class="memItemRight" valign="bottom"><b>nf</b></td></tr>
 <tr class="separator:ga9d8e7ce856160426f38956bc38d7a2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae85542b46a8aa3f80a416a544aac0bbd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae85542b46a8aa3f80a416a544aac0bbd">initialize_model_parameters</a> (void)</td></tr>
-<tr class="memdesc:gae85542b46a8aa3f80a416a544aac0bbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize model parameters.  <a href="#gae85542b46a8aa3f80a416a544aac0bbd">More...</a><br/></td></tr>
-<tr class="separator:gae85542b46a8aa3f80a416a544aac0bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga508f35365cfe210b06cec46a0b82f069"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga508f35365cfe210b06cec46a0b82f069">initialize_model_parameters</a> (void)</td></tr>
+<tr class="memdesc:ga508f35365cfe210b06cec46a0b82f069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize model parameters.  <a href="#ga508f35365cfe210b06cec46a0b82f069">More...</a><br/></td></tr>
+<tr class="separator:ga508f35365cfe210b06cec46a0b82f069"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6fac7901eab1891c1200b798e7cceead"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6fac7901eab1891c1200b798e7cceead"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa9e289eddb591991c9bc7321dc5b186b">verbose</a>) cout&lt;&lt;&quot;Ok after initializing model parameters ...&quot;&lt;&lt; endl</td></tr>
 <tr class="separator:ga6fac7901eab1891c1200b798e7cceead"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa035770d06c219d3c64d64c178289b80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa035770d06c219d3c64d64c178289b80">calc_selectivities</a> (void)</td></tr>
-<tr class="memdesc:gaa035770d06c219d3c64d64c178289b80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate selectivies for each gear.  <a href="#gaa035770d06c219d3c64d64c178289b80">More...</a><br/></td></tr>
-<tr class="separator:gaa035770d06c219d3c64d64c178289b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77262a9f728d0ed54b8fbea2493603a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga77262a9f728d0ed54b8fbea2493603a9">calc_fishing_mortality</a> (void)</td></tr>
-<tr class="memdesc:ga77262a9f728d0ed54b8fbea2493603a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate fishing mortality rates for each fleet.  <a href="#ga77262a9f728d0ed54b8fbea2493603a9">More...</a><br/></td></tr>
-<tr class="separator:ga77262a9f728d0ed54b8fbea2493603a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf400624093b07bbcec88ab9cf3356285"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf400624093b07bbcec88ab9cf3356285">calc_selectivities</a> (void)</td></tr>
+<tr class="memdesc:gaf400624093b07bbcec88ab9cf3356285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate selectivies for each gear.  <a href="#gaf400624093b07bbcec88ab9cf3356285">More...</a><br/></td></tr>
+<tr class="separator:gaf400624093b07bbcec88ab9cf3356285"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad85d770a6686c174986ecab5fc544393"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad85d770a6686c174986ecab5fc544393">calc_fishing_mortality</a> (void)</td></tr>
+<tr class="memdesc:gad85d770a6686c174986ecab5fc544393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate fishing mortality rates for each fleet.  <a href="#gad85d770a6686c174986ecab5fc544393">More...</a><br/></td></tr>
+<tr class="separator:gad85d770a6686c174986ecab5fc544393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb239a03eef341426d98ca5de42de4ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafb239a03eef341426d98ca5de42de4ab"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (!bUseEmpiricalGrowth)</td></tr>
 <tr class="separator:gafb239a03eef341426d98ca5de42de4ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga865bc170e18ca7280bd96a9ff7e424b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga865bc170e18ca7280bd96a9ff7e424b4">calc_molting_probability</a> (void)</td></tr>
-<tr class="memdesc:ga865bc170e18ca7280bd96a9ff7e424b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the probability of moulting vs carapace width.  <a href="#ga865bc170e18ca7280bd96a9ff7e424b4">More...</a><br/></td></tr>
-<tr class="separator:ga865bc170e18ca7280bd96a9ff7e424b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1a6684e8544e37f2989b1f388c1275f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gac1a6684e8544e37f2989b1f388c1275f">calc_size_transition_matrix</a> (void)</td></tr>
-<tr class="memdesc:gac1a6684e8544e37f2989b1f388c1275f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calclate the size transtion matrix.  Steven Martell.  <a href="#gac1a6684e8544e37f2989b1f388c1275f">More...</a><br/></td></tr>
-<tr class="separator:gac1a6684e8544e37f2989b1f388c1275f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga326df5834d3e690b6c81daac1c3ffe23"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga326df5834d3e690b6c81daac1c3ffe23">calc_natural_mortality</a> (void)</td></tr>
-<tr class="memdesc:ga326df5834d3e690b6c81daac1c3ffe23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate natural mortality array.  <a href="#ga326df5834d3e690b6c81daac1c3ffe23">More...</a><br/></td></tr>
-<tr class="separator:ga326df5834d3e690b6c81daac1c3ffe23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9452e86de816c0c965273a0e38033ea6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga9452e86de816c0c965273a0e38033ea6">calc_total_mortality</a> (void)</td></tr>
-<tr class="memdesc:ga9452e86de816c0c965273a0e38033ea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total instantaneous mortality rate and survival rate.  <a href="#ga9452e86de816c0c965273a0e38033ea6">More...</a><br/></td></tr>
-<tr class="separator:ga9452e86de816c0c965273a0e38033ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8b2e44a401baa0eb9bac5c30dcf017c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga8b2e44a401baa0eb9bac5c30dcf017c4">calc_recruitment_size_distribution</a> (void)</td></tr>
-<tr class="memdesc:ga8b2e44a401baa0eb9bac5c30dcf017c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate size distribution for new recuits.  <a href="#ga8b2e44a401baa0eb9bac5c30dcf017c4">More...</a><br/></td></tr>
-<tr class="separator:ga8b2e44a401baa0eb9bac5c30dcf017c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa38ab7820a92f3ed99b6a69a28e04649"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa38ab7820a92f3ed99b6a69a28e04649">calc_initial_numbers_at_length</a> (void)</td></tr>
-<tr class="memdesc:gaa38ab7820a92f3ed99b6a69a28e04649"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialiaze populations numbers-at-length in syr  <a href="#gaa38ab7820a92f3ed99b6a69a28e04649">More...</a><br/></td></tr>
-<tr class="separator:gaa38ab7820a92f3ed99b6a69a28e04649"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3680df9e34f65fca8c25d4f67857108"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab3680df9e34f65fca8c25d4f67857108">update_population_numbers_at_length</a> (void)</td></tr>
-<tr class="memdesc:gab3680df9e34f65fca8c25d4f67857108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update numbers-at-length.  <a href="#gab3680df9e34f65fca8c25d4f67857108">More...</a><br/></td></tr>
-<tr class="separator:gab3680df9e34f65fca8c25d4f67857108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7507930a25ff4d0e9441f9067b09250f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7507930a25ff4d0e9441f9067b09250f">calc_predicted_catch</a> (void)</td></tr>
-<tr class="memdesc:ga7507930a25ff4d0e9441f9067b09250f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted catch observations.  <a href="#ga7507930a25ff4d0e9441f9067b09250f">More...</a><br/></td></tr>
-<tr class="separator:ga7507930a25ff4d0e9441f9067b09250f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f38a22aed2071f65143eeedeb247441"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f38a22aed2071f65143eeedeb247441">calc_relative_abundance</a> (void)</td></tr>
-<tr class="memdesc:ga4f38a22aed2071f65143eeedeb247441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted relative abundance and residuals.  <a href="#ga4f38a22aed2071f65143eeedeb247441">More...</a><br/></td></tr>
-<tr class="separator:ga4f38a22aed2071f65143eeedeb247441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab57c8791f16f8993c86a02ecc28c6a06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gab57c8791f16f8993c86a02ecc28c6a06">calc_predicted_composition</a> (void)</td></tr>
-<tr class="memdesc:gab57c8791f16f8993c86a02ecc28c6a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted size composition data.  <a href="#gab57c8791f16f8993c86a02ecc28c6a06">More...</a><br/></td></tr>
-<tr class="separator:gab57c8791f16f8993c86a02ecc28c6a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7ba0662d9d1f96922dad9831a0eba75"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa7ba0662d9d1f96922dad9831a0eba75">calculate_prior_densities</a> (void)</td></tr>
-<tr class="memdesc:gaa7ba0662d9d1f96922dad9831a0eba75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate prior density functions for leading parameters.  <a href="#gaa7ba0662d9d1f96922dad9831a0eba75">More...</a><br/></td></tr>
-<tr class="separator:gaa7ba0662d9d1f96922dad9831a0eba75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga075ae026c3da2bbd3fb02f2aca36905f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga075ae026c3da2bbd3fb02f2aca36905f">calc_objective_function</a> (void)</td></tr>
-<tr class="memdesc:ga075ae026c3da2bbd3fb02f2aca36905f"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate objective function  <a href="#ga075ae026c3da2bbd3fb02f2aca36905f">More...</a><br/></td></tr>
-<tr class="separator:ga075ae026c3da2bbd3fb02f2aca36905f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12c55650ae56743d78da63e00311d0bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga12c55650ae56743d78da63e00311d0bf">calc_molting_probability</a> (void)</td></tr>
+<tr class="memdesc:ga12c55650ae56743d78da63e00311d0bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the probability of moulting vs carapace width.  <a href="#ga12c55650ae56743d78da63e00311d0bf">More...</a><br/></td></tr>
+<tr class="separator:ga12c55650ae56743d78da63e00311d0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga825e78411d8523e50026198d3e4ca364"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga825e78411d8523e50026198d3e4ca364">calc_growth_transition</a> (void)</td></tr>
+<tr class="memdesc:ga825e78411d8523e50026198d3e4ca364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calclate the size transtion matrix.  Steven Martell.  <a href="#ga825e78411d8523e50026198d3e4ca364">More...</a><br/></td></tr>
+<tr class="separator:ga825e78411d8523e50026198d3e4ca364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca0927142e0652e5e5f97cfd9b60e477"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaca0927142e0652e5e5f97cfd9b60e477">calc_natural_mortality</a> (void)</td></tr>
+<tr class="memdesc:gaca0927142e0652e5e5f97cfd9b60e477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate natural mortality array.  <a href="#gaca0927142e0652e5e5f97cfd9b60e477">More...</a><br/></td></tr>
+<tr class="separator:gaca0927142e0652e5e5f97cfd9b60e477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5eae2625710326f707f516e3b01a02f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5eae2625710326f707f516e3b01a02f5">calc_total_mortality</a> (void)</td></tr>
+<tr class="memdesc:ga5eae2625710326f707f516e3b01a02f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total instantaneous mortality rate and survival rate.  <a href="#ga5eae2625710326f707f516e3b01a02f5">More...</a><br/></td></tr>
+<tr class="separator:ga5eae2625710326f707f516e3b01a02f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5afcf7f330636c244505ede70260df10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5afcf7f330636c244505ede70260df10">calc_recruitment_size_distribution</a> (void)</td></tr>
+<tr class="memdesc:ga5afcf7f330636c244505ede70260df10"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate size distribution for new recuits.  <a href="#ga5afcf7f330636c244505ede70260df10">More...</a><br/></td></tr>
+<tr class="separator:ga5afcf7f330636c244505ede70260df10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf35a569842bc00252c3e20581ae43cc8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf35a569842bc00252c3e20581ae43cc8">calc_initial_numbers_at_length</a> (void)</td></tr>
+<tr class="memdesc:gaf35a569842bc00252c3e20581ae43cc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialiaze populations numbers-at-length in syr  <a href="#gaf35a569842bc00252c3e20581ae43cc8">More...</a><br/></td></tr>
+<tr class="separator:gaf35a569842bc00252c3e20581ae43cc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89f92aac09d89c896ccfb08c24ef982f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga89f92aac09d89c896ccfb08c24ef982f">update_population_numbers_at_length</a> (void)</td></tr>
+<tr class="memdesc:ga89f92aac09d89c896ccfb08c24ef982f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update numbers-at-length.  <a href="#ga89f92aac09d89c896ccfb08c24ef982f">More...</a><br/></td></tr>
+<tr class="separator:ga89f92aac09d89c896ccfb08c24ef982f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7bde20a454a1a7df3a5a20ee97a60eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gad7bde20a454a1a7df3a5a20ee97a60eb">calc_predicted_catch</a> (void)</td></tr>
+<tr class="memdesc:gad7bde20a454a1a7df3a5a20ee97a60eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted catch observations.  <a href="#gad7bde20a454a1a7df3a5a20ee97a60eb">More...</a><br/></td></tr>
+<tr class="separator:gad7bde20a454a1a7df3a5a20ee97a60eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b76adeff63d163d4b3710afeec9ec21"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga7b76adeff63d163d4b3710afeec9ec21">calc_relative_abundance</a> (void)</td></tr>
+<tr class="memdesc:ga7b76adeff63d163d4b3710afeec9ec21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted relative abundance and residuals.  <a href="#ga7b76adeff63d163d4b3710afeec9ec21">More...</a><br/></td></tr>
+<tr class="separator:ga7b76adeff63d163d4b3710afeec9ec21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0aeca6d064f3c5b594f02bd8a84d46b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gae0aeca6d064f3c5b594f02bd8a84d46b">calc_predicted_composition</a> (void)</td></tr>
+<tr class="memdesc:gae0aeca6d064f3c5b594f02bd8a84d46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate predicted size composition data.  <a href="#gae0aeca6d064f3c5b594f02bd8a84d46b">More...</a><br/></td></tr>
+<tr class="separator:gae0aeca6d064f3c5b594f02bd8a84d46b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cbd411d40776b0950388c7107e4ccf8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga1cbd411d40776b0950388c7107e4ccf8">calculate_prior_densities</a> (void)</td></tr>
+<tr class="memdesc:ga1cbd411d40776b0950388c7107e4ccf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate prior density functions for leading parameters.  <a href="#ga1cbd411d40776b0950388c7107e4ccf8">More...</a><br/></td></tr>
+<tr class="separator:ga1cbd411d40776b0950388c7107e4ccf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f0b92ca6c71217a81f6a3b108d15088"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga4f0b92ca6c71217a81f6a3b108d15088">calc_objective_function</a> (void)</td></tr>
+<tr class="memdesc:ga4f0b92ca6c71217a81f6a3b108d15088"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate objective function  <a href="#ga4f0b92ca6c71217a81f6a3b108d15088">More...</a><br/></td></tr>
+<tr class="separator:ga4f0b92ca6c71217a81f6a3b108d15088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga48d49c3ad549eceeef2de342ff2a7032"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga48d49c3ad549eceeef2de342ff2a7032"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (last_phase())</td></tr>
 <tr class="separator:ga48d49c3ad549eceeef2de342ff2a7032"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -696,109 +822,6 @@ END_CALCS int&#160;</td><td class="memItemRight" valign="bottom"><b>nf</b></td><
 <tr class="memitem:ga14d83b0e37f0f6e54bbeb2eeb4d65c40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga14d83b0e37f0f6e54bbeb2eeb4d65c40"></a>
 <a class="el" href="../../d9/d28/classnumber.html">number</a>&#160;</td><td class="memItemRight" valign="bottom"><b>spr_fofl</b> = ptrSPR-&gt;get_fofl(cuttoff,limit,mmb(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>))</td></tr>
 <tr class="separator:ga14d83b0e37f0f6e54bbeb2eeb4d65c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4ed50ccf5aefdf5764ef4a0679f5f80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf4ed50ccf5aefdf5764ef4a0679f5f80"></a>
-report&lt;&lt; &quot;slx_capture&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; exp(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(j, <br class="typebreak"/>
-h, i))&lt;&lt; endl;report<br class="typebreak"/>
-&lt;&lt; &quot;slx_retaind&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_retaind(j, <br class="typebreak"/>
-h, i))&lt;&lt; endl;report<br class="typebreak"/>
-&lt;&lt; &quot;slx_discard&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;j++) report&lt;&lt; i<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
-&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_discard(j, <br class="typebreak"/>
-h, i))&lt;&lt; endl;REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>);REPORT(log_slx_retaind);REPORT(log_slx_discard);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga55e662f32ff984a525bbd362c2f3d617">F</a>);REPORT(d3_SizeComps);REPORT(d3_obs_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga919b77c84402d3231070eeb331e03432">d3_pre_size_comps</a>);REPORT(d3_res_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>);REPORT(rec_ini);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf6b70811670344074685f5a1eac1ded7">rec_dev</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>);REPORT(M);REPORT(mean_wt);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d">molt_probability</a>);dvector <br class="typebreak"/>
-mmb=value(calc_mmb());REPORT(mmb);if(last_phase()){int <br class="typebreak"/>
-refyear=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>-1;calc_spr_reference_points(refyear, <br class="typebreak"/>
-spr_fleet);REPORT(spr_fspr);REPORT(spr_bspr);REPORT(spr_rbar);REPORT(spr_fofl);REPORT(spr_cofl);dvar_matrix <br class="typebreak"/>
-mean_size(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar3_array <br class="typebreak"/>
-growth_matrix(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <br class="typebreak"/>
-1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>=1;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>++){int <br class="typebreak"/>
-iage=1;growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage));for(iage=2;iage&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;iage++){growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage-1)*<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
-iage));}}REPORT(growth_matrix);REPORT(mean_size);for(int <br class="typebreak"/>
-ii=1;ii&lt;=nSizeComps;ii++){size_comp_sample_size(ii)=value(exp(log_vn(ii)))*size_comp_sample_size(ii);}REPORT(size_comp_sample_size);}dvar_matrix <br class="typebreak"/>
-N_len(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
-N_mm(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
-N_males(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
-N_males_old(syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, <br class="typebreak"/>
-1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);N_len.initialize();N_males.initialize();N_mm.initialize();N_males_old.initialize();for(int <br class="typebreak"/>
-i=syr;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1;i++) for(int j=1;j<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;j++) for(int k=1;k<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a>;k++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>(k)==1){N_males(i, <br class="typebreak"/>
-j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, j);if(ishell(k)==2) <br class="typebreak"/>
-N_males_old(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
-j);if(imature(k)==1) N_mm(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, <br class="typebreak"/>
-i, j);}N_len(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
-j);}REPORT(N_len);REPORT(N_mm);REPORT(N_males);REPORT(N_males_old);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf71db134fc9fe7b5356dc9d5bfb164f9">molt_increment</a>);REPORT(dPreMoltSize);REPORT(iMoltIncSex);REPORT(dMoltInc);if(bUseEmpiricalGrowth){dvector <br class="typebreak"/>
-pMoltInc=dMoltInc;REPORT(pMoltInc);}else{dvar_vector <br class="typebreak"/>
-pMoltInc=<a class="el" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga77467279a6b22df4773716a1cb576619">calc_growth_increments</a>(dPreMoltSize, <br class="typebreak"/>
-iMoltIncSex);REPORT(pMoltInc);}REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def">survey_q</a>);dvar_vector <br class="typebreak"/>
-calc_mmb(){dvar_vector mmb(syr, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>);mmb.initialize();int ig, <br class="typebreak"/>
-m, o;int h=1;for(int i=syr;i<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==1){m=1;}else <br class="typebreak"/>
-if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==2){m=2;}for(o=1;o<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>;o++){ig=pntr_hmo(h, m, <br class="typebreak"/>
-o);mmb(i)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(ig)(i)*elem_prod(mean_wt(h), <br class="typebreak"/>
-maturity(h));}}return(mmb);}dvariable <br class="typebreak"/>
-robust_multi(const dmatrix O, <br class="typebreak"/>
-const dvar_matrix <a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>, const <br class="typebreak"/>
-dvar_vector lnN){if(lnN.indexmin()!=O.rowmin()||lnN.indexmax()!=O.rowmax()){cerr<br class="typebreak"/>
-&lt;&lt;&quot;Sample size index do not <br class="typebreak"/>
-match row index in\ observed <br class="typebreak"/>
-size composition matrix.&quot;<br class="typebreak"/>
-&lt;&lt; endl;ad_exit(1);}RETURN_ARRAYS_INCREMENT();dvariable <br class="typebreak"/>
-nll=0;double tiny=1.e-14;double <br class="typebreak"/>
-a=.1/size_count(O(1));dvar_vector <br class="typebreak"/>
-b=exp(lnN);for(int i=O.rowmin();i<br class="typebreak"/>
-&lt;=O.rowmax();i++){dvector o=O(i)+tiny;dvar_vector <br class="typebreak"/>
-p=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>(i)+tiny;o/=sum(o);p/=sum(p);dvar_vector <br class="typebreak"/>
-v=a+2.*elem_prod(o,1.-o);dvar_vector <br class="typebreak"/>
-l=elem_div(square(p-o), v);nll-=sum(log(mfexp(-1.*b(i)*l)+.01));nll+=0.5 <br class="typebreak"/>
-*sum(log(v));}RETURN_ARRAYS_DECREMENT();return <br class="typebreak"/>
-nll;}void <br class="typebreak"/>
-calc_spr_reference_points(const <br class="typebreak"/>
-int iyr, const int ifleet){spr_rbar=mean(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gadaf024d5c035a2c102be085f903db5bc">spr_syr</a>, <br class="typebreak"/>
-spr_nyr)));double _r=spr_rbar;dvector <br class="typebreak"/>
-_rx=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);d3_array _M(1, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);_M.initialize();dmatrix <br class="typebreak"/>
-_N(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dmatrix <br class="typebreak"/>
-_wa(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
-_A=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a>);d3_array <br class="typebreak"/>
-_P=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>);for(int h=1;h<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int l=1;l<br class="typebreak"/>
-&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;l++){_M(h)(l, l)=value(M(h)(iyr)(l));}_N(h)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(1)(iyr));_wa(h)=elem_prod(mean_wt(h), <br class="typebreak"/>
-maturity(h));}dmatrix _fhk(1, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>);d3_array _sel(1, <br class="typebreak"/>
-<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
-_ret(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, <br class="typebreak"/>
-1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int h=1;h&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int <br class="typebreak"/>
-k=1;k&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;k++){_fhk(h)(k)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>(k)(h)(iyr));_sel(h)(k)=exp(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(k)(h)(iyr)));_ret(h)(k)=exp(value(log_slx_retaind(k)(h)(iyr)));}}dvector <br class="typebreak"/>
-_dmr(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>);_dmr.initialize();for(int <br class="typebreak"/>
-k=1;k&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>;k++){_dmr(k)=dmr(iyr, <br class="typebreak"/>
-k);}<a class="el" href="../../df/d47/classspr.html">spr</a> *ptrSPR=nullptr;if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==1){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
-c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
-_M, _A);ptrSPR=&amp;c_spr;}if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==2){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
-c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
-_M, _P, _A);ptrSPR=&amp;c_spr;}spr_fspr=ptrSPR-&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_fspr</b> (ifleet, spr_target, _fhk, _sel, _ret, _dmr)</td></tr>
-<tr class="separator:gaf4ed50ccf5aefdf5764ef4a0679f5f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3e550940d10f5dca7793504911944a99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3e550940d10f5dca7793504911944a99"></a>
 dvector&#160;</td><td class="memItemRight" valign="bottom"><b>mmb</b> = value(calc_mmb())</td></tr>
 <tr class="separator:ga3e550940d10f5dca7793504911944a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -815,10 +838,10 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>limit</b> = 0.25</t
 convergence_criteria&#160;</td><td class="memItemRight" valign="bottom"><b>e</b></td></tr>
 <tr class="separator:gac0ac46f14427ff54d6def863230c8083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga279fead83e524b653ea0583e532dcb84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga279fead83e524b653ea0583e532dcb84"></a>
-dvector&#160;</td><td class="memItemRight" valign="bottom"><b>mod_yrs</b> (syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
+dvector&#160;</td><td class="memItemRight" valign="bottom"><b>mod_yrs</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
 <tr class="separator:ga279fead83e524b653ea0583e532dcb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga43020ed235c2deeba7dd3212304d5e75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga43020ed235c2deeba7dd3212304d5e75"></a>
-mod_yrs&#160;</td><td class="memItemRight" valign="bottom"><b>fill_seqadd</b> (syr, 1)</td></tr>
+mod_yrs&#160;</td><td class="memItemRight" valign="bottom"><b>fill_seqadd</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, 1)</td></tr>
 <tr class="separator:ga43020ed235c2deeba7dd3212304d5e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6c62fc31956117bcdeaec6f0616d436"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6c62fc31956117bcdeaec6f0616d436"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>REPORT</b> (name_read_flt)</td></tr>
@@ -865,15 +888,113 @@ mod_yrs&#160;</td><td class="memItemRight" valign="bottom"><b>fill_seqadd</b> (s
 <tr class="memitem:gafc57022de6e9a97b51e83084d8050824"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafc57022de6e9a97b51e83084d8050824"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>REPORT</b> (<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga704f894a8c0d3e262863341f6eb95e93">res_cpue</a>)</td></tr>
 <tr class="separator:gafc57022de6e9a97b51e83084d8050824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50c8f5b5a692f6c428f326f44ed866e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga50c8f5b5a692f6c428f326f44ed866e3"></a>
+report&lt;&lt; &quot;slx_capture&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
+i=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
+&lt;=nfleet;j++) report&lt;&lt; i<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; exp(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(j, <br class="typebreak"/>
+h, i))&lt;&lt; endl;report<br class="typebreak"/>
+&lt;&lt; &quot;slx_retaind&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
+i=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
+&lt;=nfleet;j++) report&lt;&lt; i<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_retaind(j, <br class="typebreak"/>
+h, i))&lt;&lt; endl;report<br class="typebreak"/>
+&lt;&lt; &quot;slx_discard&quot;&lt;&lt; endl;for(int <br class="typebreak"/>
+i=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++) for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++) for(int j=1;j<br class="typebreak"/>
+&lt;=nfleet;j++) report&lt;&lt; i<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; h&lt;&lt; &quot; &quot;&lt;&lt; j<br class="typebreak"/>
+&lt;&lt; &quot; &quot;&lt;&lt; exp(log_slx_discard(j, <br class="typebreak"/>
+h, i))&lt;&lt; endl;REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>);REPORT(log_slx_retaind);REPORT(log_slx_discard);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga55e662f32ff984a525bbd362c2f3d617">F</a>);REPORT(d3_SizeComps);REPORT(d3_obs_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga919b77c84402d3231070eeb331e03432">d3_pre_size_comps</a>);REPORT(d3_res_size_comps);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);REPORT(growth_transition);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga2f68a41189e610ba8ede114f75ccce16">rec_ini</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf6b70811670344074685f5a1eac1ded7">rec_dev</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>);REPORT(M);REPORT(mean_wt);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d">molt_probability</a>);dvector <br class="typebreak"/>
+mmb=value(calc_mmb());REPORT(mmb);if(last_phase()){int <br class="typebreak"/>
+refyear=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>-1;calc_spr_reference_points(refyear, <br class="typebreak"/>
+spr_fleet);REPORT(spr_fspr);REPORT(spr_bspr);REPORT(spr_rbar);REPORT(spr_fofl);REPORT(spr_cofl);dvar_matrix <br class="typebreak"/>
+mean_size(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar3_array <br class="typebreak"/>
+growth_matrix(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>=1;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>++){int <br class="typebreak"/>
+iage=1;growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)=growth_transition(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage));for(iage=2;iage&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;iage++){growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage-1)*growth_transition(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>);mean_size(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage)=growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, iage)*mid_points/sum(growth_matrix(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>, <br class="typebreak"/>
+iage));}}REPORT(growth_matrix);REPORT(mean_size);for(int <br class="typebreak"/>
+ii=1;ii&lt;=nSizeComps;ii++){size_comp_sample_size(ii)=value(exp(log_vn(ii)))*size_comp_sample_size(ii);}REPORT(size_comp_sample_size);}dvar_matrix <br class="typebreak"/>
+N_len(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
+N_mm(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
+N_males(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dvar_matrix <br class="typebreak"/>
+N_males_old(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);N_len.initialize();N_males.initialize();N_mm.initialize();N_males_old.initialize();for(int <br class="typebreak"/>
+i=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1;i++) for(int j=1;j<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;j++) for(int k=1;k<br class="typebreak"/>
+&lt;=n_grp;k++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5486e634d10ef3d853cfd9a131db1be8">isex</a>(k)==1){N_males(i, <br class="typebreak"/>
+j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, j);if(ishell(k)==2) <br class="typebreak"/>
+N_males_old(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
+j);if(imature(k)==1) N_mm(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, <br class="typebreak"/>
+i, j);}N_len(i, j)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(k, i, <br class="typebreak"/>
+j);}REPORT(N_len);REPORT(N_mm);REPORT(N_males);REPORT(N_males_old);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf71db134fc9fe7b5356dc9d5bfb164f9">molt_increment</a>);REPORT(dPreMoltSize);REPORT(iMoltIncSex);REPORT(dMoltInc);if(bUseEmpiricalGrowth){dvector <br class="typebreak"/>
+pMoltInc=dMoltInc;REPORT(pMoltInc);}else{dvar_vector <br class="typebreak"/>
+pMoltInc=<a class="el" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga77467279a6b22df4773716a1cb576619">calc_growth_increments</a>(dPreMoltSize, <br class="typebreak"/>
+iMoltIncSex);REPORT(pMoltInc);}REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def">survey_q</a>);REPORT(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>);REPORT(growth_transition);dmatrix <br class="typebreak"/>
+size_transition_M(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dmatrix <br class="typebreak"/>
+size_transition_F(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);size_transition_M=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>(1)*growth_transition(1));for(int <br class="typebreak"/>
+i=1;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;i++) <br class="typebreak"/>
+size_transition_M(i, i)+=value(1.-<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>(1, <br class="typebreak"/>
+i, i));REPORT(size_transition_M);if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>==2){size_transition_F=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>(2)*growth_transition(2));for(int <br class="typebreak"/>
+i=1;i&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;i++) <br class="typebreak"/>
+size_transition_M(i, i)+=value(1.-<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>(2, <br class="typebreak"/>
+i, i));REPORT(size_transition_F);}dvar_vector <br class="typebreak"/>
+calc_mmb(){dvar_vector mmb(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>);mmb.initialize();int ig, <br class="typebreak"/>
+m, o;int h=1;for(int i=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>;i<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>;i++){if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==1){m=1;}else <br class="typebreak"/>
+if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga5ed63c324f88eb6a15b3e2b2c136ec70">nmature</a>==2){m=2;}for(o=1;o<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>;o++){ig=pntr_hmo(h, m, <br class="typebreak"/>
+o);mmb(i)+=<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(ig)(i)*elem_prod(mean_wt(h), <br class="typebreak"/>
+maturity(h));}}return(mmb);}void <br class="typebreak"/>
+calc_spr_reference_points(const <br class="typebreak"/>
+int iyr, const int ifleet){spr_rbar=mean(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a>(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gadaf024d5c035a2c102be085f903db5bc">spr_syr</a>, <br class="typebreak"/>
+spr_nyr)));double _r=spr_rbar;dvector <br class="typebreak"/>
+_rx=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5b257b9793f2f889ce2b21ec6db4e3d7">rec_sdd</a>);d3_array _M(1, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);_M.initialize();dmatrix <br class="typebreak"/>
+_N(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);dmatrix <br class="typebreak"/>
+_wa(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
+_A=value(growth_transition);d3_array <br class="typebreak"/>
+_P=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga6ec7754e2a4d12b5b249462c6d17af05">P</a>);for(int h=1;h<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int l=1;l<br class="typebreak"/>
+&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>;l++){_M(h)(l, l)=value(M(h)(iyr)(l));}_N(h)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a>(1)(iyr));_wa(h)=elem_prod(mean_wt(h), <br class="typebreak"/>
+maturity(h));}dmatrix _fhk(1, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, nfleet);d3_array _sel(1, <br class="typebreak"/>
+<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, nfleet, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);d3_array <br class="typebreak"/>
+_ret(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, nfleet, <br class="typebreak"/>
+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>);for(int h=1;h&lt;=<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>;h++){for(int <br class="typebreak"/>
+k=1;k&lt;=nfleet;k++){_fhk(h)(k)=value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a>(k)(h)(iyr));_sel(h)(k)=exp(value(<a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a>(k)(h)(iyr)));_ret(h)(k)=exp(value(log_slx_retaind(k)(h)(iyr)));}}dvector <br class="typebreak"/>
+_dmr(1, nfleet);_dmr.initialize();for(int <br class="typebreak"/>
+k=1;k&lt;=nfleet;k++){_dmr(k)=dmr(iyr, <br class="typebreak"/>
+k);}<a class="el" href="../../df/d47/classspr.html">spr</a> *ptrSPR=0;if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==1){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
+c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
+_M, _A);ptrSPR=&amp;c_spr;}if(<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaa47ab609d7d0b95e04a7f35c9364975e">nshell</a>==2){<a class="el" href="../../df/d47/classspr.html">spr</a> <br class="typebreak"/>
+c_spr(_r, spr_lambda, _rx, _wa, <br class="typebreak"/>
+_M, _P, _A);ptrSPR=&amp;c_spr;}spr_fspr=ptrSPR-&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get_fspr</b> (ifleet, spr_target, _fhk, _sel, _ret, _dmr)</td></tr>
+<tr class="separator:ga50c8f5b5a692f6c428f326f44ed866e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>==================================================================================== // </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga77262a9f728d0ed54b8fbea2493603a9"></a>
+<a class="anchor" id="gad85d770a6686c174986ecab5fc544393"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_fishing_mortality </td>
+          <td class="memname">void model_parameters::calc_fishing_mortality </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -898,19 +1019,61 @@ mod_yrs&#160;</td><td class="memItemRight" valign="bottom"><b>fill_seqadd</b> (s
  f for female discards.  Not recommended to have separate F' for retained and 
  discard fisheries, but might be ok to have sex-specific F's.  
 
- TODO fix discard mortality rate.</pre> <p>Molt increment as a linear function of pre-molt size.</p>
-<p>TODO Option for empirical molt increments.</p>
+ TODO 
+ -[ ] fix discard mortality rate.</pre> <p>Compute growth increments</p>
+<p>Presently based on liner form</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vSizes</td><td>is a vector of size data from which to compute predicted values </td></tr>
+    <tr><td class="paramname">iSex</td><td>is an integer vector indexing sex (1 = male, 2 = female ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00877">877</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01302">1302</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gaa38ab7820a92f3ed99b6a69a28e04649"></a>
+<a class="anchor" id="ga825e78411d8523e50026198d3e4ca364"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_initial_numbers_at_length </td>
+          <td class="memname">void model_parameters::calc_growth_transition </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calclate the size transtion matrix.  Steven Martell. </p>
+<p>Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution. This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.</p>
+<p>This function loops over sex, then loops over the rows of the size transition matrix for each sex. The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.</p>
+<p>Modified Dec 11, 2014. Diagonal of the matrix now represents probability of not molting, and upper triangle is the probability of growing to the next size interval given you molted.</p>
+<p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
+<p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale. </p>
+<p>Calculate natural mortality array</p>
+<p>Natural mortality (M) is a 3d array for sex, year and size. </p>
+<dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
+<p>todo:</p>
+<ul>
+<li>Add time varying components</li>
+<li>Size-dependent mortality</li>
+</ul>
+
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01439">1439</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gaf35a569842bc00252c3e20581ae43cc8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void model_parameters::calc_initial_numbers_at_length </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -939,16 +1102,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
 <p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a sclaer). New recruits are added based on the estimated aveerage recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01219">1219</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01719">1719</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga865bc170e18ca7280bd96a9ff7e424b4"></a>
+<a class="anchor" id="ga12c55650ae56743d78da63e00311d0bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_molting_probability </td>
+          <td class="memname">void model_parameters::calc_molting_probability </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -971,16 +1134,16 @@ n(I - PSA - (I-P)SBPSA) = r
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01117">1117</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01605">1605</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga326df5834d3e690b6c81daac1c3ffe23"></a>
+<a class="anchor" id="gaca0927142e0652e5e5f97cfd9b60e477"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_natural_mortality </td>
+          <td class="memname">void model_parameters::calc_natural_mortality </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -997,17 +1160,18 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Calculate total instantaneous mortality rate and survival rate</p>
 <p>\( S = exp(-Z) \) </p>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
+<p>ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01029">1029</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01495">1495</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga075ae026c3da2bbd3fb02f2aca36905f"></a>
+<a class="anchor" id="ga4f0b92ca6c71217a81f6a3b108d15088"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_objective_function </td>
+          <td class="memname">void model_parameters::calc_objective_function </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1032,16 +1196,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model</p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data.</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01755">1755</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02440">2440</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga7507930a25ff4d0e9441f9067b09250f"></a>
+<a class="anchor" id="gad7bde20a454a1a7df3a5a20ee97a60eb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_predicted_catch </td>
+          <td class="memname">void model_parameters::calc_predicted_catch </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1065,16 +1229,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>This function uses the conditional mle for q to scale the population to the relative abundance index. Assumed errors in relative abundance are lognormal. Currently assumes that the CPUE index is made up of both retained and discarded crabs.</p>
 <p>Question regarding use of shell condition in the relative abundance index. Currenlty there is no shell condition information in the CPUE data, should there be? Similarly, there is no mature immature information, should there be?</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01346">1346</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01962">1962</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gab57c8791f16f8993c86a02ecc28c6a06"></a>
+<a class="anchor" id="gae0aeca6d064f3c5b594f02bd8a84d46b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_predicted_composition </td>
+          <td class="memname">void model_parameters::calc_predicted_composition </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1099,10 +1263,10 @@ n(I - PSA - (I-P)SBPSA) = r
 </ul>
 <p>Jan 5, 2015. Size compostion data can come in a number of forms. Given sex, maturity and 3 shell conditions, there are 12 possible combinations for adding up the numbers at length (nal). Shell Sex Maturity condition Description </p>
 <hr/>
-<p> Male 0 1 immature, new shell Male 0 2 immature, old shell Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell Female 0 2 immature, old shell Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
+<p> Male 0 1 immature, new shell ! Male 0 2 immature, old shell ! Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell !Female 0 2 immature, old shell !Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
 <hr/>
 <p>Call function to get the appropriate numbers-at-length.</p>
-<p>TODO: [ ] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. </p>
+<p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond) </p>
 <p>Calculate prior density functions for leading parameters.</p>
 <ul>
 <li>case 0 is a uniform density between the lower and upper bounds.</li>
@@ -1121,16 +1285,16 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>vector of prior densities for each parameter</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01579">1579</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02230">2230</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga8b2e44a401baa0eb9bac5c30dcf017c4"></a>
+<a class="anchor" id="ga5afcf7f330636c244505ede70260df10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_recruitment_size_distribution </td>
+          <td class="memname">void model_parameters::calc_recruitment_size_distribution </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1166,16 +1330,16 @@ n(I - PSA - (I-P)SBPSA) = r
 </pre><p>let C = (I - PSA - (I-P)SBPSA)</p>
 <p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash; –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01145">1145</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01637">1637</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ga4f38a22aed2071f65143eeedeb247441"></a>
+<a class="anchor" id="ga7b76adeff63d163d4b3710afeec9ec21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_relative_abundance </td>
+          <td class="memname">void model_parameters::calc_relative_abundance </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1204,21 +1368,21 @@ n(I - PSA - (I-P)SBPSA) = r
 </ul>
 <p>Jan 5, 2015. Size compostion data can come in a number of forms. Given sex, maturity and 3 shell conditions, there are 12 possible combinations for adding up the numbers at length (nal). Shell Sex Maturity condition Description </p>
 <hr/>
-<p> Male 0 1 immature, new shell Male 0 2 immature, old shell Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell Female 0 2 immature, old shell Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
+<p> Male 0 1 immature, new shell ! Male 0 2 immature, old shell ! Male 0 0 immature, new &amp; old shell 1 Male, immature, new shell Male 1 1 mature, new shell Male 1 2 mature, old shell Male 1 0 mature, new &amp; old shell Female 0 1 immature, new shell !Female 0 2 immature, old shell !Female 0 0 immature, new &amp; old shell Female 1 1 mature, new shell Female 1 2 mature, old shell Female 1 0 mature, new &amp; old shell </p>
 <hr/>
 <p>Call function to get the appropriate numbers-at-length.</p>
-<p>TODO: [ ] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new.</p>
+<p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond)</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01459">1459</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02096">2096</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gaa035770d06c219d3c64d64c178289b80"></a>
+<a class="anchor" id="gaf400624093b07bbcec88ab9cf3356285"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_selectivities </td>
+          <td class="memname">void model_parameters::calc_selectivities </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1244,51 +1408,18 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>In the event that there is effort data and catch data, then it's possible to estimate a catchability coefficient and predict the catch for the period of missing catch/discard data. Best option for this would be to use F = q*E, where q = F/E. Then in the objective function, minimize the variance in the estimates of q, and use the mean q to predict catch. Or minimize the first difference and assume a random walk in q.</p>
 <p>Note that this function calculates the fishing mortality rate including deaths due to discards. Where lambda is the discard mortality rate.</p>
 <p>Note also that Jie estimates F for retained fishery, f for male discards and f for female discards. Not recommended to have separate F' for retained and discard fisheries, but might be ok to have sex-specific F's.</p>
-<p>TODO fix discard mortality rate.</p>
+<p>TODO -[ ] fix discard mortality rate.</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00799">799</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01209">1209</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gac1a6684e8544e37f2989b1f388c1275f"></a>
+<a class="anchor" id="ga5eae2625710326f707f516e3b01a02f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calc_size_transition_matrix </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname">)</td><td></td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calclate the size transtion matrix.  Steven Martell. </p>
-<p>Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution. This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.</p>
-<p>This function loops over sex, then loops over the rows of the size transition matrix for each sex. The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.</p>
-<p>Modified Dec 11, 2014. Diagonal of the matrix now represents probability of not molting, and upper triangle is the probability of growing to the next size interval given you molted.</p>
-<p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
-<p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale. </p>
-<p>Calculate natural mortality array</p>
-<p>Natural mortality (M) is a 3d array for sex, year and size. </p>
-<dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
-<p>todo:</p>
-<ul>
-<li>Add time varying components</li>
-<li>Size-dependent mortality</li>
-</ul>
-
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00987">987</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ga9452e86de816c0c965273a0e38033ea6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void calc_total_mortality </td>
+          <td class="memname">void model_parameters::calc_total_mortality </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1299,21 +1430,22 @@ n(I - PSA - (I-P)SBPSA) = r
 
 <p>Calculate total instantaneous mortality rate and survival rate. </p>
 <p>\( S = exp(-Z) \) </p>
-<dl class="section return"><dt>Returns</dt><dd>NULL </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL <pre class="fragment"> ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used.
+ Due to F.</pre> </dd></dl>
 <p>Calculate the probability of moulting vs carapace width.</p>
 <p>Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data.</p>
 <p>Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).</p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01091">1091</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01571">1571</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gaa7ba0662d9d1f96922dad9831a0eba75"></a>
+<a class="anchor" id="ga1cbd411d40776b0950388c7107e4ccf8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void calculate_prior_densities </td>
+          <td class="memname">void model_parameters::calculate_prior_densities </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1354,16 +1486,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Penalty to constrain random walk in natural mortaliy rates</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01682">1682</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02349">2349</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gae85542b46a8aa3f80a416a544aac0bbd"></a>
+<a class="anchor" id="ga508f35365cfe210b06cec46a0b82f069"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initialize_model_parameters </td>
+          <td class="memname">void model_parameters::initialize_model_parameters </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1390,16 +1522,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Loop over years and block-in the log_selectivity at mid points.</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00749">749</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01149">1149</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="gab3680df9e34f65fca8c25d4f67857108"></a>
+<a class="anchor" id="ga89f92aac09d89c896ccfb08c24ef982f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void update_population_numbers_at_length </td>
+          <td class="memname">void model_parameters::update_population_numbers_at_length </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname">)</td><td></td>
@@ -1422,16 +1554,19 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l01280">1280</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01851">1851</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:35 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="../../doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:11 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>

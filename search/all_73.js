@@ -8,7 +8,6 @@ var searchData=
   ['selex',['Selex',['../dc/d0a/classcstar_1_1_selex.html',1,'cstar']]],
   ['selex_2ehpp',['selex.hpp',['../d9/d49/selex_8hpp.html',1,'']]],
   ['simulation_5fmodel',['simulation_model',['../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga7b4343d51918847f59db06da7b0d0b3c',1,'gmacs.tpl']]],
-  ['size_5ftransition',['size_transition',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7',1,'gmacs.tpl']]],
   ['spinit_5f3darray',['SPinit_3darray',['../de/d80/class_s_pinit__3darray.html',1,'']]],
   ['spinit_5f4darray',['SPinit_4darray',['../d3/db6/class_s_pinit__4darray.html',1,'']]],
   ['spinit_5fbounded_5f3darray',['SPinit_bounded_3darray',['../d8/d98/class_s_pinit__bounded__3darray.html',1,'']]],
@@ -40,7 +39,9 @@ var searchData=
   ['spnumber',['SPnumber',['../de/d12/class_s_pnumber.html',1,'']]],
   ['spr',['spr',['../df/d47/classspr.html',1,'spr'],['../df/d47/classspr.html#ab4ae833a7352d4d416731ac44e2efc8a',1,'spr::spr(const double &amp;_r, const double &amp;_lambda, const dvector &amp;_rx, const dmatrix &amp;_wa, const d3_array &amp;_M, const d3_array &amp;_A)'],['../df/d47/classspr.html#adaff487e1c7c4bd4fe7cb3599cfbafc9',1,'spr::spr(const double &amp;_r, const double &amp;_lambda, const dvector &amp;_rx, const dmatrix &amp;_wa, const d3_array &amp;_M, const d3_array &amp;_P, const d3_array &amp;_A)']]],
   ['spr_2ecpp',['spr.cpp',['../d4/d4f/spr_8cpp.html',1,'']]],
+  ['spr_2eh',['spr.h',['../d5/d0a/spr_8h.html',1,'']]],
   ['spr_5fsyr',['spr_syr',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gadaf024d5c035a2c102be085f903db5bc',1,'gmacs.tpl']]],
   ['spvector',['SPvector',['../d6/d72/class_s_pvector.html',1,'']]],
-  ['survey_5fq',['survey_q',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def',1,'gmacs.tpl']]]
+  ['survey_5fq',['survey_q',['../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaac9aab7fd112a5cb6f03efd2640a0def',1,'gmacs.tpl']]],
+  ['syr',['syr',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359',1,'gmacs.tpl']]]
 ];

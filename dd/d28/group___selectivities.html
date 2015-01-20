@@ -8,6 +8,13 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/search.js"></script>
 <script type="text/javascript">
@@ -68,6 +75,20 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('dd/d28/group___selectivities.html','../../');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -97,13 +118,39 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Alternative selectivity functions in the cstar namespace are derived from the <a class="el" href="../../dc/d0a/classcstar_1_1_selex.html" title="An abstract class for Selectivity functions. ">cstar::Selex</a> base class. </p>
+<dl class="section author"><dt>Author</dt><dd>Steven Martell </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>Feb 10, 2014  Selectivity functions</dd></dl>
+<p>Alternative selectivity functions in the cstar namespace are derived from the <a class="el" href="../../dc/d0a/classcstar_1_1_selex.html" title="An abstract class for Selectivity functions. ">cstar::Selex</a> base class.</p>
+<p>Example of how to call this function </p>
+<pre class="fragment">    // declare a pointer to abstract class
+    // be sure to cast the type of variable that is used in the template class.
+    cstar::Selex&lt;dvector&gt; *pSLX;
+
+    // instantiate a new Logistic curve selectivity with parameters p1 &amp; p2
+    pSLX = new cstar::LogisticCurve&lt;dvector,double&gt;(p1,p2); 
+
+    // Call one of the available methods in the abstract class for size bins x
+    sex  = pSLX -&gt; Selectivity(x);
+</pre><p>Table 1. List of available selectivity functions, function names, and the class object. </p>
+<table class="doxtable">
+<tr>
+<th>Selectivity </th><th>FUNCTIONS </th><th>Class name  </th></tr>
+<tr>
+<td>Logistic </td><td>plogis </td><td>LogisticCurve </td></tr>
+<tr>
+<td>Logistic95 </td><td>plogis95 </td><td>LogisticCurve95 </td></tr>
+<tr>
+<td>Nonparametric </td><td>nonparametric </td><td>SelectivityCoefficients </td></tr>
+</table>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:35 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="../../doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:11 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>

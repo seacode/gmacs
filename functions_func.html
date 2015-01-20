@@ -8,6 +8,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
@@ -82,6 +89,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('functions_func.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -107,9 +128,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>dmultinom()
 : <a class="el" href="d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4">acl::multinomial</a>
 </li>
-<li>dmvlogistic()
-: <a class="el" href="d2/d6d/classlikelihoods_1_1nloglike.html#ac342b2c8b2a4401edc9ebd1c27f11b4c">likelihoods::nloglike</a>
-</li>
 <li>get_cofl()
 : <a class="el" href="df/d47/classspr.html#afccf9131ac27f116ee38adb492b6c2b4">spr</a>
 </li>
@@ -119,9 +137,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>get_fspr()
 : <a class="el" href="df/d47/classspr.html#ac21f4b9bd58b8cf097e8ece186fa0735">spr</a>
 </li>
-<li>multinomial()
-: <a class="el" href="d2/d6d/classlikelihoods_1_1nloglike.html#af660c0fc634cb865d86b463e3bc4be03">likelihoods::nloglike</a>
-</li>
 <li>pdf()
 : <a class="el" href="df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51">acl::robust_multi</a>
 </li>
@@ -129,16 +144,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="df/d47/classspr.html#ab4ae833a7352d4d416731ac44e2efc8a">spr</a>
 </li>
 <li>tail_compression()
-: <a class="el" href="d2/d6d/classlikelihoods_1_1nloglike.html#a686d492d738900cf723b215ce8b00180">likelihoods::nloglike</a>
-, <a class="el" href="d3/d8c/classacl_1_1negative_log_likelihood.html#a10f4175a1f51ecff3e14d37213ab8748">acl::negativeLogLikelihood</a>
+: <a class="el" href="d3/d8c/classacl_1_1negative_log_likelihood.html#a10f4175a1f51ecff3e14d37213ab8748">acl::negativeLogLikelihood</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:36 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:12 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>

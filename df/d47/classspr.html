@@ -8,6 +8,13 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/search.js"></script>
 <script type="text/javascript">
@@ -75,6 +82,21 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('df/d47/classspr.html','../../');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -89,7 +111,6 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -128,7 +149,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>get_bspr</b> ()</td
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="../../d5/d0a/spr_8h_source.html#l00014">14</a> of file <a class="el" href="../../d5/d0a/spr_8h_source.html">spr.h</a>.</p>
+<p>Definition at line <a class="el" href="../../d5/d0a/spr_8h_source.html#l00020">20</a> of file <a class="el" href="../../d5/d0a/spr_8h_source.html">spr.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab4ae833a7352d4d416731ac44e2efc8a"></a>
 <div class="memitem">
@@ -179,6 +200,18 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>get_bspr</b> ()</td
 </div><div class="memdoc">
 
 <p>constructor for SPR class </p>
+<p>Constructor for SRR class</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_r</td><td>equilibrium recruitment </td></tr>
+    <tr><td class="paramname">_lambda</td><td>fraction of females that contribute to the Spawning potential ratio </td></tr>
+    <tr><td class="paramname">_rx</td><td>size distribution of new recruits </td></tr>
+    <tr><td class="paramname">_M</td><td>natural mortality at size by sex </td></tr>
+    <tr><td class="paramname">_wa</td><td>weight-at-length interval </td></tr>
+    <tr><td class="paramname">_A</td><td>size-transition matrix</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Constructor for SRR class</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -519,11 +552,15 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>get_bspr</b> ()</td
 <li>/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/src/lib/<a class="el" href="../../d4/d4f/spr_8cpp_source.html">spr.cpp</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:36 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="../../doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../df/d47/classspr.html">spr</a></li>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:12 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>

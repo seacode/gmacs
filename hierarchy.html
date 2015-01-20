@@ -8,6 +8,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
@@ -76,6 +83,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('hierarchy.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -154,10 +175,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr id="row_54_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d4/d03/classcstar_1_1logistic_trait_3_01double_01_4.html" target="_self">cstar::logisticTrait&lt; double &gt;</a></td><td class="desc"></td></tr>
 <tr id="row_55_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d9/d47/classcstar_1_1logistic_trait_3_01named__dvariable_01_4.html" target="_self">cstar::logisticTrait&lt; named_dvariable &gt;</a></td><td class="desc"></td></tr>
 <tr id="row_56_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d1/d8d/classmatrix.html" target="_self">matrix</a></td><td class="desc"></td></tr>
-<tr id="row_57_"><td class="entry"><img id="arr_57_" src="ftv2pnode.png" alt="o" width="16" height="22" onclick="toggleFolder('57_')"/><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d3/d8c/classacl_1_1negative_log_likelihood.html" target="_self">acl::negativeLogLikelihood</a></td><td class="desc"></td></tr>
-<tr id="row_57_0_" class="even" style="display:none;"><td class="entry"><img src="ftv2vertline.png" alt="|" width="16" height="22" /><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d6/d28/classacl_1_1multinomial.html" target="_self">acl::multinomial</a></td><td class="desc">Class for multinomial negative loglikelihood </td></tr>
-<tr id="row_57_1_" class="even" style="display:none;"><td class="entry"><img src="ftv2vertline.png" alt="|" width="16" height="22" /><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="df/dea/classacl_1_1robust__multi.html" target="_self">acl::robust_multi</a></td><td class="desc"></td></tr>
-<tr id="row_58_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d2/d6d/classlikelihoods_1_1nloglike.html" target="_self">likelihoods::nloglike</a></td><td class="desc"></td></tr>
+<tr id="row_57_"><td class="entry"><img id="arr_57_" src="ftv2pnode.png" alt="o" width="16" height="22" onclick="toggleFolder('57_')"/><img src="ftv2cl.png" alt="C" width="24" height="22" /><b>model_data</b></td><td class="desc"></td></tr>
+<tr id="row_57_0_" class="even" style="display:none;"><td class="entry"><img src="ftv2vertline.png" alt="|" width="16" height="22" /><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="db/d6d/classtest__comm.html" target="_self">test_comm</a></td><td class="desc"></td></tr>
+<tr id="row_58_" class="even"><td class="entry"><img id="arr_58_" src="ftv2pnode.png" alt="o" width="16" height="22" onclick="toggleFolder('58_')"/><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d3/d8c/classacl_1_1negative_log_likelihood.html" target="_self">acl::negativeLogLikelihood</a></td><td class="desc"></td></tr>
+<tr id="row_58_0_" style="display:none;"><td class="entry"><img src="ftv2vertline.png" alt="|" width="16" height="22" /><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d6/d28/classacl_1_1multinomial.html" target="_self">acl::multinomial</a></td><td class="desc">Class for multinomial negative loglikelihood </td></tr>
+<tr id="row_58_1_" style="display:none;"><td class="entry"><img src="ftv2vertline.png" alt="|" width="16" height="22" /><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="df/dea/classacl_1_1robust__multi.html" target="_self">acl::robust_multi</a></td><td class="desc"></td></tr>
 <tr id="row_59_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d6/da5/classnormal__prior.html" target="_self">normal_prior</a></td><td class="desc"></td></tr>
 <tr id="row_60_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d9/d28/classnumber.html" target="_self">number</a></td><td class="desc"></td></tr>
 <tr id="row_61_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="d2/d02/classobjective__function__value.html" target="_self">objective_function_value</a></td><td class="desc"></td></tr>
@@ -212,11 +234,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </table>
 </div><!-- directory -->
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:36 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:12 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -8,6 +8,13 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/search.js"></script>
 <script type="text/javascript">
@@ -68,6 +75,20 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     </ul>
   </div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html','../../');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -94,27 +115,23 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gade838fe8107f4bcb05f2550d82295798"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gade838fe8107f4bcb05f2550d82295798"></a>
-END_CALCS <a class="el" href="../../d1/d0f/classinit__number__vector.html">init_number_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_fbar</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, f_phz)</td></tr>
+END_CALCS <a class="el" href="../../d1/d0f/classinit__number__vector.html">init_number_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_fbar</b> (1, nfleet, f_phz)</td></tr>
 <tr class="separator:gade838fe8107f4bcb05f2550d82295798"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1552a2cce597930be686a3afed42e4f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1552a2cce597930be686a3afed42e4f7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga1552a2cce597930be686a3afed42e4f7">size_transition</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
-<tr class="memdesc:ga1552a2cce597930be686a3afed42e4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
-<p>probability of molting </p>
-</blockquote>
-<br/></td></tr>
-<tr class="separator:ga1552a2cce597930be686a3afed42e4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8d25965996b74f7708f38415cc786a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab8d25965996b74f7708f38415cc786a7"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>growth_transition</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+<tr class="separator:gab8d25965996b74f7708f38415cc786a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga137c806a67d411f1a12e49bdfec4429c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga137c806a67d411f1a12e49bdfec4429c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>M</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>M</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="separator:ga137c806a67d411f1a12e49bdfec4429c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a43083584974671b2f3d341e101c733"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a43083584974671b2f3d341e101c733"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5a43083584974671b2f3d341e101c733">Z</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga5a43083584974671b2f3d341e101c733">Z</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="memdesc:ga5a43083584974671b2f3d341e101c733"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>Natural mortality </p>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:ga5a43083584974671b2f3d341e101c733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55e662f32ff984a525bbd362c2f3d617"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55e662f32ff984a525bbd362c2f3d617"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga55e662f32ff984a525bbd362c2f3d617">F</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga55e662f32ff984a525bbd362c2f3d617">F</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="memdesc:ga55e662f32ff984a525bbd362c2f3d617"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>Total mortality </p>
 </blockquote>
@@ -128,28 +145,28 @@ END_CALCS <a class="el" href="../../d1/d0f/classinit__number__vector.html">init_
 <br/></td></tr>
 <tr class="separator:ga6ec7754e2a4d12b5b249462c6d17af05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga07f69a6c12073e7b87e9fe4b20b7432e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga07f69a6c12073e7b87e9fe4b20b7432e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga2aa83339d9da5c340798336500aab799">n_grp</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga07f69a6c12073e7b87e9fe4b20b7432e">d3_N</a> (1, n_grp, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="memdesc:ga07f69a6c12073e7b87e9fe4b20b7432e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>Diagonal matrix of molt probabilities </p>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:ga07f69a6c12073e7b87e9fe4b20b7432e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga218e4fe012e1afdab85c09517d890e4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga218e4fe012e1afdab85c09517d890e4f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga218e4fe012e1afdab85c09517d890e4f">ft</a> (1, nfleet, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
 <tr class="memdesc:ga218e4fe012e1afdab85c09517d890e4f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>Numbers-at-sex/mature/shell/length. </p>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:ga218e4fe012e1afdab85c09517d890e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga392baa5af413ffcb0b15616fec7fe8b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga392baa5af413ffcb0b15616fec7fe8b8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga392baa5af413ffcb0b15616fec7fe8b8">d3_newShell</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga392baa5af413ffcb0b15616fec7fe8b8">d3_newShell</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="memdesc:ga392baa5af413ffcb0b15616fec7fe8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>Fishing mortality by gear </p>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:ga392baa5af413ffcb0b15616fec7fe8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac0f3eb81bfb73d6affa8f2b08016e126"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac0f3eb81bfb73d6affa8f2b08016e126"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gac0f3eb81bfb73d6affa8f2b08016e126">d3_oldShell</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gac0f3eb81bfb73d6affa8f2b08016e126">d3_oldShell</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>+1, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="memdesc:gac0f3eb81bfb73d6affa8f2b08016e126"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>New shell crabs-at-length. </p>
 </blockquote>
@@ -163,20 +180,20 @@ END_CALCS <a class="el" href="../../d1/d0f/classinit__number__vector.html">init_
 <br/></td></tr>
 <tr class="separator:ga919b77c84402d3231070eeb331e03432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4026f602b9b9f810824317c1de57ce57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4026f602b9b9f810824317c1de57ce57"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>S</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>S</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="separator:ga4026f602b9b9f810824317c1de57ce57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24a2d92bd04b39df15797453566714f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga24a2d92bd04b39df15797453566714f1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga24a2d92bd04b39df15797453566714f1">log_slx_capture</a> (1, nfleet, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="memdesc:ga24a2d92bd04b39df15797453566714f1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>Surival Rate (S=exp(-Z)) </p>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:ga24a2d92bd04b39df15797453566714f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4008505c171b2d40aca864ee55a6be3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4008505c171b2d40aca864ee55a6be3c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>log_slx_retaind</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>log_slx_retaind</b> (1, nfleet, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="separator:ga4008505c171b2d40aca864ee55a6be3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1a76d4b33b13d09d33fdf3b716f9eec9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1a76d4b33b13d09d33fdf3b716f9eec9"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>log_slx_discard</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>log_slx_discard</b> (1, nfleet, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="separator:ga1a76d4b33b13d09d33fdf3b716f9eec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
@@ -187,23 +204,39 @@ Variables</h2></td></tr>
 <tr class="memitem:ga51f64164cff10b02e2a67a7cdfa2d1f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga51f64164cff10b02e2a67a7cdfa2d1f0"></a>
 <a class="el" href="../../dc/dad/classinit__bounded__number__vector.html">init_bounded_number_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Grwth</b> (1, nGrwth, Grwth_lb, Grwth_ub, Grwth_phz)</td></tr>
 <tr class="separator:ga51f64164cff10b02e2a67a7cdfa2d1f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedfd9b420b5d5b039e0ac412a8c76c3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaedfd9b420b5d5b039e0ac412a8c76c3f"></a>
-<a class="el" href="../../dd/d34/classinit__bounded__matrix__vector.html">init_bounded_matrix_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_slx_pars</b> (1, nslx, 1, slx_rows, 1, slx_cols,-25, 25, slx_phzm)</td></tr>
-<tr class="separator:gaedfd9b420b5d5b039e0ac412a8c76c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeba91737deb4b9af57e893098afc0773"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeba91737deb4b9af57e893098afc0773"></a>
+<a class="el" href="../../dd/d34/classinit__bounded__matrix__vector.html">init_bounded_matrix_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_slx_pars</b> (1, nslx, 1, slx_rows, 1, slx_cols, 0., 5.2, slx_phzm)</td></tr>
+<tr class="separator:gaeba91737deb4b9af57e893098afc0773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae3fe06843c381f778dc864f44b7ff50b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae3fe06843c381f778dc864f44b7ff50b"></a>
-<a class="el" href="../../de/d99/classinit__vector__vector.html">init_vector_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_fdev</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, nFparams, f_phz)</td></tr>
+<a class="el" href="../../de/d99/classinit__vector__vector.html">init_vector_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gae3fe06843c381f778dc864f44b7ff50b">log_fdev</a> (1, nfleet, 1, nFparams, f_phz)</td></tr>
+<tr class="memdesc:gae3fe06843c381f778dc864f44b7ff50b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
+<p>Male mean fishing mortality </p>
+</blockquote>
+<br/></td></tr>
 <tr class="separator:gae3fe06843c381f778dc864f44b7ff50b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacdb2045eb8e4ca3bc7aa74e49a04a719"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacdb2045eb8e4ca3bc7aa74e49a04a719"></a>
-<a class="el" href="../../d1/d0f/classinit__number__vector.html">init_number_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_foff</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, foff_phz)</td></tr>
+<a class="el" href="../../d1/d0f/classinit__number__vector.html">init_number_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gacdb2045eb8e4ca3bc7aa74e49a04a719">log_foff</a> (1, nfleet, foff_phz)</td></tr>
+<tr class="memdesc:gacdb2045eb8e4ca3bc7aa74e49a04a719"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
+<p>Male f devs </p>
+</blockquote>
+<br/></td></tr>
 <tr class="separator:gacdb2045eb8e4ca3bc7aa74e49a04a719"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4af4ffd6c104c68c8049980f24427b57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4af4ffd6c104c68c8049980f24427b57"></a>
-<a class="el" href="../../de/d99/classinit__vector__vector.html">init_vector_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>log_fdov</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#ga20b8c3de4b867dab041850cf0b25dfb0">nfleet</a>, 1, nYparams, foff_phz)</td></tr>
+<a class="el" href="../../de/d99/classinit__vector__vector.html">init_vector_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga4af4ffd6c104c68c8049980f24427b57">log_fdov</a> (1, nfleet, 1, nYparams, foff_phz)</td></tr>
+<tr class="memdesc:ga4af4ffd6c104c68c8049980f24427b57"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
+<p>Female F offset to Male F </p>
+</blockquote>
+<br/></td></tr>
 <tr class="separator:ga4af4ffd6c104c68c8049980f24427b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2f68a41189e610ba8ede114f75ccce16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2f68a41189e610ba8ede114f75ccce16"></a>
-<a class="el" href="../../d7/d31/classinit__bounded__dev__vector.html">init_bounded_dev_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>rec_ini</b> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>,-7.0, 7.0, rdv_phz)</td></tr>
+<a class="el" href="../../d7/d31/classinit__bounded__dev__vector.html">init_bounded_dev_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga2f68a41189e610ba8ede114f75ccce16">rec_ini</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>,-7.0, 7.0, rdv_phz)</td></tr>
+<tr class="memdesc:ga2f68a41189e610ba8ede114f75ccce16"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
+<p>Female F offset to Male F </p>
+</blockquote>
+<br/></td></tr>
 <tr class="separator:ga2f68a41189e610ba8ede114f75ccce16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6b70811670344074685f5a1eac1ded7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6b70811670344074685f5a1eac1ded7"></a>
-<a class="el" href="../../d7/d31/classinit__bounded__dev__vector.html">init_bounded_dev_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf6b70811670344074685f5a1eac1ded7">rec_dev</a> (syr+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>,-7.0, 7.0, rdv_phz)</td></tr>
+<a class="el" href="../../d7/d31/classinit__bounded__dev__vector.html">init_bounded_dev_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf6b70811670344074685f5a1eac1ded7">rec_dev</a> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>+1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>,-7.0, 7.0, rdv_phz)</td></tr>
 <tr class="memdesc:gaf6b70811670344074685f5a1eac1ded7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>initial size devs </p>
 </blockquote>
@@ -322,7 +355,7 @@ Variables</h2></td></tr>
 <br/></td></tr>
 <tr class="separator:ga5b257b9793f2f889ce2b21ec6db4e3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga19c444af05f8f323c313ca49164f4b19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga19c444af05f8f323c313ca49164f4b19"></a>
-<a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a> (syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
+<a class="el" href="../../d7/dfc/classvector.html">vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#ga19c444af05f8f323c313ca49164f4b19">recruits</a> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
 <tr class="memdesc:ga19c444af05f8f323c313ca49164f4b19"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>recruitment size_density_distribution </p>
 </blockquote>
@@ -370,27 +403,56 @@ Variables</h2></td></tr>
 </blockquote>
 <br/></td></tr>
 <tr class="separator:gaf71db134fc9fe7b5356dc9d5bfb164f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf2ead1e3f78fe5ede3ebac728c52947d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf2ead1e3f78fe5ede3ebac728c52947d"></a>
-<a class="el" href="../../d1/d8d/classmatrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d">molt_probability</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
+<tr class="memitem:gaf2ead1e3f78fe5ede3ebac728c52947d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/d8d/classmatrix.html">matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dca/group___p_a_r_a_m_e_t_e_r___s_e_c_t_i_o_n.html#gaf2ead1e3f78fe5ede3ebac728c52947d">molt_probability</a> (1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td></tr>
 <tr class="memdesc:gaf2ead1e3f78fe5ede3ebac728c52947d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
 <p>linear molt increment </p>
 </blockquote>
-<br/></td></tr>
+ <a href="#gaf2ead1e3f78fe5ede3ebac728c52947d">More...</a><br/></td></tr>
 <tr class="separator:gaf2ead1e3f78fe5ede3ebac728c52947d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf9b6855f9d0872a990a18eb2a22a6b54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf9b6855f9d0872a990a18eb2a22a6b54"></a>
-<a class="el" href="../../d5/dae/classsdreport__vector.html">sdreport_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sd_log_recruits</b> (syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
+<a class="el" href="../../d5/dae/classsdreport__vector.html">sdreport_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sd_log_recruits</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
 <tr class="separator:gaf9b6855f9d0872a990a18eb2a22a6b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6839e53e3c27094ae0defb3eed5a4478"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6839e53e3c27094ae0defb3eed5a4478"></a>
-<a class="el" href="../../d5/dae/classsdreport__vector.html">sdreport_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sd_log_mmb</b> (syr, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
+<a class="el" href="../../d5/dae/classsdreport__vector.html">sdreport_vector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sd_log_mmb</b> (<a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gaf3fda9aeee1cfcce997db9ccd0c5a359">syr</a>, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabf19890366959e62b9f5fd444807a2d3">nyr</a>)</td></tr>
 <tr class="separator:ga6839e53e3c27094ae0defb3eed5a4478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7687aa33f115c7e3f0182050d0edf914"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7687aa33f115c7e3f0182050d0edf914"></a>
+<a class="el" href="../../db/d72/classinit__number.html">init_number</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dum</b></td></tr>
+<tr class="separator:ga7687aa33f115c7e3f0182050d0edf914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e0b2bbcb2b110a8cc3ccd655de24482"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9e0b2bbcb2b110a8cc3ccd655de24482"></a>
+<a class="el" href="../../d2/d02/classobjective__function__value.html">objective_function_value</a>&#160;</td><td class="memItemRight" valign="bottom"><b>f</b></td></tr>
+<tr class="separator:ga9e0b2bbcb2b110a8cc3ccd655de24482"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="gaf2ead1e3f78fe5ede3ebac728c52947d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d1/d8d/classmatrix.html">matrix</a> molt_probability(1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gabba2a6095b2a11a9007f29453bdc11e6">nsex</a>, 1, <a class="el" href="../../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html#gacece24db44313d85a8a1a22119b00807">nclass</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><blockquote class="doxtable">
+<p>linear molt increment </p>
+</blockquote>
+</p>
+<blockquote class="doxtable">
+<p>probability of molting </p>
+</blockquote>
+
+</div>
+</div>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated on Mon Jan 12 2015 14:44:35 for GMACS by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="../../doxygen.png" alt="doxygen"/>
-</a> 1.8.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated on Mon Jan 19 2015 16:05:11 for GMACS by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
+  </ul>
+</div>
 </body>
 </html>
