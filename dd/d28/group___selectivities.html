@@ -123,9 +123,9 @@ Classes</h2></td></tr>
 <p>Alternative selectivity functions in the cstar namespace are derived from the <a class="el" href="../../dc/d0a/classcstar_1_1_selex.html" title="An abstract class for Selectivity functions. ">cstar::Selex</a> base class.</p>
 <p>The Selex class is an abstract class that contains 3 virtual methods.</p>
 <ul>
-<li>[Selectivity] Aritmatic 0-1 values of selectivity values.</li>
-<li>logSelectivity</li>
-<li>logSelexMeanOne</li>
+<li><b>Selectivity</b> Arithmatic 0-1 values of selectivity values.</li>
+<li><b>logSelectivity</b> Returns selectivity vector in log-space.</li>
+<li><b>logSelexMeanOne</b> Returns selectivity in log-space and rescaled to have mean 1 in arithmatic space.</li>
 </ul>
 <p>Example of how to call this function </p>
 <pre class="fragment">    // declare a pointer to abstract class
@@ -146,14 +146,16 @@ Classes</h2></td></tr>
 <tr>
 <td>Logistic95 </td><td>plogis95 </td><td>LogisticCurve95 </td></tr>
 <tr>
-<td>Nonparametric </td><td>selcoffs </td><td>SelectivityCoefficients </td></tr>
+<td>Coefficients </td><td>selcoffs </td><td>SelectivityCoefficients </td></tr>
+<tr>
+<td>Nonparameteric </td><td>nonparametric </td><td>ParameterPerClass </td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Jan 19 2015 16:21:14 for GMACS by
+    <li class="footer">Generated on Mon Jan 19 2015 16:39:13 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.4 </li>
   </ul>
