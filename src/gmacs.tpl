@@ -32,10 +32,16 @@
 //
 // ==================================================================================== //
 
-///
-///@file gmacs.tpl
-///@authors Steve Martell, Jim Ianelli, Athol Whitten 
-///
+   /**
+    * 
+    * @file gmacs.tpl
+    * @authors Steve Martell, Jim Ianelli, Athol Whitten 
+    * 
+    */
+   
+   
+   
+   
 
 DATA_SECTION
 	

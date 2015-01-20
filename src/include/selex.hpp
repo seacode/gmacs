@@ -6,22 +6,37 @@
 // #include "cstar.h"
 
 /**
- * @defgroup Selectivities
- * @title Selectivity functions
- * @Selectivities Alternative selectivity functions in the cstar namespace are
- * derived from the cstar::Selex base class. 
- * 
  * @file selex.hpp 
- * 
+ * @defgroup Selectivities
  * @author Steven Martell
  * @date   Feb 10, 2014
+ * @title Selectivity functions
+ * @details Alternative selectivity functions in the cstar namespace are
+ * derived from the cstar::Selex base class. 
+ * 
+ * Example of how to call this function
+ * 
+ * 		// declare a pointer to abstract class
+ * 		// be sure to cast the type of variable that is used in the template class.
+ * 		cstar::Selex<dvector> *pSLX;
+ * 		
+ * 		// instantiate a new Logistic curve selectivity with parameters p1 & p2
+ * 		pSLX = new cstar::LogisticCurve<dvector,double>(p1,p2);	
+ * 		
+ * 		// Call one of the available methods in the abstract class for size bins x
+ * 		sex  = pSLX -> Selectivity(x);
  * 
  * 
- * <br> Available Selectivity options are: <br><br>
- * <br>Selectivity              FUNCTIONS                Class name
- * <br>Logistic                 plogis                   LogisticCurve
- * <br>Nonparametric            nonparametric            SelectivityCoefficients
- * <br>
+ * 
+ * 
+ * Table 1. List of available selectivity functions, function names, and the class
+ * object.
+ * |Selectivity              |FUNCTIONS                |Class name				|
+ * |-------------------------|-------------------------|------------------------|
+ * |Logistic                 |plogis                   |LogisticCurve           |
+ * |Logistic95               |plogis95                 |LogisticCurve95         |
+ * |Nonparametric            |nonparametric            |SelectivityCoefficients |
+ * 
  */
 
 namespace cstar {
@@ -93,8 +108,6 @@ namespace cstar {
 		{
 			typedef typename vonBtrait<T>::vonBT vonBT;
 	 */
-
-	//typename logisticTrait<T>::plogisT plogis(const T &x, const T2 &mean, const T2 &sd)
 	template<class T,class T2>
 	inline
 	const T plogis(const T &x, const T2 &mean, const T2 &sd)
@@ -125,7 +138,6 @@ namespace cstar {
 	 * @tparam T data vector or dvar vector
 	 * @tparam T2 double or dvariable for mean and standard deviation of the logistic curve
 	 */
-
 	template<class T,class T2>
 	class LogisticCurve: public Selex<T>
 	{
@@ -288,7 +300,7 @@ namespace cstar {
 	/**
 	 * @brief Nonparametric selectivity function
 	 * @details Estimate one parameter per age/size class, and rescale to maximum of one.
-	 * 
+	 * @author Athol Whitten
 	 * @param x Independent variable (number of classes)
 	 * @param selparms Vector of selectivity parameters (initial values).
 	 * @return Selectivity values.
@@ -312,6 +324,10 @@ namespace cstar {
 	/**
 	 * @brief Parametric selectivity function
 	 * @details One age or size-specific selectivity parameter for each age/size class.
+	 * @author Athol Whitten
+	 * 
+	 * Note that the same can be accomplished using the SelectivityCoefficients class
+	 * but Athol wanted to have this function in CSTAR
 	 * 
 	 * @tparam T vector of parameters (initial values)
 	 */
