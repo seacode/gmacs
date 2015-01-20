@@ -1,10 +1,12 @@
 var NAVTREEINDEX2 =
 {
+"df/da9/classquadratic__penalty.html#a8778598e330b17d88354b253f798d497":[0,3,1,71,1],
+"df/db3/classdll__init__bounded__number.html":[0,3,1,27],
 "df/db3/classdll__init__bounded__number.html#ac8548ec31c1367433aa5f4be319b8584":[0,3,1,27,0],
 "df/db3/classdll__init__bounded__number.html#ac8548ec31c1367433aa5f4be319b8584":[0,3,1,27,1],
 "df/dcc/classconstant__quadratic__penalty.html":[0,3,1,22],
-"df/dcc/classconstant__quadratic__penalty.html#afca1b0223510873f3152dc310bbe2d18":[0,3,1,22,0],
 "df/dcc/classconstant__quadratic__penalty.html#afca1b0223510873f3152dc310bbe2d18":[0,3,1,22,1],
+"df/dcc/classconstant__quadratic__penalty.html#afca1b0223510873f3152dc310bbe2d18":[0,3,1,22,0],
 "df/dcc/classinit__adstring.html":[0,3,1,47],
 "df/dcc/classinit__adstring.html#a56b4d5cfa43711af193db8dae4999bc9":[0,3,1,47,1],
 "df/dcc/classinit__adstring.html#a56b4d5cfa43711af193db8dae4999bc9":[0,3,1,47,0],

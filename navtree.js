@@ -32,7 +32,7 @@ var NAVTREEINDEX =
 [
 ".html",
 "d7/dfc/classvector.html",
-"df/db3/classdll__init__bounded__number.html#ac8548ec31c1367433aa5f4be319b8584"
+"df/da9/classquadratic__penalty.html#a8778598e330b17d88354b253f798d497"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
