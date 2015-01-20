@@ -228,8 +228,11 @@ namespace cstar {
 
 	/**
 	 * @brief Nonparametric selectivity coefficients
-	 * @details Assumes that the last age/size class has the same selectivity coefficient
-	 * as the terminal sel_coeffs.
+	 * @details The length of the vector sel_coeffs must be less than or equal to 
+	 * length of the indepoendent variabls x.  If it it shorter, then it is assumed that
+	 * the parameters in the last element of sel_coeffs is the same for all elements in
+	 * the terminus of the independent vector.  Also use a logit transformation to ensure
+	 * that selectivities are bounded between 0-1.
 	 * 
 	 * @param x Independent variable
 	 * @param sel_coeffs Vector of estimated selectivity coefficients logit transformed.
