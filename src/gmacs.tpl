@@ -163,8 +163,6 @@ DATA_SECTION
 				}
 			}
 		}
-		COUT(isex);
-		COUT(pntr_hmo);
 	END_CALCS
 
 
@@ -280,7 +278,7 @@ DATA_SECTION
 		for(int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
-			cpue_cv(k) = column(dSurveyData(k),6);
+			cpue_cv(k)  = column(dSurveyData(k),6);
 		}
 		WRITEDAT(nSurveys);WRITEDAT(nSurveyRows);WRITEDAT(dSurveyData); 
 		ECHO(obs_cpue); ECHO(cpue_cv); 
