@@ -926,7 +926,7 @@ FUNCTION initialize_model_parameters
 		icnt += nsex;
 		beta(h)      = Grwth(icnt);
 		icnt += nsex;
-		gscale(h)    = Grwth(icnt);
+		gscale(h)    = Grwth(icnt) * max(size_breaks);
 		icnt += nsex;
 		molt_mu(h)   = Grwth(icnt);
 		icnt += nsex;
@@ -1165,10 +1165,16 @@ FUNCTION calc_growth_increments
 	 * function as pgamma with the rate parameter set at its default value 1.0.  The 
 	 * mean value of the function is the second argument of cumd_gamma, and the vector 
 	 * of quantiles is the first argument.  Both arguments are scaled by gscale.
+	 * 
+	 * Jan 20, 2015.  Jim reported that cumd_gamma was not converging. Required large 
+	 * number of iterations to solve the cumd_gamma function in gser in the ADMB libs.
+	 * Soln, either increase the MAXIT in gser, or rescale the problem to the maximum
+	 * of the size breaks.  The latter seems to work.
 	 */
 FUNCTION calc_growth_transition
 	//cout<<"Start of calc_growth_transition"<<endl;
 	int h,l,ll;
+	
 	dvariable dMeanSizeAfterMolt;
 	dvar_vector psi(1,nclass+1);
 	dvar_vector sbi(1,nclass+1);
@@ -1181,6 +1187,7 @@ FUNCTION calc_growth_transition
 	{
 		At.initialize();
 		sbi = size_breaks / gscale(h);
+		
 		for( l = 1; l <= nclass; l++ )
 		{
 			dMeanSizeAfterMolt = (size_breaks(l) + molt_increment(h)(l)) / gscale(h);
@@ -1200,7 +1207,8 @@ FUNCTION calc_growth_transition
 
 		
 	}
-	
+	//COUT(cumd_gamma(257.812,258.714));
+	//exit(1);
 	// cout<<"End of calc_growth_transition"<<endl;
 	
 	
