@@ -16,9 +16,9 @@
   0.18      0.01         1         -2       2   0.18    0.04         # M
    7.0       -10        20         -1       1    3.0     5.0         # logR0
    7.0       -10        20          2       1    3.0     5.0         # logR1      
-   7.0       -10        20          2       1    3.0     5.0         # logRbar      
+  10.4       -10        20          4       1    3.0     5.0         # logRbar      
   72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
-  0.40       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
+  0.55       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -32,9 +32,9 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
   17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
   0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
-   0.8       0.01     30.0         -3       0    0.0     3.0         # gscale males or combined
-  140.      65.0     165.0          4       0    0.0     3.0         # molt_mu males or combined
-   0.2       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
+   0.65     0.01     30.0         -3       0    0.0     3.0         # gscale males or combined
+  140.      65.0     165.0         4       0    0.0     3.0         # molt_mu males or combined
+   0.071     0.0       1.0        -3       0    0.0     3.0         # molt_cv males or combined
 # ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -117,9 +117,9 @@
 ## STDEV in m_dev for Random walk
   0.60
 ## Number of nodes for cubic spline or number of step-changes for option 3
-  2
+  4
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1980 1985 
+   1976 1980 1985 1994
 
 
 
