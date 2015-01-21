@@ -926,7 +926,7 @@ FUNCTION initialize_model_parameters
 		icnt += nsex;
 		beta(h)      = Grwth(icnt);
 		icnt += nsex;
-		gscale(h)    = Grwth(icnt) * max(size_breaks);
+		gscale(h)    = Grwth(icnt);
 		icnt += nsex;
 		molt_mu(h)   = Grwth(icnt);
 		icnt += nsex;
@@ -1668,12 +1668,12 @@ FUNCTION calc_predicted_catch
 	{
 		for( j = 1; j <= nCatchRows(kk); j++ )
 		{   
-			i = dCatchData(kk)(j,1);        // year index
-			k = dCatchData(kk)(j,3);        // gear index
-			h = dCatchData(kk)(j,4);        // sex index
+			i = dCatchData(kk,j,1);        // year index
+			k = dCatchData(kk,j,3);        // gear index
+			h = dCatchData(kk,j,4);        // sex index
 
 			// Type of catch (retained = 1, discard = 2)
-			type = int(dCatchData(kk)(j,7));
+			type = int(dCatchData(kk,j,7));
 
 			// Units of catch equation (1 = biomass, 2 = numbers)
 			unit = int(dCatchData(kk)(j,8));
@@ -1715,8 +1715,7 @@ FUNCTION calc_predicted_catch
 				tmp_ft = ft(k)(h)(i);
 				nal = (unit==1) ? elem_prod(nal,mean_wt(h)) : nal;
 
-				pre_catch(kk)(j) = nal 
-						* elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+				pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 			}
 			else    // sexes combibed
 			{
@@ -1751,8 +1750,7 @@ FUNCTION calc_predicted_catch
 					tmp_ft = ft(k)(h)(i);
 					nal = (unit==1) ? elem_prod(nal,mean_wt(h)) : nal;
 
-					pre_catch(kk)(j) += nal 
-							* elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+					pre_catch(kk,j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 				}
 			}
 		}
