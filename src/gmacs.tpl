@@ -32,12 +32,7 @@
 //
 // ==================================================================================== //
 
-   /**
-    * 
-    * @file gmacs.tpl
-    * @authors Steve Martell, Jim Ianelli, Athol Whitten 
-    * 
-    */
+   
    
    
    
@@ -49,7 +44,9 @@ DATA_SECTION
 	// |---------------------|
 	// | SIMULATION CONTROLS |
 	// |---------------------|
-	int simflag;
+	
+	int simflag; 
+	!! ///> flag for simulating data 
 	int rseed
 	LOC_CALCS
 		simflag = 0;
@@ -688,19 +685,14 @@ INITIALIZATION_SECTION
 PARAMETER_SECTION
 	
 	// Leading parameters
-	// M        = theta(1)
-	// ln(Ro)   = theta(2)
-	// ln(R1)   = theta(3)
-	// ln(Rbar) = theta(4)
-	// ra       = theta(5)
-	// rbeta    = theta(6)
-	// sigma_R  = theta(7)
-	// alpha    = Grwth(1)
-	// beta     = Grwth(2)
-	// scale    = Grwth(3)
-	// molt_mu  = Grwth(4)
-	// molt_cv  = Grwth(5)
-	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
+	// M         = theta(1)
+	// ln(Ro)    = theta(2)
+	// ln(R1)    = theta(3)
+	// ln(Rbar)  = theta(4)
+	// ra        = theta(5)
+	// rbeta     = theta(6)
+	// logSigmaR = theta(7)
+	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 	
 
@@ -711,9 +703,9 @@ PARAMETER_SECTION
 	// gscale   = Grwth(3);
 	// molt_mu  = Grwth(4);
 	// molt_cv  = Grwth(5);
+
 	init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
-	// init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
-	//init_bounded_vector_vector theta(1,ntheta,1,ipar_vector,theta_lb,theta_ub,theta_phz);
+	
 
 	// Molt increment parameters
 	// Need molt increment data to estimate these parameters
@@ -2647,6 +2639,11 @@ RUNTIME_SECTION
 
 
 GLOBALS_SECTION
+	/**
+	 * @file gmacs.cpp
+	 * @authors Steve Martell and Jim Ianelli
+	 */
+
 	#include <admodel.h>
 	#include <time.h>
 	//#include <contrib.h>

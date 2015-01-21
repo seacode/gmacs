@@ -9,18 +9,26 @@
  * @file selex.hpp 
  * @defgroup Selectivities
  * @author Steven Martell
+ * @namespace cstar
  * @date   Feb 10, 2014
  * @title Selectivity functions
  * @details Alternative selectivity functions in the cstar namespace are
  * derived from the cstar::Selex base class. 
  * 
- * Example of how to call this function
+ * The Selex class is an abstract class that contains 3 virtual methods.
+ * - **Selectivity** 	Arithmatic 0-1 values of selectivity values.
+ * - **logSelectivity**	Returns selectivity vector in log-space.
+ * - **logSelexMeanOne** Returns selectivity in log-space and rescaled to have mean 1
+ * in arithmatic space.
  * 
- * 		// declare a pointer to abstract class
- * 		// be sure to cast the type of variable that is used in the template class.
+ * 
+ * Example of how to use this class to create a selectivity vector.
+ * 
+ * 		// Declare a pointer to the abstract base class Selex.
+ * 		// Cast the <type> of variable that the class will return.
  * 		cstar::Selex<dvector> *pSLX;
  * 		
- * 		// instantiate a new Logistic curve selectivity with parameters p1 & p2
+ * 		// Instantiate a new Logistic curve selectivity with parameters p1 & p2
  * 		pSLX = new cstar::LogisticCurve<dvector,double>(p1,p2);	
  * 		
  * 		// Call one of the available methods in the abstract class for size bins x
@@ -31,11 +39,12 @@
  * 
  * Table 1. List of available selectivity functions, function names, and the class
  * object.
- * |Selectivity              |FUNCTIONS                |Class name				|
- * |-------------------------|-------------------------|------------------------|
- * |Logistic                 |plogis                   |LogisticCurve           |
- * |Logistic95               |plogis95                 |LogisticCurve95         |
- * |Nonparametric            |nonparametric            |SelectivityCoefficients |
+ * |Selectivity     |FUNCTIONS     |Class name				|
+ * |----------------|--------------|------------------------|
+ * |Logistic        |plogis        |LogisticCurve           |
+ * |Logistic95      |plogis95      |LogisticCurve95         |
+ * |Coefficients    |selcoffs      |SelectivityCoefficients |
+ * |Nonparameteric  |nonparametric |ParameterPerClass       |
  * 
  */
 
@@ -223,7 +232,7 @@ namespace cstar {
   };
 
 // =========================================================================================================
-// coefficients: Base function for non-parametric selectivity cooefficients 
+// Coefficients: Base function for non-parametric selectivity cooefficients 
 // =========================================================================================================
 
 	/**

@@ -7,10 +7,15 @@
 
 
 
-
-
-
-
+/**
+ * @file nloglike.h 
+ * @defgroup Likelihoods
+ * @author Steven Martell
+ * @namespace acl
+ * @date   Feb 10, 2014
+ * @title Selectivity functions
+ * @details  Uses abstract base class for computing negative loglikelihoods
+ */
 namespace acl
 {
 
@@ -18,7 +23,7 @@ namespace acl
 	/**
 	 * Base class for negative loglikelihoods used in composition data.
 	 * @details This class has two virtual methods: nloglike and residual.
-	 * 
+	 * @namepsace acl
 	 */
 	class negativeLogLikelihood
 	{
