@@ -1,7 +1,4 @@
----
-title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. 2014"
-output: pdf_document
----
+# Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. 2014
 ## Results culminating from the mid-January 2015 crab modeling workshop
 
 The following summarizes the outcome of some rudimentary comparisons between the existing BBRKC model and an emulated version using the gmacs platform.
