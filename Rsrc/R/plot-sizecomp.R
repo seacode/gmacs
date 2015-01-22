@@ -56,11 +56,12 @@ get_sizecomp <- function(replist){
 #' @param replist List object created by read_admb function
 #' @return Plot of observed and predicted size composition
 #' @export
-plot_sizecomp <- function(replist,which_plots="all"){
+plot_sizecomp <- function(replist,which_plots="all",main=""){
   A <- replist
   sdf <- get_sizecomp(replist)
 
   p <- ggplot(data=sdf[[1]])
+  p <- p + ggtitle(main)
   p <- p + geom_bar(aes(variable,value),stat="identity")
   p <- p + geom_line(aes(as.numeric(variable),pred),col="red")
   p <- p + scale_x_discrete(breaks=pretty(A$mid_points)) 
