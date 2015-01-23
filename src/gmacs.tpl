@@ -163,8 +163,6 @@ DATA_SECTION
 				}
 			}
 		}
-		COUT(isex);
-		COUT(pntr_hmo);
 	END_CALCS
 
 
@@ -280,7 +278,7 @@ DATA_SECTION
 		for(int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
-			cpue_cv(k) = column(dSurveyData(k),6);
+			cpue_cv(k)  = column(dSurveyData(k),6);
 		}
 		WRITEDAT(nSurveys);WRITEDAT(nSurveyRows);WRITEDAT(dSurveyData); 
 		ECHO(obs_cpue); ECHO(cpue_cv); 
@@ -2338,6 +2336,7 @@ REPORT_SECTION
 	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
 		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
 
+	REPORT(slx_control);
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
@@ -2350,7 +2349,7 @@ REPORT_SECTION
 	REPORT(d3_res_size_comps);
 	REPORT(ft);
 	REPORT(rec_sdd);
-	REPORT(growth_transition);
+	
 	REPORT(rec_ini);
 	REPORT(rec_dev);
 	REPORT(recruits);
@@ -2440,11 +2439,28 @@ REPORT_SECTION
 		REPORT(pMoltInc);
 	}
 	REPORT(survey_q);
+	
+	// Growth and size transition.
 	REPORT(P);
 	REPORT(growth_transition);
+	d3_array tG(1,nsex,1,nclass,1,nclass);
+	d3_array tS(1,nsex,1,nclass,1,nclass);
+
+	for(int h = 1; h<=nsex; h++)
+	{
+		tG(h)=trans(value(growth_transition(h)));
+		tS(h)=trans(value(P(h) * growth_transition(h)));
+		for(int l = 1; l <= nclass; ++l)
+		{
+			tS(h)(l,l) += value(1.0-P(h)(l,l));
+		}
+	}
+	REPORT(tG);
+	REPORT(tS);
 	dmatrix size_transition_M(1,nclass,1,nclass);
 	dmatrix size_transition_F(1,nclass,1,nclass);
 
+	// For Jim's r-script.
 	size_transition_M = value(P(1) * growth_transition(1));
 	for (int i=1;i<=nclass;i++)
 	  size_transition_M(i,i) += value(1.-P(1,i,i));
