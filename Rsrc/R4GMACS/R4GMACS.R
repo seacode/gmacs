@@ -20,6 +20,10 @@ library(dplyr)
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")
+.SHELL    = c("Aggregate","New Shell","Old Shell")
+.MATURITY = c("Aggregate","Immature","Mature")
+.TYPE     = c("Total catch","Retained","Discarded")
+.SEAS     = c("Annaul")
 
 # SOURCE R_SRCIPTS FROM .LIB
 setwd(.PWD)

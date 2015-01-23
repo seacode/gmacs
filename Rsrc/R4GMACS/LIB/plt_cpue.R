@@ -32,9 +32,17 @@ plot.cpue <- function( M )
 
 	p  <- ggplot(mdf,aes(year,cpue,col=factor(sex)))
 	p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb,col=factor(sex)))
-	p  <- p + geom_line(data=mdf,aes(year,pred))
+	if(.OVERLAY)
+	{
+		p  <- p + geom_line(data=mdf,aes(year,pred,linetype=Model))
+		p  <- p + facet_wrap(~fleet+sex,scales="free_y")
+	}
+	else 
+	{
+		p  <- p + geom_line(data=mdf,aes(year,pred))
+		p  <- p + facet_wrap(~fleet+sex+Model,scales="free_y")
+	}
 	p  <- p + labs(x="Year",y="CPUE",col="Sex")
-	p  <- p + facet_wrap(~fleet+sex,scales="free_y")
 	print(p + .THEME)
 
 }
@@ -45,9 +53,17 @@ plot.cpue.res <- function( M )
 	mdf <- .getDF( M )
 
 	p  <- ggplot(mdf,aes(year,resd))
-	p  <- p + geom_bar(aes(fill=factor(sex)),stat = "identity", position="dodge")
+	if(.OVERLAY)
+	{
+		p  <- p + geom_bar(aes(fill=factor(Model)),stat = "identity", position="dodge")
+		p  <- p + facet_wrap(~ sex + fleet)		
+	}
+	else
+	{
+		p  <- p + geom_bar(aes(fill=factor(sex)),stat = "identity", position="dodge")
+		p  <- p + facet_wrap(~Model + sex + fleet)		
+	}
 	p  <- p + labs(x="Year",y="Residual (Observed - Predicted)",fill="Sex")
-	p  <- p + facet_wrap(~Model + fleet)
 	print(p + .THEME)
 
 }
