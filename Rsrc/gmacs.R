@@ -24,7 +24,7 @@ gmrep <- read_admb('gmacs')
 # Get plots of interest:
 plot_catch(gmrep)
 plot_growth(gmrep)
-plot_catch(gmrep,plot_res=T)
+plot_catch(gmrep,plot_res=TRUE)
 names(gmrep$fit)
 plot_growth_inc(gmrep)
 plot_cpue(gmrep)
