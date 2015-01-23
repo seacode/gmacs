@@ -2335,6 +2335,7 @@ REPORT_SECTION
 	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
 		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
 
+	REPORT(slx_control);
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
