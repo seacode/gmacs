@@ -2,8 +2,10 @@
 #'
 #' @param replist List object created by read_admb function
 #' @return Plot of size transition matrix
+#' @author SJD Martell
 #' @export
-plot_sizetransition <- function(replist){
+plot_sizetransition <- function( M )
+{
   A    <- replist
   df   <- data.frame(stm = A$size_transition_M,stm_f = A$size_transition_F)
   colnames(df) <- A$mid_points

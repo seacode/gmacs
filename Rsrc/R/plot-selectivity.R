@@ -1,14 +1,24 @@
-#' Get selectivity
+#' .get_selectivity_df
 #'
 #' @param replist List object created by read_admb function
-#' @param type =1 Capture, =2 Retained, =3 Discarded selectivity 
 #' @return List of selectivities
 #' @export
-get_selectivity <- function(replist,type=1){
-  A  <- replist
-  df <- as.data.frame(cbind(A$slx_capture))
-  colnames(df) <- c("year", "sex", "fleet", as.character(A$mid_points))
-  mdf <- melt(df,id=1:3)
+.get_selectivity_df <- function(replist){
+{
+	n   <- length(M)
+	mdf <- NULL
+	for(i in 1:n)
+	{
+		df <- data.frame(Model=names(M)[i], M[[i]]$slx_capture)
+		colnames(df) <- c("Model","year","sex","fleet",as.character(A$mid_points))
+		df$sex = .SEX[df$sex+1]
+		df$fleet = .FLEET[df$fleet]
+
+		blkyr <- M[[i]]$slx_control[,12]
+		df    <- filter(df,year %in% blkyr)
+
+		mdf <- rbind(mdf,melt(df,id.var=1:4))
+	}
   return(mdf)  
 }
 
@@ -16,20 +26,25 @@ get_selectivity <- function(replist,type=1){
 #'
 #' @param replist List object created by read_admb function
 #' @return Plot of selectivity
+#' @author SJD Martell
 #' @export
 plot_selectivity <- function(replist){
-  sdf <- get_selectivity(replist)
-  # Just do for last year
-  sdf <- subset(sdf,year==max(sdf$year))
+	p <- ggplot(mdf)
+	if(.OVERLAY)
+	{
+		p <- p + geom_line(aes(as.numeric(variable),value,col=Model,linetype=factor(year)))
+		p <- p + facet_wrap(~sex+fleet)
+	}
+	else
+	{
+		p <- p + geom_line(aes(as.numeric(variable),value,col=sex,linetype=factor(year)))
+		p <- p + facet_wrap(~Model+fleet)
+	}
+	p <- p + labs(y="Selectivity",
+	              x="Mid point of size class (mm)",
+	              col="Sex",
+	              linetype="Block Year")
 
-  # Still sucks because crappy x-axis label
-  p <- ggplot(data=sdf,x=factor(variable))
-  p <- p + geom_line(aes(as.numeric(variable),value),stat="identity")
-  p <- p + labs(y="Selectivity",x="size bin")
-  p <- p + facet_wrap(~fleet+sex) + ggtheme
-  print(p)
-  
-  pSelectivity <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)
+  print(p + .THEME)
 
-  return(pSelectivity)
 }
