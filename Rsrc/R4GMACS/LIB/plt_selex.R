@@ -1,15 +1,13 @@
-#' .get_selectivity_df
-#'
-#' @param replist List object created by read_admb function
-#' @return List of selectivities
-#' @export
-.get_selectivity_df <- function(replist)
+# plt_selex.R
+
+plot.selex <- function( M )
 {
 	n   <- length(M)
 	mdf <- NULL
 	for(i in 1:n)
 	{
-		df <- data.frame(Model=names(M)[i], M[[i]]$slx_capture)
+		df <- data.frame(Model=names(M)[i],
+		                 M[[i]]$slx_capture)
 		colnames(df) <- c("Model","year","sex","fleet",as.character(M[[i]]$mid_points))
 		df$sex = .SEX[df$sex+1]
 		df$fleet = .FLEET[df$fleet]
@@ -19,16 +17,8 @@
 
 		mdf <- rbind(mdf,melt(df,id.var=1:4))
 	}
-  return(mdf)  
-}
 
-#' Plot selectivity
-#'
-#' @param replist List object created by read_admb function
-#' @return Plot of selectivity
-#' @author SJD Martell
-#' @export
-plot_selectivity <- function(replist){
+
 	p <- ggplot(mdf)
 	if(.OVERLAY)
 	{
@@ -45,6 +35,6 @@ plot_selectivity <- function(replist){
 	              col="Sex",
 	              linetype="Block Year")
 
-  print(p + .THEME)
 
+	print(p + .THEME)
 }

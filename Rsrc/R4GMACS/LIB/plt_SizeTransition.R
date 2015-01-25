@@ -1,10 +1,5 @@
-#' Plot size transition
-#'
-#' @param M List of object(s) created by read_admb function
-#' @return Plot of size transition matrix
-#' @author SJD Martell
-#' @export
-plot_sizeTransition <- function(M)
+# plt_SizeTransition.R
+plot.sizeTransition <- function(M)
 {
 	n   <- length(M)
 	mdf <- NULL
@@ -14,7 +9,7 @@ plot_sizeTransition <- function(M)
 		G = M[[i]]$tS
 		h = dim(G)[1]/dim(G)[2]
 		colnames(G) = paste(x)
-		s  = .SEX[as.vector(sapply(1:h,rep,20))+1]
+		s  = as.vector(sapply(1:h,rep,20))
 		df = data.frame(Model=names(M)[i],mp=x,sex=s,G)
 
 		mdf <- rbind(mdf,df)

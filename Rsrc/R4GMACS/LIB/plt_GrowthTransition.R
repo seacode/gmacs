@@ -1,17 +1,15 @@
-#' Plot size transition
-#'
-#' @param M List of object(s) created by read_admb function
-#' @return Plot of size transition matrix
-#' @author SJD Martell
-#' @export
-plot_sizeTransition <- function(M)
+# plt_GrowthTransition.R
+# Must use the transpose of the G matrix for ggplot
+
+
+plot.growthTransition <- function( M )
 {
 	n   <- length(M)
 	mdf <- NULL
 	for(i in 1:n)
 	{
 		x = M[[i]]$mid_points
-		G = M[[i]]$tS
+		G = M[[i]]$tG
 		h = dim(G)[1]/dim(G)[2]
 		colnames(G) = paste(x)
 		s  = .SEX[as.vector(sapply(1:h,rep,20))+1]
@@ -23,10 +21,9 @@ plot_sizeTransition <- function(M)
 
 	p <- ggplot(mdf,aes(x=mp,y=value,col=Model,linetype=factor(sex)))
 	p <- p + geom_line() 
-	p <- p + labs(x="Size Bin (mm)",y="P(size transition|molt)",linetype="Sex")
+	p <- p + labs(x="Size Bin (mm)",y="P(growth transition)",linetype="Sex")
 	p <- p + facet_wrap(~variable)
 	# if(!.OVERLAY) p <- p + facet_wrap(~Model)
 
 	print(p + .THEME)
-
 }

@@ -95,68 +95,7 @@ namespace acl
 		return R;
 	}
   
-  
-	/**
-	 * @brief Class for multinomial negative loglikelihood.
-	 * @details This is a derived class which inherits the virtual methods
-	 * in negativeLogLikelihood and uses a fixed value for the effective
-	 * sample size.
-	 * 
-	 */
-	// class f_multinomial: public negativeLogLikelihood
-	// {
-	// private:
-	// 	bool        m_bCompress;
-	// 	dvector     m_vn;
-	// 	dvar_matrix m_P;
 
-	// public:
-
-	// 	f_multinomial(const dmatrix &_O,const bool bCompress=false)
-	// 	: negativeLogLikelihood(_O),m_bCompress(bCompress) 
-	// 	{
-	// 		if(m_bCompress) tail_compression();
-	// 	}
-
-	// 	~f_multinomial();
-
-	// 	dvector get_n()      const { return m_vn;    }
-	// 	void      set_n(dvector _n){ this->m_vn = _n;}
-
-	// 	dvar_matrix get_P()         const { return m_P;    }
-	// 	void        set_P(dvar_matrix _P) { this->m_P = _P;}
-
-	
-	// 	// negative log likelihood
-	// 	const dvariable nloglike(const dvector& _vn, const dvar_matrix& _P) const 
-	// 	{
-	// 		if(m_bCompress)
-	// 		{
-	// 			dmatrix     Or = compress(this->get_O());
-	// 			dvar_matrix Pr = compress(_P);
-	// 			return dmultinom(_vn,Or,Pr);
-	// 		}
-	// 		else
-	// 		{
-	// 			return dmultinom(_vn,this->get_O(),_P);	
-	// 		}
-	// 	}
-
-	// 	// pearson residuals
-	// 	const   dmatrix residual(const dvector& _n, const dvar_matrix& _P) const
-	// 	{
-	// 		return pearson_residuals(_n,this->get_O(),_P);
-	// 	}
-		
-		
-	// 	const dvariable dmultinom(const dvector& log_vn,
-	//                           const dmatrix& o, 
-	//                           const dvar_matrix& p) const;
-
-	// 	const dmatrix pearson_residuals(const dvector& log_vn,
- //                  									const dmatrix& o,
- //                  									const dvar_matrix p) const;
-	// };
 	
 	/**
 	 * @brief Class for multinomial negative loglikelihood.

@@ -1,10 +1,6 @@
-#' Get cpue or other indices
-#'
-#' @param replist List object created by read_admb function
-#' @return dataframe of observed and predicted indices and residuals
-#' @author SJD Martell
-#' @export
-.get_cpue_df <- function( M )
+# plt_cpue.R
+
+.getDF <- function( M )
 {
 	n   <- length(M)
 	mdf <- NULL
@@ -21,20 +17,18 @@
 		df$ub <- exp(log(df$cpue)+1.96*sd)
 		df$pred <- na.exclude(as.vector(t(A$pre_cpue)))
 		df$resd <- na.exclude(as.vector(t(A$res_cpue)))
+
 		mdf <- rbind(mdf,df)
 	} 
+
 	return(mdf)	
 }
-#' Plot cpue or other indices
-#'
-#' @param replist List object created by read_admb function
-#' @return Plot of all observed and predicted incices
-#' @author SJD Martell
-#' @export
-plot_cpue <- function(replist)
-{
 
-	mdf <- .get_cpue_df(replist)
+
+plot.cpue <- function( M )
+{
+	
+	mdf <- .getDF( M )
 
 	p  <- ggplot(mdf,aes(year,cpue,col=factor(sex)))
 	p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb,col=factor(sex)))
@@ -50,18 +44,13 @@ plot_cpue <- function(replist)
 	}
 	p  <- p + labs(x="Year",y="CPUE",col="Sex")
 	print(p + .THEME)
+
 }
 
-
-#' Plot residuals of cpue or other indices
-#'
-#' @param replist List object created by read_admb function
-#' @return Plot of fit indices residuals
-#' @export
-plot_cpue_res <- function(M)
+plot.cpue.res <- function( M )
 {
 	
-	mdf <- .get_cpue_df( M )
+	mdf <- .getDF( M )
 
 	p  <- ggplot(mdf,aes(year,resd))
 	if(.OVERLAY)
@@ -76,4 +65,5 @@ plot_cpue_res <- function(M)
 	}
 	p  <- p + labs(x="Year",y="Residual (Observed - Predicted)",fill="Sex")
 	print(p + .THEME)
+
 }

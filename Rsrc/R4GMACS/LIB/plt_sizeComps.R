@@ -1,9 +1,6 @@
-#' Get observed and predicted size composition values
-#'
-#' @param replist List object created by read_admb function
-#' @return List of observed and predicted size composition values
-#' @export
-.get_sizecomp_df <- function( M )
+# plt_sizeComps.R
+
+get.df <- function(M) 
 {
 	n   <- length(M)
 	ldf <- list()
@@ -63,17 +60,10 @@
 }	
 
 
-#' Plot observed and predicted size composition
-#'
-#'
-#' @param replist List object created by read_admb function
-#' @return Plot of observed and predicted size composition
-#' @author SJD Martell
-#' @export
-plot_sizeComps <- function( M, which.plot="all" )
+plot.sizeComps <- function( M, which.plot="all" )
 {
 	
-	mdf <- .get_sizecomp_df( M )
+	mdf <- get.df( M )
 	ix <- pretty(1:length(M[[1]]$mid_points))
 	p <- ggplot(mdf[[1]])
 	p <- p + geom_bar(aes(variable,value),stat="identity",fill="grey",position="dodge")
@@ -95,37 +85,11 @@ plot_sizeComps <- function( M, which.plot="all" )
 	{
 		print( plist[[which.plot]] )
 	}
+
 }
 
-#' Plot size composition residuals
-#'
-#' TODO: Insert more information here.
-#'
-#' @param replist List object created by read_admb function
-#' @return Bubble plot of size composition residuals
-#' @export
-plot_sizecomp_res <- function( M ,which_plots="all"){
-  A <-  M 
-  sdf <- .get_sizecomp_df( M )
 
-  p <- ggplot(data=sdf[[1]])
-  p <- p + geom_point(aes(x=factor(year),variable,col=factor(sign(resid)),size=abs(resid))
-                      ,alpha=0.6)
-  p <- p + scale_size_area(max_size=10)
-  p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
-  p <- p + scale_x_discrete(breaks=pretty(A$mod_yrs))
-  p <- p + scale_y_discrete(breaks=pretty(A$mid_points))
-  p <- p + ggtheme
-  if (which_plots=="all")
-    pSizeComps <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)
-  else
-  {
-    if (!is.numeric(which_plots)) 
-      {
-        print("Error, need numeric argument for which_plots=") 
-        stop()
-      }
-    pSizeComps <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)[which_plots]
-  }
-  return(pSizeComps)
-}
+
+
+
+
