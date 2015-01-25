@@ -4,7 +4,7 @@
 \alias{plot_cpue_res}
 \title{Plot residuals of cpue or other indices}
 \usage{
-plot_cpue_res(replist)
+plot_cpue_res(M)
 }
 \arguments{
 \item{replist}{List object created by read_admb function}

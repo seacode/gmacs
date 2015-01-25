@@ -4,7 +4,7 @@
 \alias{plot_sizecomp_res}
 \title{Plot size composition residuals}
 \usage{
-plot_sizecomp_res(replist, which_plots = "all")
+plot_sizecomp_res(M, which_plots = "all")
 }
 \arguments{
 \item{replist}{List object created by read_admb function}

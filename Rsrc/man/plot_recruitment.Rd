@@ -4,15 +4,18 @@
 \alias{plot_recruitment}
 \title{Plot predicted recruitment and approximate asymptotic error-bars}
 \usage{
-plot_recruitment(replist)
+plot_recruitment(M)
 }
 \arguments{
-\item{replist}{List object created by read_admb function}
+\item{M}{List object created by read_admb function}
 }
 \value{
 Plot of predicted recruitment
 }
 \description{
 Plot predicted recruitment and approximate asymptotic error-bars
+}
+\author{
+SJD Martell
 }
 

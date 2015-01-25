@@ -15,4 +15,7 @@ Plot of selectivity
 \description{
 Plot selectivity
 }
+\author{
+SJD Martell
+}
 
