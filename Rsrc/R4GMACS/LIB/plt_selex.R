@@ -8,7 +8,7 @@ plot.selex <- function( M )
 	{
 		df <- data.frame(Model=names(M)[i],
 		                 M[[i]]$slx_capture)
-		colnames(df) <- c("Model","year","sex","fleet",as.character(A$mid_points))
+		colnames(df) <- c("Model","year","sex","fleet",as.character(M[[i]]$mid_points))
 		df$sex = .SEX[df$sex+1]
 		df$fleet = .FLEET[df$fleet]
 

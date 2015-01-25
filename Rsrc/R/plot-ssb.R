@@ -7,7 +7,8 @@
 #' @return Dataframe of spawning biomass
 #' @author SJD Martell
 #' @export
-.get_ssb_df <- function(M){
+.get_ssb_df <- function(M)
+{
 	n   <- length(M)
 	mdf <- NULL
 	for(i in 1:n)
@@ -26,18 +27,18 @@
 	}
 	return(mdf)
 }
+#------------------------------------------------------------------
 #' Plot predicted spawning stock biomass (ssb)
 #'
 #' Spawning biomass may be defined as all males or some combination of males and females
 #'
-#' @param replist List object created by read_admb function
+#' @param M List object(s) created by read_admb function
 #' @author SJD Martell
-#' @return Plot of predicted mature male biomass
+#' @return Plot of model estimates of spawning stock biomass 
 #' @export
-plot_ssb <- function(M){
-
+plot_ssb <- function(M)
+{
   mdf <- .get_ssb_df(M)
-
 	p <- ggplot(mdf)
 	p <- p + geom_line(aes(x=year,y=mmb,col=Model))
 	p <- p + geom_ribbon(aes(x=year,ymax=ub,ymin=lb,fill=Model),alpha=0.3)

@@ -58,7 +58,7 @@ plot_cpue <- function(replist)
 #' @param replist List object created by read_admb function
 #' @return Plot of fit indices residuals
 #' @export
-plot_cpue_res <- function(M){
+plot_cpue_res <- function(M)
 {
 	
 	mdf <- .get_cpue_df( M )
@@ -76,5 +76,4 @@ plot_cpue_res <- function(M){
 	}
 	p  <- p + labs(x="Year",y="Residual (Observed - Predicted)",fill="Sex")
 	print(p + .THEME)
-
 }
