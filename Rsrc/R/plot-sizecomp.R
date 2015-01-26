@@ -1,115 +1,177 @@
 #' Get observed and predicted size composition values
 #'
-#' TODO: Insert more information here.
 #'
-#' @param replist List object created by read_admb function
+#'
+#' @param M List object(s) created by read_admb function
 #' @return List of observed and predicted size composition values
+#' @author SJD Martell
 #' @export
-get_sizecomp <- function(replist){
-  A  <- replist
-  df <- as.data.frame(cbind(A$d3_SizeComps[,1:8],A$d3_obs_size_comps))
-  pf <- as.data.frame(cbind(A$d3_SizeComps[,1:8],A$d3_pre_size_comps))
-  rf <- as.data.frame(cbind(A$d3_SizeComps[,1:8],A$d3_res_size_comps))
-  colnames(df) <- tolower(c("Year", "Seas", "Fleet", "Sex", "Type", "Shell",
-               "Maturity", "Nsamp", as.character(A$mid_points)))
-  colnames(rf) <- colnames(pf) <- colnames(df)
-  mdf <- melt(df,id=1:8)
-  mpf <- melt(pf,id=1:8)
-  mrf <- melt(rf,id=1:8)
+#'
+#'
+.get_sizeComps_df <- function(M)
+{
+	n   <- length(M)
+	ldf <- list()
+	mdf <- mpf <- mrf <-NULL
+	for(i in 1:n)
+	{
+		A  <- M[[i]]
+		df <- data.frame(Model=names(M)[i],
+		                 cbind(A$d3_SizeComps[,1:8],A$d3_obs_size_comps))
+		pf <- data.frame(Model=names(M)[i],
+		                 cbind(A$d3_SizeComps[,1:8],A$d3_pre_size_comps))
+		rf <- data.frame(Model=names(M)[i],
+		                 cbind(A$d3_SizeComps[,1:8],A$d3_res_size_comps))
+		colnames(df) <- tolower(c("Model",
+		                        "Year", "Seas",
+		                        "Fleet", "Sex",
+		                        "Type", "Shell",
+								"Maturity", "Nsamp",
+								as.character(A$mid_points)))
+		colnames(pf) <- colnames(rf) <- colnames(df)
 
-  fleet <- unique(mdf$fleet)
-  sex   <- unique(mdf$sex)
-  type  <- unique(mdf$type)
-  shell <- unique(mdf$shell)
+		df$fleet    <- pf$fleet    <- rf$fleet    <- .FLEET[df$fleet]
+		df$sex      <- pf$sex      <- rf$sex      <- .SEX[df$sex+1]
+		df$shell    <- pf$shell    <- rf$shell    <- .SHELL[df$shell+1]
+		df$maturity <- pf$maturity <- rf$maturity <- .MATURITY[df$maturity+1]
+		df$type     <- pf$type     <- rf$type     <- .TYPE[df$type+1]
+		df$seas     <- pf$seas     <- rf$seas     <- .SEAS[df$seas]
 
-  i   <- 1
+		
+		mdf <- rbind(mdf,df)
+		mpf <- rbind(mpf,pf)
+		mrf <- rbind(mrf,rf)
+	}
+	mdf <- melt(mdf,id.var=1:9)
+	mpf <- melt(mpf,id.var=1:9)
+	mrf <- melt(mrf,id.var=1:9)
 
-  sdf <- list()
+	for(i in 1:n)
+	{
+		j  <- 1
+		for(k in unique(df$fleet))
+		for(h in unique(df$sex))
+		for(t in unique(df$type))
+		for(s in unique(df$shell))
+		{
+			tdf <- mdf %>% filter(fleet==k) %>% filter(sex==h) %>% filter(type==t) %>% filter(shell==s)
+			tpf <- mpf %>% filter(fleet==k) %>% filter(sex==h) %>% filter(type==t) %>% filter(shell==s)
+			trf <- mrf %>% filter(fleet==k) %>% filter(sex==h) %>% filter(type==t) %>% filter(shell==s)
+			if(dim(tdf)[1]!=0)
+			{
+				# deterimin row & column.
+				# fyr = unique(tdf$year)
+				# syr = min(fyr); nyr = max(fyr)
+				# nn  = (nyr-syr+1)
+				# nc  = ceiling(nn/sqrt(nn))
+				# irow = icol = rep(1,length=nn)
 
-  for(k in fleet)
-  {
-    for(h in sex)
-    {
-      for(t in type)
-      {
-        for(s in shell)
-        {
-          tmpdf <- subset(mdf,fleet %in% k & sex %in% h & type %in% t & shell %in% s)
-          tmppf <- subset(mpf,fleet %in% k & sex %in% h & type %in% t & shell %in% s)
-          tmprf <- subset(mrf,fleet %in% k & sex %in% h & type %in% t & shell %in% s)
-          if(dim(tmpdf)[1]!=0)
-          {
-            sdf[[i]] <- cbind(tmpdf,pred=tmppf$value,resid=tmprf$value)
-            i <- i+1
-          }
-        }
-      }
-    }
-  }
-  return(sdf)  
+				# ii = ic = ir = 1
+				# for(iyr in fyr)
+				# {
+				# 	icol[ii] <- ic
+				# 	irow[ii] <- ir
+
+				# 	ic = ic + 1
+				# 	ii = ii + 1
+
+				# 	if(ic > nc)
+				# 	{
+				# 		ic = 1
+				# 		ir = ir + 1	
+				# 	} 
+				# }
+				# tdf$irow = irow[tdf$year-syr+1]
+				# tdf$icol = icol[tdf$year-syr+1]
+				# cat(" n = ",nn,"\n")
+				# print(tdf$year - syr + 1)
+
+				ldf[[j]] <-cbind(tdf,pred=tpf$value,resd=trf$value)
+				j <- j + 1
+			}
+		}
+	}
+
+	return(ldf)
+}	
+#' plot_sizeComps
+#' Get observed and predicted size composition values
+#'
+#'
+#'
+#' @param M List object(s) created by read_admb function
+#' @return Plots of observed and predicted size composition values
+#' @author SJD Martell
+#' @export
+#'
+plot_sizeComps <- function( M ,which_plots="all")
+{
+	
+	mdf <- .get_sizeComps_df( M )
+	ix <- pretty(1:length(M[[1]]$mid_points))
+	p <- ggplot(data=mdf[[1]])
+	p <- p + geom_bar(aes(variable,value),stat="identity",position="dodge",alpha=0.5,fill="grey")
+	p <- p + geom_line(aes(as.numeric(variable),pred,col=model),alpha=0.85)
+	p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
+	p <- p + labs(x="Size (mm)",y="Proportion",col="Model",fill="Sex",linetype="Fleet")
+	p <- p + ggtitle("title")
+	p <- p + facet_wrap(~year) + .THEME
+	# p <- p + facet_grid(irow~icol,labeller=label_both) + .THEME
+	p <- p + theme(axis.text.x = element_text(angle=45,vjust=0.5))
+
+	fun <- function(x,p)
+	{
+		p$labels$title = paste("Gear =",unique(x$fleet),", Sex =",unique(x$sex))
+		p %+% x
+	}
+	plist <- lapply(mdf,fun,p=p)
+	
+
+	if ( which.plot == "all" )
+	{
+		print( plist )
+	}
+	else 
+	{
+		print( plist[[which.plot]] )
+	}
+
 }
 
-#' Plot observed and predicted size composition
-#'
-#' TODO: Insert more information here.
-#'
-#' @param replist List object created by read_admb function
-#' @return Plot of observed and predicted size composition
-#' @export
-plot_sizecomp <- function(replist,which_plots="all"){
-  A <- replist
-  sdf <- get_sizecomp(replist)
 
-  p <- ggplot(data=sdf[[1]])
-  p <- p + geom_bar(aes(variable,value),stat="identity")
-  p <- p + geom_line(aes(as.numeric(variable),pred),col="red")
-  p <- p + scale_x_discrete(breaks=pretty(A$mid_points)) 
-  p <- p + labs(x="Size (mm)",y="proportion ")
-  p <- p + facet_wrap(~year) + ggtheme
-  
-  if (which_plots=="all")
-    pSizeComps <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)
-  else
-  {
-    if (!is.numeric(which_plots)) 
-      {
-        print("Error, need numeric argument for which_plots=") 
-        stop()
-      }
-    pSizeComps <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)[which_plots]
-  }
-  return(pSizeComps)
+#' plot_sizeCompRes
+#' Get observed and predicted size composition values
+#'
+#'
+#'
+#' @param M List object(s) created by read_admb function
+#' @return Plots of observed and predicted size composition values
+#' @author SJD Martell
+#' @export
+#'
+plot_sizeCompRes <- function( M, which.plot="all" )
+{
+	mdf <- .get_sizeComps_df( M )
+	p <- ggplot(data=mdf[[1]])
+	p <- p + geom_point(aes(factor(year),variable,col=factor(sign(resd)),size=abs(resd)),alpha=0.6)
+	p <- p + scale_size_area(max_size=10)
+	p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
+	p <- p + scale_x_discrete(breaks=pretty(mdf[[1]]$mod_yrs))
+  	p <- p + scale_y_discrete(breaks=pretty(mdf[[1]]$mid_points))
+  	p <- p + facet_wrap(~model)+ .THEME
+
+  	fun <- function(x,p)
+  	{
+  		p %+% x
+  	}
+  	plist <- lapply(mdf,fun,p=p)
+  	if ( which.plot == "all" )
+  	{
+  		print( plist )
+  	}
+  	else
+  	{
+  		print( plist[[which.plot]] )
+  	}
 }
-
-#' Plot size composition residuals
-#'
-#' TODO: Insert more information here.
-#'
-#' @param replist List object created by read_admb function
-#' @return Bubble plot of size composition residuals
-#' @export
-plot_sizecomp_res <- function(replist,which_plots="all"){
-  A <- replist
-  sdf <- get_sizecomp(replist)
-
-  p <- ggplot(data=sdf[[1]])
-  p <- p + geom_point(aes(x=factor(year),variable,col=factor(sign(resid)),size=abs(resid))
-                      ,alpha=0.6)
-  p <- p + scale_size_area(max_size=10)
-  p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
-  p <- p + scale_x_discrete(breaks=pretty(A$mod_yrs))
-  p <- p + scale_y_discrete(breaks=pretty(A$mid_points))
-  p <- p + ggtheme
-  if (which_plots=="all")
-    pSizeComps <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)
-  else
-  {
-    if (!is.numeric(which_plots)) 
-      {
-        print("Error, need numeric argument for which_plots=") 
-        stop()
-      }
-    pSizeComps <- lapply(sdf,FUN = function(x,p){p %+% x},p=p)[which_plots]
-  }
-  return(pSizeComps)
 }
