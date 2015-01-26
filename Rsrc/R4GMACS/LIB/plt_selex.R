@@ -6,6 +6,7 @@ plot.selex <- function( M )
 	mdf <- NULL
 	for(i in 1:n)
 	{
+		A  <- M[[i]]
 		df <- data.frame(Model=names(M)[i],
 		                 M[[i]]$slx_capture)
 		colnames(df) <- c("Model","year","sex","fleet",as.character(A$mid_points))

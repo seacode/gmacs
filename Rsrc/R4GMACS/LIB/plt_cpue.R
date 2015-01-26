@@ -1,6 +1,6 @@
 # plt_cpue.R
 
-.getDF <- function( M )
+.getCPUEdf <- function( M )
 {
 	n   <- length(M)
 	mdf <- NULL
@@ -28,7 +28,7 @@
 plot.cpue <- function( M )
 {
 	
-	mdf <- .getDF( M )
+	mdf <- .getCPUEdf( M )
 
 	p  <- ggplot(mdf,aes(year,cpue,col=factor(sex)))
 	p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb,col=factor(sex)))
@@ -50,7 +50,7 @@ plot.cpue <- function( M )
 plot.cpue.res <- function( M )
 {
 	
-	mdf <- .getDF( M )
+	mdf <- .getCPUEdf( M )
 
 	p  <- ggplot(mdf,aes(year,resd))
 	if(.OVERLAY)
