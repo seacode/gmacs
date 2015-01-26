@@ -1,14 +1,13 @@
-#' Get observed and predicted size composition values
-#'
-#'
-#'
-#' @param M List object(s) created by read_admb function
-#' @return List of observed and predicted size composition values
-#' @author SJD Martell
-#' @export
-#'
-#'
-.get_sizeComps_df <- function(M)
+# plt_sizeComps.R
+
+# Agorithm for sorting factors so plots descend in rows.
+# 1. get length of 1d ribbon (n)
+# 2. determine ncol = ceiling(n/sqrt(n))
+# 3. determine nrow = ceiling(n/ncol)
+# 4. convert year vector into matrix with nrow & ncol
+# 5. transpose & vectorize as.vector(t(matrix(yr,nrow,ncol)))
+# 6. Use this as levels for years factor.
+get.df <- function(M) 
 {
 	n   <- length(M)
 	ldf <- list()
@@ -94,20 +93,12 @@
 
 	return(ldf)
 }	
-#' plot_sizeComps
-#' Get observed and predicted size composition values
-#'
-#'
-#'
-#' @param M List object(s) created by read_admb function
-#' @return Plots of observed and predicted size composition values
-#' @author SJD Martell
-#' @export
-#'
-plot_sizeComps <- function( M ,which_plots="all")
+
+
+plot.sizeComps <- function( M, which.plot="all" )
 {
 	
-	mdf <- .get_sizeComps_df( M )
+	mdf <- get.df( M )
 	ix <- pretty(1:length(M[[1]]$mid_points))
 	p <- ggplot(data=mdf[[1]])
 	p <- p + geom_bar(aes(variable,value),stat="identity",position="dodge",alpha=0.5,fill="grey")
@@ -139,19 +130,9 @@ plot_sizeComps <- function( M ,which_plots="all")
 }
 
 
-#' plot_sizeCompRes
-#' Get observed and predicted size composition values
-#'
-#'
-#'
-#' @param M List object(s) created by read_admb function
-#' @return Plots of observed and predicted size composition values
-#' @author SJD Martell
-#' @export
-#'
-plot_sizeCompRes <- function( M, which.plot="all" )
+plot.SizeCompRes <- function( M, which.plot="all" )
 {
-	mdf <- .get_sizeComps_df( M )
+	mdf <- get.df( M )
 	p <- ggplot(data=mdf[[1]])
 	p <- p + geom_point(aes(factor(year),variable,col=factor(sign(resd)),size=abs(resd)),alpha=0.6)
 	p <- p + scale_size_area(max_size=10)
@@ -174,4 +155,8 @@ plot_sizeCompRes <- function( M, which.plot="all" )
   		print( plist[[which.plot]] )
   	}
 }
-}
+
+
+
+
+
