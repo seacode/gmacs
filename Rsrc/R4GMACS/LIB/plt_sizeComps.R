@@ -130,6 +130,7 @@ plot.sizeComps <- function( M, which.plot="all" )
 }
 
 
+# Residual bubble plots
 plot.SizeCompRes <- function( M, which.plot="all" )
 {
 	mdf <- get.df( M )
