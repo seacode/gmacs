@@ -45,6 +45,7 @@ names(M) <- basename(.MODELDIR)
 	plot_growthTransition( M )
 	plot_sizeTransition( M )
 	plot_selectivity( M )
+	plot_sizeComps( M[1], 1 )
 	plot_sizeComps( M, 1 )
 
 # Set working directory to that containing Gmacs model results:

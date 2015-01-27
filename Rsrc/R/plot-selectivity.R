@@ -3,7 +3,7 @@
 #' @param replist List object created by read_admb function
 #' @return List of selectivities
 #' @export
-.get_selectivity_df <- function(replist)
+.get_selectivity_df <- function(M)
 {
 	n   <- length(M)
 	mdf <- NULL
@@ -28,7 +28,8 @@
 #' @return Plot of selectivity
 #' @author SJD Martell
 #' @export
-plot_selectivity <- function(replist){
+plot_selectivity <- function( M ){
+	mdf <- .get_selectivity_df(M)
 	p <- ggplot(mdf)
 	if(.OVERLAY)
 	{
