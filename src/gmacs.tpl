@@ -6,6 +6,9 @@
 //            and Alaska Fisheries Science Centre, Seattle
 //
 //   Info: https://github.com/seacode/gmacs Copyright (C) 2014. All rights reserved.
+//   
+//  ACKNOWLEDGEMENTS
+// 		- finacial support provided by NOAA and Bering Sea Fisheries Research Foundation.
 //
 //  INDEXES:
 //    g = group
@@ -2193,6 +2196,8 @@ FUNCTION calc_objective_function
 	{
 		dvariable s     = mean(log_fdev(k));
 		nlogPenalty(1) += 10000.0*s*s;
+		dvariable r     = mean(log_fdov(k));
+		nlogPenalty(1) += 10000.0*r*r;
 	}
 
 
@@ -2419,6 +2424,7 @@ REPORT_SECTION
 	    	N_len(i,j) += d3_N(k,i,j);
 	    }
 
+	
 	REPORT(N_len);
 	REPORT(N_mm);
 	REPORT(N_males);
