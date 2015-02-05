@@ -1477,69 +1477,9 @@ FUNCTION calc_initial_numbers_at_length
 
 		
 	}
-	if(verbose) COUT(d3_N(1))
-	// cout<<"End of calc_initial_numbers_at_length"<<endl;
-
-
-
-	// DEPRECATE, used for checking analytical soln.
-	// Solve for stable distribution numerically.
-	// int ig,h,o,m;
-	// int iter = 0;
-//  dvar_vector t1(1,nclass);
-//  dvar_matrix At(1,nclass,1,nclass);
-//  dvar_matrix Bt(1,nclass,1,nclass);
-//
-//  do
-//  {
-//      for( ig = 1; ig <= n_grp; ig++ )
-//      {
-//          h = isex(ig);
-//          m = imature(ig);
-//          o = ishell(ig);
-//          
-//          if( o == 1 )    // newshell
-//          {
-//              At = growth_transition(h);
-//              for(int l = 1; l <= nclass; l++ )
-//              {
-//                  At(l) *= S(h)(syr)(l);
-//              }
-//
-//              x = d3_N(ig)(syr);
-//              d3_N(ig)(syr) = elem_prod(molt_probability(h), x) * At + rt;
-//          }
-//
-//          if( o == 2 )    // oldshell
-//          {
-//              x  = d3_N(ig)(syr);
-//              y  = d3_N(ig-1)(syr);
-//              t1 = elem_prod(1.0 - molt_probability(h),S(h)(syr));
-//              
-//              // add oldshell non-terminal molts to newshell
-//              d3_N(ig-1)(syr) += elem_prod(molt_probability(h), x) * At;
-//
-//              // oldshell
-//              d3_N(ig)(syr) = elem_prod(t1,x+d3_N(ig-1)(syr));
-//          }
-//
-//          if ( o == 1 && m == 2 )     // terminal molt to new shell.
-//          {
-//
-//          }
-//
-//          if ( o == 2 && m == 2 )     // terminal molt newshell to oldshell.
-//          {
-//
-//          }
-//
-//      }
-//  }while(iter++ <= 4*nclass);
-	
-
-
 	
 	if(verbose) COUT(d3_N(1)(syr));
+	// cout<<"End of calc_initial_numbers_at_length"<<endl; 
 	
 
 	/**
