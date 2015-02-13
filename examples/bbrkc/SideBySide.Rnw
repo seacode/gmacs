@@ -1,0 +1,39 @@
+\documentclass{article}
+
+\begin{document}
+
+#Appendix 
+The following summarizes the outcome of some rudimentary comparisons between the existing BBRKC model and an emulated version using the gmacs platform.
+## Size specific schedules
+### Mean weight-at-length
+The values used in both models are nearly identical:
+  
+Initial recruitment size distribution
+Gmacs was configured to match the Zheng et al. (2014) model closely and this was achieved: 
+ 
+
+Numbers at length in 1975
+The scale of these results is quite similar. However, a similar plot for 2014 numbers was less similar, presumably due to survey selectivity issues.
+ 
+Numbers at length in 2014
+Time series results/comparisons
+Natural mortality
+The figure below illustrates implementation of 4 step changes in M (freely estimated) in gmacs relative to the estimates from Zheng et al. 2014.
+ 
+Recruitment
+Recruitment
+Fit to survey abundance indices
+The model fit to survey biomass (males) was better for the current model (at least visually) than for the current implementation of gmacs:
+ 
+Molting probability
+
+Transition x molting probability figure
+
+Estimated retained catch and discards, for whole period
+This figure summarizes the observed (horizontal) and predicted (vertical) catches by gear type. Data for discard fisheries were read in with 100% mortality (as clarified in Table 1 of Zheng et al. 2014).
+ 
+
+
+
+
+\end{document}
