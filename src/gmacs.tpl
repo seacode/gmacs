@@ -814,6 +814,8 @@ PARAMETER_SECTION
 	sdreport_vector sd_log_mmb(syr,nyr);
 
 
+	friend_class population_model;
+
 PRELIMINARY_CALCS_SECTION
 	if( simflag )
 	{
