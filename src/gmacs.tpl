@@ -117,7 +117,8 @@ DATA_SECTION
 	// | MODEL DIMENSIONS |
 	// |------------------|
 	///> initial year
-	init_int syr;     
+	init_int syr;
+
 
 	///> terminal year
 	init_int nyr;         
@@ -961,7 +962,8 @@ FUNCTION initialize_model_parameters
 	 *  -# Create a pointer array with length = number of blocks
 	 *  -# Based on slx_type, fill pointer with parameter estimates.
 	 *  -# Loop over years and block-in the log_selectivity at mid points.
-	 *  
+	 * 	
+	 * 	 Need to deprecate the abstract class for selectivity, 7X slower. 
 	 */
 FUNCTION calc_selectivities
 	int h,i,j,k;
@@ -2616,6 +2618,7 @@ GLOBALS_SECTION
 
 	#include <admodel.h>
 	#include <time.h>
+	//#include "./test/comm.h"
 	//#include <contrib.h>
 	#if defined __APPLE__ || defined __linux
 	#include "./include/libgmacs.h"
