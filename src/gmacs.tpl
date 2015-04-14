@@ -1950,6 +1950,43 @@ FUNCTION calc_predicted_composition
 		
 	}
 	
+FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const double &p1, const double &p2)
+	{
+		dvariable priorDensity;
+		switch(pType)
+			{
+				// uniform
+				case 0: 
+					priorDensity = -log(1.0 / (p2-p1));
+				break;
+
+				// normal
+				case 1:
+					priorDensity = dnorm(theta,p1,p2);
+				break;
+
+				// lognormal
+				case 2:
+					priorDensity = dlnorm(theta,log(p1),p2);
+				break;
+
+				// beta
+				case 3:
+					//lb = theta_control(i,2);
+					//ub = theta_control(i,3);
+					//priorDensity = dbeta((theta-lb)/(ub-lb),p1,p2);
+					priorDensity = dbeta(theta,p1,p2);
+				break;
+
+				// gamma
+				case 4:
+					priorDensity = dgamma(theta,p1,p2);
+				break;
+			}
+
+			return priorDensity;
+	}
+
 
 	/**
 	 * @brief Calculate prior density functions for leading parameters.
@@ -1975,45 +2012,38 @@ FUNCTION calculate_prior_densities
 	
 	for(int i = 1; i <= ntheta; i++ )
 	{
-		// for(int j = 1; j <= ipar_vector(i); j++ )
-		{
 			int priorType = int(theta_control(i,5));
 			p1 = theta_control(i,6);
 			p2 = theta_control(i,7);
-			switch(priorType)
+			dvariable x = theta(i);
+			if(priorType == 3)
 			{
-				// uniform
-				case 0: 
-					priorDensity(i) = -log(1.0 / (p2-p1));
-				break;
-
-				// normal
-				case 1:
-					priorDensity(i) = dnorm(theta(i),p1,p2);
-				break;
-
-				// lognormal
-				case 2:
-					priorDensity(i) = dlnorm(theta(i),log(p1),p2);
-				break;
-
-				// beta
-				case 3:
-					lb = theta_control(i,2);
-					ub = theta_control(i,3);
-					priorDensity(i) = dbeta((theta(i)-lb)/(ub-lb),p1,p2);
-				break;
-
-				// gamma
-				case 4:
-					priorDensity(i) = dgamma(theta(i),p1,p2);
-				break;
+				lb = theta_control(i,2);
+				ub = theta_control(i,3);
+				x  = (x-lb)/(ub-lb);
 			}
-		}
+
+			priorDensity(i) = get_prior_pdf(priorType,x,p1,p2);
+	}
+
+	for(int i = 1; i <= nGrwth; i++ )
+	{
+			int priorType = int(Grwth_control(i,5));
+			p1 = Grwth_control(i,6);
+			p2 = Grwth_control(i,7);
+			dvariable x = Grwth(i);
+			if(priorType == 3)
+			{
+				lb = Grwth_control(i,2);
+				ub = Grwth_control(i,3);
+				x  = (x-lb)/(ub-lb);
+			}
+
+			priorDensity(ntheta+i) = get_prior_pdf(priorType,x,p1,p2);
 	}
 
 	// ---Continue with catchability priors-----------------------
-	int iprior = ntheta + 1; 
+	int iprior = ntheta + nGrwth + 1; 
 	for (int i=1;i<=nSurveys;i++)
 	{
 		int itype = int(prior_qtype(i));
