@@ -19,7 +19,7 @@ plot_naturalmortality <- function(M,plt_surface=FALSE)
           as.data.frame(cbind(as.numeric(A$mod_yrs), .SEX[A$sex+1], M[[i]]$M)
             ))
     colnames(df) <- c("Model","Year","sex",as.character(A$mid_points))
-    df <- filter(df,A$mid_points = A$mid_points[1])
+    df <- mean(df,A$mid_points = A$mid_points[1])
     mdf    <- melt(df,id=c("Model","sex","Year"),value.name="M")
   }
   
