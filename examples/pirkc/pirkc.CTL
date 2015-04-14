@@ -62,12 +62,12 @@
 ## Selectivity P(capture of all sizes)
 ## Fishery has no lencomp; set sel at legal size; use trawl sel from BBRKC
    1      3   137.9   138      0    1      1     -1      12.5  12.5  12.5   1975   2014
-   2      3   100.00  130      0    1      1     -2      12.5  12.5  12.5   1975   2014 
+   2      3   120.00  130      0    1      1     -2      12.5  12.5  12.5   1975   2014 
    3      3     80      100    0    1      1      2      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
   -1      3   137.9   138      0    1      1     -1      12.5  12.5  12.5   1975   2014
-  -2      2   164.84  0.053    0    1      1     -2      12.5  12.5  12.5   1975   2014 
+  -2      2   1604.84  0.053    0    1      1     -2      12.5  12.5  12.5   1975   2014 
   -3      3     80      100    0    1      1      2      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -130,7 +130,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
-  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+  2       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2014    # Last year for average recruitment for Bspr calculation.
