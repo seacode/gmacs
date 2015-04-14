@@ -1,41 +1,32 @@
 #' Plot size transition
 #'
-#' @param replist List object created by read_admb function
+#' @param M List of object(s) created by read_admb function
 #' @return Plot of size transition matrix
+#' @author SJD Martell
 #' @export
-plot_sizetransition <- function(replist){
-  A    <- replist
-  df   <- data.frame(stm = A$size_transition_M,stm_f = A$size_transition_F)
-  colnames(df) <- A$mid_points
-  nrow   <- dim(A$size_transition_M)[2]
-  df$sex <- c(rep(1,length=nrow),rep(2,length=nrow))
-  df$col <- A$mid_points
-  mdf    <- melt(df,id=c("sex","col"))
-  
-  p <- ggplot(mdf)
-  p <- p + geom_point(aes(variable,col,size=value),alpha=0.4,col="red")
-  p <- p + scale_size_area(max_size=10)
-  p <- p + labs(x="Post-molt carapace width",y="Pre-molt carapace width",size="Probability")
-  p <- p + facet_wrap(~sex)
-  pSizeTransition <- p
-  return(pSizeTransition)
-}
+plot_sizeTransition <- function(M)
+{
+	n   <- length(M)
+	mdf <- NULL
+	for(i in 1:n)
+	{
+		x = M[[i]]$mid_points
+		G = M[[i]]$tS
+		h = dim(G)[1]/dim(G)[2]
+		colnames(G) = paste(x)
+		s  = .SEX[as.vector(sapply(1:h,rep,20))+1]
+		df = data.frame(Model=names(M)[i],mp=x,sex=s,G)
 
-# THis routine includs the molting probability
-plot_growthtransition <- function(replist){
-  A    <- replist
-  df   <- data.frame(stm = A$size_transition %*% A$P)
-  colnames(df) <- A$mid_points
-  nrow   <- dim(A$size_transition)[2]
-  df$sex <- c(rep(1,length=nrow),rep(2,length=nrow))
-  df$col <- A$mid_points
-  mdf    <- melt(df,id=c("sex","col"))
-  
-  p <- ggplot(mdf)
-  p <- p + geom_point(aes(variable,col,size=value),alpha=0.4,col="red")
-  p <- p + scale_size_area(max_size=10)
-  p <- p + labs(x="Post-molt carapace width",y="Pre-molt carapace width",size="Probability")
-  p <- p + facet_wrap(~sex)
-  pGrowthTransition <- p
-  return(pGrowthTransition)
+		mdf <- rbind(mdf,df)
+	}
+	mdf = melt(mdf,id.var=c("Model","sex","mp"))
+
+	p <- ggplot(mdf,aes(x=mp,y=value,col=Model,linetype=factor(sex)))
+	p <- p + geom_line() 
+	p <- p + labs(x="Size Bin (mm)",y="P(size transition|molt)",linetype="Sex")
+	p <- p + facet_wrap(~variable)
+	# if(!.OVERLAY) p <- p + facet_wrap(~Model)
+
+	print(p + .THEME)
+
 }

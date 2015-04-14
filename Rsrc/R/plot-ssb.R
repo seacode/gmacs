@@ -1,26 +1,51 @@
-#' Plot predicted spawning stock biomass (ssb)
+
+#' Extract spawning stock biomass (ssb)from gmacs run
 #'
 #' Spawning biomass may be defined as all males or some combination of males and females
 #'
 #' @param replist List object created by read_admb function
-#' @return Plot of predicted mature male biomass
+#' @return Dataframe of spawning biomass
+#' @author SJD Martell
 #' @export
-plot_ssb <- function(replist){
-
-  df <- get_ssb(replist)
-  #A <- replist
-#
-  #dfpar   <- data.frame(par=A$fit$names,log_mmb=A$fit$est,log_sd=A$fit$std)
-  #df      <- subset(dfpar,par=="sd_log_mmb")[,-1]
-  #df$year <- A$mod_yrs
-  #df$lb   <- exp(df$log_mmb - 1.96*df$log_sd)
-  #df$ub   <- exp(df$log_mmb + 1.96*df$log_sd)
-#
-  p <- ggplot(df)
-  p <- p + geom_line(aes(x=year,y=exp(log_mmb)))
-  p <- p + geom_ribbon(aes(x=year,ymax=ub,ymin=lb),alpha=0.3)
-  p <- p + labs(x="Year",y="Spawning biomass")
-
-  pSSB <- p + ggtheme
-  return(pSSB)
+.get_ssb_df <- function(M)
+{
+	n   <- length(M)
+	mdf <- NULL
+	for(i in 1:n)
+	{
+		A  <- M[[i]]
+		df <- data.frame(Model=names(M)[i],
+		                 par = A$fit$names,
+		                 log_mmb=A$fit$est,
+		                 log_sd=A$fit$std)
+		df      <- subset(df,par == "sd_log_mmb")
+		df$year <- A$mod_yrs
+		df$mmb  <- exp(df$log_mmb)
+		df$lb   <- exp(df$log_mmb - 1.96*df$log_sd)
+		df$ub   <- exp(df$log_mmb + 1.96*df$log_sd)
+		mdf     <- rbind(mdf,df)
+	}
+	return(mdf)
 }
+#------------------------------------------------------------------
+#' Plot predicted spawning stock biomass (ssb)
+#'
+#' Spawning biomass may be defined as all males or some combination of males and females
+#'
+#' @param M List object(s) created by read_admb function
+#' @author SJD Martell
+#' @return Plot of model estimates of spawning stock biomass 
+#' @export
+plot_ssb <- function(M)
+{
+  mdf <- .get_ssb_df(M)
+	p <- ggplot(mdf)
+	p <- p + geom_line(aes(x=year,y=mmb,col=Model))
+	p <- p + geom_ribbon(aes(x=year,ymax=ub,ymin=lb,fill=Model),alpha=0.3)
+	p <- p + labs(x="Year",y="Spawning biomass")
+
+	if(!.OVERLAY) p <- p + facet_wrap(~Model)
+
+	print(p + .THEME)
+}
+
