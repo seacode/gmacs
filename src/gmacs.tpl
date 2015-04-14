@@ -852,12 +852,12 @@ PRELIMINARY_CALCS_SECTION
 PROCEDURE_SECTION
 	// Initialize model parameters
 	initialize_model_parameters();
-	if( verbose ) cout<<"Ok after initializing model parameters ..."<<endl;
+	if( verbose == 1) cout<<"Ok after initializing model parameters ..."<<endl;
 	
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
-	if( verbose ) cout<<"Ok after fleet dynamics ..."<<endl;
+	if( verbose == 1 ) cout<<"Ok after fleet dynamics ..."<<endl;
 
 	// Population dynamics ...
 	if(!bUseEmpiricalGrowth)
@@ -871,18 +871,18 @@ PROCEDURE_SECTION
 	calc_recruitment_size_distribution();
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
-	if( verbose ) cout<<"Ok after population dynamcs ..."<<endl;
+	if( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
 	calc_predicted_catch();
 	calc_relative_abundance();
 	calc_predicted_composition();
-	if( verbose ) cout<<"Ok after observation models ..."<<endl;
+	if( verbose == 1 ) cout<<"Ok after observation models ..."<<endl;
 
 	// objective function ...
 	calculate_prior_densities();
 	calc_objective_function();
-	if( verbose ) cout<<"Ok after objective function ..."<<endl;
+	if( verbose == 1 ) cout<<"Ok after objective function ..."<<endl;
 
 	// sd_report variables
 	if( last_phase() ) 
@@ -1483,7 +1483,7 @@ FUNCTION calc_initial_numbers_at_length
 		
 	}
 	
-	if(verbose) COUT(d3_N(1)(syr));
+	if(verbose == 1) COUT(d3_N(1)(syr));
 	// cout<<"End of calc_initial_numbers_at_length"<<endl; 
 	
 
@@ -1581,7 +1581,7 @@ FUNCTION update_population_numbers_at_length
 	}
 	
 	
-	if(verbose) COUT(d3_N(1)+d3_N(2));
+	if(verbose  == 1) COUT(d3_N(1)+d3_N(2));
 	
 
 
@@ -1683,6 +1683,7 @@ FUNCTION calc_predicted_catch
 						case 2:     // discard catch
 							sel = 
 								elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+							//COUT(sel)
 							for(int m = 1; m <= nmature; m++ )
 							{
 								for(int o = 1; o <= nshell; o++ )
@@ -1701,8 +1702,9 @@ FUNCTION calc_predicted_catch
 			}
 		}
 		// Catch residuals
-		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
-		if(verbose)COUT(pre_catch(kk)(1));
+		//COUT(pre_catch(kk));
+		res_catch(kk) = log(obs_catch(kk)+TINY) - log(pre_catch(kk)+TINY);
+		if(verbose == 1)COUT(pre_catch(kk)(1));
 	}
 
 	
@@ -2091,7 +2093,7 @@ FUNCTION calc_objective_function
 	nloglike.initialize();
 	
 	// 1) Likelihood of the catch data.
-	if(verbose) COUT(res_catch(1));
+	if(verbose == 1) COUT(res_catch(1));
 	for(int k = 1; k <= nCatchDF; k++ )
 	{
 		dvector catch_sd = sqrt( log( 1.0+square(catch_cv(k)) ) );
@@ -2102,7 +2104,7 @@ FUNCTION calc_objective_function
 
 
 	// 2) Likelihood of the relative abundance data.
-  if(verbose) COUT(res_cpue(1));
+  if(verbose == 1) COUT(res_cpue(1));
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
