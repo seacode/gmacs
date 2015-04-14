@@ -36,8 +36,8 @@ const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
 	int r2 = o.rowmax();
 	for(int i = r1; i <= r2; i++ )
 	{
-  	int c1 = o(i).indexmin();
-	  int c2 = o(i).indexmax();
+  		int c1 = o(i).indexmin();
+	  	int c2 = o(i).indexmax();
 		//scale observed numbers by effective sample size.
 		dvar_vector sobs = vn(i) * o(i)/sum(o(i));  
 		ff -= gammln(vn(i));

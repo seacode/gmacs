@@ -2123,7 +2123,7 @@ FUNCTION calc_objective_function
 
 
 	// 5) Likelihood for growth increment data
-	if( !bUseEmpiricalGrowth && ( active(theta(7)) || active(theta(8)) ) )
+	if( !bUseEmpiricalGrowth && ( active(Grwth(1)) || active(Grwth(2)) ) )
 	{
 		dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
 		nloglike(5,1)    = dnorm(log(dMoltInc) - log(MoltIncPred),dMoltIncCV);
