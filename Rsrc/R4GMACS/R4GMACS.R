@@ -16,7 +16,8 @@ library(dplyr)
 .PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/Rsrc/R4GMACS"
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
-.MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
+# .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
+.MODELDIR = c("../../examples/bbrkc/SRA-1/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")
