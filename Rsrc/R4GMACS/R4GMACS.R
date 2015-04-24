@@ -16,7 +16,7 @@ library(dplyr)
 .PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/Rsrc/R4GMACS"
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
-.MODELDIR = c("../../examples/bbrkc/OneSex/")#,"../../examples/bbrkc/TwoSex/")
+.MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")
@@ -34,11 +34,14 @@ fn       <- paste0(.MODELDIR,"gmacs")
 M        <- lapply(fn,read.admb)
 names(M) <- basename(.MODELDIR)
 
-# PLOT ROUTINES
-	# plot.ssb( M )
-	# plot.cpue( M )
+# PLOT ROUTINES	
+	png("figCatch.png",width=600,height=300,units="px",bg="transparent")
+	plot.catch( M[1] ); 			#ggsave("figCatch.png",bg="transparent")
+	dev.off();
+	plot.ssb( M )
+	plot.cpue( M )
 	plotGrowthTransition( M )
 	plotSizeTransition( M )
 	plot.selex  ( M )
-	plot.sizeComps ( M, 1 )
-	plot.SizeCompRes ( M, 1 ) 
+	plot.sizeComps ( M, 1 );   ggsave("figSizeComps.png")
+	plot.SizeCompRes ( M, 1 ); ggsave("figSizeCompResdiuals.png")

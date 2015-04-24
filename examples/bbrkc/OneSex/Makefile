@@ -21,3 +21,6 @@ clean:
 	rm -f $(EXEC)
 	rm -f admodel.*
 	rm -f $(EXEC)  $(EXEC).[brces]* $(EXEC).*[0123456789] *.rpt *.log variance
+
+clobber: clean
+	rm -f *.par *_in.* *.rep

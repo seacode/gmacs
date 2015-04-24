@@ -890,7 +890,7 @@ PROCEDURE_SECTION
 		calc_sdreport();
 	}
 	nf++;
-	exit(1);
+	
 
 	/**
 	 * @brief calculate sdreport variables in final phase
