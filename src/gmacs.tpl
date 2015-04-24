@@ -890,7 +890,7 @@ PROCEDURE_SECTION
 		calc_sdreport();
 	}
 	nf++;
-
+	exit(1);
 
 	/**
 	 * @brief calculate sdreport variables in final phase
@@ -1683,7 +1683,7 @@ FUNCTION calc_predicted_catch
 						case 2:     // discard catch
 							sel = 
 								elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
-							COUT(sel)
+							//COUT(sel)
 							for(int m = 1; m <= nmature; m++ )
 							{
 								for(int o = 1; o <= nshell; o++ )
