@@ -35,12 +35,12 @@ plot.selex <- function( M )
 	p <- ggplot(mdf)
 	if(.OVERLAY)
 	{
-		p <- p + geom_line(aes(as.numeric(variable),value,col=type,linetype=factor(year)))
+		p <- p + geom_line(aes(as.numeric(as.vector(variable)),value,col=type,linetype=factor(year)))
 		p <- p + facet_wrap(~Model+sex+fleet)
 	}
-	else
+	if(!.OVERLAY)
 	{
-		p <- p + geom_line(aes(as.numeric(variable),value,col=sex,linetype=factor(year)))
+		p <- p + geom_line(aes(as.numeric(as.vector(variable)),value,col=sex,linetype=factor(year)))
 		p <- p + facet_wrap(~Model+fleet+type)
 	}
 	p <- p + labs(y="Selectivity",

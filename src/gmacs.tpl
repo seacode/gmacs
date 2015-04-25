@@ -1084,8 +1084,16 @@ FUNCTION calc_fishing_mortality
 
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k);
+					
 					tmp = elem_prod(sel,ret + (1.0 - ret) * lambda);
 					
+					if(sum(tmp)==0 || min(tmp) < 0)
+					{
+						cerr <<"Selectivity vector for gear "<<k<<" is all 0's ";
+						cerr <<"Please fix the selectivity controls."<<endl;
+						COUT(tmp);
+						exit(1);
+					}
 					F(h)(i) += ft(k,h,i) * tmp;
 				}
 			}
@@ -2120,12 +2128,16 @@ FUNCTION calc_objective_function
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 		dvar_vector log_effn  = log(exp(log_vn(ii)) * size_comp_sample_size(ii));
+		d3_res_size_comps.initialize();
 
 		bool bCmp = bTailCompression(ii);
 		acl::negativeLogLikelihood *ploglike;
 		
 		switch(nAgeCompType(ii))
 		{
+			case 0:  // ignore composition data in model fitting.
+				ploglike = NULL;
+			break;
 			case 1:  // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
 			break;
@@ -2138,13 +2150,16 @@ FUNCTION calc_objective_function
 			break;
 		}
 		// Compute residuals in the last phase.
-		if(last_phase()) 
+		if( last_phase() && ploglike != NULL ) 
 		{
 		  d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
 		}
 
 		// now compute the likelihood.
-		nloglike(3,ii) += ploglike->nloglike(log_effn,P);
+		if(ploglike != NULL)
+		{
+			nloglike(3,ii) += ploglike->nloglike(log_effn,P);			
+		}
 
 		
 	}
