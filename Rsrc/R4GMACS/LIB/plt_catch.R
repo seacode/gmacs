@@ -23,7 +23,7 @@ plot.catch <- function( M )
 	}
 
 	p <- ggplot(mdf,aes(x=as.integer(year),y=obs,fill=sex))
-	p <- p + geom_bar(stat="identity",position="dodge")
+	p <- p + geom_bar(stat="identity",position="dodge",alpha=0.5)
 	p <- p + geom_pointrange(aes(as.integer(year),obs,ymax=ub,ymin=lb,position="dodge"),size=0.5,alpha=0.5)
 	p <- p + geom_line(aes(x=as.integer(year),y=predicted),alpha=0.8)
 	p <- p + labs(x="Year",y="Catch (kt)",fill="Sex")

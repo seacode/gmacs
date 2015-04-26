@@ -2505,44 +2505,7 @@ FUNCTION dvar_vector calc_mmb()
 	return(mmb);
 
 
-// To be deprecated?
-//FUNCTION dvariable robust_multi(const dmatrix O, const dvar_matrix P, const dvar_vector lnN)
-//  /**
-//   * @brief Robustified Multinomial likleihood for composition data.
-//   * @details Follows Fournier's approach
-//   * 
-//   * @param lnN The assumed log of sample size 
-//   * @return returns the negative log likelihood.
-//   * 
-//   * TO BE Deprecated, now lives in robust_multi.cpp
-//   */   
-//	if( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )
-//	{
-//		cerr<<"Sample size index do not match row index in\
-//			   observed size composition matrix."<<endl;
-//		ad_exit(1);
-//	}
-//	RETURN_ARRAYS_INCREMENT();
-//	dvariable nll = 0;
-//	double tiny = 1.e-14;
-//	double  a  = .1/size_count(O(1));
-//	dvar_vector b  = exp(lnN);
-//
-//	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
-//	{
-//		dvector      o =  O(i) + tiny;
-//		dvar_vector  p =  P(i) + tiny;
-//		o /= sum(o);
-//		p /= sum(p);
-//
-//		dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
-//		dvar_vector l  =  elem_div(square(p - o), v );
-//		nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
-//		nll += 0.5 * sum(log(v));
-//
-//	}
-//	RETURN_ARRAYS_DECREMENT();
-//	return nll;
+
 
 
 	/**
@@ -2622,8 +2585,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	//spr *ptrSPR=nullptr;
 	spr *ptrSPR=0;
 
-
-
+	
 	// SPR reference points for a single shell condition.
 	if(nshell == 1)
 	{

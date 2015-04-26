@@ -232,7 +232,8 @@ double spr::get_fspr(const int& ifleet,
 			dmatrix sel = _sel(h);
 			dmatrix ret = _ret(h);
 			
-
+			
+			
 			
 			Z = m_M(h);
 			for( k = 1; k <= m_nfleet; k++ )
@@ -264,7 +265,6 @@ double spr::get_fspr(const int& ifleet,
 			{
 				dvector r = m_rbar/m_nsex * m_rx;
 				calc_equilibrium(n,o,m_A(h),S,m_P(h),r);
-				
 				double lam;
 				h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
 				m_ssb += lam * (n+o) * m_wa(h);
@@ -294,7 +294,7 @@ double spr::get_fspr(const int& ifleet,
 		{
 			fb = fc;
 		}
-		cout<<"iter = "<<iter<<"\tfc = "<<fc<<"\t"<<m_spr<<" - "<<spr_target<<" "<<t1<<endl;
+		cout<<"iter = "<<iter<<"\tfc = "<<fc<<"\t(spr-spr_target)="<<m_spr<<" - "<<spr_target<<" "<<t1<<endl;
 		fc = 0.5*(fa+fb);
 	} while (iter++ < MAXIT);
 

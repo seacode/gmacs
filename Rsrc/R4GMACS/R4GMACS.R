@@ -10,6 +10,15 @@ library(ggplot2)
 library(reshape2)
 library(dplyr)
 
+myTheme <- theme_bw(base_size = 12) +
+	theme(
+    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+    legend.background = element_blank(),
+    legend.key= element_blank(),
+    # panel.grid.minor = element_blank(), 
+    # panel.grid.major = element_blank(),
+    plot.background = element_rect(fill = "transparent",colour = NA)
+	) 
 
 # GLOBAL CONSTS
 .OVERLAY  = TRUE
@@ -18,7 +27,7 @@ library(dplyr)
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 # .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
 .MODELDIR = c("../../examples/bbrkc/SRA-1/")
-.THEME    = theme_bw(base_size = 12, base_family = "")
+.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
@@ -35,14 +44,14 @@ fn       <- paste0(.MODELDIR,"gmacs")
 M        <- lapply(fn,read.admb)
 names(M) <- basename(.MODELDIR)
 
+
 # PLOT ROUTINES	
-	png("figCatch.png",width=600,height=300,units="px",bg="transparent")
-	plot.catch( M[1] ); 			#ggsave("figCatch.png",bg="transparent")
-	dev.off();
+	
+	plot.catch( M[1] );       ggsave("figCatch.png",width=7,height=3.5,bg="transparent")			
 	plot.ssb( M )
 	plot.cpue( M )
 	plotGrowthTransition( M )
 	plotSizeTransition( M )
 	plot.selex  ( M )
-	plot.sizeComps ( M, 1 );   ggsave("figSizeComps.png")
-	plot.SizeCompRes ( M, 1 ); ggsave("figSizeCompResdiuals.png")
+	plot.sizeComps ( M, 1 );   ggsave("figSizeComps.png",bg="transparent")
+	plot.SizeCompRes ( M, 1 ); ggsave("figSizeCompResdiuals.png",bg="transparent")
