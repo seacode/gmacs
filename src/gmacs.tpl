@@ -531,18 +531,25 @@ DATA_SECTION
 		}
 	END_CALCS
 
+
 	// |---------------------------------------------------------|
 	// | PRIORS FOR CATCHABILITIES FOR INDICES                   |
 	// |---------------------------------------------------------|
-	init_matrix q_controls(1,nSurveys,1,3);
+	init_matrix q_controls(1,nSurveys,1,4);
 	vector prior_qbar(1,nSurveys);
 	vector prior_qsd(1,nSurveys);
 	vector prior_qtype(1,nSurveys);
+	vector cpue_lambda(1,nSurveys);
 	LOC_CALCS
 		prior_qtype = column(q_controls,1);
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
-		WriteCtl(q_controls); ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); 
+		cpue_lambda = column(q_controls,4);
+		WriteCtl(q_controls); 
+		ECHO(prior_qtype); 
+		ECHO(prior_qbar); 
+		ECHO(prior_qsd); 
+		ECHO(cpue_lambda);
 	END_CALCS
 
 
@@ -812,6 +819,7 @@ PARAMETER_SECTION
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
+	sdreport_vector sd_fbar(1,nfleet);
 	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector sd_log_mmb(syr,nyr);
 
@@ -899,6 +907,11 @@ FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
 	sd_log_mmb = log(calc_mmb());
 	
+	for(int k = 1; k <= nfleet; k++ )
+	{
+		sd_fbar(k) = mean(ft(k));
+		
+	}
 	
 	
 
@@ -1515,7 +1528,14 @@ FUNCTION update_population_numbers_at_length
 	dvar_matrix t1(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
-	recruits(syr+1,nyr) = mfexp(logRbar);
+	if ( bInitializeUnfished )
+	{
+		recruits(syr+1,nyr) = mfexp(logR0);
+	}
+	else
+	{
+		recruits(syr+1,nyr) = mfexp(logRbar);	
+	}
 
 	for( i = syr; i <= nyr; i++ )
 	{
@@ -2116,7 +2136,7 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
-		nloglike(2,k) += dnorm(res_cpue(k),cpue_sd(k));
+		nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k),cpue_sd(k));
 	}
 
 
@@ -2196,11 +2216,14 @@ FUNCTION calc_objective_function
 	// 2) Penalty on mean F to regularize the solution.
 	int irow=1;
 	if(last_phase()) irow=2;
-	dvariable fbar;
+	dvariable log_fbar;
 	for(int k = 1; k <= nfleet; k++ )
 	{
-		fbar = mean(ft(k));
-		nlogPenalty(2) += dnorm(fbar,pen_fbar(k),pen_fstd(irow,k));
+		if(pen_fbar(k) > 0 )
+		{
+			log_fbar = log(mean(ft(k)));
+			nlogPenalty(2) += dnorm(log_fbar,log(pen_fbar(k)),pen_fstd(irow,k));			
+		}
 	}
 
 

@@ -26,7 +26,7 @@ myTheme <- theme_bw(base_size = 12) +
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 # .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
-.MODELDIR = c("../../examples/bbrkc/SRA-1/")
+.MODELDIR = c("../../examples/bbrkc/M1/")
 .THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")
@@ -47,9 +47,9 @@ names(M) <- basename(.MODELDIR)
 
 # PLOT ROUTINES	
 	
-	plot.catch( M[1] );       ggsave("figCatch.png",width=7,height=3.5,bg="transparent")			
-	plot.ssb( M )
-	plot.cpue( M )
+	plot.catch( M[1] );       ggsave("figCatch.png",width=7,height=3,bg="transparent")			
+	plot.ssb( M );			  ggsave("figMMB.png",width=7,height=3,bg="transparent")	
+	plot.cpue( M );			  ggsave("figCPUE.png",width=7,height=3,bg="transparent")
 	plotGrowthTransition( M )
 	plotSizeTransition( M )
 	plot.selex  ( M )
