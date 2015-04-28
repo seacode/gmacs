@@ -1454,7 +1454,9 @@ FUNCTION calc_recruitment_size_distribution
 	 *  then n = C^(-1) r                           (4)
 	 *  –––-—————————————————————————————————————————————————————————————————————————----
 	 *  –––-—————————————————————————————————————————————————————————————————————————----   
-	 *  
+	 * 
+	 *  April 28, 2015.  There is no case here for initializing the model at unfished
+	 *  equilibrium conditions.  Need to fix this for SRA purposes.  SJDM. 
 	 *  
 	 */
 FUNCTION calc_initial_numbers_at_length
@@ -1482,16 +1484,32 @@ FUNCTION calc_initial_numbers_at_length
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
+	dvar_matrix _S(1,nclass,1,nclass);
+	_S.initialize();
 
 
 	for(int h = 1; h <= nsex; h++ )
 	{
 		A = growth_transition(h);
+		
+		// Unfished conditions
+		if ( bInitializeUnfished )
+		{
+			for(int i = 1; i <= nclass; i++ )
+			{
+				_S(i,i) = exp(-M(h)(syr)(i));
+			}
+		}
+		// Steady-state fished conditions
+		else
+		{
+			_S = S(h)(syr);
+		}
 
 		// Single shell condition
 		if ( nshell == 1 && nmature == 1)
 		{
-			calc_equilibrium(x,A,S(h)(syr),rt);
+			calc_equilibrium(x,A,_S,rt);
 			ig = pntr_hmo(h,1,1);
 			d3_N(ig)(syr) = elem_prod(x , exp(rec_ini));
 		}
@@ -1499,9 +1517,9 @@ FUNCTION calc_initial_numbers_at_length
 		// Continuous molt (newshell/oldshell)
 		if ( nshell == 2 && nmature == 1)
 		{
-			calc_equilibrium(x,y,A,S(h)(syr),P(h),rt);
+			calc_equilibrium(x,y,A,_S,P(h),rt);
 			ig = pntr_hmo(h,1,1);
-			d3_N(ig)(syr) = elem_prod(x , exp(rec_ini));;
+			d3_N(ig)(syr)   = elem_prod(x , exp(rec_ini));;
 			d3_N(ig+1)(syr) = elem_prod(y , exp(rec_ini));;
 		}
 
@@ -1988,39 +2006,49 @@ FUNCTION calc_predicted_composition
 	
 FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const double &p1, const double &p2)
 	{
-		dvariable priorDensity;
+		dvariable prior_pdf;
 		switch(pType)
 			{
 				// uniform
 				case 0: 
-					priorDensity = -log(1.0 / (p2-p1));
+					if (p2 > p1)
+					{
+						prior_pdf = -log(1.0 / (p2-p1));
+					}
+					else
+					{
+						cerr <<"Error in uniform prior, p1 > p2.\n";
+						ad_exit(1);
+					}
 				break;
 
 				// normal
 				case 1:
-					priorDensity = dnorm(theta,p1,p2);
+					COUT(p1);COUT(p2);
+					prior_pdf = dnorm(theta,p1,p2);
+					COUT(prior_pdf);
 				break;
 
 				// lognormal
 				case 2:
-					priorDensity = dlnorm(theta,log(p1),p2);
+					prior_pdf = dlnorm(theta,log(p1),p2);
 				break;
 
 				// beta
 				case 3:
 					//lb = theta_control(i,2);
 					//ub = theta_control(i,3);
-					//priorDensity = dbeta((theta-lb)/(ub-lb),p1,p2);
-					priorDensity = dbeta(theta,p1,p2);
+					//prior_pdf = dbeta((theta-lb)/(ub-lb),p1,p2);
+					prior_pdf = dbeta(theta,p1,p2);
 				break;
 
 				// gamma
 				case 4:
-					priorDensity = dgamma(theta,p1,p2);
+					prior_pdf = dgamma(theta,p1,p2);
 				break;
 			}
 
-			return priorDensity;
+			return prior_pdf;
 	}
 
 
@@ -2048,6 +2076,8 @@ FUNCTION calculate_prior_densities
 	
 	for(int i = 1; i <= ntheta; i++ )
 	{
+		if( active(theta(i) ))
+		{
 			int priorType = int(theta_control(i,5));
 			p1 = theta_control(i,6);
 			p2 = theta_control(i,7);
@@ -2060,10 +2090,14 @@ FUNCTION calculate_prior_densities
 			}
 
 			priorDensity(i) = get_prior_pdf(priorType,x,p1,p2);
+		}
 	}
 
 	for(int i = 1; i <= nGrwth; i++ )
 	{
+		if( active(Grwth(i)) )
+		{
+
 			int priorType = int(Grwth_control(i,5));
 			p1 = Grwth_control(i,6);
 			p2 = Grwth_control(i,7);
@@ -2076,6 +2110,7 @@ FUNCTION calculate_prior_densities
 			}
 
 			priorDensity(ntheta+i) = get_prior_pdf(priorType,x,p1,p2);
+		}
 	}
 
 	// ---Continue with catchability priors-----------------------
@@ -2382,6 +2417,7 @@ REPORT_SECTION
 	REPORT(recruits);
 	REPORT(d3_N);
 	REPORT(M);
+	REPORT(Z);
 	REPORT(mean_wt);
 	REPORT(molt_probability);	///> vector of molt probabilities
 

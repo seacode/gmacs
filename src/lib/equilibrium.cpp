@@ -117,7 +117,7 @@ void calc_equilibrium(dvar_vector& n,
 	D = trans(Id - C - (Id-P)*S*B*C);
 
 	// COUT(A);
-	// COUT(inv(D)*r);
+	//COUT(inv(D)*r);
 
 	n = solve(D,r);			// newshell
 	o = n*((Id-P)*S*B);		// oldshell
