@@ -46,12 +46,14 @@ names(M) <- basename(.MODELDIR)
 
 
 # PLOT ROUTINES	
-	
-	plot.catch( M[1] );       ggsave("figCatch.png",width=7,height=3,bg="transparent")			
-	plot.ssb( M );			  ggsave("figMMB.png",width=7,height=3,bg="transparent")	
-	plot.cpue( M );			  ggsave("figCPUE.png",width=7,height=3,bg="transparent")
-	plotGrowthTransition( M )
-	plotSizeTransition( M )
-	plot.selex  ( M )
-	plot.sizeComps ( M, 1 );   ggsave("figSizeComps.png",bg="transparent")
-	plot.SizeCompRes ( M, 1 ); ggsave("figSizeCompResdiuals.png",bg="transparent")
+	hh <- 8.5
+	ww <- 11
+
+	plot.catch( M );        ggsave("figCatch.png",width=ww,height=hh,bg="transparent")			
+	plot.ssb( M );			   ggsave("figMMB.png",  width=ww,height=hh,bg="transparent")	
+	plot.cpue( M );			   ggsave("figCPUE.png", width=ww,height=hh,bg="transparent")
+	# plotGrowthTransition( M )
+	# plotSizeTransition( M )
+	# plot.selex  ( M )
+	plot.sizeComps ( M, 1 );   ggsave("figSizeComps.png",width=ww,height=hh,bg="transparent")
+	plot.SizeCompRes ( M, 1 ); ggsave("figSizeCompResdiuals.png",width=ww,height=hh,bg="transparent")

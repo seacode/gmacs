@@ -214,12 +214,18 @@ DATA_SECTION
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix  catch_cv(1,nCatchDF,1,nCatchRows);
 	matrix  catch_dm(1,nCatchDF,1,nCatchRows);
+	matrix  catch_mult(1,nCatchDF,1,nCatchRows);
 	LOC_CALCS
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
+			catch_mult(k)= column(dCatchData(k),9);
 			obs_catch(k) = column(dCatchData(k),5);
 			catch_cv(k)  = column(dCatchData(k),6);
 			catch_dm(k)  = column(dCatchData(k),11);
+
+
+			// rescale catch by multiplier.
+			obs_catch(k) = elem_prod(obs_catch(k),catch_mult(k));
 		}
 	  WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 	END_CALCS
@@ -2186,9 +2192,11 @@ FUNCTION calc_objective_function
 
 
 	// 4) Likelihood for recruitment deviations.
-	dvariable sigR = mfexp(logSigmaR);
-	nloglike(4,1)    = dnorm(rec_dev,sigR);
-
+	if( active(rec_dev) )
+	{
+		dvariable sigR = mfexp(logSigmaR);
+		nloglike(4,1)  = dnorm(rec_dev,sigR);		
+	}
 
 	// 5) Likelihood for growth increment data
 	if( !bUseEmpiricalGrowth && ( active(Grwth(1)) || active(Grwth(2)) ) )
