@@ -106,7 +106,7 @@ plot.sizeComps <- function( M, which.plot="all" )
 	p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
 	p <- p + labs(x="Size (mm)",y="Proportion",col="Model",fill="Sex",linetype="Fleet")
 	p <- p + ggtitle("title")
-	p <- p + facet_wrap(~year) + .THEME
+	p <- p + facet_wrap(~year) + .THEME #+ coord_flip()
 	# p <- p + facet_grid(irow~icol,labeller=label_both) + .THEME
 	p <- p + theme(axis.text.x = element_text(angle=45,vjust=0.5))
 

@@ -736,7 +736,7 @@ PARAMETER_SECTION
 
 	// Selectivity parameters
 	// NOTE THIS NEEDS FIXING...cobbled together some bounds to make things work...
-	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,0.,5.2,slx_phzm);
+	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-15,15,slx_phzm);
 	LOC_CALCS
 		for(int k = 1; k <= nslx; k++ )
 		{
@@ -885,6 +885,7 @@ PROCEDURE_SECTION
 	calc_recruitment_size_distribution();
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
+	calc_stock_recruitment_relationship();
 	if( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
@@ -1527,7 +1528,7 @@ FUNCTION calc_initial_numbers_at_length
 
 		// Insert terminal molt case here.
 
-		
+
 	}
 	
 	if(verbose == 1) COUT(d3_N(1)(syr));
@@ -1609,35 +1610,25 @@ FUNCTION update_population_numbers_at_length
 			}
 
 		}
-
-
-		// TO BE DEPRECATED
-//      for( h = 1; h <= nsex; h++ )
-//      {
-//          At = growth_transition(h) * S(h)(i);
-//          //for( l = 1; l <= nclass; l++ )
-//          //{
-//          //  At(l) *= S(h)(i)(l);
-//          //}
-//
-//          // New-shell Old-shell accounting
-//          dvar_vector tmpNew  = elem_prod(molt_probability(h),N(h)(i));
-//          dvar_vector tmpOld  = N(h)(i) - tmpNew;
-//          d3_newShell(h)(i+1) = tmpNew * At;
-//          d3_oldShell(h)(i+1) = elem_prod(tmpOld,diagonal(S(h)(i)));
-//
-//          N(h)(i+1)  = (0.5 * recruits(i)) * rec_sdd;
-//          N(h)(i+1) += d3_newShell(h)(i+1) + d3_oldShell(h)(i+1);
-//
-//          // d3_newShell(h)(i+1) = elem_prod(1.0-diagonal(growth_transition(h)) , N(h)(i+1));
-//          // d3_oldShell(h)(i+1) = elem_prod(diagonal(growth_transition(h)) , N(h)(i+1));
-//      }
 	}
 	
 	
 	if(verbose  == 1) COUT(d3_N(1)+d3_N(2));
 	
 
+	/**
+	 * @brief Calculate stock recruitment relationship.
+	 * @details  Assuming a Beverton-Holt relationship between the 
+	 * mature biomass (user defined) and the annual recruits.  Note 
+	 * that we derive so and beta in R = so * MB / (1 + beta * Mb)
+	 * from Ro and steepness (leading parameters defined in theta).
+	 * 
+	 */
+FUNCTION calc_stock_recruitment_relationship
+	dvariable so, beta;
+
+	//so   = reck * ro / bo;
+	//beta = (reck -1.0 ) / bo;
 
 
 	/**
@@ -2234,6 +2225,7 @@ FUNCTION calc_objective_function
 		dvariable sigR = mfexp(logSigmaR);
 		nloglike(4,1)  = dnorm(rec_dev,sigR);	
 		nloglike(4,1) += dnorm(rec_ini,sigR);		
+		nloglike(4,1) += 100.*norm2(first_difference(rec_dev));
 	}
 
 	// 5) Likelihood for growth increment data
@@ -2262,13 +2254,14 @@ FUNCTION calc_objective_function
 	// 2) Penalty on mean F to regularize the solution.
 	int irow=1;
 	if(last_phase()) irow=2;
+	dvariable fbar;
 	dvariable log_fbar;
 	for(int k = 1; k <= nfleet; k++ )
 	{
-		if(pen_fbar(k) > 0 )
+		fbar = mean( ft(k)(1) );
+		if( pen_fbar(k) > 0  && fbar != 0 )
 		{
-			// Added TINY value to ft 
-			log_fbar = log( mean( ft(k)(1)(nyr-5,nyr) ) + TINY );
+			log_fbar = log(fbar);
 			nlogPenalty(2) += dnorm(log_fbar,log(pen_fbar(k)),pen_fstd(irow,k));			
 		}
 	}
