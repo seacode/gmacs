@@ -22,7 +22,7 @@ plot.ssb  <- function(M)
 	p <- ggplot(mdf)
 	p <- p + geom_line(aes(x=year,y=mmb,col=Model))
 	p <- p + geom_ribbon(aes(x=year,ymax=ub,ymin=lb,fill=Model),alpha=0.3)
-	p <- p + labs(x="Year",y="Spawning biomass")
+	p <- p + labs(x="Year",y="Mature Male Biomass (kt)")
 
 	if(!.OVERLAY) p <- p + facet_wrap(~Model)
 

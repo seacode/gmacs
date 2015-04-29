@@ -25,10 +25,12 @@
 }
 
 
-plot.cpue <- function( M )
+plot.cpue <- function( M ,subsetby="")
 {
 	
 	mdf <- .getCPUEdf( M )
+	if(subsetby != "")
+	mdf <- subset(mdf,fleet==subsetby)
 
 	p  <- ggplot(mdf,aes(year,cpue,col=factor(sex)))
 	p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb),col="black",alpha=0.5)
@@ -37,7 +39,7 @@ plot.cpue <- function( M )
 		p  <- p + geom_line(data=mdf,aes(year,pred,color=Model))
 		p  <- p + facet_wrap(~fleet+sex,scales="free_y")
 	}
-	else 
+	if(!.OVERLAY)
 	{
 		p  <- p + geom_line(data=mdf,aes(year,pred))
 		p  <- p + facet_wrap(~fleet+sex+Model,scales="free_y")

@@ -13,12 +13,12 @@ library(readADMB)
 
 myTheme <- theme_bw(base_size = 12) +
 	theme(
-    panel.background = element_rect(fill = "transparent",colour = NA), # or theme_blank()
-    legend.background = element_blank(),
-    legend.key= element_blank(),
+	panel.background  = element_rect(fill = "transparent",colour = NA), # or theme_blank()
+	legend.background = element_blank(),
+	legend.key        = element_blank(),
     # panel.grid.minor = element_blank(), 
     # panel.grid.major = element_blank(),
-    plot.background = element_rect(fill = "transparent",colour = NA)
+    plot.background   = element_rect(fill = "transparent",colour = NA)
 	) 
 
 # GLOBAL CONSTS
@@ -27,7 +27,8 @@ myTheme <- theme_bw(base_size = 12) +
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 # .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
-.MODELDIR = c("../../examples/bbrkc/M1/","../../examples/bbrkc/M2/")
+# .MODELDIR = c("../../examples/bbrkc/M1/","../../examples/bbrkc/M2/")
+.MODELDIR = paste0("../../examples/bbrkc/M",c(1,2),"/")
 .THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")
@@ -50,11 +51,11 @@ names(M) <- basename(.MODELDIR)
 	hh <- 8.5
 	ww <- 11
 
-	plot.catch( M );        ggsave("figCatch.png",width=ww,height=hh,bg="transparent")			
-	plot.ssb( M );			   ggsave("figMMB.png",  width=ww,height=hh,bg="transparent")	
-	plot.cpue( M );			   ggsave("figCPUE.png", width=ww,height=hh,bg="transparent")
+	plot.catch( M );             ggsave("figCatch.png",width=ww,height=0.3*hh,bg="transparent")			
+	plot.ssb( M );			     ggsave("figMMB.png",  width=0.5*ww,height=0.5*hh,bg="transparent")	
+	plot.cpue( M ,"NMFS Trawl"); ggsave("figCPUE.png", width=0.5*ww,height=0.5*hh,bg="transparent")
 	# plotGrowthTransition( M )
 	# plotSizeTransition( M )
 	# plot.selex  ( M )
-	plot.sizeComps ( M, 1 );   ggsave("figSizeComps.png",width=ww,height=hh,bg="transparent")
-	plot.SizeCompRes ( M, 1 ); ggsave("figSizeCompResdiuals.png",width=ww,height=hh,bg="transparent")
+	plot.sizeComps ( M, 4 );   ggsave("figSizeComps.png",width=ww,height=hh,bg="transparent")
+	plot.SizeCompRes ( M, 4 ); ggsave("figSizeCompResdiuals.png",width=ww,height=hh,bg="transparent")

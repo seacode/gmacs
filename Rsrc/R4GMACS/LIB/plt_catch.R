@@ -24,10 +24,10 @@ plot.catch <- function( M )
 	}
 
 	p <- ggplot(mdf,aes(x=as.integer(year),y=observed))
-	p <- p + geom_bar(stat="identity",position="dodge",fill="grey",alpha=0.5)
+	p <- p + geom_bar(stat="identity",position="dodge",alpha=0.15)
 	p <- p + geom_linerange(aes(as.integer(year),observed,ymax=ub,ymin=lb,position="dodge"),size=0.2,alpha=0.5,col="black")
 	p <- p + geom_line(aes(x=as.integer(year),y=predicted,col=model),alpha=0.8)
-	p <- p + labs(x="Year",y="Catch (kt)",fill="Sex")
+	p <- p + labs(x="Year",y="Catch (kt)",col="Model")
 	if(.OVERLAY)
 	{
 		p <- p + facet_wrap(~sex+fleet+type,scales="free_y")	
