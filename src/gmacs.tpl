@@ -2267,7 +2267,8 @@ FUNCTION calc_objective_function
 	{
 		if(pen_fbar(k) > 0 )
 		{
-			log_fbar = log( mean( ft(k)(1)(nyr-5,nyr) ) );
+			// Added TINY value to ft 
+			log_fbar = log( mean( ft(k)(1)(nyr-5,nyr) ) + TINY );
 			nlogPenalty(2) += dnorm(log_fbar,log(pen_fbar(k)),pen_fstd(irow,k));			
 		}
 	}
