@@ -1107,13 +1107,14 @@ FUNCTION calc_fishing_mortality
 					
 					tmp = elem_prod(sel,ret + (1.0 - ret) * lambda);
 					
-					if(sum(tmp)==0 || min(tmp) < 0)
+					/*if(sum(tmp)==0 || min(tmp) < 0)
 					{
 						cerr <<"Selectivity vector for gear "<<k<<" is all 0's ";
 						cerr <<"Please fix the selectivity controls."<<endl;
 						COUT(tmp);
 						exit(1);
 					}
+					*/
 					F(h)(i) += ft(k,h,i) * tmp;
 				}
 			}
@@ -2025,9 +2026,9 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 
 				// normal
 				case 1:
-					COUT(p1);COUT(p2);
+					// COUT(p1);COUT(p2);
 					prior_pdf = dnorm(theta,p1,p2);
-					COUT(prior_pdf);
+					// COUT(prior_pdf);
 				break;
 
 				// lognormal
@@ -2266,7 +2267,8 @@ FUNCTION calc_objective_function
 	{
 		if(pen_fbar(k) > 0 )
 		{
-			log_fbar = log( mean( ft(k)(1)(nyr-5,nyr) ) );
+			// Added TINY value to ft 
+			log_fbar = log( mean( ft(k)(1)(nyr-5,nyr) ) + TINY );
 			nlogPenalty(2) += dnorm(log_fbar,log(pen_fbar(k)),pen_fstd(irow,k));			
 		}
 	}
