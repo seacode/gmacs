@@ -984,6 +984,8 @@ FUNCTION initialize_model_parameters
 	 *  -# Loop over years and block-in the log_selectivity at mid points.
 	 * 	
 	 * 	 Need to deprecate the abstract class for selectivity, 7X slower. 
+	 * 	 
+	 * 	APRIL 28, 15, Finally fixed DF_dflog error
 	 */
 FUNCTION calc_selectivities
 	int h,i,j,k;
