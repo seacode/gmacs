@@ -31,10 +31,10 @@ plot.cpue <- function( M )
 	mdf <- .getCPUEdf( M )
 
 	p  <- ggplot(mdf,aes(year,cpue,col=factor(sex)))
-	p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb,col=factor(sex)))
+	p  <- p + geom_pointrange(aes(year,cpue,ymax=ub,ymin=lb),col="black",alpha=0.5)
 	if(.OVERLAY)
 	{
-		p  <- p + geom_line(data=mdf,aes(year,pred,linetype=Model))
+		p  <- p + geom_line(data=mdf,aes(year,pred,color=Model))
 		p  <- p + facet_wrap(~fleet+sex,scales="free_y")
 	}
 	else 

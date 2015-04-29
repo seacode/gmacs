@@ -825,7 +825,7 @@ PARAMETER_SECTION
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
-	sdreport_vector sd_fbar(1,nfleet);
+	//sdreport_vector sd_fbar(1,nfleet);
 	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector sd_log_mmb(syr,nyr);
 
@@ -870,40 +870,40 @@ PROCEDURE_SECTION
 	
 	// Fishing fleet dynamics ...
 	calc_selectivities();
-	calc_fishing_mortality();
+//	calc_fishing_mortality();
 	if( verbose == 1 ) cout<<"Ok after fleet dynamics ..."<<endl;
-
-	// Population dynamics ...
-	if(!bUseEmpiricalGrowth)
-	{
-		calc_growth_increments();
-	}
-	calc_molting_probability();
-	calc_growth_transition();
-	calc_natural_mortality();
-	calc_total_mortality();
-	calc_recruitment_size_distribution();
-	calc_initial_numbers_at_length();
-	update_population_numbers_at_length();
-	if( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
-
-	// observation models ...
-	calc_predicted_catch();
-	calc_relative_abundance();
-	calc_predicted_composition();
-	if( verbose == 1 ) cout<<"Ok after observation models ..."<<endl;
-
-	// objective function ...
-	calculate_prior_densities();
-	calc_objective_function();
-	if( verbose == 1 ) cout<<"Ok after objective function ..."<<endl;
-
-	// sd_report variables
-	if( last_phase() ) 
-	{
-		calc_sdreport();
-	}
-	nf++;
+//
+//	// Population dynamics ...
+//	if(!bUseEmpiricalGrowth)
+//	{
+//		calc_growth_increments();
+//	}
+//	calc_molting_probability();
+//	calc_growth_transition();
+//	calc_natural_mortality();
+//	calc_total_mortality();
+//	calc_recruitment_size_distribution();
+//	calc_initial_numbers_at_length();
+//	update_population_numbers_at_length();
+//	if( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
+//
+//	// observation models ...
+//	calc_predicted_catch();
+//	calc_relative_abundance();
+//	calc_predicted_composition();
+//	if( verbose == 1 ) cout<<"Ok after observation models ..."<<endl;
+//
+//	// objective function ...
+//	calculate_prior_densities();
+//	calc_objective_function();
+//	if( verbose == 1 ) cout<<"Ok after objective function ..."<<endl;
+//
+//	// sd_report variables
+//	if( last_phase() ) 
+//	{
+//		calc_sdreport();
+//	}
+//	nf++;
 	
 
 	/**
@@ -913,11 +913,11 @@ FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
 	sd_log_mmb = log(calc_mmb());
 	
-	for(int k = 1; k <= nfleet; k++ )
-	{
-		sd_fbar(k) = mean(ft(k));
-		
-	}
+	//for(int k = 1; k <= nfleet; k++ )
+	//{
+	//	sd_fbar(k) = mean(ft(k));
+	//	
+	//}
 	
 	
 
@@ -994,7 +994,6 @@ FUNCTION calc_selectivities
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
 
-
 	for( k = 1; k <= nslx; k++ )
 	{   
 		block = 1;
@@ -1038,7 +1037,7 @@ FUNCTION calc_selectivities
 				else
 				{
 					log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)));
+					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)) +TINY);
 				}
 			}
 			
@@ -2011,7 +2010,7 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 			{
 				// uniform
 				case 0: 
-					if (p2 > p1)
+					if ( (p2-p1) > 0 )
 					{
 						prior_pdf = -log(1.0 / (p2-p1));
 					}
@@ -2230,7 +2229,8 @@ FUNCTION calc_objective_function
 	if( active(rec_dev) )
 	{
 		dvariable sigR = mfexp(logSigmaR);
-		nloglike(4,1)  = dnorm(rec_dev,sigR);		
+		nloglike(4,1)  = dnorm(rec_dev,sigR);	
+		nloglike(4,1) += dnorm(rec_ini,sigR);		
 	}
 
 	// 5) Likelihood for growth increment data
@@ -2264,7 +2264,7 @@ FUNCTION calc_objective_function
 	{
 		if(pen_fbar(k) > 0 )
 		{
-			log_fbar = log(mean(ft(k)));
+			log_fbar = log( mean( ft(k)(1)(nyr-5,nyr) ) );
 			nlogPenalty(2) += dnorm(log_fbar,log(pen_fbar(k)),pen_fstd(irow,k));			
 		}
 	}
@@ -2370,174 +2370,174 @@ FUNCTION simulation_model
 	// COUT(d3_obs_size_comps(1)(1));
 
 REPORT_SECTION
-	dvector mod_yrs(syr,nyr); 
-	mod_yrs.fill_seqadd(syr,1);
-	REPORT(name_read_flt);
-	REPORT(name_read_srv);
-	REPORT(mod_yrs);
-	REPORT(mid_points); 
-	REPORT(nloglike);
-	REPORT(nlogPenalty);
-	REPORT(priorDensity);
-	REPORT(dCatchData);
-	REPORT(obs_catch);
-	REPORT(pre_catch);
-	REPORT(res_catch);
-	REPORT(dSurveyData);
-	REPORT(obs_cpue);
-	REPORT(pre_cpue);
-	REPORT(res_cpue);
-
-	report << "slx_capture"<<endl;
-	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
-		report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) <<endl;
-	report << "slx_retaind"<<endl;
-	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
-		report << i << " " << h << " " << j << " " << exp(log_slx_retaind(j,h,i)) <<endl;
-	report << "slx_discard"<<endl;
-	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
-		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
-
-	REPORT(slx_control);
-	REPORT(log_slx_capture);
-	REPORT(log_slx_retaind);
-	REPORT(log_slx_discard);
-	
-	REPORT(F);
-	REPORT(d3_SizeComps);
-
-	REPORT(d3_obs_size_comps);
-	REPORT(d3_pre_size_comps);
-	REPORT(d3_res_size_comps);
-	REPORT(ft);
-	REPORT(rec_sdd);
-	
-	REPORT(rec_ini);
-	REPORT(rec_dev);
-	REPORT(recruits);
-	REPORT(d3_N);
-	REPORT(M);
-	REPORT(Z);
-	REPORT(mean_wt);
-	REPORT(molt_probability);	///> vector of molt probabilities
-
-	dvector mmb = value(calc_mmb());
-	REPORT(mmb);
-
-	if(last_phase())
-	{
-		int refyear = nyr-1;
-		calc_spr_reference_points(refyear,spr_fleet);
-		//calc_ofl(refyear,spr_fspr);
-		REPORT(spr_fspr);
-		REPORT(spr_bspr);
-		REPORT(spr_rbar);
-		REPORT(spr_fofl);
-		REPORT(spr_cofl);
-
-		dvar_matrix mean_size(1,nsex,1,nclass);
-		///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
-		dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
-		for (int isex=1;isex<=nsex;isex++)
-		{
-			int iage=1;
-			// Set the initial size frequency
-			growth_matrix(isex,iage) = growth_transition(isex,iage);
-			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
-			for (iage=2;iage<=nclass;iage++)
-			{
-				growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*growth_transition(isex);
-				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
-			}
-		}
-		REPORT(growth_matrix);
-		REPORT(mean_size);
-		for(int ii = 1; ii <= nSizeComps; ii++)
-		{
-			// Set final sample-size for composition data for comparisons
-			size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
-		}
-		REPORT(size_comp_sample_size);
-	}
-	// Print total numbers at length
-	dvar_matrix N_len(syr,nyr+1,1,nclass);
-	dvar_matrix N_mm(syr,nyr+1,1,nclass);
-	dvar_matrix N_males(syr,nyr+1,1,nclass);
-	dvar_matrix N_males_old(syr,nyr+1,1,nclass);
-	N_len.initialize();
-	N_males.initialize();
-	N_mm.initialize();
-	N_males_old.initialize();
-	for (int i=syr;i<=nyr+1;i++)
-	  for (int j=1;j<=nclass;j++)
-	    for (int k=1;k<=n_grp;k++)
-	    {	
-				if (isex(k)==1)
-	    	{
-	    		N_males(i,j) += d3_N(k,i,j);
-					if (ishell(k)==2)
-		    		N_males_old(i,j) += d3_N(k,i,j);
-					if (imature(k)==1)
-		    		N_mm(i,j) += d3_N(k,i,j);
-	    	}
-	    	N_len(i,j) += d3_N(k,i,j);
-	    }
-
-	
-	REPORT(N_len);
-	REPORT(N_mm);
-	REPORT(N_males);
-	REPORT(N_males_old);
-	REPORT(molt_increment);
-	REPORT(dPreMoltSize);
-	REPORT(iMoltIncSex);
-	REPORT(dMoltInc);
-	if(bUseEmpiricalGrowth)
-	{
-		dvector pMoltInc = dMoltInc;
-		REPORT(pMoltInc);
-	}
-	else
-	{
-		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
-		REPORT(pMoltInc);
-	}
-	REPORT(survey_q);
-	
-	// Growth and size transition.
-	REPORT(P);
-	REPORT(growth_transition);
-	d3_array tG(1,nsex,1,nclass,1,nclass);
-	d3_array tS(1,nsex,1,nclass,1,nclass);
-
-	for(int h = 1; h<=nsex; h++)
-	{
-		tG(h)=trans(value(growth_transition(h)));
-		tS(h)=trans(value(P(h) * growth_transition(h)));
-		for(int l = 1; l <= nclass; ++l)
-		{
-			tS(h)(l,l) += value(1.0-P(h)(l,l));
-		}
-	}
-	REPORT(tG);
-	REPORT(tS);
-	dmatrix size_transition_M(1,nclass,1,nclass);
-	dmatrix size_transition_F(1,nclass,1,nclass);
-
-	// For Jim's r-script.
-	size_transition_M = value(P(1) * growth_transition(1));
-	for (int i=1;i<=nclass;i++)
-	  size_transition_M(i,i) += value(1.-P(1,i,i));
-
-	REPORT(size_transition_M);
-	
-	if (nsex==2)
-	{
-  	size_transition_F = value(P(2) * growth_transition(2));
-  	for (int i=1;i<=nclass;i++)
-	    size_transition_M(i,i) += value(1.-P(2,i,i));
-  	REPORT(size_transition_F);
-	}
+//	dvector mod_yrs(syr,nyr); 
+//	mod_yrs.fill_seqadd(syr,1);
+//	REPORT(name_read_flt);
+//	REPORT(name_read_srv);
+//	REPORT(mod_yrs);
+//	REPORT(mid_points); 
+//	REPORT(nloglike);
+//	REPORT(nlogPenalty);
+//	REPORT(priorDensity);
+//	REPORT(dCatchData);
+//	REPORT(obs_catch);
+//	REPORT(pre_catch);
+//	REPORT(res_catch);
+//	REPORT(dSurveyData);
+//	REPORT(obs_cpue);
+//	REPORT(pre_cpue);
+//	REPORT(res_cpue);
+//
+//	report << "slx_capture"<<endl;
+//	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+//		report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) <<endl;
+//	report << "slx_retaind"<<endl;
+//	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+//		report << i << " " << h << " " << j << " " << exp(log_slx_retaind(j,h,i)) <<endl;
+//	report << "slx_discard"<<endl;
+//	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
+//		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
+//
+//	REPORT(slx_control);
+//	REPORT(log_slx_capture);
+//	REPORT(log_slx_retaind);
+//	REPORT(log_slx_discard);
+//	
+//	REPORT(F);
+//	REPORT(d3_SizeComps);
+//
+//	REPORT(d3_obs_size_comps);
+//	REPORT(d3_pre_size_comps);
+//	REPORT(d3_res_size_comps);
+//	REPORT(ft);
+//	REPORT(rec_sdd);
+//	
+//	REPORT(rec_ini);
+//	REPORT(rec_dev);
+//	REPORT(recruits);
+//	REPORT(d3_N);
+//	REPORT(M);
+//	REPORT(Z);
+//	REPORT(mean_wt);
+//	REPORT(molt_probability);	///> vector of molt probabilities
+//
+//	dvector mmb = value(calc_mmb());
+//	REPORT(mmb);
+//
+//	if(last_phase())
+//	{
+//		int refyear = nyr-1;
+//		calc_spr_reference_points(refyear,spr_fleet);
+//		//calc_ofl(refyear,spr_fspr);
+//		REPORT(spr_fspr);
+//		REPORT(spr_bspr);
+//		REPORT(spr_rbar);
+//		REPORT(spr_fofl);
+//		REPORT(spr_cofl);
+//
+//		dvar_matrix mean_size(1,nsex,1,nclass);
+//		///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
+//		dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
+//		for (int isex=1;isex<=nsex;isex++)
+//		{
+//			int iage=1;
+//			// Set the initial size frequency
+//			growth_matrix(isex,iage) = growth_transition(isex,iage);
+//			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
+//			for (iage=2;iage<=nclass;iage++)
+//			{
+//				growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*growth_transition(isex);
+//				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
+//			}
+//		}
+//		REPORT(growth_matrix);
+//		REPORT(mean_size);
+//		for(int ii = 1; ii <= nSizeComps; ii++)
+//		{
+//			// Set final sample-size for composition data for comparisons
+//			size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
+//		}
+//		REPORT(size_comp_sample_size);
+//	}
+//	// Print total numbers at length
+//	dvar_matrix N_len(syr,nyr+1,1,nclass);
+//	dvar_matrix N_mm(syr,nyr+1,1,nclass);
+//	dvar_matrix N_males(syr,nyr+1,1,nclass);
+//	dvar_matrix N_males_old(syr,nyr+1,1,nclass);
+//	N_len.initialize();
+//	N_males.initialize();
+//	N_mm.initialize();
+//	N_males_old.initialize();
+//	for (int i=syr;i<=nyr+1;i++)
+//	  for (int j=1;j<=nclass;j++)
+//	    for (int k=1;k<=n_grp;k++)
+//	    {	
+//				if (isex(k)==1)
+//	    	{
+//	    		N_males(i,j) += d3_N(k,i,j);
+//					if (ishell(k)==2)
+//		    		N_males_old(i,j) += d3_N(k,i,j);
+//					if (imature(k)==1)
+//		    		N_mm(i,j) += d3_N(k,i,j);
+//	    	}
+//	    	N_len(i,j) += d3_N(k,i,j);
+//	    }
+//
+//	
+//	REPORT(N_len);
+//	REPORT(N_mm);
+//	REPORT(N_males);
+//	REPORT(N_males_old);
+//	REPORT(molt_increment);
+//	REPORT(dPreMoltSize);
+//	REPORT(iMoltIncSex);
+//	REPORT(dMoltInc);
+//	if(bUseEmpiricalGrowth)
+//	{
+//		dvector pMoltInc = dMoltInc;
+//		REPORT(pMoltInc);
+//	}
+//	else
+//	{
+//		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
+//		REPORT(pMoltInc);
+//	}
+//	REPORT(survey_q);
+//	
+//	// Growth and size transition.
+//	REPORT(P);
+//	REPORT(growth_transition);
+//	d3_array tG(1,nsex,1,nclass,1,nclass);
+//	d3_array tS(1,nsex,1,nclass,1,nclass);
+//
+//	for(int h = 1; h<=nsex; h++)
+//	{
+//		tG(h)=trans(value(growth_transition(h)));
+//		tS(h)=trans(value(P(h) * growth_transition(h)));
+//		for(int l = 1; l <= nclass; ++l)
+//		{
+//			tS(h)(l,l) += value(1.0-P(h)(l,l));
+//		}
+//	}
+//	REPORT(tG);
+//	REPORT(tS);
+//	dmatrix size_transition_M(1,nclass,1,nclass);
+//	dmatrix size_transition_F(1,nclass,1,nclass);
+//
+//	// For Jim's r-script.
+//	size_transition_M = value(P(1) * growth_transition(1));
+//	for (int i=1;i<=nclass;i++)
+//	  size_transition_M(i,i) += value(1.-P(1,i,i));
+//
+//	REPORT(size_transition_M);
+//	
+//	if (nsex==2)
+//	{
+//  	size_transition_F = value(P(2) * growth_transition(2));
+//  	for (int i=1;i<=nclass;i++)
+//	    size_transition_M(i,i) += value(1.-P(2,i,i));
+//  	REPORT(size_transition_F);
+//	}
 
 	/**
 	 * @brief Calculate mature male biomass

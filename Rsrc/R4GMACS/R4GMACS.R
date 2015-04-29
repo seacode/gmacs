@@ -9,6 +9,7 @@
 library(ggplot2)
 library(reshape2)
 library(dplyr)
+library(readADMB)
 
 myTheme <- theme_bw(base_size = 12) +
 	theme(
@@ -26,7 +27,7 @@ myTheme <- theme_bw(base_size = 12) +
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 # .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
-.MODELDIR = c("../../examples/bbrkc/M1/")
+.MODELDIR = c("../../examples/bbrkc/M1/","../../examples/bbrkc/M2/")
 .THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")
