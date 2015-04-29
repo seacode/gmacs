@@ -770,7 +770,7 @@ PARAMETER_SECTION
 
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
-	vector nlogPenalty(1,4);
+	vector nlogPenalty(1,5);
 	vector priorDensity(1,ntheta+nGrwth+nSurveys);
 
 	objective_function_value objfun;
@@ -793,6 +793,7 @@ PARAMETER_SECTION
 
 	vector rec_sdd(1,nclass);           ///> recruitment size_density_distribution
 	vector recruits(syr,nyr);           ///> vector of estimated recruits
+	vector xi(syr+1,nyr);								///> vector of residuals for SRR
 	vector survey_q(1,nSurveys);        ///> scalers for relative abundance indices (q)
 
 	matrix pre_catch(1,nCatchDF,1,nCatchRows);  ///> predicted catch (Baranov eq)
@@ -1620,16 +1621,49 @@ FUNCTION update_population_numbers_at_length
 	 * @brief Calculate stock recruitment relationship.
 	 * @details  Assuming a Beverton-Holt relationship between the 
 	 * mature biomass (user defined) and the annual recruits.  Note 
-	 * that we derive so and beta in R = so * MB / (1 + beta * Mb)
+	 * that we derive so and bb in R = so * MB / (1 + bb * Mb)
 	 * from Ro and steepness (leading parameters defined in theta).
 	 * 
 	 */
 FUNCTION calc_stock_recruitment_relationship
-	dvariable so, beta;
+	dvariable so, bb;
+	dvariable ro = mfexp(logR0);
+	dvariable phiB;
+	dvariable reck = 4.*0.75/(1.-0.75);
+	dvar_matrix A(1,nclass,1,nclass);
+	dvar_matrix L(1,nclass,1,nclass);
+	A.initialize();
+	L.initialize();
 
-	//so   = reck * ro / bo;
-	//beta = (reck -1.0 ) / bo;
+	// get unfished mature male biomass per recruit.
+	phiB = 0.0;
+	for(int h = 1; h <= nsex; h++ )
+	{
+		for (int l = 1; l <= nclass; ++l)
+		{
+			L(l,l) = exp(-M(h)(syr)(l));
+		}
+		A = growth_transition(h);
+		dvar_vector x(1,nclass);
+		calc_equilibrium(x,A,L,rec_sdd);
 
+		double lam;
+		h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
+		phiB += lam * x * elem_prod(mean_wt(h),maturity(h));
+
+	}
+	dvariable bo = ro * phiB;
+
+	so   = reck * ro / bo;
+	bb   = (reck -1.0 ) / bo;
+
+	dvar_vector mmb  = calc_mmb().shift(syr+1);
+	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
+	
+	// residuals
+	dvariable sigR = mfexp(logSigmaR);
+	xi = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
+	
 
 	/**
 	 * @brief Calculate predicted catch observations
@@ -2223,9 +2257,8 @@ FUNCTION calc_objective_function
 	if( active(rec_dev) )
 	{
 		dvariable sigR = mfexp(logSigmaR);
-		nloglike(4,1)  = dnorm(rec_dev,sigR);	
-		nloglike(4,1) += dnorm(rec_ini,sigR);		
-		nloglike(4,1) += 100.*norm2(first_difference(rec_dev));
+		nloglike(4,1)  = dnorm(xi,sigR);
+		//nloglike(4,1) += 100.*norm2(first_difference(rec_dev));
 	}
 
 	// 5) Likelihood for growth increment data
@@ -2273,6 +2306,11 @@ FUNCTION calc_objective_function
 			nlogPenalty(3) = dnorm(m_dev,m_stdev);
 	}
 
+	// 4 Penalty on recruitment devs.
+	if( active(rec_dev) )
+		nlogPenalty(4) = dnorm(rec_dev,2.0);
+	if( active(rec_ini) )
+		nlogPenalty(5) = dnorm(rec_ini,2.0);
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
 	if( verbose==2 ) 
@@ -2542,6 +2580,7 @@ REPORT_SECTION
 	 * 
 	 * 
 	 * TODO correct for timing of when the MMB is calculated
+	 * Add female component if lamnda < 1
 	 * 
 	 * @return dvar_vector
 	 */
