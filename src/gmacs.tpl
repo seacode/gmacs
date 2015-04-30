@@ -74,8 +74,8 @@ DATA_SECTION
 			cout<<"  | Steven Martell,              IPHC                        |\n";
 			cout<<"  | James Ianelli,               NOAA-NMFS                   |\n";
 			cout<<"  | Jack Turnock,                NOAA-NMFS                   |\n";
-			cout<<"  | Jie Zheng,	                ADF&G                       |\n";
-			cout<<"  | Hamachan Hamazaki,	        ADF&G                       |\n";
+			cout<<"  | Jie Zheng,	                  ADF&G                       |\n";
+			cout<<"  | Hamachan Hamazaki,	          ADF&G                       |\n";
 			cout<<"  | Athol Whitten,               University of Washington    |\n";
 			cout<<"  | Andre Punt,                  University of Washington    |\n";
 			cout<<"  | Dave Fournier,               Otter Research              |\n";
@@ -633,9 +633,9 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
-	init_vector model_controls(1,9);
-	int rdv_phz;                                        ///> Estimated rec_dev phase
-	int verbose;                                        ///> Flag to print to screen
+	init_vector model_controls(1,10);
+	int rdv_phz;                            ///> Estimated rec_dev phase
+	int verbose;                            ///> Flag to print to screen
 	int bInitializeUnfished;                ///> Flag to initialize at unfished conditions
 	int spr_syr;
 	int spr_nyr;
@@ -643,6 +643,7 @@ DATA_SECTION
 	int spr_fleet;
 	number spr_lambda;
 	int bUseEmpiricalGrowth;
+	int nSRR_flag;
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -653,6 +654,7 @@ DATA_SECTION
 		spr_fleet           = int(model_controls(7));
 		spr_lambda          =     model_controls(8);
 		bUseEmpiricalGrowth = int(model_controls(9));
+		nSRR_flag           = int(model_controls(10));
 		WriteCtl(model_controls); 
 	END_CALCS
 
@@ -707,6 +709,7 @@ PARAMETER_SECTION
 	// ra        = theta(5)
 	// rbeta     = theta(6)
 	// logSigmaR = theta(7)
+	// steepness = theta(8)
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 	
@@ -783,6 +786,7 @@ PARAMETER_SECTION
 	number ra;              ///> Expected value of recruitment distribution
 	number rbeta;           ///> rate parameter for recruitment distribution
 	number logSigmaR;       ///> standard deviation of recruitment deviations.
+	number steepness;       ///> steepness of the SRR
 
 	vector alpha(1,nsex);   ///> intercept for linear growth increment model.
 	vector beta(1,nsex);    ///> slope for the linear growth increment model.
@@ -942,6 +946,7 @@ FUNCTION initialize_model_parameters
 	ra        = theta(5);
 	rbeta     = theta(6);
 	logSigmaR = theta(7);
+	if(ntheta == 8) steepness = theta(8);
 
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// Get Growth & Molting parameters 
@@ -1623,13 +1628,19 @@ FUNCTION update_population_numbers_at_length
 	 * mature biomass (user defined) and the annual recruits.  Note 
 	 * that we derive so and bb in R = so * MB / (1 + bb * Mb)
 	 * from Ro and steepness (leading parameters defined in theta).
+	 *
+	 * NOTES:
+	 * if nSRR_flag == 1 then use a Beverton-Holt model to compute the 
+	 * recruitment deviations for minumization.
 	 * 
 	 */
 FUNCTION calc_stock_recruitment_relationship
+
+	
 	dvariable so, bb;
 	dvariable ro = mfexp(logR0);
 	dvariable phiB;
-	dvariable reck = 4.*0.75/(1.-0.75);
+	dvariable reck = 4.*steepness/(1.-steepness);
 	dvar_matrix A(1,nclass,1,nclass);
 	dvar_matrix L(1,nclass,1,nclass);
 	A.initialize();
@@ -1662,7 +1673,17 @@ FUNCTION calc_stock_recruitment_relationship
 	
 	// residuals
 	dvariable sigR = mfexp(logSigmaR);
-	xi = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
+
+	switch(nSRR_flag)
+	{
+		case 0: // NO SRR
+			xi = 0;
+		break;
+
+		case 1:	// SRR model
+			xi = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
+		break;
+	}
 	
 
 	/**
@@ -2257,7 +2278,17 @@ FUNCTION calc_objective_function
 	if( active(rec_dev) )
 	{
 		dvariable sigR = mfexp(logSigmaR);
-		nloglike(4,1)  = dnorm(xi,sigR);
+		switch(nSRR_flag)
+		{
+			case 0:  
+				nloglike(4,1)  = dnorm(rec_dev,sigR);
+				nloglike(4,1) += dnorm(rec_ini,sigR);
+			break;
+
+			case 1:
+				nloglike(4,1)  = dnorm(xi,sigR);
+			break;
+		}
 		//nloglike(4,1) += 100.*norm2(first_difference(rec_dev));
 	}
 
@@ -2307,9 +2338,9 @@ FUNCTION calc_objective_function
 	}
 
 	// 4 Penalty on recruitment devs.
-	if( active(rec_dev) )
+	if( active(rec_dev) && nSRR_flag !=0)
 		nlogPenalty(4) = dnorm(rec_dev,2.0);
-	if( active(rec_ini) )
+	if( active(rec_ini) && nSRR_flag !=0)
 		nlogPenalty(5) = dnorm(rec_ini,2.0);
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
@@ -2450,6 +2481,7 @@ REPORT_SECTION
 	REPORT(rec_ini);
 	REPORT(rec_dev);
 	REPORT(recruits);
+	REPORT(xi);
 	REPORT(d3_N);
 	REPORT(M);
 	REPORT(Z);

@@ -9,7 +9,7 @@
 #                  4 -> gamma
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ntheta
-  7
+  8
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
@@ -18,8 +18,9 @@
    7.0       -10        20          1       0    3.0     5.0         # logR1      
    7.0       -10        20          1       0    3.0     5.0         # logRbar      
   62.5        55       100         -4       0   72.5    7.25         # Recruitment Expected Value
-  0.40       0.01        1         -3       0    0.1       5         # Recruitment scale (variance component)
-  -1.609     -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+  0.40      0.01         1         -3       0    0.1       5         # Recruitment scale (variance component)
+-1.609       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+  0.75      0.20      1.00         -4       3    3.0    2.00         # steepness
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -94,6 +95,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
+##   -0) ignore composition data.
 ##   -1) multinomial with estimated/fixed sample size
 ##   -2) robust_multi. Robust approximation to multinomial
 ##   -3) logistic normal  (NIY)
@@ -138,5 +140,6 @@
   1       # Gear index for SPR calculations (i.e., directed fishery).
   1       # Lambda (proportion of mature male biomass for SPR reference points.)
   0       # Use empirical molt increment data (0=FALSE, 1=TRUE)
+  0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ## EOF
 9999
