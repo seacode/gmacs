@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.org/seacode/gmacs.svg?branch=issue77)](https://travis-ci.org/seacode/gmacs)
-
 # Gmacs
+[![Build Status](https://travis-ci.org/seacode/gmacs.svg?branch=issue77)](https://travis-ci.org/seacode/gmacs)
 
 <!-- Gmacs is currently under development. A simple working release version of Gmacs is available via `Tag V1.0` and has been tested using the BBRKC model available in the examples folder. The next major release of Gmacs is planned for September 2014. -->
 
