@@ -9,7 +9,7 @@
 #                  4 -> gamma
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ntheta
-  7
+  8
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
@@ -20,6 +20,7 @@
   72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
   0.40       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+  0.75      0.20      1.00         -4       3    3.0    2.00         # steepness
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -141,5 +142,6 @@
   1       # Gear index for SPR calculations (i.e., directed fishery).
   1       # Lambda (proportion of mature male biomass for SPR reference points.)
   1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
+  0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ## EOF
 9999

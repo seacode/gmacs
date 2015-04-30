@@ -9,7 +9,7 @@
 #  4  ->  gamma                              
 #  ——————————————————————————————————————————————————————————————————————————————————————  #                                
 #  ntheta                                  
-7
+8
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
@@ -20,6 +20,7 @@
   72.5        65       150          4       1   72.5    7.25         # Recruitment mBeta
   1.50       0.1         5         -4       0    0.1       5         # Recruitment m50
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+  0.75      0.20      1.00         -4       3    3.0    2.00         # steepness
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -122,14 +123,15 @@
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 ##  OTHER  CONTROLS                                
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
-  3  #  Estimated  rec_dev  phase                          
-  0  #  VERBOSE  FLAG  (0  =  off  1  =  on  2  =  objective  func)        
-  0  #  INITIALIZE  MODEL  AT  UNFISHED  RECRUITS  (0=FALSE  1=TRUE)                  
+  3     #  Estimated  rec_dev  phase                          
+  0     #  VERBOSE  FLAG  (0  =  off  1  =  on  2  =  objective  func)        
+  0     #  INITIALIZE  MODEL  AT  UNFISHED  RECRUITS  (0=FALSE  1=TRUE)                  
   1984  #  First  year  for  average  recruitment  for  Bspr  calculation.                
   2013  #  Last  year  for  average  recruitment  for  Bspr  calculation.                
   0.35  #  Target  SPR  ratio  for  Bmsy  proxy.                    
-  1  #  Gear  index  for  SPR  calculations  (i.e.  directed  fishery).                
-  1  #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
-  1  #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
+  1     #  Gear  index  for  SPR  calculations  (i.e.  directed  fishery).                
+  1     #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
+  1     # Use empirical molt increment data (0=FALSE, 1=TRUE)
+  0     # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ##  EOF                                  
 9999                                    
