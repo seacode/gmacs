@@ -27,8 +27,8 @@ myTheme <- theme_bw(base_size = 12) +
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 # .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
-# .MODELDIR = paste0("../../examples/bbrkc/M",c(1,2,3),"/")
-.MODELDIR = c("../../examples/pirkc/")
+.MODELDIR = paste0("../../examples/bbrkc/M",c(1),"/")
+# .MODELDIR = c("../../examples/pirkc/")
 .THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .SEX      = c("Aggregate","Male","Female")

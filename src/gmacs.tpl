@@ -2339,9 +2339,9 @@ FUNCTION calc_objective_function
 
 	// 4 Penalty on recruitment devs.
 	if( active(rec_dev) && nSRR_flag !=0)
-		nlogPenalty(4) = dnorm(rec_dev,2.0);
+		nlogPenalty(4) = dnorm(rec_dev,1.0);
 	if( active(rec_ini) && nSRR_flag !=0)
-		nlogPenalty(5) = dnorm(rec_ini,2.0);
+		nlogPenalty(5) = dnorm(rec_ini,1.0);
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
 	if( verbose==2 ) 
