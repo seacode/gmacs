@@ -1834,7 +1834,7 @@ FUNCTION calc_predicted_catch
 		}
 		// Catch residuals
 		//COUT(pre_catch(kk));
-		res_catch(kk) = log(obs_catch(kk)+TINY) - log(pre_catch(kk)+TINY);
+		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
 		if(verbose == 1)COUT(pre_catch(kk)(1));
 	}
 
@@ -2246,7 +2246,7 @@ FUNCTION calc_objective_function
 	if(verbose == 1) COUT(res_catch(1));
 	for(int k = 1; k <= nCatchDF; k++ )
 	{
-		dvector catch_sd = sqrt( log( 1.0+square(catch_cv(k)) ) );
+		dvector catch_sd = sqrt(log(1.0 + square(catch_cv(k))));
 		nloglike(1,k) += dnorm(res_catch(k),catch_sd);
 	}
 
@@ -2322,7 +2322,7 @@ FUNCTION calc_objective_function
 				nloglike(4,1)  = dnorm(xi,sigR);
 			break;
 		}
-		nloglike(4,1) += 50.*norm2(first_difference(rec_dev));
+		//nloglike(4,1) += 50.*norm2(first_difference(rec_dev));
 
 		// autocorrelation in rec_devs
 		
