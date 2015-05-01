@@ -14,13 +14,13 @@
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1         -2       2   0.18    0.04         # M
-   7.0       -10        20         -1       1    3.0     5.0         # logR0
+   7.0       -10        20         -2       1    3.0     5.0         # logR0
    7.0       -10        20          1       1    3.0     5.0         # logR1      
    7.0       -10        20          1       1    3.0     5.0         # logRbar      
   72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
   0.40       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
-  0.75      0.20      1.00         -4       3    3.0    2.00         # steepness
+  0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -31,10 +31,10 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta
+  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha males or combined
+  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha
+  0.10       0.0       0.5         -3       0    0.0    10.0         # beta males or combined
+  0.10       0.0       0.5         -3       0    0.0    10.0         # beta
    6.0       1.0      30.0          3       0    0.0     3.0         # gscale males or combined
    6.0       1.0      30.0          3       0    0.0     3.0         # gscale
   115.      65.0     165.0          2       0    0.0     3.0         # molt_mu males or combined
@@ -98,6 +98,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## LIKELIHOOD OPTIONS:
+##   -0) Ignore size composition data.
 ##   -1) multinomial with estimated/fixed sample size
 ##   -2) robust_multi. Robust approximation to multinomial
 ##   -3) logistic normal  (NIY)
@@ -105,9 +106,9 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 2 2 2 2 2 2 2 2 2 2   2   2   2   2   2   2   2   2   # Type of likelihood.
- 0  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
--4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
+ 2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   2   # Type of likelihood.
+ 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
+-3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3  -3   # Phz for estimating effective sample size (if appl.)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -133,7 +134,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  3       # Estimated rec_dev phase
+  2       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.

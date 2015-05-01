@@ -17,7 +17,7 @@
 2   # Number  of  sexes 
 2   # Number  of  shell condition types 
 1   # Number  of  maturity types 
-20   # Number  of  size classes in the model 
+20  # Number  of  size classes in the model 
 ##
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1) 
 65 70 75 80 85 90 95 100 105 110 115 120 125 130 135 140 145 150 155 160 165 

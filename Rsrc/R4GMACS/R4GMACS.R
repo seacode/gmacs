@@ -27,7 +27,7 @@ myTheme <- theme_bw(base_size = 12) +
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 # .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
-.MODELDIR = paste0("../../examples/bbrkc/M",c(1),"/")
+.MODELDIR = paste0("../../examples/bbrkc/M",c(1,2),"/")
 # .MODELDIR = c("../../examples/pirkc/")
 .THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
@@ -51,11 +51,12 @@ names(M) <- basename(.MODELDIR)
 	hh <- 8.5
 	ww <- 11
 
-	plot.catch( M );             ggsave("figCatch.png",width=ww,height=0.3*hh,bg="transparent")			
-	plot.ssb( M );			     ggsave("figMMB.png",  width=0.5*ww,height=0.5*hh,bg="transparent")	
-	plot.cpue( M ,"NMFS Trawl"); ggsave("figCPUE.png", width=0.5*ww,height=0.5*hh,bg="transparent")
+	plot.catch( M );             ggsave("figCatch.png",   width=1.0*ww,height=0.3*hh,bg="transparent")			
+	plot.ssb( M );			     ggsave("figMMB.png",     width=0.5*ww,height=0.5*hh,bg="transparent")	
+	plot.Recruitment( M );	     ggsave("figRecruits.png",width=0.5*ww,height=0.5*hh,bg="transparent")	
+	plot.cpue( M ,"NMFS Trawl"); ggsave("figCPUE.png",    width=0.5*ww,height=0.5*hh,bg="transparent")
 	# plotGrowthTransition( M )
 	# plotSizeTransition( M )
 	# plot.selex  ( M )
 	plot.sizeComps ( M );   ggsave("figSizeComps.png",width=ww,height=hh,bg="transparent")
-	plot.SizeCompRes ( M ); ggsave("figSizeCompResdiuals.png",width=ww,height=hh,bg="transparent")
+	# plot.SizeCompRes ( M ); ggsave("figSizeCompResdiuals.png",width=ww,height=hh,bg="transparent")

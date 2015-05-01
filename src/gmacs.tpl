@@ -1683,6 +1683,16 @@ FUNCTION calc_stock_recruitment_relationship
 		case 1:	// SRR model
 			xi = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
 		break;
+
+		case 2: // SRR model with autocorrelation in rec_devs
+			COUT(recruits);
+			double rho =0.7;
+			int byr = syr+1;
+			xi = log(recruits(byr,nyr)) 
+			   - (1.-rho)*log(rhat(byr,nyr))
+			   - rho * log(++recruits(byr-1,nyr-1))
+			   + 0.5*sigR*sigR;
+		break;
 	}
 	
 
@@ -2289,7 +2299,10 @@ FUNCTION calc_objective_function
 				nloglike(4,1)  = dnorm(xi,sigR);
 			break;
 		}
-		//nloglike(4,1) += 100.*norm2(first_difference(rec_dev));
+		nloglike(4,1) += 50.*norm2(first_difference(rec_dev));
+
+		// autocorrelation in rec_devs
+		
 	}
 
 	// 5) Likelihood for growth increment data
