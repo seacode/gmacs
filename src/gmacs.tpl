@@ -1105,7 +1105,7 @@ FUNCTION calc_fishing_mortality
 					{
 						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
 					}
-					ft(k)(h)(i) = mfexp(log_ftmp);
+					ft(k)(h)(i) = 0*mfexp(log_ftmp);
 					
 					lambda = dmr(i,k);
 
@@ -1484,7 +1484,7 @@ FUNCTION calc_initial_numbers_at_length
 		log_initial_recruits = logRini;
 	}
 	recruits(syr) = exp(log_initial_recruits);
-	dvar_vector rt = 0.5 * recruits(syr) * rec_sdd;
+	dvar_vector rt = 1.0/nsex * recruits(syr) * rec_sdd;
 
 	// Analytical equilibrium soln.
 	int ig;
@@ -1641,10 +1641,10 @@ FUNCTION calc_stock_recruitment_relationship
 	dvariable ro = mfexp(logR0);
 	dvariable phiB;
 	dvariable reck = 4.*steepness/(1.-steepness);
-	dvar_matrix A(1,nclass,1,nclass);
-	dvar_matrix L(1,nclass,1,nclass);
-	A.initialize();
-	L.initialize();
+	dvar_matrix _A(1,nclass,1,nclass);
+	dvar_matrix _S(1,nclass,1,nclass);
+	_A.initialize();
+	_S.initialize();
 
 	// get unfished mature male biomass per recruit.
 	phiB = 0.0;
@@ -1652,15 +1652,40 @@ FUNCTION calc_stock_recruitment_relationship
 	{
 		for (int l = 1; l <= nclass; ++l)
 		{
-			L(l,l) = exp(-M(h)(syr)(l));
+			_S(l,l) = exp(-M(h)(syr)(l));
 		}
-		A = growth_transition(h);
+		_A = growth_transition(h);
 		dvar_vector x(1,nclass);
-		calc_equilibrium(x,A,L,rec_sdd);
+		dvar_vector y(1,nclass);
 
 		double lam;
 		h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-		phiB += lam * x * elem_prod(mean_wt(h),maturity(h));
+
+		// Single shell condition
+		if ( nshell == 1 && nmature == 1)
+		{
+			calc_equilibrium(x,_A,_S,rec_sdd);
+			phiB += lam * x * elem_prod(mean_wt(h),maturity(h));
+		}
+
+		// Continuous molt (newshell/oldshell)
+		if ( nshell == 2 && nmature == 1)
+		{
+			COUT(lam)
+			calc_equilibrium(x,y,_A,_S,P(h),rec_sdd);
+			phiB += lam * x * elem_prod(mean_wt(h),maturity(h))
+			     +  lam * y * elem_prod(mean_wt(h),maturity(h));
+			COUT(x);
+			COUT(y);
+			//ig = pntr_hmo(h,1,1);
+			//d3_N(ig)(syr)   = elem_prod(x , exp(rec_ini));;
+			//d3_N(ig+1)(syr) = elem_prod(y , exp(rec_ini));;
+		}
+
+		// Insert terminal molt case here.
+
+
+		
 
 	}
 	dvariable bo = ro * phiB;
@@ -1670,7 +1695,10 @@ FUNCTION calc_stock_recruitment_relationship
 
 	dvar_vector mmb  = calc_mmb().shift(syr+1);
 	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
-	
+	COUT(bo);
+	COUT(mmb(syr+1));
+	exit(1);
+
 	// residuals
 	dvariable sigR = mfexp(logSigmaR);
 
@@ -2621,13 +2649,14 @@ REPORT_SECTION
 
 	/**
 	 * @brief Calculate mature male biomass
-	 
+	 * @details Calculation of the mature male biomass is based on the
+	 * numbers-at-length summed over each shell condition.
 	 * 
 	 * 
 	 * TODO correct for timing of when the MMB is calculated
 	 * Add female component if lamnda < 1
 	 * 
-	 * @return dvar_vector
+	 * @return dvar_vector mmb (model mature biomass).
 	 */
 FUNCTION dvar_vector calc_mmb()
 	dvar_vector mmb(syr,nyr);
@@ -2636,19 +2665,36 @@ FUNCTION dvar_vector calc_mmb()
 	int h = 1;  // males
 	for(int i = syr; i <= nyr; i++ )
 	{
-		if( nmature == 1 )      // continous molt
+		for( ig = 1; ig <= n_grp; ig++ )
 		{
-			m = 1;
+			h = isex(ig);
+			o = ishell(ig);
+			m = imature(ig);
+
+			double lam;
+			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
+
+			mmb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
 		}
-		else if( nmature == 2 ) // terminal molt males only
-		{
-			m = 2;
-		}
-		for( o = 1; o <= nshell; o++ )
-		{
-			ig = pntr_hmo(h,m,o);
-			mmb(i) += d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
-		}
+
+
+
+
+
+
+		//if( nmature == 1 )      // continous molt
+		//{
+		//	m = 1;
+		//}
+		//else if( nmature == 2 ) // terminal molt males only
+		//{
+		//	m = 2;
+		//}
+		//for( o = 1; o <= nshell; o++ )
+		//{
+		//	ig = pntr_hmo(h,m,o);
+		//	mmb(i) += d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
+		//}
 	}
 	return(mmb);
 
