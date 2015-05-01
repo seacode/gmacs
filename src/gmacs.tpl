@@ -1576,7 +1576,7 @@ FUNCTION update_population_numbers_at_length
 		{
 			recruits(i) *= mfexp(rec_dev(i));
 		}
-		rt = (0.5 * recruits(i)) * rec_sdd;
+		rt = (1.0/nsex * recruits(i)) * rec_sdd;
 
 		for( ig = 1; ig <= n_grp; ig++ )
 		{
@@ -1671,15 +1671,9 @@ FUNCTION calc_stock_recruitment_relationship
 		// Continuous molt (newshell/oldshell)
 		if ( nshell == 2 && nmature == 1)
 		{
-			COUT(lam)
 			calc_equilibrium(x,y,_A,_S,P(h),rec_sdd);
 			phiB += lam * x * elem_prod(mean_wt(h),maturity(h))
 			     +  lam * y * elem_prod(mean_wt(h),maturity(h));
-			COUT(x);
-			COUT(y);
-			//ig = pntr_hmo(h,1,1);
-			//d3_N(ig)(syr)   = elem_prod(x , exp(rec_ini));;
-			//d3_N(ig+1)(syr) = elem_prod(y , exp(rec_ini));;
 		}
 
 		// Insert terminal molt case here.
@@ -1695,9 +1689,10 @@ FUNCTION calc_stock_recruitment_relationship
 
 	dvar_vector mmb  = calc_mmb().shift(syr+1);
 	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
-	COUT(bo);
-	COUT(mmb(syr+1));
-	exit(1);
+	COUT(recruits);
+	COUT(rhat);
+
+	COUT(mmb);
 
 	// residuals
 	dvariable sigR = mfexp(logSigmaR);
@@ -1712,8 +1707,7 @@ FUNCTION calc_stock_recruitment_relationship
 			xi = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
 		break;
 
-		case 2: // SRR model with autocorrelation in rec_devs
-			COUT(recruits);
+		case 2: // SRR model with autocorrelation in rec_devs (testing only)
 			double rho =0.7;
 			int byr = syr+1;
 			xi = log(recruits(byr,nyr)) 
@@ -2677,24 +2671,6 @@ FUNCTION dvar_vector calc_mmb()
 			mmb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
 		}
 
-
-
-
-
-
-		//if( nmature == 1 )      // continous molt
-		//{
-		//	m = 1;
-		//}
-		//else if( nmature == 2 ) // terminal molt males only
-		//{
-		//	m = 2;
-		//}
-		//for( o = 1; o <= nshell; o++ )
-		//{
-		//	ig = pntr_hmo(h,m,o);
-		//	mmb(i) += d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
-		//}
 	}
 	return(mmb);
 
