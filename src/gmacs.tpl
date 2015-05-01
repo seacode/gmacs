@@ -1105,7 +1105,7 @@ FUNCTION calc_fishing_mortality
 					{
 						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
 					}
-					ft(k)(h)(i) = 0*mfexp(log_ftmp);
+					ft(k)(h)(i) = mfexp(log_ftmp);
 					
 					lambda = dmr(i,k);
 
@@ -1689,10 +1689,9 @@ FUNCTION calc_stock_recruitment_relationship
 
 	dvar_vector mmb  = calc_mmb().shift(syr+1);
 	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
-	COUT(recruits);
-	COUT(rhat);
-
-	COUT(mmb);
+	// COUT(recruits);
+	// COUT(rhat);
+	// COUT(mmb);
 
 	// residuals
 	dvariable sigR = mfexp(logSigmaR);
@@ -1949,10 +1948,10 @@ FUNCTION calc_relative_abundance
 	 * @brief Calculate predicted size composition data.
 	 * @details   Predicted size composition data are given in proportions.
 	 * Size composition strata:
-	 *  - sex
-	 *  - type (retained or discard)
-	 *  - shell condition
-	 *  - mature or immature
+	 *  - sex  (0 = both sexes, 1 = male, 2 = female)
+	 *  - type (0 = all catch, 1 = retained, 2 = discard)
+	 *  - shell condition (0 = all, 1 = new shell, 2 = oldshell)
+	 *  - mature or immature (0 = both, 1 = immature, 2 = mature)
 	 * 
 	 * NB Sitting in a campground on the Orgeon Coast writing this code,
 	 * with baby Tabitha sleeping on my back.
@@ -1960,6 +1959,7 @@ FUNCTION calc_relative_abundance
 	 * TODO: 
 	 *  - add pointers for shell type.   DONE
 	 *  - add pointers for maturity state. DONE
+	 *  - need pointer for retained vs. discarded.
 	 *  
 	 *  Jan 5, 2015.
 	 *  Size compostion data can come in a number of forms.
@@ -1988,6 +1988,7 @@ FUNCTION calc_relative_abundance
 	 *  [x] Check to ensure new shell old shell is working.
 	 *  [ ] Add maturity component for data sets with mature old and mature new.
 	 *  [ ] Issue 53, comps/total(sex,shell cond) 
+	 *  [ ]
 	 */
 FUNCTION calc_predicted_composition
 	int h,i,j,k,ig;

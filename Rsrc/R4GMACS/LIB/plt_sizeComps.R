@@ -112,7 +112,11 @@ plot.sizeComps <- function( M, which.plot="all" )
 
 	fun <- function(x,p)
 	{
-		p$labels$title = paste("Gear =",unique(x$fleet),"\n Sex =",unique(x$sex),", Type =",unique(x$type))
+		p$labels$title = paste("Gear =",unique(x$fleet),
+		                       "\n Sex =",unique(x$sex),
+		                       ", Type =",unique(x$type),
+		                       ", Shell=",unique(x$shell),
+		                       ", Maturity=",unique(x$maturity))
 		p %+% x
 	}
 	plist <- lapply(mdf,fun,p=p)

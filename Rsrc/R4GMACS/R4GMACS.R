@@ -34,7 +34,7 @@ myTheme <- theme_bw(base_size = 12) +
 .SEX      = c("Aggregate","Male","Female")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
-.TYPE     = c("Total catch","Retained","Discarded")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SEAS     = c("Annual")
 
 # SOURCE R_SRCIPTS FROM .LIB
