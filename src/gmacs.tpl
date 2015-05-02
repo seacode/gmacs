@@ -2788,7 +2788,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 
 RUNTIME_SECTION
   maximum_function_evaluations 500,  500,   1500, 25000, 25000
-  convergence_criteria        1.e-4, 1.e-4, 1.e-4, 1.e-4, 1.e-4, 
+  convergence_criteria        1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4, 
 
 
 GLOBALS_SECTION

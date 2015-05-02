@@ -26,7 +26,7 @@ myTheme <- theme_bw(base_size = 12) +
 .PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/Rsrc/R4GMACS"
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
-# .MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/")
+# .MODELDIR = c("../../examples/bbrkc/OneSex/")#,"../../examples/bbrkc/")
 .MODELDIR = paste0("../../examples/bbrkc/M",c(1,2),"/")
 # .MODELDIR = c("../../examples/pirkc/")
 .THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
