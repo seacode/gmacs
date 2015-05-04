@@ -948,8 +948,8 @@ FUNCTION initialize_model_parameters
 	ra        = theta(5);
 	rbeta     = theta(6);
 	logSigmaR = theta(7);
-	if(ntheta == 8) steepness = theta(8);
-	if(ntheta == 9) rho = theta(9);
+	steepness = theta(8);
+	rho       = theta(9);
 
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// Get Growth & Molting parameters 
@@ -1702,12 +1702,16 @@ FUNCTION calc_stock_recruitment_relationship
 	switch(nSRR_flag)
 	{
 		case 0: // NO SRR
-			res_recruit = log(recruits) - logRbar + sig2R;
+			res_recruit(syr)     = log(recruits(syr)) - logRbar;
+			res_recruit(byr,nyr) = log(recruits(byr-nyr)) 
+			                       - (1.0-rho) * logRbar 
+			                       - rho * log(++recruits(byr-1,nyr-1))
+			                       + sig2R;
 		break;
 
 		case 1:	// SRR model
 			//xi(byr,nyr) = log(recruits(byr,nyr)) - log(rhat(byr,nyr)) + sig2R;
-
+			
 			res_recruit(byr,nyr) = log(recruits(byr,nyr)) 
 			                       - (1.0-rho) * log(rhat(byr,nyr)) 
 			                       - rho * log(++recruits(byr-1,nyr-1))
@@ -2322,9 +2326,6 @@ FUNCTION calc_objective_function
 				nloglike(4,1)  = dnorm(res_recruit,sigR);
 			break;
 		}
-		//nloglike(4,1) += 50.*norm2(first_difference(rec_dev));
-
-		// autocorrelation in rec_devs
 		
 	}
 
