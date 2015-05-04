@@ -427,9 +427,6 @@ DATA_SECTION
 		theta_lb   = column(theta_control,2);
 		theta_ub   = column(theta_control,3);
 		theta_phz  = ivector(column(theta_control,4));
-		// ipar_vector(1,7)  = 1;
-		// ipar_vector(7,11) = nsex;
-		// ipar_vector(12)   = 1;
 	END_CALCS
 
 	// |----------------------------|
@@ -710,6 +707,7 @@ PARAMETER_SECTION
 	// rbeta     = theta(6)
 	// logSigmaR = theta(7)
 	// steepness = theta(8)
+	// rho       = theta(9)
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 	
@@ -787,6 +785,7 @@ PARAMETER_SECTION
 	number rbeta;           ///> rate parameter for recruitment distribution
 	number logSigmaR;       ///> standard deviation of recruitment deviations.
 	number steepness;       ///> steepness of the SRR
+	number rho;             ///> autocorrelation coefficient in recruitment.
 
 	vector   alpha(1,nsex); ///> intercept for linear growth increment model.
 	vector    beta(1,nsex); ///> slope for the linear growth increment model.
@@ -950,6 +949,7 @@ FUNCTION initialize_model_parameters
 	rbeta     = theta(6);
 	logSigmaR = theta(7);
 	if(ntheta == 8) steepness = theta(8);
+	if(ntheta == 9) rho = theta(9);
 
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// Get Growth & Molting parameters 
@@ -1694,6 +1694,7 @@ FUNCTION calc_stock_recruitment_relationship
 	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
 	
 	// residuals
+	int byr = syr+1;
 	res_recruit.initialize();
 	dvariable sigR = mfexp(logSigmaR);
 	dvariable sig2R = 0.5 * sigR * sigR;
@@ -1702,23 +1703,15 @@ FUNCTION calc_stock_recruitment_relationship
 	{
 		case 0: // NO SRR
 			res_recruit = log(recruits) - logRbar + sig2R;
-			xi = 0;
 		break;
 
 		case 1:	// SRR model
-			xi(syr+1,nyr) = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
-			res_recruit(syr+1,nyr) = log(recruits(syr+1,nyr)) 
-			                       - log(rhat(syr+1,nyr)) 
-			                       + 0.5*sigR*sigR;
-		break;
+			//xi(byr,nyr) = log(recruits(byr,nyr)) - log(rhat(byr,nyr)) + sig2R;
 
-		case 2: // SRR model with autocorrelation in rec_devs (testing only)
-			double rho =0.7;
-			int byr = syr+1;
-			xi = log(recruits(byr,nyr)) 
-			   - (1.-rho)*log(rhat(byr,nyr))
-			   - rho * log(++recruits(byr-1,nyr-1))
-			   + 0.5*sigR*sigR;
+			res_recruit(byr,nyr) = log(recruits(byr,nyr)) 
+			                       - (1.0-rho) * log(rhat(byr,nyr)) 
+			                       - rho * log(++recruits(byr-1,nyr-1))
+			                       + sig2R;
 		break;
 	}
 	
@@ -2320,12 +2313,13 @@ FUNCTION calc_objective_function
 		switch(nSRR_flag)
 		{
 			case 0:  
-				nloglike(4,1)  = dnorm(rec_dev,sigR);
+				//nloglike(4,1)  = dnorm(rec_dev,sigR);
+				nloglike(4,1)  = dnorm(res_recruit,sigR);
 				nloglike(4,1) += dnorm(rec_ini,sigR);
 			break;
 
 			case 1:
-				nloglike(4,1)  = dnorm(xi,sigR);
+				nloglike(4,1)  = dnorm(res_recruit,sigR);
 			break;
 		}
 		//nloglike(4,1) += 50.*norm2(first_difference(rec_dev));
