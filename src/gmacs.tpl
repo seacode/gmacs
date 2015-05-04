@@ -788,17 +788,20 @@ PARAMETER_SECTION
 	number logSigmaR;       ///> standard deviation of recruitment deviations.
 	number steepness;       ///> steepness of the SRR
 
-	vector alpha(1,nsex);   ///> intercept for linear growth increment model.
-	vector beta(1,nsex);    ///> slope for the linear growth increment model.
-	vector gscale(1,nsex);  ///> scale parameter for the gamma distribution.
-
+	vector   alpha(1,nsex); ///> intercept for linear growth increment model.
+	vector    beta(1,nsex); ///> slope for the linear growth increment model.
+	vector  gscale(1,nsex); ///> scale parameter for the gamma distribution.
 	vector molt_mu(1,nsex); ///> 50% probability of molting at length each year.
 	vector molt_cv(1,nsex); ///> CV in molting probabilility.
 
-	vector rec_sdd(1,nclass);           ///> recruitment size_density_distribution
-	vector recruits(syr,nyr);           ///> vector of estimated recruits
-	vector xi(syr+1,nyr);								///> vector of residuals for SRR
-	vector survey_q(1,nSurveys);        ///> scalers for relative abundance indices (q)
+	vector rec_sdd(1,nclass); ///> recruitment size_density_distribution
+
+	vector    recruits(syr,nyr); ///> vector of estimated recruits
+	vector res_recruit(syr,nyr); ///> vector of estimated recruits
+	vector          xi(syr,nyr); ///> vector of residuals for SRR
+
+
+	vector survey_q(1,nSurveys); ///> scalers for relative abundance indices (q)
 
 	matrix pre_catch(1,nCatchDF,1,nCatchRows);  ///> predicted catch (Baranov eq)
 	matrix res_catch(1,nCatchDF,1,nCatchRows);  ///> catch residuals in log-space
@@ -1689,21 +1692,24 @@ FUNCTION calc_stock_recruitment_relationship
 
 	dvar_vector mmb  = calc_mmb().shift(syr+1);
 	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
-	// COUT(recruits);
-	// COUT(rhat);
-	// COUT(mmb);
-
+	
 	// residuals
+	res_recruit.initialize();
 	dvariable sigR = mfexp(logSigmaR);
+	dvariable sig2R = 0.5 * sigR * sigR;
 
 	switch(nSRR_flag)
 	{
 		case 0: // NO SRR
+			res_recruit = log(recruits) - logRbar + sig2R;
 			xi = 0;
 		break;
 
 		case 1:	// SRR model
-			xi = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
+			xi(syr+1,nyr) = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
+			res_recruit(syr+1,nyr) = log(recruits(syr+1,nyr)) 
+			                       - log(rhat(syr+1,nyr)) 
+			                       + 0.5*sigR*sigR;
 		break;
 
 		case 2: // SRR model with autocorrelation in rec_devs (testing only)
