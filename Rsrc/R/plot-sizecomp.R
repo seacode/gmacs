@@ -174,4 +174,3 @@ plot_sizeCompRes <- function( M, which.plot="all" )
   		print( plist[[which.plot]] )
   	}
 }
-}

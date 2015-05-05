@@ -1,30 +1,36 @@
 #' Plot data range by fleet and year 
 #'
-#' @param replist List object created by read_admb function
+#' @param M List object(s) created by read_admb function
 #' @return Plot of data range 
+#' @author Ian Taylor, Huihua Lee, Jim Ianelli
 #' @export
-plot_datarange <-function(replist)
+plot_datarange <-function(M)
 {
-    #repfile   <- paste(deparse(substitute(replist)),".rep",sep="")
-    repfile   <- replist$run_name
+  n  <- length(M)
+  mdf<- NULL
+  for(i in 1:n)
+  {
+    A <- M[[i]]
+    #repfile   <- paste(deparse(substitute(M)),".rep",sep="")
+    repfile   <- A$run_name
     print(repfile)
     narepfile <- strsplit(scan(repfile,what="character",flush=TRUE,blank.lines.skip=FALSE,quiet=TRUE)[1:4],':')
     
-    startyr       <- replist$mod_yrs[1]
-    endyr         <- replist$mod_yrs[length(replist$mod_yrs)]
+    startyr       <- A$mod_yrs[1]
+    endyr         <- A$mod_yrs[length(A$mod_yrs)]
     nfleets       <- length(narepfile[[2]]) + length(narepfile[[4]])
     nfishfleets   <- length(narepfile[[2]]) 
     fleetnames    <- c(narepfile[[2]], narepfile[[4]])
     
-    df <- as.data.frame(replist$dCatchData)
+    df <- as.data.frame(A$dCatchData)
     colnames(df)<- c("year","seas","fleet","sex","obs","cv","type","units","mult","effort","discard_mort")
     
     retainedcatch <- df[df$type==1,]
     discards <- df[df$type==2,]
-    cpue <- as.data.frame(replist$dSurveyData)
+    cpue <- as.data.frame(A$dSurveyData)
     colnames(cpue)<- c("year","seas","fleet","sex","obs","cv","units")
-    size <- as.data.frame(replist$d3_SizeComps)
-    colnames(size)<- c("year","seas","fleet","sex","type","shell","maturity","Nsamp",as.character(replist$mid_points))
+    size <- as.data.frame(A$d3_SizeComps)
+    colnames(size)<- c("year","seas","fleet","sex","type","shell","maturity","Nsamp",as.character(A$mid_points))
     
     typetable <- matrix(c("retainedcatch",    "Retained_Catch",         
                           "discards",    "Discards",         
@@ -69,6 +75,7 @@ plot_datarange <-function(replist)
     
     ntypes <- max(typetable$itype)
     fleets <- sort(unique(typetable$fleet))
+  }
     
     plotdata <-  function()
     {
