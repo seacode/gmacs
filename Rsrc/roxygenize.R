@@ -1,2 +1,2 @@
 library(roxygen2)
-roxygen2::roxygenize("R/")
+roxygen2::roxygenize("../Rsrc/")
