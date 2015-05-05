@@ -4,10 +4,13 @@ Version: 1.00
 Date: 2015-05-06
     text-based ADMB output files and creating visual plots of both input data
     and fitted model results.
-Authors@R: c(person("Whitten", "Athol", email = "athol.whitten@gmail.com", role
-    = c("aut")), person("Ianelli", "Jim", email = "jim.ianelli@noaa.gov",
-    role = c("aut")), person("Martell", "Steve", role = "aut","cre"))
-URL: https://github.com/seacode/gmr
+Authors@R: c(person("Darcy", "Webber", role = c("aut", "cre"),
+		     email = "Darcy@quantifish.co.nz"),
+	      person("Steve", "Martell", role = "aut"),
+	      person("Jim", "Ianelli", role = "ctb",
+		     email = "jim.ianelli@noaa.gov"))
+Author: Darcy Webber [aut, cre], Steve Martell [aut],  Jim Ianelli [ctb]
+Maintainer: D Webber <Joe.Developer@some.domain.net>
 Version: 0.2
 Depends:
     R (>= 3.0.0),
@@ -17,3 +20,4 @@ Imports:
     reshape2 (>= 1.2.2),
     shiny (>= 0.10.2.2),
 License: MIT
+URL: https://github.com/seacode/gmr
