@@ -1,7 +1,7 @@
 Package: gmr
 Title: Plotting and analysis tools for the Gmacs stock assessment framework
-Description: gmr is a set of tools for analysing data and outputs from Gmacs
-    stock assessment models. The package streamlines the process of taking
+Version: 1.00
+Date: 2015-05-06
     text-based ADMB output files and creating visual plots of both input data
     and fitted model results.
 Authors@R: c(person("Whitten", "Athol", email = "athol.whitten@gmail.com", role
