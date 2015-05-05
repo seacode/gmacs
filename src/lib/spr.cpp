@@ -281,7 +281,7 @@ double spr::get_fspr(const int& ifleet,
 		{
 			m_fspr = fc;
 			m_bspr = m_ssb;
-			cout<<"Breaking good"<<endl;
+			cout<<"SPR calculations have converged. :)"<<endl;
 			break;
 		}
 

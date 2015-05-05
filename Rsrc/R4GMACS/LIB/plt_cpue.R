@@ -44,7 +44,7 @@ plot.cpue <- function( M ,subsetby="")
 		p  <- p + geom_line(data=mdf,aes(year,pred))
 		p  <- p + facet_wrap(~fleet+sex+Model,scales="free_y")
 	}
-	p  <- p + labs(x="Year",y="CPUE",col="Sex")
+	p  <- p + labs(x="Year",y="CPUE",col="Model")
 	print(p + .THEME)
 
 }

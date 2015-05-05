@@ -689,6 +689,7 @@ DATA_SECTION
 	number spr_rbar;
 	number spr_cofl;
 	number spr_fofl;
+	number spr_ssbo;
 
 INITIALIZATION_SECTION
 	theta     theta_ival;
@@ -771,7 +772,7 @@ PARAMETER_SECTION
 
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
-	vector nlogPenalty(1,5);
+	vector nlogPenalty(1,6);
 	vector priorDensity(1,ntheta+nGrwth+nSurveys);
 
 	objective_function_value objfun;
@@ -2364,6 +2365,8 @@ FUNCTION calc_objective_function
 		nlogPenalty(4) = dnorm(rec_dev,1.0);
 	if( active(rec_ini) && nSRR_flag !=0)
 		nlogPenalty(5) = dnorm(rec_ini,1.0);
+	if( active(rec_dev))
+		nlogPenalty(6) = dnorm(first_difference(rec_dev),1.0);
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
 	if( verbose==2 ) 
@@ -2523,6 +2526,7 @@ REPORT_SECTION
 		REPORT(spr_rbar);
 		REPORT(spr_fofl);
 		REPORT(spr_cofl);
+		REPORT(spr_ssbo);
 
 		dvar_matrix mean_size(1,nsex,1,nclass);
 		///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
@@ -2757,6 +2761,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	}
 	spr_fspr = ptrSPR->get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
 	spr_bspr = ptrSPR->get_bspr();
+	spr_ssbo = ptrSPR->get_ssbo();
 
 	// OFL Calculations
 	dvector mmb = value(calc_mmb());
