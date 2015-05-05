@@ -28,5 +28,5 @@
 #' @export
 #' 
 .gmr_options <- list(plot_type = "png", plot_resolution = 400,
-                     plot_size = c(150,150), plot_cols = .cbPalette1,
+                     plot_size = c(100,100), plot_cols = .cbPalette1,
                      thick = 2, thin = 1)

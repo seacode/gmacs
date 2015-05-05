@@ -1,0 +1,56 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(roxygen2)
+> roxygen2::roxygenize("../gmr/")
+Loading required package: ggplot2
+Loading required package: gdata
+gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+
+gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+
+Attaching package: ‘gdata’
+
+The following object is masked from ‘package:stats’:
+
+    nobs
+
+The following object is masked from ‘package:utils’:
+
+    object.size
+
+Loading required package: reshape2
+Loading required package: shiny
+Skipping invalid path:  .cbPalette1.Rd 
+Skipping invalid path:  .cbPalette2.Rd 
+Skipping invalid path:  .gmr_options.Rd 
+Skipping invalid path:  .onLoad.Rd 
+Skipping invalid path:  .get_catch_df.Rd 
+Skipping invalid path:  .get_cpue_df.Rd 
+Skipping invalid path:  .get_M_df.Rd 
+Skipping invalid path:  .get_recruitment_df.Rd 
+Skipping invalid path:  .get_selectivity_df.Rd 
+Skipping invalid path:  .get_sizeComps_df.Rd 
+Skipping invalid path:  .get_ssb_df.Rd 
+> 
+> proc.time()
+   user  system elapsed 
+  4.316   0.194   4.676 

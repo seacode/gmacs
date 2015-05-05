@@ -18,6 +18,6 @@ Depends:
 Imports:
     gdata (>= 2.13.3),
     reshape2 (>= 1.2.2),
-    shiny (>= 0.10.2.2),
+    shiny (>= 0.10.2.2)
 License: MIT
 URL: https://github.com/seacode/gmr
