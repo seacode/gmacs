@@ -7,5 +7,4 @@ admb -f gmacs.tpl lib/tailcompression.cpp lib/nloglike.cpp lib/spr.cpp lib/multi
 cp gmacs build/release/
 rm gmacs gmacs.obj
 rm lib/*.obj
-rm -r lib/bin/
 sudo ln -s ~/gmacs/src/build/release/gmacs /usr/bin/gmacs
