@@ -1111,7 +1111,7 @@ FUNCTION calc_fishing_mortality
 					ft(k)(h)(i) = mfexp(log_ftmp);
 					
 					lambda = dmr(i,k);
-
+					
 					sel = exp(log_slx_capture(k)(h)(i));
 					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k);
 					
@@ -1130,6 +1130,7 @@ FUNCTION calc_fishing_mortality
 			}
 		}
 	}
+	
 
 
 
@@ -1702,11 +1703,12 @@ FUNCTION calc_stock_recruitment_relationship
 	switch(nSRR_flag)
 	{
 		case 0: // NO SRR
-			res_recruit(syr)     = log(recruits(syr)) - logRbar;
-			res_recruit(byr,nyr) = log(recruits(byr-nyr)) 
+			//res_recruit(syr)     = log(recruits(syr)) - logRbar;
+			res_recruit(byr,nyr) = log(recruits(byr,nyr)) 
 			                       - (1.0-rho) * logRbar 
 			                       - rho * log(++recruits(byr-1,nyr-1))
 			                       + sig2R;
+			
 		break;
 
 		case 1:	// SRR model
@@ -1896,15 +1898,6 @@ FUNCTION calc_relative_abundance
 					}
 				}
 
-				// switch(unit)
-				// {
-				//  case 1:
-				//      nal=elem_prod(N(h)(i),mean_wt(h));
-				//  break;
-				//  case 2:
-				//      nal=N(h)(i);
-				//  break;
-				// }
 				V(j) = nal * sel;
 			}
 			else
@@ -1923,15 +1916,6 @@ FUNCTION calc_relative_abundance
 						}
 					}
 					
-					// switch(unit)
-					// {
-					//  case 1:
-					//      nal=elem_prod(N(h)(i),mean_wt(h));
-					//  break;
-					//  case 2:
-					//      nal=N(h)(i);
-					//  break;
-					// }
 					V(j) += nal * sel;
 				}
 			}
@@ -2360,6 +2344,7 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nfleet; k++ )
 	{
 		fbar = mean( ft(k)(1) );
+		
 		if( pen_fbar(k) > 0  && fbar != 0 )
 		{
 			log_fbar = log(fbar);
