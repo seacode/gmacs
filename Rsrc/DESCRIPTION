@@ -6,7 +6,7 @@ Date: 2015-05-06
     and fitted model results.
 Authors@R: c(person("Whitten", "Athol", email = "athol.whitten@gmail.com", role
     = c("aut")), person("Ianelli", "Jim", email = "jim.ianelli@noaa.gov",
-    role = c("aut")), person("Martell", "Steve", role = "aut", "cre"))
+    role = c("aut")), person("Martell", "Steve", email="stevem@iphc.int",role = "aut"))
 URL: https://github.com/seacode/gmr
 Version: 0.2
 Depends:
