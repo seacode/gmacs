@@ -12,6 +12,6 @@ src/robust_multi.obj
 src/spr.obj
 src/tailcompression.obj
 .Rproj.user
-.Rout
-.R~
+*.Rout
+*.R~
 .RData
