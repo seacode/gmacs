@@ -427,9 +427,6 @@ DATA_SECTION
 		theta_lb   = column(theta_control,2);
 		theta_ub   = column(theta_control,3);
 		theta_phz  = ivector(column(theta_control,4));
-		// ipar_vector(1,7)  = 1;
-		// ipar_vector(7,11) = nsex;
-		// ipar_vector(12)   = 1;
 	END_CALCS
 
 	// |----------------------------|
@@ -710,6 +707,7 @@ PARAMETER_SECTION
 	// rbeta     = theta(6)
 	// logSigmaR = theta(7)
 	// steepness = theta(8)
+	// rho       = theta(9)
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 	
@@ -787,18 +785,22 @@ PARAMETER_SECTION
 	number rbeta;           ///> rate parameter for recruitment distribution
 	number logSigmaR;       ///> standard deviation of recruitment deviations.
 	number steepness;       ///> steepness of the SRR
+	number rho;             ///> autocorrelation coefficient in recruitment.
 
-	vector alpha(1,nsex);   ///> intercept for linear growth increment model.
-	vector beta(1,nsex);    ///> slope for the linear growth increment model.
-	vector gscale(1,nsex);  ///> scale parameter for the gamma distribution.
-
+	vector   alpha(1,nsex); ///> intercept for linear growth increment model.
+	vector    beta(1,nsex); ///> slope for the linear growth increment model.
+	vector  gscale(1,nsex); ///> scale parameter for the gamma distribution.
 	vector molt_mu(1,nsex); ///> 50% probability of molting at length each year.
 	vector molt_cv(1,nsex); ///> CV in molting probabilility.
 
-	vector rec_sdd(1,nclass);           ///> recruitment size_density_distribution
-	vector recruits(syr,nyr);           ///> vector of estimated recruits
-	vector xi(syr+1,nyr);								///> vector of residuals for SRR
-	vector survey_q(1,nSurveys);        ///> scalers for relative abundance indices (q)
+	vector rec_sdd(1,nclass); ///> recruitment size_density_distribution
+
+	vector    recruits(syr,nyr); ///> vector of estimated recruits
+	vector res_recruit(syr,nyr); ///> vector of estimated recruits
+	vector          xi(syr,nyr); ///> vector of residuals for SRR
+
+
+	vector survey_q(1,nSurveys); ///> scalers for relative abundance indices (q)
 
 	matrix pre_catch(1,nCatchDF,1,nCatchRows);  ///> predicted catch (Baranov eq)
 	matrix res_catch(1,nCatchDF,1,nCatchRows);  ///> catch residuals in log-space
@@ -946,7 +948,8 @@ FUNCTION initialize_model_parameters
 	ra        = theta(5);
 	rbeta     = theta(6);
 	logSigmaR = theta(7);
-	if(ntheta == 8) steepness = theta(8);
+	steepness = theta(8);
+	rho       = theta(9);
 
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// Get Growth & Molting parameters 
@@ -1689,30 +1692,30 @@ FUNCTION calc_stock_recruitment_relationship
 
 	dvar_vector mmb  = calc_mmb().shift(syr+1);
 	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
-	// COUT(recruits);
-	// COUT(rhat);
-	// COUT(mmb);
-
+	
 	// residuals
+	int byr = syr+1;
+	res_recruit.initialize();
 	dvariable sigR = mfexp(logSigmaR);
+	dvariable sig2R = 0.5 * sigR * sigR;
 
 	switch(nSRR_flag)
 	{
 		case 0: // NO SRR
-			xi = 0;
+			res_recruit(syr)     = log(recruits(syr)) - logRbar;
+			res_recruit(byr,nyr) = log(recruits(byr-nyr)) 
+			                       - (1.0-rho) * logRbar 
+			                       - rho * log(++recruits(byr-1,nyr-1))
+			                       + sig2R;
 		break;
 
 		case 1:	// SRR model
-			xi = log(recruits(syr+1,nyr)) - log(rhat(syr+1,nyr)) + 0.5*sigR*sigR;
-		break;
-
-		case 2: // SRR model with autocorrelation in rec_devs (testing only)
-			double rho =0.7;
-			int byr = syr+1;
-			xi = log(recruits(byr,nyr)) 
-			   - (1.-rho)*log(rhat(byr,nyr))
-			   - rho * log(++recruits(byr-1,nyr-1))
-			   + 0.5*sigR*sigR;
+			//xi(byr,nyr) = log(recruits(byr,nyr)) - log(rhat(byr,nyr)) + sig2R;
+			
+			res_recruit(byr,nyr) = log(recruits(byr,nyr)) 
+			                       - (1.0-rho) * log(rhat(byr,nyr)) 
+			                       - rho * log(++recruits(byr-1,nyr-1))
+			                       + sig2R;
 		break;
 	}
 	
@@ -2314,17 +2317,15 @@ FUNCTION calc_objective_function
 		switch(nSRR_flag)
 		{
 			case 0:  
-				nloglike(4,1)  = dnorm(rec_dev,sigR);
+				//nloglike(4,1)  = dnorm(rec_dev,sigR);
+				nloglike(4,1)  = dnorm(res_recruit,sigR);
 				nloglike(4,1) += dnorm(rec_ini,sigR);
 			break;
 
 			case 1:
-				nloglike(4,1)  = dnorm(xi,sigR);
+				nloglike(4,1)  = dnorm(res_recruit,sigR);
 			break;
 		}
-		//nloglike(4,1) += 50.*norm2(first_difference(rec_dev));
-
-		// autocorrelation in rec_devs
 		
 	}
 
