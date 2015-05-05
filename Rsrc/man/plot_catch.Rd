@@ -4,17 +4,20 @@
 \alias{plot_catch}
 \title{Plot observed and predicted catch values}
 \usage{
-plot_catch(replist, plot_res = FALSE)
+plot_catch(M, plot_res = FALSE)
 }
 \arguments{
-\item{replist}{List object created by read_admb function}
-
 \item{plot_res}{plot residuals only (default=F)}
+
+\item{replist}{List object created by read_admb function}
 }
 \value{
 Plot of catch history (observed) and predicted values
 }
 \description{
 Plot observed and predicted catch values
+}
+\author{
+SJD Martell
 }
 

@@ -4,7 +4,7 @@
 \alias{plot_selectivity}
 \title{Plot selectivity}
 \usage{
-plot_selectivity(replist)
+plot_selectivity(M)
 }
 \arguments{
 \item{replist}{List object created by read_admb function}

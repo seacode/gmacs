@@ -20,7 +20,7 @@
   72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
   0.40       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
-  0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
+  0.95      0.20      1.00         -2       3    3.0    2.00         # steepness
   0.001     0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -122,7 +122,7 @@
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
   3
 ## Phase of estimation
- -3
+  3
 ## STDEV in m_dev for Random walk
   0.60
 ## Number of nodes for cubic spline or number of step-changes for option 3
