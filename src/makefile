@@ -14,7 +14,7 @@ ifdef ComSpec
     CXX:=g++
 else
     RM=rm -rf
-		CXX:=clang++
+    CXX:=clang++
 endif 
 
 
