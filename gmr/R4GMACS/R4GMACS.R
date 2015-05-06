@@ -50,13 +50,15 @@ names(M) <- basename(.MODELDIR)
 # PLOT ROUTINES	
 	hh <- 8.5
 	ww <- 11
+	.FIGS = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/docs/poster/FIGS/"
+	plot.catch( M );             ggsave(paste0(.FIGS,"figCatch.png"     ),width=1.0*ww,height=0.3*hh,bg="transparent")			
+	plot.ssb( M );			     ggsave(paste0(.FIGS,"figMMB.png"       ),width=0.5*ww,height=0.5*hh,bg="transparent")	
+	plot.Recruitment( M );	     ggsave(paste0(.FIGS,"figRecruits.png"  ),width=0.5*ww,height=0.5*hh,bg="transparent")	
+	plot.cpue( M ,"NMFS Trawl"); ggsave(paste0(.FIGS,"figCPUE.png"      ),width=0.5*ww,height=0.5*hh,bg="transparent")
+	plot.sizeComps ( M, 4 );     ggsave(paste0(.FIGS,"figSizeComps.png" ),width=ww,height=hh,bg="transparent")
+	table.SPRrefPoints(M)
 
-	plot.catch( M );             ggsave("figCatch.png",   width=1.0*ww,height=0.3*hh,bg="transparent")			
-	plot.ssb( M );			     ggsave("figMMB.png",     width=0.5*ww,height=0.5*hh,bg="transparent")	
-	plot.Recruitment( M );	     ggsave("figRecruits.png",width=0.5*ww,height=0.5*hh,bg="transparent")	
-	plot.cpue( M ,"NMFS Trawl"); ggsave("figCPUE.png",    width=0.5*ww,height=0.5*hh,bg="transparent")
 	# plotGrowthTransition( M )
 	# plotSizeTransition( M )
 	# plot.selex  ( M )
-	plot.sizeComps ( M, 4 );   ggsave("figSizeComps.png",width=ww,height=hh,bg="transparent")
 	# plot.SizeCompRes ( M ); ggsave("figSizeCompResdiuals.png",width=ww,height=hh,bg="transparent")
