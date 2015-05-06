@@ -34,8 +34,11 @@ lf_names <- c("Directed pot fishery","Pot fishery discard", "Trawl fishery disca
 j_mmb = read.table("jie_mmb.rep",header=T)
 j_surv = read.table("jie_survb.rep",header=T)
 j_len = read.table("jie_len_sched.rep",header=T)
-#j_ltr = read.table("jie_lentrans.rep",header=F)
+j_ltr = read.table("jie_lentrans.rep",header=F)
 gmrep <- read_admb("../OneSex/gmacs")
+#gmrep <- list(gmrep)
+#names(gmrep) <- ""
+
 ```
 
 
@@ -153,7 +156,9 @@ Recruitment patterns are similar, but differences in natural mortality schedules
 
 ```{r recruits}
 # Recruitment comparisons
-r1=get_recruitment(gmrep)
+M <- list(gmrep)
+names(M) <- ""
+r1=.get_recruitment_df(M)
 plot(r1$year,exp(r1$log_rec),typ="b",ylab="Recruits",xlab="Year")
 #abline(h=mean(exp(r1$log_rec)))
 R_m = j_mmb$R[2:40]
@@ -169,7 +174,7 @@ The model fit to survey biomass (males) was better for the current model (at lea
 
 ```{r survey_biomass}
 #Survey biomass fits
-plot(gmrep$mod_yrs,(gmrep$pre_cpue[1,]),typ="b",ylab="survey biomass ",xlab="Year",ylim=c(0,300000))
+plot(gmrep$mod_yrs,as.numeric(gmrep$pre_cpue[1,]),typ="b",ylab="survey biomass ",xlab="Year",ylim=c(0,300000))
 lines(j_surv$year,j_surv$pred,col="red")
 points(j_surv$year,j_surv$obs,col="red",pch=19)
 #points(gmrep$mod_yrs,(gmrep$obs_cpue[1,]))
@@ -195,12 +200,19 @@ for (i in 1:3) plot(gmrep$obs_catch[i,],(gmrep$pre_catch[i,]),main=fsh_names[i],
 The subsequent figures provide fits to the male BBRKC data based on gmacs.
 
 ```{r sizecomps, echo=FALSE}
-plot_sizecomp(gmrep,which_plots=1,main=lf_names[1])
-plot_sizecomp(gmrep,which_plots=2,main=lf_names[2])
-plot_sizecomp(gmrep,which_plots=3,main=lf_names[3])
-plot_sizecomp(gmrep,which_plots=4,main=lf_names[4])
-plot_sizecomp(gmrep,which_plots=5,main=lf_names[5])
-plot_sizecomp(gmrep,which_plots=6,main=lf_names[6])
+.THEME    = theme_bw(base_size = 12, base_family = "")
+.FLEET = c("Directed pot fishery", "Pot fishery discard", "Trawl fishery discard", "BTS Newshell", "BTS Oldshell", "BSFRF")
+.SEX   = c("Aggregate","Male","Female")
+.SHELL    = c("Aggregate","New Shell","Old Shell")
+.MATURITY = c("Aggregate","Immature","Mature")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
+.SEAS     = c("Annual")
+plot_sizeComps(M, which_plots=1)
+plot_sizeComps(M, which_plots=2)
+plot_sizeComps(M, which_plots=3)
+plot_sizeComps(M, which_plots=4)
+plot_sizeComps(M, which_plots=5)
+plot_sizeComps(M, which_plots=6)
 ```
 
 
