@@ -104,7 +104,7 @@
 #' @author SJD Martell
 #' @export
 #'
-plot_sizeComps <- function( M ,which_plots="all")
+plot_sizeComps <- function(M , which_plots="all")
 {
 	
 	mdf <- .get_sizeComps_df( M )
@@ -127,13 +127,11 @@ plot_sizeComps <- function( M ,which_plots="all")
 	plist <- lapply(mdf,fun,p=p)
 	
 
-	if ( which.plot == "all" )
+	if ( which_plots == "all" )
 	{
 		print( plist )
-	}
-	else 
-	{
-		print( plist[[which.plot]] )
+	} else {
+		print( plist[[which_plots]] )
 	}
 
 }
