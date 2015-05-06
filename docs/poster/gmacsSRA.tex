@@ -160,34 +160,7 @@
       %% COLUMN 1
       \begin{column}{.3\linewidth}
         \vspace{3in}
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        \begin{block}{\large Data Inputs}
-          \begin{table}
-          \centering
-          %\footnotesize
-          \caption{Required and optional input data for GMACS.}
-          \begin{tabular}{@{} p{.7\linewidth} c r @{}}
-            \toprule
-            % Features                                                             & Dim.            & [\%WER] \\
-            Data Type                                  & Symbol  & Required \\
-            \midrule
-            History of catch removals                  &  $C_t$  & yes      \\
-            History of discards                        &  $D_t$  & no       \\
-            \addlinespace
-            \addlinespace
-            Relative abundance data (\eg, CPUE)        &  $I_t$  & no       \\
-            \addlinespace
-            \addlinespace
-            Size composition (sex,type,shell,maturity) &$\bm{Q}_{h,p,o,m}$ & no       \\
-            Growth increment data                      &  $g_h$    & no       \\
-            Size Transition Matrix                     &$\bm{G}_{h}$ & no       \\
-            \bottomrule
-          \end{tabular}
-          \label{tab:data_inputs}
-          \end{table}
-        \end{block}
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        \vskip1ex
+        
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \begin{block}{\large General Size-structured Equilibrium Model}
 
@@ -201,17 +174,70 @@
           \[\bm{n} = \bm{A}\bm{n} + \bm{r}\]
           with the equilibrium solution for the numbers-at-size given by
           \[\bm{n} = -(\bm{A} - \bm{I})^{-1} (\bm{r})\]
-          where $\bm{I}$ is the $m$ x $m$ identity matrtix. In practical terms, the 
+          where $\bm{I}$ is the $m$ x $m$ identity matrix. In practical terms, the 
           challenge is in developing the matrix $\bm{A}$ and the vector of new recruitment
           $\bm{r}$.\\[1ex]
 
-          Our approach accomodates the dynamics of molting probabilities, and 
-          jointly modeling the abundance of new and old shell crabs and maturity state.
+          GMACS is based on this simple matrix equation equation for modeling the dynamics of molting probabilities, size-transition or growth, and also jointly models various life-history stages, such as, new- and old-shell crab.
+
+          % Our approach accommodates the dynamics of molting probabilities, and 
+          % jointly modeling the abundance of new and old shell crabs and maturity state.
         \end{block}
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \vskip1ex
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+        \begin{block}{\large Model Features}
+          \begin{table}
+            \centering
+            \caption{Data inputs and dimensions implemented in GMACS, required elements in \textbf{bold}}
+            \begin{tabular}{@{} p{.33\linewidth} | p{.33\linewidth} | c | c @{}}
+            \toprule
+            Data Type & Dimensions & Symbol & Implemented \\ 
+            \midrule
+            \addlinespace
+            \textbf{Catch} &year, fleet, sex              & $C_t$       & \cmark \\
+            Discards       &year, fleet, sex              & $D_t$       & \cmark \\
+            Effort         &year, fleet                   & $E_t$       & \xmark \\
+            CPUE           &year, fleet, sex, shell       & $I_t$       & \cmark \\
+            Composition    &year, fleet, sex, shell, type & $Q_{i,h,o}$ & \cmark \\
+            Composition    &maturity status               &             & \xmark \\
+            Molt Increment &sex                           & $g_l$       & \cmark \\
+            Tagging data   &sex                           &             & \xmark \\
+            \bottomrule
+            \end{tabular}
+          \end{table}
+        \end{block}
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \vskip1ex
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % \begin{block}{\large Data Inputs}
+          % \begin{table}
+          % \centering
+          % \footnotesize
+          % \caption{Required and optional input data for GMACS.}
+          % \begin{tabular}{@{} p{.7\linewidth} c r @{}}
+            % \toprule
+            % Features                                                             & Dim.            & [\%WER] \\
+            % Data Type                                  & Symbol  & Required \\
+            % \midrule
+            % History of catch removals                  &  $C_t$  & yes      \\
+            % History of discards                        &  $D_t$  & no       \\
+            % \addlinespace
+            % \addlinespace
+            % Relative abundance data (\eg, CPUE)        &  $I_t$  & no       \\
+            % \addlinespace
+            % \addlinespace
+            % Size composition (sex,type,shell,maturity) &$\bm{Q}_{h,p,o,m}$ & no       \\
+            % Growth increment data                      &  $g_h$    & no       \\
+            % Size Transition Matrix                     &$\bm{G}_{h}$ & no       \\
+            % \bottomrule
+          % \end{tabular}
+          % \label{tab:data_inputs}
+          % \end{table}
+        % \end{block}
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % \vskip1ex
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \begin{block}{\large Generalized Model Notation (equilibrium conditions)}
           \begin{table}
             \centering
@@ -296,8 +322,8 @@
       \begin{column}{.3\linewidth}
         \vspace{-2in}
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        \begin{block}{\centering \large \textbf{Abstract}}
-          \justifying
+        \begin{block}{\centering \LARGE \textbf{Abstract}}
+          \justifying 
           Stock reduction analysis (SRA) is a data-poor technique that typically just uses historical 
           catch information to estimate recruitment rates needed to explain those historical catches.  
           The method is easily extended to accommodate sparse information on trends in abundance, 
@@ -306,9 +332,9 @@
           models suitable for data-poor to data-rich assessments.  Reference points are derived from 
           steady-state conditions by solving matrix equations that represent size-dependent mortality 
           and growth.   Our results show how the scalability of GMACS can be used as an integrated
-          data-poor assessment method. Next steps include the evaluation of such ``simple`` methods testing 
+          data-poor assessment method. Next steps include the evaluation of such ``simple'' methods testing 
           simulated data generated from within GMACS (or from a separate R package) but configured to have 
-          greater complexity of underlying dynamics (e.g., time-varying natural mortality))
+          greater complexity of underlying dynamics (e.g., time-varying natural mortality)
         \end{block}
         \vspace{2in}
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -478,7 +504,7 @@
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \begin{block}{\large Discussion}
           \begin{itemize}
-            \item Size-structured models contain additional confounding between estimates of recruitment, size-transition, and size-based mortality in contrast to age-structured models.
+            \item Size- or stage-structured models contain additional confounding between estimates of recruitment, size-transition, and size-based mortality in contrast to age-structured models.
             \item It is possible to conduct Stock Reduction Analysis (using only catch data) and additional assumptions about natural mortality, growth, and the size-distribution of new recruits.
             \item The generalized size-structured equilibrium model also extends to additional classes such as sex, new and old-shell, immature and mature animals.
           \end{itemize}

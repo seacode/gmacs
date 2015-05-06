@@ -102,6 +102,8 @@ DATA_SECTION
 			cout<<"\n";
 			exit(1);
 		}
+
+		// Add command line option here to do retrospective analysis
 	END_CALCS
 
 	// |------------------------|
