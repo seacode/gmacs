@@ -193,19 +193,19 @@
 
 
           Given a vector $\bm{n} = (n_1,n_2,\ldots,n_m)$ that represents the number of individuals in discrete
-          size bins in a given year.  Each year the numbers in size bin are subject to 
-          growth and survival $\bm{A}$ and the addition of new recruits $\bm{r}$ into each size
-          bin. Assuming growth and survival is a linear function of the number of 
-          indiviudals in each size bin, then the following matrix equation represents
-          the steady-state or equilibrium conditions.
+          size bins in a given year.  Each year the numbers in each size bin are subject to 
+          growth and survival $\bm{A}$ and the addition of recruits $\bm{r}$.
+          Assuming growth and survival is a linear function of the number of 
+          individuals in each size bin, then the following matrix equation represents
+          the steady-state or equilibrium conditions:
           \[\bm{n} = \bm{A}\bm{n} + \bm{r}\]
-          The equilibrium solution for the numbers-at-size is given by
+          with the equilibrium solution for the numbers-at-size given by
           \[\bm{n} = -(\bm{A} - \bm{I})^{-1} (\bm{r})\]
-          where $\bm{I}$ is the $m$ x $m$ identity matrtix. The only real practical 
-          challenge is developing the matrix $\bm{A}$ and the vector of new recruitment
+          where $\bm{I}$ is the $m$ x $m$ identity matrtix. In practical terms, the 
+          challenge is in developing the matrix $\bm{A}$ and the vector of new recruitment
           $\bm{r}$.\\[1ex]
 
-          It is also possible to accomodate the dynamics of molting probabilities, and 
+          Our approach accomodates the dynamics of molting probabilities, and 
           jointly modelling the abundance of new and old shell crabs and maturity state.
         \end{block}
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -298,7 +298,17 @@
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \begin{block}{\centering \large \textbf{Abstract}}
           \justifying
-          Stock reduction analysis (SRA) is a data-poor technique that uses only historical catch information to estimate recruitment rates needed to explain those historical catches.  The method is easily extended to accommodate sparse information on trends in abundance, composition information, and tagging data.  Estimation of model parameters using maximum likelihood or Bayesian methods is possible.  GMACS is a generalized framework for size-structured models suitable for data-poor to data-rich assessments.  Reference points are derived from steady-state conditions by solving matrix equations that represent size-dependent mortality and growth.   We discuss how other data-poor techniques can easily be integrated into GMACS.
+          Stock reduction analysis (SRA) is a data-poor technique that typically just uses historical 
+          catch information to estimate recruitment rates needed to explain those historical catches.  
+          The method is easily extended to accommodate sparse information on trends in abundance, 
+          composition information, and tagging data.  Estimation of model parameters using maximum 
+          likelihood or Bayesian methods is possible.  GMACS is a generalized framework for size-structured 
+          models suitable for data-poor to data-rich assessments.  Reference points are derived from 
+          steady-state conditions by solving matrix equations that represent size-dependent mortality 
+          and growth.   Our results show how the scalability of GMACS can be used as an integrated
+          data-poor assessment method. Next steps include the evaluation of such ``simple`` methods testing 
+          simulated data generated from within GMACS (or from a separate R package) but configured to have 
+          greater complexity of underlying dynamics (e.g., time-varying natural mortality))
         \end{block}
         \vspace{2in}
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -321,7 +331,7 @@
             &\mbox{\underline{Selectivity \& retention}} &\nonumber \\
             &s_{l} = (1 + \exp(-(l-a )/ \sigma_{s}))^{-1}\label{T4.3} & \mbox{Capture probability}\\[1ex]
             &y_{l} = (1 + \exp(-(\lambda - l) / \sigma_{y}))^{-1}&\mbox{Retention probability}\label{T4.4}\\[1ex]
-            &\nu_{l}  = s_{l} [y_{l} + (1-y_{l})\xi]&\mbox{Joint probability dying from fishing}\label{T4.5}\\[2ex]
+            &\nu_{l}  = s_{l} [y_{l} + (1-y_{l})\xi]&\mbox{Joint probability of dying from fishing}\label{T4.5}\\[2ex]
             %%
             %%
             &\mbox{\underline{Fishing mortality}}& \nonumber \\
@@ -345,11 +355,11 @@
           The Spawning Potential Ratio (SPR) is the ratio of spawning stock biomass in 
           fished:unfished conditions.  Or,
           \[SPR = \dfrac{\tilde{\phi}_B}{\phi_B}\] 
-          Fishing mortality rates that achieve SPR values in the range of 0.3-0.4 are 
-          often a good proxy for rates associated with Maximum Sustainable Yield.
+          Fishing mortality that achieves SPR values in the range of 0.3-0.4 are 
+          often considered a proxy for rates associated with Maximum Sustainable Yield.
           GMACS uses an interative solution based on solving equations \eqref{T1.14} 
-          and \eqref{T1.16} to determine the appropriate fishing mortality rate 
-          ($F_{\mbox{SPR}}$) that reduces the SPR to a specified ratio.  
+          and \eqref{T1.16} to find the fishing mortality rate 
+          ($F_{\mbox{SPR}}$) that corresponds to a specified SPR value.  
         \end{block}
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \vskip1ex
@@ -393,9 +403,9 @@
             retained and discarded catch (Fig. \ref{figCatch}).
             \item Catch only method requires prior information on one of the following:
               \begin{itemize}
-                 \item Average fishing mortality rates,
-                 \item or an estimate of current depeltion level,
-                 \item or estimate of absolute fishing mortality for one or more gears.
+                 \item Average fishing mortality rates, or
+                 \item an estimate of current depletion level, or
+                 \item an estimate of absolute fishing mortality for one or more gears.
                \end{itemize} 
             \item Estimates of \fspr\ are consistent across models because same natural
             mortality and selectivity are assumed (Table \ref{tab:spr_results}).
