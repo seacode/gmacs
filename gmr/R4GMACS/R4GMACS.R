@@ -23,7 +23,7 @@ myTheme <- theme_bw(base_size = 12) +
 
 # GLOBAL CONSTS
 .OVERLAY  = TRUE
-.PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/Rsrc/R4GMACS"
+.PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/gmr/R4GMACS"
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 # .MODELDIR = c("../../examples/bbrkc/OneSex/")#,"../../examples/bbrkc/")
