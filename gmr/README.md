@@ -7,7 +7,7 @@ The most recent release of the `gmr` package can be downloaded and installed fro
 ```S
 install.packages("devtools")
 install.packages("shiny")
-devtools::install_github("seacode/gmacs",subdir="/Rsrc",ref="develop")
+devtools::install_github("seacode/gmacs",subdir="/gmr",ref="develop")
 ```
 
 
@@ -20,13 +20,13 @@ library(gmr)
 To install previous release versions of `gmr`, use, for example:
 
 ```S
-devtools::install_github("seacode/gmacs/Rsrc", ref = "V1.0")
+devtools::install_github("seacode/gmacs/gmr", ref = "V1.0")
 ````
 
 To install current development versions of `gmr`, use:
 
 ```S
-devtools::install_github("seacode/gmacs/Rsrc", ref = "develop")
+devtools::install_github("seacode/gmacs/gmr", ref = "develop")
 ```
 
 ### Useage note 
