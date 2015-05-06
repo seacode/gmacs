@@ -17,7 +17,7 @@ opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/', echo=FALSE, warning
 ```{r, load_packages, include=FALSE}
 # echo=FALSE}
 library(gmr)
-source("../../../Rsrc/R/plot-sizecomp.R")
+#source("../../../Rsrc/R/plot-sizecomp.R")
 library(reshape2)
 library(devtools)
 #library(ggplot2)
@@ -25,7 +25,8 @@ library(devtools)
 set_ggtheme('bw')
 
 # Set working directory to that containing Gmacs model results:
-setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
+#setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
+setwd("../jieOutput/")
 
 fsh_names <- c("Directed","Pot discard", "Trawl discard")
 lf_names <- c("Directed pot fishery","Pot fishery discard", "Trawl fishery discard","BTS Newshell","BTS Oldshell","BSFRF")
@@ -33,8 +34,8 @@ lf_names <- c("Directed pot fishery","Pot fishery discard", "Trawl fishery disca
 j_mmb = read.table("jie_mmb.rep",header=T)
 j_surv = read.table("jie_survb.rep",header=T)
 j_len = read.table("jie_len_sched.rep",header=T)
-j_ltr = read.table("jie_lentrans.rep",header=F)
-gmrep <- read_admb('gmacs')
+#j_ltr = read.table("jie_lentrans.rep",header=F)
+gmrep <- read_admb("../OneSex/gmacs")
 ```
 
 
