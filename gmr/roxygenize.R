@@ -1,2 +1,2 @@
-library(roxygen2)
-roxygen2::roxygenize("../gmr/")
+require(roxygen2)
+roxygen2::roxygenize("../gmr")
