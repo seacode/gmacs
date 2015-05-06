@@ -2881,7 +2881,7 @@ TOP_OF_MAIN_SECTION
 	gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);
 	gradient_structure::set_MAX_NVAR_OFFSET(5000);
 	gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
-	gradient_structure::set_MAX_DLINKS(50000); 
+	gradient_structure::set_MAX_DLINKS(150000); 
 
 
 FINAL_SECTION
