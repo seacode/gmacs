@@ -1,4 +1,6 @@
 # gmr
+[![Build Status](https://travis-ci.org/seacode/gmacs/gmr.svg?branch=develop)](https://travis-ci.org/seacode/gmacs/gmr)
+
 ### R code for Gmacs
 
 The `gmr` R package is under development in support of the [Gmacs](https://github.com/seacode/gmacs) stock assessment modeling framework. More information about the package can be found on the [Gmacs Wiki](https://github.com/seacode/gmacs/wiki), under the [R Package](https://github.com/seacode/gmacs/wiki/4.-R-Package) section. 
