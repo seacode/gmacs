@@ -95,7 +95,6 @@ namespace acl
 		return R;
 	}
   
-
 	
 	/**
 	 * @brief Class for multinomial negative loglikelihood.
@@ -220,6 +219,4 @@ namespace acl
 } // end of acl namespace
 
 
-
 #endif
-
