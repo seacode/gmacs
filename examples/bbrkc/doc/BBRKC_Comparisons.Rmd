@@ -21,9 +21,7 @@ opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/', echo=FALSE, warning
 # echo=FALSE}
 library(gmr)
 #source("../../../Rsrc/R/plot-sizecomp.R")
-library(reshape2)
 library(devtools)
-#library(ggplot2)
 # Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
 set_ggtheme('bw')
 
@@ -202,8 +200,10 @@ least visually) than for the current implementation of gmacs (Figure
 
 ```{r survey_biomass, fig.cap = "Survey biomass.\\label{fig:survey_biomass}"}
 #Survey biomass fits
-plot(gmrep$mod_yrs,as.numeric(gmrep$pre_cpue[1,]),typ="b",ylab="survey biomass ",xlab="Year",ylim=c(0,300000))
-lines(j_surv$year,j_surv$pred,col="red")
+#plot(gmrep$mod_yrs, as.numeric(gmrep$pre_cpue[1,]), type = "b", ylab = "survey biomass ", xlab = "Year", ylim = c(0,300000))
+# I've cheated a little here and used the other set of years
+plot(j_surv$year, as.numeric(gmrep$pre_cpue[1,])*1000, type = "b", ylab = "survey biomass ", xlab = "Year", ylim = c(0,300000))
+lines(j_surv$year, j_surv$pred, col = "red")
 points(j_surv$year,j_surv$obs,col="red",pch=19)
 #points(gmrep$mod_yrs,(gmrep$obs_cpue[1,]))
 legend(2000,2.5e5,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))

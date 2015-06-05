@@ -74,8 +74,8 @@ DATA_SECTION
 			cout<<"  | Steven Martell,              IPHC                        |\n";
 			cout<<"  | James Ianelli,               NOAA-NMFS                   |\n";
 			cout<<"  | Jack Turnock,                NOAA-NMFS                   |\n";
-			cout<<"  | Jie Zheng,	                  ADF&G                       |\n";
-			cout<<"  | Hamachan Hamazaki,	          ADF&G                       |\n";
+			cout<<"  | Jie Zheng,	                ADF&G                       |\n";
+			cout<<"  | Hamachan Hamazaki,	        ADF&G                       |\n";
 			cout<<"  | Athol Whitten,               University of Washington    |\n";
 			cout<<"  | Andre Punt,                  University of Washington    |\n";
 			cout<<"  | Dave Fournier,               Otter Research              |\n";
@@ -145,7 +145,7 @@ DATA_SECTION
 	int n_grp;              ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
 	int nlikes
-                 //   1      2       3         4          5             
+                       //   1      2       3         4          5             
 	!! nlikes = 5; // (catch, cpue, sizecomps, recruits, molt_increment data)
 
 	// Set up index pointers
@@ -314,7 +314,9 @@ DATA_SECTION
 			d3_obs_size_comps(k) = trans(tmp);
 			// NOTE This normalizes all observations by row--may be incorrect if shell condition
 			for (int i=1;i<=nSizeCompRows(k);i++)
+			{
 			  d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
+			}
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
 		WRITEDAT(nSizeComps);WRITEDAT(nSizeCompRows);  WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps); 
