@@ -1,15 +1,16 @@
 ---
 title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. 2014"
 output: pdf_document
+bibliography: gmacs.bib
 ---
-## Results culminating from the mid-January 2015 crab modeling workshop
 
-The following summarizes the outcome of some rudimentary comparisons between the
-existing Bristol Bay red king crab (BBRKC) model and an emulated version using
-the gmacs platform.  Since the BBRKC model from Zheng et al. (2014) treats
-recruits by sex along with sex-specific natural mortality and fishing mortality,
-results from the male components are compared with results from a `gmacs` model
-implementation tuned to male-only data.
+The following summarizes the outcome of some comparisons between the existing
+Bristol Bay red king crab (BBRKC) stock assessment model [@zheng_bristol_2014]
+(Zheng et al. 2014) and an emulated version using the gmacs platform.  Since the
+BBRKC model from Zheng et al. (2014) treats recruits by sex along with
+sex-specific natural mortality and fishing mortality, results from the male
+components are compared with results from a `gmacs` model implementation tuned
+to male-only data.
 
 
 
@@ -21,10 +22,16 @@ implementation tuned to male-only data.
 
 ## Mean weight-at-length
 
-The mean weight-at-length ($w_\ell$) used in both models are nearly identical
-(Figure \ref{fig:mean_wt}). The only difference between the two models is in the
-final length class (160mm) where the mean weight is greater in Zheng's model
-than in gmacs. This difference is due to...
+The mean weight-at-length ($w_\ell$) of crabs is defined in grams and the
+carapace length ($\ell$, CL) in mm. The mean weight-at-length used in both
+models is nearly identical (Figure \ref{fig:mean_wt}). The only difference
+between the two models is in the final length class (160mm) where the mean
+weight is greater in Zheng's model than in gmacs.
+
+The length-weight relationships used in Zheng's model for males and females were
+$$W = 0.000408 L^{3.127956} \quad \text{immature females},$$
+$$W = 0.003593 L^{2.666076} \quad \text{ovigerous females},$$
+$$W = 0.0004031 L^{3.141334} \quad \text{males}.$$
 
 ![Mean weight-at-length.\label{fig:mean_wt}](Figs/mean_wt-1.png) 
 
@@ -73,13 +80,14 @@ population-at-lengths were established (the BBRKC model assumes all new-shell)
 ![Initial numbers.\label{fig:init_N}](Figs/init_N-1.png) 
  
 # Time series results/comparisons
+
 ## Natural mortality
 
-The figure below illustrates implementation of 4 step changes in M (freely
-estimated) in gmacs relative to the estimates from Zheng et al. 2014 (Figure
-\ref{fig:M_t}).
+The figure below illustrates implementation of four step changes in $M_t$
+(freely estimated) in gmacs relative to the estimates from Zheng et al. 2014
+(Figure \ref{fig:M_t}).
 
-![Time-varying natural mortality ($M_t$).\label{fig:M_t}](Figs/M_t-1.png) 
+![Time-varying natural mortality.\label{fig:M_t}](Figs/M_t-1.png) 
 
 
 ## Recruitment
@@ -89,6 +97,7 @@ will affect these matches. The figure below plots the values to have the same
 mean (Figure \ref{fig:recruits}).
 
 ![Recruitment ($R_t$).\label{fig:recruits}](Figs/recruits-1.png) 
+
 
 ## Fit to survey abundance indices
 
@@ -128,3 +137,6 @@ the robust-multinomial would be the next step after selectivity issues are
 resolved. Subsequent to that, it would be worth exploring aspects of alternative
 model specifications (e.g., constant natural mortality over time, time-varying
 selectivity, etc) to evaluate sensitivities.
+
+
+# References

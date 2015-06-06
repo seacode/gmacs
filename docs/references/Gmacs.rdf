@@ -1,0 +1,112 @@
+<rdf:RDF
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:z="http://www.zotero.org/namespaces/export#"
+ xmlns:dcterms="http://purl.org/dc/terms/"
+ xmlns:bib="http://purl.org/net/biblio#"
+ xmlns:foaf="http://xmlns.com/foaf/0.1/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:prism="http://prismstandard.org/namespaces/1.2/basic/">
+    <bib:Article rdf:about="http://icesjms.oxfordjournals.org/cgi/doi/10.1093/icesjms/fss185">
+        <z:itemType>journalArticle</z:itemType>
+        <dcterms:isPartOf rdf:resource="urn:issn:1054-3139,%201095-9289"/>
+        <bib:authors>
+            <rdf:Seq>
+                <rdf:li>
+                    <foaf:Person>
+                        <foaf:surname>Punt</foaf:surname>
+                        <foaf:givenname>A. E.</foaf:givenname>
+                    </foaf:Person>
+                </rdf:li>
+                <rdf:li>
+                    <foaf:Person>
+                        <foaf:surname>Huang</foaf:surname>
+                        <foaf:givenname>T.</foaf:givenname>
+                    </foaf:Person>
+                </rdf:li>
+                <rdf:li>
+                    <foaf:Person>
+                        <foaf:surname>Maunder</foaf:surname>
+                        <foaf:givenname>M. N.</foaf:givenname>
+                    </foaf:Person>
+                </rdf:li>
+            </rdf:Seq>
+        </bib:authors>
+        <dc:title>Review of integrated size-structured models for stock assessment of hard-to-age crustacean and mollusc species</dc:title>
+        <bib:pages>16-33</bib:pages>
+        <dc:date>2013-01-01</dc:date>
+        <z:language>en</z:language>
+        <dc:identifier>
+            <dcterms:URI>
+                <rdf:value>http://icesjms.oxfordjournals.org/cgi/doi/10.1093/icesjms/fss185</rdf:value>
+            </dcterms:URI>
+        </dc:identifier>
+        <dcterms:dateSubmitted>2015-06-05 22:07:42</dcterms:dateSubmitted>
+        <z:libraryCatalog>CrossRef</z:libraryCatalog>
+    </bib:Article>
+    <bib:Journal rdf:about="urn:issn:1054-3139,%201095-9289">
+        <dc:title>ICES Journal of Marine Science</dc:title>
+        <prism:volume>70</prism:volume>
+        <prism:number>1</prism:number>
+        <dc:identifier>DOI 10.1093/icesjms/fss185</dc:identifier>
+        <dc:identifier>ISSN 1054-3139, 1095-9289</dc:identifier>
+    </bib:Journal>
+    <bib:Article rdf:about="#item_46">
+        <z:itemType>journalArticle</z:itemType>
+        <dcterms:isPartOf>
+            <bib:Journal>
+               <dc:title>Alaska Department of Fish and Game</dc:title>
+            </bib:Journal>
+        </dcterms:isPartOf>
+        <bib:authors>
+            <rdf:Seq>
+                <rdf:li>
+                    <foaf:Person>
+                        <foaf:surname>Zheng</foaf:surname>
+                        <foaf:givenname>J.</foaf:givenname>
+                    </foaf:Person>
+                </rdf:li>
+                <rdf:li>
+                    <foaf:Person>
+                        <foaf:surname>Siddeek</foaf:surname>
+                        <foaf:givenname>M.S.M</foaf:givenname>
+                    </foaf:Person>
+                </rdf:li>
+            </rdf:Seq>
+        </bib:authors>
+        <dc:title>Bristol Bay Red King Crab Stock Assessment in Spring 2014</dc:title>
+        <bib:pages>149</bib:pages>
+        <dc:date>2014</dc:date>
+    </bib:Article>
+    <bib:Article rdf:about="http://booksandjournals.brillonline.com/content/journals/10.1163/193724011x615460">
+        <z:itemType>journalArticle</z:itemType>
+        <dcterms:isPartOf rdf:resource="urn:issn:0278-0372,%201937-240X"/>
+        <bib:authors>
+            <rdf:Seq>
+                <rdf:li>
+                    <foaf:Person>
+                        <foaf:surname>Stevens</foaf:surname>
+                        <foaf:givenname>Bradley G.</foaf:givenname>
+                    </foaf:Person>
+                </rdf:li>
+            </rdf:Seq>
+        </bib:authors>
+        <dc:title>Growth of Juvenile Red King Crabs, Paralithodes camtschaticus, Through Sequential Molts in the Laboratory</dc:title>
+        <bib:pages>215-222</bib:pages>
+        <dc:date>2012-01-01</dc:date>
+        <z:language>en</z:language>
+        <dc:identifier>
+            <dcterms:URI>
+                <rdf:value>http://booksandjournals.brillonline.com/content/journals/10.1163/193724011x615460</rdf:value>
+            </dcterms:URI>
+        </dc:identifier>
+        <dcterms:dateSubmitted>2015-06-05 22:20:56</dcterms:dateSubmitted>
+        <z:libraryCatalog>CrossRef</z:libraryCatalog>
+    </bib:Article>
+    <bib:Journal rdf:about="urn:issn:0278-0372,%201937-240X">
+        <dc:title>Journal of Crustacean Biology</dc:title>
+        <prism:volume>32</prism:volume>
+        <prism:number>2</prism:number>
+        <dc:identifier>DOI 10.1163/193724011X615460</dc:identifier>
+        <dc:identifier>ISSN 0278-0372, 1937-240X</dc:identifier>
+    </bib:Journal>
+</rdf:RDF>

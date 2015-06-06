@@ -1,15 +1,16 @@
 ---
 title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. 2014"
 output: pdf_document
+bibliography: gmacs.bib
 ---
-## Results culminating from the mid-January 2015 crab modeling workshop
 
-The following summarizes the outcome of some rudimentary comparisons between the
-existing Bristol Bay red king crab (BBRKC) model and an emulated version using
-the gmacs platform.  Since the BBRKC model from Zheng et al. (2014) treats
-recruits by sex along with sex-specific natural mortality and fishing mortality,
-results from the male components are compared with results from a `gmacs` model
-implementation tuned to male-only data.
+The following summarizes the outcome of some comparisons between the existing
+Bristol Bay red king crab (BBRKC) stock assessment model [@zheng_bristol_2014]
+(Zheng et al. 2014) and an emulated version using the gmacs platform.  Since the
+BBRKC model from Zheng et al. (2014) treats recruits by sex along with
+sex-specific natural mortality and fishing mortality, results from the male
+components are compared with results from a `gmacs` model implementation tuned
+to male-only data.
 
 
 ```{r global_options, include=FALSE}
@@ -19,13 +20,14 @@ opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/', echo=FALSE, warning
 
 ```{r, load_packages, include=FALSE}
 # echo=FALSE}
+# Import the gmr plotting functions
 library(gmr)
 #source("../../../Rsrc/R/plot-sizecomp.R")
 library(devtools)
-# Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
+# Set theme for ggplot2 (works for themes classic, minimal, gray, bw)
 set_ggtheme('bw')
 
-# Set working directory to that containing Gmacs model results:
+# Set working directory to that containing Gmacs model results
 #setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
 setwd("../jieOutput/")
 
@@ -39,7 +41,6 @@ j_ltr = read.table("jie_lentrans.rep",header=F)
 gmrep <- read_admb("../OneSex/gmacs")
 #gmrep <- list(gmrep)
 #names(gmrep) <- ""
-
 ```
 
 
@@ -47,10 +48,16 @@ gmrep <- read_admb("../OneSex/gmacs")
 
 ## Mean weight-at-length
 
-The mean weight-at-length ($w_\ell$) used in both models are nearly identical
-(Figure \ref{fig:mean_wt}). The only difference between the two models is in the
-final length class (160mm) where the mean weight is greater in Zheng's model
-than in gmacs. This difference is due to...
+The mean weight-at-length ($w_\ell$) of crabs is defined in grams and the
+carapace length ($\ell$, CL) in mm. The mean weight-at-length used in both
+models is nearly identical (Figure \ref{fig:mean_wt}). The only difference
+between the two models is in the final length class (160mm) where the mean
+weight is greater in Zheng's model than in gmacs.
+
+The length-weight relationships used in Zheng's model for males and females were
+$$W = 0.000408 L^{3.127956} \quad \text{immature females},$$
+$$W = 0.003593 L^{2.666076} \quad \text{ovigerous females},$$
+$$W = 0.0004031 L^{3.141334} \quad \text{males}.$$
 
 ```{r mean_wt, fig.cap = "Mean weight-at-length.\\label{fig:mean_wt}"}
 #Mean weight
@@ -157,16 +164,17 @@ legend(130,50000,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
 ```
  
 # Time series results/comparisons
+
 ## Natural mortality
 
-The figure below illustrates implementation of 4 step changes in M (freely
-estimated) in gmacs relative to the estimates from Zheng et al. 2014 (Figure
-\ref{fig:M_t}).
+The figure below illustrates implementation of four step changes in $M_t$
+(freely estimated) in gmacs relative to the estimates from Zheng et al. 2014
+(Figure \ref{fig:M_t}).
 
-```{r M_t, fig.cap = "Time-varying natural mortality ($M_t$).\\label{fig:M_t}"}
+```{r M_t, fig.cap = "Time-varying natural mortality.\\label{fig:M_t}"}
 #M over time
 par(mfrow=c(1,1))
-plot(gmrep$mod_yrs,(gmrep$M[,3]),typ="b",ylab="Natural mortality",xlab="Year",ylim=c(0,1))
+plot(gmrep$mod_yrs,(gmrep$M[,3]), typ="b", ylab = "Natural mortality", xlab = "Year", ylim = c(0,1))
 lines(j_mmb$yr,j_mmb$M,col="red")
 legend(2000,.8,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
 ```
@@ -191,6 +199,7 @@ R_m = mean(exp(r1$log_rec))*( R_m/mean(R_m))
 lines(j_mmb$yr[1:39],R_m,col="red")
 legend(2000,500000,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
 ```
+
 
 ## Fit to survey abundance indices
 
@@ -257,3 +266,6 @@ the robust-multinomial would be the next step after selectivity issues are
 resolved. Subsequent to that, it would be worth exploring aspects of alternative
 model specifications (e.g., constant natural mortality over time, time-varying
 selectivity, etc) to evaluate sensitivities.
+
+
+# References
