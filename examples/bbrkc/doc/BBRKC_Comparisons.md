@@ -6,11 +6,10 @@ bibliography: gmacs.bib
 
 The following summarizes the outcome of some comparisons between the existing
 Bristol Bay red king crab (BBRKC) stock assessment model [@zheng_bristol_2014]
-(Zheng et al. 2014) and an emulated version using the gmacs platform.  Since the
-BBRKC model from Zheng et al. (2014) treats recruits by sex along with
-sex-specific natural mortality and fishing mortality, results from the male
-components are compared with results from a `gmacs` model implementation tuned
-to male-only data.
+and an emulated version using the gmacs platform.  Since the BBRKC model from
+@zheng_bristol_2014 treats recruits by sex along with sex-specific natural
+mortality and fishing mortality, results from the male components are compared
+with results from a `gmacs` model implementation tuned to male-only data.
 
 
 
