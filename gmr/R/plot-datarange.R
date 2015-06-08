@@ -4,6 +4,7 @@
 #' @return Plot of data range 
 #' @author Ian Taylor, Huihua Lee, Jim Ianelli
 #' @export
+#' 
 plot_datarange <-function(M)
 {
   n  <- length(M)

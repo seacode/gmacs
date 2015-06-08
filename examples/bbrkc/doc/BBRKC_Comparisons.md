@@ -1,5 +1,5 @@
 ---
-title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. 2014"
+title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. (2014)"
 output: pdf_document
 bibliography: gmacs.bib
 ---
@@ -34,13 +34,13 @@ $$W = 0.0004031 L^{3.141334} \quad \text{males}.$$
 
 ![Mean weight-at-length.\label{fig:mean_wt}](Figs/mean_wt-1.png) 
 
-  
+
 ## Initial recruitment size distribution
 
-Gmacs was configured to match the Zheng et al. (2014) model closely and this was
-achieved (Figure \ref{fig:init_rec}).
+Gmacs was configured to match the @zheng_bristol_2014 model closely and this was
+achieved (Figure~\ref{fig:init_rec}).
 
-![Length at recruitment.\label{fig:init_rec}](Figs/init_rec-1.png) 
+![Distribution of length at recruitment.\label{fig:init_rec}](Figs/init_rec-1.png) 
 
 ## Molting increment width
 
@@ -57,10 +57,11 @@ et al. (2014) (Figure \ref{fig:molt_prob}).
 
 ![Molting probability.\label{fig:molt_prob}](Figs/molt_prob-1.png) 
 
+
 ## Transition processes
 
 The first set of figures is the growth probabilities (for all crabs that molt)
-(Figure \ref{fig:growth_trans}).
+(Figure~\ref{fig:growth_trans}).
 
 ![Growth transitions.\label{fig:growth_trans}](Figs/growth_trans-1.png) 
 
@@ -69,6 +70,7 @@ represents the size transition (Figure \ref{fig:size_trans}).
 
 ![Growth transitions.\label{fig:size_trans}](Figs/size_trans-1.png) 
 
+
 ## Numbers at length in 1975
 
 The scale of these results differ significantly and may be related to the
@@ -76,8 +78,8 @@ interaction with natural mortality estimates and how the initial
 population-at-lengths were established (the BBRKC model assumes all new-shell)
 (Figure \ref{fig:init_N}).
 
-![Initial numbers.\label{fig:init_N}](Figs/init_N-1.png) 
- 
+![Numbers at length in 1975.\label{fig:init_N}](Figs/init_N-1.png) 
+
 # Time series results/comparisons
 
 ## Natural mortality

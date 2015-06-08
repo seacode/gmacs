@@ -1,5 +1,5 @@
 ---
-title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. 2014"
+title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. (2014)"
 output: pdf_document
 bibliography: gmacs.bib
 ---
@@ -25,19 +25,34 @@ library(gmr)
 library(devtools)
 # Set theme for ggplot2 (works for themes classic, minimal, gray, bw)
 set_ggtheme('bw')
+.THEME    = theme_bw(base_size = 12, base_family = "")
+.FLEET = c("Directed pot fishery", "Pot fishery discard", "Trawl fishery discard", "BTS Newshell", "BTS Oldshell", "BSFRF")
+.SEX   = c("Aggregate","Male","Female")
+.SHELL    = c("Aggregate","New Shell","Old Shell")
+.MATURITY = c("Aggregate","Immature","Mature")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
+.SEAS     = c("Annual")
 
 # Set working directory to that containing Gmacs model results
 #setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
 setwd("../jieOutput/")
 
-fsh_names <- c("Directed","Pot discard", "Trawl discard")
-lf_names <- c("Directed pot fishery","Pot fishery discard", "Trawl fishery discard","BTS Newshell","BTS Oldshell","BSFRF")
+model <- c("gmacs", "bbrkc")
+fsh_names <- c("Directed", "Pot discard", "Trawl discard")
+lf_names <- c("Directed pot fishery", "Pot fishery discard", "Trawl fishery discard", "BTS Newshell", "BTS Oldshell", "BSFRF")
+
 # Read in Jie's file
-j_mmb = read.table("jie_mmb.rep",header=T)
-j_surv = read.table("jie_survb.rep",header=T)
-j_len = read.table("jie_len_sched.rep",header=T)
-j_ltr = read.table("jie_lentrans.rep",header=F)
+j_mmb = read.table("jie_mmb.rep", header=T)
+j_surv = read.table("jie_survb.rep", header=T)
+j_len = read.table("jie_len_sched.rep", header=T)
+j_ltr = read.table("jie_lentrans.rep", header=F)
+
+# Read in gmacs file
 gmrep <- read_admb("../OneSex/gmacs")
+
+# Combine the two
+M <- list(gmrep, gmrep)
+
 #gmrep <- list(gmrep)
 #names(gmrep) <- ""
 ```
@@ -60,9 +75,9 @@ $$W = 0.0004031 L^{3.141334} \quad \text{males}.$$
 
 ```{r mean_wt, fig.cap = "Mean weight-at-length.\\label{fig:mean_wt}"}
 #Mean weight
-plot(gmrep$mid_points, (gmrep$mean_wt), type="b", ylab="Mean weight at length", xlab="Carapace width (mm)", ylim=c(0,4))
+plot(gmrep$mid_points, (gmrep$mean_wt), type="b", ylab="Mean weight at length", xlab="Carapace width (mm)", ylim=c(0,4), las = 1)
 lines(j_len$Size, j_len$MaleWt, col="red")
-legend(130,1.2,c("gmacs","bbrkc"), pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
+legend("topleft", model, bty = "n", pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
 ```
 
 
@@ -71,12 +86,12 @@ legend(130,1.2,c("gmacs","bbrkc"), pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
 Gmacs was configured to match the @zheng_bristol_2014 model closely and this was
 achieved (Figure~\ref{fig:init_rec}).
 
-```{r init_rec, fig.cap = "Length at recruitment.\\label{fig:init_rec}"}
+```{r init_rec, fig.cap = "Distribution of length at recruitment.\\label{fig:init_rec}"}
 #Recruitment size distribution
-plot(gmrep$mid_points, gmrep$rec_sdd, type="b", xlab="size", ylab="density", main="Recruitment size distribution")
+plot(gmrep$mid_points, gmrep$rec_sdd, type="b", xlab="size", ylab="density", main="Recruitment size distribution", las = 1)
 #lines(j_len$Size,j_len$Female_R_sd,col="red")
 lines(j_len$Size,j_len$Male_R_sd,col="red")
-legend(130,.3,c("gmacs","bbrkc"), pch=c(1,-1), lty=1, col=c(1,"red"))
+legend("topright", model, bty = "n", pch = c(1,-1), lty = 1, col = c(1,2))
 ```
 
 ## Molting increment width
@@ -101,16 +116,17 @@ diag(m) <- j_len$MP_1987
 m <- as.matrix(j_ltr) %*% m
 diag(m) <- diag(m)+(1-j_len$MP_1987)
 # Molting probabilities
-par(mfrow=c(1,1),mai=c(1,1.3,.3,.3))
-plot(gmrep$mid_points,gmrep$molt_probability,typ="b",xlab="size",ylab="probability",main="Molting probability ")
+par(mfrow=c(1,1), mai=c(1,1.3,.3,.3))
+plot(gmrep$mid_points, gmrep$molt_probability, type = "b", xlab="Size", ylab="Probability", main="Molting probability", las = 1, ylim = c(0, 1))
 lines(gmrep$mid_points,j_len$MP_1987,typ="l",col="red")
-legend(80,.3,c("gmacs","bbrkc"),pch=c(1,-1),lty=1,col=c(1,"red"))
+legend("topright", model, bty = "n", pch = c(1,-1), lty = 1, col = c(1,"red"))
 ```
+
 
 ## Transition processes
 
 The first set of figures is the growth probabilities (for all crabs that molt)
-(Figure \ref{fig:growth_trans}).
+(Figure~\ref{fig:growth_trans}).
 
 ```{r growth_trans, fig.cap = "Growth transitions.\\label{fig:growth_trans}"}
 # For growth transition
@@ -146,6 +162,7 @@ for(j in 1:5)
 	}
 ```
 
+
 ## Numbers at length in 1975
 
 The scale of these results differ significantly and may be related to the
@@ -153,15 +170,15 @@ interaction with natural mortality estimates and how the initial
 population-at-lengths were established (the BBRKC model assumes all new-shell)
 (Figure \ref{fig:init_N}).
 
-```{r init_N, fig.cap = "Initial numbers.\\label{fig:init_N}"}
+```{r init_N, fig.cap = "Numbers at length in 1975.\\label{fig:init_N}"}
 # Initial Numbers at length
 par(mfrow=c(1,1),mai=c(1,1,.5,.5))
-plot(gmrep$mid_points,gmrep$N_len[1,],typ="b",xlab="size",ylab="density",main="N at length in 1975")
-Nbeg = (j_len$N1975_male_n)/1000
-lines(j_len$Size,Nbeg,col="red")
+plot(gmrep$mid_points, gmrep$N_len[1,], type = "b", xlab="size",ylab="Density",main="N at length in 1975", las = 1)
+Nbeg <- (j_len$N1975_male_n)/1000
+lines(j_len$Size, Nbeg, col = "red")
 legend(130,50000,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
 ```
- 
+
 # Time series results/comparisons
 
 ## Natural mortality
@@ -172,10 +189,12 @@ The figure below illustrates implementation of four step changes in $M_t$
 
 ```{r M_t, fig.cap = "Time-varying natural mortality.\\label{fig:M_t}"}
 #M over time
+#M[[1]]
+#plot_naturalmortality(M)
 par(mfrow=c(1,1))
-plot(gmrep$mod_yrs,(gmrep$M[,3]), typ="b", ylab = "Natural mortality", xlab = "Year", ylim = c(0,1))
+plot(gmrep$mod_yrs, (gmrep$M[,3]), type = "b", ylab = "Natural mortality", xlab = "Year", ylim = c(0,1), las = 1)
 lines(j_mmb$yr,j_mmb$M,col="red")
-legend(2000,.8,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
+legend("topright", model, bty = "n", pch = c(1,-1), lty = c(1,1), col = c(1,"red"))
 ```
 
 
@@ -241,13 +260,6 @@ The subsequent figures provide fits to the male BBRKC data based on gmacs
 (Figure \ref{fig:sizecomps}).
 
 ```{r sizecomps, fig.cap = "Size comps.\\label{fig:sizecomps}", echo=FALSE}
-.THEME    = theme_bw(base_size = 12, base_family = "")
-.FLEET = c("Directed pot fishery", "Pot fishery discard", "Trawl fishery discard", "BTS Newshell", "BTS Oldshell", "BSFRF")
-.SEX   = c("Aggregate","Male","Female")
-.SHELL    = c("Aggregate","New Shell","Old Shell")
-.MATURITY = c("Aggregate","Immature","Mature")
-.TYPE     = c("Retained & Discarded","Retained","Discarded")
-.SEAS     = c("Annual")
 plot_sizeComps(M, which_plots=1)
 plot_sizeComps(M, which_plots=2)
 plot_sizeComps(M, which_plots=3)

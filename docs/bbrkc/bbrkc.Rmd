@@ -14,7 +14,14 @@ bibliography: bbrkc.bib
 ---
 
 ## Introduction
-Gmacs is a generalized size-structured stock assessment modeling framework [more here on Gmacs]. Crab stocks of Alaska are managed by the North Pacific Fisheries Management Council [NPFMC](http://npfmc.org). Some stocks are assessed with integrated size-structured assessment models of the form described by @Punt2012. Currenlty, each stock is assessed using a stock-specific assessment model. The Gmacs project aims to provide software that will allow each stock to be assessed inside a single modelling framework.
+
+Gmacs is a generalized size-structured stock assessment modeling framework [more
+here on Gmacs]. Crab stocks of Alaska are managed by the North Pacific Fisheries
+Management Council [NPFMC](http://npfmc.org). Some stocks are assessed with
+integrated size-structured assessment models of the form described by
+@Punt2012. Currenlty, each stock is assessed using a stock-specific assessment
+model. The Gmacs project aims to provide software that will allow each stock to
+be assessed inside a single modelling framework.
 
 Gmacs is used here to develop an assessment model for the Bristol Bay Red King Crab (BBRKC) stock. This analysis serves as a test-case for the development of Gmacs: the example assessment is intended to match closely with a model scenario presented to the Spring 2014 BSAI Crab Plan Team Meeting by @Zheng2014.
 

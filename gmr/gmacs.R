@@ -7,10 +7,8 @@
 #=========================================================================================================
 
 # LIBRARIES
-library(ggplot2)
-library(reshape2)
-library(dplyr)
 library(gmr)
+library(dplyr)
 
 # GLOBAL CONSTS
 .OVERLAY  = TRUE
