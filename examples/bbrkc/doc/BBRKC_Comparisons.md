@@ -1,7 +1,7 @@
 ---
 title: "Appendix comparing aspects of gmacs configured to be similar to that of Zheng et al. (2014)"
 output: pdf_document
-bibliography: gmacs.bib
+bibliography: ../../../docs/references/Gmacs.bib
 ---
 
 The following summarizes the outcome of some comparisons between the existing
@@ -127,7 +127,30 @@ mortality (as clarified in Table 1 of Zheng et al. 2014) (Figure
 The subsequent figures provide fits to the male BBRKC data based on gmacs
 (Figure \ref{fig:sizecomps}).
 
-![Size comps.\label{fig:sizecomps}](Figs/sizecomps-1.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-2.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-3.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-4.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-5.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-6.png) 
+
+```
+## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
+```
 
 
 # Summary
