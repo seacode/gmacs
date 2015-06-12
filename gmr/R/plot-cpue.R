@@ -33,10 +33,11 @@
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_cpue <- function(replist)
+plot_cpue <- function(replist, subsetby = "")
 {
 	mdf <- .get_cpue_df(replist)
-
+	if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
+        
 	p  <- ggplot(mdf, aes(year, cpue, col = factor(sex)))
 	#p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb, col = factor(sex)))
 	p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
@@ -51,7 +52,7 @@ plot_cpue <- function(replist)
 		p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")
 	}
 	#p  <- p + labs(x = "Year", y = "CPUE", col = "Sex")
-	p  <- p + labs(x = "Year", y = "CPUE", col = "Model")
+	p  <- p + labs(x = "\nYear", y = "CPUE\n", col = "Model")
 	print(p + .THEME)
 }
 

@@ -49,6 +49,7 @@ j_ltr = read.table("jie_lentrans.rep", header=F)
 
 # Read in gmacs file
 gmrep <- read_admb("../OneSex/gmacs")
+gmrep2 <- read_admb("../TwoSex/gmacs")
 
 # Combine the two
 M <- list(gmrep, gmrep)
@@ -84,11 +85,12 @@ legend("topleft", model, bty = "n", pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
 ## Initial recruitment size distribution
 
 Gmacs was configured to match the @zheng_bristol_2014 model closely and this was
-achieved (Figure~\ref{fig:init_rec}).
+achieved (Figure \ref{fig:init_rec}).
 
 ```{r init_rec, fig.cap = "Distribution of length at recruitment.\\label{fig:init_rec}"}
 #Recruitment size distribution
 plot(gmrep$mid_points, gmrep$rec_sdd, type="b", xlab="size", ylab="density", main="Recruitment size distribution", las = 1)
+lines(gmrep2$mid_points, gmrep2$rec_sdd, type="b", col = "gray")
 #lines(j_len$Size,j_len$Female_R_sd,col="red")
 lines(j_len$Size,j_len$Male_R_sd,col="red")
 legend("topright", model, bty = "n", pch = c(1,-1), lty = 1, col = c(1,2))
@@ -106,8 +108,8 @@ plot_growth_inc(gmrep)
 
 ## Molting probability
 
-Fixed parameters in gmacs were easily set to represent that assumed from Zheng
-et al. (2014) (Figure \ref{fig:molt_prob}).
+Fixed parameters in gmacs were easily set to represent that assumed from
+@zheng_bristol_2014 (Figure \ref{fig:molt_prob}).
 
 ```{r molt_prob, fig.cap = "Molting probability.\\label{fig:molt_prob}"}
 # To compute same size-transition for comparisons
@@ -135,11 +137,11 @@ for(j in 1:5)
 	for(i in 1:4)
 	{
 		ii = j + (i-1 ) * 5
-		plot(gmrep$mid_points,gmrep$growth_transition[ii,],typ="b",xlab="size",ylab="probability",ylim=c(0,.4),xaxt="n",yaxt="n")
+		plot(gmrep$mid_points, gmrep$growth_transition[ii,],typ="b",xlab="size",ylab="probability",ylim=c(0,.4),xaxt="n",yaxt="n")
 		if (ii==1) text(130,.35,"Growth transition",cex=1.5)
 		text(80,.35,paste(gmrep$mid_points[ii],"mm") ,cex=1)
-	  lines(gmrep$mid_points,j_ltr[ii,],typ="l",col="red")
-	  #legend(130,.18,c("gmacs","bbrkc"),pch=c(1,-1),lty=1,col=c(1,"red"))
+	  lines(gmrep$mid_points, j_ltr[ii,],typ="l",col="red")
+	  #legend(130,.18, model, pch=c(1,-1), lty=1, col=c(1,"red"))
 	}
 ```
 
@@ -179,6 +181,7 @@ lines(j_len$Size, Nbeg, col = "red")
 legend(130,50000,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
 ```
 
+
 # Time series results/comparisons
 
 ## Natural mortality
@@ -193,7 +196,8 @@ The figure below illustrates implementation of four step changes in $M_t$
 #plot_naturalmortality(M)
 par(mfrow=c(1,1))
 plot(gmrep$mod_yrs, (gmrep$M[,3]), type = "b", ylab = "Natural mortality", xlab = "Year", ylim = c(0,1), las = 1)
-lines(j_mmb$yr,j_mmb$M,col="red")
+lines(gmrep2$mod_yrs, (gmrep2$M[1:40,3]), type = "b", col = 4)
+lines(j_mmb$yr, j_mmb$M, col="red")
 legend("topright", model, bty = "n", pch = c(1,-1), lty = c(1,1), col = c(1,"red"))
 ```
 
@@ -209,13 +213,17 @@ mean (Figure \ref{fig:recruits}).
 M <- list(gmrep)
 names(M) <- ""
 r1=.get_recruitment_df(M)
-plot(r1$year,exp(r1$log_rec),typ="b",ylab="Recruits",xlab="Year")
+M <- list(gmrep2)
+names(M) <- ""
+r2=.get_recruitment_df(M)
+plot(r1$year, exp(r1$log_rec), type = "b", ylab = "Recruits", xlab = "Year")
+lines(r2$year, exp(r2$log_rec)/1000, type = "b", col = 4)
 #abline(h=mean(exp(r1$log_rec)))
 R_m = j_mmb$R[2:40]
 R_m = mean(exp(r1$log_rec))*( R_m/mean(R_m))
-#lines(j_mmb$yr-1,j_mmb$R*10000,col="red")
-lines(j_mmb$yr[1:39],R_m,col="red")
-legend(2000,500000,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
+#lines(j_mmb$yr-1, j_mmb$R*10000, col="red")
+lines(j_mmb$yr[1:39], R_m, col = "red")
+legend("topright", model, pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
 ```
 
 
@@ -236,7 +244,7 @@ points(j_surv$year,j_surv$obs,col="red",pch=19)
 legend(2000,2.5e5,c("gmacs","bbrkc"),pch=c(1,-1),lty=c(1,1),col=c(1,"red"))
 ```
 
- 
+
 ## Estimated retained catch and discards, for whole period
 
 This figure summarizes the observed (horizontal) and predicted (vertical)
@@ -247,9 +255,8 @@ mortality (as clarified in Table 1 of Zheng et al. 2014) (Figure
 ```{r fit_to_catch, fig.cap = "Fit to catch.\\label{fig:fit_to_catch}"}
 #Fit to catch and discards
 par(mfrow=c(2,2))
-for (i in 1:3) plot(gmrep$obs_catch[i,],(gmrep$pre_catch[i,]),main=fsh_names[i],typ="p",pch=19,ylab="predicted ",xlab="observed ")
+for (i in 1:3) plot(gmrep$obs_catch[i,], (gmrep$pre_catch[i,]), main=fsh_names[i], typ="p",pch=19,ylab="predicted ",xlab="observed ")
 ```
-
 
 
 # Other diagnostics
@@ -267,7 +274,6 @@ plot_sizeComps(M, which_plots=4)
 plot_sizeComps(M, which_plots=5)
 plot_sizeComps(M, which_plots=6)
 ```
-
 
 
 # Summary

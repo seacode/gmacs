@@ -38,7 +38,7 @@ $$W = 0.0004031 L^{3.141334} \quad \text{males}.$$
 ## Initial recruitment size distribution
 
 Gmacs was configured to match the @zheng_bristol_2014 model closely and this was
-achieved (Figure~\ref{fig:init_rec}).
+achieved (Figure \ref{fig:init_rec}).
 
 ![Distribution of length at recruitment.\label{fig:init_rec}](Figs/init_rec-1.png) 
 
@@ -52,8 +52,8 @@ below (Figure \ref{fig:growth_inc}).
 
 ## Molting probability
 
-Fixed parameters in gmacs were easily set to represent that assumed from Zheng
-et al. (2014) (Figure \ref{fig:molt_prob}).
+Fixed parameters in gmacs were easily set to represent that assumed from
+@zheng_bristol_2014 (Figure \ref{fig:molt_prob}).
 
 ![Molting probability.\label{fig:molt_prob}](Figs/molt_prob-1.png) 
 
@@ -79,6 +79,7 @@ population-at-lengths were established (the BBRKC model assumes all new-shell)
 (Figure \ref{fig:init_N}).
 
 ![Numbers at length in 1975.\label{fig:init_N}](Figs/init_N-1.png) 
+
 
 # Time series results/comparisons
 
@@ -108,7 +109,7 @@ least visually) than for the current implementation of gmacs (Figure
 
 ![Survey biomass.\label{fig:survey_biomass}](Figs/survey_biomass-1.png) 
 
- 
+
 ## Estimated retained catch and discards, for whole period
 
 This figure summarizes the observed (horizontal) and predicted (vertical)
@@ -119,7 +120,6 @@ mortality (as clarified in Table 1 of Zheng et al. 2014) (Figure
 ![Fit to catch.\label{fig:fit_to_catch}](Figs/fit_to_catch-1.png) 
 
 
-
 # Other diagnostics
 
 ## Fit to size frequency data
@@ -128,7 +128,6 @@ The subsequent figures provide fits to the male BBRKC data based on gmacs
 (Figure \ref{fig:sizecomps}).
 
 ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-1.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-2.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-3.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-4.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-5.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-6.png) 
-
 
 
 # Summary

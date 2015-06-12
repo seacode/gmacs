@@ -1,5 +1,4 @@
-
-#' Extract spawning stock biomass (ssb)from gmacs run
+#' Extract spawning stock biomass (ssb) from gmacs run
 #'
 #' Spawning biomass may be defined as all males or some combination of males and females
 #'
@@ -7,6 +6,7 @@
 #' @return Dataframe of spawning biomass
 #' @author SJD Martell
 #' @export
+#' 
 .get_ssb_df <- function(M)
 {
 	n   <- length(M)
@@ -27,7 +27,8 @@
 	}
 	return(mdf)
 }
-#------------------------------------------------------------------
+
+
 #' Plot predicted spawning stock biomass (ssb)
 #'
 #' Spawning biomass may be defined as all males or some combination of males and females
@@ -36,13 +37,14 @@
 #' @author SJD Martell
 #' @return Plot of model estimates of spawning stock biomass 
 #' @export
+#' 
 plot_ssb <- function(M)
 {
   mdf <- .get_ssb_df(M)
 	p <- ggplot(mdf)
 	p <- p + geom_line(aes(x=year,y=mmb,col=Model))
 	p <- p + geom_ribbon(aes(x=year,ymax=ub,ymin=lb,fill=Model),alpha=0.3)
-	p <- p + labs(x="Year",y="Spawning biomass")
+	p <- p + labs(x = "\nYear", y = "Spawning biomass\n")
 
 	if(!.OVERLAY) p <- p + facet_wrap(~Model)
 

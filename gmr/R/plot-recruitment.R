@@ -1,4 +1,3 @@
-#------------------------------------------------------------------
 #' .get_recruitment_df
 #' Extracts predicted recruitment and approximate asymptotic error-bars
 #'
@@ -6,6 +5,7 @@
 #' @return Dataframe of recruitment
 #' @author SJD Martell
 #' @export
+#' 
 .get_recruitment_df <- function(M)
 {
   n   <- length(M)
@@ -30,7 +30,8 @@
   }
   return(mdf)
 }
-#------------------------------------------------------------------
+
+
 #' Plot predicted recruitment and approximate asymptotic error-bars
 #'
 #'
@@ -38,28 +39,32 @@
 #' @author SJD Martell
 #' @return Plot of predicted recruitment
 #' @export
-plot_recruitment <- function(M){
+#' 
+plot_recruitment <- function(M)
+{
   mdf <- .get_recruitment_df(M)
   p <- ggplot(mdf,aes(x=(year),y=exp(log_rec),col=Model,group=Model))
   p <- p + geom_bar(stat = "identity", alpha=0.4,aes(fill=Model),position="dodge")
   p <- p + geom_pointrange(aes((year),exp(log_rec),col=Model,ymax=ub,ymin=lb),
            position=position_dodge(width=.9))
-  p <- p + labs(x="Year",y="Recruitment")
+  p <- p + labs(x = "\nYear", y = "Recruitment\n")
 
   if(!.OVERLAY) p <- p + facet_wrap(~Model)
 
   print(p + .THEME)
 }
-#------------------------------------------------------------------
+
+
 #' Plot predicted recruitment across model runs
-#'
 #'
 #' @param data A list of multiple objects created by read_admb function
 #' @param modnames A vector of model names included in \code{data}
 #' @return Plot of predicted recruitment compared across models
 #' @author Cole Monnahan Kelli Johnson
 #' @export
-plot_models_recruitment <- function(data, modnames=NULL ){
+#' 
+plot_models_recruitment <- function(data, modnames=NULL )
+{
   if (is.null(modnames))
     modnames = paste("Model ",1:length(data))
   if (length(data)!=length(modnames)) 

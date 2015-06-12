@@ -27,6 +27,6 @@
 }
 
 
-plot(gmrep$mid_points, (gmrep$mean_wt), type="b", ylab="Mean weight at length", xlab="Carapace width (mm)", ylim=c(0,4))
-lines(j_len$Size, j_len$MaleWt, col="red")
-legend(130,1.2,c("gmacs","bbrkc"), pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
+#plot(gmrep$mid_points, (gmrep$mean_wt), type="b", ylab="Mean weight at length", xlab="Carapace width (mm)", ylim=c(0,4))
+#lines(j_len$Size, j_len$MaleWt, col="red")
+#legend(130,1.2,c("gmacs","bbrkc"), pch=c(1,-1), lty=c(1,1), col=c(1,"red"))

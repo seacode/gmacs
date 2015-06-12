@@ -1,12 +1,9 @@
 #' Get observed and predicted size composition values
 #'
-#'
-#'
 #' @param M List object(s) created by read_admb function
 #' @return List of observed and predicted size composition values
 #' @author SJD Martell
 #' @export
-#'
 #'
 .get_sizeComps_df <- function(M)
 {
@@ -93,27 +90,27 @@
 	}
 
 	return(ldf)
-}	
+}
+
+
 #' plot_sizeComps
+#' 
 #' Get observed and predicted size composition values
-#'
-#'
 #'
 #' @param M List object(s) created by read_admb function
 #' @return Plots of observed and predicted size composition values
 #' @author SJD Martell
 #' @export
 #'
-plot_sizeComps <- function(M , which_plots="all")
+plot_size_comps <- function(M, which_plots = "all")
 {
-	
 	mdf <- .get_sizeComps_df( M )
 	ix <- pretty(1:length(M[[1]]$mid_points))
 	p <- ggplot(data=mdf[[1]])
 	p <- p + geom_bar(aes(variable,value),stat="identity",position="dodge",alpha=0.5,fill="grey")
 	p <- p + geom_line(aes(as.numeric(variable),pred,col=model),alpha=0.85)
 	p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
-	p <- p + labs(x="Size (mm)",y="Proportion",col="Model",fill="Sex",linetype="Fleet")
+	p <- p + labs(x = "\nSize (mm)", y = "Proportion\n", col = "Model", fill = "Sex", linetype = "Fleet")
 	p <- p + ggtitle("title")
 	p <- p + facet_wrap(~year) + .THEME
 	# p <- p + facet_grid(irow~icol,labeller=label_both) + .THEME
@@ -133,7 +130,6 @@ plot_sizeComps <- function(M , which_plots="all")
 	} else {
 		print( plist[[which_plots]] )
 	}
-
 }
 
 
