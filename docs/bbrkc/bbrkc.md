@@ -115,59 +115,58 @@ In what follows, we demonstrate the use of the `gmr` package to process the
 output of the Gmacs-BBRKC model and produce plots that can be used in assessment
 reports.
 
-```{r, echo=FALSE}
-# Load gmr package for Gmacs:
-library(gmr)
 
-# Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
-set_ggtheme('bw')
-#.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
-.THEME    = theme_bw(base_size = 12, base_family = "")
-
-# Set working directory to that containing Gmacs model results:
-.MODELDIR = c("../../examples/bbrkc/OneSex/")
-.OVERLAY  = TRUE
-.SEX      = c("Aggregate","Male")
-.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
-.TYPE     = c("Retained & Discarded","Retained","Discarded")
-.SHELL    = c("Aggregate","New Shell","Old Shell")
-.MATURITY = c("Aggregate","Immature","Mature")
-.SEAS     = c("Annual")
-fn       <- paste0(.MODELDIR, "gmacs")
-
-# Read report file and create gmacs report object (a list):
-M        <- lapply(fn, read_admb)
-names(M) <- basename(.MODELDIR)
-
-plot_datarange(M)
-plot_catch(M) # broken
-plot_cpue(M)
-plot_cpue(M, "NMFS Trawl")
-plot_natural_mortality(M)
-plot_ssb(M)
-plot_recruitment(M)
-plot_size_comps(M, 1)
-plot_size_comps(M, 2)
-plot_size_comps(M, 3)
-plot_size_comps(M, 4)
-plot_size_comps(M, 5)
-plot_size_comps(M, 6)
-plot_selectivity(M)
-plot_size_transition(M)
-plot_growth_inc(M[[1]])
-
-# Get plots of interest:
-#plot_catch(gmrep)
-#plot_catch(gmrep, plot_res = T)
-# plot_sizecomp(gmrep,which_plots=c(1))
-# plot_sizecomp_res(gmrep)
-# plot_sizecomp(gmrep,which_plots=c(11))
-# plot_sizecomp_res(gmrep)
-# plot_sizetransition(gmrep)
-# plot_selectivity(gmrep)
-# plot_recruitment(gmrep)
-# plot_mmb(gmrep)
 ```
+## Loading required package: reshape2
+## Loading required package: ggplot2
+## Loading required package: dplyr
+## 
+## Attaching package: 'dplyr'
+## 
+## The following object is masked from 'package:stats':
+## 
+##     filter
+## 
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+```
+## 
+## ==============================================
+## Gmacs stock assessment plotting library
+## Version: 1.00
+## Compile date: 2015-06-12
+## For help ask someone who cares
+## ==============================================
+```
+
+```
+## The ggplot theme has been set to bw for this working session
+```
+
+```
+## [1] "../../examples/bbrkc/OneSex/gmacs.rep"
+```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
+
+```
+##  [1] 1950 1955 1955 1955 1955 1955 1960 1960 1960 1960 1960 1965 1965 1965
+## [15] 1965 1965 1970 1970 1970 1970 1970 1975 1975 1975 1975 1975 1980 1980
+## [29] 1980 1980 1980 1985 1985 1985 1985 1985 1990 1990 1990 1990 1990 1995
+## [43] 1995 1995 1995 1995 2000 2000 2000 2000 2000 2005 2005 2005 2005 2005
+## [57] 2010 2010 2010 2010 2010 2015 2015 2015
+```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-2.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-3.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-4.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-5.png) 
+
+```
+## Error in eval(expr, envir, enclos): could not find function "plot_natural_mortality"
+```
+
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-6.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-7.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-8.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-9.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-10.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-11.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-12.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-13.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-14.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-15.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-16.png) 
 
 ## Comparison of Assessment Processes
 ### File Description

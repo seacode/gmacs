@@ -1,8 +1,6 @@
-#' Plot natural mortality
+#' Get natural mortality data
 #'
 #' @param M List object created by read_admb function
-#' @param plt_surface Include a panel with surface over size-time 
-#' @return Plot natural mortality over time (and size)
 #' @author J Ianelli, SJD Martell, DN Webber
 #' @export
 #' 
@@ -30,6 +28,14 @@
 }
 
 
+#' Plot natural mortality
+#'
+#' @param M List object created by read_admb function
+#' @param plt_surface Include a panel with surface over size-time 
+#' @return Plot natural mortality over time (and size)
+#' @author J Ianelli, SJD Martell, DN Webber
+#' @export
+#' 
 plot_natural_mortality <- function(M, plt_surface = FALSE)
 {
   mdf <- .get_M_df(M)
