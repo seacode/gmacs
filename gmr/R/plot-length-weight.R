@@ -41,15 +41,13 @@
 plot_length_weight <- function(M)
 {
     mdf <- .get_length_weight_df(M)
-    
     p <- ggplot(mdf, aes(x = Length, y = Weight)) +
         labs(x = "\nLength (mm)", y = "Weight\n")
     if (length(M) == 1)
     {
-        p <- p + geom_line(aes(col = Sex))
+        p <- p + geom_line(aes(linetype = Sex))
     } else {
-        p <- p + geom_line(aes(col = model)) +
-            labs(col = "Model")
+        p <- p + geom_line(aes(linetype = Sex, col = Model))
     }
     print(p + .THEME)
 }

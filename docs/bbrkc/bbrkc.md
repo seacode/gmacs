@@ -133,10 +133,7 @@ reports.
 
 ![Selectivity.\label{fig:selectivity}](Figs/selectivity-1.png) 
 
-
-```
-## Error in `colnames<-`(`*tmp*`, value = c("67.5", "72.5", "77.5", "82.5", : attempt to set 'colnames' on an object with less than two dimensions
-```
+![Probability of size transition.\label{fig:size-trans}](Figs/size_transition-1.png) 
 
 ![Relationship between length (mm) and weight (kg) by sex.\label{fig:length-weight}](Figs/length_weight-1.png) 
 

@@ -127,12 +127,62 @@ plot_size_comps(M, 9)
 plot_size_comps(M, 10)
 plot_selectivity(M)
 plot_size_transition(M)
-plot_growth_inc(M[[1]])
+plot_growth_inc(M)
 
 
+# ----------------------------------------------------------------------------- #
+# TwoSex and Zheng
+# ----------------------------------------------------------------------------- #
+.MODELDIR = c("../../examples/bbrkc/TwoSex/","../../examples/bbrkc/TwoSex/")
+.OVERLAY  = TRUE
+.SEX      = c("Aggregate","Male","Female")
+.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
+.SHELL    = c("Aggregate","New Shell","Old Shell")
+.MATURITY = c("Aggregate","Immature","Mature")
+.THEME    = theme_bw(base_size = 12, base_family = "")
+.SEAS     = c("Annual")
 
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb)
+names(M) <- c(basename(.MODELDIR)[1], "Zheng")
 
+# Read in Jie's file
+j_mmb = read.table("../../examples/bbrkc/jieOutput/jie_mmb.rep", header=T)
+j_surv = read.table("../../examples/bbrkc/jieOutput/jie_survb.rep", header=T)
+j_len = read.table("../../examples/bbrkc/jieOutput/jie_len_sched.rep", header=T)
+j_ltr = read.table("../../examples/bbrkc/jieOutput/jie_lentrans.rep", header=F)
 
+M[[2]]$mmb <- j_mmb$mmb
+M[[2]]$M <- matrix(c(j_mmb$M, j_mmb$M), nrow = 80, ncol = 20)
+M[[2]]$mid_points <- j_len$Size
+M[[2]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
+M[[2]]$obs_cpue[1,] <- j_surv$obs
+M[[2]]$pre_cpue[1,] <- j_surv$pred
+
+plot_length_weight(M)
+plot_cpue(M)
+plot_cpue(M, "BSFRF")
+plot_cpue(M, "NMFS Trawl")
+
+plot_datarange(M) # not right
+plot_catch(M) # broken for OneSex
+plot_natural_mortality(M)
+plot_ssb(M)
+plot_recruitment(M)
+plot_size_comps(M, 1)
+plot_size_comps(M, 2)
+plot_size_comps(M, 3)
+plot_size_comps(M, 4)
+plot_size_comps(M, 5)
+plot_size_comps(M, 6)
+plot_size_comps(M, 7)
+plot_size_comps(M, 8)
+plot_size_comps(M, 9)
+plot_size_comps(M, 10)
+plot_selectivity(M)
+plot_size_transition(M)
+plot_growth_inc(M)
 
 
 
@@ -143,14 +193,14 @@ plot_growth_inc(M[[1]])
 
 
 #.PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/gmr/R4GMACS"
-#.LIB      = "./LIB"
-#.RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
+.LIB      = "./LIB"
+.RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
 #.MODELDIR = c("../../examples/bbrkc/OneSex/", "../../examples/bbrkc/TwoSex/")#,"../../examples/bbrkc/")
 #.MODELDIR = c(paste0("../../examples/bbrkc/M",c(1,2,3,4),"/"))#,"../../examples/bbrkc/OneSex/")
 # .MODELDIR = c("../../examples/pirkc/")
 # SOURCE R_SRCIPTS FROM .LIB
 #setwd(.PWD)
-#for(nm in .RFILES) source(file.path(.LIB, nm), echo = FALSE)
+for(nm in .RFILES) source(file.path(.LIB, nm), echo = FALSE)
 
 # PLOT ROUTINES	
 #hh <- 8.5
@@ -241,8 +291,10 @@ plot_selectivity(M)
 #===============================================================================#
 # Size transition
 #===============================================================================#
+#source("../R4GMACS/LIB/plotSizeTransition.R")
+#plotSizeTransition(M)
+#source("../R4GMACS/LIB/plotGrowthTransition.R")
 #plotGrowthTransition( M )
-#plotSizeTransition( M )
 #plot_growthTransition(M)
 source("../R/plot-size-transition.R")
 plot_size_transition(M)
@@ -256,3 +308,12 @@ plot_growth_inc(M)
 
 source("../R/plot-length-weight.R")
 plot_length_weight(M)
+
+
+#===============================================================================#
+# Numbers
+#===============================================================================#
+source("../R/plot-numbers.R")
+plot_numbers(M)
+plot_numbers(M, subsetby = c("1975","2014"))
+plot_numbers(M, subsetby = 1975:2014)

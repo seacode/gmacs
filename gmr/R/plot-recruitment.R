@@ -9,29 +9,59 @@
 #' 
 .get_recruitment_df <- function(M)
 {
-  n   <- length(M)
-  mdf <- NULL
-  for(i in 1:n)
-  {
-    A  <- M[[i]]
-    if(is.null(A$fit$logDetHess))
+    n <- length(M)
+    mdf <- NULL
+    for(i in 1:n)
     {
-      stop("Appears that the Hessian was not positive definite\n
-            thus estimates of recruitment do not exist.\n
-            See this in replist$fit.")
+        A  <- M[[i]]
+        if(is.null(A$fit$logDetHess))
+        {
+            stop("Appears that the Hessian was not positive definite\n
+                  thus estimates of recruitment do not exist.\n
+                  See this in replist$fit.")
+        }
+        df <- data.frame(Model = names(M)[i],
+                         par = A$fit$names,
+                         log_rec=A$fit$est,
+                         log_sd=A$fit$std)
+        df <- subset(df,par == "sd_log_recruits")
+        df$year <- A$mod_yrs
+        df$mmb <- exp(df$log_rec)
+        df$lb <- exp(df$log_rec - 1.96*df$log_sd)
+        df$ub <- exp(df$log_rec + 1.96*df$log_sd)
+        mdf <- rbind(mdf,df)
     }
-    df <- data.frame(Model=names(M)[i],
-                     par = A$fit$names,
-                     log_rec=A$fit$est,
-                     log_sd=A$fit$std)
-    df      <- subset(df,par == "sd_log_recruits")
-    df$year <- A$mod_yrs
-    df$mmb  <- exp(df$log_rec)
-    df$lb   <- exp(df$log_rec - 1.96*df$log_sd)
-    df$ub   <- exp(df$log_rec + 1.96*df$log_sd)
-    mdf     <- rbind(mdf,df)
-  }
-  return(mdf)
+    return(mdf)
+}
+
+
+#' Get recruitment size distribution data
+#' 
+#' @param M list object(s) created by read_admb function
+#' @return dataframe of recruitment size distribution
+#' @author DN Webber
+#' @export
+#' 
+.get_recruitment_size_df <- function(M)
+{
+    n <- length(M)
+    mdf <- NULL
+    for(i in 1:n)
+    {
+        A  <- M[[i]]
+        if(is.null(A$fit$logDetHess))
+        {
+            stop("Appears that the Hessian was not positive definite\n
+                  thus estimates of recruitment do not exist.\n
+                  See this in replist$fit.")
+        }
+        df <- data.frame(Model = names(M)[i],
+                         mid_points = A$mid_points,
+                         rec_sdd = A$rec_sdd,
+                         rec_ini = A$rec_ini)
+        mdf <- rbind(mdf, df)
+    }
+    return(mdf)
 }
 
 
@@ -56,6 +86,28 @@ plot_recruitment <- function(M)
             geom_pointrange(aes(year, exp(log_rec), col = Model, ymax = ub, ymin = lb), position = position_dodge(width = 0.9))
     }
     p <- p + labs(x = "\nYear", y = "Recruitment\n")
+    if(!.OVERLAY) p <- p + facet_wrap(~Model)
+    print(p + .THEME)
+}
+
+
+#' Plot recruitment size distribution
+#'
+#' @param M list object created by read_admb function
+#' @return plot of recruitment size distribution
+#' @author DN Webber
+#' @export
+#' 
+plot_recruitment_size <- function(M)
+{
+    mdf <- .get_recruitment_size_df(M)
+    p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) + labs(x = "\nSize", y = "Density\n")
+    if (length(M) == 1)
+    {
+        p <- p + geom_line()
+    } else {
+        p <- p + geom_line(aes(col = Model))
+    }
     if(!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)
 }

@@ -18,13 +18,8 @@ opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/', echo=FALSE, warning
 ```
 
 ```{r, load_packages, include=FALSE}
-# echo=FALSE}
-# Import the gmr plotting functions
 library(gmr)
-#source("../../../Rsrc/R/plot-sizecomp.R")
-library(devtools)
-# Set theme for ggplot2 (works for themes classic, minimal, gray, bw)
-set_ggtheme('bw')
+.MODELDIR = c("../TwoSex/","../TwoSex/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .FLEET = c("Directed pot fishery", "Pot fishery discard", "Trawl fishery discard", "BTS Newshell", "BTS Oldshell", "BSFRF")
 .SEX   = c("Aggregate","Male","Female")
@@ -35,27 +30,26 @@ set_ggtheme('bw')
 
 # Set working directory to that containing Gmacs model results
 #setwd("~/_mymods/seacode/gmacs/examples/bbrkc")
-setwd("../jieOutput/")
+#setwd("../jieOutput/")
 
 model <- c("gmacs", "bbrkc")
 fsh_names <- c("Directed", "Pot discard", "Trawl discard")
 lf_names <- c("Directed pot fishery", "Pot fishery discard", "Trawl fishery discard", "BTS Newshell", "BTS Oldshell", "BSFRF")
 
 # Read in Jie's file
-j_mmb = read.table("jie_mmb.rep", header=T)
-j_surv = read.table("jie_survb.rep", header=T)
-j_len = read.table("jie_len_sched.rep", header=T)
-j_ltr = read.table("jie_lentrans.rep", header=F)
+j_mmb = read.table("../jieOutput/jie_mmb.rep", header=T)
+j_surv = read.table("../jieOutput/jie_survb.rep", header=T)
+j_len = read.table("../jieOutput/jie_len_sched.rep", header=T)
+j_ltr = read.table("../jieOutput/jie_lentrans.rep", header=F)
 
 # Read in gmacs file
-gmrep <- read_admb("../OneSex/gmacs")
-gmrep2 <- read_admb("../TwoSex/gmacs")
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb)
+names(M) <- c(basename(.MODELDIR)[1], "Zheng")
 
-# Combine the two
-M <- list(gmrep, gmrep)
+M[[2]]$mmb <- j_mmb$mmb
+M[[2]]$M <- matrix(c(j_mmb$M, j_mmb$M), nrow = 80, ncol = 20)
 
-#gmrep <- list(gmrep)
-#names(gmrep) <- ""
 ```
 
 
@@ -76,9 +70,10 @@ $$W = 0.0004031 L^{3.141334} \quad \text{males}.$$
 
 ```{r mean_wt, fig.cap = "Mean weight-at-length.\\label{fig:mean_wt}"}
 #Mean weight
-plot(gmrep$mid_points, (gmrep$mean_wt), type="b", ylab="Mean weight at length", xlab="Carapace width (mm)", ylim=c(0,4), las = 1)
-lines(j_len$Size, j_len$MaleWt, col="red")
-legend("topleft", model, bty = "n", pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
+plot_length_weight(M)
+#plot(gmrep$mid_points, (gmrep$mean_wt), type="b", ylab="Mean weight at length", xlab="Carapace width (mm)", ylim=c(0,4), las = 1)
+#lines(j_len$Size, j_len$MaleWt, col="red")
+#legend("topleft", model, bty = "n", pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
 ```
 
 
@@ -103,7 +98,7 @@ system, a size-specific vector was used to determine molt increments as show
 below (Figure \ref{fig:growth_inc}).
 
 ```{r growth_inc, fig.cap = "Growth increment.\\label{fig:growth_inc}"}
-plot_growth_inc(gmrep)
+plot_growth_inc(M)
 ```
 
 ## Molting probability
@@ -191,14 +186,12 @@ The figure below illustrates implementation of four step changes in $M_t$
 (Figure \ref{fig:M_t}).
 
 ```{r M_t, fig.cap = "Time-varying natural mortality.\\label{fig:M_t}"}
-#M over time
-#M[[1]]
-#plot_naturalmortality(M)
-par(mfrow=c(1,1))
-plot(gmrep$mod_yrs, (gmrep$M[,3]), type = "b", ylab = "Natural mortality", xlab = "Year", ylim = c(0,1), las = 1)
-lines(gmrep2$mod_yrs, (gmrep2$M[1:40,3]), type = "b", col = 4)
-lines(j_mmb$yr, j_mmb$M, col="red")
-legend("topright", model, bty = "n", pch = c(1,-1), lty = c(1,1), col = c(1,"red"))
+plot_natural_mortality(M)
+#par(mfrow=c(1,1))
+#plot(gmrep$mod_yrs, (gmrep$M[,3]), type = "b", ylab = "Natural mortality", xlab = "Year", ylim = c(0,1), las = 1)
+#lines(gmrep2$mod_yrs, (gmrep2$M[1:40,3]), type = "b", col = 4)
+#lines(j_mmb$yr, j_mmb$M, col="red")
+#legend("topright", model, bty = "n", pch = c(1,-1), lty = c(1,1), col = c(1,"red"))
 ```
 
 

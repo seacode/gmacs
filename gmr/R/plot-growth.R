@@ -3,6 +3,7 @@
 #' @param replist List object created by read_admb function
 #' @return Plot natural mortality over time and size
 #' @export
+#' 
 plot_growth <- function(replist){
   A    <- replist
   df   <- data.frame(A$mean_size)

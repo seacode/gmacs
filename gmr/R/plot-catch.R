@@ -7,35 +7,33 @@
 #' 
 .get_catch_df <- function(M)
 {
-  n  <- length(M)
-  mdf <- NULL
-  for( i in 1:n )
-  {
-    A <- M[[i]]
-    df <- data.frame(Model = names(M)[i], A$dCatchData)
-                       #       year  seas  fleet sex obs cv  type  units mult  effort  discard_mortality
-    colnames(df) <- c("model","year","seas","fleet","sex","obs","cv","type","units","mult","effort","discard.mortality")
-    df$observed  <- na.omit(as.vector(t(A$obs_catch)))
-    df$predicted <- na.omit(as.vector(t(A$pre_catch)))
-    df$residuals <- na.omit(as.vector(t(A$res_catch)))
-    df$sex       <- .SEX[df$sex+1]
-    df$fleet     <- .FLEET[df$fleet]
-    df$type      <- .TYPE[df$type+1]
-    
-    sd    <- sqrt(log(1+df$cv^2))
-    df$lb <- exp(log(df$obs)-1.96*sd)
-    df$ub <- exp(log(df$obs)+1.96*sd)
-    mdf <- rbind(mdf, df)
-  }
-  return(mdf)
+    n  <- length(M)
+    mdf <- NULL
+    for( i in 1:n )
+    {
+        A <- M[[i]]
+        df <- data.frame(Model = names(M)[i], A$dCatchData)
+        colnames(df) <- c("model","year","seas","fleet","sex","obs","cv","type","units","mult","effort","discard.mortality")
+        df$observed  <- na.omit(as.vector(t(A$obs_catch)))
+        df$predicted <- na.omit(as.vector(t(A$pre_catch)))
+        df$residuals <- na.omit(as.vector(t(A$res_catch)))
+        df$sex       <- .SEX[df$sex+1]
+        df$fleet     <- .FLEET[df$fleet]
+        df$type      <- .TYPE[df$type+1]
+        sd    <- sqrt(log(1+df$cv^2))
+        df$lb <- exp(log(df$obs)-1.96*sd)
+        df$ub <- exp(log(df$obs)+1.96*sd)
+        mdf <- rbind(mdf, df)
+    }
+    return(mdf)
 }
 
 
 #' Plot observed and predicted catch values
 #'
-#' @param replist List object created by read_admb function
-#' @param plot_res plot residuals only (default=F)
-#' @return Plot of catch history (observed) and predicted values
+#' @param M list object created by read_admb function
+#' @param plot_res plot residuals only (default = FALSE)
+#' @return plot of catch history (observed) and predicted values
 #' @author SJD Martell, DN Webber
 #' @export
 #' 

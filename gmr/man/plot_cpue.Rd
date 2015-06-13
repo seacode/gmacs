@@ -8,6 +8,8 @@ plot_cpue(M, subsetby = "")
 }
 \arguments{
 \item{M}{list object created by read_admb function}
+
+\item{subsetby}{the fleet to subset the data to}
 }
 \value{
 plot of all observed and predicted incices

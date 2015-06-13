@@ -1,6 +1,6 @@
 #' Get cpue or other indices
 #'
-#' @param replist List object created by read_admb function
+#' @param M List object created by read_admb function
 #' @return dataframe of observed and predicted indices and residuals
 #' @author SJD Martell, DN Webber
 #' @export
@@ -29,6 +29,7 @@
 #' Plot cpue or other indices
 #'
 #' @param M list object created by read_admb function
+#' @param subsetby the fleet to subset the data to
 #' @return plot of all observed and predicted incices
 #' @author SJD Martell, DN Webber
 #' @export

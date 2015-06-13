@@ -7,10 +7,10 @@
 plot_selectivity(M)
 }
 \arguments{
-\item{replist}{List object created by read_admb function}
+\item{M}{list object created by read_admb function}
 }
 \value{
-Plot of selectivity
+plot of selectivity
 }
 \description{
 Plot selectivity

@@ -13,7 +13,8 @@ plot_ssb(M)
 Plot of model estimates of spawning stock biomass
 }
 \description{
-Spawning biomass may be defined as all males or some combination of males and females
+Spawning biomass may be defined as all males or some combination of males and
+females
 }
 \author{
 SJD Martell, DN Webber
