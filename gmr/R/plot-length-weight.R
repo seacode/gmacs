@@ -1,6 +1,6 @@
-#' Get length-weight
+#' Get length-weight data
 #'
-#' @param replist List object created by read_admb function
+#' @param M List object created by read_admb function
 #' @return dataframe of the length-weight relationship used in the model
 #' @author DN Webber
 #' @export
@@ -13,20 +13,43 @@
     {
         A  <- M[[i]]
         nsex <- 1
-        if (is.matrix(A$mean_wt)) nsex <- 2
-        df <- data.frame(Model = names(M)[i], Length = A$mid_points, t(A$mean_wt))
-        #colnames(df) <- c("Model", "length", "weight")
-        #df$sex = .SEX[df$sex+1]
-        #sd <- sqrt(log(1+df$cv^2))
-        #df$lb <- exp(log(df$cpue)-1.96*sd)
-        #df$ub <- exp(log(df$cpue)+1.96*sd)
-        #df$pred <- na.exclude(as.vector(t(A$pre_cpue)))
-        mdf <- rbind(mdf, df)
-    } 
+        if (is.matrix(A$mean_wt))
+        {
+            nsex <- 2
+            wt <- t(A$mean_wt)
+        } else {
+            wt <- data.frame(A$mean_wt)
+        }
+        colnames(wt) <- .SEX[1:nsex+1]
+        df <- data.frame(Model = names(M)[i], Length = A$mid_points, wt)
+        df1 <- melt(df, id.var = c("Model", "Length"))
+        mdf <- rbind(mdf, df1)
+    }
+    names(mdf) <- c("Model", "Length", "Sex", "Weight")
+    mdf$Sex <- factor(mdf$Sex, levels = sort(levels(mdf$Sex)))
     return(mdf)	
 }
 
 
-#plot(gmrep$mid_points, (gmrep$mean_wt), type="b", ylab="Mean weight at length", xlab="Carapace width (mm)", ylim=c(0,4))
-#lines(j_len$Size, j_len$MaleWt, col="red")
-#legend(130,1.2,c("gmacs","bbrkc"), pch=c(1,-1), lty=c(1,1), col=c(1,"red"))
+#' Plot length-weight relationship
+#'
+#' @param M list object created by read_admb function
+#' @return plot of the length-weight relationship
+#' @author DN Webber
+#' @export
+#' 
+plot_length_weight <- function(M)
+{
+    mdf <- .get_length_weight_df(M)
+    
+    p <- ggplot(mdf, aes(x = Length, y = Weight)) +
+        labs(x = "\nLength (mm)", y = "Weight\n")
+    if (length(M) == 1)
+    {
+        p <- p + geom_line(aes(col = Sex))
+    } else {
+        p <- p + geom_line(aes(col = model)) +
+            labs(col = "Model")
+    }
+    print(p + .THEME)
+}

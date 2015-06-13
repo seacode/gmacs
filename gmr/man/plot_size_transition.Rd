@@ -7,10 +7,10 @@
 plot_size_transition(M)
 }
 \arguments{
-\item{M}{List of object(s) created by read_admb function}
+\item{M}{list of object(s) created by read_admb function}
 }
 \value{
-Plot of size transition matrix
+plot of size transition matrix
 }
 \description{
 Plot size transition

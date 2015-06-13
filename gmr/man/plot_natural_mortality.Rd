@@ -7,9 +7,9 @@
 plot_natural_mortality(M, plt_surface = FALSE)
 }
 \arguments{
-\item{M}{List object created by read_admb function}
+\item{M}{list object created by read_admb function}
 
-\item{plt_surface}{Include a panel with surface over size-time}
+\item{plt_surface}{include a panel with surface over size-time}
 }
 \value{
 Plot natural mortality over time (and size)

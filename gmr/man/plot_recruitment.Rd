@@ -16,6 +16,6 @@ Plot of predicted recruitment
 Plot predicted recruitment and approximate asymptotic error-bars
 }
 \author{
-SJD Martell
+SJD Martell, DN Webber
 }
 

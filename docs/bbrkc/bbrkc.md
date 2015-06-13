@@ -1,7 +1,7 @@
 ---
 title: "Gmacs Example Stock Assessment"
 author: "Athol R. Whitten, James N. Ianelli, André E. Punt"
-date: "September 2014"
+date: "May 2015"
 output:
   pdf_document:
     highlight: zenburn
@@ -12,6 +12,7 @@ output:
   word_document: default
 bibliography: Gmacs.bib
 ---
+
 
 ## Introduction
 
@@ -116,59 +117,37 @@ output of the Gmacs-BBRKC model and produce plots that can be used in assessment
 reports.
 
 
-```
-## Loading required package: reshape2
-## Loading required package: ggplot2
-## Loading required package: dplyr
-## 
-## Attaching package: 'dplyr'
-## 
-## The following object is masked from 'package:stats':
-## 
-##     filter
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
+
+
+
+
+![Catch.\label{fig:catch}](Figs/catch-1.png) 
+
+![Survey biomass.\label{fig:survey_biomass}](Figs/survey_biomass-1.png) 
+
+![Spawning stock biomass.\label{fig:ssb}](Figs/spawning_stock_biomass-1.png) 
+
+![Recruitment.\label{fig:recruitment}](Figs/recruitment-1.png) 
+
+![Time-varying natural mortality.\label{fig:Mt}](Figs/natural_mortality-1.png) 
+
+![Selectivity.\label{fig:selectivity}](Figs/selectivity-1.png) 
+
 
 ```
-## 
-## ==============================================
-## Gmacs stock assessment plotting library
-## Version: 1.00
-## Compile date: 2015-06-12
-## For help ask someone who cares
-## ==============================================
+## Error in `colnames<-`(`*tmp*`, value = c("67.5", "72.5", "77.5", "82.5", : attempt to set 'colnames' on an object with less than two dimensions
 ```
 
-```
-## The ggplot theme has been set to bw for this working session
-```
+![Relationship between length (mm) and weight (kg) by sex.\label{fig:length-weight}](Figs/length_weight-1.png) 
 
-```
-## [1] "../../examples/bbrkc/OneSex/gmacs.rep"
-```
+![Growth increment.\label{fig:growth-inc}](Figs/growth_inc-1.png) 
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
 
-```
-##  [1] 1950 1955 1955 1955 1955 1955 1960 1960 1960 1960 1960 1965 1965 1965
-## [15] 1965 1965 1970 1970 1970 1970 1970 1975 1975 1975 1975 1975 1980 1980
-## [29] 1980 1980 1980 1985 1985 1985 1985 1985 1990 1990 1990 1990 1990 1995
-## [43] 1995 1995 1995 1995 2000 2000 2000 2000 2000 2005 2005 2005 2005 2005
-## [57] 2010 2010 2010 2010 2010 2015 2015 2015
-```
+![plot of chunk unnamed-chunk-1](Figs/unnamed-chunk-1-1.png) ![plot of chunk unnamed-chunk-1](Figs/unnamed-chunk-1-2.png) ![plot of chunk unnamed-chunk-1](Figs/unnamed-chunk-1-3.png) ![plot of chunk unnamed-chunk-1](Figs/unnamed-chunk-1-4.png) ![plot of chunk unnamed-chunk-1](Figs/unnamed-chunk-1-5.png) ![plot of chunk unnamed-chunk-1](Figs/unnamed-chunk-1-6.png) 
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-2.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-3.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-4.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-5.png) 
-
-```
-## Error in eval(expr, envir, enclos): could not find function "plot_natural_mortality"
-```
-
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-6.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-7.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-8.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-9.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-10.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-11.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-12.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-13.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-14.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-15.png) ![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-16.png) 
 
 ## Comparison of Assessment Processes
+
 ### File Description
 
   * The `*.tpl` file is working, it builds and the `*.exe` file runs successfully.
@@ -188,9 +167,11 @@ reports.
     'scratch' batch file deletes all files relating to the model build and 
     leaves only source and data files.
 
+
 ## Discussion
 
 This discussion will focus on the challenges in developing a Gmacs version of
 the BBRKC model: those met, and those yet to be met.
+
 
 ## References

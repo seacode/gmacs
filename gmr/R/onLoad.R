@@ -6,11 +6,11 @@
 .onLoad <- function(libname, pkgname)
 {
   cat("\n")
-  cat("==============================================\n")
+  cat("==============================================================\n")
   cat("Gmacs stock assessment plotting library\n")
   cat(gmr.version())
-  cat("For help ask someone who cares\n")
-  cat("==============================================\n")
+  cat("For help see https://github.com/seacode/gmacs/tree/develop/gmr\n")
+  cat("==============================================================\n")
   cat("\n")
 }
 

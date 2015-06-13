@@ -34,20 +34,23 @@
 #' Spawning biomass may be defined as all males or some combination of males and females
 #'
 #' @param M List object(s) created by read_admb function
-#' @author SJD Martell
 #' @return Plot of model estimates of spawning stock biomass 
+#' @author SJD Martell, DN Webber
 #' @export
 #' 
 plot_ssb <- function(M)
 {
-  mdf <- .get_ssb_df(M)
-	p <- ggplot(mdf)
-	p <- p + geom_line(aes(x=year,y=mmb,col=Model))
-	p <- p + geom_ribbon(aes(x=year,ymax=ub,ymin=lb,fill=Model),alpha=0.3)
-	p <- p + labs(x = "\nYear", y = "Spawning biomass\n")
-
-	if(!.OVERLAY) p <- p + facet_wrap(~Model)
-
-	print(p + .THEME)
+    mdf <- .get_ssb_df(M)
+    p <- ggplot(mdf) + labs(x = "\nYear", y = "Spawning biomass\n")
+    if (length(M) == 1)
+    {
+        p <- p + geom_line(aes(x = year, y = mmb)) +
+            geom_ribbon(aes(x = year, ymax = ub, ymin = lb), alpha = 0.3)
+    } else {
+        p <- p + geom_line(aes(x = year, y = mmb, col = Model)) +
+            geom_ribbon(aes(x = year, ymax = ub, ymin = lb, fill = Model), alpha = 0.3)
+    }
+    if(!.OVERLAY) p <- p + facet_wrap(~Model)
+    print(p + .THEME)
 }
 

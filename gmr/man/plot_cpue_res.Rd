@@ -15,4 +15,7 @@ Plot of fit indices residuals
 \description{
 Plot residuals of cpue or other indices
 }
+\author{
+SJD Martell, DN Webber
+}
 

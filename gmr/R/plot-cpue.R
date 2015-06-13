@@ -28,32 +28,38 @@
 
 #' Plot cpue or other indices
 #'
-#' @param replist List object created by read_admb function
-#' @return Plot of all observed and predicted incices
+#' @param M list object created by read_admb function
+#' @return plot of all observed and predicted incices
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_cpue <- function(replist, subsetby = "")
+plot_cpue <- function(M, subsetby = "")
 {
-	mdf <- .get_cpue_df(replist)
-	if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
-        
-	p  <- ggplot(mdf, aes(year, cpue, col = factor(sex)))
-	#p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb, col = factor(sex)))
-	p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
-        
-	if(.OVERLAY)
-	{
-		#p  <- p + geom_line(data = mdf, aes(year, pred, linetype = Model))
-		p  <- p + geom_line(data = mdf, aes(year, pred, color = Model))
-		p  <- p + facet_wrap(~fleet + sex, scales = "free_y")
-	} else {
-		p  <- p + geom_line(data = mdf, aes(year, pred))
-		p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")
-	}
-	#p  <- p + labs(x = "Year", y = "CPUE", col = "Sex")
-	p  <- p + labs(x = "\nYear", y = "CPUE\n", col = "Model")
-	print(p + .THEME)
+    mdf <- .get_cpue_df(M)
+    if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
+    
+    p  <- ggplot(mdf, aes(year, cpue))
+    #p  <- ggplot(mdf, aes(year, cpue, col = factor(sex)))
+    #p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb, col = factor(sex)))
+    p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
+
+    if(.OVERLAY)
+    {
+        if (length(M) == 1)
+        {
+            p  <- p + geom_line(data = mdf, aes(year, pred, color = sex)) + labs(col = "Sex")
+        } else {
+            p  <- p + geom_line(data = mdf, aes(year, pred, color = Model))
+        }
+        p  <- p + facet_wrap(~fleet + sex, scales = "free_y")
+    } else {
+        p  <- p + geom_line(data = mdf, aes(year, pred))
+        p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")
+    }
+    #p  <- p + labs(x = "Year", y = "CPUE", col = "Sex")
+    #p  <- p + labs(x = "\nYear", y = "CPUE\n", col = "Model")
+    p  <- p + labs(x = "\nYear", y = "CPUE\n")
+    print(p + .THEME)
 }
 
 
@@ -61,7 +67,9 @@ plot_cpue <- function(replist, subsetby = "")
 #'
 #' @param replist List object created by read_admb function
 #' @return Plot of fit indices residuals
+#' @author SJD Martell, DN Webber
 #' @export
+#' 
 plot_cpue_res <- function(M)
 {
 	

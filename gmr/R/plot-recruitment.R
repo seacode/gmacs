@@ -1,9 +1,10 @@
-#' .get_recruitment_df
+#' Get recruitment data
+#' 
 #' Extracts predicted recruitment and approximate asymptotic error-bars
 #'
-#' @param M List object(s) created by read_admb function
-#' @return Dataframe of recruitment
-#' @author SJD Martell
+#' @param M list object(s) created by read_admb function
+#' @return dataframe of recruitment
+#' @author SJD Martell, DN Webber
 #' @export
 #' 
 .get_recruitment_df <- function(M)
@@ -13,10 +14,12 @@
   for(i in 1:n)
   {
     A  <- M[[i]]
-    if(is.null(A$fit$logDetHess)) {
+    if(is.null(A$fit$logDetHess))
+    {
       stop("Appears that the Hessian was not positive definite\n
             thus estimates of recruitment do not exist.\n
-            See this in replist$fit.") }
+            See this in replist$fit.")
+    }
     df <- data.frame(Model=names(M)[i],
                      par = A$fit$names,
                      log_rec=A$fit$est,
@@ -34,24 +37,27 @@
 
 #' Plot predicted recruitment and approximate asymptotic error-bars
 #'
-#'
 #' @param M List object created by read_admb function
-#' @author SJD Martell
 #' @return Plot of predicted recruitment
+#' @author SJD Martell, DN Webber
 #' @export
 #' 
 plot_recruitment <- function(M)
 {
-  mdf <- .get_recruitment_df(M)
-  p <- ggplot(mdf,aes(x=(year),y=exp(log_rec),col=Model,group=Model))
-  p <- p + geom_bar(stat = "identity", alpha=0.4,aes(fill=Model),position="dodge")
-  p <- p + geom_pointrange(aes((year),exp(log_rec),col=Model,ymax=ub,ymin=lb),
-           position=position_dodge(width=.9))
-  p <- p + labs(x = "\nYear", y = "Recruitment\n")
-
-  if(!.OVERLAY) p <- p + facet_wrap(~Model)
-
-  print(p + .THEME)
+    mdf <- .get_recruitment_df(M)
+    if (length(M) == 1)
+    {
+        p <- ggplot(mdf, aes(x = year,y = exp(log_rec))) +
+            geom_bar(stat = "identity", alpha = 0.4, position = "dodge") +
+            geom_pointrange(aes(year, exp(log_rec), ymax = ub, ymin = lb), position = position_dodge(width = 0.9))
+    } else {
+        p <- ggplot(mdf, aes(x = year,y = exp(log_rec), col = Model, group = Model)) +
+            geom_bar(stat = "identity", alpha = 0.4, aes(fill = Model), position = "dodge") +
+            geom_pointrange(aes(year, exp(log_rec), col = Model, ymax = ub, ymin = lb), position = position_dodge(width = 0.9))
+    }
+    p <- p + labs(x = "\nYear", y = "Recruitment\n")
+    if(!.OVERLAY) p <- p + facet_wrap(~Model)
+    print(p + .THEME)
 }
 
 

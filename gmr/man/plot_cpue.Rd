@@ -4,13 +4,13 @@
 \alias{plot_cpue}
 \title{Plot cpue or other indices}
 \usage{
-plot_cpue(replist, subsetby = "")
+plot_cpue(M, subsetby = "")
 }
 \arguments{
-\item{replist}{List object created by read_admb function}
+\item{M}{list object created by read_admb function}
 }
 \value{
-Plot of all observed and predicted incices
+plot of all observed and predicted incices
 }
 \description{
 Plot cpue or other indices

@@ -10,18 +10,6 @@ myTheme <- theme_bw(base_size = 12) + theme(
         #panel.grid.major = element_blank(),
         plot.background   = element_rect(fill = "transparent",colour = NA)) 
 
-.MODELDIR = c("../../examples/bbrkc/TwoSex/")
-#.MODELDIR = c("../../examples/bbrkc/OneSex/", "../../examples/bbrkc/TwoSex/")
-.OVERLAY  = TRUE
-.SEX      = c("Aggregate","Male","Female")
-.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
-.TYPE     = c("Retained & Discarded","Retained","Discarded")
-.SHELL    = c("Aggregate","New Shell","Old Shell")
-.MATURITY = c("Aggregate","Immature","Mature")
-.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
-.SEAS     = c("Annual")
-
-
 # ----------------------------------------------------------------------------- #
 # OneSex
 # ----------------------------------------------------------------------------- #
@@ -32,7 +20,8 @@ myTheme <- theme_bw(base_size = 12) + theme(
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
-.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
+.THEME    = theme_bw(base_size = 12, base_family = "")
+#.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .SEAS     = c("Annual")
 
 fn       <- paste0(.MODELDIR, "gmacs")
@@ -62,9 +51,7 @@ plot_growth_inc(M[[1]])
 # ----------------------------------------------------------------------------- #
 # TwoSex
 # ----------------------------------------------------------------------------- #
-#.MODELDIR = c("../../examples/bbrkc/OneSex/")
 .MODELDIR = c("../../examples/bbrkc/TwoSex/")
-#.MODELDIR = c("../../examples/bbrkc/OneSex/", "../../examples/bbrkc/TwoSex/")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
@@ -184,7 +171,7 @@ plot_datarange(M)
 #M[[1]]$ob_catch <- M[[1]]$obs_catch * 1000
 #plot.catch(M)
 #ggsave(paste0(.FIGS, "figCatch.png"), width=1.0*ww, height=0.6*hh, bg="white")
-#source("../R/plot-catch.R")
+source("../R/plot-catch.R")
 plot_catch(M)
 
 #===============================================================================#
@@ -194,7 +181,7 @@ plot_catch(M)
 #M[[1]]$obs_cpue <- M[[1]]$obs_cpue * 1000
 #plot.cpue(M , "NMFS Trawl")
 #ggsave(paste0(.FIGS, "figCPUE.png"), width=0.5*ww, height=0.5*hh, bg="white")
-#source("../R/plot-cpue.R")
+source("../R/plot-cpue.R")
 plot_cpue(M)
 plot_cpue(M, "BSFRF")
 plot_cpue(M, "NMFS Trawl")
@@ -202,7 +189,7 @@ plot_cpue(M, "NMFS Trawl")
 #===============================================================================#
 # Natural mortality
 #===============================================================================#
-#source("../R/plot-natural-mortality.R")
+source("../R/plot-natural-mortality.R")
 plot_natural_mortality(M)
 #ggsave(paste0(.FIGS, "figNaturalMortality.png" ), width=ww, height=hh, bg="white")
 
@@ -213,7 +200,7 @@ plot_natural_mortality(M)
 #M[[1]]$mmb <- M[[1]]$mmb * 10000
 #plot.ssb(M)
 #ggsave(paste0(.FIGS, "figMMB.png"), width=0.5*ww, height=0.5*hh, bg="white")
-#source("../R/plot-ssb.R")
+source("../R/plot-ssb.R")
 plot_ssb(M)
 
 
@@ -222,7 +209,7 @@ plot_ssb(M)
 #===============================================================================#
 #plot.Recruitment(M)
 #ggsave(paste0(.FIGS, "figRecruits.png"), width=0.5*ww, height=0.5*hh, bg="white")
-#source("../R/plot-recruitment.R")
+source("../R/plot-recruitment.R")
 plot_recruitment(M)
 
 
@@ -247,7 +234,7 @@ plot_size_comps(M, 10)
 #===============================================================================#
 # Selectivity
 #===============================================================================#
-#source("../R/plot-selectivity.R")
+source("../R/plot-selectivity.R")
 plot_selectivity(M)
 
 
@@ -256,13 +243,16 @@ plot_selectivity(M)
 #===============================================================================#
 #plotGrowthTransition( M )
 #plotSizeTransition( M )
-#source("../R/plot-size-transition.R")
-plot_size_transition(M)
 #plot_growthTransition(M)
+source("../R/plot-size-transition.R")
+plot_size_transition(M)
 
 
 #===============================================================================#
 # Growth increments
 #===============================================================================#
-#source("../R/plot-growth-inc.R")
-plot_growth_inc(M[[1]])
+source("../R/plot-growth-inc.R")
+plot_growth_inc(M)
+
+source("../R/plot-length-weight.R")
+plot_length_weight(M)

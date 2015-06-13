@@ -1,7 +1,7 @@
 ---
 title: "Gmacs Example Stock Assessment"
 author: "Athol R. Whitten, James N. Ianelli, André E. Punt"
-date: "September 2014"
+date: "May 2015"
 output:
   pdf_document:
     highlight: zenburn
@@ -12,6 +12,7 @@ output:
   word_document: default
 bibliography: Gmacs.bib
 ---
+
 
 ## Introduction
 
@@ -115,13 +116,17 @@ In what follows, we demonstrate the use of the `gmr` package to process the
 output of the Gmacs-BBRKC model and produce plots that can be used in assessment
 reports.
 
-```{r, echo=FALSE}
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.width = 12, fig.height = 8, fig.path = 'Figs/', echo = FALSE, warning=FALSE, message=FALSE)
+```
+
+```{r, load_packages, include=FALSE}
 # Load gmr package for Gmacs:
 library(gmr)
 
 # Set theme for ggplot2 (works for themes classic, minimal, gray, bw):
-set_ggtheme('bw')
-#.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 
 # Set working directory to that containing Gmacs model results:
@@ -139,37 +144,64 @@ fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
 names(M) <- basename(.MODELDIR)
 
-plot_datarange(M)
-plot_catch(M) # broken
+#plot_catch(gmrep, plot_res = T)
+# plot_sizecomp(gmrep,which_plots=c(1))
+# plot_sizecomp_res(gmrep)
+# plot_sizecomp(gmrep,which_plots=c(11))
+# plot_sizecomp_res(gmrep)
+```
+
+```{r catch, fig.cap = "Catch.\\label{fig:catch}"}
+plot_catch(M)
+```
+
+```{r survey_biomass, fig.cap = "Survey biomass.\\label{fig:survey_biomass}"}
 plot_cpue(M)
-plot_cpue(M, "NMFS Trawl")
-plot_natural_mortality(M)
+#plot_cpue(M, "NMFS Trawl")
+```
+
+```{r spawning_stock_biomass, fig.cap = "Spawning stock biomass.\\label{fig:ssb}"}
 plot_ssb(M)
+```
+
+```{r recruitment, fig.cap = "Recruitment.\\label{fig:recruitment}"}
 plot_recruitment(M)
+```
+
+```{r natural_mortality, fig.cap = "Time-varying natural mortality.\\label{fig:Mt}"}
+plot_natural_mortality(M)
+```
+
+```{r selectivity, fig.cap = "Selectivity.\\label{fig:selectivity}"}
+plot_selectivity(M)
+```
+
+```{r size_transition, fig.cap = "Probability of size transition.\\label{fig:size-trans}"}
+plot_size_transition(M)
+```
+
+```{r length_weight, fig.cap = "Relationship between length (mm) and weight (kg) by sex.\\label{fig:length-weight}"}
+plot_length_weight(M)
+```
+
+```{r growth_inc, fig.cap = "Growth increment.\\label{fig:growth-inc}"}
+plot_growth_inc(M)
+```
+
+
+```{r, echo=FALSE}
+#plot_datarange(M)
 plot_size_comps(M, 1)
 plot_size_comps(M, 2)
 plot_size_comps(M, 3)
 plot_size_comps(M, 4)
 plot_size_comps(M, 5)
 plot_size_comps(M, 6)
-plot_selectivity(M)
-plot_size_transition(M)
-plot_growth_inc(M[[1]])
-
-# Get plots of interest:
-#plot_catch(gmrep)
-#plot_catch(gmrep, plot_res = T)
-# plot_sizecomp(gmrep,which_plots=c(1))
-# plot_sizecomp_res(gmrep)
-# plot_sizecomp(gmrep,which_plots=c(11))
-# plot_sizecomp_res(gmrep)
-# plot_sizetransition(gmrep)
-# plot_selectivity(gmrep)
-# plot_recruitment(gmrep)
-# plot_mmb(gmrep)
 ```
 
+
 ## Comparison of Assessment Processes
+
 ### File Description
 
   * The `*.tpl` file is working, it builds and the `*.exe` file runs successfully.
@@ -189,9 +221,11 @@ plot_growth_inc(M[[1]])
     'scratch' batch file deletes all files relating to the model build and 
     leaves only source and data files.
 
+
 ## Discussion
 
 This discussion will focus on the challenges in developing a Gmacs version of
 the BBRKC model: those met, and those yet to be met.
+
 
 ## References
