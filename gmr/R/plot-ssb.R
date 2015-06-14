@@ -15,16 +15,16 @@
     for(i in 1:n)
     {
         A  <- M[[i]]
-        df <- data.frame(Model=names(M)[i],
+        df <- data.frame(Model = names(M)[i],
                          par = A$fit$names,
-	                 log_mmb=A$fit$est,
-                         log_sd=A$fit$std)
+	                 log_mmb = A$fit$est,
+                         log_sd = A$fit$std)
         df      <- subset(df,par == "sd_log_mmb")
         df$year <- A$mod_yrs
         df$mmb  <- exp(df$log_mmb)
         df$lb   <- exp(df$log_mmb - 1.96*df$log_sd)
         df$ub   <- exp(df$log_mmb + 1.96*df$log_sd)
-        mdf     <- rbind(mdf,df)
+        mdf     <- rbind(mdf, df)
     }
     return(mdf)
 }

@@ -52,13 +52,13 @@ plot_growth_inc(M[[1]])
 # TwoSex
 # ----------------------------------------------------------------------------- #
 .MODELDIR = c("../../examples/bbrkc/TwoSex/")
+.THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
-.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .SEAS     = c("Annual")
 
 fn       <- paste0(.MODELDIR, "gmacs")
@@ -153,33 +153,49 @@ j_surv = read.table("../../examples/bbrkc/jieOutput/jie_survb.rep", header=T)
 j_len = read.table("../../examples/bbrkc/jieOutput/jie_len_sched.rep", header=T)
 j_ltr = read.table("../../examples/bbrkc/jieOutput/jie_lentrans.rep", header=F)
 
-M[[2]]$mmb <- j_mmb$mmb
+head(j_mmb)
+head(j_surv)
+head(j_len)
+head(j_ltr)
+names(M[[2]])
+
+# Add mmb data
+#M[[2]]$mmb <- j_mmb$mmb
+ii <- which(M[[2]]$fit$names %in% "sd_log_mmb")
+M[[2]]$fit$est[ii] <- log(j_mmb$mmb*1000)
+#M[[2]]$fit$std[ii] <- log(j_mmb$mmb_sd)
+
+# Add natural mortality data
 M[[2]]$M <- matrix(c(j_mmb$M, j_mmb$M), nrow = 80, ncol = 20)
+
+# Add size-weight data
 M[[2]]$mid_points <- j_len$Size
 M[[2]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
+
+# Add cpue data
 M[[2]]$obs_cpue[1,] <- j_surv$obs
 M[[2]]$pre_cpue[1,] <- j_surv$pred
 
+# Add numbers data
+M[[2]]$N_len[41,] <- (j_len$N2014_female + j_len$N2014_male_n + j_len$N2014_male_o)/1000
+ii <- which(M[[2]]$mod_yrs == 1975) + 1
+M[[2]]$N_len[ii,] <- (j_len$N1975_female + j_len$N1975_male_n + j_len$N1976_male_o)/1000
+
+# Add recruitment data
+ii <- which(M[[2]]$fit$names %in% "sd_log_recruits")
+M[[2]]$fit$est[ii] <- log(j_mmb$R*1000)
+M[[2]]$fit$std[ii] <- rep(0, length(j_mmb$R))
+
+# Test the plots
+plot_recruitment(M)
 plot_length_weight(M)
 plot_cpue(M)
 plot_cpue(M, "BSFRF")
 plot_cpue(M, "NMFS Trawl")
-
-plot_datarange(M) # not right
-plot_catch(M) # broken for OneSex
+plot_numbers(M, subsetby = c("1975","2014"))
 plot_natural_mortality(M)
 plot_ssb(M)
-plot_recruitment(M)
-plot_size_comps(M, 1)
-plot_size_comps(M, 2)
-plot_size_comps(M, 3)
-plot_size_comps(M, 4)
-plot_size_comps(M, 5)
-plot_size_comps(M, 6)
-plot_size_comps(M, 7)
-plot_size_comps(M, 8)
-plot_size_comps(M, 9)
-plot_size_comps(M, 10)
+plot_catch(M)
 plot_selectivity(M)
 plot_size_transition(M)
 plot_growth_inc(M)
