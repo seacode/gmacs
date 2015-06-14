@@ -221,10 +221,16 @@ There are five separate fishing fleets accounted for in the ADFG model:
 The results of the ADFG-BBRKC model are compared here to the results of the
 Gmacs-BBRKC model.
 
-The length-weight relationship used between the two models differs somewhat
-(Figure \ref{fig:length-weight}).
+Model           | FSPR | BSPR     | FOFL | OFL     | RSPR
+--------------- | ----:| --------:| ----:| -------:| --------:
+Gmacs (one sex) | 0.28 | 32995.95 | 0.28 | 3373.93 | 8160.40
+Gmacs (two sex) | 0.21 | 22205.54 | 0.21 | 3030.39 | 16959.09
 
-![Relationship between length (mm) and weight (kg) by sex.\label{fig:length-weight}](Figs/length_weight-1.png) 
+The mean weight at length used in the two models differs little for males
+(Figure \ref{fig:length-weight}). However, the pattern is very different for
+females. This difference is due to...
+
+![Relationship between carapace length (mm) and weight (kg) by sex.\label{fig:length-weight}](Figs/length_weight-1.png) 
 
 The fit to the NMFS surveys also differ (Figure \ref{fig:survey_biomass}). The
 ADFG-BBRKC model provides as bad a fit to the female survey biomass as the
@@ -234,27 +240,31 @@ the male survey biomass.
 ![Survey biomass.\label{fig:survey_biomass}](Figs/survey_biomass-1.png) 
 
 In both the ADFG-BBRKC and Gmacs-BBRKC models, time-varying natural mortality
-($M_t$) is freely estimated with four allowed step changes through time. The
-pattern in time-varying natural mortality is resonably similar between the two
-models (Figure \ref{fig:Mt}), however the peak in natural mortality during the
-early 1980 is not as high in the Gmacs-BBRKC model.
+($M_t$) is freely estimated with four step changes through time. The years ($t$)
+that each of these steps cover are fixed a priori. The pattern in time-varying
+natural mortality is resonably similar between the two models (Figure
+\ref{fig:Mt}), however the peak in natural mortality during the early 1980 is
+not as high in the Gmacs-BBRKC model.
 
-![Time-varying natural mortality.\label{fig:Mt}](Figs/natural_mortality-1.png) 
+![Time-varying natural mortality ($M_t$).\label{fig:Mt}](Figs/natural_mortality-1.png) 
 
-Recruitment patterns are similar, but differences in natural mortality schedules
-will affect these matches (Figure \ref{fig:recruitment}).
+Patterns in recruitment through time ($R_t$) estimated in the two models are
+similar, but differences in natural mortality schedules will affect these
+matches (Figure \ref{fig:recruitment}).
 
-![Estimated recruitment time series.\label{fig:recruitment}](Figs/recruitment-1.png) 
+![Estimated recruitment time series ($R_t$).\label{fig:recruitment}](Figs/recruitment-1.png) 
 
-The number of crabs in each size class in the initial and final years of each
-model differ substantially (Figure \ref{fig:numbers}).
+The number of crabs in each size class (${\bf n}$) in the initial year ($t=1$)
+and final year ($t=T$) in each model differ substantially (Figure
+\ref{fig:numbers}).
 
 ![Numbers at length.\label{fig:numbers}](Figs/numbers_at_length-1.png) 
 
-The spawning stock biomass ($\mathit{SSB}_t$) of mature males also differs a lot bewteen the two
-models (Figure \ref{fig:ssb}).
+The spawning stock biomass of mature males, termed the mature male biomass
+($\mathit{MMB}_t$), also differs a lot bewteen the two models (Figure
+\ref{fig:ssb}).
 
-![Spawning stock biomass.\label{fig:ssb}](Figs/spawning_stock_biomass-1.png) 
+![Mature male biomass.\label{fig:ssb}](Figs/spawning_stock_biomass-1.png) 
 
 
 ### Gmacs Results

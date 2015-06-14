@@ -35,11 +35,11 @@
 //
 // ==================================================================================== //
 
-   
-   
-   
-   
-   
+
+
+
+
+
 
 DATA_SECTION
 	
@@ -67,8 +67,9 @@ DATA_SECTION
 
 		if((on=option_match(ad_comm::argc,ad_comm::argv,"-i",opt))>-1)
 		{
+			cout<<"\n";
 			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | CONTRIBUTIONS (Code and intellectual)                    |\n";
+			cout<<"  | CONTRIBUTIONS (code and intellectual)                    |\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | Name:                        Organization:               |\n";
 			cout<<"  | Steven Martell,              IPHC                        |\n";
@@ -81,7 +82,6 @@ DATA_SECTION
 			cout<<"  | Dave Fournier,               Otter Research              |\n";
 			cout<<"  | John Levitt,                 Mathemetician               |\n";
 			cout<<"  |----------------------------------------------------------|\n";
-
 			cout<<"\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | FINANCIAL SUPPORT                                        |\n";
@@ -91,14 +91,11 @@ DATA_SECTION
 			cout<<"  | Fisheries Research Foundation,....                       |\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"\n";
-
-			cout<<"\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | DOCUMENTATION                                            |\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | online api: http://seacode.github.io/gmacs/index.html    |\n";
 			cout<<"  |----------------------------------------------------------|\n";
-
 			cout<<"\n";
 			exit(1);
 		}
@@ -174,7 +171,7 @@ DATA_SECTION
 
 
 	init_vector size_breaks(1,nclass+1);
-	vector       mid_points(1,nclass);
+	vector      mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
 	!!  WRITEDAT(size_breaks);
 
@@ -220,16 +217,15 @@ DATA_SECTION
 	LOC_CALCS
 		for(int k = 1; k <= nCatchDF; k++ )
 		{
-			catch_mult(k)= column(dCatchData(k),9);
-			obs_catch(k) = column(dCatchData(k),5);
-			catch_cv(k)  = column(dCatchData(k),6);
-			catch_dm(k)  = column(dCatchData(k),11);
-
+			catch_mult(k) = column(dCatchData(k),9);
+			obs_catch(k)  = column(dCatchData(k),5);
+			catch_cv(k)   = column(dCatchData(k),6);
+			catch_dm(k)   = column(dCatchData(k),11);
 
 			// rescale catch by multiplier.
 			obs_catch(k) = elem_prod(obs_catch(k),catch_mult(k));
 		}
-	  WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
+		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 	END_CALCS
 	//!! ECHO(obs_catch); ECHO(catch_cv);
 
@@ -421,7 +417,6 @@ DATA_SECTION
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
 	
-
 	vector theta_ival(1,ntheta);
 	vector theta_lb(1,ntheta);
 	vector theta_ub(1,ntheta);
@@ -2294,8 +2289,6 @@ FUNCTION calc_objective_function
 		{
 			nloglike(3,ii) += ploglike->nloglike(log_effn,P);			
 		}
-
-		
 	}
 
 
@@ -2349,7 +2342,6 @@ FUNCTION calc_objective_function
 	for(int k = 1; k <= nfleet; k++ )
 	{
 		fbar = mean( ft(k)(1) );
-		
 		if( pen_fbar(k) > 0  && fbar != 0 )
 		{
 			log_fbar = log(fbar);
@@ -2624,23 +2616,28 @@ REPORT_SECTION
 	// For Jim's r-script.
 	size_transition_M = value(P(1) * growth_transition(1));
 	for (int i=1;i<=nclass;i++)
+	{
 	  size_transition_M(i,i) += value(1.-P(1,i,i));
+	}
 
 	REPORT(size_transition_M);
 	
 	if (nsex==2)
 	{
-  	size_transition_F = value(P(2) * growth_transition(2));
-  	for (int i=1;i<=nclass;i++)
-	    size_transition_M(i,i) += value(1.-P(2,i,i));
-  	REPORT(size_transition_F);
+	  	size_transition_F = value(P(2) * growth_transition(2));
+  		for (int i=1;i<=nclass;i++)
+		{
+			    size_transition_M(i,i) += value(1.-P(2,i,i));
+		}
+		REPORT(size_transition_F);
 	}
 
+
+
 	/**
-	 * @brief Calculate mature male biomass
+	 * @brief Calculate mature male biomass (MMB)
 	 * @details Calculation of the mature male biomass is based on the
 	 * numbers-at-length summed over each shell condition.
-	 * 
 	 * 
 	 * TODO correct for timing of when the MMB is calculated
 	 * Add female component if lamnda < 1
@@ -2651,7 +2648,7 @@ FUNCTION dvar_vector calc_mmb()
 	dvar_vector mmb(syr,nyr);
 	mmb.initialize();
 	int ig,m,o;
-	int h = 1;  // males
+	int h = 1; // males
 	for(int i = syr; i <= nyr; i++ )
 	{
 		for( ig = 1; ig <= n_grp; ig++ )
@@ -2659,13 +2656,10 @@ FUNCTION dvar_vector calc_mmb()
 			h = isex(ig);
 			o = ishell(ig);
 			m = imature(ig);
-
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-
 			mmb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
 		}
-
 	}
 	return(mmb);
 
@@ -2782,8 +2776,8 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	
 
 RUNTIME_SECTION
-  maximum_function_evaluations 500,  500,   1500, 25000, 25000
-  convergence_criteria        1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4, 
+  maximum_function_evaluations 500,   500,   1500,  25000, 25000
+  convergence_criteria         1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4, 
 
 
 GLOBALS_SECTION

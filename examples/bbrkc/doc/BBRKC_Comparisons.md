@@ -17,6 +17,7 @@ with results from a `gmacs` model implementation tuned to male-only data.
 
 
 
+
 # Size specific schedules
 
 ## Mean weight-at-length
@@ -27,25 +28,20 @@ models is nearly identical (Figure \ref{fig:mean_wt}). The only difference
 between the two models is in the final length class (160mm) where the mean
 weight is greater in Zheng's model than in gmacs.
 
-The length-weight relationships used in Zheng's model for males and females were
-$$W = 0.000408 L^{3.127956} \quad \text{immature females},$$
-$$W = 0.003593 L^{2.666076} \quad \text{ovigerous females},$$
-$$W = 0.0004031 L^{3.141334} \quad \text{males}.$$
-
 ![Mean weight-at-length.\label{fig:mean_wt}](Figs/mean_wt-1.png) 
 
 
 ## Initial recruitment size distribution
 
-Gmacs was configured to match the @zheng_bristol_2014 model closely and this was
-achieved (Figure \ref{fig:init_rec}).
+Gmacs was configured to match the @zheng_bristol_2014 model recruitment size
+distribution closely (Figure \ref{fig:init_rec}).
 
 ![Distribution of length at recruitment.\label{fig:init_rec}](Figs/init_rec-1.png) 
 
 ## Molting increment width
 
 Options to fit relationship based on data was developed but for the BBRKC
-system, a size-specific vector was used to determine molt increments as show
+system, a size-specific vector was used to determine molt increments as shown
 below (Figure \ref{fig:growth_inc}).
 
 ![Growth increment.\label{fig:growth_inc}](Figs/growth_inc-1.png) 
@@ -61,14 +57,14 @@ Fixed parameters in gmacs were easily set to represent that assumed from
 ## Transition processes
 
 The first set of figures is the growth probabilities (for all crabs that molt)
-(Figure~\ref{fig:growth_trans}).
+(Figure \ref{fig:growth_trans}).
 
 ![Growth transitions.\label{fig:growth_trans}](Figs/growth_trans-1.png) 
 
 The second set of figures is the combination of growth and molting and
 represents the size transition (Figure \ref{fig:size_trans}).
 
-![Growth transitions.\label{fig:size_trans}](Figs/size_trans-1.png) 
+![Size transitions.\label{fig:size_trans}](Figs/size_trans-1.png) 
 
 
 ## Numbers at length in 1975
@@ -127,30 +123,7 @@ mortality (as clarified in Table 1 of Zheng et al. 2014) (Figure
 The subsequent figures provide fits to the male BBRKC data based on gmacs
 (Figure \ref{fig:sizecomps}).
 
-
-```
-## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "plot_sizeComps"
-```
+![Size comps.\label{fig:sizecomps}](Figs/sizecomps-1.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-2.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-3.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-4.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-5.png) ![Size comps.\label{fig:sizecomps}](Figs/sizecomps-6.png) 
 
 
 # Summary

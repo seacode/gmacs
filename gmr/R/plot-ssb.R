@@ -40,10 +40,12 @@
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_ssb <- function(M)
+plot_ssb <- function(M, xlab = "Year", ylab = "MMB (tonnes)")
 {
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
     mdf <- .get_ssb_df(M)
-    p <- ggplot(mdf) + labs(x = "\nYear", y = "Spawning biomass\n")
+    p <- ggplot(mdf) + labs(x = xlab, y = ylab) + expand_limits(y = 0)
     if (length(M) == 1)
     {
         p <- p + geom_line(aes(x = year, y = mmb)) +

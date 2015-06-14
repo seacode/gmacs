@@ -1,14 +1,7 @@
 require(devtools)
 devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
-
-myTheme <- theme_bw(base_size = 12) + theme(
-	panel.background  = element_rect(fill = "transparent",colour = NA), # or theme_blank()
-	legend.background = element_blank(),
-	legend.key        = element_blank(),
-        #panel.grid.minor = element_blank(), 
-        #panel.grid.major = element_blank(),
-        plot.background   = element_rect(fill = "transparent",colour = NA)) 
+source("reload.R")
 
 # ----------------------------------------------------------------------------- #
 # OneSex
@@ -21,13 +14,19 @@ myTheme <- theme_bw(base_size = 12) + theme(
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
 .THEME    = theme_bw(base_size = 12, base_family = "")
-#.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .SEAS     = c("Annual")
 
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
 names(M) <- basename(.MODELDIR)
 length(M)
+
+sum(M[[1]]$nloglike, na.rm = TRUE) + sum(M[[1]]$nlogPenalty, na.rm = TRUE) + sum(M[[1]]$priorDensity, na.rm = TRUE)
+M[[1]]$fit$nlogl
+
+M[[1]]$nloglike
+M[[1]]$nlogPenalty
+M[[1]]$priorDensity
 
 plot_datarange(M)
 plot_catch(M) # broken
@@ -66,6 +65,7 @@ M        <- lapply(fn, read_admb)
 names(M) <- basename(.MODELDIR)
 length(M)
 
+table_spr(M)
 plot_datarange(M)
 plot_catch(M)
 plot_cpue(M)
@@ -99,7 +99,7 @@ plot_growth_inc(M[[1]])
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
-.THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
+.THEME    = theme_bw(base_size = 12, base_family = "")
 .SEAS     = c("Annual")
 
 fn       <- paste0(.MODELDIR, "gmacs")
@@ -107,8 +107,9 @@ M        <- lapply(fn, read_admb)
 names(M) <- basename(.MODELDIR)
 length(M)
 
+table_spr(M)
 plot_datarange(M) # not right
-plot_catch(M) # broken for OneSex
+plot_catch(M)
 plot_cpue(M)
 plot_cpue(M, "BSFRF")
 plot_cpue(M, "NMFS Trawl")
@@ -200,6 +201,113 @@ plot_selectivity(M)
 plot_size_transition(M)
 plot_growth_inc(M)
 
+
+# ----------------------------------------------------------------------------- #
+# OneSex, TwoSex and Zheng
+# ----------------------------------------------------------------------------- #
+.MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/TwoSex/","../../examples/bbrkc/TwoSex/")
+.OVERLAY  = TRUE
+.SEX      = c("Aggregate","Male","Female")
+.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
+.SHELL    = c("Aggregate","New Shell","Old Shell")
+.MATURITY = c("Aggregate","Immature","Mature")
+.THEME    = theme_bw(base_size = 12, base_family = "")
+.SEAS     = c("Annual")
+
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb)
+names(M) <- c(basename(.MODELDIR)[1:2], "Zheng")
+
+# Read in Jie's file
+j_mmb = read.table("../../examples/bbrkc/jieOutput/jie_mmb.rep", header=T)
+j_surv = read.table("../../examples/bbrkc/jieOutput/jie_survb.rep", header=T)
+j_len = read.table("../../examples/bbrkc/jieOutput/jie_len_sched.rep", header=T)
+j_ltr = read.table("../../examples/bbrkc/jieOutput/jie_lentrans.rep", header=F)
+
+head(j_mmb)
+head(j_surv)
+head(j_len)
+head(j_ltr)
+names(M[[2]])
+
+# Add mmb data
+# 1 lb = 0.453592 kg
+# 1 kg = 2.20462 lb
+jj <- 3
+#M[[jj]]$mmb <- j_mmb$mmb*1000
+ii <- which(M[[jj]]$fit$names %in% "sd_log_mmb")
+M[[jj]]$fit$est[ii] <- log(j_mmb$mmb*10000)
+M[[jj]]$fit$std[ii] <- 0
+#M[[jj]]$fit$std[ii] <- log(j_mmb$mmb_sd)
+
+# Add natural mortality data
+M[[jj]]$M <- matrix(c(j_mmb$M, j_mmb$M), nrow = 80, ncol = 20)
+
+# Add size-weight data
+M[[jj]]$mid_points <- j_len$Size
+M[[jj]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
+
+# Add cpue data
+M[[jj]]$obs_cpue[1,] <- j_surv$obs
+M[[jj]]$pre_cpue[1,] <- j_surv$pred
+
+# Add numbers data
+M[[jj]]$N_len[41,] <- (j_len$N2014_female + j_len$N2014_male_n + j_len$N2014_male_o)/1000
+ii <- which(M[[jj]]$mod_yrs == 1975) + 1
+M[[jj]]$N_len[ii,] <- (j_len$N1975_female + j_len$N1975_male_n + j_len$N1976_male_o)/1000
+
+# Add recruitment data
+ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
+M[[jj]]$fit$est[ii] <- log(j_mmb$R*1e+3)
+M[[jj]]$fit$std[ii] <- rep(0, length(j_mmb$R))
+
+# Add growth transition data
+M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
+M[[jj]]$tG                <- rbind(j_ltr, j_ltr)
+
+# Add size transition data
+m <- diag(20)
+diag(m) <- j_len$MP_1987
+m <- as.matrix(j_ltr) %*% m
+diag(m) <- diag(m)+(1-j_len$MP_1987)
+M[[jj]]$size_transition_M <- m
+M[[jj]]$size_transition_F <- m
+M[[jj]]$tS <- rbind(m, m)
+
+# Add molting probability data
+M[[jj]]$molt_probability <- rbind(j_len$MP_1987, j_len$MP_1987)
+
+# Add recruitment size distribution data
+M[[jj]]$mid_points <- j_len$Size
+M[[jj]]$rec_sdd <- j_len$Male_R_sd #j_len$Female_R_sd
+
+reload()
+
+A <- M; A[[2]] <- NULL
+plot_growth_transition(A)
+
+# Test the plots
+plot_recruitment(M)
+plot_recruitment_size(M)
+.OVERLAY = FALSE
+plot_length_weight(M)
+.OVERLAY = TRUE
+plot_molt_prob(M)
+plot_cpue(M)
+plot_cpue(M, "BSFRF")
+plot_cpue(M, "NMFS Trawl")
+plot_numbers(M, subsetby = c("1975","2014"))
+plot_natural_mortality(M)
+plot_ssb(M)
+plot_catch(M)
+plot_selectivity(M)
+plot_growth_transition(M)
+plot_size_transition(M)
+plot_growth_inc(M)
+
+A <- M; A[[3]] <- NULL
+plot_recruitment(A)
 
 
 

@@ -4,12 +4,16 @@
 \alias{plot_cpue}
 \title{Plot cpue or other indices}
 \usage{
-plot_cpue(M, subsetby = "")
+plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE")
 }
 \arguments{
 \item{M}{list object created by read_admb function}
 
 \item{subsetby}{the fleet to subset the data to}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
 }
 \value{
 plot of all observed and predicted incices

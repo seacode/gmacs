@@ -67,7 +67,8 @@ plot_catch <- function(M , plot_res = FALSE)
                 labs(col = "Model")
         }
     } else {
-        p <- p + facet_wrap(~model + sex + fleet + type, scales = "free_y")
+        p <- p + facet_wrap(~model + sex + fleet + type, scales = "free_y") +
+            geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.8)
     }
     print(p + .THEME)
 }

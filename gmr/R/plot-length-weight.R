@@ -47,7 +47,12 @@ plot_length_weight <- function(M)
     {
         p <- p + geom_line(aes(linetype = Sex))
     } else {
-        p <- p + geom_line(aes(linetype = Sex, col = Model))
+        if (.OVERLAY)
+        {
+            p <- p + geom_line(aes(linetype = Sex, col = Model))
+        } else {
+            p <- p + geom_line(aes(col = Model)) + facet_wrap(~Sex)
+        }
     }
     print(p + .THEME)
 }

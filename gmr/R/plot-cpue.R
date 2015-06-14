@@ -26,22 +26,26 @@
 	return(mdf)	
 }
 
+
 #' Plot cpue or other indices
 #'
 #' @param M list object created by read_admb function
 #' @param subsetby the fleet to subset the data to
+#' @param xlab the x-axis label for the plot
+#' @param ylab the y-axis label for the plot
 #' @return plot of all observed and predicted incices
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_cpue <- function(M, subsetby = "")
+plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE")
 {
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
+    
     mdf <- .get_cpue_df(M)
     if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
     
     p  <- ggplot(mdf, aes(year, cpue))
-    #p  <- ggplot(mdf, aes(year, cpue, col = factor(sex)))
-    #p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb, col = factor(sex)))
     p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
 
     if(.OVERLAY)
@@ -57,9 +61,7 @@ plot_cpue <- function(M, subsetby = "")
         p  <- p + geom_line(data = mdf, aes(year, pred))
         p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")
     }
-    #p  <- p + labs(x = "Year", y = "CPUE", col = "Sex")
-    #p  <- p + labs(x = "\nYear", y = "CPUE\n", col = "Model")
-    p  <- p + labs(x = "\nYear", y = "CPUE\n")
+    p  <- p + labs(x = xlab, y = ylab)
     print(p + .THEME)
 }
 

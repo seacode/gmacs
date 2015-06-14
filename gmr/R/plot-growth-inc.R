@@ -12,7 +12,11 @@
     for(i in 1:n)
     {
         A <- M[[i]]
-        df <- data.frame(Model = names(M)[i], sex = A$iMoltIncSex, obs = A$pMoltInc, pred = A$dMoltInc, size = A$dPreMoltSize)
+        df <- data.frame(Model = names(M)[i],
+                         sex   = A$iMoltIncSex,
+                         obs   = A$pMoltInc,
+                         pred  = A$dMoltInc,
+                         size  = A$dPreMoltSize)
         df$sex <- .SEX[df$sex + 1]
         mdf <- rbind(mdf, df)
     }
