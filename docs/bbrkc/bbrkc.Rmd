@@ -153,6 +153,7 @@ catch, and bycatch data using a maximum likelihood approach to estimate
 abundance, recruitment, catchabilities, catches, and bycatch of the commercial
 pot fisheries and groundfish trawl fisheries.
 
+<<<<<<< HEAD
 Critical assumptions of the model include:
 
   * The base natural mortality is constant over shell condition and size and was
@@ -185,10 +186,100 @@ Critical assumptions of the model include:
 
 
 # Gmacs
+=======
+g. Critical assumptions of the model:
+
+h. The base natural mortality is constant over shell condition and size and
+was estimated assuming a maximum age of 25 and applying the 1% rule (Zheng
+2005).
+
+ii. Survey and fisheries selectivities are a function of size and were
+constant over shell condition.  Selectivities are a function of sex except for
+trawl bycatch selectivities, which are the same for both sexes. Two different
+survey selectivities were estimated: (1) 1975-1981 and (2) 1982-2013 based on
+modifications to the trawl gear used in the assessment survey.
+
+iii. Growth is a function of size and did not change over time for males. For
+females, three growth increments per molt as a function of size were estimated
+based on sizes at maturity (1975-1982, 1983-1993, and 1994-2013). Once mature,
+female red king crabs grow with a much smaller growth increment per molt.
+
+iv. Molting probabilities are an inverse logistic function of size for
+males. Females molt annually.
+
+v. Annual fishing seasons for the directed fishery are short.
+
+vi. Survey catchability (Q) was estimated to be 0.896, based on a trawl
+experiment by Weinberg et al.  (2004) with a standard deviation of 0.025. Q was
+assumed to be constant over time. Some scenarios estimate Q in the model.
+
+vii. Males mature at sizes =120 mm CL. For convenience, female abundance was
+summarized at sizes =90 mm CL as an index of mature females.  viii. For summer
+trawl survey data, shell ages of newshell crabs were 12 months or less, and
+shell ages of oldshell and very oldshell crabs were more than 12 months.
+
+ix. Measurement errors were assumed to be normally distributed for size
+compositions and were log- normally distributed for biomasses.
+
+h. Changes to the above since previous assessment: see Section A.3. Changes to
+the assessment methodol- ogy.
+
+i. Outline of methods used to validate the code used to implement the model and
+whether the code is available: The code is available.
+
+3. Model Selection and Evaluation
+
+a. Alternative model configurations: Several scenarios were compared for this
+report: Scenario 4: base scenario. Scenario 4 includes:
+
+(1) Basic M = 0.18, and additional mortalities as one level (1980-1984) for
+males and two levels (1980-1984 and 76-79 & 85-93) for females.
+
+(2) Including BSFRF survey data in 2007 and 2008.
+
+(3) Assuming survey catchability to be 0.896 for all other years.
+
+
+### Gmacs-BBRKC
+>>>>>>> 800bbc4cfc81673da2751116c694a103f43c770e
 
 How Gmacs deals with retention and selectivity: this is an important part to
 add, as there.
 
+<<<<<<< HEAD
+=======
+
+## Comparison of Data and Model Specifications
+
+### ADFG
+### Survey Data
+
+### Catch Data
+
+### Weight and Fecundity
+
+For the size-weight relationships, Jie's data file `rk7513s1.dat` has
+information on the weight-at-size parameters for BBRKC. He suggests we use the
+'new' parameters listed (see line 339 onwards): these parameters were estimated
+by NMFS.
+ 
+Fecundity-at-size is a little more complicated: This information was provided
+by Jie:
+
+From Jie: Fecundity-at-size depends on clutch fullness, which changes from
+year to year. Right now, we do not use fecundity in the management, so no
+fecundity is used in the model. The “fecundity” used in Andre's simplified model
+looks like the male mean weight by size with the “old" parameters”. If GMACS
+needs fecundity, maybe just input mean weight by size of mature females, or
+mature males (please use “new” parameters). As to the maturity by size, right
+now, it is 0 for lengths less than 90 mm and 1 for lengths 90 or larger for
+females and 0 for lengths less than 120mm and 1 for lengths greater than 119 mm
+for males. In the future, I plan to estimate maturity by size for females over
+time to improve estimation of growth.
+
+### Gmacs
+
+>>>>>>> 800bbc4cfc81673da2751116c694a103f43c770e
 The data and model specifications used in the Gmacs-BBRKC model are very similar
 to those used in the '4nb' scenario developed by @zheng_bristol_2014, herein
 referred to as the ADFG-BBRKC model.
@@ -265,6 +356,12 @@ There are five separate fishing fleets accounted for in the ADFG model:
     leaves only source and data files.
 
 
+<<<<<<< HEAD
+=======
+The mean weight at size used in the two models differs little for males
+(Figure \ref{fig:length-weight}). However, the pattern is very different for
+females. This difference is due to... 
+>>>>>>> 800bbc4cfc81673da2751116c694a103f43c770e
 
 # Model comparisons
 
