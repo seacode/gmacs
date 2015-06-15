@@ -4,10 +4,14 @@
 \alias{plot_length_weight}
 \title{Plot length-weight relationship}
 \usage{
-plot_length_weight(M)
+plot_length_weight(M, xlab = "Size", ylab = "Weight")
 }
 \arguments{
 \item{M}{list object created by read_admb function}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
 }
 \value{
 plot of the length-weight relationship

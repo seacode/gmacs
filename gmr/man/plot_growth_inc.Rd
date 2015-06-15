@@ -4,9 +4,14 @@
 \alias{plot_growth_inc}
 \title{Plot growth from arbitrary start age}
 \usage{
-plot_growth_inc(M)
+plot_growth_inc(M, xlab = "Pre-molt size (mm)",
+  ylab = "Molting increment (mm)")
 }
 \arguments{
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
+
 \item{replist}{list object created by read_admb function}
 }
 \value{

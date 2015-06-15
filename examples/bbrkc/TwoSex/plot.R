@@ -14,7 +14,7 @@ require(gmr)
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
 .SEAS     = c("Annual")
-.FIGS     = c("Figs/")
+.FIGS     = c("figure/")
 
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)

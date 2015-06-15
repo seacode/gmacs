@@ -4,10 +4,14 @@
 \alias{plot_recruitment_size}
 \title{Plot recruitment size distribution}
 \usage{
-plot_recruitment_size(M)
+plot_recruitment_size(M, xlab = "Size", ylab = "Density")
 }
 \arguments{
 \item{M}{list object created by read_admb function}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
 }
 \value{
 plot of recruitment size distribution

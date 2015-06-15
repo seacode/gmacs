@@ -77,7 +77,7 @@
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
-##  TYPE: 0 = UNINFORMATIVE, 1 - NORMAL (log-space), 2 = time-varying (nyi)
+##  TYPE: 0 = UNINFORMATIVE, 1 = NORMAL (log-space), 2 = time-varying (nyi)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SURVEYS/INDICES ONLY
 ## NMFS  BSFRF
@@ -85,7 +85,7 @@
      1      0.896     0.03      1.0
      0      0.001     0.01      1.0
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-
+4
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -142,7 +142,7 @@
   2014    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
   1       # Gear index for SPR calculations (i.e., directed fishery).
-  1       # Lambda (proportion of mature male biomass for SPR reference points.)
+  1       # Lambda (proportion of mature male biomass for SPR reference points).
   1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
   0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ## EOF

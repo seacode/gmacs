@@ -98,14 +98,18 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (thousands of
 #' Plot recruitment size distribution
 #'
 #' @param M list object created by read_admb function
+#' @param xlab the x-axis label for the plot
+#' @param ylab the y-axis label for the plot
 #' @return plot of recruitment size distribution
 #' @author DN Webber
 #' @export
 #' 
-plot_recruitment_size <- function(M)
+plot_recruitment_size <- function(M, xlab = "Size", ylab = "Density")
 {
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
     mdf <- .get_recruitment_size_df(M)
-    p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) + labs(x = "\nSize", y = "Density\n")
+    p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) + labs(x = xlab, y = ylab)
     if (length(M) == 1)
     {
         p <- p + geom_line()

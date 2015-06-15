@@ -34,15 +34,19 @@
 #' Plot length-weight relationship
 #'
 #' @param M list object created by read_admb function
+#' @param xlab the x-axis label for the plot
+#' @param ylab the y-axis label for the plot
 #' @return plot of the length-weight relationship
 #' @author DN Webber
 #' @export
 #' 
-plot_length_weight <- function(M)
+plot_length_weight <- function(M, xlab = "Size", ylab = "Weight")
 {
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
     mdf <- .get_length_weight_df(M)
     p <- ggplot(mdf, aes(x = Length, y = Weight)) +
-        labs(x = "\nLength (mm)", y = "Weight\n")
+        labs(x = xlab, y = ylab)
     if (length(M) == 1)
     {
         p <- p + geom_line(aes(linetype = Sex))

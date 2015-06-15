@@ -27,15 +27,18 @@
 #' Plot growth from arbitrary start age
 #'
 #' @param replist list object created by read_admb function
+#' @param xlab the x-axis label for the plot
+#' @param ylab the y-axis label for the plot
 #' @return plot growth increment for given pre-molt size, including model predictions and data
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_growth_inc <- function(M)
+plot_growth_inc <- function(M, xlab = "Pre-molt size (mm)", ylab = "Molting increment (mm)")
 {
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
     mdf <- .get_gi_df(M)
-    p <- ggplot(mdf) +
-        labs(x = "\nPre-molt size (mm)", y = "Molting increment (mm)\n", col = "Sex")
+    p <- ggplot(mdf) + labs(x = xlab, y = ylab, col = "Sex")
     p <- p + geom_line(aes(x = size, y = obs, colour = sex))
     #p <- p + geom_point(aes(x = size, y = pred, colour = sex))
     if (!length(M) == 1)
