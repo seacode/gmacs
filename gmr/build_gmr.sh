@@ -1,6 +1,4 @@
-cd gmr/
-R CMD BATCH update-description.R
-R CMD BATCH roxygenize.R
+R CMD BATCH update-gmr.R
 cd ../
 R CMD build gmr
 R CMD INSTALL gmr_*.tar.gz
