@@ -29,6 +29,12 @@ ggsave(paste0(.FIGS, "catch.png"), width = ww*1.2, height = hh*1.2)
 plot_cpue(M)
 ggsave(paste0(.FIGS, "cpue.png"), width = ww*2.5, height = hh)
 
+plot_cpue(M, "BSFRF")
+ggsave(paste0(.FIGS, "cpue_BSFRF.png"), width = ww, height = hh)
+
+plot_cpue(M, "NMFS Trawl")
+ggsave(paste0(.FIGS, "cpue_NMFS.png"), width = ww*2.5, height = hh)
+
 plot_natural_mortality(M)
 ggsave(paste0(.FIGS, "M_t.png"), width = ww, height = hh)
 
@@ -53,16 +59,40 @@ ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
 plot_numbers(M)
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*2, height = hh*1.5)
 
+plot_numbers(M, subsetby = c("1975","2014"))
+ggsave(paste0(.FIGS, "numbers.png"), width = ww*1.2, height = hh)
+
+plot_size_comps(M, 1)
+ggsave(paste0(.FIGS, "lf_1.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 2)
+ggsave(paste0(.FIGS, "lf_2.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 3)
+ggsave(paste0(.FIGS, "lf_3.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 4)
+ggsave(paste0(.FIGS, "lf_4.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 5)
+ggsave(paste0(.FIGS, "lf_5.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 6)
+ggsave(paste0(.FIGS, "lf_6.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 7)
+ggsave(paste0(.FIGS, "lf_7.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 8)
+ggsave(paste0(.FIGS, "lf_8.png"), width = ww*2, height = hh*1.5)
+
+plot_size_comps(M, 9)
+ggsave(paste0(.FIGS, "lf_9.png"), width = ww, height = hh*0.5)
+
+plot_size_comps(M, 10)
+ggsave(paste0(.FIGS, "lf_10.png"), width = ww, height = hh*0.5)
+
+
+
 
 plot_datarange(M)
-plot_size_comps(M, 1)
-plot_size_comps(M, 2)
-plot_size_comps(M, 3)
-plot_size_comps(M, 4)
-plot_size_comps(M, 5)
-plot_size_comps(M, 6)
-plot_size_comps(M, 7)
-plot_size_comps(M, 8)
-plot_size_comps(M, 9)
-plot_size_comps(M, 10)
-plot_numbers(M, subsetby = c("1975","2014"))
