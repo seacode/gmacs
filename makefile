@@ -3,6 +3,7 @@ all:
 
 test:
 	$(MAKE) --directory=./examples/demo
+	$(MAKE) --directory=./examples/bbrkc/M1
 
 clean:
 	$(MAKE) clean --directory=./src
