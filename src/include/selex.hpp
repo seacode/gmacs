@@ -3,17 +3,17 @@
 #define SELEX_HPP
 
 #include <admodel.h>
-// #include "cstar.h"
+// #include "gsm.h"
 
 /**
  * @file selex.hpp 
  * @defgroup Selectivities
  * @author Steven Martell
- * @namespace cstar
+ * @namespace gsm
  * @date   Feb 10, 2014
  * @title Selectivity functions
- * @details Alternative selectivity functions in the cstar namespace are
- * derived from the cstar::Selex base class. 
+ * @details Alternative selectivity functions in the gsm namespace are
+ * derived from the gsm::Selex base class. 
  * 
  * The Selex class is an abstract class that contains 3 virtual methods.
  * - **Selectivity** 	Arithmatic 0-1 values of selectivity values.
@@ -26,10 +26,10 @@
  * 
  * 		// Declare a pointer to the abstract base class Selex.
  * 		// Cast the <type> of variable that the class will return.
- * 		cstar::Selex<dvector> *pSLX;
+ * 		gsm::Selex<dvector> *pSLX;
  * 		
  * 		// Instantiate a new Logistic curve selectivity with parameters p1 & p2
- * 		pSLX = new cstar::LogisticCurve<dvector,double>(p1,p2);	
+ * 		pSLX = new gsm::LogisticCurve<dvector,double>(p1,p2);	
  * 		
  * 		// Call one of the available methods in the abstract class for size bins x
  * 		sex  = pSLX -> Selectivity(x);
@@ -48,7 +48,7 @@
  * 
  */
 
-namespace cstar {
+namespace gsm {
 
 // =========================================================================================================
 // Selex: Defined Base Class for Selectivity Functions
@@ -166,17 +166,17 @@ namespace cstar {
 
 		const T Selectivity(const T &x) const
 		{
-			return cstar::plogis(x, this->GetMean(), this->GetStd());
+			return gsm::plogis(x, this->GetMean(), this->GetStd());
 		}
 
 		const T logSelectivity(const T &x) const
 		{
-			return log(cstar::plogis(x, this->GetMean(), this->GetStd()));
+			return log(gsm::plogis(x, this->GetMean(), this->GetStd()));
 		}
 
 		const T logSelexMeanOne(const T &x) const
 		{
-			T y = log(cstar::plogis(x, this->GetMean(), this->GetStd()));
+			T y = log(gsm::plogis(x, this->GetMean(), this->GetStd()));
 			y  -= log(mean(mfexp(y)));
 			return y;
 		}
@@ -214,17 +214,17 @@ namespace cstar {
 
     const T Selectivity(const T &x) const
     {
-      return cstar::plogis95<T>(x, this->GetS50(), this->GetS95());
+      return gsm::plogis95<T>(x, this->GetS50(), this->GetS95());
     }
 
     const T logSelectivity(const T &x) const
     {
-      return log(cstar::plogis95<T>(x, this->GetS50(), this->GetS95()));
+      return log(gsm::plogis95<T>(x, this->GetS50(), this->GetS95()));
     }
 
     const T logSelexMeanOne(const T &x) const
     {
-      T y = log(cstar::plogis95<T>(x, this->GetS50(), this->GetS95()));
+      T y = log(gsm::plogis95<T>(x, this->GetS50(), this->GetS95()));
       y  -= log(mean(mfexp(y)));
       return y;
     }
@@ -288,18 +288,18 @@ namespace cstar {
 		const T Selectivity(const T &x) const
 		{
 			// Call the age/size specific function
-			return cstar::coefficients(x, this->GetSelCoeffs());
+			return gsm::coefficients(x, this->GetSelCoeffs());
 		}
 
 		const T logSelectivity(const T &x) const
 		{
 			// Call the age/size specific function
-			return log(cstar::coefficients(x, this->GetSelCoeffs()));
+			return log(gsm::coefficients(x, this->GetSelCoeffs()));
 		}
 
 		const T logSelexMeanOne(const T &x) const
 		{
-			T y = log(cstar::coefficients(x, this->GetSelCoeffs()));
+			T y = log(gsm::coefficients(x, this->GetSelCoeffs()));
 			y  -= log(mean(mfexp(y)));
 			return y;
 		}
@@ -359,24 +359,24 @@ namespace cstar {
 		const T Selectivity(const T &x) const
 		{
 			// Call the age/size specific function
-			return cstar::nonparametric(x, this->GetSelparms());
+			return gsm::nonparametric(x, this->GetSelparms());
 		}
 
 		const T logSelectivity(const T &x) const
 		{
 			// Call the age/size specific function
-			return log(cstar::nonparametric(x, this->GetSelparms()));
+			return log(gsm::nonparametric(x, this->GetSelparms()));
 		}
 
 		const T logSelexMeanOne(const T &x) const
 		{
-			T y = log(cstar::nonparametric(x, this->GetSelparms()));
+			T y = log(gsm::nonparametric(x, this->GetSelparms()));
 			//y  -= log(mean(mfexp(y)));
 			return y;
 		}
 	};
 
-}//cstar namespace
+}//gsm namespace
 
 
 #endif /* SELEX_HPP */   	

@@ -1009,26 +1009,26 @@ FUNCTION calc_selectivities
 	for( k = 1; k <= nslx; k++ )
 	{   
 		block = 1;
-		cstar::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
+		gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
 		{
 			switch (slx_type(k))
 			{
 			case 1:  //coefficients
 				pv   = mfexp(log_slx_pars(k)(block));
-				pSLX[j] = new cstar::SelectivityCoefficients<dvar_vector>(pv);
+				pSLX[j] = new gsm::SelectivityCoefficients<dvar_vector>(pv);
 			break;
 
 			case 2:  //logistic
 				p1 = mfexp(log_slx_pars(k,block,1));
 				p2 = mfexp(log_slx_pars(k,block,2));
-				pSLX[j] = new cstar::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+				pSLX[j] = new gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
 			break;
 
 			case 3:  // logistic95
 				p1 = mfexp(log_slx_pars(k,block,1));
 				p2 = mfexp(log_slx_pars(k,block,2));
-				pSLX[j] = new cstar::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+				pSLX[j] = new gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
 			break;
 			}
 			block ++;
