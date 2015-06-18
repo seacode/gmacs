@@ -1,4 +1,5 @@
 html/
+docs/api/html/
 src/build/*
 src/equilibrium.obj
 src/gmacs.cpp
