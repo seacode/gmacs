@@ -1,3 +1,0 @@
-# Documentation for the model application to Bristol Bay Red King Crab
-
-This was revived from 2013 so is in very rough-draft form...
