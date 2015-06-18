@@ -4,7 +4,7 @@
 \alias{plot_ssb}
 \title{Plot predicted spawning stock biomass (ssb)}
 \usage{
-plot_ssb(M)
+plot_ssb(M, xlab = "Year", ylab = "MMB (tonnes)")
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}
@@ -13,9 +13,10 @@ plot_ssb(M)
 Plot of model estimates of spawning stock biomass
 }
 \description{
-Spawning biomass may be defined as all males or some combination of males and females
+Spawning biomass may be defined as all males or some combination of males and
+females
 }
 \author{
-SJD Martell
+SJD Martell, DN Webber
 }
 

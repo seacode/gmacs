@@ -7,17 +7,17 @@
 plot_catch(M, plot_res = FALSE)
 }
 \arguments{
-\item{plot_res}{plot residuals only (default=F)}
+\item{M}{list object created by read_admb function}
 
-\item{replist}{List object created by read_admb function}
+\item{plot_res}{plot residuals only (default = FALSE)}
 }
 \value{
-Plot of catch history (observed) and predicted values
+plot of catch history (observed) and predicted values
 }
 \description{
 Plot observed and predicted catch values
 }
 \author{
-SJD Martell
+SJD Martell, DN Webber
 }
 

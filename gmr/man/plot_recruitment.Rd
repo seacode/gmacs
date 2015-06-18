@@ -4,10 +4,15 @@
 \alias{plot_recruitment}
 \title{Plot predicted recruitment and approximate asymptotic error-bars}
 \usage{
-plot_recruitment(M)
+plot_recruitment(M, xlab = "Year",
+  ylab = "Recruitment (thousands of individuals)")
 }
 \arguments{
-\item{M}{List object created by read_admb function}
+\item{M}{list object created by read_admb function}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
 }
 \value{
 Plot of predicted recruitment
@@ -16,6 +21,6 @@ Plot of predicted recruitment
 Plot predicted recruitment and approximate asymptotic error-bars
 }
 \author{
-SJD Martell
+SJD Martell, DN Webber
 }
 

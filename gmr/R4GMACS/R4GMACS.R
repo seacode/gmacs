@@ -10,6 +10,7 @@ library(ggplot2)
 library(reshape2)
 library(dplyr)
 library(readADMB)
+library(gmr)
 
 myTheme <- theme_bw(base_size = 12) +
 	theme(
@@ -26,8 +27,8 @@ myTheme <- theme_bw(base_size = 12) +
 .PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/gmr/R4GMACS"
 .LIB      = "./LIB"
 .RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
-# .MODELDIR = c("../../examples/bbrkc/OneSex/")#,"../../examples/bbrkc/")
-.MODELDIR = c(paste0("../../examples/bbrkc/M",c(1,2,3,4),"/"))#,"../../examples/bbrkc/OneSex/")
+.MODELDIR = c("../../examples/bbrkc/OneSex/")#,"../../examples/bbrkc/")
+#.MODELDIR = c(paste0("../../examples/bbrkc/M",c(1,2,3,4),"/"))#,"../../examples/bbrkc/OneSex/")
 # .MODELDIR = c("../../examples/pirkc/")
 .THEME    = myTheme #theme_bw(base_size = 12, base_family = "")
 .FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
@@ -42,8 +43,8 @@ setwd(.PWD)
 for(nm in .RFILES) source(file.path(.LIB, nm), echo=FALSE)
 
 # READ MODEL OUTPUTS FROM .MODELDIR
-fn       <- paste0(.MODELDIR,"gmacs")
-M        <- lapply(fn,read.admb)
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb)
 names(M) <- basename(.MODELDIR)
 
 

@@ -1,14 +1,14 @@
 Package: gmr
 Title: Plotting and analysis tools for the Gmacs stock assessment framework
 Version: 1.00
-Date: 2015-05-07
+Date: 2015-06-16
     text-based ADMB output files and creating visual plots of both input data
     and fitted model results.
 Authors@R: c(person("Darcy", "Webber", role = c("aut", "cre"),
-		     email = "Darcy@quantifish.co.nz"),
-	      person("Steve", "Martell", role = "aut"),
-	      person("Jim", "Ianelli", role = "ctb",
-		     email = "jim.ianelli@noaa.gov"))
+    email = "Darcy@quantifish.co.nz"),
+    person("Steve", "Martell", role = "aut"),
+    person("Jim", "Ianelli", role = "ctb",
+    email = "jim.ianelli@noaa.gov"))
 Author: Darcy Webber [aut, cre], Steve Martell [aut],  Jim Ianelli [ctb]
 Maintainer: D Webber <Joe.Developer@some.domain.net>
 Depends:

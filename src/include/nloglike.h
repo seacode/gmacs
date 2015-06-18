@@ -95,13 +95,11 @@ namespace acl
 		return R;
 	}
   
-
 	
 	/**
-	 * @brief Class for multinomial negative loglikelihood.
+	 * @brief Class for multinomial negative log-likelihood.
 	 * @details This is a derived class which inherits the virtual methods
 	 * in negativeLogLikelihood.
-	 * 
 	 */
 	class multinomial: public negativeLogLikelihood
 	{
@@ -160,6 +158,11 @@ namespace acl
 	};
 
 
+	/**
+	 * @brief Class for robust multinomial negative log-likelihood.
+	 * @details This is a derived class which inherits the virtual methods
+	 * in negativeLogLikelihood.
+	 */
 	class robust_multi: public negativeLogLikelihood
 	{
 	private:
@@ -220,6 +223,4 @@ namespace acl
 } // end of acl namespace
 
 
-
 #endif
-

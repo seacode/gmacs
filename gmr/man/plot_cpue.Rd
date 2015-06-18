@@ -4,18 +4,24 @@
 \alias{plot_cpue}
 \title{Plot cpue or other indices}
 \usage{
-plot_cpue(replist)
+plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE")
 }
 \arguments{
-\item{replist}{List object created by read_admb function}
+\item{M}{list object created by read_admb function}
+
+\item{subsetby}{the fleet to subset the data to}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
 }
 \value{
-Plot of all observed and predicted incices
+plot of all observed and predicted incices
 }
 \description{
 Plot cpue or other indices
 }
 \author{
-SJD Martell
+SJD Martell, DN Webber
 }
 

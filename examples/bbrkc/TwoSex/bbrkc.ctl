@@ -40,8 +40,8 @@
   0.30       0.0      30.0         -3       0    0.0     3.0         # gscale
   140.      65.0     165.0          4       0    0.0     3.0         # molt_mu males or combined
   159.      65.0     165.0         -2       0    0.0     3.0         # molt_mu
-   0.071       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
-   0.1      0.0       1.0         -3       0    0.0     3.0         # molt_cv
+ 0.071       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
+ 0.1         0.0       1.0         -3       0    0.0     3.0         # molt_cv
 # ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -62,14 +62,14 @@
 ## Index  type  mu   sd  dep  nodes  nodes mirror lam1  lam2  lam3 | block  block       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
-   1      3     95  140  0    1      1     3      12.5  12.5  12.5   1975   2014
+   1      3     95  140  0    1      1    -3      12.5  12.5  12.5   1975   2014
    2      3    110  150  0    1      1    -2      12.5  12.5  12.5   1975   2014 
    3      2     90   10  0    1      1     4      12.5  12.5  12.5   1975   1981
    3      2     90   10  0    1      1     4      12.5  12.5  12.5   1982   2014
    4      2     70   10  0    1      1    -3      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
-  -1      2    135    2  0    1      1    -2      12.5  12.5  12.5   1975   2014
+  -1      2    135  135  0    1      1    -2      12.5  12.5  12.5   1975   2014
   -2      2     95   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
   -3      2     90   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
   -4      2     90   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
@@ -77,15 +77,15 @@
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
-##  TYPE: 0 = UNINFORMATIVE, 1 - NORMAL (log-space), 2 = time-varying (nyi)
+##  TYPE: 0 = UNINFORMATIVE, 1 = NORMAL (log-space), 2 = time-varying (nyi)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SURVEYS/INDICES ONLY
 ## NMFS  BSFRF
-## TYPE     Mean_q    SD_q       CPUE_Lambda
+## TYPE     Mean_q    SD_q      CPUE_Lambda
      1      0.896     0.03      1.0
      0      0.001     0.01      1.0
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-
+4
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -142,7 +142,7 @@
   2014    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
   1       # Gear index for SPR calculations (i.e., directed fishery).
-  1       # Lambda (proportion of mature male biomass for SPR reference points.)
+  1       # Lambda (proportion of mature male biomass for SPR reference points).
   1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
   0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ## EOF

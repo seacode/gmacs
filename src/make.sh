@@ -5,6 +5,6 @@ admb -g gmacs.tpl lib/tailcompression.cpp lib/nloglike.cpp lib/spr.cpp lib/multi
 cp gmacs build/debug/
 admb -f gmacs.tpl lib/tailcompression.cpp lib/nloglike.cpp lib/spr.cpp lib/multinomial.cpp lib/robust_multi.cpp lib/equilibrium.cpp
 cp gmacs build/release/
-rm gmacs gmacs.obj
+rm gmacs gmacs.obj gmacs.cpp gmacs.htp
 rm lib/*.obj
 sudo ln -s ~/gmacs/src/build/release/gmacs /usr/bin/gmacs

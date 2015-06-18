@@ -14,6 +14,7 @@
 #' @param  layout A matrix specifying the layout. If present, 'cols' is ignored.
 #' @return page with figures 
 #' @export
+#' 
 plot_multiple <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   require(grid)
   # Make a list from the ... arguments and plotlist

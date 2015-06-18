@@ -6,7 +6,7 @@
 \alias{gmr-package}
 \title{gmr: R code for Gmacs}
 \description{
-gmr is a set of tools for analysing data and outputs
-related to Gmacs stock assessment models.
+gmr is a set of tools for analysing data and outputs related to Gmacs stock
+assessment models.
 }
 

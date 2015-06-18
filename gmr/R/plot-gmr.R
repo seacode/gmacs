@@ -6,6 +6,7 @@
 #' @return All gmr plots.
 #' @author DN Webber
 #' @export
+#' 
 plot_gmr <- function(M, plot_res = FALSE, target_dir = "", gmr_options = .gmr_options)
 {
     wkey <- 20
