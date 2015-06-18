@@ -2512,125 +2512,55 @@ REPORT_SECTION
 	dvector mmb = value(calc_mmb());
 	REPORT(mmb);
 
-	if(last_phase())
-	{
-		int refyear = nyr-1;
-		calc_spr_reference_points(refyear,spr_fleet);
-		//calc_ofl(refyear,spr_fspr);
-		REPORT(spr_fspr);
-		REPORT(spr_bspr);
-		REPORT(spr_rbar);
-		REPORT(spr_fofl);
-		REPORT(spr_cofl);
-		REPORT(spr_ssbo);
+// =========================================================================================================
+// TEMPORARY FUNCTIONS TO BE MOVED TO CSTAR IF REQUIRED:
+// ---------------------------------------------------------------------------------------------------------
+ /** Returns mean length for variable objects (model estimates) */
+FUNCTION double mn_length(const dvector& pobs);
+  double mobs = (pobs*mean_length);
+  return mobs;
 
-		dvar_matrix mean_size(1,nsex,1,nclass);
-		///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
-		dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
-		for (int isex=1;isex<=nsex;isex++)
-		{
-			int iage=1;
-			// Set the initial size frequency
-			growth_matrix(isex,iage) = growth_transition(isex,iage);
-			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
-			for (iage=2;iage<=nclass;iage++)
-			{
-				growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*growth_transition(isex);
-				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
-			}
-		}
-		REPORT(growth_matrix);
-		REPORT(mean_size);
-		for(int ii = 1; ii <= nSizeComps; ii++)
-		{
-			// Set final sample-size for composition data for comparisons
-			size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
-		}
-		REPORT(size_comp_sample_size);
-	}
-	// Print total numbers at length
-	dvar_matrix N_len(syr,nyr+1,1,nclass);
-	dvar_matrix N_mm(syr,nyr+1,1,nclass);
-	dvar_matrix N_males(syr,nyr+1,1,nclass);
-	dvar_matrix N_males_old(syr,nyr+1,1,nclass);
-	N_len.initialize();
-	N_males.initialize();
-	N_mm.initialize();
-	N_males_old.initialize();
-	for (int i=syr;i<=nyr+1;i++)
-	  for (int j=1;j<=nclass;j++)
-	    for (int k=1;k<=n_grp;k++)
-	    {	
-				if (isex(k)==1)
-	    	{
-	    		N_males(i,j) += d3_N(k,i,j);
-					if (ishell(k)==2)
-		    		N_males_old(i,j) += d3_N(k,i,j);
-					if (imature(k)==1)
-		    		N_mm(i,j) += d3_N(k,i,j);
-	    	}
-	    	N_len(i,j) += d3_N(k,i,j);
-	    }
+FUNCTION double mn_length(const dvar_vector& pobs)
+  double mobs = value(pobs*mean_length);
+  return mobs;
 
-	
-	REPORT(N_len);
-	REPORT(N_mm);
-	REPORT(N_males);
-	REPORT(N_males_old);
-	REPORT(molt_increment);
-	REPORT(dPreMoltSize);
-	REPORT(iMoltIncSex);
-	REPORT(dMoltInc);
-	if(bUseEmpiricalGrowth)
-	{
-		dvector pMoltInc = dMoltInc;
-		REPORT(pMoltInc);
-	}
-	else
-	{
-		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
-		REPORT(pMoltInc);
-	}
-	REPORT(survey_q);
-	
-	// Growth and size transition.
-	REPORT(P);
-	REPORT(growth_transition);
-	d3_array tG(1,nsex,1,nclass,1,nclass);
-	d3_array tS(1,nsex,1,nclass,1,nclass);
+// ---------------------------------------------------------------------------------------------------------
+ /** Returns standard deviation of length */
+FUNCTION double sd_length(const dvector& pobs);
+  double mobs = (pobs*length);
+  double stmp = sqrt((elem_prod(mean_length,mean_length)*pobs) - mobs*mobs);
+  return stmp;
 
-	for(int h = 1; h<=nsex; h++)
-	{
-		tG(h)=trans(value(growth_transition(h)));
-		tS(h)=trans(value(P(h) * growth_transition(h)));
-		for(int l = 1; l <= nclass; ++l)
-		{
-			tS(h)(l,l) += value(1.0-P(h)(l,l));
-		}
-	}
-	REPORT(tG);
-	REPORT(tS);
-	dmatrix size_transition_M(1,nclass,1,nclass);
-	dmatrix size_transition_F(1,nclass,1,nclass);
+// ---------------------------------------------------------------------------------------------------------
+ /** Returns normalized residuals of composition data given sample size. */
+FUNCTION dvector norm_res( dvector& pred, dvector& obs,double m);
+  RETURN_ARRAYS_INCREMENT();
+  pred += incd;
+  obs  += incd;
+  dvector nr(1,size_count(obs));
+  nr = elem_div(obs-pred,sqrt(elem_prod(pred,(1.-pred))/m));
+  RETURN_ARRAYS_DECREMENT();
+  return nr;
 
-	// For Jim's r-script.
-	size_transition_M = value(P(1) * growth_transition(1));
-	for (int i=1;i<=nclass;i++)
-	{
-	  size_transition_M(i,i) += value(1.-P(1,i,i));
-	}
+// ---------------------------------------------------------------------------------------------------------
+ /** Computes standard deviation of normalized residuals given observed and predicted proportions. */
+FUNCTION double sd_norm_res(const dvar_vector& pred, dvector& obs,double m);
+  RETURN_ARRAYS_INCREMENT();
+  double sdnr;
+  dvector pp = value(pred)+ incd;
+  sdnr = std_dev( norm_res(pp,obs,m) );
+  RETURN_ARRAYS_DECREMENT();
+  return sdnr;
 
-	REPORT(size_transition_M);
-	
-	if (nsex==2)
-	{
-	  	size_transition_F = value(P(2) * growth_transition(2));
-  		for (int i=1;i<=nclass;i++)
-		{
-			    size_transition_M(i,i) += value(1.-P(2,i,i));
-		}
-		REPORT(size_transition_F);
-	}
+// ---------------------------------------------------------------------------------------------------------
+ /** Computes effective sample size. */
+FUNCTION double eff_N( dvector& pobs,  dvar_vector& phat);
+  pobs += incd;
+  phat += incd;
+  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
+  double vtmp;
+  vtmp = value(norm2(rtmp)/size_count(rtmp));
+  return 1./vtmp;
 
 
 
