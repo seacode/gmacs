@@ -1,0 +1,35 @@
+/**
+ * @mainpage GMACS
+ * 
+ * \a GMACS is a size-structured assessment model for use with crustacean species that
+ * undergo a molting process.
+ * 
+ * You can find more information in the following sections:
+ * - \subpage p_about
+ * - \subpage p_install
+ * 
+ * \tableofcontents
+ * 
+ * 
+ */
+
+ //-----------------------------------------------------------------------------------//
+ //	ABOUT PAGE
+ //-----------------------------------------------------------------------------------//
+ /**
+	\page p_about  About
+	I'll tell you more about it when I have time to tell you about it.
+*/
+ //-----------------------------------------------------------------------------------//
+ //	INSTALL PAGE
+ //-----------------------------------------------------------------------------------//
+ /**
+  * \page p_install Install instructions
+  * 
+  * There are two options for installing Gmacs:
+  *  -# clone the githup repository
+  *  -# download the source code
+  * 
+  * 
+  */
+ 

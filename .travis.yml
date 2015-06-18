@@ -1,0 +1,19 @@
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+
+script: make clean all test
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: true
+
+env: PROG=
+
+os:
+  - linux
