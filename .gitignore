@@ -14,25 +14,27 @@ src/robust_multi.obj
 src/spr.obj
 src/tailcompression.obj
 
+# R files
 .Rproj.user
 *.Rout
 *.R~
 .RData
 .Rhistory
 
-examples/*.cov
-examples/*.dep
-examples/*.hes
-examples/*.rep
-examples/*.log
-examples/*.b0*
-examples/*.bar
-examples/*.cor
-examples/*.eva
-examples/*.p0*
-examples/*.par
-examples/*.r0*
-examples/*.std
-examples/*_in.ctl
-examples/*_in.dat
+# ADMB standard output files
+*.cov
+*.dep
+*.hes
+*.rep
+*.log
+*.b0*
+*.bar
+*.cor
+*.eva
+*.p0*
+*.par
+*.r0*
+*.std
+*_in.ctl
+*_in.dat
 variance
