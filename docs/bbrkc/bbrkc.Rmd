@@ -104,7 +104,7 @@ and -independent indices of abundance. Gmacs is coded using AD Model Builder.
 
 Crab stocks of Alaska are managed by the North Pacific Fisheries Management
 Council ([NPFMC](http://npfmc.org)). Some stocks are assessed with integrated
-size-structured assessment models of the form described by
+size-structured assessment models of the form described in
 @punt_review_2013. Currenlty, each stock is assessed using a stock-specific
 assessment model (e.g. @zheng_bristol_2014). The Gmacs project aims to provide
 software that will allow each stock to be assessed inside a single modelling
@@ -114,23 +114,19 @@ Gmacs is used here to develop an assessment model for the Bristol Bay Red King
 Crab (BBRKC) stock. This document serves as a test-case for the development of
 Gmacs. The example assessment is intended to match closely with a model scenario
 presented to the Spring 2014 BSAI Crab Plan Team Meeting by @zheng_bristol_2014.
-
-Together, the Gmacs-BBRKC model and this report serve as the first example of
-what should follow for other crab stocks: that is, direct model comparisons to
-(1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in
-practice to closely match the outputs of existing ADFG stock assessment models.
-
 The following summarizes the outcome of some comparisons between the existing
 BBRKC stock assessment model [@zheng_bristol_2014] and an emulated version using
-the gmacs platform.  Since the BBRKC model from @zheng_bristol_2014 treats
-recruits by sex along with sex-specific natural mortality and fishing mortality,
-results from the male components are compared with results from a Gmacs model
-implementation tuned to male-only data.
+the Gmacs platform.
 
 An important component of the Gmacs framework is the provision of software for
 plotting Gmacs model outputs. In what follows, we demonstrate the use of the
 `gmr` package to process the output of the Gmacs-BBRKC model and produce plots
 that can be used in assessment reports.
+
+Together, the Gmacs-BBRKC model and this report serve as the first example of
+what should follow for other crab stocks: that is, direct model comparisons to
+(1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in
+practice to closely match the outputs of existing ADFG stock assessment models.
 
 
 ## Summary of analytical approach
@@ -190,6 +186,11 @@ The data and model specifications used in the Gmacs-BBRKC model are very similar
 to those used in the '4nb' scenario developed by @zheng_bristol_2014, herein
 referred to as the ADFG-BBRKC model.
 
+Since the BBRKC model from @zheng_bristol_2014 treats recruits by sex along with
+sex-specific natural mortality and fishing mortality, results from the male
+components are compared with results from a Gmacs model implementation tuned to
+male-only data.
+
 Parameter Number of estimated parameters Value Natural mortality 1 Males
 (1980-84) 1 Females (1980-84) 1 Females (1976-79; 1984-1993) 0.18 yr-1 Other
 years
@@ -216,16 +217,18 @@ NMFS Slope and intercept (1975-81) by sex 4 NMFS Slope and intercept (1982+) by 
 Pre-specified BSFRF CV 1
 
 
-## Population Dynamics
+# Population Dynamics
 
 Comparison tables of two different model approaches could be done by
 
-Specification       | Parameter | ADFG Value | Gmacs Value | Comments
-------------------  | --------- | ---------- | ----------- | --------
-No. sexes           | M         | 2          | 2           | 
-No. shell condition | M         | 2          | 2           | 
-No. maturity        | M         | 2          | 1           | 
-No. size-classes    | M         | 20         | 20          | 
+Specification       | Parameter | ADFG Value | Gmacs OneSex | Gmacs TwoSex |
+------------------- | --------- | ---------- | ------------ | ------------ |
+Start year          | $t=0$     | 1975       | 1953         | 1975         |
+End year            | $t=T$     | 2014       | 2014         | 2014         |
+No. sexes           | $s$       | 2          | 1            | 2            |
+No. shell condition | $\nu$     | 2          | 2            | 2            |
+No. maturity        | $m$       | 2          | 1            | 1            |
+No. size-classes    | $\ell$    | 20         | 20           | 20           |
 
 
 Life History Trait  | Parameter | ADFG Value | Gmacs Value | Comments
@@ -233,7 +236,7 @@ Life History Trait  | Parameter | ADFG Value | Gmacs Value | Comments
 Natural Mortality   | M         | Fixed      | Fixed       | M is fixed in both models
 
 
-## Fishery Dynamics
+# Fishery Dynamics
 
 Specification       | Parameter | ADFG Value | Gmacs Value | Comments
 ------------------  | --------- | ---------- | ----------- | --------
@@ -262,7 +265,7 @@ No. Fleets          |           | 5          | 5           |
 
 
 
-# Model comparisons
+# Comparison of model results
 
 The following plots summarize plots made using `gmr` based on output from
 @zheng_bristol_2014 and Gmacs. Two Gmacs models are provided, the OneSex model
@@ -275,7 +278,7 @@ The model fit to survey biomass for males was better for the @zheng_bristol_2014
 model (at least visually) than for either of the current implementations of
 Gmacs (Figure \ref{fig:survey_biomass}).
 
-```{r survey_biomass, fig.cap = "Model fits to survey biomass.\\label{fig:survey_biomass}"}
+```{r survey_biomass, fig.cap = "Model fits to NMFS trawl survey biomass.\\label{fig:survey_biomass}"}
 #plot_cpue(M)
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass")
 ```
@@ -448,7 +451,7 @@ The spawning stock biomass of mature males, termed the mature male biomass
 ($\mathit{MMB}_t$), also differs a lot bewteen the two models (Figure
 \ref{fig:ssb}).
 
-```{r spawning_stock_biomass, fig.cap = "Mature male biomass.\\label{fig:ssb}"}
+```{r spawning_stock_biomass, fig.cap = "Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.\\label{fig:ssb}"}
 plot_ssb(M)
 ```
 
