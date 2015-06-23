@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/seacode/gmacs.svg?branch=issue77)](https://travis-ci.org/seacode/gmacs)
 
-<!-- Gmacs is currently under development. A simple working release version of Gmacs is available via `Tag V1.0` and has been tested using the BBRKC model available in the examples folder. The next major release of Gmacs is planned for September 2014. -->
+A generalized size-structured stock assessment modelling framework. Gmacs includes:
 
-## Table of contents
-- [About Gmacs](#about-gmacs)
-- [Gmacs R Package](#r-package-for-gmacs)
-- [Development](#development)
+  * The Gmacs model
+  * An R package for working with Gmacs output files
+  * Documentation
+
 
 ## About Gmacs
 
@@ -46,8 +46,6 @@ A simulation-estimation procedure can be performed with Gmacs, by using the
 `gmacs -sim` flag. For example, try `gmacs -sim 123`, where 123 is a random
 number seed.
 
-## Development
-
-This software is under development and is not yet intended for general use. If
-you would like to contribute to the project, please see the [Developers
-Guide](https://github.com/seacode/gmacs/wiki/5.-Developers).
+## Resources
+  * User Manual: https://github.com/seacode/gmacs/wiki
+  * API: http://seacode.github.io/gmacs/
