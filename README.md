@@ -4,13 +4,13 @@
 
 A generalized size-structured stock assessment modelling framework. Gmacs includes:
 
-  * The Gmacs model
+  * The [Gmacs](https://github.com/seacode/gmacs/tree/develop/src) model
   * A simulation model
-  * An R package for working with Gmacs output files
-  * A Wiki
-  * Other documentation
+  * An R [package](https://github.com/seacode/gmacs/tree/develop/gmr) for working with Gmacs output files
+  * A [Wiki](https://github.com/seacode/gmacs/wiki)
+  * Other [documentation](https://github.com/seacode/gmacs/tree/develop/docs)
 
-The Wiki is the best place to begin for those new to Gmacs.
+The [Wiki](https://github.com/seacode/gmacs/wiki) is the best place to begin for those new to Gmacs.
 
 
 ### Resources
