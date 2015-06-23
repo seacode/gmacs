@@ -10,14 +10,13 @@ A generalized size-structured stock assessment modelling framework. Gmacs includ
   * Documentation
 
 ### Resources
-  * User Manual: https://github.com/seacode/gmacs/wiki
-  * API: http://seacode.github.io/gmacs/
+  * **User Manual**: https://github.com/seacode/gmacs/wiki
+  * **API**: http://seacode.github.io/gmacs/
 
 
-## About Gmacs
 
-**Gmacs** is a generalized size-structured stock assessment modelling
-  framework. The framework is designed with similar flexibility to that provided
+
+The framework is designed with similar flexibility to that provided
   by age-structured stock assessment modelling frameworks like Stock Synthesis
   and [CASAL](https://www.niwa.co.nz/fisheries/tools-resources/casal). Gmacs can
   fit to a wide-variety of data for single sex or sex-specific population
