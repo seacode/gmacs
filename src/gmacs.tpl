@@ -2353,7 +2353,7 @@ FUNCTION calc_objective_function
 	// 3) Penalty to constrain M in random walk
 	if( active(m_dev) )
 	{
-			nlogPenalty(3) = dnorm(m_dev,m_stdev);
+		nlogPenalty(3) = dnorm(m_dev,m_stdev);
 	}
 
 	// 4 Penalty on recruitment devs.
@@ -2561,7 +2561,7 @@ REPORT_SECTION
 	  for (int j=1;j<=nclass;j++)
 	    for (int k=1;k<=n_grp;k++)
 	    {	
-				if (isex(k)==1)
+	    	if (isex(k)==1)
 	    	{
 	    		N_males(i,j) += d3_N(k,i,j);
 					if (ishell(k)==2)

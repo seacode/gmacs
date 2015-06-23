@@ -6,7 +6,7 @@
 	#include "include\nloglike.h"
 #endif
 
-	
+
 
 /**
  * @brief multinomial desity function with estimated effective sample size.
@@ -29,8 +29,7 @@ const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
 		ad_exit(1);
 	}
 
-
-	dvar_vector vn  = mfexp(log_vn);
+	dvar_vector vn = mfexp(log_vn);
 	dvariable ff = 0;
 	int r1 = o.rowmin();
 	int r2 = o.rowmax();
@@ -48,7 +47,6 @@ const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
 		}
 		ff -= sobs * log(TINY + p(i));
 	}
-
 	return ff;
 }
 
