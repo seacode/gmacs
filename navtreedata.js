@@ -3,7 +3,7 @@ var NAVTREE =
   [ "GMACS", "index.html", [
     [ "About", "dd/d8e/p_about.html", null ],
     [ "Install instructions", "df/df7/p_install.html", null ],
-    [ "Modules", "modules.html", "modules" ],
+    [ "SECTION", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -11,14 +11,12 @@ var NAVTREE =
         [ "Functions", "namespacemembers_func.html", null ]
       ] ]
     ] ],
-    [ "Classes", null, [
-      [ "Class List", "annotated.html", "annotated" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
-      ] ]
+    [ "Class List", "annotated.html", "annotated" ],
+    [ "Class Index", "classes.html", null ],
+    [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
+    [ "Class Members", "functions.html", [
+      [ "All", "functions.html", null ],
+      [ "Functions", "functions_func.html", null ]
     ] ],
     [ "Files", null, [
       [ "File List", "files.html", "files" ],

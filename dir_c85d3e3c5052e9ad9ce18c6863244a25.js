@@ -1,5 +1,6 @@
 var dir_c85d3e3c5052e9ad9ce18c6863244a25 =
 [
+    [ "dirichlet.cpp", "d0/de4/dirichlet_8cpp_source.html", null ],
     [ "equilibrium.cpp", "d1/d92/equilibrium_8cpp.html", "d1/d92/equilibrium_8cpp" ],
     [ "moltIncrement.cpp", "d2/db6/molt_increment_8cpp_source.html", null ],
     [ "multinomial.cpp", "de/d44/lib_2multinomial_8cpp_source.html", null ],

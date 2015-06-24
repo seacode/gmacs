@@ -55,9 +55,8 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     <ul class="tablist">
       <li><a href="../../index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="../../pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="../../modules.html"><span>Modules</span></a></li>
+      <li><a href="../../modules.html"><span>SECTION</span></a></li>
       <li><a href="../../namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="../../annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="../../files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -128,8 +127,8 @@ $(document).ready(function(){initNavTree('d6/d53/robust__multi_8cpp_source.html'
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="../../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51">   20</a></span>&#160;<span class="keyword">const</span> dvariable <a class="code" href="../../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51">acl::robust_multi::pdf</a>(<span class="keyword">const</span> dmatrix&amp; O, </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                                 <span class="keyword">const</span> dvar_matrix&amp; P,</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                                 <span class="keyword">const</span> dvar_vector&amp; lnN)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                       <span class="keyword">const</span> dvar_matrix&amp; P,</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                       <span class="keyword">const</span> dvar_vector&amp; lnN)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword"> </span>{  </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordflow">if</span>( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    {</div>
@@ -160,23 +159,24 @@ $(document).ready(function(){initNavTree('d6/d53/robust__multi_8cpp_source.html'
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> nll;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">const</span> dmatrix acl::robust_multi::pearson_residuals(<span class="keyword">const</span> dmatrix&amp; O,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                                                <span class="keyword">const</span> dvar_matrix P,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                                                <span class="keyword">const</span> dvar_vector&amp; log_vn)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    dvector vn = value(mfexp(log_vn));</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    dmatrix res = O - value(P);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">const</span> dmatrix acl::robust_multi::pearson_residuals(<span class="keyword">const</span> dmatrix&amp; O,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                                                <span class="keyword">const</span> dvar_matrix P,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                                                <span class="keyword">const</span> dvar_vector&amp; log_vn)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    dvector vn = value(mfexp(log_vn));</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    dmatrix res = O - value(P);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = O.rowmin(); i &lt;= O.rowmax(); i++ )</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        dvector o   = O(i) + TINY;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        dvector p   = value(P(i)) + TINY;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        dvector var = elem_prod(o,1.0-o) / vn(i);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        res(i)      = elem_div(o - p,sqrt(var));</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> res;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = O.rowmin(); i &lt;= O.rowmax(); i++ )</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        dvector o   = O(i) + TINY;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        dvector p   = value(P(i)) + TINY;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        dvector var = elem_prod(o,1.0-o) / vn(i);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        res(i)      = elem_div(o - p,sqrt(var));</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
 <div class="ttc" id="classacl_1_1robust__multi_html_a534457998bcf849b4b9395a704214c51"><div class="ttname"><a href="../../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51">acl::robust_multi::pdf</a></div><div class="ttdeci">const dvariable pdf(const dmatrix &amp;O, const dvar_matrix &amp;P, const dvar_vector &amp;lnN) const </div><div class="ttdoc">robust multinomial desity function with estimated effective sample size. </div><div class="ttdef"><b>Definition:</b> <a href="../../d6/d53/robust__multi_8cpp_source.html#l00020">robust_multi.cpp:20</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -184,7 +184,7 @@ $(document).ready(function(){initNavTree('d6/d53/robust__multi_8cpp_source.html'
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_c85d3e3c5052e9ad9ce18c6863244a25.html">lib</a></li><li class="navelem"><b>robust_multi.cpp</b></li>
-    <li class="footer">Generated on Mon Jun 22 2015 23:22:16 for GMACS by
+    <li class="footer">Generated on Wed Jun 24 2015 16:34:37 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>
