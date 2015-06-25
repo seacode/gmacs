@@ -1,4 +1,6 @@
 html/
+docs/api/html/
+
 src/build/*
 src/equilibrium.obj
 src/gmacs.cpp
@@ -11,8 +13,33 @@ src/nloglike.obj
 src/robust_multi.obj
 src/spr.obj
 src/tailcompression.obj
+
+# Latex files
+*.aux
+*.fdb_latexmk
+*.fls
+
+# R files
 .Rproj.user
 *.Rout
 *.R~
 .RData
 .Rhistory
+
+# ADMB standard output files
+*.cov
+*.dep
+*.hes
+*.rep
+*.log
+*.b0*
+*.bar
+*.cor
+*.eva
+*.p0*
+*.par
+*.r0*
+*.std
+*_in.ctl
+*_in.dat
+variance

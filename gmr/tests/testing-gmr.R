@@ -44,7 +44,7 @@ plot_size_comps(M, 5)
 plot_size_comps(M, 6)
 plot_selectivity(M)
 plot_size_transition(M)
-plot_growth_inc(M[[1]])
+plot_growth_inc(M)
 
 
 # ----------------------------------------------------------------------------- #

@@ -18,8 +18,8 @@
  * @return negative loglikelihood.
  */
 const dvariable acl::robust_multi::pdf(const dmatrix& O, 
-                                 const dvar_matrix& P,
- 								 const dvar_vector& lnN) const
+				       const dvar_matrix& P,
+				       const dvar_vector& lnN) const
  {	
 	if( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )
 	{
@@ -40,15 +40,16 @@ const dvariable acl::robust_multi::pdf(const dmatrix& O,
 		o /= sum(o);
 		p /= sum(p);
 
-    	dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
-    	dvar_vector l  =  elem_div(square(p - o), v );
-    	nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
-    	nll += 0.5 * sum(log(v));
+		dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
+		dvar_vector l  =  elem_div(square(p - o), v );
+		nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
+		nll += 0.5 * sum(log(v));
 
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return nll;
 }
+
 
 const dmatrix acl::robust_multi::pearson_residuals(const dmatrix& O,
                                 				const dvar_matrix P,

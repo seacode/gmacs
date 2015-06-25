@@ -1,9 +1,9 @@
 /// ==================================================================================== //
 //   Gmacs: A generalized size-structured stock assessment modeling framework.
 //
-//   Authors: Athol Whitten and Jim Ianelli
-//            University of Washington, Seattle
-//            and Alaska Fisheries Science Centre, Seattle
+//   Authors: gmacs development team at the
+//            Alaska Fisheries Science Centre, Seattle
+//            and the University of Washington
 //
 //   Info: https://github.com/seacode/gmacs Copyright (C) 2014. All rights reserved.
 //   
@@ -995,7 +995,6 @@ FUNCTION initialize_model_parameters
 	 * 	
 	 * 	 Need to deprecate the abstract class for selectivity, 7X slower. 
 	 * 	 
-	 * 	APRIL 28, 15, Finally fixed DF_dflog error
 	 */
 FUNCTION calc_selectivities
 	int h,i,j,k;
@@ -1182,11 +1181,9 @@ FUNCTION calc_growth_increments
 		}
 	}
 
-
-
 	/**
 	 * \brief Calclate the size transtion matrix.
-	 * \Authors Steven Martell
+	 * \Authors Team
 	 * \details Calculates the size transition matrix for each sex based on
 	 * growth increments, which is a linear function of the size interval, and
 	 * the scale parameter for the gamma distribution.  This function does the 
@@ -1198,24 +1195,8 @@ FUNCTION calc_growth_increments
 	 * size l to size ll is based on the vector molt_increment and the 
 	 * scale parameter. In all there are three parameters that define the size
 	 * transition matrix (alpha, beta, scale) for each sex.
-	 * 
-	 * Modified Dec 11, 2014.  Diagonal of the matrix now represents probability
-	 * of not molting, and upper triangle is the probability of growing to the next
-	 * size interval given you molted. 
-	 * 
-	 * Dec 20.  Undid the above modification after correspondence with Jack Turnock.
-	 * He rightly pointed out that it is possible to molt and remain in the same bin
-	 * interval (if the intervals are sufficiently large). 
-	 * 
-	 * Jan 11, 2015. Checked cumd_gamma function in ADMB with R.  This is the same
-	 * function as pgamma with the rate parameter set at its default value 1.0.  The 
-	 * mean value of the function is the second argument of cumd_gamma, and the vector 
-	 * of quantiles is the first argument.  Both arguments are scaled by gscale.
-	 * 
-	 * Jan 20, 2015.  Jim reported that cumd_gamma was not converging. Required large 
-	 * number of iterations to solve the cumd_gamma function in gser in the ADMB libs.
-	 * Soln, either increase the MAXIT in gser, or rescale the problem to the maximum
-	 * of the size breaks.  The latter seems to work.
+   *
+   * Issue 112 details some of evolution of code development here
 	 */
 FUNCTION calc_growth_transition
 	//cout<<"Start of calc_growth_transition"<<endl;
@@ -1249,16 +1230,7 @@ FUNCTION calc_growth_transition
 			At(l)(l,nclass)  = At(l)(l,nclass) / sum(At(l));
 		}
 		growth_transition(h) = At;
-		
-
-		
 	}
-	//COUT(cumd_gamma(257.812,258.714));
-	//exit(1);
-	// cout<<"End of calc_growth_transition"<<endl;
-	
-	
-
 
 	/**
 	 * @brief Calculate natural mortality array
@@ -1404,9 +1376,6 @@ FUNCTION calc_recruitment_size_distribution
 	}
 	rec_sdd  = first_difference(x);
 	rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
-	
-
-
 
 	/**
 	 * @brief initialiaze populations numbers-at-length in syr
@@ -1547,7 +1516,7 @@ FUNCTION calc_initial_numbers_at_length
 
 	/**
 	 * @brief Update numbers-at-length
-	 * @author Steve Martell
+	 * @author Team
 	 * @details  Numbers at length are propagated each year for each sex based on the 
 	 * size transition matrix and a vector of size-specifc survival rates. The columns
 	 * of the size-transition matrix are multiplied by the size-specific survival rate
@@ -2353,7 +2322,7 @@ FUNCTION calc_objective_function
 	// 3) Penalty to constrain M in random walk
 	if( active(m_dev) )
 	{
-			nlogPenalty(3) = dnorm(m_dev,m_stdev);
+		nlogPenalty(3) = dnorm(m_dev,m_stdev);
 	}
 
 	// 4 Penalty on recruitment devs.
@@ -2561,7 +2530,7 @@ REPORT_SECTION
 	  for (int j=1;j<=nclass;j++)
 	    for (int k=1;k<=n_grp;k++)
 	    {	
-				if (isex(k)==1)
+	    	if (isex(k)==1)
 	    	{
 	    		N_males(i,j) += d3_N(k,i,j);
 					if (ishell(k)==2)
@@ -2768,11 +2737,6 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,mmb(nyr));
 	spr_cofl = ptrSPR->get_cofl(_N);
 
-	
-
-
-	
-	
 	
 
 RUNTIME_SECTION
