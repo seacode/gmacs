@@ -1,5 +1,5 @@
-require(devtools)
-devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
+#require(devtools)
+#devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
 source("reload.R")
 
@@ -27,6 +27,9 @@ M[[1]]$fit$nlogl
 M[[1]]$nloglike
 M[[1]]$nlogPenalty
 M[[1]]$priorDensity
+
+fn <- paste0(.MODELDIR, "bbrkc_ss.ctl")
+read_ctl(fn)
 
 plot_datarange(M)
 plot_catch(M) # broken

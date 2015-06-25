@@ -18,6 +18,12 @@ src/tailcompression.obj
 *.aux
 *.fdb_latexmk
 *.fls
+*.out
+*.nav
+*.toc
+*.snm
+*.tex.bak
+auto/
 
 # R files
 .Rproj.user

@@ -38,12 +38,12 @@
 #' Plot natural mortality
 #'
 #' @param M list object created by read_admb function
-#' @param plt_surface include a panel with surface over size-time 
-#' @return Plot natural mortality over time (and size)
+#' @param plt_knots if the knots should be plotted or not
+#' @return plot of natural mortality
 #' @author J Ianelli, SJD Martell, DN Webber
 #' @export
 #' 
-plot_natural_mortality <- function(M, plt_surface = FALSE)
+plot_natural_mortality <- function(M, plt_knots = TRUE)
 {
     mdf <- .get_M_df(M)
     if (length(M) == 1)
@@ -58,19 +58,15 @@ plot_natural_mortality <- function(M, plt_surface = FALSE)
     } else {
         p <- p + geom_line(aes(linetype = Sex))
     }
+    if (plt_knots)
+    {
+        knots <- c(1976, 1980, 1985, 1994)
+        mdf$Knot <- NA
+        mdf$Knot[mdf$Year %in% knots] <- mdf$M[mdf$Year %in% knots]
+        p <- p + geom_point(data = mdf, aes(x = Year, y = Knot, colour = Model)) +
+            labs(col = "Knot")
+    }
     p <- p + expand_limits(y = 0) + labs(x = "\nYear", y = "Natural mortality\n")
     print(p + .THEME)
-  #p <- ggplot(mdf,aes(x=Year,y=as.double(variable),z=value))
-  #p <- p + geom_tile(aes(fill = value)) 
-  #p <- p + stat_contour(geom="polygon", aes(fill=(value)))
-  #p <- p + labs(x="Year",y="size bin",fill="M")
-  #p <- p + facet_wrap(~sex,scale="free")
-  #ggplot(mdf, aes(x=Year, y=M, colour=sex, group=Model,stat="identity")) +
-  #ggplot(mdf, aes(x=as.numeric(Year), y=M)) + geom_line() + expand_limits(y=0)
-  #plot(mdf$Year,mdf$M,typ="b")
-  #, aes(x=Year, y=M)) + geom_line(stat="identity") + expand_limits(y=0)
-  # print(cbind(mdf$Year,mdf$value))
-  #p <- p + facet_wrap(~Model)
-  #plot_multiple(p2,p)
 }
 
