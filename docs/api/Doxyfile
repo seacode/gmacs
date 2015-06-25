@@ -81,7 +81,7 @@ SHOW_USED_FILES        = YES
 SHOW_FILES             = YES
 SHOW_NAMESPACES        = YES
 FILE_VERSION_FILTER    =
-LAYOUT_FILE            =
+LAYOUT_FILE            = TPLLayout.xml
 CITE_BIB_FILES         =
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -109,8 +109,8 @@ EXAMPLE_PATTERNS       =
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             =
 INPUT_FILTER           = 
-FILTER_PATTERNS        = *.tpl=tpl2dox
-FILTER_SOURCE_FILES    = NO
+FILTER_PATTERNS        = *.tpl=tpl2dox.sh
+FILTER_SOURCE_FILES    = YES
 FILTER_SOURCE_PATTERNS =
 USE_MDFILE_AS_MAINPAGE =
 #---------------------------------------------------------------------------

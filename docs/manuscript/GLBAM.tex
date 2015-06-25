@@ -1,50 +1,34 @@
 \documentclass[12pt,letterpaper]{article}
 
-% Use utf-8 encoding for foreign characters
-\usepackage[utf8]{inputenc}
-
-% Setup for fullpage use
-\usepackage{fullpage}
+\usepackage[utf8]{inputenc} % Use utf-8 encoding for foreign characters
+\usepackage{fullpage} % Setup for fullpage use
 \usepackage{lscape}
-
 % Uncomment some of the following if you use the features
-%
-% Running Headers and footers
-\usepackage{fancyhdr}
-
-% Multipart figures
-%\usepackage{subfigure}
-
-% Multicols
-\usepackage{multicol}
+\usepackage{fancyhdr} % Running Headers and footers
+%\usepackage{subfigure} % Multipart figures
+\usepackage{multicol} % Multicols
 \setlength{\columnseprule}{0.5pt}
 \setlength{\columnsep}{15pt}
-
-% More symbols
-\usepackage{amsmath}
+\usepackage{amsmath} % More symbols
 \usepackage{amssymb}
 \usepackage{latexsym}
 \usepackage{bm}
-
-% Surround parts of graphics with box
-\usepackage{boxedminipage}
-
-% Longtables
-\usepackage{longtable}
-
-% Package for including code in the document
-\usepackage{listings}
+\usepackage{boxedminipage} % Surround parts of graphics with box
+\usepackage{longtable} % Longtables
+\usepackage{listings} % Package for including code in the document
 \usepackage{alltt}
-
-% If you want to generate a toc for each chapter (use with book)
-% \usepackage{minitoc}
-
-% This is now the recommended way for checking for PDFLaTeX:
-\usepackage{ifpdf}
-
-% Natbib
-\usepackage[round]{natbib}
-
+% \usepackage{minitoc} % If you want to generate a toc for each chapter (use with book)
+\usepackage{ifpdf} % This is now the recommended way for checking for PDFLaTeX
+\usepackage[round]{natbib} % Natbib
+%\usepackage{url} % Hyperref
+\usepackage[colorlinks,bookmarks,citecolor=magenta,linkcolor=blue]{hyperref}
+%\usepackage{hyperref}
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\usepackage{tikz-uml}
 
 %% -math-
 \def\bs#1{\boldsymbol{#1}}
@@ -64,10 +48,6 @@
   \def\puthrule{ %thick rule lines for equation tables
     \hrule \hrule \hrule \hrule \hrule}
 
-% Hyperref
-% \usepackage{url}
-\usepackage[colorlinks,bookmarks,citecolor=magenta,linkcolor=blue]{hyperref}
-% \usepackage{hyperref}
 
 %\newif\ifpdf
 %\ifx\pdfoutput\undefined
@@ -77,14 +57,8 @@
 %\pdftrue
 %\fi
 
-\ifpdf
-\usepackage[pdftex]{graphicx}
-\else
-\usepackage{graphicx}
-\fi
 
 
-\usepackage{tikz-uml}
 
 
 \title{A generalized size-structured assessment model for Crustaceans}
@@ -92,7 +66,7 @@
 
 % Andre should probably be on here too, check with others.
 % I understand the problem with using the name Gmacs, and thus the relationship with Alaskan Crab stocks, 
-%   but it's probably too late to change. Thus Gmacs is now written as a name, not an acronym.
+% but it's probably too late to change. Thus Gmacs is now written as a name, not an acronym.
 % We must use 'size' instead of 'length' for all descriptions, as some species are measured via widths, not lengths.
 
 
@@ -107,7 +81,18 @@
   \maketitle
 
   \begin{abstract}
-    Gmacs is a statistical size-structured stock assessment modelling framework for molting crustacean species. The framework makes use of a wide variety of data, including both fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs has initially been designed for application to the king crab stocks of Alaska. Models of these stocks serve as a testing ground for the first versions of the modeling framework. Gmacs is coded using AD Model Builder, so inherits its capability to efficiently estimate hundreds of parameters. In this paper we describe details of the underlying population dynamics and statistical framework. The description is based upon modelling for crustaceans that undergo molting and with each subsequent molt increase in size.
+
+    Gmacs is a statistical size-structured stock assessment modelling framework
+    for molting crustacean species. The framework makes use of a wide variety of
+    data, including both fishery- and survey-based size-composition data, and
+    fishery-dependent and -independent indices of abundance. Gmacs has initially
+    been designed for application to the king crab stocks of Alaska. Models of
+    these stocks serve as a testing ground for the first versions of the
+    modeling framework. Gmacs is coded using AD Model Builder, so inherits its
+    capability to efficiently estimate hundreds of parameters. In this paper we
+    describe details of the underlying population dynamics and statistical
+    framework. The description is based upon modelling for crustaceans that
+    undergo molting and with each subsequent molt increase in size.
 
   \end{abstract}
 
@@ -115,15 +100,33 @@
   \section*{Introduction} % (fold)
   \label{sec:introduction}
 
-  Statistical catch age models have several advantages over simple production type models in that age and size composition data can be used to better inform structural features such as recruitment variability, and total mortality rates.  There are a number of generic age-structured models in use today, but there are very few generic size-based, or staged-based models that are used in stock assessment. In this paper we describe a generalized statistical catch-at-size model that is well suited for animals that cannot be aged, and where only precise size measurements are available. The description is based on a crustaceans that undergo molting and with each subsequent molt increase in size.
+  Statistical catch age models have several advantages over simple production
+  type models in that age and size composition data can be used to better inform
+  structural features such as recruitment variability, and total mortality
+  rates.  There are a number of generic age-structured models in use today, but
+  there are very few generic size-based, or staged-based models that are used in
+  stock assessment. In this paper we describe a generalized statistical
+  catch-at-size model that is well suited for animals that cannot be aged, and
+  where only precise size measurements are available. The description is based
+  on a crustaceans that undergo molting and with each subsequent molt increase
+  in size.
 
   % section introduction (end)
 
   \section*{Methods} % (fold)
   \label{sec:methods}
-  The analytical details of the generalized model is summarized using tables of equations (e.g., Table \ref{tab:equilibrium_model}).   These tables serve two purposes: (1) to clearly provide the logical order in which calculations proceed, and (2) organization of a relatively large integrated model into a series of sub-models that represent specific components such as population dynamics, observation models, reference point calculations, fisheries dynamics, and the objective function.  We first start with a description of the population dynamics under steady-state (equilibrium) conditions.  
+  The analytical details of the generalized model is summarized using tables of
+  equations (e.g., Table \ref{tab:equilibrium_model}).  These tables serve two
+  purposes: (1) to clearly provide the logical order in which calculations
+  proceed, and (2) organization of a relatively large integrated model into a
+  series of sub-models that represent specific components such as population
+  dynamics, observation models, reference point calculations, fisheries
+  dynamics, and the objective function.  We first start with a description of
+  the population dynamics under steady-state (equilibrium) conditions.
 
-  For model notation, vectors and matrixes are given in bold using lower and upper case notation, respectively.  Model notation and a description of symbols are provided in Table \ref{tab:notation}.
+  For model notation, vectors and matrixes are given in bold using lower and
+  upper case notation, respectively.  Model notation and a description of
+  symbols are provided in Table \ref{tab:notation}.
 
 
 \begin{table}
@@ -172,13 +175,44 @@
 
     \subsection*{Equilibrium considerations} % (fold)
     \label{sub:equilibrium_considerations}
-    Parameters for the population sub model are represented by the vector $\Theta$ (\ref{T1.1} in Table \ref{tab:equilibrium_model}), which consists of the natural mortality rate, average-recruitment, initial recruitment in the first year, parameters that describe the size-distribution of new recruits, and stock-recruitment parameters (see Table \ref{tab:notation} for notation).  Constraints for these model parameters are defined in \eqref{T1.2}.  Assuming the molt increments are linear, growth following each molt is a parametric function with the parameters defined in $\Phi$.
 
-    The model is based on a set of user defined size categories. We assume at any time the population consists of a vector where each component of the vector consists of a number of individuals in some size category. The size category intervals and mid points of those intervals are defined by \eqref{T1.3}.  Average molt increments from size category $l$ to the next is assumed to be sex-specific, and is defined by a linear function \eqref{T1.4}.  The probability of transitioning from  size category $l$ to $l'$ assumed that variation in molt increments follows a Gamma distribution \eqref{T1.5}, and the size-transition matrix for each sex $h$ is denoted as $\pmb{G}_h$.
+    Parameters for the population sub model are represented by the vector
+    $\Theta$ (\ref{T1.1} in Table \ref{tab:equilibrium_model}), which consists
+    of the natural mortality rate, average-recruitment, initial recruitment in
+    the first year, parameters that describe the size-distribution of new
+    recruits, and stock-recruitment parameters (see Table \ref{tab:notation} for
+    notation).  Constraints for these model parameters are defined in
+    \eqref{T1.2}.  Assuming the molt increments are linear, growth following
+    each molt is a parametric function with the parameters defined in $\Phi$.
 
-    The size distribution of new recruits is assumed to follow a gamma distribution \eqref{T1.7} with the parameters $\alpha_r$ and $\beta_r$.  The gamma distribution is scaled such that $\alpha_r$ is the mode of the distribution and could potentially be obtained from empirical size composition data.  The vector of new recruits at each time step \eqref{T1.8} assumes a 50:50 sex ratio.
+    The model is based on a set of user defined size categories. We assume at
+    any time the population consists of a vector where each component of the
+    vector consists of a number of individuals in some size category. The size
+    category intervals and mid points of those intervals are defined by
+    \eqref{T1.3}.  Average molt increments from size category $l$ to the next is
+    assumed to be sex-specific, and is defined by a linear function
+    \eqref{T1.4}.  The probability of transitioning from size category $l$ to
+    $l'$ assumed that variation in molt increments follows a Gamma distribution
+    \eqref{T1.5}, and the size-transition matrix for each sex $h$ is denoted as
+    $\pmb{G}_h$.
 
-    For unfished conditions that are subject only to sex-specific natural mortality $M_h$ rates, we assume that each year members of the population grow and experience mortality.  The basic assumption is that this process is a linear function of the numbers in each size category, where the categories are separated by  sex to accommodate differential growth and survival rates.  Survival and growth at each time step in unfished conditions is based on \eqref{T1.10}, where $(\pmb{I}_n)_{l,l'}$ is the identity matrix and $M_h$ is a scaler. It's also possible to accommodate size-specific natural mortality rates in \eqref{T1.10} where $M_h$ represents a vector of size-specific natural mortality rates.
+    The size distribution of new recruits is assumed to follow a gamma
+    distribution \eqref{T1.7} with the parameters $\alpha_r$ and $\beta_r$.  The
+    gamma distribution is scaled such that $\alpha_r$ is the mode of the
+    distribution and could potentially be obtained from empirical size
+    composition data.  The vector of new recruits at each time step \eqref{T1.8}
+    assumes a 50:50 sex ratio.
+
+    For unfished conditions that are subject only to sex-specific natural
+    mortality $M_h$ rates, we assume that each year members of the population
+    grow and experience mortality.  The basic assumption is that this process is
+    a linear function of the numbers in each size category, where the categories
+    are separated by sex to accommodate differential growth and survival rates.
+    Survival and growth at each time step in unfished conditions is based on
+    \eqref{T1.10}, where $(\pmb{I}_n)_{l,l'}$ is the identity matrix and $M_h$
+    is a scaler. It's also possible to accommodate size-specific natural
+    mortality rates in \eqref{T1.10} where $M_h$ represents a vector of
+    size-specific natural mortality rates.
 
 
 
