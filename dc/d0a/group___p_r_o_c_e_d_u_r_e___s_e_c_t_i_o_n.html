@@ -128,7 +128,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga0395ca8c64d5e7b7505b202d2ccf8692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate fishing mortality rates for each fleet.  <a href="#ga0395ca8c64d5e7b7505b202d2ccf8692">More...</a><br /></td></tr>
 <tr class="separator:ga0395ca8c64d5e7b7505b202d2ccf8692"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga414796bfb07b183050fe17e3f166d093"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga414796bfb07b183050fe17e3f166d093">calc_growth_transition</a> ()</td></tr>
-<tr class="memdesc:ga414796bfb07b183050fe17e3f166d093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calclate the size transtion matrix.  Steven Martell.  <a href="#ga414796bfb07b183050fe17e3f166d093">More...</a><br /></td></tr>
+<tr class="memdesc:ga414796bfb07b183050fe17e3f166d093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calclate the size transtion matrix.  Team.  <a href="#ga414796bfb07b183050fe17e3f166d093">More...</a><br /></td></tr>
 <tr class="separator:ga414796bfb07b183050fe17e3f166d093"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa136d309ee87fe0a74f31a2e1cdfc7aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#gaa136d309ee87fe0a74f31a2e1cdfc7aa">calc_natural_mortality</a> ()</td></tr>
 <tr class="memdesc:gaa136d309ee87fe0a74f31a2e1cdfc7aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate natural mortality array.  <a href="#gaa136d309ee87fe0a74f31a2e1cdfc7aa">More...</a><br /></td></tr>
@@ -201,7 +201,7 @@ Functions</h2></td></tr>
 
  TODO 
  -[ ] fix discard mortality rate.</pre> 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01358">1358</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01357">1357</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -244,7 +244,7 @@ Functions</h2></td></tr>
 <p>Molt increment as a linear function of pre-molt size.</p>
 <p>TODO Option for empirical molt increments.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01424">1424</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01423">1423</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -262,13 +262,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Calclate the size transtion matrix.  Steven Martell. </p>
+<p>Calclate the size transtion matrix.  Team. </p>
 <p>Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution. This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.</p>
 <p>This function loops over sex, then loops over the rows of the size transition matrix for each sex. The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.</p>
-<p>Modified Dec 11, 2014. Diagonal of the matrix now represents probability of not molting, and upper triangle is the probability of growing to the next size interval given you molted.</p>
-<p>Dec 20. Undid the above modification after correspondence with Jack Turnock. He rightly pointed out that it is possible to molt and remain in the same bin interval (if the intervals are sufficiently large).</p>
-<p>Jan 11, 2015. Checked cumd_gamma function in ADMB with R. This is the same function as pgamma with the rate parameter set at its default value 1.0. The mean value of the function is the second argument of cumd_gamma, and the vector of quantiles is the first argument. Both arguments are scaled by gscale.</p>
-<p>Jan 20, 2015. Jim reported that cumd_gamma was not converging. Required large number of iterations to solve the cumd_gamma function in gser in the ADMB libs. Soln, either increase the MAXIT in gser, or rescale the problem to the maximum of the size breaks. The latter seems to work. </p>
+<p>Issue 112 details some of evolution of code development here </p>
 <p>Calculate natural mortality array</p>
 <p>Natural mortality (M) is a 3d array for sex, year and size. </p><dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 <p>todo:</p><ul>
@@ -276,7 +273,7 @@ Functions</h2></td></tr>
 <li>Size-dependent mortality</li>
 </ul>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01510">1510</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01491">1491</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -313,7 +310,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Update numbers-at-length </p><dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
 <p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a sclaer). New recruits are added based on the estimated aveerage recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01795">1795</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01764">1764</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -345,7 +342,7 @@ n(I - PSA - (I-P)SBPSA) = r
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01679">1679</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01651">1651</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -373,7 +370,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>\( S = exp(-Z) \) </p><dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 <p>ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01569">1569</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01541">1541</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -405,7 +402,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model</p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02590">2590</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02559">2559</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -431,7 +428,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>This function uses the conditional mle for q to scale the population to the relative abundance index. Assumed errors in relative abundance are lognormal. Currently assumes that the CPUE index is made up of both retained and discarded crabs.</p>
 <p>Question regarding use of shell condition in the relative abundance index. Currenlty there is no shell condition information in the CPUE data, should there be? Similarly, there is no mature immature information, should there be?</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02078">2078</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02047">2047</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -467,7 +464,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Call function to get the appropriate numbers-at-length.</p>
 <p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond) [ ] </p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02330">2330</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02299">2299</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -511,7 +508,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash; –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
 <p>April 28, 2015. There is no case here for initializing the model at unfished equilibrium conditions. Need to fix this for SRA purposes. SJDM.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01711">1711</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01683">1683</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -551,7 +548,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Call function to get the appropriate numbers-at-length.</p>
 <p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond) [ ]</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02212">2212</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02181">2181</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -579,8 +576,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Create a pointer array with length = number of blocks</li>
 <li>Based on slx_type, fill pointer with parameter estimates.</li>
 <li><p class="startli">Loop over years and block-in the log_selectivity at mid points.</p>
-<p class="startli">Need to deprecate the abstract class for selectivity, 7X slower.</p>
-<p class="startli">APRIL 28, 15, Finally fixed DF_dflog error </p>
+<p class="startli">Need to deprecate the abstract class for selectivity, 7X slower. </p>
 </li>
 </ol>
 <p>Calculate fishing mortality rates for each fleet.</p>
@@ -590,7 +586,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Note also that Jie estimates F for retained fishery, f for male discards and f for female discards. Not recommended to have separate F' for retained and discard fisheries, but might be ok to have sex-specific F's.</p>
 <p>TODO -[ ] fix discard mortality rate.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01266">1266</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01265">1265</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -622,7 +618,7 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01973">1973</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01942">1942</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -647,7 +643,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data.</p>
 <p>Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01645">1645</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01617">1617</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -693,7 +689,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Penalty to constrain random walk in natural mortaliy rates</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02499">2499</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02468">2468</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -748,13 +744,13 @@ n(I - PSA - (I-P)SBPSA) = r
 </div><div class="memdoc">
 
 <p>Update numbers-at-length. </p>
-<dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Team</dd></dl>
 <p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a sclaer). New recruits are added based on the estimated aveerage recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd). </p>
 <p>Calculate stock recruitment relationship.</p>
 <p>Assuming a Beverton-Holt relationship between the mature biomass (user defined) and the annual recruits. Note that we derive so and bb in R = so * MB / (1 + bb * Mb) from Ro and steepness (leading parameters defined in theta).</p>
 <p>NOTES: if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minumization.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01883">1883</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01852">1852</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -763,7 +759,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jun 24 2015 23:52:59 for GMACS by
+    <li class="footer">Generated on Thu Jun 25 2015 00:10:32 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>
