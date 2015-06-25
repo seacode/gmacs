@@ -2,10 +2,9 @@
 
 
 default: Doxyfile
-	tpl2dox.sh ../../src/gmacs.tpl
 	doxygen Doxyfile
 	@cd html; git add .
-	@cd html; git ci -ma"Updates to API"
+	@cd html; git ci -a -m"Jim Updates to API"
 	@cd html; git push origin gh-pages
 
 
