@@ -31,8 +31,10 @@
 %% =========================================================================== %%
 
 \section{Notation and symbols}
-\subsection{Indices}
 
+%% =========================================================================== %%
+
+\subsection{Indices}
 \begin{frame}
 \frametitle{Indices}
 
@@ -59,9 +61,8 @@
 %% =========================================================================== %%
 
 \subsection{Key parameters}
-
 \begin{frame}
-\frametitle{Estimated parameters}
+\frametitle{Estimable parameters}
 
 \begin{table}
   \centering
@@ -69,25 +70,29 @@
   \hline
   Symbol  & Description \\
   \hline
-      $M_0$       & Instantaneous natural mortality rate\\
-      $\bar{R}$   & Average recruitment\\
-      $\ddot{R}$  & Initial recruitment\\
-      $\alpha_r$  & Mode of size-at-recruitment\\
-      $\beta_r $  & Shape parameter for size-at-recruitment\\
-      $R_0$       & Unfished average recruitment\\
-      $\kappa$    & Recruitment compensation ratio\\
+      \textcolor{red}{$M_0$}       & Initial instantaneous natural mortality rate\\
+      \textcolor{red}{$\bar{R}$}   & Average recruitment\\
+      \textcolor{red}{$\ddot{R}$}  & Initial recruitment\\
+      \textcolor{red}{$\alpha_r$}  & Mode of size-at-recruitment\\
+      \textcolor{red}{$\beta_r $}  & Shape parameter for size-at-recruitment\\
+      \textcolor{red}{$R_0$}       & Unfished average recruitment\\
+      \textcolor{red}{$\kappa$}    & Recruitment compensation ratio\\
+      \textcolor{red}{$\alpha_h$}  & Mode of size-at-recruitment\\
+      \textcolor{red}{$\beta_h$}   & Shape parameter for size-at-recruitment\\
+      \textcolor{red}{$\varphi_h$} & Instantaneous natural mortality rate\\
+      \textcolor{red}{$\boldsymbol\nu$} & Instantaneous natural mortality rate\\
+      \textcolor{red}{$\boldsymbol\xi$} & Discard mortality rate\\
   \hline
   \end{tabular}
 \end{table}
 
 \begin{equation*}
-  M_{0,h} > 0, \bar{R} > 0, \ddot{R} > 0, \alpha_r > 0, \beta_r > 0, R_0 > 0, \kappa
-  > 1.0
-\end{equation*}
-
-\begin{equation*}
-  \Theta = \{ M_0, \bar{R}, \ddot{R}, \alpha_r, \beta_r, R_0, \kappa,
-  \alpha_h, \beta_h, \varphi_h, \boldsymbol\nu, \boldsymbol\xi \}.
+  \textcolor{red}{\Theta} = \{ \textcolor{red}{M_0}, \textcolor{red}{\bar{R}}, 
+  \textcolor{red}{\ddot{R}}, \textcolor{red}{\alpha_r},
+  \textcolor{red}{\beta_r}, 
+  \textcolor{red}{R_0}, \textcolor{red}{\kappa}, \textcolor{red}{\alpha_h}, 
+  \textcolor{red}{\beta_h}, \textcolor{red}{\varphi_h}, 
+  \textcolor{red}{\boldsymbol\nu}, \textcolor{red}{\boldsymbol\xi} \}.
 \end{equation*}
 
 \end{frame}
@@ -97,6 +102,11 @@
 \subsection{Growth parameters}
 \begin{frame}
 \frametitle{Growth parameters}
+
+\begin{equation*}
+  M_{0,h} > 0, \bar{R} > 0, \ddot{R} > 0, \alpha_r > 0, \beta_r > 0, R_0 > 0, \kappa
+  > 1.0
+\end{equation*}
 
 \begin{table}
   \centering
@@ -119,9 +129,9 @@
 
 %% =========================================================================== %%
 
-\subsection{Stuff}
+\subsection{Other variables}
 \begin{frame}
-\frametitle{Stuff}
+\frametitle{Other variables}
 
 \begin{table}
   \centering
@@ -139,21 +149,131 @@
 
 %% =========================================================================== %%
 
-\section{Growth and survival}
-\subsection{Growth}
+\subsection{Cubic splines}
+\begin{frame}
+\frametitle{Cubic splines}
+A spline is a numeric function that is piecewise-defined by polynomial
+functions, and which possesses a sufficiently high degree of smoothness at the
+places where the polynomial pieces connect (which are known as knots). A cubic
+spline is constructed of piecewise third-order polynomials. The second
+derivative of each polynomial is commonly set to zero at the endpoints, since
+this provides a boundary condition that completes the system of $m-2$
+equations. This produces a so-called ``natural'' cubic spline and leads to a
+simple tridiagonal system which can be solved easily to give the coefficients of
+the polynomials. However, this choice is not the only one possible, and other
+boundary conditions can be used instead.
+\end{frame}
 
+%% =========================================================================== %%
+
+\section{Selectivity, retention, fishing}
+
+%% =========================================================================== %%
+
+\subsection{Selectivity and retention}
+\begin{frame}
+\frametitle{Selectivity, retention and fishing mortality}
+\begin{table}
+  \centering
+  \begin{tabular}{cl}
+  \hline
+  Symbol  & Description \\
+  \hline
+      \textcolor{red}{$a_{h,i,k}$} & Length at 50\% selectivity \\
+      \textcolor{red}{$\sigma^s_{h,i,k}$} & Standard deviation in length at selectivity \\
+      $s_{h,i,k,\ell}$ & Length at 50\% selectivity in length interval $\ell$ \\
+      \textcolor{red}{$r_{h,i,k}$} & Length at 50\% \\
+      \textcolor{red}{$\sigma^y_{h,i,k}$} & Standard deviation in length at retention \\
+      $y_{h,i,k,\ell}$ & Length at 50\% retention in length interval $\ell$ \\
+      \textcolor{red}{$\xi_{h,k}$} & Discard mortality rate for sex $h$ and gear $k$ \\
+      $\nu_{h,i,k,\ell}$ & Vulnerability due to fishing mortality for sex $h$ \\
+      $\bar{\boldsymbol{f}}_k$ &  \\
+      $\boldsymbol\Psi_{k,i}$ &  \\
+      $\boldsymbol{F}_{k,i}$ &  \\
+      $\boldsymbol{f}_{h,i}$ &  \\
+  \hline
+  \end{tabular}
+\end{table}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Selectivity and retention}
+The probability of catching an animal of sex $h$, in year $i$, in fishery $k$,
+of length $\ell$ (i.e. selectivity) is
+\begin{equation*}
+  s_{h,i,k,\ell} = \left(1 + \exp \left(-(\ell - \textcolor{red}{a_{h,i,k}}) /
+  \textcolor{red}{\sigma_{h,i,k}^s} \right) \right)^{-1}.
+\end{equation*}
+
+The probability of an animal of sex $h$, in year $i$, in fishery $k$, of length
+$\ell$ being retained is
+\begin{equation*}
+  y_{h,i,k,\ell} = \left(1 + \exp \left(-(\textcolor{red}{r_{h,i,k}} - \ell \right) /
+  \textcolor{red}{\sigma_{h,i,k}^y}) \right)^{-1}.
+\end{equation*}
+
+The joint probability of vulnerability due to fishing and discard mortality is
+\begin{equation*}
+  \nu_{h,i,k,\ell} = s_{h,i,k,\ell} \left[ y_{h,i,k,\ell} + (1 - y_{h,i,k,\ell})
+    \textcolor{red}{\xi_{h,k}} \right],
+\end{equation*}
+where $\textcolor{red}{\xi_{h,k}}$ is the discard mortality rate for sex $h$ in
+fishery $k$.
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Selectivity and retention}
+Assuming that selectivity for the NMFS trawl fishery is split into two blocks
+(1975-1981 and 1982-2014) and that retention is constant with time
+$y_{h,i,k,\ell} = y_{h,k,\ell}$
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.6\linewidth]{../../examples/bbrkc/OneSex/figure/selectivity.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Fishing mortality}
+\begin{align*}
+  \boldsymbol{F}_{k,i} &= \exp \left( \bar{\boldsymbol{f}}_k +
+    \boldsymbol\Psi_{k,i} \right),\\
+  \boldsymbol{f}_{h,i} &= \sum_k \boldsymbol{F}_{k,i} \nu_{h,i,k,\ell},
+\end{align*}
+
+\begin{equation*}
+  C_{i} = \sum_{\ell} \left[ \boldsymbol{n} w_{h,\ell} \frac{F_{i}}{Z_{i,\ell}} 
+    \left( 1 - e^{-Z_{i,\ell}} \right) \right] \quad \text{where} \quad Z_{h,i}
+  = M_{h,i} + F_{h,i}.
+\end{equation*}
+
+\end{frame}
+
+%% =========================================================================== %%
+
+\section{Growth and survival}
+
+%% =========================================================================== %%
+
+\subsection{Growth}
 \begin{frame}
 \frametitle{Growth}
 The average molt increment from size class $\ell$ to $\ell'$ is assumed to be
 sex-specific and is defined by the linear function
 \begin{equation*}
-  a_{h,\ell} = \frac{\alpha_h + \beta_h \ell}{\varphi_h}.
+  a_{h,\ell} = \frac{\textcolor{red}{\alpha_h} + \textcolor{red}{\beta_h}
+    \ell}{\textcolor{red}{\varphi_h}}.
 \end{equation*}
 The probability of transitioning from size class $\ell$ to $\ell'$ assumes that
 variation in molt increments follows a gamma distribution
 \begin{equation*}
-  p (\ell,\ell')_h = \boldsymbol{G}_h = \int^{\ell + \Delta \ell}_\ell \frac{\ell^{a_{h,\ell-1}} \exp
-    \left(\frac{\ell}{\varphi_h} \right)}{\Gamma (a_{h,\ell}) \ell^{a_{h,\ell}}}
+  p (\ell'|\ell)_h = \boldsymbol{G}_h = \int^{\ell + \Delta \ell}_\ell \frac{\ell^{a_{h,\ell-1}} \exp
+    \left(\frac{\ell}{\textcolor{red}{\varphi_h}} \right)}{\Gamma (a_{h,\ell}) \ell^{a_{h,\ell}}}
   \quad \text{where} \quad \Delta \ell = \ell' - \ell.
 \end{equation*}
 Specifically
@@ -170,7 +290,7 @@ Specifically
 %% =========================================================================== %%
 
 \begin{frame}
-\frametitle{Growth}
+\frametitle{Growth increment}
 Growth increment
 \begin{figure}[!htbp]
   \centering
@@ -194,14 +314,47 @@ Growth transition
 \subsection{Natural mortality}
 \begin{frame}
 \frametitle{Natural mortality}
+\begin{table}
+  \centering
+  \begin{tabular}{cl}
+  \hline
+  Symbol  & Description \\
+  \hline
+      $\textcolor{red}{M_{0,h}}$ &  \\
+      $\sigma_M$ & Standard deviation of natural mortality \\
+      $\delta_i$ & Natural mortality deviate \\
+      $M_{h,i}$ & Natural mortality by sex $h$ and year $i$ \\
+  \hline
+  \end{tabular}
+\end{table}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Natural mortality options}
 Natural mortality ($M$) is assumed to be sex-specific ($h$), size-independent
-($\ell$), and may or may not be constant over time ($i$). If time-varying
-natural mortality is used, the model constrains $M_{h,i}$ to be a random-walk
-process with variance $\sigma^2_M$
+($\ell$), and may or may not be constant over time ($i$). The options currently
+available in Gmacs include:
+\begin{enumerate}
+\item Constant natural mortality ($M_{h,i} = \textcolor{red}{M_{0,h}}$)
+\item Random walk (deviates constrained by variance $\sigma^2_M$)
+\item Cubic Spline (deviates constrained by nodes and node placement)
+\item Blocked changes (deviates constrained by variance at specific knots)
+\end{enumerate}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Natural mortality: option 2}
+If time-varying natural mortality is specified using the {\bf random walk}
+option, the model constrains $M_{h,i}$ to be a random-walk process with variance
+$\sigma^2_M$
 \begin{equation*}
   M_{h,i+1} = 
   \begin{cases}
-    \bar{M}_h\\
+    \textcolor{red}{M_{0,h}} \\
     M_{h,i} e^{\delta_i}
   \end{cases},
 \end{equation*}
@@ -211,69 +364,37 @@ where
 \end{equation*}
 A time-varying natural mortality can be estimated for all years ($i$), or for
 specified blocks of years ($\iota \in i$).
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Natural mortality}
-Assuming natural mortality is time-varying constrained by variance ($\sigma^2_M
-= 0.04$) at four specific knots (1976, 1980, 1985, 1994)
 \begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.65\linewidth]{../../examples/bbrkc/OneSex/figure/M_t.png}
+  %\includegraphics[width=0.65\linewidth]{figure/M_t_walk.png}
 \end{figure}
 \end{frame}
 
 %% =========================================================================== %%
 
 \begin{frame}
-\frametitle{Selectivity and retention}
-
-The probability of catching an animal of sex $h$, in year $i$, in fishery $k$,
-of length $\ell$ (i.e. selectivity) is
-\begin{equation*}
-  s_{h,i,k,\ell} = (1 + \exp(-(\ell-a_{h,i,k})/\sigma_{h,i,k}^s))^{-1}.
-\end{equation*}
-
-The probability of an animal of sex $h$, in year $i$, in fishery $k$, of length
-$\ell$ being reatained is
-\begin{equation*}
-  y_{h,i,k,\ell} = (1 + \exp(-(r_{h,i,k}-\ell)/\sigma_{h,i,k}^y))^{-1}.
-\end{equation*}
-
-The joint probability of vulnerability due to fishing mortality and discarding
-is
-\begin{equation*}
-  \nu_{h,i,k,\ell} = s_{h,i,k,\ell} \left[ y_{h,i,k,\ell} + (1 - y_{h,i,k,\ell})
-    \xi_{h,k} \right],
-\end{equation*}
-where $\xi_{h,k}$ is the discard mortality rate for sex $h$ in fishery
-$k$.
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Selectivity and retention}
-Assuming that selectivity for the NMFS trawl fishery is split into two blocks
-(1975-1981 and 1982-2014) and that retention is constant with time
-$y_{h,i,k,\ell} = y_{h,k,\ell}$
+\frametitle{Natural mortality: option 3}
+If time-varying natural mortality is specified using the {\bf cubic spline}
+option, the model constrains $M_{h,i}$ to be a cubic spline process at
+specified knots. For example, setting
 \begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.6\linewidth]{../../examples/bbrkc/OneSex/figure/selectivity.png}
+  \includegraphics[width=0.65\linewidth]{figure/M_t_spline.png}
 \end{figure}
 \end{frame}
 
 %% =========================================================================== %%
 
 \begin{frame}
-\frametitle{Fishing mortality}
-\begin{align*}
-  \boldsymbol{F}_{k,i} &= \exp \left( \bar{\boldsymbol{f}}_k + \Psi_{k,i}
-  \right),\\
-  \boldsymbol{f}_{h,i} &= \sum_k \boldsymbol{F}_{k,i} \nu_{h,i,k,\ell},
-\end{align*}
+\frametitle{Natural mortality: option 4}
+If time-varying natural mortality is specified using the {\bf blocked changes}
+option, the model constrains $M_{h,i}$ by the variance ($\sigma^2_M$). For
+example, setting $\sigma^2_M = 0.04$ and four specific years (1976, 1980, 1985,
+1994) we get
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{figure/M_t_block.png}
+\end{figure}
 \end{frame}
 
 %% =========================================================================== %%
@@ -283,29 +404,39 @@ $y_{h,i,k,\ell} = y_{h,k,\ell}$
 \frametitle{Growth and survival}
 Growth and survival
 \begin{equation*}
-  \boldsymbol{A}_{h} = \boldsymbol{G}_h \left[ \exp (-\bar{M}_h) \boldsymbol{I}
-  \right].
+  \boldsymbol{A}_{h} = \boldsymbol{G}_h \left[ \exp (-\textcolor{red}{M_{0,h}})
+    \boldsymbol{I} \right].
 \end{equation*}
-Growth and survival including fishing mortality
+Assuming a non-zero steady-state fishing mortality rate vector
+$\boldsymbol{f}_{h,i}$, the equilibrium growth and survival process is
+represented by
 \begin{equation*}
   \boldsymbol{B}_{h,i} = \boldsymbol{G}_h \left[ \exp (-M_{h,i} -
     \boldsymbol{f}_{h,i}) \boldsymbol{I} \right].
 \end{equation*}
+The vector $\boldsymbol{f}_{h,i}$ represents all mortality associated with
+fishing, including discards in directed and non-directed fisheries.
 \end{frame}
 
 %% =========================================================================== %%
 
 \section{Steady-state conditions}
-\subsection{Survivorship to length}
 
+%% =========================================================================== %%
+
+\subsection{Survivorship to length}
 \begin{frame}
 \frametitle{Survivorship to length}
-
-Survivorship to length
+Assuming unit recruitment, then the growth and survivorship in unfished and
+fished conditions is given by the solutions to the matrix equations
 \begin{align*}
   \boldsymbol{u}_h &= -(\boldsymbol{A}_h - \boldsymbol{I})^{-1} (p(\boldsymbol{r})),\\
   \boldsymbol{v}_h &= -(\boldsymbol{B}_h - \boldsymbol{I})^{-1} (p(\boldsymbol{r})).
 \end{align*}
+The vectors $\boldsymbol{u}_h$ and $\boldsymbol{v}_h$ represent the unique
+equilibrium solution for the numbers per recruit in each size category. The
+total unfished numbers in each size category is defined as $R_0
+\boldsymbol{u}_h$.
 
 Steady-state conditions
 \begin{align*}
@@ -346,7 +477,7 @@ Initial numbers at length
 The numbers in each size-class in the following time-step
 ($\boldsymbol{n}_{h,i+1}$) is the product of the numbers in each size-class in
 the previous time-step ($\boldsymbol{n}_{h,i}$), size-specific growth and
-survival ($\boldsymbol{A}_{h,i}$), plus new recuits ($\boldsymbol{r}_{h,i}$)
+survival ($\boldsymbol{A}_{h,i}$), plus new recruits ($\boldsymbol{r}_{h,i}$)
 \begin{equation*}
   \boldsymbol{n}_{h,i+1} = \boldsymbol{n}_{h,i} \boldsymbol{A}_{h,i} +
   \boldsymbol{r}_{h,i} \quad \text{where} \quad i > 1.
