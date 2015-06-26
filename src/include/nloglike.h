@@ -219,6 +219,33 @@ namespace acl
 		
 	};
 
+	/**
+	 * @brief Class for Dirichlet negative log-likelihood.
+	 * @details This is a derived class which inherits the virtual methods
+	 * in negativeLogLikelihood.
+	 */
+	/*
+	class dirichlet: public negativeLogLikelihood
+	{
+	private:
+		bool        m_bCompress;
+      dvar_vector alpha_o;
+			dvar_vector alpha_t; 
+			dmatrix o;
+			dvar_matrix p;
+
+	public:
+		
+		dirichlet(const dmatrix &_O,const bool bCompress=false)
+		: negativeLogLikelihood( const dvar_vector& alpha_o,
+				    const dvar_vector& alpha_t, 
+				    const dmatrix& o, 
+				    const dvar_matrix& p) const
+
+		~dirichlet();
+
+    };
+	*/
 
 } // end of acl namespace
 
