@@ -29,7 +29,7 @@ M[[1]]$nlogPenalty
 M[[1]]$priorDensity
 
 fn <- paste0(.MODELDIR, "bbrkc_ss.ctl")
-read_ctl(fn)
+#read_ctl(fn)
 
 plot_datarange(M)
 plot_catch(M) # broken
@@ -48,6 +48,7 @@ plot_size_comps(M, 6)
 plot_selectivity(M)
 plot_size_transition(M)
 plot_growth_inc(M)
+plot_molt_prob(M)
 
 
 # ----------------------------------------------------------------------------- #

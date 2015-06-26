@@ -65,13 +65,15 @@ plot_selectivity <- function(M)
 #'
 #' @param M list object created by read_admb function
 #' @param plt_surface include a panel with surface over size-time 
-#' @return plot of selectivity
+#' @return 3D plot of selectivity
 #' @author D'Arcy N. Webber
 #' @export
 #' 
 plot_selectivity_3d <- function(M, plt_surface = FALSE)
 {
     mdf <- .get_selectivity_df(M)
+    df3 <- subset(mdf, unique(year) > 1)
+    
     p <- ggplot(mdf) + expand_limits(y = 0)
     if(.OVERLAY)
     {
