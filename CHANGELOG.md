@@ -1,28 +1,24 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and this file inspired by http://keepachangelog.com/
-
-
 ## [Unreleased][unreleased]
 ### Changed
-- Improve argument against commit logs.
 
-## [0.0.0] - 2015-06-24
-### Changed
-## [0.0.1] - 2014-12-11
+
+## [0.0.4] - 2014-12-11
 ### In FUNCTION calc_growth_transition 
 Diagonal of the matrix now represents probability
 of not molting, and upper triangle is the probability of growing to the next
 size interval given you molted.
 
-## [0.0.1] - 2015-01-20
+## [0.0.3] - 2015-01-20
 ### In FUNCTION calc_growth_transition 
 Jim reported that cumd_gamma was not converging. Required large
 number of iterations to solve the cumd_gamma function in gser in the ADMB libs.
 Soln, either increase the MAXIT in gser, or rescale the problem to the maximum
 of the size breaks. The latter seems to work. 
 
-## [0.0.1] - 2015-01-11
+## [0.0.2] - 2015-01-11
 ### In FUNCTION calc_growth_transition 
 Checked cumd_gamma function in ADMB with R. This is the same
 function as pgamma with the rate parameter set at its default value 1.0. The
@@ -38,7 +34,7 @@ interval (if the intervals are sufficiently large).
 
 
 
-## Earlier stuff
+## [0.0.0] - pre 2014-12-20
 5.	When number of classes in the data and the model differ by an integer factor, class link matrix is automatically generated. 
 6.	When number of classes in the data is not a multiple of number of classes in the model, read in class_link matrix.
 7.	Names of fleets and surveys now printed correctly to echoinput file: (bug fix).
