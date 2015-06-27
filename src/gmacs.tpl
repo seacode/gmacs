@@ -1401,7 +1401,6 @@ FUNCTION calc_recruitment_size_distribution
 	 *  Jan 1, 2015.  Changed how the equilibrium calculation is done.  Use a numerical
 	 *  approach to solve the newshell oldshell initial abundance.
 	 *  
-	 *  –––-—————————————————————————————————————————————————————————————————————————----
 	 *  Jan 3, 2015.  Working with John Levitt on analytical solution instead of the 
 	 *  numerical approach.  Think we have a soln.  
 	 *  
@@ -1432,7 +1431,6 @@ FUNCTION calc_recruitment_size_distribution
 	 *  
 	 *  then n = C^(-1) r                           (4)
 	 *  –––-—————————————————————————————————————————————————————————————————————————----
-	 *  –––-—————————————————————————————————————————————————————————————————————————----   
 	 * 
 	 *  April 28, 2015.  There is no case here for initializing the model at unfished
 	 *  equilibrium conditions.  Need to fix this for SRA purposes.  SJDM. 
@@ -1485,7 +1483,7 @@ FUNCTION calc_initial_numbers_at_length
 		}
 
 		// Single shell condition
-		if ( nshell == 1 && nmature == 1)
+		if ( nshell == 1 && nmature == 1 )
 		{
 			calc_equilibrium(x,A,_S,rt);
 			ig = pntr_hmo(h,1,1);
@@ -1493,7 +1491,7 @@ FUNCTION calc_initial_numbers_at_length
 		}
 
 		// Continuous molt (newshell/oldshell)
-		if ( nshell == 2 && nmature == 1)
+		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,A,_S,P(h),rt);
 			ig = pntr_hmo(h,1,1);

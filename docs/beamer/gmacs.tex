@@ -89,11 +89,11 @@ Notice no area index.
   Symbol & Support & Description \\
   \hline
       \textcolor{red}{$M_0$} & $0 < \textcolor{red}{M_0} < \infty$ & Initial instantaneous natural mortality rate\\
+      \textcolor{red}{$R_0$} & $0 < \textcolor{red}{R_0} < \infty$ & Unfished average recruitment\\
+      \textcolor{red}{$\ddot{R}$} & $0 < \textcolor{red}{\ddot{R}} < \infty$ & Initial recruitment\\
       \textcolor{red}{$\bar{R}$} & $0 < \textcolor{red}{\bar{R}} < \infty$ & Average recruitment\\
-      \textcolor{red}{$\ddot{R}$} & $\textcolor{red}{\ddot{R}} > 0$ &Initial recruitment\\
       \textcolor{red}{$\alpha_r$} & $\textcolor{red}{\alpha_r} > 0$ & Mode of size-at-recruitment\\
       \textcolor{red}{$\beta_r $} & $\textcolor{red}{\beta_r} > 0$ & Shape parameter for size-at-recruitment\\
-      \textcolor{red}{$R_0$} & $\textcolor{red}{R_0} > 0$ & Unfished average recruitment\\
       \textcolor{red}{$\kappa$} & $\textcolor{red}{\kappa} > 1$ & Recruitment compensation ratio\\
   \hline
   \end{tabular}
@@ -101,9 +101,8 @@ Notice no area index.
 We group the leading model parameters into the vector
 \begin{equation*}
   \textcolor{red}{\boldsymbol\theta} = \{ \textcolor{red}{M_0},
-  \textcolor{red}{\bar{R}}, 
-  \textcolor{red}{\ddot{R}}, \textcolor{red}{\alpha_r},
-  \textcolor{red}{\beta_r}, \textcolor{red}{R_0}, \textcolor{red}{\kappa} \}.
+  \textcolor{red}{R_0}, \textcolor{red}{\ddot{R}}, \textcolor{red}{\bar{R}},
+  \textcolor{red}{\alpha_r}, \textcolor{red}{\beta_r}, \textcolor{red}{\kappa} \}.
 \end{equation*}
 \end{frame}
 
@@ -120,14 +119,17 @@ We group the leading model parameters into the vector
   \hline
       \textcolor{red}{$\alpha_h$} & $\textcolor{red}{\alpha_h} > 0$ & Mode of size-at-recruitment\\
       \textcolor{red}{$\beta_h$} & $\textcolor{red}{\beta_h} > 0$ & Shape parameter for size-at-recruitment\\
-      \textcolor{red}{$\varphi_h$} & $\textcolor{red}{\varphi_h}$ & Instantaneous natural mortality rate\\
+      \textcolor{red}{$\varphi_h$} & $\textcolor{red}{\varphi_h} > 0$ & Instantaneous natural mortality rate\\
+      \textcolor{red}{$\mu_h$} & $\textcolor{red}{\mu_h} > 0$ & Length at 50\% molting probability\\
+      \textcolor{red}{$c_h$} & $\textcolor{red}{c_h} > 0$ & Coefficient of variation of molting probability\\
   \hline
   \end{tabular}
 \end{table}
 We group the growth parameters into the vector
 \begin{equation*}
   \textcolor{red}{\boldsymbol\psi} = \{ \textcolor{red}{\alpha_h}, 
-  \textcolor{red}{\beta_h}, \textcolor{red}{\varphi_h} \}.
+  \textcolor{red}{\beta_h}, \textcolor{red}{\varphi_h}, \textcolor{red}{\mu_h},
+  \textcolor{red}{c_h} \}.
 \end{equation*}
 \end{frame}
 
@@ -142,7 +144,7 @@ We group the growth parameters into the vector
   \hline
   Symbol & Support & Description \\
   \hline
-      \textcolor{red}{$\boldsymbol\nu$} & & Instantaneous natural mortality rate\\
+      \textcolor{red}{$\boldsymbol\nu$} & $\ell \times 1$ & Initial recuitment deviates \\
       \textcolor{red}{$\boldsymbol\xi$} & &  Discard mortality rate\\
   \hline
   \end{tabular}
@@ -238,8 +240,7 @@ Specifically
 %% =========================================================================== %%
 
 \begin{frame}
-\frametitle{Growth increment}
-Growth increment
+\frametitle{Growth increments ($a_{h,\ell}$)}
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.75\linewidth]{../../examples/bbrkc/OneSex/figure/gi.png}
@@ -249,11 +250,149 @@ Growth increment
 %% =========================================================================== %%
 
 \begin{frame}
-\frametitle{Growth}
-Growth transition
+\frametitle{Growth transitions ($\boldsymbol{G}_h$)}
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.75\linewidth]{../../examples/bbrkc/OneSex/figure/growth_transition.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\subsection{Molting}
+\begin{frame}
+\frametitle{Molt probability ($\boldsymbol{P}_h$)}
+The standard deviation of molting probability ($\textcolor{red}{\sigma_h}$) is
+calculated from the coefficient of variation of molting probability
+($\textcolor{red}{c_h}$) as
+\begin{equation*}
+  \sigma_h = \textcolor{red}{\mu_h} \textcolor{red}{c_h}.
+\end{equation*}
+The molting probability ($\boldsymbol{P}_h$) is calculated as
+\begin{equation*}
+  \boldsymbol{P}_h = 1 + (-1 - \exp(\textcolor{red}{\mu_h} - \ell) / \sigma_h)^{-1}.
+\end{equation*}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Molt probability ($\boldsymbol{P}_h$)}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.75\linewidth]{../../examples/bbrkc/OneSex/figure/molt_prob.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Size transitions  ($\boldsymbol{P}_h \boldsymbol{G}_h$)}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.75\linewidth]{../../examples/bbrkc/OneSex/figure/size_transition.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+%% =========================================================================== %%
+
+\section{Natural mortality and survival}
+
+%% =========================================================================== %%
+%% =========================================================================== %%
+
+\subsection{Natural mortality}
+\begin{frame}
+\frametitle{Natural mortality}
+\begin{table}
+  \centering
+  \begin{tabular}{cl}
+  \hline
+  Symbol  & Description \\
+  \hline
+      $\textcolor{red}{M_{0,h}}$ & Initial instantaneous natural mortality rate \\
+      $\sigma_M$ & Standard deviation of natural mortality \\
+      $\delta_i$ & Natural mortality deviate \\
+      $M_{h,i}$ & Natural mortality by sex $h$ and year $i$ \\
+  \hline
+  \end{tabular}
+\end{table}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Natural mortality options}
+Natural mortality ($M$) is assumed to be sex-specific ($h$), size-independent
+($\ell$), and may or may not be constant over time ($i$). The options currently
+available in Gmacs include:
+\begin{enumerate}
+\item Constant natural mortality ($M_{h,i} = \textcolor{red}{M_{0,h}}$)
+\item Random walk (deviates constrained by variance $\sigma^2_M$)
+\item Cubic Spline (deviates constrained by nodes and node placement)
+\item Blocked changes (deviates constrained by variance at specific knots)
+\end{enumerate}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Natural mortality: option 2}
+If time-varying natural mortality is specified using the {\bf random walk}
+option, the model constrains $M_{h,i}$ to be a random-walk process with variance
+$\sigma^2_M$
+\begin{equation*}
+  M_{h,i+1} = 
+  \begin{cases}
+    \textcolor{red}{M_{0,h}} \\
+    M_{h,i} e^{\delta_i}
+  \end{cases},
+\end{equation*}
+where
+\begin{equation*}
+  \delta_i \sim \mathcal{N} \left( 0, \sigma^2_M \right).
+\end{equation*}
+A time-varying natural mortality can be estimated for all years ($i$), or for
+specified blocks of years ($\iota \in i$).
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Natural mortality: option 2}
+Below we present an example in which time-varying natural mortality is estimated
+as a {\bf random walk} process for all years ($i$)
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{figure/M_t_walk.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Natural mortality: option 3}
+If time-varying natural mortality is specified using the {\bf cubic spline}
+option, the model constrains $M_{h,i}$ to be a cubic spline process at
+specified knots. For example, setting
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{figure/M_t_spline.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Natural mortality: option 4}
+If time-varying natural mortality is specified using the {\bf blocked changes}
+option, the model constrains $M_{h,i}$ by the variance ($\sigma^2_M$). For
+example, setting $\sigma^2_M = 0.04$ and four specific years (1976, 1980, 1985,
+1994) we get
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{figure/M_t_block.png}
 \end{figure}
 \end{frame}
 
@@ -350,100 +489,6 @@ $\boldsymbol{y}_{h,i,k} = \boldsymbol{y}_{h,k}$
 %% =========================================================================== %%
 %% =========================================================================== %%
 
-\section{Natural mortality and survival}
-
-%% =========================================================================== %%
-%% =========================================================================== %%
-
-\subsection{Natural mortality}
-\begin{frame}
-\frametitle{Natural mortality}
-\begin{table}
-  \centering
-  \begin{tabular}{cl}
-  \hline
-  Symbol  & Description \\
-  \hline
-      $\textcolor{red}{M_{0,h}}$ &  \\
-      $\sigma_M$ & Standard deviation of natural mortality \\
-      $\delta_i$ & Natural mortality deviate \\
-      $M_{h,i}$ & Natural mortality by sex $h$ and year $i$ \\
-  \hline
-  \end{tabular}
-\end{table}
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Natural mortality options}
-Natural mortality ($M$) is assumed to be sex-specific ($h$), size-independent
-($\ell$), and may or may not be constant over time ($i$). The options currently
-available in Gmacs include:
-\begin{enumerate}
-\item Constant natural mortality ($M_{h,i} = \textcolor{red}{M_{0,h}}$)
-\item Random walk (deviates constrained by variance $\sigma^2_M$)
-\item Cubic Spline (deviates constrained by nodes and node placement)
-\item Blocked changes (deviates constrained by variance at specific knots)
-\end{enumerate}
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Natural mortality: option 2}
-If time-varying natural mortality is specified using the {\bf random walk}
-option, the model constrains $M_{h,i}$ to be a random-walk process with variance
-$\sigma^2_M$
-\begin{equation*}
-  M_{h,i+1} = 
-  \begin{cases}
-    \textcolor{red}{M_{0,h}} \\
-    M_{h,i} e^{\delta_i}
-  \end{cases},
-\end{equation*}
-where
-\begin{equation*}
-  \delta_i \sim \mathcal{N} \left( 0, \sigma^2_M \right).
-\end{equation*}
-A time-varying natural mortality can be estimated for all years ($i$), or for
-specified blocks of years ($\iota \in i$).
-\begin{figure}[!htbp]
-  \centering
-  %\includegraphics[width=0.65\linewidth]{figure/M_t_walk.png}
-\end{figure}
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Natural mortality: option 3}
-If time-varying natural mortality is specified using the {\bf cubic spline}
-option, the model constrains $M_{h,i}$ to be a cubic spline process at
-specified knots. For example, setting
-\begin{figure}[!htbp]
-  \centering
-  \includegraphics[width=0.65\linewidth]{figure/M_t_spline.png}
-\end{figure}
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Natural mortality: option 4}
-If time-varying natural mortality is specified using the {\bf blocked changes}
-option, the model constrains $M_{h,i}$ by the variance ($\sigma^2_M$). For
-example, setting $\sigma^2_M = 0.04$ and four specific years (1976, 1980, 1985,
-1994) we get
-\begin{figure}[!htbp]
-  \centering
-  \includegraphics[width=0.65\linewidth]{figure/M_t_block.png}
-\end{figure}
-\end{frame}
-
-%% =========================================================================== %%
-%% =========================================================================== %%
-
 \section{Recruitment}
 
 %% =========================================================================== %%
@@ -492,7 +537,11 @@ The total unfished numbers in each size category is defined as $R_0
 \begin{equation*}
   \boldsymbol{n}_{h,i} = \left[-\left( \boldsymbol{A}_{h} - \boldsymbol{I}
     \right)^{-1} \boldsymbol{r}_{h,i} \right] e^{\boldsymbol\nu} \quad
-  \text{where} \quad i=1.
+  \text{for} \quad i=1,
+\end{equation*}
+where
+\begin{equation*}
+  \boldsymbol\nu \sim \mathcal{N} \left( 0,  \right).
 \end{equation*}
 \end{frame}
 
@@ -557,6 +606,28 @@ survival ($\boldsymbol{B}_{h,i}$), plus new recruits ($\boldsymbol{r}_{h,i}$)
 %% =========================================================================== %%
 %% =========================================================================== %%
 
+\begin{frame}
+\frametitle{Likelihoods and penalties}
+Likelihoods
+\begin{itemize}
+\item likelihood of catch
+\item likelihood of relative abundance
+\item likelihood of size compositions
+\item likelihood of recruitment deviations
+\item likelihood of growth increment data
+\end{itemize}
+Penalties
+\begin{itemize}
+\item $log_{fdev}$ to ensure they sum to zero
+\item mean $F$ to regularize the solution
+\item constrain $M$ in random walk
+\item recruitment deviations
+\end{itemize}
+
+\end{frame}
+
+%% =========================================================================== %%
+
 \subsection{Log-likelihoods}
 \begin{frame}
 \frametitle{Log-likelihoods}
@@ -584,8 +655,8 @@ location $\mu$ and scale $\sigma$, we write
 \end{equation*}
 The log-likelihood is
 \begin{equation*}
-  \ell(\mu,\sigma^2; x_1,\ldots,x_n) = -\frac{n}{2} \log (2 \pi) - n \log (\sigma) -
-  \frac{1}{2\sigma^2} \sum_i^n (x_i - \mu)^2.
+  \ell(\mu,\sigma^2; x_1,\ldots,x_n) = 0.5 \log (2 \pi) + \log (\sigma) + \log
+  (x) + \frac{1}{2\sigma^2} (x - \mu)^2.
 \end{equation*}
 \end{frame}
 
@@ -608,7 +679,7 @@ The log-likelihood is
 
 \begin{frame}
 \frametitle{Log-likelihoods: relative abundance}
-the catchability coefficient $q$ is treated as a nuisance parameter and
+The catchability coefficient $q$ is treated as a nuisance parameter and
 integrated out of the model (Walters and Ludwig 1994)
 \begin{equation*}
   q = \exp \left( \frac{1}{n} \sum_i \log \left( \frac{I_i}{V_i} \right) \right).
@@ -627,6 +698,26 @@ The log-likelihood is
   &= n \lambda \cancel{-\frac{n}{2} \log (2 \pi)} - n \log (\sigma) - \frac{1}{2\sigma^2} \sum_i^n (x_i - \mu)^2\\
   &= n \lambda - n \log (\sigma) - \frac{1}{2\sigma^2} \sum_i^n (x_i - \mu)^2\\
 \end{align*}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Log-likelihoods: size composition}
+Size composition data is assumed to be multinomail distributed
+\begin{equation*}
+  \boldsymbol{P}_{h,i} = (P_\ell)_{h,i} = \mathcal{M}\text{ultinomial} \left( n_{h,i},
+  \boldsymbol{Q}_{h,i} \right)
+\end{equation*}
+
+Alternatively we could use
+\begin{equation*}
+  \boldsymbol{P}_{h,i} = (P_\ell)_{h,i} = \mathcal{D}\text{irichlet} \left(
+    \textcolor{red}{\lambda_0} n_{h,i} \boldsymbol{Q}_{h,i} \right).
+\end{equation*}
+In this context, $\textcolor{red}{\lambda_0}$ can be thought of as the data
+weight (which may be estimated in the model) and $n_{h,i}$ is the relative
+sample size between years.
 \end{frame}
 
 %% =========================================================================== %%
@@ -654,20 +745,6 @@ Abundance indices
   \frac{1}{\sigma^2_{F_k}} (\bar{F}_k - \hat{F})^2.
 \end{equation*}
 
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Data weighting}
-Log-likelihood, likelihood, distribution
-\begin{align*}
-  \ell (\mu, \sigma^2, \lambda; x) &= \lambda \left( -\frac{1}{2} \log (2 \pi) - \frac{1}{2}
-  \log (\sigma^2) - \frac{1}{2 \sigma^2} (x - \mu)^2 \right)\\
-  p(x|\mu, \sigma^2, \lambda) &= \exp(\lambda) \left( 2 \pi \sigma^2 \right)^{-\frac{1}{2}} \exp \left[ -\frac{1}{2
-      \sigma^2} (x - \mu)^2 \right]\\
-  x|\mu, \sigma^2, \lambda &\sim \mathcal{N} \left( \mu, \lambda \sigma^2 \right)
-\end{align*}
 \end{frame}
 
 %% =========================================================================== %%

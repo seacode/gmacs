@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------- #
-# TwoSex
+# OneSex
 # ----------------------------------------------------------------------------- #
 #require(devtools)
 #devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
@@ -55,12 +55,16 @@ plot_selectivity(M)
 ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
-plot_size_transition(M)
-ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
-dev.off()
-
 plot_growth_transition(M)
 ggsave(paste0(.FIGS, "growth_transition.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+
+plot_molt_prob(M)
+ggsave(paste0(.FIGS, "molt_prob.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+
+plot_size_transition(M)
+ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
 plot_growth_inc(M)
