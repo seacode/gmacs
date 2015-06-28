@@ -4,7 +4,7 @@
 \alias{plot_ssb}
 \title{Plot predicted spawning stock biomass (ssb)}
 \usage{
-plot_ssb(M, xlab = "Year", ylab = "MMB (tonnes)")
+plot_ssb(M, xlab = "Year", ylab = "SSB (tonnes)")
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}

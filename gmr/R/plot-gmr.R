@@ -27,7 +27,7 @@ plot_gmr <- function(M, plot_res = FALSE, target_dir = "", gmr_options = .gmr_op
     # SSB
     cat("Plotting spawning stock biomass...\n")
     plot_ssb(M)
-    fn <- paste0(target_dir, "/", "fig_MMB.png")
+    fn <- paste0(target_dir, "/", "fig_SSB.png")
     ggsave(fn, width = wkey+1*gmr_options$plot_size[1], height = gmr_options$plot_size[2], bg = "white", units = "mm")
     dev.off()
     # Recruitment
