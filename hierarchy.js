@@ -67,6 +67,7 @@ var hierarchy =
     [ "gsm::logisticTrait< named_dvariable >", "df/d63/classgsm_1_1logistic_trait_3_01named__dvariable_01_4.html", null ],
     [ "matrix", "d1/d8d/classmatrix.html", null ],
     [ "acl::negativeLogLikelihood", "d3/d8c/classacl_1_1negative_log_likelihood.html", [
+      [ "acl::dirichlet", "d5/d05/classacl_1_1dirichlet.html", null ],
       [ "acl::multinomial", "d6/d28/classacl_1_1multinomial.html", null ],
       [ "acl::robust_multi", "df/dea/classacl_1_1robust__multi.html", null ]
     ] ],

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['dirichlet',['dirichlet',['../d5/d05/classacl_1_1dirichlet.html',1,'acl']]],
   ['dll_5f3darray',['dll_3darray',['../d2/d88/classdll__3darray.html',1,'']]],
   ['dll_5fadstring',['dll_adstring',['../de/df0/classdll__adstring.html',1,'']]],
   ['dll_5fimatrix',['dll_imatrix',['../dc/d65/classdll__imatrix.html',1,'']]],

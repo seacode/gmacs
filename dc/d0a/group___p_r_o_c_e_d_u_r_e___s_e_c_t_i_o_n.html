@@ -200,7 +200,17 @@ Functions</h2></td></tr>
  discard fisheries, but might be ok to have sex-specific F's.  
 
  TODO 
- -[ ] fix discard mortality rate.</pre> 
+ -[ ] fix discard mortality rate.</pre> <p>Compute growth increments</p>
+<p>Presently based on liner form</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vSizes</td><td>is a vector of size data from which to compute predicted values </td></tr>
+    <tr><td class="paramname">iSex</td><td>is an integer vector indexing sex (1 = male, 2 = female ) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments</dd></dl>
+
 <p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01357">1357</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
@@ -232,19 +242,10 @@ Functions</h2></td></tr>
 <p>Compute growth increments. </p>
 <p>Presently based on liner form </p><pre class="fragment"> @param vSizes is a vector of size data from which to compute predicted values
  @param iSex   is an integer vector indexing sex (1 = male, 2 = female )
- @return dvar_vector of predicted growth increments</pre><p>Presently based on liner form</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vSizes</td><td>is a vector of size data from which to compute predicted values </td></tr>
-    <tr><td class="paramname">iSex</td><td>is an integer vector indexing sex (1 = male, 2 = female ) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>dvar_vector of predicted growth increments </dd></dl>
-<p>Molt increment as a linear function of pre-molt size.</p>
+ @return dvar_vector of predicted growth increments</pre> <p>Molt increment as a linear function of pre-molt size.</p>
 <p>TODO Option for empirical molt increments.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01423">1423</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01420">1420</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -273,7 +274,7 @@ Functions</h2></td></tr>
 <li>Size-dependent mortality</li>
 </ul>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01491">1491</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01488">1488</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -299,18 +300,18 @@ Functions</h2></td></tr>
 <p>Dec 11, 2014. Martell &amp; Ianelli at snowgoose. We had a discussion regarding how to deal with the joint probability of molting and growing to a new size interval for a given length, and the probability of not molting. We settled on using the size-tranistion matrix to represent this joint probability, where the diagonal of the matrix to represent the probability of surviving and molting to a new size interval. The upper diagonal of the size-transition matrix represent the probability of growing to size interval j' given size interval j.</p>
 <p>Oldshell crabs are then the column vector of 1-molt_probabiltiy times the numbers-at-length, and the Newshell crabs is the column vector of molt_probability times the number-at-length.</p>
 <p>Jan 1, 2015. Changed how the equilibrium calculation is done. Use a numerical approach to solve the newshell oldshell initial abundance.</p>
-<p>–––-—————————————————————————————————————————————————————————————————————————-&mdash; Jan 3, 2015. Working with John Levitt on analytical solution instead of the numerical approach. Think we have a soln.</p>
+<p>Jan 3, 2015. Working with John Levitt on analytical solution instead of the numerical approach. Think we have a soln.</p>
 <p>Notation: n = vector of newshell crabs o = vector of oldshell crabs P = diagonal matrix of molting probabilities by size S = diagonal matrix of survival rates by size A = Size transition matrix. r = vector of new recruits (newshell) I = identity matrix.</p>
 <p>The following equations represent the dynamics of newshell and oldshell crabs. n = nSPA + oSPA + r (1) o = oS(I-P)A + nS(I-P)A (2) Objective is to solve the above equations for n and o repsectively. Starting with o: o = n(I-P)S[I-(I-P)S]^(-1) (3) next substitute (3) into (1) and solve for n n = nPSA + n(I-P)S[I-(I-P)S]^(-1)PSA + r</p>
 <p>let B = [I-(I-P)S]^(-1) </p><pre class="fragment">n - nPSA - n(I-P)SBPSA = r
 n(I - PSA - (I-P)SBPSA) = r
 </pre><p>let C = (I - PSA - (I-P)SBPSA)</p>
-<p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash; –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
+<p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
 <p>April 28, 2015. There is no case here for initializing the model at unfished equilibrium conditions. Need to fix this for SRA purposes. SJDM. </p>
-<p>Update numbers-at-length </p><dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
+<p>Update numbers-at-length </p><dl class="section author"><dt>Author</dt><dd>Team</dd></dl>
 <p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a sclaer). New recruits are added based on the estimated aveerage recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01764">1764</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01758">1758</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -342,7 +343,7 @@ n(I - PSA - (I-P)SBPSA) = r
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01651">1651</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01646">1646</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -370,7 +371,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>\( S = exp(-Z) \) </p><dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 <p>ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01541">1541</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01538">1538</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -402,7 +403,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Simulation model</p>
 <p>Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02559">2559</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02527">2527</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -423,12 +424,18 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Calculate predicted catch observations. </p>
 <p>The function uses the Baranov catch equation to predict the retained and discarded catch.</p>
 <p>Assumptions: 1) retained (landed catch) is assume to be newshell male only. 2) discards are all females (new and old) and male only crab. 3) Natural and fishing mortality occur simultaneously. 4) discard is the total number of crab caught and discarded.</p>
-<pre class="fragment"> @param  [description]
- @return NULL</pre> <p>Calculate predicted relative abundance and residuals </p><dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">[description]</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL </dd></dl>
+<p>Calculate predicted relative abundance and residuals </p><dl class="section author"><dt>Author</dt><dd>Steve Martell</dd></dl>
 <p>This function uses the conditional mle for q to scale the population to the relative abundance index. Assumed errors in relative abundance are lognormal. Currently assumes that the CPUE index is made up of both retained and discarded crabs.</p>
 <p>Question regarding use of shell condition in the relative abundance index. Currenlty there is no shell condition information in the CPUE data, should there be? Similarly, there is no mature immature information, should there be?</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02047">2047</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02032">2032</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -464,7 +471,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Call function to get the appropriate numbers-at-length.</p>
 <p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond) [ ] </p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02299">2299</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02274">2274</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -499,16 +506,16 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Dec 11, 2014. Martell &amp; Ianelli at snowgoose. We had a discussion regarding how to deal with the joint probability of molting and growing to a new size interval for a given length, and the probability of not molting. We settled on using the size-tranistion matrix to represent this joint probability, where the diagonal of the matrix to represent the probability of surviving and molting to a new size interval. The upper diagonal of the size-transition matrix represent the probability of growing to size interval j' given size interval j.</p>
 <p>Oldshell crabs are then the column vector of 1-molt_probabiltiy times the numbers-at-length, and the Newshell crabs is the column vector of molt_probability times the number-at-length.</p>
 <p>Jan 1, 2015. Changed how the equilibrium calculation is done. Use a numerical approach to solve the newshell oldshell initial abundance.</p>
-<p>–––-—————————————————————————————————————————————————————————————————————————-&mdash; Jan 3, 2015. Working with John Levitt on analytical solution instead of the numerical approach. Think we have a soln.</p>
+<p>Jan 3, 2015. Working with John Levitt on analytical solution instead of the numerical approach. Think we have a soln.</p>
 <p>Notation: n = vector of newshell crabs o = vector of oldshell crabs P = diagonal matrix of molting probabilities by size S = diagonal matrix of survival rates by size A = Size transition matrix. r = vector of new recruits (newshell) I = identity matrix.</p>
 <p>The following equations represent the dynamics of newshell and oldshell crabs. n = nSPA + oSPA + r (1) o = oS(I-P)A + nS(I-P)A (2) Objective is to solve the above equations for n and o repsectively. Starting with o: o = n(I-P)S[I-(I-P)S]^(-1) (3) next substitute (3) into (1) and solve for n n = nPSA + n(I-P)S[I-(I-P)S]^(-1)PSA + r</p>
 <p>let B = [I-(I-P)S]^(-1) </p><pre class="fragment">n - nPSA - n(I-P)SBPSA = r
 n(I - PSA - (I-P)SBPSA) = r
 </pre><p>let C = (I - PSA - (I-P)SBPSA)</p>
-<p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash; –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
+<p>then n = C^(-1) r (4) –––-—————————————————————————————————————————————————————————————————————————-&mdash;</p>
 <p>April 28, 2015. There is no case here for initializing the model at unfished equilibrium conditions. Need to fix this for SRA purposes. SJDM.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01683">1683</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01679">1679</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -548,7 +555,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Call function to get the appropriate numbers-at-length.</p>
 <p>TODO: [x] Check to ensure new shell old shell is working. [ ] Add maturity component for data sets with mature old and mature new. [ ] Issue 53, comps/total(sex,shell cond) [ ]</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02181">2181</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02159">2159</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -606,7 +613,7 @@ n(I - PSA - (I-P)SBPSA) = r
 
 <p>Calculate stock recruitment relationship. </p>
 <p>Assuming a Beverton-Holt relationship between the mature biomass (user defined) and the annual recruits. Note that we derive so and bb in R = so * MB / (1 + bb * Mb) from Ro and steepness (leading parameters defined in theta).</p>
-<p>NOTES: if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minumization. </p>
+<p>NOTES: if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization. </p>
 <p>Calculate predicted catch observations</p>
 <p>The function uses the Baranov catch equation to predict the retained and discarded catch.</p>
 <p>Assumptions: 1) retained (landed catch) is assume to be newshell male only. 2) discards are all females (new and old) and male only crab. 3) Natural and fishing mortality occur simultaneously. 4) discard is the total number of crab caught and discarded.</p>
@@ -618,7 +625,7 @@ n(I - PSA - (I-P)SBPSA) = r
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01942">1942</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01933">1933</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -643,7 +650,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data.</p>
 <p>Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01617">1617</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01613">1613</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -689,7 +696,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Penalty to constrain random walk in natural mortaliy rates</li>
 </ol>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02468">2468</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l02444">2444</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -721,7 +728,6 @@ n(I - PSA - (I-P)SBPSA) = r
 <li>Based on slx_type, fill pointer with parameter estimates.</li>
 <li><p class="startli">Loop over years and block-in the log_selectivity at mid points.</p>
 <p class="startli">Need to deprecate the abstract class for selectivity, 7X slower.</p>
-<p class="startli">APRIL 28, 15, Finally fixed DF_dflog error</p>
 </li>
 </ol>
 
@@ -748,9 +754,9 @@ n(I - PSA - (I-P)SBPSA) = r
 <p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a sclaer). New recruits are added based on the estimated aveerage recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd). </p>
 <p>Calculate stock recruitment relationship.</p>
 <p>Assuming a Beverton-Holt relationship between the mature biomass (user defined) and the annual recruits. Note that we derive so and bb in R = so * MB / (1 + bb * Mb) from Ro and steepness (leading parameters defined in theta).</p>
-<p>NOTES: if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minumization.</p>
+<p>NOTES: if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.</p>
 
-<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01852">1852</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/da9/gmacs_8tpl_source.html#l01846">1846</a> of file <a class="el" href="../../dd/da9/gmacs_8tpl_source.html">gmacs.tpl</a>.</p>
 
 </div>
 </div>
@@ -759,7 +765,7 @@ n(I - PSA - (I-P)SBPSA) = r
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jun 25 2015 00:10:32 for GMACS by
+    <li class="footer">Generated on Sun Jun 28 2015 12:40:01 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>
