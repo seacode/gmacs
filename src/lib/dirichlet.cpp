@@ -7,7 +7,6 @@
 #endif
 
 
-
 /**
  * @brief Dirichlet desity function.
  * @details Negative log likelihood using the Dirichlet distribution.
@@ -18,9 +17,8 @@
  * @param p predicted proportions
  * @return negative loglikelihood.
  */
- /* 
-const dvariable acl::dirichlet::negativeLogLikelihood(
-const dvar_vector& alpha_o,
+const dvariable acl::dirichlet::pdf(
+				    const dvar_vector& alpha_o,
 				    const dvar_vector& alpha_t, 
 				    const dmatrix& o, 
 				    const dvar_matrix& p) const
@@ -33,7 +31,7 @@ const dvar_vector& alpha_o,
 		ad_exit(1);
 	}
 
-	dvar_vector vn = mfexp(log_vn);
+	dvar_vector vn = mfexp(alpha_t);
 	dvariable ff = 0;
 	int r1 = o.rowmin();
 	int r2 = o.rowmax();
@@ -52,4 +50,3 @@ const dvar_vector& alpha_o,
 	}
 	return ff;
 }
- */ 

@@ -6,7 +6,6 @@
 #define TINY     1.e-08
 
 
-
 /**
  * @file nloglike.h 
  * @defgroup Likelihoods
@@ -18,8 +17,6 @@
  */
 namespace acl
 {
-
-
 	/**
 	 * Base class for negative loglikelihoods used in composition data.
 	 * @details This class has two virtual methods: nloglike and residual.
@@ -104,14 +101,14 @@ namespace acl
 	class multinomial: public negativeLogLikelihood
 	{
 	private:
-		bool        m_bCompress;
-		dvariable   m_log_vn;
-		dvar_matrix m_P;
+	  bool        m_bCompress;
+	  dvariable   m_log_vn;
+	  dvar_matrix m_P;
 
 	public:
 
-		multinomial(const dmatrix &_O,const bool bCompress=false)
-		: negativeLogLikelihood(_O),m_bCompress(bCompress) 
+		multinomial(const dmatrix &_O, const bool bCompress=false)
+		: negativeLogLikelihood(_O), m_bCompress(bCompress) 
 		{
 			if(m_bCompress) tail_compression();
 		}
@@ -149,12 +146,12 @@ namespace acl
 		
 		
 		const dvariable dmultinom(const dvar_vector& log_vn,
-	                          const dmatrix& o, 
-	                          const dvar_matrix& p) const;
+					  const dmatrix& o, 
+					  const dvar_matrix& p) const;
 
 		const dmatrix pearson_residuals(const dvar_vector& log_vn,
-                  									const dmatrix& o,
-                  									const dvar_matrix p) const;
+						const dmatrix& o,
+						const dvar_matrix p) const;
 	};
 
 
@@ -166,13 +163,13 @@ namespace acl
 	class robust_multi: public negativeLogLikelihood
 	{
 	private:
-		bool        m_bCompress;
-		dvariable   m_log_vn;
-		dvar_matrix m_P;
+	  bool        m_bCompress;
+	  dvariable   m_log_vn;
+	  dvar_matrix m_P;
 
 	public:
 		
-		robust_multi(const dmatrix &_O,const bool bCompress=false)
+		robust_multi(const dmatrix &_O, const bool bCompress=false)
 		: negativeLogLikelihood(_O),m_bCompress(bCompress) 
 		{
 			if(m_bCompress) tail_compression();
@@ -214,8 +211,8 @@ namespace acl
 		
 
 		const dmatrix pearson_residuals(const dmatrix& o,
-                  						const dvar_matrix p,
-                  						const dvar_vector& log_vn) const;
+						const dvar_matrix p,
+						const dvar_vector& log_vn) const;
 		
 	};
 
@@ -224,30 +221,50 @@ namespace acl
 	 * @details This is a derived class which inherits the virtual methods
 	 * in negativeLogLikelihood.
 	 */
-	/*
 	class dirichlet: public negativeLogLikelihood
 	{
 	private:
-		bool        m_bCompress;
-      dvar_vector alpha_o;
-			dvar_vector alpha_t; 
-			dmatrix o;
-			dvar_matrix p;
+	  bool        m_bCompress;
+	  dvariable   m_log_vn;
+	  dvar_matrix m_P;
 
 	public:
 		
-		dirichlet(const dmatrix &_O,const bool bCompress=false)
-		: negativeLogLikelihood( const dvar_vector& alpha_o,
-				    const dvar_vector& alpha_t, 
-				    const dmatrix& o, 
-				    const dvar_matrix& p) const
+		dirichlet(const dmatrix &_O, const bool bCompress=false)
+		: negativeLogLikelihood(_O), m_bCompress(bCompress) 
+		{
+			if(m_bCompress) tail_compression();
+		}
 
 		~dirichlet();
 
+		dvariable get_n()      const { return m_log_vn;    }
+		void      set_n(dvariable _n){ this->m_log_vn = _n;}
+
+		dvar_matrix get_P()         const { return m_P;    }
+		void        set_P(dvar_matrix _P) { this->m_P = _P;}
+
+	
+		// negative log likelihood
+		const dvariable nloglike(const dvar_vector& log_vn, const dvar_matrix& _P) const 
+		{
+			if(m_bCompress)
+			{
+				dmatrix     Or = compress(this->get_O());
+				dvar_matrix Pr = compress(_P);
+				return pdf(log_vn,Or,Pr);
+			}
+			else
+			{
+				return pdf(log_vn,this->get_O(),_P);	
+			}
+		}
+
+		const dvariable pdf(const dvar_vector& log_vn,
+				    const dmatrix& o, 
+				    const dvar_matrix& p) const;
     };
-	*/
 
 } // end of acl namespace
-
 
 #endif

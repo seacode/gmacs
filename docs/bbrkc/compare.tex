@@ -1,17 +1,22 @@
 \documentclass{beamer}
 \usetheme{Boadilla}
 \usefonttheme{serif}
-%\usepackage{amscd}
+
+%% =========================================================================== %%
+
 \usepackage{amsmath}
 \usepackage[makeroom]{cancel}
 \usepackage{verbatim}
-%\usepackage{amssymb}
+\usepackage[sort]{natbib}
+
+%% =========================================================================== %%
 
 \title{Gmacs}
 \subtitle{BBRKC model comparisons}
 \author{The Gmacs Development Team}
 %\institute{Quantifish}
 \date{\today}
+
 \begin{document}
 
 %% =========================================================================== %%
@@ -40,9 +45,9 @@
 This presentation provides a comparison between three different Bristol Bay Red
 King Crab (BBRKC) stock assessment models. These models inlcude:
 \begin{itemize}
-\item OneSex
-\item TwoSex
-\item Zheng
+\item {\bf OneSex}
+\item {\bf TwoSex}
+\item {\bf Zheng}~\citep{zheng_bristol_2015}
 \end{itemize}
 \end{frame}
 
@@ -126,45 +131,16 @@ We group the latent states into the vector
 \end{frame}
 
 %% =========================================================================== %%
+%% =========================================================================== %%
 
-\subsection{Other variables}
-\begin{frame}
-\frametitle{Other variables}
-
-\begin{table}
-  \centering
-  \begin{tabular}{ccl}
-  \hline
-  Symbol  & Dimensions & Description \\
-  \hline
-      $\boldsymbol{w}_{h}$ & $\ell \times 1$ & Mean weight at length ($\ell$) by sex ($h$) \\
-      $\boldsymbol{m}_{h} $ & $\ell \times 1$ & Average proportion mature at length ($\ell$) by sex ($h$) \\
-  \hline
-  \end{tabular}
-\end{table}
-
-\begin{equation*}
-  \boldsymbol{w}_{h} = f_w(\ell,\theta)
-\end{equation*}
-
-\begin{equation*}
-  \boldsymbol{m}_{h} = f_m(\ell,\theta)
-\end{equation*}
-
-
-\end{frame}
+\section{Size, weight, molting and growth}
 
 %% =========================================================================== %%
 %% =========================================================================== %%
 
-\section{Size, weight and growth}
-
-%% =========================================================================== %%
-%% =========================================================================== %%
-
-\subsection{Size-weight ($w_{h,\ell}$)}
 \begin{frame}
 \frametitle{Size-weight ($w_{h,\ell}$)}
+Mean weight at size ($\ell$) by sex ($h$)
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.75\linewidth]{figure/length_weight-1.png}
@@ -173,13 +149,25 @@ We group the latent states into the vector
 
 %% =========================================================================== %%
 
-\subsection{Growth}
+%\subsection{Maturity ($m_{h,\ell}$)}
+%\begin{frame}
+%Average proportion mature at length ($\ell$) by sex ($h$)
+%\frametitle{Size-weight ($m_{h,\ell}$)}
+%\begin{figure}[!htbp]
+%  \centering
+%  \includegraphics[width=0.75\linewidth]{figure/length_weight-1.png}
+%\end{figure}
+%\end{frame}
+
+%% =========================================================================== %%
+
 \begin{frame}
 \frametitle{Growth increments ($a_{h,\ell}$)}
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.75\linewidth]{figure/growth_inc-1.png}
 \end{figure}
+No comparison with~\citet{zheng_bristol_2015} on plot.
 \end{frame}
 
 %% =========================================================================== %%
@@ -190,12 +178,10 @@ We group the latent states into the vector
   \centering
   \includegraphics[width=0.75\linewidth]{figure/growth_trans-1.png}
 \end{figure}
-No comparison with Zheng on plot.
 \end{frame}
 
 %% =========================================================================== %%
 
-\subsection{Molting}
 \begin{frame}
 \frametitle{Molt probability ($\boldsymbol{P}_h$)}
 \begin{figure}[!htbp]
@@ -217,18 +203,17 @@ No comparison with Zheng on plot.
 %% =========================================================================== %%
 %% =========================================================================== %%
 
-\section{Natural mortality and survival}
+\section{Natural mortality}
 
 %% =========================================================================== %%
 %% =========================================================================== %%
 
-\subsection{Natural mortality}
 \begin{frame}
-\frametitle{Natural mortality: option 4}
-If time-varying natural mortality is specified using the {\bf blocked changes}
-option, the model constrains $M_{h,i}$ by the variance ($\sigma^2_M$). For
-example, setting $\sigma^2_M = 0.04$ and four specific years (1976, 1980, 1985,
-1994) we get
+\frametitle{Natural mortality}
+Time-varying natural mortality is specified using the {\bf blocked changes}
+option in Gmacs. The model constrains $M_{h,i}$ by the variance
+($\sigma^2_M$). We used the parameters $\sigma^2_M = 0.04$ and four specific
+years (1976, 1980, 1985, 1994) we get
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.65\linewidth]{figure/natural_mortality-1.png}
@@ -252,6 +237,7 @@ $\boldsymbol{y}_{h,i,k} = \boldsymbol{y}_{h,k}$
   \centering
   \includegraphics[width=0.6\linewidth]{figure/selectivity-1.png}
 \end{figure}
+No comparison with~\citet{zheng_bristol_2015} on plot.
 \end{frame}
 
 %% =========================================================================== %%
@@ -262,6 +248,7 @@ $\boldsymbol{y}_{h,i,k} = \boldsymbol{y}_{h,k}$
   \centering
   \includegraphics[width=0.6\linewidth]{figure/fit_to_catch-1.png}
 \end{figure}
+No comparison with~\citet{zheng_bristol_2015} on plot.
 \end{frame}
 
 %% =========================================================================== %%
@@ -300,7 +287,6 @@ Recruitment size-distribution
 
 %% =========================================================================== %%
 
-\subsection{Initialization}
 \begin{frame}
 \frametitle{Initial numbers}
 \begin{figure}[!htbp]
@@ -335,6 +321,7 @@ Recruitment size-distribution
   \centering
   \includegraphics[width=0.6\linewidth]{figure/sc_pot_m-1.png}
 \end{figure}
+No comparison with~\citet{zheng_bristol_2015} on plot.
 \end{frame}
 
 %% =========================================================================== %%
@@ -351,6 +338,14 @@ Recruitment size-distribution
   \centering
   \includegraphics[width=0.6\linewidth]{figure/spawning_stock_biomass-1.png}
 \end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{References}
+\bibliographystyle{agsm}
+\bibliography{../references/Gmacs}
 \end{frame}
 
 %% =========================================================================== %%

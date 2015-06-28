@@ -4,15 +4,15 @@
 \alias{plot_natural_mortality}
 \title{Plot natural mortality}
 \usage{
-plot_natural_mortality(M, plt_surface = FALSE)
+plot_natural_mortality(M, plt_knots = TRUE)
 }
 \arguments{
 \item{M}{list object created by read_admb function}
 
-\item{plt_surface}{include a panel with surface over size-time}
+\item{plt_knots}{if the knots should be plotted or not}
 }
 \value{
-Plot natural mortality over time (and size)
+plot of natural mortality
 }
 \description{
 Plot natural mortality

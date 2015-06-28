@@ -13,6 +13,7 @@ src/nloglike.obj
 src/robust_multi.obj
 src/spr.obj
 src/tailcompression.obj
+*~
 
 # Latex files
 *.aux

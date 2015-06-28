@@ -5,8 +5,7 @@
 #if defined _WIN32 || defined _WIN64
 	#include "include\nloglike.h"
 #endif
-	
-	
+
 
 /**
  * @brief robust multinomial desity function with estimated effective sample size.

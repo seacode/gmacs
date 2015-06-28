@@ -58,7 +58,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
    1      3    100  120  0    1      1    -1      12.5  12.5  12.5   1975   2014
-   2      3    110  130  0    1      1    -2      12.5  12.5  12.5   1975   2014 
+   2      3    110  130  0    1      1    -2      12.5  12.5  12.5   1975   2014
    3      3     80  100  1    1      1    -3      12.5  12.5  12.5   1975   1981
    3      3     90   95  1    1      1    -4      12.5  12.5  12.5   1982   2014
    4      3     80   90  0    1      1    -5      12.5  12.5  12.5   1975   2014
@@ -116,15 +116,15 @@
 ##      1 = Random walk (deviates constrained by variance in M)
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
-  1
+  0
 ## Phase of estimation
   4
 ## STDEV in m_dev for Random walk
   0.20
 ## Number of nodes for cubic spline or number of step-changes for option 3
-  58
+  1
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1953 1954 1955 1956 1957 1958 1959 1960 1961 1962 1963 1964 1965 1967 1968 1970 1971 1972 1973 1974 1975 1976 1977 1980 1981 1982 1983 1984 1985 1986 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014
+   1953
 
 
 

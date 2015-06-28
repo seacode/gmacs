@@ -16,6 +16,6 @@ object of type 'list' with ADMB outputs therein
 Read ADMB .par, .std, and .cor file and return an R object of type 'list' of estimates and correlations
 }
 \author{
-Steve Martell, Anders Nielsen, Athol Whitten
+Steve Martell, Anders Nielsen, Athol Whitten, D'Arcy N. Webber
 }
 

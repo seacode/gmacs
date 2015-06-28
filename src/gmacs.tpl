@@ -1602,8 +1602,6 @@ FUNCTION update_population_numbers_at_length
 	 * 
 	 */
 FUNCTION calc_stock_recruitment_relationship
-
-	
 	dvariable so, bb;
 	dvariable ro = mfexp(logR0);
 	dvariable phiB;
@@ -1646,8 +1644,6 @@ FUNCTION calc_stock_recruitment_relationship
 		// Insert terminal molt case here.
 
 
-		
-
 	}
 	dvariable bo = ro * phiB;
 
@@ -1676,7 +1672,6 @@ FUNCTION calc_stock_recruitment_relationship
 
 		case 1:	// SRR model
 			//xi(byr,nyr) = log(recruits(byr,nyr)) - log(rhat(byr,nyr)) + sig2R;
-			
 			res_recruit(byr,nyr) = log(recruits(byr,nyr)) 
 			                       - (1.0-rho) * log(rhat(byr,nyr)) 
 			                       - rho * log(++recruits(byr-1,nyr-1))
@@ -1695,7 +1690,6 @@ FUNCTION calc_stock_recruitment_relationship
 	 *  2) discards are all females (new and old) and male only crab.
 	 *  3) Natural and fishing mortality occur simultaneously.
 	 *  4) discard is the total number of crab caught and discarded.
-	 *  
 	 * 
 	 * @param  [description]
 	 * @return NULL

@@ -112,6 +112,10 @@ names(M) <- basename(.MODELDIR)
 length(M)
 
 table_spr(M)
+table_priors(M)
+table_likelihoods(M)
+table_penalties(M)
+
 plot_datarange(M) # not right
 plot_catch(M)
 plot_cpue(M)

@@ -7,7 +7,6 @@
 #endif
 
 
-
 /**
  * @brief multinomial desity function with estimated effective sample size.
  * @details Negative log likelihood using the multinomial distribution.	

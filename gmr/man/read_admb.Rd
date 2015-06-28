@@ -16,6 +16,6 @@ object of type 'list' with ADMB outputs as list elements
 Read ADMB output files .rep, .par, and .cor and return an R object of type 'list'
 }
 \author{
-Steve Martell, Anders Nielsen, Athol Whitten
+Steve Martell, Anders Nielsen, Athol Whitten, D'Arcy N. Webber
 }
 
