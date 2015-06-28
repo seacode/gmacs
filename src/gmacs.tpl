@@ -1700,7 +1700,6 @@ FUNCTION calc_predicted_catch
 	dvar_vector sel(1,nclass);
 	dvar_vector nal(1,nclass);      // numbers or biomass at length.
 	
-
 	for(int kk = 1; kk <= nCatchDF; kk++ )
 	{
 		for( j = 1; j <= nCatchRows(kk); j++ )
@@ -1819,7 +1818,6 @@ FUNCTION calc_relative_abundance
 	dvar_vector nal(1,nclass);  // numbers at length
 	dvar_vector sel(1,nclass);  // selectivity at length
 
-
 	for( k = 1; k <= nSurveys; k++ )
 	{
 		dvar_vector V(1,nSurveyRows(k));    
@@ -1920,7 +1918,6 @@ FUNCTION calc_relative_abundance
 	 *  [x] Check to ensure new shell old shell is working.
 	 *  [ ] Add maturity component for data sets with mature old and mature new.
 	 *  [ ] Issue 53, comps/total(sex,shell cond) 
-	 *  [ ]
 	 */
 FUNCTION calc_predicted_composition
 	int h,i,j,k,ig;
