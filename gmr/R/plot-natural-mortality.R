@@ -43,7 +43,7 @@
 #' @author J Ianelli, SJD Martell, DN Webber
 #' @export
 #' 
-plot_natural_mortality <- function(M, plt_knots = TRUE)
+plot_natural_mortality <- function(M, plt_knots = TRUE, knots = c(1976, 1980, 1985, 1994))
 {
     mdf <- .get_M_df(M)
     if (length(M) == 1)
@@ -60,7 +60,6 @@ plot_natural_mortality <- function(M, plt_knots = TRUE)
     }
     if (plt_knots)
     {
-        knots <- c(1976, 1980, 1985, 1994)
         mdf$Knot <- NA
         mdf$Knot[mdf$Year %in% knots] <- mdf$M[mdf$Year %in% knots]
         p <- p + geom_point(data = mdf, aes(x = Year, y = Knot, colour = Model)) +

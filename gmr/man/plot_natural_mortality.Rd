@@ -4,7 +4,8 @@
 \alias{plot_natural_mortality}
 \title{Plot natural mortality}
 \usage{
-plot_natural_mortality(M, plt_knots = TRUE)
+plot_natural_mortality(M, plt_knots = TRUE, knots = c(1976, 1980, 1985,
+  1994))
 }
 \arguments{
 \item{M}{list object created by read_admb function}

@@ -95,6 +95,8 @@ Notice no area index.
       \textcolor{red}{$\alpha_r$} & $\textcolor{red}{\alpha_r} > 0$ & Mode of size-at-recruitment\\
       \textcolor{red}{$\beta_r $} & $\textcolor{red}{\beta_r} > 0$ & Shape parameter for size-at-recruitment\\
       \textcolor{red}{$\kappa$} & $\textcolor{red}{\kappa} > 1$ & Recruitment compensation ratio\\
+      %\textcolor{red}{$h$} & $\textcolor{red}{h} > 1$ & Stock recruit steepness\\
+      \textcolor{red}{$\rho$} & $\textcolor{red}{\rho} > 1$ & Recruitment autocorrelation\\
   \hline
   \end{tabular}
 \end{table}
@@ -108,33 +110,6 @@ We group the leading model parameters into the vector
 
 %% =========================================================================== %%
 
-\subsection{Growth parameters}
-\begin{frame}
-\frametitle{Growth parameters}
-\begin{table}
-  \centering
-  \begin{tabular}{ccl}
-  \hline
-  Symbol & Support & Description \\
-  \hline
-      \textcolor{red}{$\alpha_h$} & $\textcolor{red}{\alpha_h} > 0$ & Mode of size-at-recruitment\\
-      \textcolor{red}{$\beta_h$} & $\textcolor{red}{\beta_h} > 0$ & Shape parameter for size-at-recruitment\\
-      \textcolor{red}{$\varphi_h$} & $\textcolor{red}{\varphi_h} > 0$ & Instantaneous natural mortality rate\\
-      \textcolor{red}{$\mu_h$} & $\textcolor{red}{\mu_h} > 0$ & Length at 50\% molting probability\\
-      \textcolor{red}{$c_h$} & $\textcolor{red}{c_h} > 0$ & Coefficient of variation of molting probability\\
-  \hline
-  \end{tabular}
-\end{table}
-We group the growth parameters into the vector
-\begin{equation*}
-  \textcolor{red}{\boldsymbol\psi} = \{ \textcolor{red}{\alpha_h}, 
-  \textcolor{red}{\beta_h}, \textcolor{red}{\varphi_h}, \textcolor{red}{\mu_h},
-  \textcolor{red}{c_h} \}.
-\end{equation*}
-\end{frame}
-
-%% =========================================================================== %%
-
 \subsection{Latent states}
 \begin{frame}
 \frametitle{Latent states}
@@ -142,17 +117,19 @@ We group the growth parameters into the vector
   \centering
   \begin{tabular}{ccl}
   \hline
-  Symbol & Support & Description \\
+  Symbol & Dimensions & Description \\
   \hline
+      \textcolor{red}{$\delta_i$} & $1$ & Annual natrual mortality rate deviates \\
       \textcolor{red}{$\boldsymbol\nu$} & $\ell \times 1$ & Initial recuitment deviates \\
-      \textcolor{red}{$\boldsymbol\xi$} & &  Discard mortality rate\\
+      \textcolor{red}{$xi_{i,k}$} & $1$ &  Discard mortality rate for each gear
+      $k$ in year $i$\\
   \hline
   \end{tabular}
 \end{table}
 We group the latent states into the vector
 \begin{equation*}
   \textcolor{red}{\boldsymbol\omega} = \{ \textcolor{red}{\boldsymbol\nu},
-  \textcolor{red}{\boldsymbol\xi} \}.
+  \xi, \delta_i \}.
 \end{equation*}
 \end{frame}
 
@@ -210,9 +187,34 @@ boundary conditions can be used instead.
 %% =========================================================================== %%
 %% =========================================================================== %%
 
-\subsection{Growth}
 \begin{frame}
-\frametitle{Growth}
+\frametitle{Growth parameters}
+\begin{table}
+  \centering
+  \begin{tabular}{ccl}
+  \hline
+  Symbol & Support & Description \\
+  \hline
+      \textcolor{red}{$\alpha_h$} & $\textcolor{red}{\alpha_h} > 0$ & Mode of size-at-recruitment\\
+      \textcolor{red}{$\beta_h$} & $\textcolor{red}{\beta_h} > 0$ & Shape parameter for size-at-recruitment\\
+      \textcolor{red}{$\varphi_h$} & $\textcolor{red}{\varphi_h} > 0$ & Instantaneous natural mortality rate\\
+      \textcolor{red}{$\mu_h$} & $\textcolor{red}{\mu_h} > 0$ & Length at 50\% molting probability\\
+      \textcolor{red}{$c_h$} & $\textcolor{red}{c_h} > 0$ & Coefficient of variation of molting probability\\
+  \hline
+  \end{tabular}
+\end{table}
+We group the growth parameters into the vector
+\begin{equation*}
+  \textcolor{red}{\boldsymbol\psi} = \{ \textcolor{red}{\alpha_h}, 
+  \textcolor{red}{\beta_h}, \textcolor{red}{\varphi_h}, \textcolor{red}{\mu_h},
+  \textcolor{red}{c_h} \}.
+\end{equation*}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Growth matrix}
 The average molt increment from size class $\ell$ to $\ell'$ is assumed to be
 sex-specific and is defined by the linear function
 \begin{equation*}
@@ -261,9 +263,10 @@ Specifically
 
 \subsection{Molting}
 \begin{frame}
-\frametitle{Molt probability ($\boldsymbol{P}_h$)}
+\frametitle{Molting probability ($\boldsymbol{P}_h$)}
 The standard deviation of molting probability ($\textcolor{red}{\sigma_h}$) is
-calculated from the coefficient of variation of molting probability
+calculated from the length at 50\% molting probability
+($\textcolor{red}{\mu_h}$) coefficient of variation of molting probability
 ($\textcolor{red}{c_h}$) as
 \begin{equation*}
   \sigma_h = \textcolor{red}{\mu_h} \textcolor{red}{c_h}.
@@ -272,12 +275,15 @@ The molting probability ($\boldsymbol{P}_h$) is calculated as
 \begin{equation*}
   \boldsymbol{P}_h = 1 + (-1 - \exp(\textcolor{red}{\mu_h} - \ell) / \sigma_h)^{-1}.
 \end{equation*}
+The molting probability ($\boldsymbol{P}_h$) and the growth probability
+($\boldsymbol{G}_h$) are combined to yield the size transition matrix
+($\boldsymbol{P}_h \boldsymbol{G}_h$).
 \end{frame}
 
 %% =========================================================================== %%
 
 \begin{frame}
-\frametitle{Molt probability ($\boldsymbol{P}_h$)}
+\frametitle{Molting probability ($\boldsymbol{P}_h$)}
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.75\linewidth]{../../examples/bbrkc/OneSex/figure/molt_prob.png}
@@ -313,7 +319,7 @@ The molting probability ($\boldsymbol{P}_h$) is calculated as
   \hline
       $\textcolor{red}{M_{0,h}}$ & Initial instantaneous natural mortality rate \\
       $\sigma_M$ & Standard deviation of natural mortality \\
-      $\delta_i$ & Natural mortality deviate \\
+      $\textcolor{red}{\delta_i}$ & Natural mortality deviate \\
       $M_{h,i}$ & Natural mortality by sex $h$ and year $i$ \\
   \hline
   \end{tabular}
@@ -331,7 +337,8 @@ available in Gmacs include:
 \item Constant natural mortality ($M_{h,i} = \textcolor{red}{M_{0,h}}$)
 \item Random walk (deviates constrained by variance $\sigma^2_M$)
 \item Cubic Spline (deviates constrained by nodes and node placement)
-\item Blocked changes (deviates constrained by variance at specific knots)
+\item Blocked changes (deviates constrained by variance in specified blocks
+  $\iota \in i$)
 \end{enumerate}
 \end{frame}
 
@@ -345,13 +352,13 @@ $\sigma^2_M$
 \begin{equation*}
   M_{h,i+1} = 
   \begin{cases}
-    \textcolor{red}{M_{0,h}} \\
-    M_{h,i} e^{\delta_i}
+    \textcolor{red}{M_{0,h}} \quad \text{for} \quad i=1\\
+    M_{h,i} e^{\textcolor{red}{\delta_i}} \quad \text{for} \quad i>1
   \end{cases},
 \end{equation*}
 where
 \begin{equation*}
-  \delta_i \sim \mathcal{N} \left( 0, \sigma^2_M \right).
+  \textcolor{red}{\delta_i} \sim \mathcal{N} \left( 0, \sigma^2_M \right).
 \end{equation*}
 A time-varying natural mortality can be estimated for all years ($i$), or for
 specified blocks of years ($\iota \in i$).
@@ -419,7 +426,8 @@ example, setting $\sigma^2_M = 0.04$ and four specific years (1976, 1980, 1985,
       \textcolor{red}{$r_{h,i,k}$} & $1$ & Length at 50\% \\
       \textcolor{red}{$\sigma^y_{h,i,k}$} & $1$ & Standard deviation in length at retention \\
       $\boldsymbol{y}_{h,i,k}$ & $\ell \times 1$ & Length at 50\% retention in length interval $\ell$ \\
-      \textcolor{red}{$\xi_{h,k}$} & $1$ & Discard mortality rate for sex $h$ and gear $k$ \\
+      \textcolor{red}{$\xi_{i,k}$} & $1$ & Discard mortality rate for gear $k$
+      in year $i$ \\
       $\boldsymbol\nu_{h,i,k}$ & $\ell \times 1$ & Vulnerability due to fishing mortality for sex $h$ \\
       $\bar{\boldsymbol{f}}_k$ & $i \times 1$ & Average fishing mortality rate for gear $k$ \\
       $\boldsymbol\Psi_{k,i}$ & & Fishing mortality deviate for gear $k$ in year $i$ \\
@@ -451,10 +459,10 @@ The joint probability of vulnerability due to fishing and discard mortality
 is
 \begin{equation*}
   \boldsymbol\nu_{h,i,k} = \boldsymbol{s}_{h,i,k} \left[ \boldsymbol{y}_{h,i,k} + (1 - \boldsymbol{y}_{h,i,k})
-    \textcolor{red}{\xi_{h,k}} \right],
+    \textcolor{red}{\xi_{i,k}} \right],
 \end{equation*}
-where $\textcolor{red}{\xi_{h,k}}$ is the discard mortality rate for sex $h$ in
-fishery $k$.
+where $\textcolor{red}{\xi_{i,k}}$ is the discard mortality rate for fishery $k$ in
+year $i$.
 \end{frame}
 
 %% =========================================================================== %%
@@ -500,17 +508,26 @@ $\boldsymbol{y}_{h,i,k} = \boldsymbol{y}_{h,k}$
 Recruitment size-distribution
 \begin{align*}
   \alpha &= \frac{\alpha_r}{\beta_r},\\
-  p(\boldsymbol{r}_i) &= \int^{x_\ell+0.5 \Delta x}_{x_\ell-0.5 \Delta x}
-  \frac{x^{\alpha-1} \exp
-    \left(\frac{x}{\beta_r}\right)}{\Gamma (\alpha) x^\alpha} dx,\\
-  \boldsymbol{r}_{h,i} &= 0.5 p(\boldsymbol{r}_i) \ddot{R}.
+  p[x_\ell-0.5 \Delta x \le x \le x_\ell+0.5 \Delta x] &= p[x] = \int^{x_\ell+0.5
+    \Delta x}_{x_\ell-0.5 \Delta x} \frac{x^{\alpha-1} \exp
+    \left(\frac{x}{\beta_r}\right)}{\Gamma (\alpha) x^\alpha} dx.
 \end{align*}
-
+Initial recruitment
 \begin{equation*}
-  \delta_i = \log (R) - (1-\rho) \log (\bar{R}) - \rho \log(R) + 0.5 \sigma^2_R
+  \boldsymbol{r}_{h,i} = 0.5 p[x] \textcolor{red}{\ddot{R}} \quad \text{for} \quad i=1.
 \end{equation*}
-
-
+Recruitment
+\begin{equation*}
+  \boldsymbol{r}_{h,i} = 0.5 p[x] \textcolor{red}{\bar{R}} e^{\delta_i}  \quad \text{for} \quad i>1,
+\end{equation*}
+where
+\begin{equation*}
+  \delta_i = \log (r_i) - (1-\rho) \log (\textcolor{red}{\bar{R}}) - \rho \log(r_{i-1}) + 0.5 \sigma^2_R
+\end{equation*}
+and
+\begin{equation*}
+  r_i = \sum_h r_{h,i}.
+\end{equation*}
 \end{frame}
 
 %% =========================================================================== %%
