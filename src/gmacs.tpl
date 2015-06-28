@@ -834,7 +834,7 @@ PARAMETER_SECTION
 
 	//sdreport_vector sd_fbar(1,nfleet);
 	sdreport_vector sd_log_recruits(syr,nyr);
-	sdreport_vector sd_log_mmb(syr,nyr);
+	sdreport_vector sd_log_ssb(syr,nyr);
 
 
 	friend_class population_model;
@@ -919,7 +919,7 @@ PROCEDURE_SECTION
 	 */
 FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
-	sd_log_mmb = log(calc_mmb());
+	sd_log_ssb = log(calc_ssb());
 	
 	//for(int k = 1; k <= nfleet; k++ )
 	//{
@@ -1648,8 +1648,8 @@ FUNCTION calc_stock_recruitment_relationship
 	so   = reck * ro / bo;
 	bb   = (reck -1.0 ) / bo;
 
-	dvar_vector mmb  = calc_mmb().shift(syr+1);
-	dvar_vector rhat = elem_div(so * mmb , 1.0 + bb* mmb);
+	dvar_vector ssb  = calc_ssb().shift(syr+1);
+	dvar_vector rhat = elem_div(so * ssb , 1.0 + bb* ssb);
 	
 	// residuals
 	int byr = syr+1;
@@ -2438,8 +2438,8 @@ REPORT_SECTION
 	REPORT(mean_wt);
 	REPORT(molt_probability);	///> vector of molt probabilities
 
-	dvector mmb = value(calc_mmb());
-	REPORT(mmb);
+	dvector ssb = value(calc_ssb());
+	REPORT(ssb);
 
 	if(last_phase())
 	{
@@ -2570,11 +2570,11 @@ REPORT_SECTION
 	 * TODO correct for timing of when the MMB is calculated
 	 * Add female component if lamnda < 1
 	 * 
-	 * @return dvar_vector mmb (model mature biomass).
+	 * @return dvar_vector ssb (model mature biomass).
 	 */
-FUNCTION dvar_vector calc_mmb()
-	dvar_vector mmb(syr,nyr);
-	mmb.initialize();
+FUNCTION dvar_vector calc_ssb()
+	dvar_vector ssb(syr,nyr);
+	ssb.initialize();
 	int ig,m,o;
 	int h = 1; // males
 	for(int i = syr; i <= nyr; i++ )
@@ -2586,10 +2586,10 @@ FUNCTION dvar_vector calc_mmb()
 			m = imature(ig);
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-			mmb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
+			ssb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
 		}
 	}
-	return(mmb);
+	return(ssb);
 
 
 	/**
@@ -2685,10 +2685,10 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	spr_ssbo = ptrSPR->get_ssbo();
 
 	// OFL Calculations
-	dvector mmb = value(calc_mmb());
+	dvector ssb = value(calc_ssb());
 	double cuttoff = 0.1;
 	double limit = 0.25;
-	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,mmb(nyr));
+	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,ssb(nyr));
 	spr_cofl = ptrSPR->get_cofl(_N);
 
 

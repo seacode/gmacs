@@ -39,21 +39,19 @@ M        <- lapply(fn, read_admb)
 names(M) <- c("OneSex","TwoSex","Zheng")
 
 # Read in Jie's file
-j_mmb  = read.table("jieOutput/jie_mmb.rep",       header = TRUE)
+j_ssb  = read.table("jieOutput/jie_mmb.rep",       header = TRUE)
 j_surv = read.table("jieOutput/jie_survb.rep",     header = TRUE)
 j_len  = read.table("jieOutput/jie_len_sched.rep", header = TRUE)
 j_ltr  = read.table("jieOutput/jie_lentrans.rep",  header = FALSE)
 jj <- 3 # The position in the list that Jies model is
 
 # Add mmb data
-#M[[jj]]$mmb <- j_mmb$mmb
-ii <- which(M[[jj]]$fit$names %in% "sd_log_mmb")
-M[[jj]]$fit$est[ii] <- log(j_mmb$mmb*10000)
+ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
+M[[jj]]$fit$est[ii] <- log(j_ssb$mmb*10000)
 M[[jj]]$fit$std[ii] <- 0
-#M[[jj]]$fit$std[ii] <- log(j_mmb$mmb_sd)
 
 # Add natural mortality data
-M[[jj]]$M <- matrix(c(j_mmb$M, j_mmb$M), nrow = 80, ncol = 20)
+M[[jj]]$M <- matrix(c(j_ssb$M, j_ssb$M), nrow = 80, ncol = 20)
 
 # Add size-weight data
 M[[jj]]$mid_points <- j_len$Size
@@ -70,8 +68,8 @@ M[[jj]]$N_len[ii,] <- (j_len$N1975_female + j_len$N1975_male_n + j_len$N1976_mal
 
 # Add recruitment data
 ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-M[[jj]]$fit$est[ii] <- log(j_mmb$R*1e+3)
-M[[jj]]$fit$std[ii] <- rep(0, length(j_mmb$R))
+M[[jj]]$fit$est[ii] <- log(j_ssb$R*1e+3)
+M[[jj]]$fit$std[ii] <- rep(0, length(j_ssb$R))
 
 # Add growth transition data
 M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
