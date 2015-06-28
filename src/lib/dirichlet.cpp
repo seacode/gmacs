@@ -17,11 +17,10 @@
  * @param p predicted proportions
  * @return negative loglikelihood.
  */
-const dvariable acl::dirichlet::pdf(
-				    const dvar_vector& alpha_o,
-				    const dvar_vector& alpha_t, 
-				    const dmatrix& o, 
-				    const dvar_matrix& p) const
+const dvariable acl::dirichlet::ddirichlet(const dvar_vector& alpha_o,
+					   const dvar_vector& alpha_t, 
+					   const dmatrix& o, 
+					   const dvar_matrix& p) const
 {
 	if(o.colsize()!=p.colsize() || o.rowsize()!=p.rowsize())
 	{
@@ -31,6 +30,7 @@ const dvariable acl::dirichlet::pdf(
 		ad_exit(1);
 	}
 
+	/*
 	dvar_vector vn = mfexp(alpha_t);
 	dvariable ff = 0;
 	int r1 = o.rowmin();
@@ -49,4 +49,5 @@ const dvariable acl::dirichlet::pdf(
 		ff -= sobs * log(TINY + p(i));
 	}
 	return ff;
+	*/
 }

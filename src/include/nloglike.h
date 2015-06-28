@@ -216,6 +216,7 @@ namespace acl
 		
 	};
 
+
 	/**
 	 * @brief Class for Dirichlet negative log-likelihood.
 	 * @details This is a derived class which inherits the virtual methods
@@ -252,17 +253,18 @@ namespace acl
 			{
 				dmatrix     Or = compress(this->get_O());
 				dvar_matrix Pr = compress(_P);
-				return pdf(log_vn,Or,Pr);
+				return ddirichlet(log_vn,log_vn,Or,Pr);
 			}
 			else
 			{
-				return pdf(log_vn,this->get_O(),_P);	
+			        return ddirichlet(log_vn,log_vn,this->get_O(),_P);	
 			}
 		}
 
-		const dvariable pdf(const dvar_vector& log_vn,
-				    const dmatrix& o, 
-				    const dvar_matrix& p) const;
+		const dvariable ddirichlet(const dvar_vector& alpha_o,
+					   const dvar_vector& alpha_t, 
+					   const dmatrix& o, 
+					   const dvar_matrix& p) const;
     };
 
 } // end of acl namespace

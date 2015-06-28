@@ -1586,6 +1586,7 @@ FUNCTION update_population_numbers_at_length
 	}
 	if(verbose  == 1) COUT(d3_N(1)+d3_N(2));
 
+
 	/**
 	 * @brief Calculate stock recruitment relationship.
 	 * @details  Assuming a Beverton-Holt relationship between the 
