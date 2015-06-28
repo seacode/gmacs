@@ -11,17 +11,17 @@
 # ntheta
   9
 # —————————————————————————————————————————————————————————————————————————————————————— #
-# ival        lb        ub        phz   prior     p1      p2         # parameter         #
+# ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1          4       2   0.18    0.02         # M
   -1.2       -10        20          2       1   -1.2     0.1         # logR0
    5.0       -10        20         -2       1    3.0     5.0         # logR1      
    5.0       -10        20         -1       1    3.0     5.0         # logRbar      
-  72.5        55       100         -4       1   72.5    7.25         # Recruitment EV
-  0.55       0.1         5         -3       0    0.1       5         # Recruitment scale 
+  72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
+  0.55       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
  -0.6931     -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
   0.75      0.20      1.00          2       3    3.0    2.00         # steepness
-  0.001     0.00      1.00         -3       3    1.01   1.01         # recruitment AR1
+  0.001     0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -120,7 +120,7 @@
 ## Phase of estimation
  -3
 ## STDEV in m_dev for Random walk
-  0.60
+  0.20
 ## Number of nodes for cubic spline or number of step-changes for option 3
   4
 ## Year position of the knots (vector must be equal to the number of nodes)

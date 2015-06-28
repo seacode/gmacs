@@ -1008,7 +1008,7 @@ FUNCTION calc_selectivities
 	for( k = 1; k <= nslx; k++ )
 	{   
 		block = 1;
-		gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
+		gsm::Selex<dvar_vector> * pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
 		{
 			switch (slx_type(k))
@@ -1039,7 +1039,7 @@ FUNCTION calc_selectivities
 		{
 			for( i = slx_styr(k); i <= slx_edyr(k); i++ )
 			{
-				int kk = fabs(slx_indx(k));   // gear index
+				int kk = abs(slx_indx(k));   // gear index
 				
 				if(slx_indx(k) > 0)
 				{
@@ -1584,10 +1584,7 @@ FUNCTION update_population_numbers_at_length
 
 		}
 	}
-	
-	
 	if(verbose  == 1) COUT(d3_N(1)+d3_N(2));
-	
 
 	/**
 	 * @brief Calculate stock recruitment relationship.
@@ -1598,7 +1595,7 @@ FUNCTION update_population_numbers_at_length
 	 *
 	 * NOTES:
 	 * if nSRR_flag == 1 then use a Beverton-Holt model to compute the 
-	 * recruitment deviations for minumization.
+	 * recruitment deviations for minimization.
 	 * 
 	 */
 FUNCTION calc_stock_recruitment_relationship
@@ -2177,7 +2174,7 @@ FUNCTION calc_objective_function
 	}
 
 	// 2) Likelihood of the relative abundance data.
-  	if(verbose == 1) COUT(res_cpue(1));
+  if(verbose == 1) COUT(res_cpue(1));
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
