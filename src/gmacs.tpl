@@ -835,8 +835,6 @@ PARAMETER_SECTION
 	//sdreport_vector sd_fbar(1,nfleet);
 	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector sd_log_ssb(syr,nyr);
-
-
 	friend_class population_model;
 
 PRELIMINARY_CALCS_SECTION
@@ -866,9 +864,6 @@ PRELIMINARY_CALCS_SECTION
 			if(l > nclass) l=1;
 		}
 	}
-
-
-	
 
 PROCEDURE_SECTION
 	// Initialize model parameters

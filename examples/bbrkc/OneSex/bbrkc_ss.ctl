@@ -20,7 +20,7 @@
   72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
   0.55       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
  -0.6931     -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
-  0.75      0.20      1.00          2       3    3.0    2.00         # steepness
+  0.85      0.20      1.00          2       3    3.0    2.00         # steepness
   0.001     0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -59,8 +59,8 @@
 ## Selectivity P(capture of all sizes)
    1      3    100  120  0    1      1    -1      12.5  12.5  12.5   1975   2014
    2      3    110  130  0    1      1    -2      12.5  12.5  12.5   1975   2014
-   3      3     80  100  1    1      1    -3      12.5  12.5  12.5   1975   1981
-   3      3     90   95  1    1      1    -4      12.5  12.5  12.5   1982   2014
+   3      3     80  100  0    1      1    -3      12.5  12.5  12.5   1975   1981
+   3      3     90   95  0    1      1    -4      12.5  12.5  12.5   1982   2014
    4      3     80   90  0    1      1    -5      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
@@ -116,15 +116,15 @@
 ##      1 = Random walk (deviates constrained by variance in M)
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
-  0
+  3
 ## Phase of estimation
   4
 ## STDEV in m_dev for Random walk
-  0.20
+  0.60
 ## Number of nodes for cubic spline or number of step-changes for option 3
-  1
+  4
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1953
+   1953 1980 1985 1994
 
 
 
