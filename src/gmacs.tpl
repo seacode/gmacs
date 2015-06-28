@@ -136,7 +136,7 @@ DATA_SECTION
 		WRITEDAT(nfleet); 
 		WRITEDAT(nsex); 
 		WRITEDAT(nshell);
-		WRITEDAT(nmature); 
+		WRITEDAT(nmature);
 		WRITEDAT(nclass);
 	END_CALCS
 	int n_grp;              ///> number of sex/newshell/oldshell groups
@@ -754,14 +754,14 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_number_vector log_fbar(1,nfleet,f_phz);				///> Male mean fishing mortality
-	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);		///> Male f devs
-	init_number_vector log_foff(1,nfleet,foff_phz);				///> Female F offset to Male F
-	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);  ///> Female F offset to Male F
+	init_number_vector log_fbar(1,nfleet,f_phz);                 ///> Male mean fishing mortality
+	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);      ///> Male f devs
+	init_number_vector log_foff(1,nfleet,foff_phz);              ///> Female F offset to Male F
+	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
 
 	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz); ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz);///> recruitment deviations
+	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
+	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
@@ -1129,9 +1129,6 @@ FUNCTION calc_fishing_mortality
 			}
 		}
 	}
-	
-
-
 
 
 	/**
@@ -1195,8 +1192,8 @@ FUNCTION calc_growth_increments
 	 * size l to size ll is based on the vector molt_increment and the 
 	 * scale parameter. In all there are three parameters that define the size
 	 * transition matrix (alpha, beta, scale) for each sex.
-   *
-   * Issue 112 details some of evolution of code development here
+   	 *
+  	 * Issue 112 details some of evolution of code development here
 	 */
 FUNCTION calc_growth_transition
 	//cout<<"Start of calc_growth_transition"<<endl;
@@ -1209,7 +1206,6 @@ FUNCTION calc_growth_transition
 	growth_transition.initialize();
 
 
-	
 	for( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
@@ -1231,6 +1227,7 @@ FUNCTION calc_growth_transition
 		}
 		growth_transition(h) = At;
 	}
+
 
 	/**
 	 * @brief Calculate natural mortality array
@@ -1284,10 +1281,10 @@ FUNCTION calc_natural_mortality
 			M and it then returns back to the previous state.
 			*/
 			case 3:  // Specific break points
-			  for (int idev=1;idev<=nMdev;idev++)
-			  {
-  				delta(m_nodeyear(idev)) = m_dev(idev);
-			  }
+			        for (int idev=1;idev<=nMdev;idev++)
+			  	{
+  					delta(m_nodeyear(idev)) = m_dev(idev);
+			  	}
 			break;
 
 		}
@@ -1310,7 +1307,6 @@ FUNCTION calc_natural_mortality
 	 * 
 	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used.
 	 * Due to F.
-	 * 
 	 */
 FUNCTION calc_total_mortality
 	int h;
@@ -1329,7 +1325,6 @@ FUNCTION calc_total_mortality
 		}
 		//COUT(F(h));
 	}
-
 
 
 	/**
@@ -1356,6 +1351,7 @@ FUNCTION calc_molting_probability
 		}
 	}
 
+
 	/**
 	 * @brief calculate size distribution for new recuits.
 	 * @details Based on the gamma distribution, calculates the probability
@@ -1376,6 +1372,7 @@ FUNCTION calc_recruitment_size_distribution
 	}
 	rec_sdd  = first_difference(x);
 	rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
+
 
 	/**
 	 * @brief initialiaze populations numbers-at-length in syr
@@ -1404,7 +1401,6 @@ FUNCTION calc_recruitment_size_distribution
 	 *  Jan 1, 2015.  Changed how the equilibrium calculation is done.  Use a numerical
 	 *  approach to solve the newshell oldshell initial abundance.
 	 *  
-	 *  –––-—————————————————————————————————————————————————————————————————————————----
 	 *  Jan 3, 2015.  Working with John Levitt on analytical solution instead of the 
 	 *  numerical approach.  Think we have a soln.  
 	 *  
@@ -1435,11 +1431,9 @@ FUNCTION calc_recruitment_size_distribution
 	 *  
 	 *  then n = C^(-1) r                           (4)
 	 *  –––-—————————————————————————————————————————————————————————————————————————----
-	 *  –––-—————————————————————————————————————————————————————————————————————————----   
 	 * 
 	 *  April 28, 2015.  There is no case here for initializing the model at unfished
 	 *  equilibrium conditions.  Need to fix this for SRA purposes.  SJDM. 
-	 *  
 	 */
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
@@ -1489,7 +1483,7 @@ FUNCTION calc_initial_numbers_at_length
 		}
 
 		// Single shell condition
-		if ( nshell == 1 && nmature == 1)
+		if ( nshell == 1 && nmature == 1 )
 		{
 			calc_equilibrium(x,A,_S,rt);
 			ig = pntr_hmo(h,1,1);
@@ -1497,7 +1491,7 @@ FUNCTION calc_initial_numbers_at_length
 		}
 
 		// Continuous molt (newshell/oldshell)
-		if ( nshell == 2 && nmature == 1)
+		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,A,_S,P(h),rt);
 			ig = pntr_hmo(h,1,1);
@@ -1766,7 +1760,7 @@ FUNCTION calc_predicted_catch
 				tmp_ft = ft(k)(h)(i);
 				nal = (unit==1) ? elem_prod(nal,mean_wt(h)) : nal;
 
-				pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+				pre_catch(kk,j) = nal * elem_div( elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))), Z(h)(i) );
 			}
 			else    // sexes combibed
 			{
@@ -1811,13 +1805,6 @@ FUNCTION calc_predicted_catch
 		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
 		if(verbose == 1)COUT(pre_catch(kk)(1));
 	}
-
-	
-
-
-
-
-
 
 
 	/**
@@ -1895,9 +1882,6 @@ FUNCTION calc_relative_abundance
 		survey_q(k)    = mfexp(zbar);
 		pre_cpue(k)    = survey_q(k) * V;
 	}
-
-	
-
 
 
 	/**
@@ -2040,7 +2024,8 @@ FUNCTION calc_predicted_composition
 		}
 		
 	}
-	
+
+
 FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const double &p1, const double &p2)
 	{
 		dvariable prior_pdf;
@@ -2169,13 +2154,6 @@ FUNCTION calculate_prior_densities
 	}
 
 
-
-
-
-
-
-
-
 	/**
 	 * @brief calculate objective function
 	 * @details 
@@ -2189,10 +2167,8 @@ FUNCTION calculate_prior_densities
 	 *  -# Penalty on log_fdev to ensure they sum to zero.
 	 *  -# Penalty to regularize values of log_fbar.
 	 *  -# Penalty to constrain random walk in natural mortaliy rates
-	 * 
 	 */
 FUNCTION calc_objective_function
-
 	// |---------------------------------------------------------------------------------|
 	// | NEGATIVE LOGLIKELIHOOD COMPONENTS FOR THE OBJECTIVE FUNCTION                    |
 	// |---------------------------------------------------------------------------------|
@@ -2206,19 +2182,13 @@ FUNCTION calc_objective_function
 		nloglike(1,k) += dnorm(res_catch(k),catch_sd);
 	}
 
-
-
-
 	// 2) Likelihood of the relative abundance data.
-  if(verbose == 1) COUT(res_cpue(1));
+  	if(verbose == 1) COUT(res_cpue(1));
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
 		nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k),cpue_sd(k));
 	}
-
-
-
 
 	// 3) Likelihood for size composition data. 
 	for(int ii = 1; ii <= nSizeComps; ii++)
@@ -2342,12 +2312,12 @@ FUNCTION calc_objective_function
 		COUT(priorDensity);
 	}
 
+
 	/**
 	 * @brief Simulation model
 	 * @details Uses many of the same routines as the assessment
 	 * model, over-writes the observed data in memory with simulated 
 	 * data.
-	 * 
 	 */
 FUNCTION simulation_model
 	// random number generator
@@ -2424,6 +2394,7 @@ FUNCTION simulation_model
 	}
 	// COUT(d3_pre_size_comps(1)(1));
 	// COUT(d3_obs_size_comps(1)(1));
+
 
 REPORT_SECTION
 	dvector mod_yrs(syr,nyr); 
@@ -2602,7 +2573,6 @@ REPORT_SECTION
 	}
 
 
-
 	/**
 	 * @brief Calculate mature male biomass (MMB)
 	 * @details Calculation of the mature male biomass is based on the
@@ -2633,9 +2603,6 @@ FUNCTION dvar_vector calc_mmb()
 	return(mmb);
 
 
-
-
-
 	/**
 	 * @brief calculate spr-based reference points.
 	 * @details Calculate the SPR-ratio for a given value of F.
@@ -2662,10 +2629,8 @@ FUNCTION dvar_vector calc_mmb()
 	 *  nshell = 1,
 	 *  nshell = 2 && nmaturity = 1,
 	 *  nshell = 2 && nmaturity = 2.
-	 *  
 	 */
 FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
-	
 	// Average recruitment
 	spr_rbar =  mean(value(recruits(spr_syr,spr_nyr)));
 
@@ -2737,7 +2702,6 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,mmb(nyr));
 	spr_cofl = ptrSPR->get_cofl(_N);
 
-	
 
 RUNTIME_SECTION
   maximum_function_evaluations 500,   500,   1500,  25000, 25000
@@ -2836,6 +2800,7 @@ GLOBALS_SECTION
 
 	 ofstream checkfile("checkfile.rep");
 
+
 TOP_OF_MAIN_SECTION
 	time(&start);
 	arrmblsize = 50000000;
@@ -2843,7 +2808,7 @@ TOP_OF_MAIN_SECTION
 	gradient_structure::set_CMPDIF_BUFFER_SIZE(1.e7);
 	gradient_structure::set_MAX_NVAR_OFFSET(5000);
 	gradient_structure::set_NUM_DEPENDENT_VARIABLES(5000);
-	gradient_structure::set_MAX_DLINKS(150000); 
+	gradient_structure::set_MAX_DLINKS(150000);
 
 
 FINAL_SECTION

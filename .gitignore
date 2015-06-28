@@ -18,6 +18,12 @@ src/tailcompression.obj
 *.aux
 *.fdb_latexmk
 *.fls
+*.out
+*.nav
+*.toc
+*.snm
+*.tex.bak
+auto/
 
 # R files
 .Rproj.user
@@ -27,19 +33,23 @@ src/tailcompression.obj
 .Rhistory
 
 # ADMB standard output files
-*.cov
-*.dep
-*.hes
-*.rep
-*.log
 *.b0*
 *.bar
 *.cor
+*.cov
+*.dep
+*.ecm
 *.eva
+*.hes
+*.log
+*.mc2
+*.mcm
 *.p0*
 *.par
+*.rep
 *.r0*
 *.std
 *_in.ctl
 *_in.dat
 variance
+sims

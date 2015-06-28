@@ -1,10 +1,40 @@
-# Gmacs Changes
-## List of changes to Gmacs since pilot version (V1.0):
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/) and this file inspired by http://keepachangelog.com/
+## [Unreleased][unreleased]
+### Changed
 
-1. 	Generic functions at end of code, now exported to Cstar.
-2. 	Selectivity functions exported to Cstar.
-3. 	Cstar selectivity functions used in code (more options available).
-4. 	When number of classes in data and model are same, class link matrix not required. Automatically generated instead.
+
+## [0.0.4] - 2014-12-11
+### In FUNCTION calc_growth_transition 
+Diagonal of the matrix now represents probability
+of not molting, and upper triangle is the probability of growing to the next
+size interval given you molted.
+
+## [0.0.3] - 2015-01-20
+### In FUNCTION calc_growth_transition 
+Jim reported that cumd_gamma was not converging. Required large
+number of iterations to solve the cumd_gamma function in gser in the ADMB libs.
+Soln, either increase the MAXIT in gser, or rescale the problem to the maximum
+of the size breaks. The latter seems to work. 
+
+## [0.0.2] - 2015-01-11
+### In FUNCTION calc_growth_transition 
+Checked cumd_gamma function in ADMB with R. This is the same
+function as pgamma with the rate parameter set at its default value 1.0. The
+mean value of the function is the second argument of cumd_gamma, and the vector
+of quantiles is the first argument. Both arguments are scaled by gscale.
+
+## [0.0.1] - 2014-12-20
+### In FUNCTION calc_growth_transition 
+Undid the below modification after correspondence with Jack Turnock.
+He rightly pointed out that it is possible to molt and remain in the same bin
+interval (if the intervals are sufficiently large).
+
+
+
+
+## [0.0.0] - pre 2014-12-20
 5.	When number of classes in the data and the model differ by an integer factor, class link matrix is automatically generated. 
 6.	When number of classes in the data is not a multiple of number of classes in the model, read in class_link matrix.
 7.	Names of fleets and surveys now printed correctly to echoinput file: (bug fix).
@@ -18,7 +48,6 @@
 15.	Growth functions can now be selected from among multiple options. This includes a linear growth relationship with a gamma distribution about each size class.
 16. Internal calculations have been modified so that multiple copies of selectivity, retention, or size-transition matrix patterns are not created nor stored as before. This make the code mode efficient. NOTE: Will do the same for selectivity, but waiting until further selectivity updates are made [to selex_fleet and selex_survey]
 		
-* Cstar functions for selectivity (and some others) have now been written in Template style code.
 * Many updates to Gmacs R functions: Can now be used for any Gmacs model. 
 
 ---

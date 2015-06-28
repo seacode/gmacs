@@ -18,7 +18,9 @@
  * @param p predicted proportions
  * @return negative loglikelihood.
  */
-const dvariable acl::dirichlet::pdf(const dvar_vector& alpha_o,
+ /* 
+const dvariable acl::dirichlet::negativeLogLikelihood(
+const dvar_vector& alpha_o,
 				    const dvar_vector& alpha_t, 
 				    const dmatrix& o, 
 				    const dvar_matrix& p) const
@@ -50,3 +52,4 @@ const dvariable acl::dirichlet::pdf(const dvar_vector& alpha_o,
 	}
 	return ff;
 }
+ */ 

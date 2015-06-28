@@ -17,4 +17,4 @@ The [Wiki](https://github.com/seacode/gmacs/wiki) is the best place to begin for
   * **Wiki**: https://github.com/seacode/gmacs/wiki
   * **API**: http://seacode.github.io/gmacs/
   * **Model Description**: https://github.com/seacode/gmacs/blob/develop/docs/developer/ModelDescription.pdf
-  * **Release Notes**: https://github.com/seacode/gmacs/blob/develop/CHANGES.md
+  * **Release Notes**: https://github.com/seacode/gmacs/blob/develop/CHANGELOG.md

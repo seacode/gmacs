@@ -59,3 +59,32 @@ plot_selectivity <- function(M)
                   col = "Type", linetype = "Block Year")
     print(p + .THEME)
 }
+
+
+#' Plot selectivity 3D
+#'
+#' @param M list object created by read_admb function
+#' @param plt_surface include a panel with surface over size-time 
+#' @return 3D plot of selectivity
+#' @author D'Arcy N. Webber
+#' @export
+#' 
+plot_selectivity_3d <- function(M, plt_surface = FALSE)
+{
+    mdf <- .get_selectivity_df(M)
+    df3 <- subset(mdf, unique(year) > 1)
+    
+    p <- ggplot(mdf) + expand_limits(y = 0)
+    if(.OVERLAY)
+    {
+        p <- p + geom_line(aes(as.numeric(variable),value,col=type,linetype=factor(year)))
+        p <- p + facet_wrap(~Model+sex+fleet)
+    } else {
+        p <- p + geom_line(aes(as.numeric(variable),value,col=sex,linetype=factor(year)))
+        p <- p + facet_wrap(~Model + fleet + type)
+    }
+    p <- p + labs(y = "Selectivity\n",
+                  x = "\nMid-point of size class (mm)",
+                  col = "Type", linetype = "Block Year")
+    print(p + .THEME)
+}
