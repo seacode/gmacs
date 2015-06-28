@@ -53,7 +53,7 @@ ggsave(paste0(.FIGS, "M_t.png"), width = ww, height = hh)
 dev.off()
 
 plot_ssb(M)
-ggsave(paste0(.FIGS, "mmb.png"), width = ww, height = hh)
+ggsave(paste0(.FIGS, "ssb.png"), width = ww, height = hh)
 dev.off()
 
 plot_recruitment(M)

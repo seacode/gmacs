@@ -33,7 +33,7 @@ pen <- table_penalties(M)
 write.table(pen, file = paste0(.FIGS, "penalties.csv"), sep = ",", row.names = FALSE)
 
 plot_catch(M)
-ggsave(paste0(.FIGS, "catch.png"), width = ww*1.2, height = hh*1.2)
+ggsave(paste0(.FIGS, "catch.png"), width = ww*2.5, height = hh*1.5)
 dev.off()
 
 plot_cpue(M)
@@ -53,7 +53,7 @@ ggsave(paste0(.FIGS, "M_t.png"), width = ww, height = hh)
 dev.off()
 
 plot_ssb(M)
-ggsave(paste0(.FIGS, "mmb.png"), width = ww, height = hh)
+ggsave(paste0(.FIGS, "ssb.png"), width = ww, height = hh)
 dev.off()
 
 plot_recruitment(M)

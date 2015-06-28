@@ -17,13 +17,13 @@
         A  <- M[[i]]
         df <- data.frame(Model = names(M)[i],
                          par = A$fit$names,
-	                 log_mmb = A$fit$est,
+	                 log_ssb = A$fit$est,
                          log_sd = A$fit$std)
-        df      <- subset(df,par == "sd_log_mmb")
+        df      <- subset(df,par == "sd_log_ssb")
         df$year <- A$mod_yrs
-        df$mmb  <- exp(df$log_mmb)
-        df$lb   <- exp(df$log_mmb - 1.96*df$log_sd)
-        df$ub   <- exp(df$log_mmb + 1.96*df$log_sd)
+        df$ssb  <- exp(df$log_ssb)
+        df$lb   <- exp(df$log_ssb - 1.96*df$log_sd)
+        df$ub   <- exp(df$log_ssb + 1.96*df$log_sd)
         mdf     <- rbind(mdf, df)
     }
     return(mdf)
@@ -40,7 +40,7 @@
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_ssb <- function(M, xlab = "Year", ylab = "MMB (tonnes)")
+plot_ssb <- function(M, xlab = "Year", ylab = "SSB (tonnes)")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -48,10 +48,10 @@ plot_ssb <- function(M, xlab = "Year", ylab = "MMB (tonnes)")
     p <- ggplot(mdf) + labs(x = xlab, y = ylab) + expand_limits(y = 0)
     if (length(M) == 1)
     {
-        p <- p + geom_line(aes(x = year, y = mmb)) +
+        p <- p + geom_line(aes(x = year, y = ssb)) +
             geom_ribbon(aes(x = year, ymax = ub, ymin = lb), alpha = 0.3)
     } else {
-        p <- p + geom_line(aes(x = year, y = mmb, col = Model)) +
+        p <- p + geom_line(aes(x = year, y = ssb, col = Model)) +
             geom_ribbon(aes(x = year, ymax = ub, ymin = lb, fill = Model), alpha = 0.3)
     }
     if(!.OVERLAY) p <- p + facet_wrap(~Model)
