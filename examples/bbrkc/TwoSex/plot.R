@@ -23,6 +23,10 @@ names(M) <- basename(.MODELDIR)
 ww <- 6
 hh <- 5
 
+plot_selectivity(M)
+ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+
 priors <- table_priors(M)
 write.table(priors, file = paste0(.FIGS, "prior.csv"), sep = ",", row.names = FALSE)
 
