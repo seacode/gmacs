@@ -59,9 +59,9 @@
 ## Selectivity P(capture of all sizes)
    1      3    100  120  0    1      1    -1      12.5  12.5  12.5   1975   2014
    2      3    110  130  0    1      1    -2      12.5  12.5  12.5   1975   2014
-   3      3     80  100  0    1      1    -3      12.5  12.5  12.5   1975   1981
-   3      3     90   95  0    1      1    -4      12.5  12.5  12.5   1982   2014
-   4      3     80   90  0    1      1    -5      12.5  12.5  12.5   1975   2014
+   3      3     90  110  0    1      1    -3      12.5  12.5  12.5   1975   1981
+   3      3     95  105  0    1      1     4      12.5  12.5  12.5   1982   2014
+   4      3     80   90  0    1      1    -4      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
   -1      3    133  137  0    1      1    -1      12.5  12.5  12.5   1975   2014
@@ -103,7 +103,7 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 1   1   1   1   1   1 #  2   2   2   # Type of likelihood.
+ 2   2   2   2   2   2 #  2   2   2   # Type of likelihood.
  0   0   0   0   0   0 #  0   0   0   # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4 # -4  -4  -4   # Phz for estimating effective sample size (if appl.)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -120,11 +120,11 @@
 ## Phase of estimation
   4
 ## STDEV in m_dev for Random walk
-  0.60
+  0.20
 ## Number of nodes for cubic spline or number of step-changes for option 3
   4
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1953 1980 1985 1994
+   1976 1980 1985 1994
 
 
 

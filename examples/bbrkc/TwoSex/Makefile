@@ -1,10 +1,10 @@
 EXEC = gmacs
-ifeq ($(OPT),TRUE)
-	DIST = ../../../src/build/release/
-else
+ifeq ($(SAFE),TRUE)
 	DIST = ../../../src/build/debug/
+else
+	DIST = ../../../src/build/release/
 endif
-ARGS = -nox -iprint 50 
+ARGS = -nox -iprint 50 -est
 
 all: run
 
@@ -16,6 +16,7 @@ $(DIST)$(EXEC).tpl:
 
 run: $(EXEC)
 	./$(EXEC) $(ARGS)
+	R CMD BATCH plot.R
 
 clean:
 	rm -f $(EXEC)
