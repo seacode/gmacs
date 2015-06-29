@@ -115,15 +115,9 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	///> initial year
-	init_int syr;
-
-
-	///> terminal year
-	init_int nyr;         
-
-	///> time step (years)
-	init_number jstep;      
+	init_int syr;           ///> initial year
+	init_int nyr;         	///> terminal year
+	init_number jstep;      ///> time step (years)
 	init_int nfleet;        ///> number of gears
 	init_int nsex;          ///> number of sexes
 	init_int nshell;        ///> number of shell conditions
@@ -241,7 +235,6 @@ DATA_SECTION
 	imatrix yhit(syr,nyr,1,nfleet);
 	matrix  dmr(syr,nyr,1,nfleet);
 
-
 	LOC_CALCS
 		nFparams.initialize();
 		nYparams.initialize();
@@ -304,14 +297,14 @@ DATA_SECTION
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
 	LOC_CALCS
-		for(int k = 1; k <= nSizeComps; k++ )
+		for(int k = 1; k <= nSizeComps; k++)
 		{
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
 			// NOTE This normalizes all observations by row--may be incorrect if shell condition
 			for (int i=1;i<=nSizeCompRows(k);i++)
 			{
-			  d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
+			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
@@ -325,7 +318,6 @@ DATA_SECTION
 	  ilike_vector(4) = 1;
 	  ilike_vector(5) = 1;
 	END_CALCS
-
 
 
 	// |-----------------------|
@@ -452,8 +444,6 @@ DATA_SECTION
 		WriteCtl(Grwth_control);
 	END_CALCS
 
-	
-
 	// |--------------------------------|
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
@@ -533,7 +523,6 @@ DATA_SECTION
 		}
 	END_CALCS
 
-
 	// |---------------------------------------------------------|
 	// | PRIORS FOR CATCHABILITIES FOR INDICES                   |
 	// |---------------------------------------------------------|
@@ -553,8 +542,6 @@ DATA_SECTION
 		ECHO(prior_qsd); 
 		ECHO(cpue_lambda);
 	END_CALCS
-
-
 
 	// |---------------------------------------------------------|
 	// | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
@@ -585,16 +572,54 @@ DATA_SECTION
 		WriteCtl(f_controls); ECHO(f_phz); 
 	END_CALCS
 
-
 	// |-----------------------------------|
 	// | OPTIONS FOR SIZE COMPOSITION DATA |
 	// |-----------------------------------|
 	init_ivector nAgeCompType(1,nSizeComps);
 	init_ivector bTailCompression(1,nSizeComps);
 	init_ivector nvn_phz(1,nSizeComps);
+	init_ivector iCompAggregator(1,nSizeComps);
+	LOC_CALCS
+		int iAggComps = max(iCompAggregator);
+	END_CALCS
+
+	3darray d3_obs_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
+	3darray d3_res_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
+	matrix agg_comp_sample_size(1,nAggComps,1,nAggCompRows);
+
+	LOC_CALCS
+		for(int k = 1; k <= nSizeComps; k++)
+		{
+		        iCompAggregator(k)
+			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
+			d3_obs_size_comps(k) = trans(tmp);
+			for (int i=1;i<=nSizeCompRows(k);i++)
+			{
+			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
+			}
+			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
+		}
+		ivector nAggCompRows(1,nAggComps);
+		ivector nAggCompCols(1,nAggComps);
+		3darray d3_AggComps(1,nAggComps,1,nAggCompRows,-7,nAggCompCols);
+	END_CALCS
+
+
+	LOC_CALCS
+		for(int k = 1; k <= nSizeComps; k++ )
+		{
+			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
+			d3_obs_size_comps(k) = trans(tmp);
+			// NOTE This normalizes all observations by row--may be incorrect if shell condition
+			for (int i=1;i<=nSizeCompRows(k);i++)
+			{
+			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
+			}
+			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
+		}
+		//WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps);
+	END_CALCS
   !!	WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz); 
-
-
 
 	// |--------------------------------------------------|
 	// | OPTIONS FOR TIME-VARYING NATURAL MORTALITY RATES |
@@ -1871,7 +1896,8 @@ FUNCTION calc_relative_abundance
 
 	/**
 	 * @brief Calculate predicted size composition data.
-	 * @details   Predicted size composition data are given in proportions.
+         *
+	 * @details Predicted size composition data are given in proportions.
 	 * Size composition strata:
 	 *  - sex  (0 = both sexes, 1 = male, 2 = female)
 	 *  - type (0 = all catch, 1 = retained, 2 = discard)

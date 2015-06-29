@@ -14,7 +14,7 @@
 1975  # Start year
 2014  # End year
 1     # Time-step (years)
-4     # Number  of  distinct  data  groups  (among  fishing fleets  and surveys)                                                                                                                                       
+4     # Number  of  distinct  data  groups  (among fishing fleets and surveys)                                                                                                                                       
 2     # Number  of  sexes
 2     # Number  of  shell condition types
 1     # Number  of  maturity  types
@@ -277,8 +277,8 @@ NMFS_Trawl:BSFRF
   2008  1     4       0     106040.9    0.1939 1                                                                 
 
 
-##  Number  of  length  frequency matrices                                                                      
-9                                                                               
+##  Number  of  length  frequency matrices
+9
 ##  Number  of  rows  in  each  matrix                                                                    
 36  22  22  37  37                                                                        
 40  40  40  4                                                                         

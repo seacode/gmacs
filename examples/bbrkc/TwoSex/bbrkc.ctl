@@ -107,9 +107,10 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 2   2   2   2   2   2   2   2   1   # Type of likelihood.
+ 2   2   2   2   2   2   2   2   2   # Type of likelihood.
  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
+ 1   2   3   4   4   5   5   5   6   # Composition aggregator
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## TIME VARYING NATURAL MORTALIIY RATES                                                 ##
