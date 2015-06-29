@@ -2240,7 +2240,6 @@ FUNCTION calc_objective_function
 		}
 	}
 
-
 	// 4) Likelihood for recruitment deviations.
 	if( active(rec_dev) )
 	{
@@ -2282,7 +2281,6 @@ FUNCTION calc_objective_function
 		nlogPenalty(1) += 10000.0*r*r;
 	}
 
-
 	// 2) Penalty on mean F to regularize the solution.
 	int irow=1;
 	if(last_phase()) irow=2;
@@ -2297,7 +2295,6 @@ FUNCTION calc_objective_function
 			nlogPenalty(2) += dnorm(log_fbar,log(pen_fbar(k)),pen_fstd(irow,k));			
 		}
 	}
-
 
 	// 3) Penalty to constrain M in random walk
 	if( active(m_dev) )

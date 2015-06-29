@@ -32,6 +32,10 @@ write.table(likes, file = paste0(.FIGS, "likelihood.csv"), sep = ",", row.names 
 pen <- table_penalties(M)
 write.table(pen, file = paste0(.FIGS, "penalties.csv"), sep = ",", row.names = FALSE)
 
+plot_recruitment_size(M)
+ggsave(paste0(.FIGS, "rec_size.png"), width = ww*2.5, height = hh*1.5)
+dev.off()
+
 plot_catch(M)
 ggsave(paste0(.FIGS, "catch.png"), width = ww*2.5, height = hh*1.5)
 dev.off()
