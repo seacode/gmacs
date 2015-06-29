@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: gmacs.aux
+The style file: agsm.bst
+Database file #1: ../references/Gmacs.bib
+You've used 1 entry,
+            2909 wiz_defined-function locations,
+            646 strings with 4935 characters,
+and the built_in function-call counts, 3518 in all, are:
+= -- 562
+> -- 47
+< -- 0
++ -- 258
+- -- 14
+* -- 300
+:= -- 726
+add.period$ -- 1
+call.type$ -- 1
+change.case$ -- 14
+chr.to.int$ -- 1
+cite$ -- 1
+duplicate$ -- 16
+empty$ -- 36
+format.name$ -- 20
+if$ -- 627
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 6
+num.names$ -- 10
+pop$ -- 3
+preamble$ -- 1
+purify$ -- 15
+quote$ -- 0
+skip$ -- 14
+stack$ -- 0
+substring$ -- 781
+swap$ -- 3
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 4
+warning$ -- 0
+while$ -- 23
+width$ -- 0
+write$ -- 14

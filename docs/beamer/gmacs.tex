@@ -1,11 +1,11 @@
 \documentclass{beamer}
 \usetheme{Boadilla}
 \usefonttheme{serif}
-%\usepackage{amscd}
 \usepackage{amsmath}
 \usepackage[makeroom]{cancel}
 \usepackage{verbatim}
-%\usepackage{amssymb}
+\usepackage[sort]{natbib}
+\usepackage{tabularx}
 
 \title{Gmacs}
 \subtitle{A generalized size-structured stock assessment model}
@@ -49,6 +49,9 @@ Generally
 \item $a|b$ means event $a$ conditional on event $b$ having occurred
 \item the symbol $\forall$ means for all values, usually referring to all of the
   values within an ordered tuple.
+\item we use \textcolor{red}{red} to indicate an estimable parameter
+\item we use \textcolor{blue}{blue} to represent covariates and fixed parameters
+\item we use \textcolor{green}{green} to represent data
 \end{itemize}
 \end{frame}
 
@@ -106,60 +109,6 @@ We group the leading model parameters into the vector
   \textcolor{red}{R_0}, \textcolor{red}{\ddot{R}}, \textcolor{red}{\bar{R}},
   \textcolor{red}{\alpha_r}, \textcolor{red}{\beta_r}, \textcolor{red}{\kappa} \}.
 \end{equation*}
-\end{frame}
-
-%% =========================================================================== %%
-
-\subsection{Latent states}
-\begin{frame}
-\frametitle{Latent states}
-\begin{table}
-  \centering
-  \begin{tabular}{ccl}
-  \hline
-  Symbol & Dimensions & Description \\
-  \hline
-      \textcolor{red}{$\delta_i$} & $1$ & Annual natrual mortality rate deviates \\
-      \textcolor{red}{$\boldsymbol\nu$} & $\ell \times 1$ & Initial recuitment deviates \\
-      \textcolor{red}{$xi_{i,k}$} & $1$ &  Discard mortality rate for each gear
-      $k$ in year $i$\\
-  \hline
-  \end{tabular}
-\end{table}
-We group the latent states into the vector
-\begin{equation*}
-  \textcolor{red}{\boldsymbol\omega} = \{ \textcolor{red}{\boldsymbol\nu},
-  \xi, \delta_i \}.
-\end{equation*}
-\end{frame}
-
-%% =========================================================================== %%
-
-\subsection{Other variables}
-\begin{frame}
-\frametitle{Other variables}
-
-\begin{table}
-  \centering
-  \begin{tabular}{ccl}
-  \hline
-  Symbol  & Dimensions & Description \\
-  \hline
-      $\boldsymbol{w}_{h}$ & $\ell \times 1$ & Mean weight at length ($\ell$) by sex ($h$) \\
-      $\boldsymbol{m}_{h} $ & $\ell \times 1$ & Average proportion mature at length ($\ell$) by sex ($h$) \\
-  \hline
-  \end{tabular}
-\end{table}
-
-\begin{equation*}
-  \boldsymbol{w}_{h} = f_w(\ell,\theta)
-\end{equation*}
-
-\begin{equation*}
-  \boldsymbol{m}_{h} = f_m(\ell,\theta)
-\end{equation*}
-
-
 \end{frame}
 
 %% =========================================================================== %%
@@ -310,7 +259,7 @@ The molting probability ($\boldsymbol{P}_h$) and the growth probability
 
 \subsection{Natural mortality}
 \begin{frame}
-\frametitle{Natural mortality}
+\frametitle{Natural mortality variables}
 \begin{table}
   \centering
   \begin{tabular}{cl}
@@ -318,9 +267,9 @@ The molting probability ($\boldsymbol{P}_h$) and the growth probability
   Symbol  & Description \\
   \hline
       $\textcolor{red}{M_{0,h}}$ & Initial instantaneous natural mortality rate \\
-      $\sigma_M$ & Standard deviation of natural mortality \\
-      $\textcolor{red}{\delta_i}$ & Natural mortality deviate \\
-      $M_{h,i}$ & Natural mortality by sex $h$ and year $i$ \\
+      $\textcolor{blue}{\sigma_M}$ & Standard deviation of natural mortality \\
+      $\delta_i$ & Natural mortality deviate \\
+      $\textcolor{red}{M_{h,i}}$ & Natural mortality by sex $h$ and year $i$ \\
   \hline
   \end{tabular}
 \end{table}
@@ -334,8 +283,8 @@ Natural mortality ($M$) is assumed to be sex-specific ($h$), size-independent
 ($\ell$), and may or may not be constant over time ($i$). The options currently
 available in Gmacs include:
 \begin{enumerate}
-\item Constant natural mortality ($M_{h,i} = \textcolor{red}{M_{0,h}}$)
-\item Random walk (deviates constrained by variance $\sigma^2_M$)
+\item Constant natural mortality ($\textcolor{red}{M_{h,i}} = \textcolor{red}{M_{0,h}}$)
+\item Random walk (deviates constrained by variance $\textcolor{blue}{\sigma^2_M}$)
 \item Cubic Spline (deviates constrained by nodes and node placement)
 \item Blocked changes (deviates constrained by variance in specified blocks
   $\iota \in i$)
@@ -350,15 +299,15 @@ If time-varying natural mortality is specified using the {\bf random walk}
 option, the model constrains $M_{h,i}$ to be a random-walk process with variance
 $\sigma^2_M$
 \begin{equation*}
-  M_{h,i+1} = 
+  \textcolor{red}{M_{h,i+1}} = 
   \begin{cases}
     \textcolor{red}{M_{0,h}} \quad \text{for} \quad i=1\\
-    M_{h,i} e^{\textcolor{red}{\delta_i}} \quad \text{for} \quad i>1
+    \textcolor{red}{M_{h,i}} e^{\delta_i} \quad \text{for} \quad i>1
   \end{cases},
 \end{equation*}
 where
 \begin{equation*}
-  \textcolor{red}{\delta_i} \sim \mathcal{N} \left( 0, \sigma^2_M \right).
+  \delta_i \sim \mathcal{N} \left( 0, \textcolor{blue}{\sigma^2_M} \right).
 \end{equation*}
 A time-varying natural mortality can be estimated for all years ($i$), or for
 specified blocks of years ($\iota \in i$).
@@ -381,7 +330,7 @@ as a {\bf random walk} process for all years ($i$)
 \begin{frame}
 \frametitle{Natural mortality: option 3}
 If time-varying natural mortality is specified using the {\bf cubic spline}
-option, the model constrains $M_{h,i}$ to be a cubic spline process at
+option, the model constrains $\textcolor{red}{M_{h,i}}$ to be a cubic spline process at
 specified knots. For example, setting
 \begin{figure}[!htbp]
   \centering
@@ -394,8 +343,9 @@ specified knots. For example, setting
 \begin{frame}
 \frametitle{Natural mortality: option 4}
 If time-varying natural mortality is specified using the {\bf blocked changes}
-option, the model constrains $M_{h,i}$ by the variance ($\sigma^2_M$). For
-example, setting $\sigma^2_M = 0.04$ and four specific years (1976, 1980, 1985,
+option, the model constrains $\textcolor{red}{M_{h,i}}$ by the variance
+($\textcolor{blue}{\sigma^2_M}$). For example, setting
+$\textcolor{blue}{\sigma^2_M} = 0.04$ and four specific years (1976, 1980, 1985,
 1994) we get
 \begin{figure}[!htbp]
   \centering
@@ -426,12 +376,12 @@ example, setting $\sigma^2_M = 0.04$ and four specific years (1976, 1980, 1985,
       \textcolor{red}{$r_{h,i,k}$} & $1$ & Length at 50\% \\
       \textcolor{red}{$\sigma^y_{h,i,k}$} & $1$ & Standard deviation in length at retention \\
       $\boldsymbol{y}_{h,i,k}$ & $\ell \times 1$ & Length at 50\% retention in length interval $\ell$ \\
-      \textcolor{red}{$\xi_{i,k}$} & $1$ & Discard mortality rate for gear $k$
+      \textcolor{blue}{$\xi_{i,k}$} & $1$ & Discard mortality rate for gear $k$
       in year $i$ \\
       $\boldsymbol\nu_{h,i,k}$ & $\ell \times 1$ & Vulnerability due to fishing mortality for sex $h$ \\
-      $\bar{\boldsymbol{f}}_k$ & $i \times 1$ & Average fishing mortality rate for gear $k$ \\
-      $\boldsymbol\Psi_{k,i}$ & & Fishing mortality deviate for gear $k$ in year $i$ \\
-      $\boldsymbol{F}_{k,i}$ & & Annual fishing mortality rate for gear $k$ in year $i$ \\
+      \textcolor{red}{$\bar{\boldsymbol{f}}_k$} & $i \times 1$ & Average fishing mortality rate for gear $k$ \\
+      \textcolor{red}{$\boldsymbol\Psi_{i,k}$} & & Fishing mortality deviate for gear $k$ in year $i$ \\
+      \textcolor{red}{$\boldsymbol{F}_{i,k}$} & & Annual fishing mortality rate for gear $k$ in year $i$ \\
   \hline
   \end{tabular}
 \end{table}
@@ -454,15 +404,28 @@ $\ell$ being retained is
   \boldsymbol{y}_{h,i,k} = \left(1 + \exp \left(-(\textcolor{red}{r_{h,i,k}} - \ell \right) /
   \textcolor{red}{\sigma_{h,i,k}^y}) \right)^{-1}.
 \end{equation*}
+\end{frame}
 
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Selectivity, retention and fishing mortality}
 The joint probability of vulnerability due to fishing and discard mortality
 is
 \begin{equation*}
   \boldsymbol\nu_{h,i,k} = \boldsymbol{s}_{h,i,k} \left[ \boldsymbol{y}_{h,i,k} + (1 - \boldsymbol{y}_{h,i,k})
-    \textcolor{red}{\xi_{i,k}} \right],
+    \textcolor{blue}{\xi_{i,k}} \right],
 \end{equation*}
-where $\textcolor{red}{\xi_{i,k}}$ is the discard mortality rate for fishery $k$ in
-year $i$.
+where $\textcolor{blue}{\xi_{i,k}}$ is the discard mortality rate for fishery $k$ in
+year $i$. Finally the fishing mortality is calculated as
+\begin{align*}
+  \textcolor{red}{\boldsymbol{F}_{h,i}} &= \sum_k \exp \left(
+    \textcolor{red}{\bar{\boldsymbol{f}}_k} +
+    \textcolor{red}{\boldsymbol\Psi_{i,k}} \right) \boldsymbol\nu_{h,i,k},\\
+\end{align*}
+The vector $\textcolor{red}{\boldsymbol{F}_{h,i}}$ represents all mortality
+associated with fishing, including discards in directed and non-directed
+fisheries.
 \end{frame}
 
 %% =========================================================================== %%
@@ -479,23 +442,6 @@ $\boldsymbol{y}_{h,i,k} = \boldsymbol{y}_{h,k}$
 \end{frame}
 
 %% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Fishing mortality}
-\begin{align*}
-  \boldsymbol{F}_{h,i} &= \sum_k \exp \left( \bar{\boldsymbol{f}}_k +
-    \boldsymbol\Psi_{k,i} \right) \boldsymbol\nu_{h,i,k},\\
-\end{align*}
-
-\begin{equation*}
-  C_{h,i} = \sum_{\ell} \left[ \boldsymbol{n}_{h,i} \boldsymbol{w}_{h} \frac{\boldsymbol{F}_{h,i}}{\boldsymbol{Z}_{h,i}} 
-    \left( 1 - e^{-\boldsymbol{Z}_{h,i}} \right) \right] \quad \text{where} \quad \boldsymbol{Z}_{h,i}
-  = M_{h,i} + \boldsymbol{F}_{h,i}.
-\end{equation*}
-
-\end{frame}
-
-%% =========================================================================== %%
 %% =========================================================================== %%
 
 \section{Recruitment}
@@ -507,10 +453,11 @@ $\boldsymbol{y}_{h,i,k} = \boldsymbol{y}_{h,k}$
 \frametitle{Recruitment}
 Recruitment size-distribution
 \begin{align*}
-  \alpha &= \frac{\alpha_r}{\beta_r},\\
+  \textcolor{red}{\alpha} &= \frac{\textcolor{red}{\alpha_r}}{\textcolor{red}{\beta_r}},\\
   p[x_\ell-0.5 \Delta x \le x \le x_\ell+0.5 \Delta x] &= p[x] = \int^{x_\ell+0.5
-    \Delta x}_{x_\ell-0.5 \Delta x} \frac{x^{\alpha-1} \exp
-    \left(\frac{x}{\beta_r}\right)}{\Gamma (\alpha) x^\alpha} dx.
+    \Delta x}_{x_\ell-0.5 \Delta x} \frac{ x^{\textcolor{red}{\alpha} - 1} \exp
+    \left( \frac{x}{\textcolor{red}{\beta_r}} \right)}
+    {\Gamma (\textcolor{red}{\alpha}) x^{\textcolor{red}{\alpha}}} dx.
 \end{align*}
 Initial recruitment
 \begin{equation*}
@@ -543,92 +490,85 @@ and
 %% =========================================================================== %%
 %% =========================================================================== %%
 
-\section{Initialization}
+\section{Population dynamics}
 
 %% =========================================================================== %%
-%% =========================================================================== %%
-
-\subsection{Initialization}
-\begin{frame}
-\frametitle{Initialization}
-Growth and survival
-\begin{equation*}
-  \boldsymbol{A}_{h} = \boldsymbol{G}_h \left[ \exp (-\textcolor{red}{M_{0,h}})
-    \boldsymbol{I} \right] \quad \text{for} \quad i=1.
-\end{equation*}
-
-\begin{equation*}
-  \boldsymbol{u}_h = -(\boldsymbol{A}_h - \boldsymbol{I})^{-1} (p[\boldsymbol{r}]),
-\end{equation*}
-
-Steady-state conditions
-\begin{equation*}
-  B_0 = \textcolor{red}{R_0} \sum_h \lambda_h \sum_\ell \boldsymbol{u}_h
-  \boldsymbol{w}_{h} \boldsymbol{m}_{h},
-\end{equation*}
-The total unfished numbers in each size category is defined as $R_0
-\boldsymbol{u}_h$. Initial numbers at length
-\begin{equation*}
-  \boldsymbol{n}_{h,i} = \left[-\left( \boldsymbol{A}_{h} - \boldsymbol{I}
-    \right)^{-1} \boldsymbol{r}_{h,i} \right] e^{\boldsymbol\nu} \quad
-  \text{for} \quad i=1,
-\end{equation*}
-where
-\begin{equation*}
-  \boldsymbol\nu \sim \mathcal{N} \left( 0,  \right).
-\end{equation*}
-\end{frame}
-
-%% =========================================================================== %%
-
-
-
-%% =========================================================================== %%
-%% =========================================================================== %%
-
-\section{Steady-state conditions}
-
-%% =========================================================================== %%
-%% =========================================================================== %%
-
-\subsection{Survivorship to length}
-\begin{frame}
-\frametitle{Survivorship to length}
-Assuming a non-zero steady-state fishing mortality rate vector
-$\boldsymbol{f}_{h,i}$, the equilibrium growth and survival process is
-represented by
-\begin{equation*}
-  \boldsymbol{B}_{h,i} = \boldsymbol{G}_h \left[ \exp (-M_{h,i} -
-    \boldsymbol{f}_{h,i}) \boldsymbol{I} \right].
-\end{equation*}
-The vector $\boldsymbol{f}_{h,i}$ represents all mortality associated with
-fishing, including discards in directed and non-directed fisheries.
-
-Assuming unit recruitment, then the growth and survivorship in unfished and
-fished conditions is given by the solutions to the matrix equations
-\begin{equation*}
-  \boldsymbol{v}_h = -(\boldsymbol{B}_h - \boldsymbol{I})^{-1} (p[\boldsymbol{r}]).
-\end{equation*}
-The vector $\boldsymbol{v}_h$ represent the unique equilibrium solution for the
-numbers per recruit in each size category.
-
-\begin{equation*}
-  \tilde{B} = \tilde{R} \sum_h \lambda_h \sum_\ell \boldsymbol{v}_h \boldsymbol{w}_{h}
-  \boldsymbol{m}_{h}.
-\end{equation*}
-\end{frame}
-
 %% =========================================================================== %%
 
 \begin{frame}
 \frametitle{Population dynamics}
-The numbers in each size-class in the following time-step
-($\boldsymbol{n}_{h,i+1}$) is the product of the numbers in each size-class in
-the previous time-step ($\boldsymbol{n}_{h,i}$), size-specific growth and
-survival ($\boldsymbol{B}_{h,i}$), plus new recruits ($\boldsymbol{r}_{h,i}$)
+Growth and survival process are combined, represented by
 \begin{equation*}
-  \boldsymbol{n}_{h,i+1} = \boldsymbol{n}_{h,i} \boldsymbol{B}_{h,i} +
-  \boldsymbol{r}_{h,i} \quad \text{where} \quad i > 1.
+  \boldsymbol{A}_{h,i} =
+  \begin{cases}
+    \boldsymbol{G}_{h} \left[ \exp(- \textcolor{red}{M_{h,i}}) \boldsymbol{I} \right] \quad  \text{for} \quad i = 1\\
+    \boldsymbol{G}_{h} \left[ \exp(-\textcolor{red}{\boldsymbol{Z}_{h,i}}) \boldsymbol{I} \right] \quad \text{for} \quad i > 1
+  \end{cases}.
+\end{equation*}
+where
+\begin{equation*}
+  \textcolor{red}{\boldsymbol{Z}_{h,i}} = \textcolor{red}{M_{h,i}} +
+  \textcolor{red}{\boldsymbol{F}_{h,i}}.
+\end{equation*}
+
+Assuming unit recruitment, then the growth and survivorship in unfished and
+fished conditions is given by the solutions to the equations
+\begin{equation*}
+  \boldsymbol{u}_{h,i} = -(\boldsymbol{A}_{h,i} - \boldsymbol{I})^{-1} (p[x])
+  \quad \forall i.
+\end{equation*}
+The vector $\boldsymbol{u}_{h,i}$ represent the unique equilibrium solution for the
+numbers per recruit in each size category.
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Initial population}
+The mean weight at length ($\ell$) by sex ($h$) is represented by the $\ell
+\times 1$ vector $\boldsymbol{w}_{h}$ and can take any form the user wishes
+\begin{equation*}
+  \boldsymbol{w}_{h} = f_w(\ell,\theta)
+\end{equation*}
+
+Similarly, the average proportion mature at length ($\ell$) by sex ($h$) is
+represented by the $\ell \times 1$ vector $\boldsymbol{w}_{h}$ and can take any
+form the user wishes
+\begin{equation*}
+  \boldsymbol{m}_{h} = f_m(\ell,\theta)
+\end{equation*}
+
+Steady-state conditions
+\begin{equation*}
+  B_0 = \textcolor{red}{R_0} \sum_h \lambda_h \sum_\ell \boldsymbol{u}_{h,i}
+  \boldsymbol{w}_{h} \boldsymbol{m}_{h} \quad \text{for} \quad i=1,
+\end{equation*}
+\begin{equation*}
+  \tilde{B} = \tilde{R} \sum_h \lambda_h \sum_\ell \boldsymbol{u}_{h,i} \boldsymbol{w}_{h}
+  \boldsymbol{m}_{h} \quad \text{for} \quad i>1.
+\end{equation*}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Population evolution}
+The total unfished numbers in each size category is defined as $R_0
+\boldsymbol{u}_{h,i=1}$. Initial numbers at length
+\begin{equation*}
+  \boldsymbol{n}_{h,i} = \left[-\left( \boldsymbol{A}_{h} - \boldsymbol{I}
+    \right)^{-1} \boldsymbol{r}_{h,i} \right] e^{\textcolor{red}{\boldsymbol\varepsilon}} \quad
+  \text{for} \quad i=1,
+\end{equation*}
+where $\textcolor{red}{\boldsymbol\varepsilon}$ is an $\ell \times 1$ vector of
+initial recruitment deviates. The numbers in each size-class in the following
+time-step ($\boldsymbol{n}_{h,i+1}$) is the product of the numbers in each
+size-class in the previous time-step ($\boldsymbol{n}_{h,i}$), size-specific
+growth and survival ($\boldsymbol{A}_{h,i}$), plus new recruits
+($\boldsymbol{r}_{h,i}$)
+\begin{equation*}
+  \boldsymbol{n}_{h,i+1} = \boldsymbol{n}_{h,i} \boldsymbol{A}_{h,i} +
+  \boldsymbol{r}_{h,i} \quad \text{where} \quad i \ge 1.
 \end{equation*}
 \end{frame}
 
@@ -652,19 +592,136 @@ Likelihoods
 \end{itemize}
 Penalties
 \begin{itemize}
-\item $log_{fdev}$ to ensure they sum to zero
-\item mean $F$ to regularize the solution
-\item constrain $M$ in random walk
-\item recruitment deviations
+\item constrain $\log (\textcolor{red}{\Psi_{i,k}})$ to ensure they sum to zero
+\item constrain mean \textcolor{red}{$\bar{\boldsymbol{f}}_k$} to regularize the
+  solution
+\item constrain $\textcolor{red}{M_{h,i}}$ in random walk
 \end{itemize}
 
 \end{frame}
 
 %% =========================================================================== %%
 
-\subsection{Log-likelihoods}
+\begin{frame}
+\frametitle{Log-likelihood: catch}
+The standard deviation of the catch ($\textcolor{blue}{\sigma_{i,k}}$) is calculated
+from the CV as
+\begin{equation*}
+  \textcolor{blue}{\sigma_{i,k}} = \sqrt{\log \left( 1+\textcolor{blue}{c_{i,k}}^2 \right)}.
+\end{equation*}
+The expected catch is calculated using the Baranov catch equation
+\begin{equation*}
+  \hat{C}_{i,k} = \sum_{\ell} \left[ \boldsymbol{n}_{h,i} \boldsymbol{w}_{h}
+    \frac{\textcolor{red}{\boldsymbol{F}_{h,i}}}{\textcolor{red}{\boldsymbol{Z}_{h,i}}} 
+    \left( 1 - e^{-\textcolor{red}{\boldsymbol{Z}_{h,i}}} \right) \right] \quad \text{where}
+  \quad \textcolor{red}{\boldsymbol{Z}_{h,i}}
+  = \textcolor{red}{M_{h,i}} + \textcolor{red}{\boldsymbol{F}_{h,i}}.
+\end{equation*}
+The log-likelihood is
+\begin{equation*}
+  \ell(\textcolor{green}{C_{i,k}}) = 0.5 \log (2 \pi) + \log
+  (\textcolor{blue}{\sigma_{i,k}}) -
+  \frac{1}{2\textcolor{blue}{\sigma_{i,k}}^2} (\textcolor{green}{C_{i,k}} - \hat{C}_{i,k})^2.
+\end{equation*}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Log-likelihood: catch}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.75\linewidth]{../../examples/bbrkc/OneSex/figure/catch.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Log-likelihoods: relative abundance}
+The catchability coefficient $q$ is treated as a nuisance parameter and
+integrated out of the model~\citep{Walters1994}.
+\begin{equation*}
+  q = \exp \left( \frac{1}{n} \sum_i \log \left(
+      \frac{\textcolor{green}{I_i}}{V_i} \right) \right).
+\end{equation*}
+The standard deviation ($\textcolor{blue}{\sigma_{i,k}}$) is calculated from the CV as
+\begin{equation*}
+  \textcolor{blue}{\sigma_{i,k}} = \sqrt{\log \left(
+      1+\textcolor{blue}{c_{i,k}}^2 \right)}.
+\end{equation*}
+The log-likelihood is
+\begin{equation*}
+  \ell(\textcolor{green}{I_{i,k}}) = \lambda \left( 0.5 \log (2 \pi) + \log
+  (\textcolor{blue}{\sigma_{i,k}}) +
+  \frac{1}{2\textcolor{blue}{\sigma^2_{i,k}}} (\textcolor{green}{I_{i,k}} -
+  qV_{i,k})^2 \right).
+\end{equation*}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Log-likelihood: relative abundance}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=\linewidth]{../../examples/bbrkc/OneSex/figure/cpue.png}
+\end{figure}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Log-likelihoods: size composition}
+Size composition data is assumed to be multinomial distributed
+\begin{equation*}
+  \boldsymbol{P}_{h,i} = (P_\ell)_{h,i} = \mathcal{M}\text{ultinomial} \left( n_{h,i},
+  \boldsymbol{Q}_{h,i} \right)
+\end{equation*}
+
+Alternatively we could use
+\begin{equation*}
+  \boldsymbol{P}_{h,i} = (P_\ell)_{h,i} = \mathcal{D}\text{irichlet} \left(
+    \textcolor{red}{\lambda_0} \textcolor{blue}{n_{h,i}} \boldsymbol{Q}_{h,i} \right).
+\end{equation*}
+In this context, $\textcolor{red}{\lambda_0}$ can be thought of as the data
+weight (which may be estimated in the model) and $n_{h,i}$ is the relative
+sample size between years.
+\end{frame}
+
+%% =========================================================================== %%
+
 \begin{frame}
 \frametitle{Log-likelihoods}
+Natural mortality
+\begin{equation*}
+  \ell(\textcolor{red}{M_{h,i}}) = 
+  0.5 \log (2 \pi) + \log (\textcolor{blue}{\sigma_{M}}) + 0.5
+  \frac{1}{\textcolor{blue}{\sigma^2_{M}}} \sum_i
+  \delta_i^2.
+\end{equation*}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{References}
+\bibliographystyle{agsm}
+\bibliography{../references/Gmacs}
+\end{frame}
+
+%% =========================================================================== %%
+
+\end{document}
+
+
+
+
+%% =========================================================================== %%
+
+\subsection{Log-likelihoods}
+\begin{frame}
+\frametitle{Log-likelihood: normal}
 In general, if we have a random variable $x$ that is normally distributed with
 mean $\mu$ and variance $\sigma^2$, we write
 \begin{equation*}
@@ -680,10 +737,14 @@ $\sigma$ we write
 \begin{equation*}
   \sigma = \sqrt{\log \left( 1+c^2 \right)}.
 \end{equation*}
+\end{frame}
 
+%% =========================================================================== %%
 
-If we have a random variable $x$ that is log-normally distributed with
-location $\mu$ and scale $\sigma$, we write
+\begin{frame}
+\frametitle{Log-likelihood: lognormal}
+In general, if we have a random variable $x$ that is log-normally distributed
+with location $\mu$ and scale $\sigma$, we write
 \begin{equation*}
   x \sim \log \mathcal{N} \left(\mu, \sigma^2 \right).
 \end{equation*}
@@ -693,94 +754,3 @@ The log-likelihood is
   (x) + \frac{1}{2\sigma^2} (x - \mu)^2.
 \end{equation*}
 \end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Log-likelihoods: catch}
-The standard deviation is calculated from the CV as
-\begin{equation*}
-  \sigma = \sqrt{\log \left( 1+c^2 \right)}.
-\end{equation*}
-The log-likelihood is
-\begin{equation*}
-  \ell(\mu,\sigma^2; x_1,\ldots,x_n) = \cancel{-\frac{n}{2} \log (2 \pi)} - n \log (\sigma) -
-  \frac{1}{2\sigma^2} \sum_i^n (x_i - \mu)^2.
-\end{equation*}
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Log-likelihoods: relative abundance}
-The catchability coefficient $q$ is treated as a nuisance parameter and
-integrated out of the model (Walters and Ludwig 1994)
-\begin{equation*}
-  q = \exp \left( \frac{1}{n} \sum_i \log \left( \frac{I_i}{V_i} \right) \right).
-\end{equation*}
-
-\begin{equation*}
-  I_i = q V_i
-\end{equation*}
-The standard deviation is calculated from the CV as
-\begin{equation*}
-  \sigma = \sqrt{\log \left( 1+c^2 \right)}.
-\end{equation*}
-The log-likelihood is
-\begin{align*}
-  \ell(\mu,\sigma^2; x_1,\ldots,x_n)
-  &= n \lambda \cancel{-\frac{n}{2} \log (2 \pi)} - n \log (\sigma) - \frac{1}{2\sigma^2} \sum_i^n (x_i - \mu)^2\\
-  &= n \lambda - n \log (\sigma) - \frac{1}{2\sigma^2} \sum_i^n (x_i - \mu)^2\\
-\end{align*}
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Log-likelihoods: size composition}
-Size composition data is assumed to be multinomail distributed
-\begin{equation*}
-  \boldsymbol{P}_{h,i} = (P_\ell)_{h,i} = \mathcal{M}\text{ultinomial} \left( n_{h,i},
-  \boldsymbol{Q}_{h,i} \right)
-\end{equation*}
-
-Alternatively we could use
-\begin{equation*}
-  \boldsymbol{P}_{h,i} = (P_\ell)_{h,i} = \mathcal{D}\text{irichlet} \left(
-    \textcolor{red}{\lambda_0} n_{h,i} \boldsymbol{Q}_{h,i} \right).
-\end{equation*}
-In this context, $\textcolor{red}{\lambda_0}$ can be thought of as the data
-weight (which may be estimated in the model) and $n_{h,i}$ is the relative
-sample size between years.
-\end{frame}
-
-%% =========================================================================== %%
-
-\begin{frame}
-\frametitle{Log-likelihoods}
-Fishing mortality
-\begin{equation*}
-  \ell(F_k) = 0.5 \log (2 \pi) + \log (\sigma_{F_k}) + 0.5
-  \frac{1}{\sigma^2_{F_k}} (\bar{F}_k - \hat{F})^2.
-\end{equation*}
-Natural mortality
-\begin{equation*}
-  \ell(M_h) = 
-  \begin{cases}
-    0.5 \log (2 \pi) + \log (\sigma_{M_h}) + 0.5 \frac{1}{\sigma^2_{M_h}} \sum_i
-    \delta_i^2 \quad \text{or}\\
-    0.5 \log (2 \pi) + \log (\sigma_{M_h}) + 0.5 \frac{1}{\sigma^2_{M_h}} \sum_i
-    (\delta_{i+1} - \delta_i)^2
-  \end{cases}.
-\end{equation*}
-Abundance indices
-\begin{equation*}
-  \ell(I_k) = 0.5 \log (2 \pi) + \log (\sigma_{F_k}) + 0.5
-  \frac{1}{\sigma^2_{F_k}} (\bar{F}_k - \hat{F})^2.
-\end{equation*}
-
-\end{frame}
-
-%% =========================================================================== %%
-
-\end{document}

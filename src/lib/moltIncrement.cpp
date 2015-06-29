@@ -47,8 +47,6 @@ dmatrix get_empirical_molt_increment(const dvector& bin, const dmatrix& data)
 		y(h,j) = data(i,3);	
 	}
 
-
-
 	// rescale size to 0-1 over bin width
 	for (int h = 1; h <= nsex; ++h)
 	{
@@ -64,5 +62,4 @@ dmatrix get_empirical_molt_increment(const dvector& bin, const dmatrix& data)
 	
 	cout<<"leaving get_empirical_molt_increment"<<endl;
 	return mi;
-
 }
