@@ -72,15 +72,16 @@ DATA_SECTION
 			cout<<"  | CONTRIBUTIONS (code and intellectual)                    |\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | Name:                        Organization:               |\n";
-			cout<<"  | Steven Martell,              IPHC                        |\n";
-			cout<<"  | James Ianelli,               NOAA-NMFS                   |\n";
-			cout<<"  | Jack Turnock,                NOAA-NMFS                   |\n";
-			cout<<"  | Jie Zheng,	                ADF&G                       |\n";
-			cout<<"  | Hamachan Hamazaki,	        ADF&G                       |\n";
-			cout<<"  | Athol Whitten,               University of Washington    |\n";
-			cout<<"  | Andre Punt,                  University of Washington    |\n";
-			cout<<"  | Dave Fournier,               Otter Research              |\n";
-			cout<<"  | John Levitt,                 Mathemetician               |\n";
+			cout<<"  | James Ianelli                NOAA-NMFS                   |\n";
+			cout<<"  | Darcy Webber                 NOAA-NMFS Contractor        |\n";
+			cout<<"  | Steven Martell               IPHC                        |\n";
+			cout<<"  | Jack Turnock                 NOAA-NMFS                   |\n";
+			cout<<"  | Jie Zheng 	                  ADF&G                       |\n";
+			cout<<"  | Hamachan Hamazaki 	          ADF&G                       |\n";
+			cout<<"  | Athol Whitten                University of Washington    |\n";
+			cout<<"  | Andre Punt                   University of Washington    |\n";
+			cout<<"  | Dave Fournier                Otter Research              |\n";
+			cout<<"  | John Levitt                  Mathemetician               |\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"\n";
 			cout<<"  |----------------------------------------------------------|\n";
@@ -100,7 +101,17 @@ DATA_SECTION
 			exit(1);
 		}
 
-		// Add command line option here to do retrospective analysis
+		// Command line option here to do retrospective analysis
+		if((on=option_match(ad_comm::argc,ad_comm::argv,"-retro",opt))>-1)
+		{
+			cout<<"\n";
+			cout<<"  |----------------------------------------------------------|\n";
+			cout<<"  | Running retrospective model with "<< ad_comm::argv[on+1]<<" recent yrs removed |\n";
+			cout<<"  |----------------------------------------------------------|\n";
+			cout<<"  |  YET TO BE IMPLEMENTED                                   |\n";
+			cout<<"  |----------------------------------------------------------|\n";
+			exit(1);
+		}
 	END_CALCS
 
 	// |------------------------|
@@ -2733,9 +2744,6 @@ GLOBALS_SECTION
 	#include "include\libgmacs.h"
 	#endif
 
-
-	
-	
 	time_t start,finish;
 	long hour,minute,second;
 	double elapsed_time;
