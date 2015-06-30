@@ -73,11 +73,11 @@ DATA_SECTION
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | Name:                        Organization:               |\n";
 			cout<<"  | James Ianelli                NOAA-NMFS                   |\n";
-			cout<<"  | Darcy Webber                 NOAA-NMFS Contractor        |\n";
+			cout<<"  | D'Arcy Webber                NOAA-NMFS Contractor        |\n";
 			cout<<"  | Steven Martell               IPHC                        |\n";
 			cout<<"  | Jack Turnock                 NOAA-NMFS                   |\n";
-			cout<<"  | Jie Zheng 	                  ADF&G                       |\n";
-			cout<<"  | Hamachan Hamazaki 	          ADF&G                       |\n";
+			cout<<"  | Jie Zheng 	                ADF&G                       |\n";
+			cout<<"  | Hamachan Hamazaki 	        ADF&G                       |\n";
 			cout<<"  | Athol Whitten                University of Washington    |\n";
 			cout<<"  | Andre Punt                   University of Washington    |\n";
 			cout<<"  | Dave Fournier                Otter Research              |\n";
@@ -214,7 +214,7 @@ DATA_SECTION
 	//init_int nCatchRows;                      // number of rows in dCatchData
 	init_int nCatchDF;
 	init_ivector nCatchRows(1,nCatchDF);
-	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11);  // array of catch data
+	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11); // array of catch data
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix  catch_cv(1,nCatchDF,1,nCatchRows);
 	matrix  catch_dm(1,nCatchDF,1,nCatchRows);
@@ -226,9 +226,7 @@ DATA_SECTION
 			obs_catch(k)  = column(dCatchData(k),5);
 			catch_cv(k)   = column(dCatchData(k),6);
 			catch_dm(k)   = column(dCatchData(k),11);
-
-			// rescale catch by multiplier.
-			obs_catch(k) = elem_prod(obs_catch(k),catch_mult(k));
+			obs_catch(k) = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
 		}
 		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 	END_CALCS
@@ -236,11 +234,9 @@ DATA_SECTION
 
 	// From the catch series determine the number of fishing mortality
 	// rate parameters that need to be estimated.  Note that  there is
-	// a number of combinations which require a F to be estimated. The
-	// ivector nFparams is the number of deviations required for each 
-	// fleet, and nYparams is the number of deviations for female Fs.
-	ivector nFparams(1,nfleet);
-	ivector nYparams(1,nfleet);
+	// a number of combinations which require a F to be estimated.
+	ivector nFparams(1,nfleet);      // The number of deviations required for each fleet
+	ivector nYparams(1,nfleet);      // The number of deviations for female Fs
 	ivector foff_phz(1,nfleet);
 	imatrix fhit(syr,nyr,1,nfleet);
 	imatrix yhit(syr,nyr,1,nfleet);
@@ -257,9 +253,9 @@ DATA_SECTION
 		{
 			for(int i = 1; i <= nCatchRows(k); i++ )
 			{
-				int g = dCatchData(k)(i,3);
-				int y = dCatchData(k)(i,1);
-				int h = dCatchData(k)(i,4);
+				int g = dCatchData(k)(i,3); // fleet
+				int y = dCatchData(k)(i,1); // year
+				int h = dCatchData(k)(i,4); // sex
 				if(!fhit(y,g))
 				{
 					fhit(y,g)   ++;
@@ -402,9 +398,6 @@ DATA_SECTION
 	init_int eof;
 	!! WRITEDAT(eof);
 	!! if (eof != 9999) {cout<<"Error reading data"<<endl; exit(1);}
-
-
-
 
 
 
@@ -567,7 +560,7 @@ DATA_SECTION
 		log_pen_fbar = log(pen_fbar+1.0e-14);
 		for(int i=1; i<=2; i++)
 			pen_fstd(i) = trans(f_controls)(i+1);
-		f_phz    = ivector(column(f_controls,4));
+		f_phz = ivector(column(f_controls,4));
 		// Set foff_phz to f_phz
 		for(int k = 1; k <= nfleet; k++ )
 		{
@@ -695,7 +688,6 @@ DATA_SECTION
 	!!	if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
 	!! cout<<"end of control section"<<endl;
 
-
 	LOC_CALCS
 		// ensure the phase for alpha & beta is -ve for GrowhtPars if bUseEmpiricalGrowth
 		COUT(Grwth_phz);
@@ -726,6 +718,7 @@ DATA_SECTION
 	number spr_fofl;
 	number spr_ssbo;
 
+
 INITIALIZATION_SECTION
 	theta     theta_ival;
 	Grwth     Grwth_ival;
@@ -746,8 +739,6 @@ PARAMETER_SECTION
 	// rho       = theta(9)
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
-	
-
 
 	// Growth and molting probability parameters Sex-specific
 	// alpha    = Grwth(1);
@@ -758,7 +749,6 @@ PARAMETER_SECTION
 
 	init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	
-
 	// Molt increment parameters
 	// Need molt increment data to estimate these parameters
 	// init_bounded_vector alpha(1,nsex,0,20.,-3);
@@ -800,7 +790,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
-	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);
+	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
 
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
@@ -873,6 +863,7 @@ PARAMETER_SECTION
 	sdreport_vector sd_log_ssb(syr,nyr);
 	friend_class population_model;
 
+
 PRELIMINARY_CALCS_SECTION
 	if( simflag )
 	{
@@ -884,7 +875,6 @@ PRELIMINARY_CALCS_SECTION
 		cout<<"|———————————————————————————————————————————|"<<endl;
 		cout<<"|*** RUNNING SIMULATION WITH RSEED = "<<rseed<<" ***|"<<endl;
 		cout<<"|———————————————————————————————————————————|"<<endl;
-		
 		simulation_model();
 		//exit(1);
 	}
@@ -901,15 +891,16 @@ PRELIMINARY_CALCS_SECTION
 		}
 	}
 
+
 PROCEDURE_SECTION
 	// Initialize model parameters
 	initialize_model_parameters();
-	if( verbose == 1) cout<<"Ok after initializing model parameters ..."<<endl;
+	if(verbose == 1) cout<<"Ok after initializing model parameters ..."<<endl;
 	
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
-	if( verbose == 1 ) cout<<"Ok after fleet dynamics ..."<<endl;
+	if(verbose == 1) cout<<"Ok after fleet dynamics ..."<<endl;
 
 	// Population dynamics ...
 	if(!bUseEmpiricalGrowth)
@@ -924,7 +915,7 @@ PROCEDURE_SECTION
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	calc_stock_recruitment_relationship();
-	if( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
+	if(verbose == 1) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
 	calc_predicted_catch();
@@ -938,7 +929,7 @@ PROCEDURE_SECTION
 	if( verbose == 1 ) cout<<"Ok after objective function ..."<<endl;
 
 	// sd_report variables
-	if( last_phase() ) 
+	if(last_phase()) 
 	{
 		calc_sdreport();
 	}
@@ -951,7 +942,6 @@ PROCEDURE_SECTION
 FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
 	sd_log_ssb = log(calc_ssb());
-	
 	//for(int k = 1; k <= nfleet; k++ )
 	//{
 	//	sd_fbar(k) = mean(ft(k));
@@ -965,12 +955,11 @@ FUNCTION calc_sdreport
 	 * @details Set global variable equal to the estimated parameter vectors.
 	 * 
 	 * SM:  Note if using empirical growth increment data, then alpha and beta
-     * Growth parameters should not be estimated.  Need to warn the user
-     * if the following condition is true:
-     * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
+         * Growth parameters should not be estimated.  Need to warn the user
+         * if the following condition is true:
+         * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
 	 */
 FUNCTION initialize_model_parameters
-	
 	// Get parameters from theta control matrix:
 	M0        = theta(1);
 	logR0     = theta(2);
@@ -998,9 +987,7 @@ FUNCTION initialize_model_parameters
 		molt_cv(h)   = Grwth(icnt);
 	}
 	
-
-	
-	if( ! bUseEmpiricalGrowth )
+	if( !bUseEmpiricalGrowth )
 	{
 		alpha     = mle_alpha;
 		beta      = mle_beta;
@@ -1024,8 +1011,7 @@ FUNCTION initialize_model_parameters
 	 *  -# Based on slx_type, fill pointer with parameter estimates.
 	 *  -# Loop over years and block-in the log_selectivity at mid points.
 	 * 	
-	 * 	 Need to deprecate the abstract class for selectivity, 7X slower. 
-	 * 	 
+	 * Need to deprecate the abstract class for selectivity, 7X slower. 
 	 */
 FUNCTION calc_selectivities
 	int h,i,j,k;
@@ -1071,7 +1057,6 @@ FUNCTION calc_selectivities
 			for( i = slx_styr(k); i <= slx_edyr(k); i++ )
 			{
 				int kk = abs(slx_indx(k));   // gear index
-				
 				if(slx_indx(k) > 0)
 				{
 					log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
@@ -1082,11 +1067,9 @@ FUNCTION calc_selectivities
 					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)) +TINY);
 				}
 			}
-			
 			// Increment counter if sex-specific selectivity curves are defined.
 			if(slx_bsex(k))  j++;
 		}
-		
 		delete *pSLX;
 	}
 
@@ -1095,6 +1078,8 @@ FUNCTION calc_selectivities
 	/**
 	 * @brief Calculate fishing mortality rates for each fleet.
 	 * @details For each fleet estimate scaler log_fbar and deviates (f_devs).
+         *
+         * dmr is the discard mortality rate
 	 * 
 	 * In the event that there is effort data and catch data, then it's possible
 	 * to estimate a catchability coefficient and predict the catch for the
@@ -1104,10 +1089,10 @@ FUNCTION calc_selectivities
 	 * Or minimize the first difference and assume a random walk in q.
 	 * 
 	 * Note that this function calculates the fishing mortality rate including
-	 * deaths due to discards.  Where lambda is the discard mortality rate.
+	 * deaths due to discards.  Where xi is the discard mortality rate.
 	 * 
 	 * Note also that Jie estimates F for retained fishery, f for male discards and
-	 * f for female discards.  Not recommended to have separate F' for retained and 
+	 * f for female discards.  Not recommended to have separate F's for retained and 
 	 * discard fisheries, but might be ok to have sex-specific F's.  
 	 * 
 	 * TODO 
@@ -1115,13 +1100,13 @@ FUNCTION calc_selectivities
 	 */
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik,yk;
-	double lambda;      // discard mortality rate
+	double xi; // discard mortality rate
 	F.initialize();
 	ft.initialize();
 	dvariable log_ftmp;
 	dvar_vector sel(1,nclass);
 	dvar_vector ret(1,nclass);
-	dvar_vector tmp(1,nclass);
+	dvar_vector vul(1,nclass);
 
 	for( k = 1; k <= nfleet; k++ )
 	{
@@ -1132,30 +1117,25 @@ FUNCTION calc_fishing_mortality
 			{
 				if(fhit(i,k))
 				{
-					log_ftmp    = log_fbar(k) + log_fdev(k,ik++);
-					
+					log_ftmp = log_fbar(k) + log_fdev(k,ik++);
 					if(yhit(i,k))
 					{
-						log_ftmp   += (h-1) * (log_foff(k) + log_fdov(k,yk++));
+						log_ftmp += (h-1) * (log_foff(k) + log_fdov(k,yk++));
 					}
 					ft(k)(h)(i) = mfexp(log_ftmp);
-					
-					lambda = dmr(i,k);
-					
-					sel = exp(log_slx_capture(k)(h)(i));
-					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k);
-					
-					tmp = elem_prod(sel,ret + (1.0 - ret) * lambda);
-					
+					xi = dmr(i,k);                                       // Discard mortality rate
+					sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
+					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
+					vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
 					/*if(sum(tmp)==0 || min(tmp) < 0)
 					{
 						cerr <<"Selectivity vector for gear "<<k<<" is all 0's ";
 						cerr <<"Please fix the selectivity controls."<<endl;
-						COUT(tmp);
+						COUT(vul);
 						exit(1);
 					}
 					*/
-					F(h)(i) += ft(k,h,i) * tmp;
+					F(h)(i) += ft(k,h,i) * vul;
 				}
 			}
 		}
@@ -1166,10 +1146,10 @@ FUNCTION calc_fishing_mortality
 	 * @brief Compute growth increments 
 	 * @details Presently based on liner form
 	 * 
-	 * @param vSizes is a vector of size data from which to compute predicted values
-	 * @param iSex   is an integer vector indexing sex (1 = male, 2 = female )
+	 * @param vSizes is a vector of doubles of size data from which to compute predicted values
+	 * @param iSex   is an integer vector indexing sex (1 = male, 2 = female)
 	 * @return dvar_vector of predicted growth increments
-	 */   
+	 */
 FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
 	{
 	if( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
@@ -1188,7 +1168,6 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return pMoltInc;
-		
 	}
 
 
@@ -1200,7 +1179,6 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	 */
 FUNCTION calc_growth_increments
 	int h,l;
-	
 	for( h = 1; h <= nsex; h++ )
 	{
 		for( l = 1; l <= nclass; l++ )
@@ -1208,6 +1186,7 @@ FUNCTION calc_growth_increments
 			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
 		}
 	}
+
 
 	/**
 	 * \brief Calclate the size transtion matrix.
@@ -1236,12 +1215,10 @@ FUNCTION calc_growth_transition
 	dvar_matrix At(1,nclass,1,nclass);
 	growth_transition.initialize();
 
-
 	for( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
 		sbi = size_breaks / gscale(h);
-		
 		for( l = 1; l <= nclass; l++ )
 		{
 			dMeanSizeAfterMolt = (size_breaks(l) + molt_increment(h)(l)) / gscale(h);
@@ -1268,7 +1245,6 @@ FUNCTION calc_growth_transition
 	 * todo:  
 	 *      - Add time varying components
 	 *      - Size-dependent mortality
-	 * 
 	 */
 FUNCTION calc_natural_mortality
 	int h;
@@ -1346,7 +1322,6 @@ FUNCTION calc_total_mortality
 	for( h = 1; h <= nsex; h++ )
 	{
 		Z(h) = M(h) + F(h);
-	
 		for(int i = syr; i <= nyr; i++ )
 		{
 			for(int l = 1; l <= nclass; l++ )
@@ -1394,7 +1369,6 @@ FUNCTION calc_molting_probability
 	 * @param rbeta scales the variance of the distribution
 	 */
 FUNCTION calc_recruitment_size_distribution
-	
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
 	for(int l = 1; l <= nclass+1; l++ )
@@ -1494,11 +1468,9 @@ FUNCTION calc_initial_numbers_at_length
 	dvar_matrix _S(1,nclass,1,nclass);
 	_S.initialize();
 
-
 	for(int h = 1; h <= nsex; h++ )
 	{
 		A = growth_transition(h);
-		
 		// Unfished conditions
 		if ( bInitializeUnfished )
 		{
@@ -1532,9 +1504,7 @@ FUNCTION calc_initial_numbers_at_length
 
 		// Insert terminal molt case here.
 
-
 	}
-	
 	if(verbose == 1) COUT(d3_N(1)(syr));
 	// cout<<"End of calc_initial_numbers_at_length"<<endl; 
 	
@@ -1545,7 +1515,7 @@ FUNCTION calc_initial_numbers_at_length
 	 * @details  Numbers at length are propagated each year for each sex based on the 
 	 * size transition matrix and a vector of size-specifc survival rates. The columns
 	 * of the size-transition matrix are multiplied by the size-specific survival rate
-	 * (a sclaer).  New recruits are added based on the estimated aveerage recruitment and 
+	 * (a scalar).  New recruits are added based on the estimated aveerage recruitment and 
 	 * annual deviate, multiplied by a vector of size-proportions (rec_sdd).
 	 */
 FUNCTION update_population_numbers_at_length
@@ -1587,7 +1557,6 @@ FUNCTION update_population_numbers_at_length
 				A  = growth_transition(h) * S(h)(i);
 				x = d3_N(ig)(i);
 				d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
-			
 			}
 
 			if( o == 2 )    // oldshell
@@ -1612,7 +1581,6 @@ FUNCTION update_population_numbers_at_length
 			{
 
 			}
-
 		}
 	}
 	if(verbose  == 1) COUT(d3_N(1)+d3_N(2));
@@ -1628,7 +1596,6 @@ FUNCTION update_population_numbers_at_length
 	 * NOTES:
 	 * if nSRR_flag == 1 then use a Beverton-Holt model to compute the 
 	 * recruitment deviations for minimization.
-	 * 
 	 */
 FUNCTION calc_stock_recruitment_relationship
 	dvariable so, bb;
@@ -1840,7 +1807,6 @@ FUNCTION calc_predicted_catch
 	 * Question regarding use of shell condition in the relative abundance index.
 	 * Currenlty there is no shell condition information in the CPUE data, should
 	 * there be? Similarly, there is no mature immature information, should there be?
-	 * 
 	 */
 FUNCTION calc_relative_abundance
 	int g,h,i,j,k,ig;
@@ -1873,7 +1839,6 @@ FUNCTION calc_relative_abundance
 								d3_N(ig)(i);
 					}
 				}
-
 				V(j) = nal * sel;
 			}
 			else
@@ -1891,7 +1856,6 @@ FUNCTION calc_relative_abundance
 									d3_N(ig)(i);
 						}
 					}
-					
 					V(j) += nal * sel;
 				}
 			}
@@ -1972,7 +1936,6 @@ FUNCTION calc_predicted_composition
 			type     = d3_SizeComps(ii)(jj,-3);     // retained or discard
 			shell    = d3_SizeComps(ii)(jj,-2);     // shell condition
 			bmature  = d3_SizeComps(ii)(jj,-1);     // boolean for maturity
-				
 			
 			if(h) // sex specific
 			{
@@ -2042,7 +2005,6 @@ FUNCTION calc_predicted_composition
 			}
 			d3_pre_size_comps(ii)(jj) = dNtmp / sum(dNtmp);
 		}
-		
 	}
 
 
@@ -2089,7 +2051,6 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 					prior_pdf = dgamma(theta,p1,p2);
 				break;
 			}
-
 			return prior_pdf;
 	}
 
@@ -2109,7 +2070,6 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 	 *  @param theta a vector of parameters
 	 *  @param C matrix of controls (priorType, p1, p2, lb, ub)
 	 *  @return vector of prior densities for each parameter
-	 *  
 	 */
 FUNCTION calculate_prior_densities
 	double p1,p2;
@@ -2130,7 +2090,6 @@ FUNCTION calculate_prior_densities
 				ub = theta_control(i,3);
 				x  = (x-lb)/(ub-lb);
 			}
-
 			priorDensity(i) = get_prior_pdf(priorType,x,p1,p2);
 		}
 	}
@@ -2139,7 +2098,6 @@ FUNCTION calculate_prior_densities
 	{
 		if( active(Grwth(i)) )
 		{
-
 			int priorType = int(Grwth_control(i,5));
 			p1 = Grwth_control(i,6);
 			p2 = Grwth_control(i,7);
@@ -2150,7 +2108,6 @@ FUNCTION calculate_prior_densities
 				ub = Grwth_control(i,3);
 				x  = (x-lb)/(ub-lb);
 			}
-
 			priorDensity(ntheta+i) = get_prior_pdf(priorType,x,p1,p2);
 		}
 	}
@@ -2164,6 +2121,7 @@ FUNCTION calculate_prior_densities
 		{
 			// Analytical soln, no prior (uniform, uniformative)
 			case 0:
+				//priorDensity(iprior) = dunif(log(survey_q(i)),log(prior_qbar(i)),prior_qsd(i));
 			break;
 			// Prior on analytical soln, log-normal
 			case 1:
@@ -2203,7 +2161,7 @@ FUNCTION calc_objective_function
 	}
 
 	// 2) Likelihood of the relative abundance data.
-  if(verbose == 1) COUT(res_cpue(1));
+        if(verbose == 1) COUT(res_cpue(1));
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
@@ -2229,7 +2187,6 @@ FUNCTION calc_objective_function
 			case 1:  // multinomial with fixed or estimated n
 				ploglike = new acl::multinomial(O,bCmp);
 			break;
-
 			case 2:  // robust approximation to the multinomial
 				if( current_phase() <= 3 || !last_phase() )
 					ploglike = new acl::multinomial(O,bCmp);
@@ -2237,6 +2194,7 @@ FUNCTION calc_objective_function
 					ploglike = new acl::robust_multi(O,bCmp);
 			break;
 		}
+
 		// Compute residuals in the last phase.
 		if( last_phase() && ploglike != NULL ) 
 		{
@@ -2266,7 +2224,6 @@ FUNCTION calc_objective_function
 				nloglike(4,1)  = dnorm(res_recruit,sigR);
 			break;
 		}
-		
 	}
 
 	// 5) Likelihood for growth increment data
@@ -2330,12 +2287,12 @@ FUNCTION calc_objective_function
 	}
 
 
-	/**
-	 * @brief Simulation model
-	 * @details Uses many of the same routines as the assessment
-	 * model, over-writes the observed data in memory with simulated 
-	 * data.
-	 */
+/**
+ * @brief Simulation model
+ * @details Uses many of the same routines as the assessment
+ * model, over-writes the observed data in memory with simulated 
+ * data.
+ */
 FUNCTION simulation_model
 	// random number generator
 	random_number_generator rng(rseed);
@@ -2346,7 +2303,6 @@ FUNCTION simulation_model
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
-
 	
 	dvector drec_dev(syr+1,nyr);
 	drec_dev.fill_randn(rng);
@@ -2366,7 +2322,6 @@ FUNCTION simulation_model
 	calc_predicted_catch();
 	calc_relative_abundance();
 	calc_predicted_composition();
-
 	
 	// add observation errors to catch.
 	dmatrix err_catch(1,nCatchDF,1,nCatchRows);
@@ -2396,7 +2351,6 @@ FUNCTION simulation_model
 		}
 	}
 	
-
 	// add sampling errors to size-composition.
 	// 3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	double tau;
@@ -2515,7 +2469,9 @@ REPORT_SECTION
 	N_mm.initialize();
 	N_males_old.initialize();
 	for (int i=syr;i<=nyr+1;i++)
+	{
 	  for (int j=1;j<=nclass;j++)
+	  {
 	    for (int k=1;k<=n_grp;k++)
 	    {	
 	    	if (isex(k)==1)
@@ -2528,7 +2484,8 @@ REPORT_SECTION
 	    	}
 	    	N_len(i,j) += d3_N(k,i,j);
 	    }
-
+	  }
+	}
 	
 	REPORT(N_len);
 	REPORT(N_mm);
@@ -2806,7 +2763,6 @@ GLOBALS_SECTION
 	 ofstream gmacs_files("gmacs_files_in.dat");
 	 ofstream  gmacs_data("gmacs_in.dat");
 	 ofstream   gmacs_ctl("gmacs_in.ctl");
-
 
 
 TOP_OF_MAIN_SECTION

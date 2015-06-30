@@ -9,6 +9,7 @@
 
 /**
  * @brief Return molt increment matrix based on empirical data
+ *
  * @details Fit's a cubic spline to the empirical data.
  * Note that the spline function strictly requires increasing
  * values for each of the knots.
@@ -42,7 +43,6 @@ dmatrix get_empirical_molt_increment(const dvector& bin, const dmatrix& data)
 	{
 		int h = sex(i);
 		int j = h==1 ? bb++ : gg++ ;
-		
 		x(h,j) = data(i,1);
 		y(h,j) = data(i,3);	
 	}
@@ -59,7 +59,6 @@ dmatrix get_empirical_molt_increment(const dvector& bin, const dmatrix& data)
 		COUT(cSmooth(0.5));
 		COUT(test);
 	}
-	
 	cout<<"leaving get_empirical_molt_increment"<<endl;
 	return mi;
 }
