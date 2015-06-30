@@ -23,6 +23,7 @@ src/tailcompression.obj
 *.nav
 *.toc
 *.snm
+*.vrb
 *.tex.bak
 auto/
 

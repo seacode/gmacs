@@ -1,0 +1,5 @@
+#define SEPFUN1
+#define SEPFUN3
+#define SEPFUN4
+class model_data : public ad_comm{
+  public:

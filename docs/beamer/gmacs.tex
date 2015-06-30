@@ -652,6 +652,29 @@ The log-likelihood is
 
 %% =========================================================================== %%
 
+\begin{frame}[fragile]
+\frametitle{Log-likelihood: catch}
+\begin{verbatim}
+for(int kk = 1; kk <= nCatchDF; kk++ )
+    for( j = 1; j <= nCatchRows(kk); j++ )
+        pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft * 
+            sel, 1.0 - exp(-Z(h)(i))), Z(h)(i));
+
+for(int kk = 1; kk <= nCatchDF; kk++ )
+    res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
+
+// 1) Likelihood of the catch data.
+if(verbose == 1) COUT(res_catch(1));
+for(int k = 1; k <= nCatchDF; k++ )
+{
+    dvector catch_sd = sqrt(log(1.0 + square(catch_cv(k))));
+    nloglike(1,k) += dnorm(res_catch(k), catch_sd);
+}
+\end{verbatim}
+\end{frame}
+
+%% =========================================================================== %%
+
 \begin{frame}
 \frametitle{Log-likelihood: catch}
 \begin{figure}[!htbp]
@@ -686,6 +709,28 @@ The log-likelihood is
 
 %% =========================================================================== %%
 
+\begin{frame}[fragile]
+\frametitle{Log-likelihood: relative abundance}
+\begin{verbatim}
+dvar_vector zt = log(obs_cpue(k)) - log(V);
+dvariable zbar = mean(zt);
+res_cpue(k)    = zt - zbar;
+survey_q(k)    = mfexp(zbar);
+pre_cpue(k)    = survey_q(k) * V;
+
+// 2) Likelihood of the relative abundance data.
+if (verbose == 1) COUT(res_cpue(1));
+for (int k = 1; k <= nSurveys; k++ )
+{
+    dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
+    nloglike(2,k) += cpue_lambda(k) * 
+        dnorm(res_cpue(k), cpue_sd(k));
+}
+\end{verbatim}
+\end{frame}
+
+%% =========================================================================== %%
+
 \begin{frame}
 \frametitle{Log-likelihood: relative abundance}
 \begin{figure}[!htbp]
@@ -712,6 +757,129 @@ Alternatively we could use
 In this context, $\textcolor{red}{\lambda_0}$ can be thought of as the data
 weight (which may be estimated in the model) and $n_{h,i}$ is the relative
 sample size between years.
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}[fragile]
+\frametitle{Log-likelihood: size composition}
+\begin{verbatim}
+// 3) Likelihood for size composition data. 
+for (int ii = 1; ii <= nSizeComps; ii++)
+{
+    dmatrix     O = d3_obs_size_comps(ii);
+    dvar_matrix P = d3_pre_size_comps(ii);
+    dvar_vector log_effn = log(exp(log_vn(ii)) * 
+        size_comp_sample_size(ii));
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Log-likelihood: size composition}
+\begin{verbatim}
+    switch(nAgeCompType(ii))
+    {
+        case 0:  // ignore composition data in model fitting.
+            ploglike = NULL;
+        break;
+        case 1:  // multinomial with fixed or estimated n
+            ploglike = new acl::multinomial(O,bCmp);
+        break;
+        case 2:  // robust approximation to the multinomial
+            if( current_phase() <= 3 || !last_phase() )
+                ploglike = new acl::multinomial(O,bCmp);
+            else
+                ploglike = new acl::robust_multi(O,bCmp);
+        break;
+    }
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Log-likelihood: size composition}
+\begin{verbatim}
+    // Compute residuals in the last phase.
+    if( last_phase() && ploglike != NULL ) 
+    {
+        d3_res_size_comps(ii) = ploglike->residual(log_effn,P);
+    }
+
+    // now compute the likelihood.
+    if(ploglike != NULL)
+    {
+        nloglike(3,ii) += ploglike->nloglike(log_effn,P);			
+    }
+}
+\end{verbatim}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Log-likelihood: recruitment}
+The standard deviation of the catch ($\textcolor{blue}{\sigma_{i,k}}$) is calculated
+from the CV as
+\begin{equation*}
+  \textcolor{blue}{\sigma_{i,k}} = \sqrt{\log \left( 1+\textcolor{blue}{c_{i,k}}^2 \right)}.
+\end{equation*}
+The log-likelihood is
+\begin{equation*}
+  \ell(\textcolor{green}{C_{i,k}}) = 0.5 \log (2 \pi) + \log
+  (\textcolor{blue}{\sigma_{i,k}}) -
+  \frac{1}{2\textcolor{blue}{\sigma_{i,k}}^2} (\log (\textcolor{green}{C_{i,k}})
+  - \log (\hat{C}_{i,k}))^2.
+\end{equation*}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Log-likelihood: recruitment}
+\begin{verbatim}
+// 4) Likelihood for recruitment deviations.
+if( active(rec_dev) )
+{
+    dvariable sigR = mfexp(logSigmaR);
+    switch(nSRR_flag)
+    {
+        case 0:  
+            nloglike(4,1)  = dnorm(res_recruit, sigR);
+            nloglike(4,1) += dnorm(rec_ini, sigR);
+        break;
+        case 1:
+            nloglike(4,1)  = dnorm(res_recruit, sigR);
+        break;
+    }
+}
+\end{verbatim}
+\end{frame}
+
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Log-likelihood: growth increment}
+The standard deviation of the catch ($\textcolor{blue}{\sigma_{i,k}}$) is calculated
+from the CV as
+\begin{equation*}
+  \textcolor{blue}{\sigma_{i,k}} = \sqrt{\log \left( 1+\textcolor{blue}{c_{i,k}}^2 \right)}.
+\end{equation*}
+The log-likelihood is
+\begin{equation*}
+  \ell(\textcolor{green}{C_{i,k}}) = 0.5 \log (2 \pi) + \log
+  (\textcolor{blue}{\sigma_{i,k}}) -
+  \frac{1}{2\textcolor{blue}{\sigma_{i,k}}^2} (\log (\textcolor{green}{C_{i,k}})
+  - \log (\hat{C}_{i,k}))^2.
+\end{equation*}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Log-likelihood: growth increment}
+\begin{verbatim}
+// 5) Likelihood for growth increment data
+if( !bUseEmpiricalGrowth && ( active(Grwth(1)) || active(Grwth(2)) ) )
+{
+    dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
+    nloglike(5,1) = dnorm(log(dMoltInc) - log(MoltIncPred), dMoltIncCV);
+}
+\end{verbatim}
 \end{frame}
 
 %% =========================================================================== %%

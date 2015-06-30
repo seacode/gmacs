@@ -1,0 +1,6 @@
+#include <gmacs.htp>
+
+  df1b2_parameters * df1b2_parameters::df1b2_parameters_ptr=0;
+  model_parameters * model_parameters::model_parameters_ptr=0;
+model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
+{
