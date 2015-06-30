@@ -590,30 +590,30 @@ DATA_SECTION
 	init_ivector bTailCompression(1,nSizeComps);
 	init_ivector nvn_phz(1,nSizeComps);
 	init_ivector iCompAggregator(1,nSizeComps);
-	LOC_CALCS
-		int iAggComps = max(iCompAggregator);
-	END_CALCS
-
-	3darray d3_obs_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
-	3darray d3_res_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
-	matrix agg_comp_sample_size(1,nAggComps,1,nAggCompRows);
-
-	LOC_CALCS
-		for(int k = 1; k <= nSizeComps; k++)
-		{
-		        iCompAggregator(k)
-			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
-			d3_obs_size_comps(k) = trans(tmp);
-			for (int i=1;i<=nSizeCompRows(k);i++)
-			{
-			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
-			}
-			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
-		}
-		ivector nAggCompRows(1,nAggComps);
-		ivector nAggCompCols(1,nAggComps);
-		3darray d3_AggComps(1,nAggComps,1,nAggCompRows,-7,nAggCompCols);
-	END_CALCS
+	// LOC_CALCS
+		// int iAggComps = max(iCompAggregator);
+	// END_CALCS
+  // 
+	// 3darray d3_obs_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
+	// 3darray d3_res_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
+	// matrix agg_comp_sample_size(1,nAggComps,1,nAggCompRows);
+  // 
+	// LOC_CALCS
+		// for(int k = 1; k <= nSizeComps; k++)
+		// {
+		        // iCompAggregator(k)
+			// dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
+			// d3_obs_size_comps(k) = trans(tmp);
+			// for (int i=1;i<=nSizeCompRows(k);i++)
+			// {
+			   // d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
+			// }
+			// size_comp_sample_size(k) = column(d3_SizeComps(k),0);
+		// }
+		// ivector nAggCompRows(1,nAggComps);
+		// ivector nAggCompCols(1,nAggComps);
+		// 3darray d3_AggComps(1,nAggComps,1,nAggCompRows,-7,nAggCompCols);
+	// END_CALCS
 
 
 	LOC_CALCS
