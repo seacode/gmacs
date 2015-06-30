@@ -43,12 +43,14 @@
 #' @param ylab the y-axis label for the plot
 #' @param tlab the type (retained or discarded) label for the plot that appears above the key
 #' @param ilab the year label for the plot that appears above the key
+#' @param nrow the number of rows in the facet grid
+#' @param ncol the number of columns in the facet grid
 #' @return plot of selectivity
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
 plot_selectivity <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Selectivity",
-                             tlab = "Type", ilab = "Block year")
+                             tlab = "Type", ilab = "Block year", nrow = NULL, ncol = NULL)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -59,10 +61,10 @@ plot_selectivity <- function(M, xlab = "Mid-point of size class (mm)", ylab = "S
     if(.OVERLAY)
     {
         p <- p + geom_line(aes(variable, value, col = type, linetype = factor(year)))
-        p <- p + facet_wrap(~Model + sex + fleet)
+        p <- p + facet_wrap(~Model + sex + fleet, nrow = nrow, ncol = ncol)
     } else {
         p <- p + geom_line(aes(variable, value, col = sex, linetype = factor(year)))
-        p <- p + facet_wrap(~Model + fleet + type)
+        p <- p + facet_wrap(~Model + fleet + type, nrow = nrow, ncol = ncol)
     }
     p <- p + labs(y = ylab, x = xlab, col = tlab, linetype = ilab)
     print(p + .THEME)

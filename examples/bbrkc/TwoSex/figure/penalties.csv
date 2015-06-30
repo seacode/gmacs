@@ -1,7 +1,7 @@
 "Model","component","nlogPenalty"
 "","log_fdev",0
-"","mean_F",9.475
-"","M_walk",100.7476
+"","mean_F",9.4786
+"","M_walk",81.5872
 "","rec_dev1",0
 "","rec_dev2",0
-"","rec_dev3",79.7867
+"","rec_dev3",89.3417

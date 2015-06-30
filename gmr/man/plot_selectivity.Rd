@@ -5,7 +5,8 @@
 \title{Plot selectivity}
 \usage{
 plot_selectivity(M, xlab = "Mid-point of size class (mm)",
-  ylab = "Selectivity", tlab = "Type", ilab = "Block year")
+  ylab = "Selectivity", tlab = "Type", ilab = "Block year", nrow = NULL,
+  ncol = NULL)
 }
 \arguments{
 \item{M}{list of lists created by the read_admb function}
@@ -17,6 +18,10 @@ plot_selectivity(M, xlab = "Mid-point of size class (mm)",
 \item{tlab}{the type (retained or discarded) label for the plot that appears above the key}
 
 \item{ilab}{the year label for the plot that appears above the key}
+
+\item{nrow}{the number of rows in the facet grid}
+
+\item{ncol}{the number of columns in the facet grid}
 }
 \value{
 plot of selectivity

@@ -97,7 +97,7 @@ Notice no area index.
       \textcolor{red}{$\bar{R}$} & $0 < \textcolor{red}{\bar{R}} < \infty$ & Average recruitment\\
       \textcolor{red}{$\alpha_r$} & $0 < \textcolor{red}{\alpha_r} < \infty$ & Mode of size-at-recruitment\\
       \textcolor{red}{$\beta_r $} & $0 < \textcolor{red}{\beta_r} < \infty$ & Shape parameter for size-at-recruitment\\
-      \textcolor{red}{$\kappa$} & $1 < \textcolor{red}{\kappa} < \infty$ & Recruitment compensation ratio\\
+      %\textcolor{red}{$\kappa$} & $1 < \textcolor{red}{\kappa} < \infty$ & Recruitment compensation ratio\\
       %\textcolor{red}{$h$} & $\textcolor{red}{h} > 1$ & Stock recruit steepness\\
       \textcolor{red}{$\rho$} & $-\infty < \textcolor{red}{\rho} < \infty$ & Recruitment autocorrelation\\
   \hline
@@ -107,7 +107,8 @@ We group the leading model parameters into the vector
 \begin{equation*}
   \textcolor{red}{\boldsymbol\theta} = \{ \textcolor{red}{M_0},
   \textcolor{red}{R_0}, \textcolor{red}{\ddot{R}}, \textcolor{red}{\bar{R}},
-  \textcolor{red}{\alpha_r}, \textcolor{red}{\beta_r}, \textcolor{red}{\kappa},
+  %\textcolor{red}{\alpha_r}, \textcolor{red}{\beta_r}, \textcolor{red}{\kappa},
+  \textcolor{red}{\alpha_r}, \textcolor{red}{\beta_r},
   \textcolor{red}{\rho} \}.
 \end{equation*}
 \end{frame}
@@ -385,7 +386,7 @@ $\textcolor{blue}{\sigma^2_M} = 0.04$ and four specific years (1976, 1980, 1985,
       $\boldsymbol\nu_{h,i,k}$ & $\ell \times 1$ & Vulnerability due to fishing mortality for sex $h$ \\
       \textcolor{red}{$\bar{\boldsymbol{f}}_k$} & $i \times 1$ & Average fishing mortality rate for gear $k$ \\
       \textcolor{red}{$\boldsymbol\Psi_{i,k}$} & $1$ & Fishing mortality deviate for gear $k$ in year $i$ \\
-      \textcolor{red}{$\boldsymbol{F}_{i,k}$} & $1$ & Annual fishing mortality rate for gear $k$ in year $i$ \\
+      \textcolor{red}{$\boldsymbol{F}_{i,k}$} & $1$ & Fishing mortality rate for gear $k$ in year $i$ \\
   \hline
   \end{tabular}
 \end{table}
@@ -589,7 +590,7 @@ growth and survival ($\boldsymbol{A}_{h,i}$), plus new recruits
 %% =========================================================================== %%
 %% =========================================================================== %%
 
-\section{Likelihoods}
+\section{Data and likelihoods}
 
 %% =========================================================================== %%
 %% =========================================================================== %%
@@ -611,7 +612,16 @@ Penalties
   solution
 \item constrain $\textcolor{red}{M_{h,i}}$ in random walk (log-normal)
 \end{itemize}
+\end{frame}
 
+%% =========================================================================== %%
+
+\begin{frame}
+\frametitle{Data}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=\linewidth]{../../examples/bbrkc/OneSex/figure/data.png}
+\end{figure}
 \end{frame}
 
 %% =========================================================================== %%

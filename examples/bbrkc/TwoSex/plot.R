@@ -23,7 +23,7 @@ names(M) <- basename(.MODELDIR)
 ww <- 6
 hh <- 5
 
-plot_selectivity(M)
+plot_selectivity(M, ncol = 4)
 ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
@@ -62,10 +62,6 @@ dev.off()
 
 plot_recruitment(M)
 ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
-dev.off()
-
-plot_selectivity(M)
-ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
 plot_size_transition(M)

@@ -25,6 +25,8 @@ table_likelihoods <- function(M)
 
 #' Create a table of penalties
 #'
+#' Nees to be fixed if Jim changes order
+#'
 #' @param M list object(s) created by read_admb function
 #' @return dataframe of likelihood components for each model in M
 #' @author D'Arcy N. Webber
