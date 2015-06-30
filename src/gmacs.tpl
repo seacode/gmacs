@@ -24,13 +24,13 @@
 //    gmacs.rep  Main result file for reading into R etc
 //    gmacs.std  Result file for reading into R etc
 //
-//   FOR DEBUGGING INPUT FILES:
+//   FOR DEBUGGING INPUT FILES: (for accessing easily with read_admb() function)
 //    gmacs_files_in.dat  Which control and data files were specified for the current run
 //    gmacs_in.ctl        Code-generated copy of control file content (useful for checking read)
 //    gmacs_in.dat        Code-generated copy of data file content (useful for checking read)
 //
-//
-//    gmacs_data.rep      All of data read in (for accessing easily with read_admb() function)
+//   TO ECHO INPUT 
+//    checkfile.rep      All of data read in 
 //
 //
 // ==================================================================================== //
@@ -2799,20 +2799,14 @@ GLOBALS_SECTION
 	 #undef WRITEDAT
 	 #define WRITEDAT(object) ECHO(object); gmacs_data << "# " << #object << "\n" << object << endl;
  
-	 /**
-	 \def CHECK(object)
-	 Prints name and value of \a object on checkfile %ofstream output file.
-	 */
-	 #define CHECK(object) checkfile << #object << "\n" << object << endl;
 	 // Open output files using ofstream
 	 // This one for easy reading all input to R
-	 ofstream echoinput("gmacs_data.rep");
+	 ofstream echoinput("checkfile.rep");
 	 // These ones for compatibility with ADMB (# comment included)
 	 ofstream gmacs_files("gmacs_files_in.dat");
 	 ofstream  gmacs_data("gmacs_in.dat");
 	 ofstream   gmacs_ctl("gmacs_in.ctl");
 
-	 ofstream checkfile("checkfile.rep");
 
 
 TOP_OF_MAIN_SECTION
