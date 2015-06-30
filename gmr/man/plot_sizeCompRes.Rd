@@ -2,10 +2,9 @@
 % Please edit documentation in R/plot-size-comps.R
 \name{plot_sizeCompRes}
 \alias{plot_sizeCompRes}
-\title{plot_sizeCompRes
-Get observed and predicted size composition values}
+\title{plot_sizeCompRes}
 \usage{
-plot_sizeCompRes(M, which.plot = "all")
+plot_sizeCompRes(M, which_plot = "all")
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}
@@ -14,10 +13,9 @@ plot_sizeCompRes(M, which.plot = "all")
 Plots of observed and predicted size composition values
 }
 \description{
-plot_sizeCompRes
 Get observed and predicted size composition values
 }
 \author{
-SJD Martell
+SJD Martell, D'Arcy N. Webber
 }
 

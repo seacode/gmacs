@@ -4,18 +4,29 @@
 \alias{plot_selectivity}
 \title{Plot selectivity}
 \usage{
-plot_selectivity(M)
+plot_selectivity(M, xlab = "Mid-point of size class (mm)",
+  ylab = "Selectivity", tlab = "Type", ilab = "Block year")
 }
 \arguments{
-\item{M}{list object created by read_admb function}
+\item{M}{list of lists created by the read_admb function}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
+
+\item{tlab}{the type (retained or discarded) label for the plot that appears above the key}
+
+\item{ilab}{the year label for the plot that appears above the key}
 }
 \value{
 plot of selectivity
 }
 \description{
-Plot selectivity
+This function takes a list of lists created by the read_admb function plots
+the selectivity by fishing fleet, sex, year, type (retained or discarded) and
+model.
 }
 \author{
-SJD Martell, DN Webber
+SJD Martell, D'Arcy N. Webber
 }
 

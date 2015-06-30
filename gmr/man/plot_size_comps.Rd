@@ -2,12 +2,25 @@
 % Please edit documentation in R/plot-size-comps.R
 \name{plot_size_comps}
 \alias{plot_size_comps}
-\title{plot_sizeComps}
+\title{Plot fits to size composition data}
 \usage{
-plot_size_comps(M, which_plots = "all")
+plot_size_comps(M, which_plots = "all", xlab = "Size (mm)",
+  ylab = "Proportion", slab = "Sex", mlab = "Model", tlab = "Fleet")
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}
+
+\item{which_plots}{the size composition fits that you want to plot}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
+
+\item{slab}{the sex label for the plot that appears above the key}
+
+\item{mlab}{the model label for the plot that appears above the key}
+
+\item{tlab}{the fleet label for the plot that appears above the key}
 }
 \value{
 Plots of observed and predicted size composition values
@@ -16,6 +29,6 @@ Plots of observed and predicted size composition values
 Get observed and predicted size composition values
 }
 \author{
-SJD Martell
+SJD Martell, D'Arcy N. Webber
 }
 

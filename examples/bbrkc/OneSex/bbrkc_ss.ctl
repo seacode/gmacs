@@ -106,6 +106,7 @@
  2   2   2   2   2   2 #  2   2   2   # Type of likelihood.
  0   0   0   0   0   0 #  0   0   0   # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4 # -4  -4  -4   # Phz for estimating effective sample size (if appl.)
+ 1   2   3   4   4   5 #  5   5   6   # Composition aggregator
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -125,8 +126,6 @@
   4
 ## Year position of the knots (vector must be equal to the number of nodes)
    1976 1980 1985 1994
-
-
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS

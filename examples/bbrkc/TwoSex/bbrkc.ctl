@@ -109,11 +109,7 @@
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
  2   2   2   2   2   2   2   2   2   # Type of likelihood.
-<<<<<<< HEAD
  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
-=======
- 0   0   0   0   1   0   0   0   0   # Auto tail compression (pmin)
->>>>>>> a79f9aad348cc6e2f3b895c85bd3f41673a2b43a
 -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
  1   2   3   4   4   5   5   5   6   # Composition aggregator
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -134,8 +130,6 @@
   4
 ## Year position of the knots (vector must be equal to the number of nodes)
    1976 1980 1985 1994
-
-
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS

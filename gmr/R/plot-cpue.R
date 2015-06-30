@@ -2,7 +2,7 @@
 #'
 #' @param M List object created by read_admb function
 #' @return dataframe of observed and predicted indices and residuals
-#' @author SJD Martell, DN Webber
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
 .get_cpue_df <- function(M)
@@ -33,11 +33,12 @@
 #' @param subsetby the fleet to subset the data to
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
+#' @param slab the sex label for the plot that appears above the key
 #' @return plot of all observed and predicted incices
-#' @author SJD Martell, DN Webber
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE")
+plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -52,7 +53,7 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE")
     {
         if (length(M) == 1)
         {
-            p  <- p + geom_line(data = mdf, aes(year, pred, color = sex)) + labs(col = "Sex")
+            p  <- p + geom_line(data = mdf, aes(year, pred, color = sex)) + labs(col = slab)
         } else {
             p  <- p + geom_line(data = mdf, aes(year, pred, color = Model))
         }
@@ -69,26 +70,29 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE")
 #' Plot residuals of cpue or other indices
 #'
 #' @param replist List object created by read_admb function
-#' @return Plot of fit indices residuals
-#' @author SJD Martell, DN Webber
+#' @param xlab the x-axis label for the plot
+#' @param ylab the y-axis label for the plot
+#' @param slab the sex label for the plot that appears above the key
+#' @return plot of fit indices residuals
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_cpue_res <- function(M)
+plot_cpue_res <- function(M, xlab = "Year", ylab = "Residual (Observed - Predicted)", slab = "Sex")
 {
-	
-	mdf <- .get_cpue_df( M )
-
-	p  <- ggplot(mdf,aes(year,resd))
-	if(.OVERLAY)
-	{
-		p  <- p + geom_bar(aes(fill=factor(Model)),stat = "identity", position="dodge")
-		p  <- p + facet_wrap(~ sex + fleet)		
-	}
-	else
-	{
-		p  <- p + geom_bar(aes(fill=factor(sex)),stat = "identity", position="dodge")
-		p  <- p + facet_wrap(~Model + sex + fleet)		
-	}
-	p  <- p + labs(x="Year",y="Residual (Observed - Predicted)",fill="Sex")
-	print(p + .THEME)
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
+    
+    mdf <- .get_cpue_df(M)
+    
+    p  <- ggplot(mdf, aes(year, resd))
+    if(.OVERLAY)
+    {
+        p  <- p + geom_bar(aes(fill = factor(Model)), stat = "identity", position = "dodge")
+        p  <- p + facet_wrap(~ sex + fleet)		
+    } else {
+        p  <- p + geom_bar(aes(fill = factor(sex)), stat = "identity", position = "dodge")
+        p  <- p + facet_wrap(~Model + sex + fleet)		
+    }
+    p  <- p + labs(x = xlab, y = ylab, fill = slab)
+    print(p + .THEME)
 }

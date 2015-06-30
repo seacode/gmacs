@@ -17,6 +17,6 @@ Spawning biomass may be defined as all males or some combination of males and
 females
 }
 \author{
-SJD Martell, DN Webber
+SJD Martell, D'Arcy N. Webber
 }
 

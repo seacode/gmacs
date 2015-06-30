@@ -5,12 +5,14 @@
 \title{Plot growth from arbitrary start age}
 \usage{
 plot_growth_inc(M, xlab = "Pre-molt size (mm)",
-  ylab = "Molting increment (mm)")
+  ylab = "Molting increment (mm)", slab = "Sex")
 }
 \arguments{
 \item{xlab}{the x-axis label for the plot}
 
 \item{ylab}{the y-axis label for the plot}
+
+\item{slab}{the sex label for the plot that appears above the key}
 
 \item{replist}{list object created by read_admb function}
 }
@@ -21,6 +23,6 @@ plot growth increment for given pre-molt size, including model predictions and d
 Plot growth from arbitrary start age
 }
 \author{
-SJD Martell, DN Webber
+SJD Martell, D'Arcy N. Webber
 }
 

@@ -23,6 +23,10 @@ names(M) <- "OneSex"
 ww <- 6
 hh <- 5
 
+png(paste0(.FIGS, "data.png"), width = ww*2, height = ww, units = "in", res = 300)
+plot_datarange(M)
+dev.off()
+
 priors <- table_priors(M)
 write.table(priors, file = paste0(.FIGS, "prior.csv"), sep = ",", row.names = FALSE)
 
@@ -37,7 +41,7 @@ ggsave(paste0(.FIGS, "rec_size.png"), width = ww*2.5, height = hh*1.5)
 dev.off()
 
 plot_catch(M)
-ggsave(paste0(.FIGS, "catch.png"), width = ww*2.5, height = hh*1.5)
+ggsave(paste0(.FIGS, "catch.png"), width = ww*2.5, height = hh)
 dev.off()
 
 plot_cpue(M)

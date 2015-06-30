@@ -4,12 +4,19 @@
 \alias{plot_catch}
 \title{Plot observed and predicted catch values}
 \usage{
-plot_catch(M, plot_res = FALSE)
+plot_catch(M, plot_res = FALSE, xlab = "Year", ylab = "Catch",
+  mlab = "Model")
 }
 \arguments{
 \item{M}{list object created by read_admb function}
 
 \item{plot_res}{plot residuals only (default = FALSE)}
+
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
+
+\item{mlab}{the model label for the plot that appears above the key}
 }
 \value{
 plot of catch history (observed) and predicted values
@@ -18,6 +25,6 @@ plot of catch history (observed) and predicted values
 Plot observed and predicted catch values
 }
 \author{
-SJD Martell, DN Webber
+SJD Martell, D'Arcy N. Webber
 }
 

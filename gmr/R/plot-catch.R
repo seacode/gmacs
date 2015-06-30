@@ -2,7 +2,7 @@
 #'
 #' @param M List object(s) created by read_admb function
 #' @return dataframe of catch history (observed) and predicted values
-#' @author SJD Martell, DN Webber
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
 .get_catch_df <- function(M)
@@ -25,6 +25,7 @@
         df$ub <- exp(log(df$obs)+1.96*sd)
         mdf <- rbind(mdf, df)
     }
+    mdf$year <- as.integer(mdf$year)
     return(mdf)
 }
 
@@ -33,13 +34,21 @@
 #'
 #' @param M list object created by read_admb function
 #' @param plot_res plot residuals only (default = FALSE)
+#' @param xlab the x-axis label for the plot
+#' @param ylab the y-axis label for the plot
+#' @param mlab the model label for the plot that appears above the key
 #' @return plot of catch history (observed) and predicted values
-#' @author SJD Martell, DN Webber
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_catch <- function(M , plot_res = FALSE)
+plot_catch <- function(M , plot_res = FALSE,
+                       xlab = "Year", ylab = "Catch", mlab = "Model")
 {
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
+
     mdf <- .get_catch_df(M)
+    
     #if (plot_res)
     #{
       ## Residuals
@@ -51,10 +60,10 @@ plot_catch <- function(M , plot_res = FALSE)
     #}
     #else
     #p <- ggplot(mdf, aes(x = as.integer(year), y = observed, fill = sex))
-    p <- ggplot(mdf, aes(x = as.integer(year), y = observed)) +
+    p <- ggplot(mdf, aes(x = year, y = observed)) +
         geom_bar(stat = "identity", position = "dodge", alpha = 0.15) +
-        geom_linerange(aes(as.integer(year), observed, ymax = ub, ymin = lb, position="dodge"), size = 0.2, alpha = 0.5, col = "black") +
-        labs(x = "\nYear", y = "Catch\n")
+        geom_linerange(aes(year, observed, ymax = ub, ymin = lb, position = "dodge"), size = 0.2, alpha = 0.5, col = "black") +
+        labs(x = xlab, y = ylab)
     if(.OVERLAY)
     {
         if (length(M) == 1)
@@ -64,7 +73,7 @@ plot_catch <- function(M , plot_res = FALSE)
         } else {
             p <- p + facet_wrap(~sex + fleet + type, scales = "free_y")	+
                 geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.8) +
-                labs(col = "Model")
+                labs(col = mlab)
         }
     } else {
         p <- p + facet_wrap(~model + sex + fleet + type, scales = "free_y") +

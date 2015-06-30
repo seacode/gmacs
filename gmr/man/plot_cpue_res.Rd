@@ -4,18 +4,25 @@
 \alias{plot_cpue_res}
 \title{Plot residuals of cpue or other indices}
 \usage{
-plot_cpue_res(M)
+plot_cpue_res(M, xlab = "Year", ylab = "Residual (Observed - Predicted)",
+  slab = "Sex")
 }
 \arguments{
+\item{xlab}{the x-axis label for the plot}
+
+\item{ylab}{the y-axis label for the plot}
+
+\item{slab}{the sex label for the plot that appears above the key}
+
 \item{replist}{List object created by read_admb function}
 }
 \value{
-Plot of fit indices residuals
+plot of fit indices residuals
 }
 \description{
 Plot residuals of cpue or other indices
 }
 \author{
-SJD Martell, DN Webber
+SJD Martell, D'Arcy N. Webber
 }
 

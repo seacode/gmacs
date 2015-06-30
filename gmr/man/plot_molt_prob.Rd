@@ -20,6 +20,6 @@ plot of the molting probability relationship
 Plot molting probability relationship
 }
 \author{
-DN Webber
+D'Arcy N. Webber
 }
 

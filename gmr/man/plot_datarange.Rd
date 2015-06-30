@@ -7,15 +7,15 @@
 plot_datarange(M)
 }
 \arguments{
-\item{M}{List object(s) created by read_admb function}
+\item{M}{a list of lists object created by the read_admb function}
 }
 \value{
-Plot of data range
+plot of data range
 }
 \description{
 Plot data range by fleet and year
 }
 \author{
-Ian Taylor, Huihua Lee, Jim Ianelli
+Ian Taylor, Huihua Lee, Jim Ianelli, D'Arcy N. Webber
 }
 

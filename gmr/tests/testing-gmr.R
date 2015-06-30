@@ -2,6 +2,7 @@
 #devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
 source("reload.R")
+reload()
 
 # ----------------------------------------------------------------------------- #
 # OneSex
@@ -28,12 +29,13 @@ M[[1]]$nloglike
 M[[1]]$nlogPenalty
 M[[1]]$priorDensity
 
-fn <- paste0(.MODELDIR, "bbrkc_ss.ctl")
+#fn <- paste0(.MODELDIR, "bbrkc_ss.ctl")
 #read_ctl(fn)
 
 plot_datarange(M)
-plot_catch(M) # broken
+plot_catch(M)
 plot_cpue(M)
+plot_cpue_res(M)
 plot_cpue(M, "BSFRF")
 plot_cpue(M, "NMFS Trawl")
 plot_natural_mortality(M)
@@ -73,6 +75,7 @@ table_spr(M)
 plot_datarange(M)
 plot_catch(M)
 plot_cpue(M)
+plot_cpue_res(M)
 plot_cpue(M, "BSFRF")
 plot_cpue(M, "NMFS Trawl")
 plot_natural_mortality(M)

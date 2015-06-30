@@ -4,7 +4,7 @@
 \alias{plot_cpue}
 \title{Plot cpue or other indices}
 \usage{
-plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE")
+plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex")
 }
 \arguments{
 \item{M}{list object created by read_admb function}
@@ -14,6 +14,8 @@ plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE")
 \item{xlab}{the x-axis label for the plot}
 
 \item{ylab}{the y-axis label for the plot}
+
+\item{slab}{the sex label for the plot that appears above the key}
 }
 \value{
 plot of all observed and predicted incices
@@ -22,6 +24,6 @@ plot of all observed and predicted incices
 Plot cpue or other indices
 }
 \author{
-SJD Martell, DN Webber
+SJD Martell, D'Arcy N. Webber
 }
 

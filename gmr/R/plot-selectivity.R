@@ -2,7 +2,7 @@
 #'
 #' @param M list object created by read_admb function
 #' @return list of selectivities
-#' @author SJD Martell, DN Webber
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
 .get_selectivity_df <- function(M)
@@ -12,14 +12,10 @@
     for(i in 1:n)
     {
         A  <- M[[i]]
-        # capture
-        df <- data.frame(Model=names(M)[i],
-		         type = .TYPE[1],
-                         M[[i]]$slx_capture)
+        # captured
+        df <- data.frame(Model=names(M)[i], type = .TYPE[1], M[[i]]$slx_capture)
         # retained 
-        dr <- data.frame(Model=names(M)[i],
-                         type = .TYPE[2],
-                         M[[i]]$slx_retaind)
+        dr <- data.frame(Model=names(M)[i], type = .TYPE[2], M[[i]]$slx_retaind)
         colnames(df) <- c("Model","type","year","sex","fleet",as.character(A$mid_points))
         colnames(dr) <- colnames(df)
         df$sex   = .SEX[df$sex+1]
@@ -29,7 +25,8 @@
         blkyr <- M[[i]]$slx_control[,12]
         df    <- filter(df,year %in% blkyr)
         dr    <- filter(dr,year %in% blkyr)
-        mdf <- rbind(mdf,melt(df,id.var=1:5),melt(dr,id.var=1:5))
+        mdf <- rbind(mdf,melt(df, id.var = 1:5), melt(dr, id.var = 1:5))
+        mdf$variable <- as.numeric(as.character(mdf$variable))
     }
     return(mdf)  
 }
@@ -37,26 +34,37 @@
 
 #' Plot selectivity
 #'
-#' @param M list object created by read_admb function
+#' This function takes a list of lists created by the read_admb function plots
+#' the selectivity by fishing fleet, sex, year, type (retained or discarded) and
+#' model.
+#' 
+#' @param M list of lists created by the read_admb function
+#' @param xlab the x-axis label for the plot
+#' @param ylab the y-axis label for the plot
+#' @param tlab the type (retained or discarded) label for the plot that appears above the key
+#' @param ilab the year label for the plot that appears above the key
 #' @return plot of selectivity
-#' @author SJD Martell, DN Webber
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_selectivity <- function(M)
+plot_selectivity <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Selectivity",
+                             tlab = "Type", ilab = "Block year")
 {
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
+    
     mdf <- .get_selectivity_df(M)
+    
     p <- ggplot(mdf) + expand_limits(y = 0)
     if(.OVERLAY)
     {
-        p <- p + geom_line(aes(as.numeric(variable),value,col=type,linetype=factor(year)))
-        p <- p + facet_wrap(~Model+sex+fleet)
+        p <- p + geom_line(aes(variable, value, col = type, linetype = factor(year)))
+        p <- p + facet_wrap(~Model + sex + fleet)
     } else {
-        p <- p + geom_line(aes(as.numeric(variable),value,col=sex,linetype=factor(year)))
+        p <- p + geom_line(aes(variable, value, col = sex, linetype = factor(year)))
         p <- p + facet_wrap(~Model + fleet + type)
     }
-    p <- p + labs(y = "Selectivity\n",
-                  x = "\nMid-point of size class (mm)",
-                  col = "Type", linetype = "Block Year")
+    p <- p + labs(y = ylab, x = xlab, col = tlab, linetype = ilab)
     print(p + .THEME)
 }
 

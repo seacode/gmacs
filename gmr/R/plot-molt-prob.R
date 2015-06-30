@@ -1,8 +1,8 @@
 #' Get molting probability data
 #'
-#' @param M List object created by read_admb function
+#' @param M a list of lists created by the read_admb function
 #' @return dataframe of the molting probability data
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #'
 .get_molt_prob_df <- function(M)
@@ -37,14 +37,16 @@
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @return plot of the molting probability relationship
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #' 
 plot_molt_prob <- function(M, xlab = "Length", ylab = "Probability")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
+    
     mdf <- .get_molt_prob_df(M)
+    
     p <- ggplot(mdf, aes(x = Length, y = MP)) + labs(x = xlab, y = ylab)
     if (length(M) == 1)
     {
