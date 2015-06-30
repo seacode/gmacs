@@ -474,7 +474,7 @@ The selectivity by length ($S_\ell$) for each of the fisheries (Figure
 \ref{fig:selectivity}).
 
 ```{r selectivity, fig.cap = "Estimated selectivity functions.\\label{fig:selectivity}"}
-plot_selectivity(A)
+plot_selectivity(M, ncol = 4)
 ```
 
 
