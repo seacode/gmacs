@@ -1664,13 +1664,12 @@ FUNCTION calc_stock_recruitment_relationship
 	switch(nSRR_flag)
 	{
 		case 0: // NO SRR
-			//res_recruit(syr)     = log(recruits(syr)) - logRbar;
+			//res_recruit(syr) = log(recruits(syr)) - logRbar;
 			res_recruit(byr,nyr) = log(recruits(byr,nyr))
 			                       - (1.0-rho) * logRbar
 			                       - rho * log(++recruits(byr-1,nyr-1))
 			                       + sig2R;
 		break;
-
 		case 1:	// SRR model
 			//xi(byr,nyr) = log(recruits(byr,nyr)) - log(rhat(byr,nyr)) + sig2R;
 			res_recruit(byr,nyr) = log(recruits(byr,nyr))
