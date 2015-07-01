@@ -20,8 +20,8 @@ plot_growth_transition <- function(M, xlab = "Size-class", ylab = "P(size transi
     for(i in 1:n)
     {
         x <- M[[i]]$mid_points
-        #G <- M[[i]]$tG
-        G <- M[[i]]$growth_transition
+        G <- M[[i]]$tG
+        #G <- M[[i]]$growth_transition
         h <- dim(G)[1] / dim(G)[2]
         colnames(G) <- paste(x)
         s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]

@@ -13,7 +13,7 @@ table_penalties(M)
 dataframe of likelihood components for each model in M
 }
 \description{
-Create a table of penalties
+Nees to be fixed if Jim changes order
 }
 \author{
 D'Arcy N. Webber
