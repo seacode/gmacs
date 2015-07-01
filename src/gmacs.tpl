@@ -1649,8 +1649,8 @@ FUNCTION calc_stock_recruitment_relationship
 	}
 	dvariable bo = ro * phiB;
 
-	so   = reck * ro / bo;
-	bb   = (reck -1.0 ) / bo;
+	so = reck * ro / bo;
+	bb = (reck - 1.0) / bo;
 
 	dvar_vector ssb  = calc_ssb().shift(syr+1);
 	dvar_vector rhat = elem_div(so * ssb , 1.0 + bb* ssb);
@@ -2181,7 +2181,7 @@ FUNCTION calc_objective_function
 		d3_res_size_comps.initialize();
 
 		bool bCmp = bTailCompression(ii);
-		acl::negativeLogLikelihood *ploglike;
+		class acl::negativeLogLikelihood *ploglike;
 		
 		switch(nAgeCompType(ii))
 		{
@@ -2189,26 +2189,27 @@ FUNCTION calc_objective_function
 				ploglike = NULL;
 			break;
 			case 1:  // multinomial with fixed or estimated n
-				ploglike = new acl::multinomial(O, bCmp);
+				ploglike = new class acl::multinomial(O, bCmp);
 			break;
 			case 2:  // robust approximation to the multinomial
 				if(current_phase() <= 3 || !last_phase())
-					ploglike = new acl::multinomial(O, bCmp);
-				else
-					ploglike = new acl::robust_multi(O, bCmp);
+				{
+					ploglike = new class acl::multinomial(O, bCmp);
+				} else {
+					ploglike = new class acl::robust_multi(O, bCmp);
+				}
 			break;
 		}
-
 		// Compute residuals in the last phase.
 		if (last_phase() && ploglike != NULL)
 		{
 			d3_res_size_comps(ii) = ploglike->residual(log_effn, P);
 		}
-
 		// now compute the likelihood.
 		if (ploglike != NULL)
 		{
 			nloglike(3,ii) += ploglike->nloglike(log_effn, P);
+			delete ploglike;
 		}
 	}
 
