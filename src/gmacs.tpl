@@ -42,8 +42,7 @@
 
 
 DATA_SECTION
-	
-	friend_class gmacs_comm;
+  friend_class gmacs_comm;
 	// |---------------------|
 	// | SIMULATION CONTROLS |
 	// |---------------------|
@@ -934,7 +933,14 @@ PROCEDURE_SECTION
 		calc_sdreport();
 	}
 	nf++;
-	
+	if (mceval_phase()) 
+    write_eval();
+
+	/**
+	 * @brief calculate sdreport variables in final phase
+	 */
+FUNCTION write_eval
+  MCout(theta);
 
 	/**
 	 * @brief calculate sdreport variables in final phase
@@ -2291,12 +2297,12 @@ FUNCTION calc_objective_function
 	}
 
 
-/**
- * @brief Simulation model
- * @details Uses many of the same routines as the assessment
- * model, over-writes the observed data in memory with simulated 
- * data.
- */
+  /**
+   * @brief Simulation model
+   * @details Uses many of the same routines as the assessment
+   * model, over-writes the observed data in memory with simulated 
+   * data.
+  */
 FUNCTION simulation_model
 	// random number generator
 	random_number_generator rng(rseed);
@@ -2733,6 +2739,13 @@ GLOBALS_SECTION
 	#define TOL 1.0e-4
 
 	/**
+	\def MCout(object)
+	Prints name and value of \a object on echoinput %ofstream file.
+	*/
+	 #undef MCout
+	 #define MCout(object) mcout << #object << " " << object << endl;
+
+	/**
 	\def ECHO(object)
 	Prints name and value of \a object on echoinput %ofstream file.
 	*/
@@ -2762,6 +2775,7 @@ GLOBALS_SECTION
  
 	 // Open output files using ofstream
 	 // This one for easy reading all input to R
+	 ofstream mcout("mcout.rep");
 	 ofstream echoinput("checkfile.rep");
 	 // These ones for compatibility with ADMB (# comment included)
 	 ofstream gmacs_files("gmacs_files_in.dat");

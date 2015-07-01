@@ -106,7 +106,8 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
  1   1   # Type of likelihood.
  0   0   # Auto tail compression (pmin)
- 3   3   # Phz for estimating effective sample size (if appl.)
+-3  -3   # Phz for estimating effective sample size (if appl.)
+ 0   0   # Auto tail compression (pmin)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
