@@ -52,6 +52,7 @@ plot_growth_transition(M)
 plot_size_transition(M)
 plot_growth_inc(M)
 plot_molt_prob(M)
+plot_length_maturity(M)
 
 
 # ----------------------------------------------------------------------------- #

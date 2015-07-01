@@ -836,7 +836,7 @@ PARAMETER_SECTION
 	matrix molt_increment(1,nsex,1,nclass);     ///> linear molt increment
 
 	///> probability of molting
-	matrix molt_probability(1,nsex,1,nclass);   
+	matrix molt_probability(1,nsex,1,nclass);
 
 	3darray growth_transition(1,nsex,1,nclass,1,nclass);
 	3darray M(1,nsex,syr,nyr,1,nclass);         ///> Natural mortality
@@ -1294,7 +1294,7 @@ FUNCTION calc_natural_mortality
 			M and it then returns back to the previous state.
 			*/
 			case 3:  // Specific break points
-			        for (int idev=1;idev<=nMdev;idev++)
+			        for ( int idev = 1; idev <= nMdev; idev++ )
 			  	{
   					delta(m_nodeyear(idev)) = m_dev(idev);
 			  	}
@@ -1303,9 +1303,9 @@ FUNCTION calc_natural_mortality
 		}
 
 		// Update M by year.
-		for(int h = 1; h <= nsex; h++ )
+		for( int h = 1; h <= nsex; h++ )
 		{
-			for(int i = syr+1; i <= nyr; i++ )
+			for( int i = syr+1; i <= nyr; i++ )
 			{
 				M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
 			}
@@ -1328,9 +1328,9 @@ FUNCTION calc_total_mortality
 	for( h = 1; h <= nsex; h++ )
 	{
 		Z(h) = M(h) + F(h);
-		for(int i = syr; i <= nyr; i++ )
+		for( int i = syr; i <= nyr; i++ )
 		{
-			for(int l = 1; l <= nclass; l++ )
+			for( int l = 1; l <= nclass; l++ )
 			{
 				S(h)(i)(l,l) = mfexp(-Z(h)(i)(l));
 			}
@@ -1377,7 +1377,7 @@ FUNCTION calc_molting_probability
 FUNCTION calc_recruitment_size_distribution
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
-	for(int l = 1; l <= nclass+1; l++ )
+	for( int l = 1; l <= nclass+1; l++ )
 	{
 		x(l) = cumd_gamma(size_breaks(l)/rbeta,ralpha);
 	}
@@ -1615,9 +1615,9 @@ FUNCTION calc_stock_recruitment_relationship
 
 	// get unfished mature male biomass per recruit.
 	phiB = 0.0;
-	for(int h = 1; h <= nsex; h++ )
+	for( int h = 1; h <= nsex; h++ )
 	{
-		for (int l = 1; l <= nclass; ++l)
+		for ( int l = 1; l <= nclass; ++l )
 		{
 			_S(l,l) = exp(-M(h)(syr)(l));
 		}
@@ -1629,18 +1629,18 @@ FUNCTION calc_stock_recruitment_relationship
 		h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
 
 		// Single shell condition
-		if ( nshell == 1 && nmature == 1)
+		if ( nshell == 1 && nmature == 1 )
 		{
 			calc_equilibrium(x,_A,_S,rec_sdd);
-			phiB += lam * x * elem_prod(mean_wt(h),maturity(h));
+			phiB += lam * x * elem_prod(mean_wt(h), maturity(h));
 		}
 
 		// Continuous molt (newshell/oldshell)
-		if ( nshell == 2 && nmature == 1)
+		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,_A,_S,P(h),rec_sdd);
-			phiB += lam * x * elem_prod(mean_wt(h),maturity(h))
-			     +  lam * y * elem_prod(mean_wt(h),maturity(h));
+			phiB += lam * x * elem_prod(mean_wt(h), maturity(h))
+			     +  lam * y * elem_prod(mean_wt(h), maturity(h));
 		}
 
 		// Insert terminal molt case here.
@@ -1702,7 +1702,7 @@ FUNCTION calc_predicted_catch
 	dvar_vector sel(1,nclass);
 	dvar_vector nal(1,nclass);      // numbers or biomass at length.
 	
-	for(int kk = 1; kk <= nCatchDF; kk++ )
+	for( int kk = 1; kk <= nCatchDF; kk++ )
 	{
 		for( j = 1; j <= nCatchRows(kk); j++ )
 		{   
@@ -1728,9 +1728,9 @@ FUNCTION calc_predicted_catch
 						// Should probably include shell condition here as well.
 						// Now assuming both old and new shell are retained.
 						sel = exp( sel + log_slx_retaind(k)(h)(i) );
-						for(int m = 1; m <= nmature; m++ )
+						for( int m = 1; m <= nmature; m++ )
 						{   
-							for(int o = 1; o <= nshell; o++ )
+							for( int o = 1; o <= nshell; o++ )
 							{
 								ig   = pntr_hmo(h,m,o); 
 								nal += d3_N(ig)(i);
@@ -1740,9 +1740,9 @@ FUNCTION calc_predicted_catch
 
 					case 2:     // discard catch
 						sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
-						for(int m = 1; m <= nmature; m++ )
+						for( int m = 1; m <= nmature; m++ )
 						{
-							for(int o = 1; o <= nshell; o++ )
+							for( int o = 1; o <= nshell; o++ )
 							{
 								ig   = pntr_hmo(h,m,o);
 								nal += d3_N(ig)(i);
@@ -1763,22 +1763,21 @@ FUNCTION calc_predicted_catch
 					sel = log_slx_capture(k)(h)(i);
 					switch(type)
 					{
-						case 1:     // retained catch
+						case 1: // retained catch
 							sel = exp( sel + log_slx_retaind(k)(h)(i) );
-							for(int m = 1; m <= nmature; m++ )
+							for( int m = 1; m <= nmature; m++ )
 							{
 								ig   = pntr_hmo(h,m,1); //indexes new shell.
 								nal += d3_N(ig)(i);
 							}
 						break;
 
-						case 2:     // discard catch
-							sel = 
-								elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+						case 2: // discard catch
+							sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
 							//COUT(sel)
-							for(int m = 1; m <= nmature; m++ )
+							for( int m = 1; m <= nmature; m++ )
 							{
-								for(int o = 1; o <= nshell; o++ )
+								for( int o = 1; o <= nshell; o++ )
 								{
 									ig   = pntr_hmo(h,m,o);
 									nal += d3_N(ig)(i);
@@ -1816,8 +1815,8 @@ FUNCTION calc_predicted_catch
 FUNCTION calc_relative_abundance
 	int g,h,i,j,k,ig;
 	int unit;
-	dvar_vector nal(1,nclass);  // numbers at length
-	dvar_vector sel(1,nclass);  // selectivity at length
+	dvar_vector nal(1,nclass); // numbers at length
+	dvar_vector sel(1,nclass); // selectivity at length
 
 	for( k = 1; k <= nSurveys; k++ )
 	{
@@ -1834,9 +1833,9 @@ FUNCTION calc_relative_abundance
 			if(h)
 			{
 				sel = exp(log_slx_capture(g)(h)(i));
-				for(int m = 1; m <= nmature; m++ )
+				for( int m = 1; m <= nmature; m++ )
 				{
-					for(int o = 1; o <= nshell; o++ )
+					for( int o = 1; o <= nshell; o++ )
 					{
 						ig   = pntr_hmo(h,m,o);
 						nal +=  (unit==1)? 
@@ -1851,9 +1850,9 @@ FUNCTION calc_relative_abundance
 				for( h = 1; h <= nsex; h++ )
 				{
 					sel = exp(log_slx_capture(g)(h)(i));
-					for(int m = 1; m <= nmature; m++ )
+					for( int m = 1; m <= nmature; m++ )
 					{
-						for(int o = 1; o <= nshell; o++ )
+						for( int o = 1; o <= nshell; o++ )
 						{
 							ig   = pntr_hmo(h,m,o);
 							nal +=  (unit==1)? 
@@ -1921,15 +1920,15 @@ FUNCTION calc_relative_abundance
 	 */
 FUNCTION calc_predicted_composition
 	int h,i,j,k,ig;
-	int type,shell,bmature ;
+	int type,shell,bmature;
 	d3_pre_size_comps.initialize();
 	dvar_vector dNtmp(1,nclass);
 	dvar_vector dNtot(1,nclass);
 	dvar_vector   nal(1,nclass);
 
-	for(int ii = 1; ii <= nSizeComps; ii++ )
+	for( int ii = 1; ii <= nSizeComps; ii++ )
 	{
-		for(int jj = 1; jj <= nSizeCompRows(ii); jj++ )
+		for( int jj = 1; jj <= nSizeCompRows(ii); jj++ )
 		{
 			dNtmp.initialize();
 			dNtot.initialize();
@@ -1949,9 +1948,9 @@ FUNCTION calc_predicted_composition
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				// dvar_vector tmp = N(h)(i);
 
-				for(int m = 1; m <= nmature; m++ )
+				for( int m = 1; m <= nmature; m++ )
 				{
-					for(int o = 1; o <= nshell; o++ )
+					for( int o = 1; o <= nshell; o++ )
 					{
 						ig   = pntr_hmo(h,m,o);
 						if(shell == 0) nal += d3_N(ig)(i);
@@ -1962,17 +1961,16 @@ FUNCTION calc_predicted_composition
 				
 				switch (type)
 				{
-					case 1:     // retained
+					case 1:  // retained
 						dNtmp = elem_prod(tmp,elem_prod(sel,ret));
 					break;
-					case 2:     // discarded
+					case 2:  // discarded
 						dNtmp = elem_prod(tmp,elem_prod(sel,dis));
 					break;
-					default:	// both retained and discarded
+					default: // both retained and discarded
 						dNtmp = elem_prod(tmp,sel);
 					break;
 				}
-
 			}
 			else // sexes combined in the observations
 			{
@@ -1983,9 +1981,9 @@ FUNCTION calc_predicted_composition
 					dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 					// dvar_vector tmp = N(h)(i);
 
-					for(int m = 1; m <= nmature; m++ )
+					for( int m = 1; m <= nmature; m++ )
 					{
-						for(int o = 1; o <= nshell; o++ )
+						for( int o = 1; o <= nshell; o++ )
 						{
 							ig   = pntr_hmo(h,m,o);
 							if(shell == 0) nal += d3_N(ig)(i);
@@ -2017,7 +2015,7 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 	{
 		dvariable prior_pdf;
 		switch(pType)
-			{
+		{
 				// uniform
 				case 0: 
 					if ( (p2-p1) > 0 )
@@ -2081,7 +2079,7 @@ FUNCTION calculate_prior_densities
 	double lb,ub;
 	priorDensity.initialize();
 	
-	for (int i = 1; i <= ntheta; i++)
+	for ( int i = 1; i <= ntheta; i++)
 	{
 		if (active(theta(i)))
 		{
@@ -2119,7 +2117,7 @@ FUNCTION calculate_prior_densities
 
 	// ---Continue with catchability priors-----------------------
 	int iprior = ntheta + nGrwth + 1; 
-	for (int i = 1; i <= nSurveys; i++)
+	for ( int i = 1; i <= nSurveys; i++ )
 	{
 		int itype = int(prior_qtype(i));
 		switch(itype)
@@ -2185,13 +2183,13 @@ FUNCTION calc_objective_function
 		
 		switch(nAgeCompType(ii))
 		{
-			case 0:  // ignore composition data in model fitting.
+			case 0: // ignore composition data in model fitting.
 				ploglike = NULL;
 			break;
-			case 1:  // multinomial with fixed or estimated n
+			case 1: // multinomial with fixed or estimated n
 				ploglike = new class acl::multinomial(O, bCmp);
 			break;
-			case 2:  // robust approximation to the multinomial
+			case 2: // robust approximation to the multinomial
 				if(current_phase() <= 3 || !last_phase())
 				{
 					ploglike = new class acl::multinomial(O, bCmp);
@@ -2244,7 +2242,7 @@ FUNCTION calc_objective_function
 	nlogPenalty.initialize();
 
 	// 1) Penalty on log_fdev to ensure they sum to zero 
-	for(int k = 1; k <= nfleet; k++ )
+	for( int k = 1; k <= nfleet; k++ )
 	{
 		dvariable s     = mean(log_fdev(k));
 		nlogPenalty(1) += 10000.0*s*s;
@@ -2428,6 +2426,7 @@ REPORT_SECTION
 	REPORT(M);
 	REPORT(Z);
 	REPORT(mean_wt);
+	REPORT(maturity);
 	REPORT(molt_probability);	///> vector of molt probabilities
 
 	dvector ssb = value(calc_ssb());
@@ -2456,7 +2455,7 @@ REPORT_SECTION
 			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
 			for (iage=2;iage<=nclass;iage++)
 			{
-				growth_matrix(isex,iage) = growth_matrix(isex,iage-1)*growth_transition(isex);
+				growth_matrix(isex,iage) = growth_matrix(isex,iage-1) * growth_transition(isex);
 				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
 			}
 		}
@@ -2568,11 +2567,12 @@ REPORT_SECTION
 	 * @return dvar_vector ssb (model mature biomass).
 	 */
 FUNCTION dvar_vector calc_ssb()
-	dvar_vector ssb(syr,nyr);
-	ssb.initialize();
 	int ig,m,o;
 	int h = 1; // males
-	for(int i = syr; i <= nyr; i++ )
+	dvar_vector ssb(syr,nyr);
+	ssb.initialize();
+
+	for( int i = syr; i <= nyr; i++ )
 	{
 		for( ig = 1; ig <= n_grp; ig++ )
 		{
@@ -2581,7 +2581,7 @@ FUNCTION dvar_vector calc_ssb()
 			m = imature(ig);
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-			ssb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h),maturity(h));
+			ssb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h), maturity(h));
 		}
 	}
 	return(ssb);
@@ -2634,7 +2634,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		}
 		//todo fix me.
 		_N(h) = value(d3_N(1)(iyr));
-		_wa(h) = elem_prod(mean_wt(h),maturity(h));
+		_wa(h) = elem_prod(mean_wt(h), maturity(h));
 	}
 	
 	dmatrix  _fhk(1,nsex,1,nfleet);
@@ -2658,10 +2658,8 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		_dmr(k) = dmr(iyr,k);
 	}
 	
-
 	//spr *ptrSPR=nullptr;
-	spr *ptrSPR=0;
-
+	spr *ptrSPR = 0;
 	
 	// SPR reference points for a single shell condition.
 	if(nshell == 1)
