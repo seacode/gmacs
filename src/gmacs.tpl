@@ -684,7 +684,7 @@ DATA_SECTION
 
 	init_int eof_ctl;
 	!! WriteCtl(eof_ctl); 
-	!!	if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
+	!! if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
 	!! cout<<"end of control section"<<endl;
 
 	LOC_CALCS
@@ -694,9 +694,9 @@ DATA_SECTION
 		{
 			cerr << "WARNING:\n \tUsing empirical growth increment data,\n";
 			cerr << "\talpha & beta parameters will not be estimated."<<endl;
-			for (int h=1;h<=nsex;h++)
+			for ( int h = 1; h <= nsex; h++ )
 			{
-				int icnt=h;
+				int icnt = h;
 				Grwth_phz(icnt) = -1;
 				icnt += nsex;
 				Grwth_phz(icnt) = -1;
@@ -763,12 +763,13 @@ PARAMETER_SECTION
 	// Selectivity parameters
 	// NOTE THIS NEEDS FIXING...cobbled together some bounds to make things work...
 	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-15,15,slx_phzm);
+
 	LOC_CALCS
-		for(int k = 1; k <= nslx; k++ )
+		for( int k = 1; k <= nslx; k++ )
 		{
 			if(slx_type(k) == 2 || slx_type(k) == 3)
 			{
-				for(int j = 1; j <= slx_rows(k); j++ )
+				for( int j = 1; j <= slx_rows(k); j++ )
 				{
 					log_slx_pars(k)(j,1) = log(slx_mean(k));
 					log_slx_pars(k)(j,2) = log(slx_stdv(k));
@@ -793,7 +794,6 @@ PARAMETER_SECTION
 
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
-
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,6);
@@ -823,7 +823,6 @@ PARAMETER_SECTION
 	vector    recruits(syr,nyr); ///> vector of estimated recruits
 	vector res_recruit(syr,nyr); ///> vector of estimated recruits
 	vector          xi(syr,nyr); ///> vector of residuals for SRR
-
 
 	vector survey_q(1,nSurveys); ///> scalers for relative abundance indices (q)
 
@@ -881,9 +880,8 @@ PRELIMINARY_CALCS_SECTION
 	if(bUseEmpiricalGrowth)
 	{
 		int l = 1;
-		for(int i = 1; i <= nGrowthObs; i++ )
+		for( int i = 1; i <= nGrowthObs; i++ )
 		{
-
 			int h = dGrowthData(i,2);
 			molt_increment(h)(l++) = dGrowthData(i,3);
 			if(l > nclass) l=1;
@@ -914,7 +912,7 @@ PROCEDURE_SECTION
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	calc_stock_recruitment_relationship();
-	if(verbose == 1) cout<<"Ok after population dynamcs ..."<<endl;
+	if( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
 	calc_predicted_catch();
@@ -934,13 +932,15 @@ PROCEDURE_SECTION
 	}
 	nf++;
 	if (mceval_phase()) 
-    write_eval();
+        write_eval();
+
 
 	/**
-	 * @brief calculate sdreport variables in final phase
+	 * @brief write MCMC stuff
 	 */
 FUNCTION write_eval
   MCout(theta);
+
 
 	/**
 	 * @brief calculate sdreport variables in final phase
@@ -979,7 +979,7 @@ FUNCTION initialize_model_parameters
 
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// Get Growth & Molting parameters 
-	for (int h=1;h<=nsex;h++)
+	for ( int h = 1; h <= nsex; h++ )
 	{
 		int icnt=h;
 		alpha(h)     = Grwth(icnt);
@@ -995,8 +995,8 @@ FUNCTION initialize_model_parameters
 	
 	if( !bUseEmpiricalGrowth )
 	{
-		alpha     = mle_alpha;
-		beta      = mle_beta;
+		alpha = mle_alpha;
+		beta  = mle_beta;
 	}
 	
 
@@ -1022,14 +1022,14 @@ FUNCTION initialize_model_parameters
 FUNCTION calc_selectivities
 	int h,i,j,k;
 	int block;
-	dvariable p1,p2;
+	dvariable p1, p2;
 	dvar_vector pv;
 	log_slx_capture.initialize();
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
 
 	for( k = 1; k <= nslx; k++ )
-	{   
+	{
 		block = 1;
 		class gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
@@ -1060,7 +1060,7 @@ FUNCTION calc_selectivities
 		{
 			for( i = slx_styr(k); i <= slx_edyr(k); i++ )
 			{
-				int kk = abs(slx_indx(k));   // gear index
+				int kk = abs(slx_indx(k)); // gear index
 				if(slx_indx(k) > 0)
 				{
 					log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
