@@ -1,11 +1,3 @@
-#include <admodel.h>
-
-#ifndef NLOGLIKE_H
-#define NLOGLIKE_H
-
-#define TINY     1.e-08
-
-
 /**
  * @file nloglike.h 
  * @defgroup Likelihoods
@@ -14,7 +6,15 @@
  * @date   Feb 10, 2014
  * @title Selectivity functions
  * @details  Uses abstract base class for computing negative loglikelihoods
- */
+**/
+#ifndef NLOGLIKE_H
+#define NLOGLIKE_H
+
+#define TINY     1.e-08
+
+#include <admodel.h>
+
+
 namespace acl
 {
 	/**
@@ -24,6 +24,7 @@ namespace acl
 	 */
 	class negativeLogLikelihood
 	{
+
 	private:
 		int r1,r2;
 		int c1,c2;
@@ -80,7 +81,7 @@ namespace acl
 		R.initialize();
 
 		// fill ragged array R
-		for(int i = r1; i <= r2; i++ )
+		for( int i = r1; i <= r2; i++ )
 		{
 			M(i) /= sum(M(i));
 			R(i)(m_jmin(i),m_jmax(i)) = M(i)(m_jmin(i),m_jmax(i));
@@ -100,6 +101,7 @@ namespace acl
 	 */
 	class multinomial: public negativeLogLikelihood
 	{
+
 	private:
 	  bool        m_bCompress;
 	  dvariable   m_log_vn;
@@ -162,6 +164,7 @@ namespace acl
 	 */
 	class robust_multi: public negativeLogLikelihood
 	{
+
 	private:
 	  bool        m_bCompress;
 	  dvariable   m_log_vn;
@@ -209,7 +212,6 @@ namespace acl
 		                    const dvar_matrix& P, 
 		                    const dvar_vector& lnN) const;
 		
-
 		const dmatrix pearson_residuals(const dmatrix& o,
 						const dvar_matrix p,
 						const dvar_vector& log_vn) const;
@@ -224,6 +226,7 @@ namespace acl
 	 */
 	class dirichlet: public negativeLogLikelihood
 	{
+
 	private:
 	  bool        m_bCompress;
 	  dvariable   m_log_vn;
@@ -244,7 +247,6 @@ namespace acl
 
 		dvar_matrix get_P()         const { return m_P;    }
 		void        set_P(dvar_matrix _P) { this->m_P = _P;}
-
 	
 		// negative log likelihood
 		const dvariable nloglike(const dvar_vector& log_vn, const dvar_matrix& _P) const 

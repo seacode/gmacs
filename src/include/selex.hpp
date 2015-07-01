@@ -1,16 +1,10 @@
-
-#ifndef SELEX_HPP
-#define SELEX_HPP
-
-#include <admodel.h>
-// #include "gsm.h"
-
+//============================================================================
 /**
  * @file selex.hpp 
  * @defgroup Selectivities
  * @author Steven Martell
  * @namespace gsm
- * @date   Feb 10, 2014
+ * @date Feb 10, 2014
  * @title Selectivity functions
  * @details Alternative selectivity functions in the gsm namespace are
  * derived from the gsm::Selex base class. 
@@ -34,9 +28,6 @@
  * 		// Call one of the available methods in the abstract class for size bins x
  * 		sex  = pSLX -> Selectivity(x);
  * 
- * 
- * 
- * 
  * Table 1. List of available selectivity functions, function names, and the class
  * object.
  * |Selectivity     |FUNCTIONS     |Class name				|
@@ -45,8 +36,15 @@
  * |Logistic95      |plogis95      |LogisticCurve95         |
  * |Coefficients    |selcoffs      |SelectivityCoefficients |
  * |Nonparameteric  |nonparametric |ParameterPerClass       |
- * 
- */
+**/
+//============================================================================
+#ifndef SELEX_HPP
+#define SELEX_HPP
+
+// Local Headers
+#include <admodel.h>
+// #include "gsm.h"
+
 
 namespace gsm {
 
@@ -66,20 +64,18 @@ namespace gsm {
 	template<class T>
 	class Selex
 	{
+
 	private:
 		T m_x;
 
 	public:
-		virtual  const T Selectivity(const T &x) const = 0;
-
-		virtual  const T logSelectivity(const T &x) const = 0;
-
-		virtual  const T logSelexMeanOne(const T &x) const = 0;
-		
+		virtual const T Selectivity(const T &x) const = 0;
+		virtual const T logSelectivity(const T &x) const = 0;
+		virtual const T logSelexMeanOne(const T &x) const = 0;
 		virtual ~Selex(){}
-
 		void Set_x(T & x) { this-> m_x = x; }
 		T    Get_x() const{ return m_x;     }
+
 	};
 
 // =========================================================================================================
@@ -275,6 +271,7 @@ namespace gsm {
 	template<class T>
 	class SelectivityCoefficients: public Selex<T>
 	{
+
 	private:
 		T m_sel_coeffs;
 
@@ -300,7 +297,7 @@ namespace gsm {
 		const T logSelexMeanOne(const T &x) const
 		{
 			T y = log(gsm::coefficients(x, this->GetSelCoeffs()));
-			y  -= log(mean(mfexp(y)));
+			y -= log(mean(mfexp(y)));
 			return y;
 		}
 	};
@@ -376,10 +373,7 @@ namespace gsm {
 		}
 	};
 
-}//gsm namespace
+} //gsm namespace
 
 
 #endif /* SELEX_HPP */   	
-
-// EOF.
-// =========================================================================================================
