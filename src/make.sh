@@ -8,4 +8,4 @@ cp gmacs build/release/
 rm gmacs gmacs.obj gmacs.cpp gmacs.htp
 rm lib/*.obj
 sudo rm /usr/bin/gmacs
-sudo ln -s ~/projects/gmacs/src/build/release/gmacs /usr/bin/gmacs
+sudo ln -s ~/proj/gmacs/src/build/release/gmacs /usr/bin/gmacs

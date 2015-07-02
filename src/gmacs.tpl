@@ -2125,6 +2125,7 @@ FUNCTION calculate_prior_densities
 		{
 			// Analytical soln, no prior (uniform, uniformative)
 			case 0:
+				priorDensity(iprior) = dunif(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
 			break;
 			// Prior on analytical soln, log-normal
 			case 1:
