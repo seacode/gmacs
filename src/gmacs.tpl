@@ -24,14 +24,13 @@
 //    gmacs.rep  Main result file for reading into R etc
 //    gmacs.std  Result file for reading into R etc
 //
-//   FOR DEBUGGING INPUT FILES: (for accessing easily with read_admb() function)
+//  FOR DEBUGGING INPUT FILES: (for accessing easily with read_admb() function)
 //    gmacs_files_in.dat  Which control and data files were specified for the current run
 //    gmacs_in.ctl        Code-generated copy of control file content (useful for checking read)
 //    gmacs_in.dat        Code-generated copy of data file content (useful for checking read)
 //
 //   TO ECHO INPUT 
 //    checkfile.rep      All of data read in 
-//
 //
 // ==================================================================================== //
 
@@ -186,7 +185,7 @@ DATA_SECTION
 	init_vector lw_beta(1,nsex);
 	matrix mean_wt(1,nsex,1,nclass);
 	LOC_CALCS
-		for(int h = 1; h <= nsex; h++ )
+		for( int h = 1; h <= nsex; h++ )
 		{
 			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
 		}
@@ -219,7 +218,7 @@ DATA_SECTION
 	matrix  catch_dm(1,nCatchDF,1,nCatchRows);
 	matrix  catch_mult(1,nCatchDF,1,nCatchRows);
 	LOC_CALCS
-		for(int k = 1; k <= nCatchDF; k++ )
+		for( int k = 1; k <= nCatchDF; k++ )
 		{
 			catch_mult(k) = column(dCatchData(k),9);
 			obs_catch(k)  = column(dCatchData(k),5);
@@ -248,9 +247,9 @@ DATA_SECTION
 		yhit.initialize();
 		dmr.initialize();
 		foff_phz = -1;
-		for(int k = 1; k <= nCatchDF; k++ )
+		for( int k = 1; k <= nCatchDF; k++ )
 		{
-			for(int i = 1; i <= nCatchRows(k); i++ )
+			for( int i = 1; i <= nCatchRows(k); i++ )
 			{
 				int g = dCatchData(k)(i,3); // fleet
 				int y = dCatchData(k)(i,1); // year
@@ -282,7 +281,7 @@ DATA_SECTION
 	matrix obs_cpue(1,nSurveys,1,nSurveyRows);
 	matrix  cpue_cv(1,nSurveys,1,nSurveyRows);
 	LOC_CALCS
-		for(int k = 1; k <= nSurveys; k++ )
+		for( int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
 			cpue_cv(k)  = column(dSurveyData(k),6);
@@ -303,12 +302,12 @@ DATA_SECTION
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
 	LOC_CALCS
-		for(int k = 1; k <= nSizeComps; k++)
+		for( int k = 1; k <= nSizeComps; k++)
 		{
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
 			// NOTE This normalizes all observations by row--may be incorrect if shell condition
-			for (int i=1;i<=nSizeCompRows(k);i++)
+			for ( int i=1;i<=nSizeCompRows(k);i++)
 			{
 			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}

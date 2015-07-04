@@ -319,11 +319,11 @@ namespace gsm {
 	{
 	  int x2 = x.indexmax();
 	  dvar_vector selex(1,x2);
-		for (int i=1; i<=x2; i++)
-    	selex(i) = (1.0)/(1.0+mfexp(selparms(i)));
+	  for (int i = 1; i <= x2; i++)
+	    selex(i) = (1.0)/(1.0+mfexp(selparms(i)));
 	  dvariable temp = selex(x2);
-    selex /= temp;
-    return selex;
+	  selex /= temp;
+	  return selex;
 	}
 
 // =========================================================================================================
