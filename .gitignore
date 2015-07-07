@@ -47,6 +47,8 @@ auto/
 *.mc2
 *.mcm
 *.p0*
+*.psv
+*.hst
 *.par
 *.rep
 *.r0*
