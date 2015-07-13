@@ -172,7 +172,6 @@ DATA_SECTION
 	END_CALCS
 
 
-
 	init_vector size_breaks(1,nclass+1);
 	vector      mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
@@ -271,7 +270,6 @@ DATA_SECTION
 		}
 	END_CALCS
 
-
 	// |----------------------------|
 	// | RELATIVE ABUNDANCE INDICES |
 	// |----------------------------|
@@ -290,7 +288,6 @@ DATA_SECTION
 		ECHO(obs_cpue); ECHO(cpue_cv); 
 	END_CALCS
 
-
 	// |-----------------------|
 	// | SIZE COMPOSITION DATA |
 	// |-----------------------|
@@ -302,18 +299,18 @@ DATA_SECTION
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
 	LOC_CALCS
-		for( int k = 1; k <= nSizeComps; k++)
+		for( int k = 1; k <= nSizeComps; k++ )
 		{
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
 			// NOTE This normalizes all observations by row--may be incorrect if shell condition
-			for ( int i=1;i<=nSizeCompRows(k);i++)
+			for ( int i = 1; i <= nSizeCompRows(k); i++ )
 			{
 			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
-		WRITEDAT(nSizeComps);WRITEDAT(nSizeCompRows);  WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps); 
+		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps); 
 	END_CALCS
 	ivector ilike_vector(1,nlikes)
 	LOC_CALCS
@@ -323,7 +320,6 @@ DATA_SECTION
 	  ilike_vector(4) = 1;
 	  ilike_vector(5) = 1;
 	END_CALCS
-
 
 	// |-----------------------|
 	// | Growth increment data |
@@ -358,7 +354,7 @@ DATA_SECTION
 		// for the linear growth increment model.
 		if(nGrowthObs)
 		{
-			for(int i = 1; i <= nGrowthObs; i++ )
+			for( int i = 1; i <= nGrowthObs; i++ )
 			{
 				int h = iMoltIncSex(i);
 				
@@ -497,7 +493,7 @@ DATA_SECTION
 		// count up number of parameters required
 		slx_rows.initialize();
 		slx_cols.initialize();
-		for(int k = 1; k <= nslx; k++ )
+		for( int k = 1; k <= nslx; k++ )
 		{
 			/* multiplier for sex dependent selex */
 			int bsex = 1;
@@ -556,13 +552,15 @@ DATA_SECTION
 	LOC_CALCS
 		pen_fbar = column(f_controls,1);
 		log_pen_fbar = log(pen_fbar+1.0e-14);
-		for(int i=1; i<=2; i++)
+		for( int i = 1; i <= 2; i++ )
+		{
 			pen_fstd(i) = trans(f_controls)(i+1);
+		}
 		f_phz = ivector(column(f_controls,4));
 		// Set foff_phz to f_phz
-		for(int k = 1; k <= nfleet; k++ )
+		for( int k = 1; k <= nfleet; k++ )
 		{
-			for(int i = syr; i <= nyr; i++ )
+			for( int i = syr; i <= nyr; i++ )
 			{
 				if( yhit(i,k) ) 
 				{
@@ -581,45 +579,55 @@ DATA_SECTION
 	init_ivector bTailCompression(1,nSizeComps);
 	init_ivector nvn_phz(1,nSizeComps);
 	init_ivector iCompAggregator(1,nSizeComps);
-	// LOC_CALCS
-		// int iAggComps = max(iCompAggregator);
-	// END_CALCS
-  // 
-	// 3darray d3_obs_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
-	// 3darray d3_res_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
-	// matrix agg_comp_sample_size(1,nAggComps,1,nAggCompRows);
-  // 
-	// LOC_CALCS
-		// for(int k = 1; k <= nSizeComps; k++)
-		// {
-		        // iCompAggregator(k)
-			// dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
-			// d3_obs_size_comps(k) = trans(tmp);
-			// for (int i=1;i<=nSizeCompRows(k);i++)
-			// {
-			   // d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
-			// }
-			// size_comp_sample_size(k) = column(d3_SizeComps(k),0);
-		// }
-		// ivector nAggCompRows(1,nAggComps);
-		// ivector nAggCompCols(1,nAggComps);
-		// 3darray d3_AggComps(1,nAggComps,1,nAggCompRows,-7,nAggCompCols);
-	// END_CALCS
+	// This section is used to calculate how many aggregated
+	// size-composition data sets we want, and once aggregated, how many
+	// rows and columns each aggregated size-composition will contain.
 
-
+	// Need to rename these so that the final data is as before.
 	LOC_CALCS
-		for(int k = 1; k <= nSizeComps; k++ )
+		int nAggComps = max(iCompAggregator);
+		ivector nAggCompRows(1,nAggComps);
+		ivector nAggCompCols(1,nAggComps);
+		int kk;
+		nAggCompRows.initialize();
+		nAggCompCols.initialize();
+		for( int k = 1; k <= nSizeComps; k++ )
+		{
+			kk = iCompAggregator(k);
+			nAggCompRows(kk) += nSizeCompRows(k); // Sum up the aggregated rows, this is wrong, we are hstacking the cols
+			nAggCompCols(kk) = nSizeCompCols(k);  // The columns don't get summed up, they should be the same!
+		}
+	END_CALCS
+	LOC_CALCS
+		for( int k = 1; k <= nSizeComps; k++ )
 		{
 			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
 			d3_obs_size_comps(k) = trans(tmp);
 			// NOTE This normalizes all observations by row--may be incorrect if shell condition
-			for (int i=1;i<=nSizeCompRows(k);i++)
+			for ( int i = 1; i <= nSizeCompRows(k); i++ )
 			{
 			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}
 			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
-		//WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps);
+		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps);
+	END_CALCS
+	3darray d3_obs_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
+	3darray d3_res_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
+	matrix agg_comp_sample_size(1,nAggComps,1,nAggCompRows);
+	LOC_CALCS
+		for( int k = 1; k <= nSizeComps; k++ )
+		{
+			kk = iCompAggregator(k);
+			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
+			d3_obs_size_comps(k) = trans(tmp);
+			for ( int i = 1; i <= nSizeCompRows(k); i++ )
+			{
+			   d3_obs_agg_comps(k,i) /= sum(d3_obs_size_comps(k,i));
+			}
+			agg_comp_sample_size(k) = column(d3_SizeComps(k),0);
+		}
+		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps);
 	END_CALCS
   !!	WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz); 
 
@@ -651,7 +659,6 @@ DATA_SECTION
 		}
 		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear); 
 	END_CALCS
-
 
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
