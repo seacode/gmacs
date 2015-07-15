@@ -36,10 +36,6 @@
 
 
 
-
-
-
-
 DATA_SECTION
   friend_class gmacs_comm;
 	// |---------------------|
@@ -112,13 +108,13 @@ DATA_SECTION
 		}
 	END_CALCS
 
+
 	// |------------------------|
 	// | DATA AND CONTROL FILES |
 	// |------------------------|
 	init_adstring datafile;
 	init_adstring controlfile;
 
-	
 	!! ad_comm::change_datafile_name(datafile); WriteFileName(datafile); WriteFileName(controlfile);
 
 	// |------------------|
@@ -145,7 +141,7 @@ DATA_SECTION
 	int n_grp;              ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
 	int nlikes
-                       //   1      2       3         4          5             
+                       //  1      2     3          4         5             
 	!! nlikes = 5; // (catch, cpue, sizecomps, recruits, molt_increment data)
 
 	// Set up index pointers
@@ -171,11 +167,10 @@ DATA_SECTION
 		}
 	END_CALCS
 
-
 	init_vector size_breaks(1,nclass+1);
 	vector      mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
-	!!  WRITEDAT(size_breaks);
+	!! WRITEDAT(size_breaks);
 
 	// |-----------|
 	// | ALLOMETRY |
@@ -277,48 +272,36 @@ DATA_SECTION
 	init_ivector nSurveyRows(1,nSurveys);
 	init_3darray dSurveyData(1,nSurveys,1,nSurveyRows,1,7);
 	matrix obs_cpue(1,nSurveys,1,nSurveyRows);
-	matrix  cpue_cv(1,nSurveys,1,nSurveyRows);
+	matrix cpue_cv(1,nSurveys,1,nSurveyRows);
 	LOC_CALCS
 		for( int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
 			cpue_cv(k)  = column(dSurveyData(k),6);
 		}
-		WRITEDAT(nSurveys);WRITEDAT(nSurveyRows);WRITEDAT(dSurveyData); 
-		ECHO(obs_cpue); ECHO(cpue_cv); 
+		WRITEDAT(nSurveys); WRITEDAT(nSurveyRows); WRITEDAT(dSurveyData);
+		ECHO(obs_cpue); ECHO(cpue_cv);
 	END_CALCS
 
 	// |-----------------------|
 	// | SIZE COMPOSITION DATA |
 	// |-----------------------|
-	init_int nSizeComps;
-	init_ivector nSizeCompRows(1,nSizeComps);
-	init_ivector nSizeCompCols(1,nSizeComps);
-	init_3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,-7,nSizeCompCols);
-	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
-	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
-	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
+	init_int nSizeComps_in;
+	init_ivector nSizeCompRows_in(1,nSizeComps_in);
+	init_ivector nSizeCompCols_in(1,nSizeComps_in);
+	init_3darray d3_SizeComps_in(1,nSizeComps_in,1,nSizeCompRows_in,-7,nSizeCompCols_in);
+
+	3darray d3_obs_size_comps_in(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in);
+	matrix size_comp_sample_size_in(1,nSizeComps_in,1,nSizeCompRows_in);
+
 	LOC_CALCS
-		for( int k = 1; k <= nSizeComps; k++ )
+		for( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
-			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
-			d3_obs_size_comps(k) = trans(tmp);
-			// NOTE This normalizes all observations by row--may be incorrect if shell condition
-			for ( int i = 1; i <= nSizeCompRows(k); i++ )
-			{
-			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
-			}
-			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
+			dmatrix tmp = trans(d3_SizeComps_in(kk)).sub(1,nSizeCompCols_in(kk));
+			d3_obs_size_comps_in(kk) = trans(tmp);
+			size_comp_sample_size_in(kk) = column(d3_SizeComps_in(kk),0);
 		}
-		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps); 
-	END_CALCS
-	ivector ilike_vector(1,nlikes)
-	LOC_CALCS
-	  ilike_vector(1) = nCatchDF;
-	  ilike_vector(2) = nSurveys;
-	  ilike_vector(3) = nSizeComps;
-	  ilike_vector(4) = 1;
-	  ilike_vector(5) = 1;
+		WRITEDAT(nSizeComps_in); WRITEDAT(nSizeCompRows_in); WRITEDAT(nSizeCompCols_in); WRITEDAT(d3_SizeComps_in); ECHO(d3_obs_size_comps_in);
 	END_CALCS
 
 	// |-----------------------|
@@ -378,12 +361,8 @@ DATA_SECTION
 			}
 						
 		}
-	  WRITEDAT(nGrowthObs); 
-	  WRITEDAT(dGrowthData); 
-	  ECHO(dPreMoltSize); 
-	  ECHO(iMoltIncSex); 
-	  ECHO(dMoltInc); 
-	  ECHO(dMoltIncCV); 
+		WRITEDAT(nGrowthObs); WRITEDAT(dGrowthData);
+		ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV);
 	END_CALCS
 
 	// |------------------|
@@ -397,12 +376,10 @@ DATA_SECTION
 
 
 
-
-
-	!! ad_comm::change_datafile_name(controlfile);
 	// |----------------------------|
 	// | LEADING PARAMETER CONTROLS |
 	// |----------------------------|
+	!! ad_comm::change_datafile_name(controlfile);
 	!! cout<<"*** Reading control file ***"<<endl;
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
@@ -433,13 +410,11 @@ DATA_SECTION
 	// ivector ipar_vector(1,nGrwth);
 	LOC_CALCS
 		// ipar_vector = nsex;
-		Grwth_ival  = column(Grwth_control,1);
-		Grwth_lb    = column(Grwth_control,2);
-		Grwth_ub    = column(Grwth_control,3);
-		Grwth_phz   = ivector(column(Grwth_control,4));
-		WriteCtl(ntheta); 
-		WriteCtl(theta_control); 
-		WriteCtl(Grwth_control);
+		Grwth_ival = column(Grwth_control,1);
+		Grwth_lb   = column(Grwth_control,2);
+		Grwth_ub   = column(Grwth_control,3);
+		Grwth_phz  = ivector(column(Grwth_control,4));
+		WriteCtl(ntheta); WriteCtl(theta_control); WriteCtl(Grwth_control);
 	END_CALCS
 
 	// |--------------------------------|
@@ -457,12 +432,12 @@ DATA_SECTION
 	init_imatrix slx_nret(1,nsex,1,nfleet);
 
 	init_matrix slx_control(1,nslx,1,nc);
-	!! 	WriteCtl(slx_nsel_blocks); WriteCtl(slx_nret); WriteCtl(slx_control);
+	!! WriteCtl(slx_nsel_blocks); WriteCtl(slx_nret); WriteCtl(slx_control);
 
 	ivector slx_indx(1,nslx);
 	ivector slx_type(1,nslx);
 	ivector slx_phzm(1,nslx);
-	ivector slx_bsex(1,nslx);           // boolean 0 sex-independent, 1 sex-dependent
+	ivector slx_bsex(1,nslx); // boolean 0 sex-independent, 1 sex-dependent
 	ivector slx_xnod(1,nslx);
 	ivector slx_inod(1,nslx);
 	ivector slx_rows(1,nslx);
@@ -497,8 +472,7 @@ DATA_SECTION
 		{
 			/* multiplier for sex dependent selex */
 			int bsex = 1;
-			if(slx_bsex(k)) bsex = 2;   
-			
+			if(slx_bsex(k)) bsex = 2;
 			switch (slx_type(k))
 			{
 				case 1: // coefficients
@@ -569,67 +543,147 @@ DATA_SECTION
 				}
 			}           
 		}
-		WriteCtl(f_controls); ECHO(f_phz); 
+		WriteCtl(f_controls); ECHO(f_phz);
 	END_CALCS
 
 	// |-----------------------------------|
 	// | OPTIONS FOR SIZE COMPOSITION DATA |
 	// |-----------------------------------|
-	init_ivector nAgeCompType(1,nSizeComps);
-	init_ivector bTailCompression(1,nSizeComps);
-	init_ivector nvn_phz(1,nSizeComps);
-	init_ivector iCompAggregator(1,nSizeComps);
-	// This section is used to calculate how many aggregated
-	// size-composition data sets we want, and once aggregated, how many
-	// rows and columns each aggregated size-composition will contain.
+	init_ivector nAgeCompType_in(1,nSizeComps_in);
+	init_ivector bTailCompression_in(1,nSizeComps_in);
+	init_ivector nvn_phz_in(1,nSizeComps_in);
+	init_ivector iCompAggregator(1,nSizeComps_in);
 
-	// Need to rename these so that the final data is as before.
+	int nSizeComps;
+	!! nSizeComps = max(iCompAggregator);
+	ivector nSizeCompRows(1,nSizeComps);
+	ivector nSizeCompCols(1,nSizeComps);
+	ivector nAgeCompType(1,nSizeComps);
+	ivector bTailCompression(1,nSizeComps);
+	ivector nvn_phz(1,nSizeComps);
+
 	LOC_CALCS
-		int nAggComps = max(iCompAggregator);
-		ivector nAggCompRows(1,nAggComps);
-		ivector nAggCompCols(1,nAggComps);
-		int kk;
-		nAggCompRows.initialize();
-		nAggCompCols.initialize();
-		for( int k = 1; k <= nSizeComps; k++ )
+		nSizeCompCols.initialize();
+		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
-			kk = iCompAggregator(k);
-			nAggCompRows(kk) += nSizeCompRows(k); // Sum up the aggregated rows, this is wrong, we are hstacking the cols
-			nAggCompCols(kk) = nSizeCompCols(k);  // The columns don't get summed up, they should be the same!
+			// Currently this only works if the number of rows in
+			// each size composition group are the same and have the
+			// same years etc.
+			int k = iCompAggregator(kk);
+			//The rows don't get summed up as we are appending the
+			//arrays horizontally.
+			nSizeCompRows(k) = nSizeCompRows_in(kk);
+			nSizeCompCols(k) += nSizeCompCols_in(kk);
+			// Again, we are using only the last specification here,
+			// may want to add a check to ensure the user specifies
+			// that these are the same.
+			nAgeCompType(k) = nAgeCompType_in(kk);
+			bTailCompression(k) = bTailCompression_in(kk);
+			nvn_phz(k) = nvn_phz_in(kk);
 		}
 	END_CALCS
+
+	3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,-7,nSizeCompCols);
+	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
+	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
+
+	// THIS IS A QUICK HACK TO TEST THINGS OUT
+	//LOC_CALCS
+	//	int k, kk;
+	//	for ( int k = 1; k <= 3; k++ )
+	//	{
+	//		for ( int i = 1; i <= nSizeCompRows(k); i++ )
+	//		{
+	//			d3_obs_size_comps(k,i) = d3_obs_size_comps_in(k,i);
+	//		}
+	//	}
+	//	k = 4;
+	//	for ( int i = 1; i <= nSizeCompRows(k); i++ )
+	//	{
+	//		for ( int j = 1; j <= 20; j++ )
+	//		{
+	//			kk = 4;
+	//			d3_obs_size_comps(k,i,j) = d3_obs_size_comps_in(kk,i,j);
+	//			kk = 5;
+	//			d3_obs_size_comps(k,i,j+20) = d3_obs_size_comps_in(kk,i,j);
+	//		}
+	//	}
+	//	k = 5;
+	//	for ( int i = 1; i <= nSizeCompRows(k); i++ )
+	//	{
+	//		for ( int j = 1; j <= 20; j++ )
+	//		{
+	//			kk = 6;
+	//			d3_obs_size_comps(k,i,j) = d3_obs_size_comps_in(kk,i,j);
+	//			kk = 7;
+	//			d3_obs_size_comps(k,i,j+20) = d3_obs_size_comps_in(kk,i,j);
+	//			kk = 8;
+	//			d3_obs_size_comps(k,i,j+40) = d3_obs_size_comps_in(kk,i,j);
+	//		}
+	//	}
+	//	k = 6;
+	//	for ( int i = 1; i <= nSizeCompRows(k); i++ )
+	//	{
+	//		kk = 9;
+	//		d3_obs_size_comps(k,i) = d3_obs_size_comps_in(kk,i);
+	//	}
+	//END_CALCS
+
 	LOC_CALCS
-		for( int k = 1; k <= nSizeComps; k++ )
+		int i,j;
+		// This aggregates the size composition data by appending size
+		// comps horizontally
+		int oldk = 9999;
+		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
-			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
-			d3_obs_size_comps(k) = trans(tmp);
-			// NOTE This normalizes all observations by row--may be incorrect if shell condition
+			int k = iCompAggregator(kk);
+			if ( oldk != k )
+			{
+				j = 0;
+			}
+			oldk = k;
+			for ( int jj = 1; jj <= nSizeCompCols_in(kk); jj++ )
+			{
+				j += 1;
+				for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
+				{
+					i = ii;
+					d3_obs_size_comps(k,i,j) = d3_obs_size_comps_in(kk,ii,jj);
+				}
+			}
+		}
+		// The size composition sample sizes are calculated as the sum
+		// of the aggregated sample sizes
+		size_comp_sample_size.initialize();
+		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
+		{
+			int k = iCompAggregator(kk);
+			for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
+			{
+				size_comp_sample_size(k,ii) += size_comp_sample_size_in(kk,ii);
+			}
+		}
+		// This normalizes all observations by row
+		for ( int k = 1; k <= nSizeComps; k++ )
+		{
 			for ( int i = 1; i <= nSizeCompRows(k); i++ )
 			{
 			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}
-			size_comp_sample_size(k) = column(d3_SizeComps(k),0);
 		}
-		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps);
+		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_obs_size_comps); ECHO(d3_obs_size_comps);
+		WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz);
 	END_CALCS
-	3darray d3_obs_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
-	3darray d3_res_agg_comps(1,nAggComps,1,nAggCompRows,1,nAggCompCols);
-	matrix agg_comp_sample_size(1,nAggComps,1,nAggCompRows);
+
+	ivector ilike_vector(1,nlikes)
 	LOC_CALCS
-		for( int k = 1; k <= nSizeComps; k++ )
-		{
-			kk = iCompAggregator(k);
-			dmatrix tmp = trans(d3_SizeComps(k)).sub(1,nSizeCompCols(k));
-			d3_obs_size_comps(k) = trans(tmp);
-			for ( int i = 1; i <= nSizeCompRows(k); i++ )
-			{
-			   d3_obs_agg_comps(k,i) /= sum(d3_obs_size_comps(k,i));
-			}
-			agg_comp_sample_size(k) = column(d3_SizeComps(k),0);
-		}
-		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_SizeComps); ECHO(d3_obs_size_comps);
+	  ilike_vector(1) = nCatchDF;
+	  ilike_vector(2) = nSurveys;
+	  ilike_vector(3) = nSizeComps;
+	  ilike_vector(4) = 1;
+	  ilike_vector(5) = 1;
 	END_CALCS
-  !!	WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz); 
 
 	// |--------------------------------------------------|
 	// | OPTIONS FOR TIME-VARYING NATURAL MORTALITY RATES |
@@ -657,7 +711,7 @@ DATA_SECTION
 				nMdev = m_nNodes;
 			break;
 		}
-		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear); 
+		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear);
 	END_CALCS
 
 	// |---------------------------------------------------------|
@@ -773,7 +827,7 @@ PARAMETER_SECTION
 	LOC_CALCS
 		for( int k = 1; k <= nslx; k++ )
 		{
-			if(slx_type(k) == 2 || slx_type(k) == 3)
+			if( slx_type(k) == 2 || slx_type(k) == 3 )
 			{
 				for( int j = 1; j <= slx_rows(k); j++ )
 				{
@@ -844,20 +898,21 @@ PARAMETER_SECTION
 	matrix molt_probability(1,nsex,1,nclass);
 
 	3darray growth_transition(1,nsex,1,nclass,1,nclass);
-	3darray M(1,nsex,syr,nyr,1,nclass);         ///> Natural mortality
-	3darray Z(1,nsex,syr,nyr,1,nclass);         ///> Total mortality
-	3darray F(1,nsex,syr,nyr,1,nclass);         ///> Fishing mortality
-	3darray P(1,nsex,1,nclass,1,nclass);        ///> Diagonal matrix of molt probabilities
+	3darray M(1,nsex,syr,nyr,1,nclass);             ///> Natural mortality
+	3darray Z(1,nsex,syr,nyr,1,nclass);             ///> Total mortality
+	3darray F(1,nsex,syr,nyr,1,nclass);             ///> Fishing mortality
+	3darray P(1,nsex,1,nclass,1,nclass);            ///> Diagonal matrix of molt probabilities
 
-	//3darray N(1,nsex,syr,nyr+1,1,nclass);     ///> Numbers-at-length
-	3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);   ///> Numbers-at-sex/mature/shell/length.
-	3darray ft(1,nfleet,1,nsex,syr,nyr);        ///> Fishing mortality by gear
+	//3darray N(1,nsex,syr,nyr+1,1,nclass);         ///> Numbers-at-length
+	3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);       ///> Numbers-at-sex/mature/shell/length.
+	3darray ft(1,nfleet,1,nsex,syr,nyr);            ///> Fishing mortality by gear
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
 	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass); ///> Old shell crabs-at-length.
+	3darray d3_pre_size_comps_in(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in);
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
-	4darray S(1,nsex,syr,nyr,1,nclass,1,nclass);            ///> Surival Rate (S=exp(-Z))
+	4darray S(1,nsex,syr,nyr,1,nclass,1,nclass);    ///> Surival Rate (S=exp(-Z))
 	4darray log_slx_capture(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
@@ -1040,7 +1095,7 @@ FUNCTION calc_selectivities
 		class gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		for( j = 0; j < slx_rows(k); j++ )
 		{
-			switch (slx_type(k))
+			switch ( slx_type(k) )
 			{
 			case 1: //coefficients
 				pv = mfexp(log_slx_pars(k)(block));
@@ -1067,7 +1122,7 @@ FUNCTION calc_selectivities
 			for( i = slx_styr(k); i <= slx_edyr(k); i++ )
 			{
 				int kk = abs(slx_indx(k)); // gear index
-				if(slx_indx(k) > 0)
+				if( slx_indx(k) > 0 )
 				{
 					log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
 				}
@@ -1078,7 +1133,7 @@ FUNCTION calc_selectivities
 				}
 			}
 			// Increment counter if sex-specific selectivity curves are defined.
-			if(slx_bsex(k))  j++;
+			if( slx_bsex(k) ) j++;
 		}
 		for( j = 0; j < slx_rows(k); j++ )
 		{
@@ -1128,10 +1183,10 @@ FUNCTION calc_fishing_mortality
 			ik=1; yk=1;
 			for( i = syr; i <= nyr; i++ )
 			{
-				if(fhit(i,k))
+				if( fhit(i,k) )
 				{
 					log_ftmp = log_fbar(k) + log_fdev(k,ik++);
-					if(yhit(i,k))
+					if( yhit(i,k) )
 					{
 						log_ftmp += (h-1) * (log_foff(k) + log_fdov(k,yk++));
 					}
@@ -1243,8 +1298,8 @@ FUNCTION calc_growth_transition
 					psi(ll) = cumd_gamma(sbi(ll),dMeanSizeAfterMolt);
 				}
 			}
-			At(l)(l,nclass)  = first_difference(psi(l,nclass+1));
-			At(l)(l,nclass)  = At(l)(l,nclass) / sum(At(l));
+			At(l)(l,nclass) = first_difference(psi(l,nclass+1));
+			At(l)(l,nclass) = At(l)(l,nclass) / sum(At(l));
 		}
 		growth_transition(h) = At;
 	}
@@ -1268,7 +1323,7 @@ FUNCTION calc_natural_mortality
 	}
 
 	// Add random walk to natural mortality rate.
-	if (active( m_dev ))
+	if ( active( m_dev ) )
 	{
 		dvar_vector delta(syr+1,nyr);
 		delta.initialize();
@@ -1279,11 +1334,9 @@ FUNCTION calc_natural_mortality
 			case 0:  // constant natural mortality
 				delta = 0;
 			break;
-
 			case 1:  // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
 			break;
-
 			case 2:  // cubic splines
 			{
 				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
@@ -1293,7 +1346,6 @@ FUNCTION calc_natural_mortality
 				delta = csf(jyr);
 			}
 			break;
-
 			/*
 			JIm Question about below.  I'm not sure if you were intending to
 			have this set up as a random walk, where the shift occurs in a specifc year
@@ -1306,7 +1358,6 @@ FUNCTION calc_natural_mortality
   					delta(m_nodeyear(idev)) = m_dev(idev);
 			  	}
 			break;
-
 		}
 
 		// Update M by year.
@@ -1481,13 +1532,13 @@ FUNCTION calc_initial_numbers_at_length
 	dvar_matrix _S(1,nclass,1,nclass);
 	_S.initialize();
 
-	for(int h = 1; h <= nsex; h++ )
+	for( int h = 1; h <= nsex; h++ )
 	{
 		A = growth_transition(h);
 		// Unfished conditions
 		if ( bInitializeUnfished )
 		{
-			for(int i = 1; i <= nclass; i++ )
+			for( int i = 1; i <= nclass; i++ )
 			{
 				_S(i,i) = exp(-M(h)(syr)(i));
 			}
@@ -1565,14 +1616,14 @@ FUNCTION update_population_numbers_at_length
 			m = imature(ig);
 			o = ishell(ig);
 			
-			if( o == 1 )    // newshell
+			if( o == 1 ) // newshell
 			{
 				A  = growth_transition(h) * S(h)(i);
 				x = d3_N(ig)(i);
 				d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
 			}
 
-			if( o == 2 )    // oldshell
+			if( o == 2 ) // oldshell
 			{
 				x  = d3_N(ig)(i);
 				y  = d3_N(ig-1)(i);
@@ -1889,9 +1940,6 @@ FUNCTION calc_relative_abundance
 	 *  - shell condition (0 = all, 1 = new shell, 2 = oldshell)
 	 *  - mature or immature (0 = both, 1 = immature, 2 = mature)
 	 * 
-	 * NB Sitting in a campground on the Orgeon Coast writing this code,
-	 * with baby Tabitha sleeping on my back.
-	 * 
 	 * TODO: 
 	 *  - add pointers for shell type.   DONE
 	 *  - add pointers for maturity state. DONE
@@ -1901,6 +1949,7 @@ FUNCTION calc_relative_abundance
 	 *  Size compostion data can come in a number of forms.
 	 *  Given sex, maturity and 3 shell conditions, there are 12 possible
 	 *  combinations for adding up the numbers at length (nal).
+	 *
 	 *                          Shell
 	 *    Sex     Maturity        condition   Description
 	 *    _____________________________________________________________
@@ -1924,49 +1973,50 @@ FUNCTION calc_relative_abundance
 	 *  [x] Check to ensure new shell old shell is working.
 	 *  [ ] Add maturity component for data sets with mature old and mature new.
 	 *  [ ] Issue 53, comps/total(sex,shell cond) 
-	 */
+	**/
 FUNCTION calc_predicted_composition
 	int h,i,j,k,ig;
 	int type,shell,bmature;
+	d3_pre_size_comps_in.initialize();
 	d3_pre_size_comps.initialize();
 	dvar_vector dNtmp(1,nclass);
 	dvar_vector dNtot(1,nclass);
 	dvar_vector   nal(1,nclass);
 
-	for( int ii = 1; ii <= nSizeComps; ii++ )
+	for ( int ii = 1; ii <= nSizeComps_in; ii++ )
 	{
-		for( int jj = 1; jj <= nSizeCompRows(ii); jj++ )
+		for ( int jj = 1; jj <= nSizeCompRows_in(ii); jj++ )
 		{
 			dNtmp.initialize();
 			dNtot.initialize();
 			nal.initialize();
-			i        = d3_SizeComps(ii)(jj,-7);     // year
-			j        = d3_SizeComps(ii)(jj,-6);     // seas
-			k        = d3_SizeComps(ii)(jj,-5);     // gear
-			h        = d3_SizeComps(ii)(jj,-4);     // sex
-			type     = d3_SizeComps(ii)(jj,-3);     // retained or discard
-			shell    = d3_SizeComps(ii)(jj,-2);     // shell condition
-			bmature  = d3_SizeComps(ii)(jj,-1);     // boolean for maturity
+			i       = d3_SizeComps_in(ii)(jj,-7); // year
+			j       = d3_SizeComps_in(ii)(jj,-6); // seas
+			k       = d3_SizeComps_in(ii)(jj,-5); // gear (a.k.a. fleet)
+			h       = d3_SizeComps_in(ii)(jj,-4); // sex
+			type    = d3_SizeComps_in(ii)(jj,-3); // retained or discard
+			shell   = d3_SizeComps_in(ii)(jj,-2); // shell condition
+			bmature = d3_SizeComps_in(ii)(jj,-1); // boolean for maturity
 			
-			if(h) // sex specific
+			if ( h ) // sex specific
 			{
 				dvar_vector sel = exp(log_slx_capture(k)(h)(i));
 				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 				// dvar_vector tmp = N(h)(i);
 
-				for( int m = 1; m <= nmature; m++ )
+				for ( int m = 1; m <= nmature; m++ )
 				{
-					for( int o = 1; o <= nshell; o++ )
+					for ( int o = 1; o <= nshell; o++ )
 					{
-						ig   = pntr_hmo(h,m,o);
-						if(shell == 0) nal += d3_N(ig)(i);
-						if(shell == o) nal += d3_N(ig)(i);
+						ig = pntr_hmo(h,m,o);
+						if ( shell == 0 ) nal += d3_N(ig)(i);
+						if ( shell == o ) nal += d3_N(ig)(i);
 					}
 				}
 				dvar_vector tmp = nal;
 				
-				switch (type)
+				switch ( type )
 				{
 					case 1:  // retained
 						dNtmp = elem_prod(tmp,elem_prod(sel,ret));
@@ -1981,25 +2031,25 @@ FUNCTION calc_predicted_composition
 			}
 			else // sexes combined in the observations
 			{
-				for( h = 1; h <= nsex; h++ )
+				for ( h = 1; h <= nsex; h++ )
 				{
 					dvar_vector sel = exp(log_slx_capture(k)(h)(i));
 					dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
 					dvar_vector dis = exp(log_slx_discard(k)(h)(i));
 					// dvar_vector tmp = N(h)(i);
 
-					for( int m = 1; m <= nmature; m++ )
+					for ( int m = 1; m <= nmature; m++ )
 					{
-						for( int o = 1; o <= nshell; o++ )
+						for ( int o = 1; o <= nshell; o++ )
 						{
-							ig   = pntr_hmo(h,m,o);
-							if(shell == 0) nal += d3_N(ig)(i);
-							if(shell == o) nal += d3_N(ig)(i);
+							ig = pntr_hmo(h,m,o);
+							if ( shell == 0 ) nal += d3_N(ig)(i);
+							if ( shell == o ) nal += d3_N(ig)(i);
 						}
 					}
 					dvar_vector tmp = nal;
 
-					switch (type)
+					switch ( type )
 					{
 						case 1:
 							dNtmp += elem_prod(tmp,ret);
@@ -2013,9 +2063,41 @@ FUNCTION calc_predicted_composition
 					}
 				}
 			}
-			d3_pre_size_comps(ii)(jj) = dNtmp / sum(dNtmp);
+			//d3_pre_size_comps(ii)(jj) = dNtmp / sum(dNtmp);
+			d3_pre_size_comps_in(ii)(jj) = dNtmp;
 		}
 	}
+	// This aggregates the size composition data by appending size comps
+	// horizontally
+	int oldk = 9999;
+	for ( int kk = 1; kk <= nSizeComps_in; kk++ )
+	{
+		int k = iCompAggregator(kk);
+		if ( oldk != k )
+		{
+			j = 0;
+		}
+		oldk = k;
+		for ( int jj = 1; jj <= nSizeCompCols_in(kk); jj++ )
+		{
+			j += 1;
+			for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
+			{
+				i = ii;
+				d3_pre_size_comps(k,i,j) = d3_pre_size_comps_in(kk,ii,jj);
+			}
+		}
+	}
+	// This normalizes all observations by row
+	for ( int k = 1; k <= nSizeComps; k++ )
+	{
+		for ( int i = 1; i <= nSizeCompRows(k); i++ )
+		{
+		   d3_pre_size_comps(k,i) /= sum(d3_pre_size_comps(k,i));
+		}
+	}
+
+
 
 
 FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const double &p1, const double &p2)
