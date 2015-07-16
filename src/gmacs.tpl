@@ -7,7 +7,7 @@
 //
 //   Info: https://github.com/seacode/gmacs Copyright (C) 2014. All rights reserved.
 //   
-//  ACKNOWLEDGEMENTS
+//  ACKNOWLEDGEMENTS:
 // 		- finacial support provided by NOAA and Bering Sea Fisheries Research Foundation.
 //
 //  INDEXES:
@@ -29,7 +29,7 @@
 //    gmacs_in.ctl        Code-generated copy of control file content (useful for checking read)
 //    gmacs_in.dat        Code-generated copy of data file content (useful for checking read)
 //
-//   TO ECHO INPUT 
+//  TO ECHO INPUT 
 //    checkfile.rep      All of data read in 
 //
 // ==================================================================================== //
@@ -52,7 +52,7 @@ DATA_SECTION
 
 		/**
 		 * @brief command line option for simulating data.
-		 */
+		**/
 		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
 		{
 			simflag = 1;
@@ -67,13 +67,13 @@ DATA_SECTION
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | Name:                        Organization:               |\n";
 			cout<<"  | James Ianelli                NOAA-NMFS                   |\n";
-			cout<<"  | D'Arcy Webber                NOAA-NMFS Contractor        |\n";
+			cout<<"  | D'Arcy Webber                Quantifish                  |\n";
 			cout<<"  | Steven Martell               IPHC                        |\n";
 			cout<<"  | Jack Turnock                 NOAA-NMFS                   |\n";
 			cout<<"  | Jie Zheng 	                ADF&G                       |\n";
 			cout<<"  | Hamachan Hamazaki 	        ADF&G                       |\n";
 			cout<<"  | Athol Whitten                University of Washington    |\n";
-			cout<<"  | Andre Punt                   University of Washington    |\n";
+			cout<<"  | André Punt                   University of Washington    |\n";
 			cout<<"  | Dave Fournier                Otter Research              |\n";
 			cout<<"  | John Levitt                  Mathemetician               |\n";
 			cout<<"  |----------------------------------------------------------|\n";
@@ -114,7 +114,6 @@ DATA_SECTION
 	// |------------------------|
 	init_adstring datafile;
 	init_adstring controlfile;
-
 	!! ad_comm::change_datafile_name(datafile); WriteFileName(datafile); WriteFileName(controlfile);
 
 	// |------------------|
@@ -138,11 +137,10 @@ DATA_SECTION
 		WRITEDAT(nmature);
 		WRITEDAT(nclass);
 	END_CALCS
-	int n_grp;              ///> number of sex/newshell/oldshell groups
+	int n_grp;     ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
-	int nlikes
-                       //  1      2     3          4         5             
-	!! nlikes = 5; // (catch, cpue, sizecomps, recruits, molt_increment data)
+	int nlikes     // 1      2     3           4         5             
+	!! nlikes = 5; // catch, cpue, size comps, recruits, molt increments
 
 	// Set up index pointers
 	ivector isex(1,n_grp);
@@ -183,8 +181,8 @@ DATA_SECTION
 		{
 			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
 		}
+		WRITEDAT(lw_alfa); WRITEDAT(lw_beta); ECHO(mean_wt);
 	END_CALCS
-	!! WRITEDAT(lw_alfa); WRITEDAT(lw_beta); ECHO(mean_wt);
 
 	// |-------------------------------|
 	// | FECUNDITY FOR MMB CALCULATION |
@@ -227,8 +225,8 @@ DATA_SECTION
 	// From the catch series determine the number of fishing mortality
 	// rate parameters that need to be estimated.  Note that  there is
 	// a number of combinations which require a F to be estimated.
-	ivector nFparams(1,nfleet);      // The number of deviations required for each fleet
-	ivector nYparams(1,nfleet);      // The number of deviations for female Fs
+	ivector nFparams(1,nfleet); // The number of deviations required for each fleet
+	ivector nYparams(1,nfleet); // The number of deviations for female Fs
 	ivector foff_phz(1,nfleet);
 	imatrix fhit(syr,nyr,1,nfleet);
 	imatrix yhit(syr,nyr,1,nfleet);
@@ -248,13 +246,13 @@ DATA_SECTION
 				int g = dCatchData(k)(i,3); // fleet
 				int y = dCatchData(k)(i,1); // year
 				int h = dCatchData(k)(i,4); // sex
-				if(!fhit(y,g))
+				if( !fhit(y,g) )
 				{
 					fhit(y,g)   ++;
 					nFparams(g) ++;
 					dmr(y,g) = catch_dm(k)(i);
 				}
-				if(!yhit(y,g) && h == 2)
+				if( !yhit(y,g) && h == 2 )
 				{
 					yhit(y,g)   ++;
 					nYparams(g) ++;
@@ -301,7 +299,8 @@ DATA_SECTION
 			d3_obs_size_comps_in(kk) = trans(tmp);
 			size_comp_sample_size_in(kk) = column(d3_SizeComps_in(kk),0);
 		}
-		WRITEDAT(nSizeComps_in); WRITEDAT(nSizeCompRows_in); WRITEDAT(nSizeCompCols_in); WRITEDAT(d3_SizeComps_in); ECHO(d3_obs_size_comps_in);
+		WRITEDAT(nSizeComps_in); WRITEDAT(nSizeCompRows_in); WRITEDAT(nSizeCompCols_in); WRITEDAT(d3_SizeComps_in);
+		ECHO(d3_obs_size_comps_in);
 	END_CALCS
 
 	// |-----------------------|
@@ -335,9 +334,9 @@ DATA_SECTION
 
 		// come up with mle estimates for alpha and beta
 		// for the linear growth increment model.
-		if(nGrowthObs)
+		if ( nGrowthObs )
 		{
-			for( int i = 1; i <= nGrowthObs; i++ )
+			for ( int i = 1; i <= nGrowthObs; i++ )
 			{
 				int h = iMoltIncSex(i);
 				
@@ -347,7 +346,7 @@ DATA_SECTION
 				ybar(h)  += dMoltInc(i);
 				xx(h)    += square(dPreMoltSize(i));
 			}
-			for( h = 1; h <= nsex; h++ )
+			for ( h = 1; h <= nsex; h++ )
 			{
 				xybar(h) /= nh(h);
 				xbar(h)  /= nh(h);
@@ -442,11 +441,11 @@ DATA_SECTION
 	ivector slx_inod(1,nslx);
 	ivector slx_rows(1,nslx);
 	ivector slx_cols(1,nslx);
-	 vector slx_mean(1,nslx);
-	 vector slx_stdv(1,nslx);
-	 vector slx_lam1(1,nslx);
-	 vector slx_lam2(1,nslx);
-	 vector slx_lam3(1,nslx);
+	vector  slx_mean(1,nslx);
+	vector  slx_stdv(1,nslx);
+	vector  slx_lam1(1,nslx);
+	vector  slx_lam2(1,nslx);
+	vector  slx_lam3(1,nslx);
 	ivector slx_styr(1,nslx);
 	ivector slx_edyr(1,nslx);
 
@@ -468,23 +467,21 @@ DATA_SECTION
 		// count up number of parameters required
 		slx_rows.initialize();
 		slx_cols.initialize();
-		for( int k = 1; k <= nslx; k++ )
+		for ( int k = 1; k <= nslx; k++ )
 		{
 			/* multiplier for sex dependent selex */
 			int bsex = 1;
-			if(slx_bsex(k)) bsex = 2;
+			if ( slx_bsex(k) ) bsex = 2;
 			switch (slx_type(k))
 			{
 				case 1: // coefficients
 					slx_cols(k) = nclass - 1;
 					slx_rows(k) = bsex;
 				break;
-
 				case 2: // logistic
 					slx_cols(k) = 2;
 					slx_rows(k) = bsex;
 				break;
-
 				case 3: // logistic95
 					slx_cols(k) = 2;
 					slx_rows(k) = bsex;
@@ -508,11 +505,8 @@ DATA_SECTION
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
 		cpue_lambda = column(q_controls,4);
-		WriteCtl(q_controls); 
-		ECHO(prior_qtype); 
-		ECHO(prior_qbar); 
-		ECHO(prior_qsd); 
-		ECHO(cpue_lambda);
+		WriteCtl(q_controls);
+		ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); ECHO(cpue_lambda);
 	END_CALCS
 
 	// |---------------------------------------------------------|
@@ -526,24 +520,25 @@ DATA_SECTION
 	LOC_CALCS
 		pen_fbar = column(f_controls,1);
 		log_pen_fbar = log(pen_fbar+1.0e-14);
-		for( int i = 1; i <= 2; i++ )
+		for ( int i = 1; i <= 2; i++ )
 		{
 			pen_fstd(i) = trans(f_controls)(i+1);
 		}
 		f_phz = ivector(column(f_controls,4));
 		// Set foff_phz to f_phz
-		for( int k = 1; k <= nfleet; k++ )
+		for ( int k = 1; k <= nfleet; k++ )
 		{
-			for( int i = syr; i <= nyr; i++ )
+			for ( int i = syr; i <= nyr; i++ )
 			{
-				if( yhit(i,k) ) 
+				if ( yhit(i,k) ) 
 				{
 					foff_phz(k) = f_phz(k);
 					break;
 				}
 			}           
 		}
-		WriteCtl(f_controls); ECHO(f_phz);
+		WriteCtl(f_controls);
+		ECHO(f_phz);
 	END_CALCS
 
 	// |-----------------------------------|
@@ -566,12 +561,11 @@ DATA_SECTION
 		nSizeCompCols.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
-			// Currently this only works if the number of rows in
-			// each size composition group are the same and have the
-			// same years etc.
 			int k = iCompAggregator(kk);
-			//The rows don't get summed up as we are appending the
-			//arrays horizontally.
+			// Currently this only works if the number of rows in
+			//each size composition group are the same and have the
+			//same years etc. The rows don't get summed up as we are
+			//appending the arrays horizontally.
 			nSizeCompRows(k) = nSizeCompRows_in(kk);
 			nSizeCompCols(k) += nSizeCompCols_in(kk);
 			// Again, we are using only the last specification here,
@@ -632,9 +626,9 @@ DATA_SECTION
 
 	LOC_CALCS
 		int i,j;
+		int oldk = 9999;
 		// This aggregates the size composition data by appending size
 		// comps horizontally
-		int oldk = 9999;
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
 			int k = iCompAggregator(kk);
@@ -672,8 +666,9 @@ DATA_SECTION
 			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}
 		}
-		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_obs_size_comps); ECHO(d3_obs_size_comps);
+		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_obs_size_comps); // SHOULD WRITE THESE TO Ctl INSTEAD
 		WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz);
+		ECHO(d3_obs_size_comps);
 	END_CALCS
 
 	ivector ilike_vector(1,nlikes)
@@ -750,7 +745,7 @@ DATA_SECTION
 	LOC_CALCS
 		// ensure the phase for alpha & beta is -ve for GrowhtPars if bUseEmpiricalGrowth
 		COUT(Grwth_phz);
-		if(bUseEmpiricalGrowth)
+		if ( bUseEmpiricalGrowth )
 		{
 			cerr << "WARNING:\n \tUsing empirical growth increment data,\n";
 			cerr << "\talpha & beta parameters will not be estimated."<<endl;
@@ -924,9 +919,9 @@ PARAMETER_SECTION
 
 
 PRELIMINARY_CALCS_SECTION
-	if( simflag )
+	if ( simflag )
 	{
-		if(!global_parfile)
+		if ( !global_parfile )
 		{
 			cerr << "Must have a gmacs.pin file to use the -sim command line option"<<endl;
 			ad_exit(1);
@@ -938,14 +933,14 @@ PRELIMINARY_CALCS_SECTION
 		//exit(1);
 	}
 	
-	if(bUseEmpiricalGrowth)
+	if ( bUseEmpiricalGrowth )
 	{
 		int l = 1;
 		for( int i = 1; i <= nGrowthObs; i++ )
 		{
 			int h = dGrowthData(i,2);
 			molt_increment(h)(l++) = dGrowthData(i,3);
-			if(l > nclass) l=1;
+			if ( l > nclass ) l=1;
 		}
 	}
 
@@ -953,15 +948,15 @@ PRELIMINARY_CALCS_SECTION
 PROCEDURE_SECTION
 	// Initialize model parameters
 	initialize_model_parameters();
-	if(verbose == 1) cout<<"Ok after initializing model parameters ..."<<endl;
+	if ( verbose == 1 ) cout<<"Ok after initializing model parameters ..."<<endl;
 	
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
-	if(verbose == 1) cout<<"Ok after fleet dynamics ..."<<endl;
+	if ( verbose == 1 ) cout<<"Ok after fleet dynamics ..."<<endl;
 
 	// Population dynamics ...
-	if(!bUseEmpiricalGrowth)
+	if ( !bUseEmpiricalGrowth )
 	{
 		calc_growth_increments();
 	}
@@ -973,7 +968,7 @@ PROCEDURE_SECTION
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	calc_stock_recruitment_relationship();
-	if( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
+	if ( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
 
 	// observation models ...
 	calc_predicted_catch();
@@ -987,12 +982,12 @@ PROCEDURE_SECTION
 	if( verbose == 1 ) cout<<"Ok after objective function ..."<<endl;
 
 	// sd_report variables
-	if(last_phase()) 
+	if ( last_phase() ) 
 	{
 		calc_sdreport();
 	}
 	nf++;
-	if (mceval_phase()) 
+	if ( mceval_phase() ) 
         write_eval();
 
 
@@ -1025,7 +1020,7 @@ FUNCTION calc_sdreport
          * Growth parameters should not be estimated.  Need to warn the user
          * if the following condition is true:
          * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
-	 */
+	**/
 FUNCTION initialize_model_parameters
 	// Get parameters from theta control matrix:
 	M0        = theta(1);
@@ -1042,7 +1037,7 @@ FUNCTION initialize_model_parameters
 	// Get Growth & Molting parameters 
 	for ( int h = 1; h <= nsex; h++ )
 	{
-		int icnt=h;
+		int icnt = h;
 		alpha(h)     = Grwth(icnt);
 		icnt += nsex;
 		beta(h)      = Grwth(icnt);
@@ -1054,7 +1049,7 @@ FUNCTION initialize_model_parameters
 		molt_cv(h)   = Grwth(icnt);
 	}
 	
-	if( !bUseEmpiricalGrowth )
+	if ( !bUseEmpiricalGrowth )
 	{
 		alpha = mle_alpha;
 		beta  = mle_beta;
@@ -1089,11 +1084,11 @@ FUNCTION calc_selectivities
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
 
-	for( k = 1; k <= nslx; k++ )
+	for ( k = 1; k <= nslx; k++ )
 	{
 		block = 1;
 		class gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
-		for( j = 0; j < slx_rows(k); j++ )
+		for ( j = 0; j < slx_rows(k); j++ )
 		{
 			switch ( slx_type(k) )
 			{
@@ -1117,12 +1112,12 @@ FUNCTION calc_selectivities
 		
 		// fill array with selectivity coefficients
 		j = 0;
-		for( h = 1; h <= nsex; h++ )
+		for ( h = 1; h <= nsex; h++ )
 		{
-			for( i = slx_styr(k); i <= slx_edyr(k); i++ )
+			for ( i = slx_styr(k); i <= slx_edyr(k); i++ )
 			{
 				int kk = abs(slx_indx(k)); // gear index
-				if( slx_indx(k) > 0 )
+				if ( slx_indx(k) > 0 )
 				{
 					log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
 				}
@@ -1133,9 +1128,9 @@ FUNCTION calc_selectivities
 				}
 			}
 			// Increment counter if sex-specific selectivity curves are defined.
-			if( slx_bsex(k) ) j++;
+			if ( slx_bsex(k) ) j++;
 		}
-		for( j = 0; j < slx_rows(k); j++ )
+		for ( j = 0; j < slx_rows(k); j++ )
 		{
 			delete pSLX[j];
 		}
@@ -1176,17 +1171,17 @@ FUNCTION calc_fishing_mortality
 	dvar_vector ret(1,nclass);
 	dvar_vector vul(1,nclass);
 
-	for( k = 1; k <= nfleet; k++ )
+	for ( k = 1; k <= nfleet; k++ )
 	{
-		for( h = 1; h <= nsex; h++ )
+		for ( h = 1; h <= nsex; h++ )
 		{
-			ik=1; yk=1;
-			for( i = syr; i <= nyr; i++ )
+			ik = 1; yk = 1;
+			for ( i = syr; i <= nyr; i++ )
 			{
-				if( fhit(i,k) )
+				if ( fhit(i,k) )
 				{
 					log_ftmp = log_fbar(k) + log_fdev(k,ik++);
-					if( yhit(i,k) )
+					if ( yhit(i,k) )
 					{
 						log_ftmp += (h-1) * (log_foff(k) + log_fdov(k,yk++));
 					}
@@ -1220,7 +1215,7 @@ FUNCTION calc_fishing_mortality
 	 */
 FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
 	{
-	if( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
+	if ( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
 	{
 		cerr<<"indices don't match..."<<endl;
 		ad_exit(1);
@@ -1229,7 +1224,7 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	dvar_vector pMoltInc(1,vSizes.indexmax());
 	pMoltInc.initialize();
 	int h,i;
-	for( i = 1; i <= nGrowthObs; i++ )
+	for ( i = 1; i <= nGrowthObs; i++ )
 	{
 		h = iSex(i);
 		pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
@@ -1247,9 +1242,9 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	 */
 FUNCTION calc_growth_increments
 	int h,l;
-	for( h = 1; h <= nsex; h++ )
+	for ( h = 1; h <= nsex; h++ )
 	{
-		for( l = 1; l <= nclass; l++ )
+		for ( l = 1; l <= nclass; l++ )
 		{
 			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
 		}
@@ -1283,17 +1278,17 @@ FUNCTION calc_growth_transition
 	dvar_matrix At(1,nclass,1,nclass);
 	growth_transition.initialize();
 
-	for( h = 1; h <= nsex; h++ )
+	for ( h = 1; h <= nsex; h++ )
 	{
 		At.initialize();
 		sbi = size_breaks / gscale(h);
-		for( l = 1; l <= nclass; l++ )
+		for ( l = 1; l <= nclass; l++ )
 		{
 			dMeanSizeAfterMolt = (size_breaks(l) + molt_increment(h)(l)) / gscale(h);
 			psi.initialize();
-			for( ll = l; ll <= nclass+1; ll++ )
+			for ( ll = l; ll <= nclass+1; ll++ )
 			{
-				if( ll <= nclass+1 )
+				if ( ll <= nclass+1 )
 				{
 					psi(ll) = cumd_gamma(sbi(ll),dMeanSizeAfterMolt);
 				}
@@ -1317,7 +1312,7 @@ FUNCTION calc_growth_transition
 FUNCTION calc_natural_mortality
 	int h;
 	M.initialize();
-	for( h = 1; h <= nsex; h++ )
+	for ( h = 1; h <= nsex; h++ )
 	{
 		M(h) = M0;
 	}
@@ -1361,9 +1356,9 @@ FUNCTION calc_natural_mortality
 		}
 
 		// Update M by year.
-		for( int h = 1; h <= nsex; h++ )
+		for ( int h = 1; h <= nsex; h++ )
 		{
-			for( int i = syr+1; i <= nyr; i++ )
+			for ( int i = syr+1; i <= nyr; i++ )
 			{
 				M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
 			}
@@ -1383,12 +1378,12 @@ FUNCTION calc_total_mortality
 	int h;
 	Z.initialize();
 	S.initialize();
-	for( h = 1; h <= nsex; h++ )
+	for ( h = 1; h <= nsex; h++ )
 	{
 		Z(h) = M(h) + F(h);
-		for( int i = syr; i <= nyr; i++ )
+		for ( int i = syr; i <= nyr; i++ )
 		{
-			for( int l = 1; l <= nclass; l++ )
+			for ( int l = 1; l <= nclass; l++ )
 			{
 				S(h)(i)(l,l) = mfexp(-Z(h)(i)(l));
 			}
@@ -1410,12 +1405,12 @@ FUNCTION calc_molting_probability
 	molt_probability.initialize();
 	P.initialize();
 	double tiny = 0.000;
-	for( h = 1; h <= nsex; h++ )
+	for ( h = 1; h <= nsex; h++ )
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu* molt_cv(h);
 		molt_probability(h) = 1.0 - ((1.0-2.*tiny)*plogis(mid_points,mu,sd) + tiny);
-		for( l = 1; l <= nclass; l++ )
+		for ( l = 1; l <= nclass; l++ )
 		{
 			P(h)(l,l) = molt_probability(h)(l);
 		}
@@ -1435,7 +1430,7 @@ FUNCTION calc_molting_probability
 FUNCTION calc_recruitment_size_distribution
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
-	for( int l = 1; l <= nclass+1; l++ )
+	for ( int l = 1; l <= nclass+1; l++ )
 	{
 		x(l) = cumd_gamma(size_breaks(l)/rbeta,ralpha);
 	}
@@ -1532,13 +1527,13 @@ FUNCTION calc_initial_numbers_at_length
 	dvar_matrix _S(1,nclass,1,nclass);
 	_S.initialize();
 
-	for( int h = 1; h <= nsex; h++ )
+	for ( int h = 1; h <= nsex; h++ )
 	{
 		A = growth_transition(h);
 		// Unfished conditions
 		if ( bInitializeUnfished )
 		{
-			for( int i = 1; i <= nclass; i++ )
+			for ( int i = 1; i <= nclass; i++ )
 			{
 				_S(i,i) = exp(-M(h)(syr)(i));
 			}
@@ -1569,7 +1564,7 @@ FUNCTION calc_initial_numbers_at_length
 		// Insert terminal molt case here.
 
 	}
-	if(verbose == 1) COUT(d3_N(1)(syr));
+	if ( verbose == 1 ) COUT(d3_N(1)(syr));
 	// cout<<"End of calc_initial_numbers_at_length"<<endl; 
 	
 
@@ -1602,28 +1597,27 @@ FUNCTION update_population_numbers_at_length
 		recruits(syr+1,nyr) = mfexp(logRbar);	
 	}
 
-	for( i = syr; i <= nyr; i++ )
+	for ( i = syr; i <= nyr; i++ )
 	{
-		if( i > syr )
+		if ( i > syr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
 		}
 		rt = (1.0/nsex * recruits(i)) * rec_sdd;
 
-		for( ig = 1; ig <= n_grp; ig++ )
+		for ( ig = 1; ig <= n_grp; ig++ )
 		{
 			h = isex(ig);
 			m = imature(ig);
 			o = ishell(ig);
-			
-			if( o == 1 ) // newshell
+
+			if ( o == 1 ) // newshell
 			{
 				A  = growth_transition(h) * S(h)(i);
 				x = d3_N(ig)(i);
 				d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
 			}
-
-			if( o == 2 ) // oldshell
+			if ( o == 2 ) // oldshell
 			{
 				x  = d3_N(ig)(i);
 				y  = d3_N(ig-1)(i);
@@ -1647,7 +1641,7 @@ FUNCTION update_population_numbers_at_length
 			}
 		}
 	}
-	if(verbose  == 1) COUT(d3_N(1)+d3_N(2));
+	if ( verbose  == 1 ) COUT(d3_N(1)+d3_N(2));
 
 
 	/**
@@ -1972,7 +1966,6 @@ FUNCTION calc_relative_abundance
 	 *  TODO:
 	 *  [x] Check to ensure new shell old shell is working.
 	 *  [ ] Add maturity component for data sets with mature old and mature new.
-	 *  [ ] Issue 53, comps/total(sex,shell cond) 
 	**/
 FUNCTION calc_predicted_composition
 	int h,i,j,k,ig;
