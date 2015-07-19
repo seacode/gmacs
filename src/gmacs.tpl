@@ -128,14 +128,8 @@ DATA_SECTION
 	init_int nmature;       ///> number of maturity types
 	init_int nclass;        ///> number of size-classes
 	LOC_CALCS
-		WRITEDAT(syr); 
-		WRITEDAT(nyr); 
-		WRITEDAT(jstep); 
-		WRITEDAT(nfleet); 
-		WRITEDAT(nsex); 
-		WRITEDAT(nshell);
-		WRITEDAT(nmature);
-		WRITEDAT(nclass);
+		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(jstep); 
+		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
 	END_CALCS
 	int n_grp;     ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
@@ -166,7 +160,7 @@ DATA_SECTION
 	END_CALCS
 
 	init_vector size_breaks(1,nclass+1);
-	vector      mid_points(1,nclass);
+	vector mid_points(1,nclass);
 	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
 	!! WRITEDAT(size_breaks);
 

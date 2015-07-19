@@ -22,7 +22,7 @@ const dvariable acl::dirichlet::ddirichlet(const dvar_vector& alpha_o,
 					   const dmatrix& o, 
 					   const dvar_matrix& p) const
 {
-	if(o.colsize()!=p.colsize() || o.rowsize()!=p.rowsize())
+	if ( o.colsize() != p.colsize() || o.rowsize() != p.rowsize() )
 	{
 		cerr<<"Error in dirichlet.cpp, "
 		" observed and predicted matrixes"
