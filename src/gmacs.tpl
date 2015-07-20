@@ -144,11 +144,11 @@ DATA_SECTION
 	LOC_CALCS
 		int h,m,o;
 		int hmo=1;
-		for( h = 1; h <= nsex; h++ )
+		for ( h = 1; h <= nsex; h++ )
 		{
-			for( m = 1; m <= nmature; m++ )
+			for ( m = 1; m <= nmature; m++ )
 			{
-				for( o = 1; o <= nshell; o++ )
+				for ( o = 1; o <= nshell; o++ )
 				{
 					isex(hmo) = h;
 					ishell(hmo) = o;
@@ -171,7 +171,7 @@ DATA_SECTION
 	init_vector lw_beta(1,nsex);
 	matrix mean_wt(1,nsex,1,nclass);
 	LOC_CALCS
-		for( int h = 1; h <= nsex; h++ )
+		for ( int h = 1; h <= nsex; h++ )
 		{
 			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
 		}
@@ -200,17 +200,17 @@ DATA_SECTION
 	init_ivector nCatchRows(1,nCatchDF);
 	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11); // array of catch data
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
-	matrix  catch_cv(1,nCatchDF,1,nCatchRows);
-	matrix  catch_dm(1,nCatchDF,1,nCatchRows);
-	matrix  catch_mult(1,nCatchDF,1,nCatchRows);
+	matrix catch_cv(1,nCatchDF,1,nCatchRows);
+	matrix catch_dm(1,nCatchDF,1,nCatchRows);
+	matrix catch_mult(1,nCatchDF,1,nCatchRows);
 	LOC_CALCS
-		for( int k = 1; k <= nCatchDF; k++ )
+		for ( int k = 1; k <= nCatchDF; k++ )
 		{
 			catch_mult(k) = column(dCatchData(k),9);
 			obs_catch(k)  = column(dCatchData(k),5);
 			catch_cv(k)   = column(dCatchData(k),6);
 			catch_dm(k)   = column(dCatchData(k),11);
-			obs_catch(k) = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
+			obs_catch(k)  = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
 		}
 		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 	END_CALCS
@@ -224,7 +224,7 @@ DATA_SECTION
 	ivector foff_phz(1,nfleet);
 	imatrix fhit(syr,nyr,1,nfleet);
 	imatrix yhit(syr,nyr,1,nfleet);
-	matrix  dmr(syr,nyr,1,nfleet);
+	matrix dmr(syr,nyr,1,nfleet);
 
 	LOC_CALCS
 		nFparams.initialize();
@@ -233,20 +233,20 @@ DATA_SECTION
 		yhit.initialize();
 		dmr.initialize();
 		foff_phz = -1;
-		for( int k = 1; k <= nCatchDF; k++ )
+		for ( int k = 1; k <= nCatchDF; k++ )
 		{
-			for( int i = 1; i <= nCatchRows(k); i++ )
+			for ( int i = 1; i <= nCatchRows(k); i++ )
 			{
 				int g = dCatchData(k)(i,3); // fleet
 				int y = dCatchData(k)(i,1); // year
 				int h = dCatchData(k)(i,4); // sex
-				if( !fhit(y,g) )
+				if ( !fhit(y,g) )
 				{
 					fhit(y,g)   ++;
 					nFparams(g) ++;
 					dmr(y,g) = catch_dm(k)(i);
 				}
-				if( !yhit(y,g) && h == 2 )
+				if ( !yhit(y,g) && h == 2 )
 				{
 					yhit(y,g)   ++;
 					nYparams(g) ++;
@@ -266,7 +266,7 @@ DATA_SECTION
 	matrix obs_cpue(1,nSurveys,1,nSurveyRows);
 	matrix cpue_cv(1,nSurveys,1,nSurveyRows);
 	LOC_CALCS
-		for( int k = 1; k <= nSurveys; k++ )
+		for ( int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
 			cpue_cv(k)  = column(dSurveyData(k),6);
@@ -285,13 +285,14 @@ DATA_SECTION
 
 	3darray d3_obs_size_comps_in(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in);
 	matrix size_comp_sample_size_in(1,nSizeComps_in,1,nSizeCompRows_in);
-
+	matrix size_comp_year_in(1,nSizeComps_in,1,nSizeCompRows_in);
 	LOC_CALCS
-		for( int kk = 1; kk <= nSizeComps_in; kk++ )
+		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
 			dmatrix tmp = trans(d3_SizeComps_in(kk)).sub(1,nSizeCompCols_in(kk));
 			d3_obs_size_comps_in(kk) = trans(tmp);
 			size_comp_sample_size_in(kk) = column(d3_SizeComps_in(kk),0);
+			size_comp_year_in(kk) = column(d3_SizeComps_in(kk),-7);
 		}
 		WRITEDAT(nSizeComps_in); WRITEDAT(nSizeCompRows_in); WRITEDAT(nSizeCompCols_in); WRITEDAT(d3_SizeComps_in);
 		ECHO(d3_obs_size_comps_in);
@@ -302,10 +303,11 @@ DATA_SECTION
 	// |-----------------------|
 	init_int nGrowthObs;
 	init_matrix dGrowthData(1,nGrowthObs,1,4);
-	vector     dPreMoltSize(1,nGrowthObs);
-	ivector     iMoltIncSex(1,nGrowthObs);
-	vector         dMoltInc(1,nGrowthObs);
-	vector       dMoltIncCV(1,nGrowthObs);
+
+	vector dPreMoltSize(1,nGrowthObs);
+	ivector iMoltIncSex(1,nGrowthObs);
+	vector dMoltInc(1,nGrowthObs);
+	vector dMoltIncCV(1,nGrowthObs);
 	vector mle_alpha(1,nsex);
 	vector mle_beta(1,nsex);
 	LOC_CALCS
@@ -333,7 +335,6 @@ DATA_SECTION
 			for ( int i = 1; i <= nGrowthObs; i++ )
 			{
 				int h = iMoltIncSex(i);
-				
 				nh(h)++;
 				xybar(h) += dPreMoltSize(i) * dMoltInc(i);
 				xbar(h)  += dPreMoltSize(i); 
@@ -396,9 +397,9 @@ DATA_SECTION
 	!! nGrwth = nsex*5;
 	init_matrix Grwth_control(1,nGrwth,1,7);
 
-	vector  Grwth_ival(1,nGrwth);
-	vector  Grwth_lb(1,nGrwth);
-	vector  Grwth_ub(1,nGrwth);
+	vector Grwth_ival(1,nGrwth);
+	vector Grwth_lb(1,nGrwth);
+	vector Grwth_ub(1,nGrwth);
 	ivector Grwth_phz(1,nGrwth);
 	// ivector ipar_vector(1,nGrwth);
 	LOC_CALCS
@@ -490,6 +491,7 @@ DATA_SECTION
 	// | PRIORS FOR CATCHABILITIES FOR INDICES                   |
 	// |---------------------------------------------------------|
 	init_matrix q_controls(1,nSurveys,1,4);
+
 	vector prior_qbar(1,nSurveys);
 	vector prior_qsd(1,nSurveys);
 	vector prior_qtype(1,nSurveys);
@@ -507,6 +509,7 @@ DATA_SECTION
 	// | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
 	// |---------------------------------------------------------|
 	init_matrix f_controls(1,nfleet,1,4);
+
 	ivector f_phz(1,nfleet);
 	vector pen_fbar(1,nfleet);
 	vector log_pen_fbar(1,nfleet);
@@ -550,24 +553,48 @@ DATA_SECTION
 	ivector nAgeCompType(1,nSizeComps);
 	ivector bTailCompression(1,nSizeComps);
 	ivector nvn_phz(1,nSizeComps);
-
 	LOC_CALCS
 		nSizeCompCols.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
 			int k = iCompAggregator(kk);
 			// Currently this only works if the number of rows in
-			//each size composition group are the same and have the
-			//same years etc. The rows don't get summed up as we are
-			//appending the arrays horizontally.
+			// each size composition group are the same and have the
+			// same years. If not then gmacs throws an error.
 			nSizeCompRows(k) = nSizeCompRows_in(kk);
+			// We are appending the arrays horizontally.
 			nSizeCompCols(k) += nSizeCompCols_in(kk);
 			// Again, we are using only the last specification here,
 			// may want to add a check to ensure the user specifies
-			// that these are the same.
+			// that these are the same and throw an error if not.
 			nAgeCompType(k) = nAgeCompType_in(kk);
 			bTailCompression(k) = bTailCompression_in(kk);
 			nvn_phz(k) = nvn_phz_in(kk);
+		}
+		// Do the checks mentioned above
+		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
+		{
+			int k = iCompAggregator(kk);
+			if ( nSizeCompRows(k) != nSizeCompRows_in(kk) )
+			{
+				cout << "Error: dimension mismatch in size-compositons being aggregated" << endl; 
+				exit(1);
+			}
+			if ( nAgeCompType(k) != nAgeCompType_in(kk) )
+			{
+				cout << "Error: mismatch in type of likelihood for size-compositons being aggregated" << endl; 
+				exit(1);
+			}
+			if ( bTailCompression(k) != bTailCompression_in(kk) )
+			{
+				cout << "Error: mismatch in auto tail compression for size-compositons being aggregated" << endl; 
+				exit(1);
+			}
+			if ( nvn_phz(k) != nvn_phz_in(kk) )
+			{
+				cout << "Error: mismatch in phase for estimation of effctive sample size for size-compositons being aggregated" << endl; 
+				exit(1);
+			}
 		}
 	END_CALCS
 
@@ -575,6 +602,7 @@ DATA_SECTION
 	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
+	matrix size_comp_year(1,nSizeComps,1,nSizeCompRows);
 
 	// THIS IS A QUICK HACK TO TEST THINGS OUT
 	//LOC_CALCS
@@ -647,9 +675,23 @@ DATA_SECTION
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
 			int k = iCompAggregator(kk);
+			size_comp_year(k) = size_comp_year_in(kk);
 			for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
 			{
 				size_comp_sample_size(k,ii) += size_comp_sample_size_in(kk,ii);
+			}
+		}
+		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
+		{
+			int k = iCompAggregator(kk);
+			for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
+			{
+				if ( size_comp_year(k,ii) != size_comp_year_in(kk,ii) )
+				{
+					cout << "Error: mismatch in years for size-compositons being aggregated" << endl; 
+					cout << "       see the " << size_comp_year_in(kk,ii) << " year in size composition " << kk << " in the .dat file" << endl; 
+					exit(1);
+				}
 			}
 		}
 		// This normalizes all observations by row
@@ -1429,7 +1471,7 @@ FUNCTION calc_recruitment_size_distribution
 		x(l) = cumd_gamma(size_breaks(l)/rbeta,ralpha);
 	}
 	rec_sdd  = first_difference(x);
-	rec_sdd /= sum(rec_sdd);   // Standardize so each row sums to 1.0
+	rec_sdd /= sum(rec_sdd); // Standardize so each row sums to 1.0
 
 
 	/**
@@ -1623,13 +1665,11 @@ FUNCTION update_population_numbers_at_length
 				// oldshell
 				d3_N(ig)(i+1) = (x+d3_N(ig-1)(i)) * t1;
 			}
-
-			if ( o == 1 && m == 2 )     // terminal molt to new shell.
+			if ( o == 1 && m == 2 ) // terminal molt to new shell.
 			{
 
 			}
-
-			if ( o == 2 && m == 2 )     // terminal molt newshell to oldshell.
+			if ( o == 2 && m == 2 ) // terminal molt newshell to oldshell.
 			{
 
 			}
@@ -1680,7 +1720,6 @@ FUNCTION calc_stock_recruitment_relationship
 			calc_equilibrium(x,_A,_S,rec_sdd);
 			phiB += lam * x * elem_prod(mean_wt(h), maturity(h));
 		}
-
 		// Continuous molt (newshell/oldshell)
 		if ( nshell == 2 && nmature == 1 )
 		{
@@ -1688,8 +1727,7 @@ FUNCTION calc_stock_recruitment_relationship
 			phiB += lam * x * elem_prod(mean_wt(h), maturity(h))
 			     +  lam * y * elem_prod(mean_wt(h), maturity(h));
 		}
-
-		// Insert terminal molt case here.
+		// Insert terminal molt case here
 
 
 	}
@@ -1748,9 +1786,9 @@ FUNCTION calc_predicted_catch
 	dvar_vector sel(1,nclass);
 	dvar_vector nal(1,nclass);      // numbers or biomass at length.
 	
-	for( int kk = 1; kk <= nCatchDF; kk++ )
+	for ( int kk = 1; kk <= nCatchDF; kk++ )
 	{
-		for( j = 1; j <= nCatchRows(kk); j++ )
+		for ( j = 1; j <= nCatchRows(kk); j++ )
 		{   
 			i = dCatchData(kk,j,1);        // year index
 			k = dCatchData(kk,j,3);        // gear index
@@ -1763,20 +1801,20 @@ FUNCTION calc_predicted_catch
 			unit = int(dCatchData(kk)(j,8));
 			
 			// Total catch
-			if(h)   // sex specific
+			if ( h )   // sex specific
 			{
 				nal.initialize();
 				sel = log_slx_capture(k)(h)(i);
-				switch(type)
+				switch( type )
 				{
 					case 1:     // retained catch
 						// Question here about what the retained catch is.
 						// Should probably include shell condition here as well.
 						// Now assuming both old and new shell are retained.
 						sel = exp( sel + log_slx_retaind(k)(h)(i) );
-						for( int m = 1; m <= nmature; m++ )
+						for ( int m = 1; m <= nmature; m++ )
 						{   
-							for( int o = 1; o <= nshell; o++ )
+							for ( int o = 1; o <= nshell; o++ )
 							{
 								ig   = pntr_hmo(h,m,o); 
 								nal += d3_N(ig)(i);
@@ -1786,9 +1824,9 @@ FUNCTION calc_predicted_catch
 
 					case 2:     // discard catch
 						sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
-						for( int m = 1; m <= nmature; m++ )
+						for ( int m = 1; m <= nmature; m++ )
 						{
-							for( int o = 1; o <= nshell; o++ )
+							for ( int o = 1; o <= nshell; o++ )
 							{
 								ig   = pntr_hmo(h,m,o);
 								nal += d3_N(ig)(i);
@@ -1803,15 +1841,15 @@ FUNCTION calc_predicted_catch
 			}
 			else    // sexes combibed
 			{
-				for( h = 1; h <= nsex; h++ )
+				for ( h = 1; h <= nsex; h++ )
 				{
 					nal.initialize();
 					sel = log_slx_capture(k)(h)(i);
-					switch(type)
+					switch( type )
 					{
 						case 1: // retained catch
 							sel = exp( sel + log_slx_retaind(k)(h)(i) );
-							for( int m = 1; m <= nmature; m++ )
+							for ( int m = 1; m <= nmature; m++ )
 							{
 								ig   = pntr_hmo(h,m,1); //indexes new shell.
 								nal += d3_N(ig)(i);
@@ -1821,9 +1859,9 @@ FUNCTION calc_predicted_catch
 						case 2: // discard catch
 							sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
 							//COUT(sel)
-							for( int m = 1; m <= nmature; m++ )
+							for ( int m = 1; m <= nmature; m++ )
 							{
-								for( int o = 1; o <= nshell; o++ )
+								for ( int o = 1; o <= nshell; o++ )
 								{
 									ig   = pntr_hmo(h,m,o);
 									nal += d3_N(ig)(i);
@@ -1841,7 +1879,7 @@ FUNCTION calc_predicted_catch
 		// Catch residuals
 		//COUT(pre_catch(kk));
 		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk));
-		if(verbose == 1) COUT(pre_catch(kk)(1));
+		if ( verbose == 1 ) COUT(pre_catch(kk)(1));
 	}
 
 
@@ -1864,11 +1902,11 @@ FUNCTION calc_relative_abundance
 	dvar_vector nal(1,nclass); // numbers at length
 	dvar_vector sel(1,nclass); // selectivity at length
 
-	for( k = 1; k <= nSurveys; k++ )
+	for ( k = 1; k <= nSurveys; k++ )
 	{
 		dvar_vector V(1,nSurveyRows(k));    
 		V.initialize();
-		for( j = 1; j <= nSurveyRows(k); j++ )
+		for ( j = 1; j <= nSurveyRows(k); j++ )
 		{
 			nal.initialize();
 			i = dSurveyData(k)(j)(1);       // year index
@@ -1876,12 +1914,12 @@ FUNCTION calc_relative_abundance
 			h = dSurveyData(k)(j)(4);       //  sex index
 			unit = dSurveyData(k)(j)(7);    // units 1==biomass 2==Numbers
 
-			if(h)
+			if ( h )
 			{
 				sel = exp(log_slx_capture(g)(h)(i));
-				for( int m = 1; m <= nmature; m++ )
+				for ( int m = 1; m <= nmature; m++ )
 				{
-					for( int o = 1; o <= nshell; o++ )
+					for ( int o = 1; o <= nshell; o++ )
 					{
 						ig   = pntr_hmo(h,m,o);
 						nal +=  (unit==1)? 
@@ -1893,12 +1931,12 @@ FUNCTION calc_relative_abundance
 			}
 			else
 			{
-				for( h = 1; h <= nsex; h++ )
+				for ( h = 1; h <= nsex; h++ )
 				{
 					sel = exp(log_slx_capture(g)(h)(i));
-					for( int m = 1; m <= nmature; m++ )
+					for ( int m = 1; m <= nmature; m++ )
 					{
-						for( int o = 1; o <= nshell; o++ )
+						for ( int o = 1; o <= nshell; o++ )
 						{
 							ig   = pntr_hmo(h,m,o);
 							nal +=  (unit==1)? 
