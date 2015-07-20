@@ -28,7 +28,6 @@ void calc_equilibrium(dvar_vector& n,
 dmatrix get_empirical_molt_increment(const dvector& bin, const dmatrix& data);
 
 
-
 class population_model 
 {
 public:

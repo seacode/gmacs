@@ -23,10 +23,6 @@ names(M) <- basename(.MODELDIR)
 ww <- 6
 hh <- 5
 
-plot_selectivity(M, ncol = 4)
-ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
-dev.off()
-
 priors <- table_priors(M)
 write.table(priors, file = paste0(.FIGS, "prior.csv"), sep = ",", row.names = FALSE)
 
@@ -35,6 +31,10 @@ write.table(likes, file = paste0(.FIGS, "likelihood.csv"), sep = ",", row.names 
 
 pen <- table_penalties(M)
 write.table(pen, file = paste0(.FIGS, "penalties.csv"), sep = ",", row.names = FALSE)
+
+plot_selectivity(M, ncol = 4)
+ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
 
 plot_catch(M)
 ggsave(paste0(.FIGS, "catch.png"), width = ww*1.2, height = hh*1.2)

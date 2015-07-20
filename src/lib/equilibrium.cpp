@@ -2,8 +2,7 @@
  * \file equilibrium.cpp
  * \author Steve Martell
  * @defgroup GMACS
- * 
- */
+**/
 
 
 #include <admodel.h>
@@ -13,7 +12,6 @@
 #if defined _WIN32 || defined _WIN64
 	#include "include\libgmacs.h"
 #endif
-
 
 
 /**
@@ -28,7 +26,7 @@
  * @param[in] A size transition matrix
  * @param[in] S diagonal matrix of length specific survival rates
  * @param[in] r vector of new recruits at length.
- */
+**/
 void calc_equilibrium(dvar_vector& n,
                       const dvar_matrix& A,
                       const dvar_matrix& S,
@@ -92,7 +90,7 @@ void calc_equilibrium(dvar_vector& n,
  * 		\f}
  * Note that \f$C\f$ must be invertable to solve for the equilibrium solution for \f$n\f$.
  * So the diagonal elements of \f$P\f$ and \f$S\f$ must be positive non-zero numbers.
- */
+**/
 void calc_equilibrium(dvar_vector& n,
                       dvar_vector& o,
                       const dvar_matrix& A,

@@ -12,7 +12,6 @@
 #endif
 
 
-
 /**
  * \brief constructor for SPR class
  * \details Constructor for SRR class
@@ -23,7 +22,7 @@
  * \param _M natural mortality at size by sex
  * \param _wa weight-at-length interval
  * \param _A size-transition matrix
- */
+**/
 spr::spr(const double& _r, 
          const double& _lambda,
          const dvector& _rx, 
@@ -32,31 +31,31 @@ spr::spr(const double& _r,
          const d3_array& _A)
 :m_rbar(_r),m_lambda(_lambda),m_rx(_rx),m_wa(_wa),m_M(_M),m_A(_A)
 {
-	m_nshell   = 1;
-	m_nsex     = m_M.slicemax();
-	m_nclass   = m_rx.indexmax();
+	m_nshell = 1;
+	m_nsex   = m_M.slicemax();
+	m_nclass = m_rx.indexmax();
 	dmatrix S(1,m_nclass,1,m_nclass);
 	S.initialize();
-	
+
 	// get unfished mature male biomass per recruit.
 	m_ssb0 = 0.0;
-	for(int h = 1; h <= m_nsex; h++ )
+	for ( int h = 1; h <= m_nsex; h++ )
 	{
-		for (int l = 1; l <= m_nclass; ++l)
+		for ( int l = 1; l <= m_nclass; ++l )
 		{
 			S(l,l) = exp(-m_M(h)(l,l));
 		}
 		dvector x = calc_equilibrium(S,h);
-
 		double lam;
 		h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
 		m_ssb0 += lam * x * m_wa(h);
 	}
-	
 }
+
 
 /**
  * @brief constructor for SPR class
+ *
  * @details Constructor for SRR class
  * 
  * @param _r equilibrium recruitment
@@ -65,7 +64,7 @@ spr::spr(const double& _r,
  * @param _M natural mortality at size by sex
  * @param _wa weight-at-length interval
  * @param _A size-transition matrix
- */
+**/
 spr::spr(const double& _r, 
          const double& _lambda,
          const dvector& _rx, 

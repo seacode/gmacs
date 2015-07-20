@@ -13,12 +13,12 @@
     for(i in 1:n)
     {
         A <- M[[i]]
-        df <- data.frame(Model=names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8],A$d3_obs_size_comps))
-        pf <- data.frame(Model=names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8],A$d3_pre_size_comps))
-        rf <- data.frame(Model=names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8],A$d3_res_size_comps))
+        df <- data.frame(Model = names(M)[i],
+                         cbind(A$d3_SizeComps[,1:8], A$d3_obs_size_comps))
+        pf <- data.frame(Model = names(M)[i],
+                         cbind(A$d3_SizeComps[,1:8], A$d3_pre_size_comps))
+        rf <- data.frame(Model = names(M)[i],
+                         cbind(A$d3_SizeComps[,1:8], A$d3_res_size_comps))
         colnames(df) <- tolower(c("Model",
                                   "Year", "Seas",
                                   "Fleet", "Sex",

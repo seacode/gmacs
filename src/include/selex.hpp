@@ -1,4 +1,3 @@
-//============================================================================
 /**
  * @file selex.hpp 
  * @defgroup Selectivities
@@ -14,7 +13,6 @@
  * - **logSelectivity**	Returns selectivity vector in log-space.
  * - **logSelexMeanOne** Returns selectivity in log-space and rescaled to have mean 1
  * in arithmatic space.
- * 
  * 
  * Example of how to use this class to create a selectivity vector.
  * 
@@ -37,7 +35,6 @@
  * |Coefficients    |selcoffs      |SelectivityCoefficients |
  * |Nonparameteric  |nonparametric |ParameterPerClass       |
 **/
-//============================================================================
 #ifndef SELEX_HPP
 #define SELEX_HPP
 
@@ -128,7 +125,7 @@ namespace gsm {
 	const T plogis95(const T &x, const T2 &s50, const T2 &s95)
 	{
 		T selex = T2(1.0)/(T2(1.0)+(exp(-log(19)*((x-s50)/(s95-s50)))));
-		selex   /= selex(selex.indexmax());	
+		selex /= selex(selex.indexmax());	
 		return selex;
 	}
 
@@ -250,7 +247,7 @@ namespace gsm {
 		int x2 = x.indexmax();
 		int y2 = sel_coeffs.indexmax();
 		T y(x1,x2);
-		for(int i = x1; i < y2; i++ )
+		for ( int i = x1; i < y2; i++ )
 		{
 			y(i) = exp(sel_coeffs(i)) / (1.0 + exp(sel_coeffs(i)));
 		}
