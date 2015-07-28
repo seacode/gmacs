@@ -30,10 +30,9 @@
 //    gmacs_in.dat        Code-generated copy of data file content (useful for checking read)
 //
 //  TO ECHO INPUT 
-//    checkfile.rep      All of data read in 
+//    checkfile.rep       All of data read in 
 //
 // ==================================================================================== //
-
 
 
 DATA_SECTION
@@ -102,7 +101,7 @@ DATA_SECTION
 			cout<<"  |----------------------------------------------------------|\n";
 			cout<<"  | Running retrospective model with "<< ad_comm::argv[on+1]<<" recent yrs removed |\n";
 			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  |  YET TO BE IMPLEMENTED                                   |\n";
+			cout<<"  | YET TO BE IMPLEMENTED                                    |\n";
 			cout<<"  |----------------------------------------------------------|\n";
 			exit(1);
 		}
@@ -119,16 +118,16 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	init_int syr;           ///> initial year
-	init_int nyr;         	///> terminal year
-	init_number jstep;      ///> time step (years)
-	init_int nfleet;        ///> number of gears
-	init_int nsex;          ///> number of sexes
-	init_int nshell;        ///> number of shell conditions
-	init_int nmature;       ///> number of maturity types
-	init_int nclass;        ///> number of size-classes
+	init_int syr;      ///> initial year
+	init_int nyr;      ///> terminal year
+	init_number jstep; ///> time step (years)
+	init_int nfleet;   ///> number of gears
+	init_int nsex;     ///> number of sexes
+	init_int nshell;   ///> number of shell conditions
+	init_int nmature;  ///> number of maturity types
+	init_int nclass;   ///> number of size-classes
 	LOC_CALCS
-		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(jstep); 
+		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(jstep);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
 	END_CALCS
 	int n_grp;     ///> number of sex/newshell/oldshell groups
@@ -299,7 +298,7 @@ DATA_SECTION
 	END_CALCS
 
 	// |-----------------------|
-	// | Growth increment data |
+	// | GROWTH INCREMENT DATA |
 	// |-----------------------|
 	init_int nGrowthObs;
 	init_matrix dGrowthData(1,nGrowthObs,1,4);
@@ -417,16 +416,76 @@ DATA_SECTION
 	int nr;
 	int nc;
 	int nslx;
-	// This seems off by a factor of 2...for single sex models...???but maybe not...
-	!! nr = 2 * nfleet;
-	// !! nr = nsex * nfleet;
-	!! nc = 13;
+	int nread;
+	int nslx_rows; // number of selectivity rows
+	int nret_rows; // number of retension rows
+	!! nr = 2 * nfleet; // this is the number of selectivity and retention elements
 	init_ivector slx_nsel_blocks(1,nr);
-	!! nslx = sum(slx_nsel_blocks);
 	init_imatrix slx_nret(1,nsex,1,nfleet);
+	init_imatrix slx_spec(1,nsex,1,nfleet);
+	init_imatrix ret_spec(1,nsex,1,nfleet);
 
-	init_matrix slx_control(1,nslx,1,nc);
+	LOC_CALCS
+		nslx = sum(slx_nsel_blocks);
+		//nc = 13;
+		nc = 11; // The number of columns
+		// Work out how many rows are in the selectivity control inputs
+		nslx_rows = 0;
+		for ( int h = 1; h <= nsex; h++ )
+		{
+			for ( int k = 1; k <= nfleet; k++ )
+			{
+				// Selectivity
+				// logistic
+				if ( slx_spec(h,k) == 2 )
+				{
+					nslx_rows += 2 * slx_nsel_blocks(k);
+				}
+				// logistic95
+				if ( slx_spec(h,k) == 3 )
+				{
+					nslx_rows += 2 * slx_nsel_blocks(k);
+				}
+				// double normal
+				if ( slx_spec(h,k) == 4 )
+				{
+					nslx_rows += 3 * slx_nsel_blocks(k);
+				}
+				// Retention
+				// logistic
+				if ( ret_spec(h,k) == 2 )
+				{
+					nslx_rows += 2 * slx_nsel_blocks(k);
+				}
+				// logistic95
+				if ( ret_spec(h,k) == 3 )
+				{
+					nslx_rows += 2 * slx_nsel_blocks(k);
+				}
+				// double normal
+				if ( ret_spec(h,k) == 4 )
+				{
+					nslx_rows += 3 * slx_nsel_blocks(k);
+				}
+			}
+		}
+	END_CALCS
+	init_matrix slx_control(1,nslx_rows,1,nc);
 	!! WriteCtl(slx_nsel_blocks); WriteCtl(slx_nret); WriteCtl(slx_control);
+
+// poopie
+	LOC_CALCS
+		cout << slx_nsel_blocks << "\n" << endl;
+		cout << "nslx: " << nslx << "\n" << endl;
+		cout << slx_spec << "\n" << endl;
+
+		cout << nslx_rows << "\n" << endl;
+		cout << slx_control << "\n" << endl;
+
+		cout << "exit now\n" << endl;
+		exit(1);
+	END_CALCS
+
 
 	ivector slx_indx(1,nslx);
 	ivector slx_type(1,nslx);
@@ -464,10 +523,10 @@ DATA_SECTION
 		slx_cols.initialize();
 		for ( int k = 1; k <= nslx; k++ )
 		{
-			/* multiplier for sex dependent selex */
+			/* multiplier for sex dependent selectivities */
 			int bsex = 1;
 			if ( slx_bsex(k) ) bsex = 2;
-			switch (slx_type(k))
+			switch ( slx_type(k) )
 			{
 				case 1: // coefficients
 					slx_cols(k) = nclass - 1;
@@ -1101,20 +1160,19 @@ FUNCTION initialize_model_parameters
 	 * Maintain the possibility of estimating selectivity independently for
 	 * each sex; assumes there are data to estimate female selex.
 	 * 
-	 * BUG: There should be no retention of female crabs in the directed fishery.
-	 * 
 	 * Psuedocode:
 	 *  -# Loop over each gear:
 	 *  -# Create a pointer array with length = number of blocks
 	 *  -# Based on slx_type, fill pointer with parameter estimates.
 	 *  -# Loop over years and block-in the log_selectivity at mid points.
-	 * 	
+	 * 
 	 * Need to deprecate the abstract class for selectivity, 7X slower. 
-	 */
+	 * BUG: There should be no retention of female crabs in the directed fishery.
+	**/
 FUNCTION calc_selectivities
 	int h,i,j,k;
 	int block;
-	dvariable p1, p2;
+	dvariable p1, p2, p3;
 	dvar_vector pv;
 	log_slx_capture.initialize();
 	log_slx_discard.initialize();
@@ -1128,24 +1186,29 @@ FUNCTION calc_selectivities
 		{
 			switch ( slx_type(k) )
 			{
-			case 1: //coefficients
-				pv = mfexp(log_slx_pars(k)(block));
-				pSLX[j] = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
-			break;
-			case 2: //logistic
-				p1 = mfexp(log_slx_pars(k,block,1));
-				p2 = mfexp(log_slx_pars(k,block,2));
-				pSLX[j] = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
-			break;
-			case 3: // logistic95
-				p1 = mfexp(log_slx_pars(k,block,1));
-				p2 = mfexp(log_slx_pars(k,block,2));
-				pSLX[j] = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
-			break;
+				case 1: // coefficients
+					pv = mfexp(log_slx_pars(k)(block));
+					pSLX[j] = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
+				break;
+				case 2: // logistic
+					p1 = mfexp(log_slx_pars(k,block,1));
+					p2 = mfexp(log_slx_pars(k,block,2));
+					pSLX[j] = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+				break;
+				case 3: // logistic95
+					p1 = mfexp(log_slx_pars(k,block,1));
+					p2 = mfexp(log_slx_pars(k,block,2));
+					pSLX[j] = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+				break;
+				case 4: // double normal
+					p1 = mfexp(log_slx_pars(k,block,1));
+					p2 = mfexp(log_slx_pars(k,block,2));
+					p3 = mfexp(log_slx_pars(k,block,3));
+					//pSLX[j] = new class gsm::DoubleNormal<dvar_vector,dvariable>(p1,p2,p3);
+				break;
 			}
 			block ++;
 		}
-		
 		// fill array with selectivity coefficients
 		j = 0;
 		for ( h = 1; h <= nsex; h++ )
@@ -1160,7 +1223,7 @@ FUNCTION calc_selectivities
 				else
 				{
 					log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)) +TINY);
+					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i))+TINY);
 				}
 			}
 			// Increment counter if sex-specific selectivity curves are defined.
