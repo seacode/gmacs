@@ -352,7 +352,6 @@ DATA_SECTION
 				mle_alpha(h) = alp;
 				mle_beta(h)  = -slp;
 			}
-						
 		}
 		WRITEDAT(nGrowthObs); WRITEDAT(dGrowthData);
 		ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV);
@@ -413,108 +412,146 @@ DATA_SECTION
 	// |--------------------------------|
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
-	int nr;
 	int nc;
-	int nslx;
-	int nread;
-	int nslx_rows; // number of selectivity rows
-	int nret_rows; // number of retension rows
-	!! nr = 2 * nfleet; // this is the number of selectivity and retention elements
-	init_ivector slx_nsel_blocks(1,nr);
-	init_imatrix slx_nret(1,nsex,1,nfleet);
-	init_imatrix slx_spec(1,nsex,1,nfleet);
-	init_imatrix ret_spec(1,nsex,1,nfleet);
+	int nslx;         // number of selectivities (gears x blocks selectivity + gears * blocks retained)
+	int nslx_rows_in; // number of selectivity rows
+
+	init_ivector slx_nsel_blocks_in(1,nfleet);
+	init_ivector slx_nsex_in(1,nfleet);
+	init_imatrix slx_type_in(1,nfleet,1,nsex);
+
+	init_ivector ret_nret_blocks_in(1,nfleet);
+	init_ivector ret_nsex_in(1,nfleet);
+	init_imatrix ret_type_in(1,nfleet,1,nsex);
+	init_imatrix slx_nret(1,nfleet,1,nsex);
 
 	LOC_CALCS
-		nslx = sum(slx_nsel_blocks);
-		//nc = 13;
-		nc = 11; // The number of columns
-		// Work out how many rows are in the selectivity control inputs
-		nslx_rows = 0;
-		for ( int h = 1; h <= nsex; h++ )
+		nslx = sum(slx_nsel_blocks_in) + sum(ret_nret_blocks_in); // the number of gear,block,retained+discard selex
+		nc = 10; // The number of columns
+		// Work out how many rows are in the selectivity/retention control inputs matrix
+		nslx_rows_in = 0;
+		for ( int k = 1; k <= nfleet; k++ )
 		{
-			for ( int k = 1; k <= nfleet; k++ )
+			for ( int h = 1; h <= slx_nsex_in(k)+1; h++ )
 			{
 				// Selectivity
-				// logistic
-				if ( slx_spec(h,k) == 2 )
+				switch ( slx_type_in(k,h) )
 				{
-					nslx_rows += 2 * slx_nsel_blocks(k);
+					case 2: // logistic
+						nslx_rows_in += 2 * slx_nsel_blocks_in(k);
+					break;
+					case 3: // logistic95
+						nslx_rows_in += 2 * slx_nsel_blocks_in(k);
+					break;
+					case 4: // double normal
+						nslx_rows_in += 3 * slx_nsel_blocks_in(k);
+					break;
 				}
-				// logistic95
-				if ( slx_spec(h,k) == 3 )
-				{
-					nslx_rows += 2 * slx_nsel_blocks(k);
-				}
-				// double normal
-				if ( slx_spec(h,k) == 4 )
-				{
-					nslx_rows += 3 * slx_nsel_blocks(k);
-				}
+			}
+			for ( int h = 1; h <= ret_nsex_in(k)+1; h++ )
+			{
 				// Retention
-				// logistic
-				if ( ret_spec(h,k) == 2 )
+				switch ( ret_type_in(k,h) )
 				{
-					nslx_rows += 2 * slx_nsel_blocks(k);
-				}
-				// logistic95
-				if ( ret_spec(h,k) == 3 )
-				{
-					nslx_rows += 2 * slx_nsel_blocks(k);
-				}
-				// double normal
-				if ( ret_spec(h,k) == 4 )
-				{
-					nslx_rows += 3 * slx_nsel_blocks(k);
+					case 2: // logistic
+						nslx_rows_in += 2 * ret_nret_blocks_in(k) * slx_nret(k,h);
+					break;
+					case 3: // logistic95
+						nslx_rows_in += 2 * ret_nret_blocks_in(k) * slx_nret(k,h);
+					break;
+					case 4: // double normal
+						nslx_rows_in += 3 * ret_nret_blocks_in(k) * slx_nret(k,h);
+					break;
 				}
 			}
 		}
 	END_CALCS
-	init_matrix slx_control(1,nslx_rows,1,nc);
-	!! WriteCtl(slx_nsel_blocks); WriteCtl(slx_nret); WriteCtl(slx_control);
+	//init_matrix slx_control_in(1,nslx_rows_in,1,nc);
+	init_matrix slx_control(1,nslx_rows_in,1,nc);
+	//!! WriteCtl(slx_nsel_blocks); WriteCtl(ret_nret_blocks); WriteCtl(slx_control_in); WriteCtl(ret_control_in);
 
-// poopie
+	ivector slx_indx_in(1,nslx); // index for each gear type
+	ivector slx_type_in(1,nslx); // the type of selectivity function
+	ivector slx_bsex_in(1,nslx); // boolean 0 sex-independent, 1 sex-dependent
+	ivector slx_phzm_in(1,nslx); // phase/mirror
+	ivector slx_styr_in(1,nslx); // block start year
+	ivector slx_edyr_in(1,nslx); // block end year
+
+	ivector slx_indx(1,nslx); // index for each gear type
+	ivector slx_type(1,nslx); // the type of selectivity function
+	ivector slx_bsex(1,nslx); // boolean 0 sex-independent, 1 sex-dependent
+	ivector slx_phzm(1,nslx); // phase/mirror
+	ivector slx_styr(1,nslx); // block start year
+	ivector slx_edyr(1,nslx); // block end year
+	int nslx_par;
+
 	LOC_CALCS
-		cout << slx_nsel_blocks << "\n" << endl;
-		cout << "nslx: " << nslx << "\n" << endl;
-		cout << slx_spec << "\n" << endl;
+		nslx_par = 0;
+		int kk = 0;
+		// First we gotta work out the type of each selectivity
+		for ( int k = 1; k <= nfleet; k++ )
+		{
+			int hh = slx_nsel_blocks_in(k) * (slx_nsex_in(k) + 1);
+			for ( int h = 1; h <= hh; h++ )
+			{
+				kk ++;
+				slx_type(kk) = slx_type_in(k,h);
+			}
+		}
+		for ( int k = 1; k <= nfleet; k++ )
+		{
+			int hh = ret_nret_blocks_in(k) * (ret_nsex_in(k) + 1);
+			for ( int h = 1; h <= hh; h++ )
+			{
+				kk ++;
+				slx_type(kk) = ret_type_in(k,h) * slx_nret(k,h);
+			}
+		}
+		// Now we can start working out what all the other vectors should contain
+		kk = -1;
+		for ( int k = 1; k <= nslx; k++ )
+		{
+			kk += 2;
+			//slx_indx(k) = int(slx_control(kk,1));
+			slx_indx(k) = kk;
+			slx_bsex(k) = kk;
+		}
+	END_CALCS
 
-		cout << nslx_rows << "\n" << endl;
-		cout << slx_control << "\n" << endl;
 
+	// poop
+	LOC_CALCS
+		cout << endl << "nslx_rows_in: " << nslx_rows_in << "\n" << endl;
+		cout << endl << "nslx: " << nslx << "\n" << endl;
+
+		cout << endl << "slx_type: " << slx_type << "\n" << endl;
+		cout << endl << "slx_indx: " << slx_indx << "\n" << endl;
+
+		cout << endl << slx_control << "\n" << endl;
 		cout << "exit now\n" << endl;
 		exit(1);
 	END_CALCS
 
 
-	ivector slx_indx(1,nslx);
-	ivector slx_type(1,nslx);
-	ivector slx_phzm(1,nslx);
-	ivector slx_bsex(1,nslx); // boolean 0 sex-independent, 1 sex-dependent
-	ivector slx_xnod(1,nslx);
-	ivector slx_inod(1,nslx);
-	ivector slx_rows(1,nslx);
-	ivector slx_cols(1,nslx);
+
 	vector  slx_mean(1,nslx);
 	vector  slx_stdv(1,nslx);
-	vector  slx_lam1(1,nslx);
-	vector  slx_lam2(1,nslx);
-	vector  slx_lam3(1,nslx);
-	ivector slx_styr(1,nslx);
-	ivector slx_edyr(1,nslx);
+	matrix  slx_par(1,nslx,1,nslx_par);
+
+	ivector slx_rows(1,nslx);
+	ivector slx_cols(1,nslx);
 
 	LOC_CALCS
 		slx_indx = ivector(column(slx_control,1));
 		slx_type = ivector(column(slx_control,2));
-		slx_mean = column(slx_control,3);
-		slx_stdv = column(slx_control,4);
+		slx_mean =         column(slx_control,3);
+		slx_stdv =         column(slx_control,4);
 		slx_bsex = ivector(column(slx_control,5));
-		slx_xnod = ivector(column(slx_control,6));
-		slx_inod = ivector(column(slx_control,7));
+		//slx_xnod = ivector(column(slx_control,6));
+		//slx_inod = ivector(column(slx_control,7));
 		slx_phzm = ivector(column(slx_control,8));
-		slx_lam1 = column(slx_control,9);
-		slx_lam2 = column(slx_control,10);
-		slx_lam3 = column(slx_control,11);
+		//slx_lam2 =         column(slx_control,10);
+		//slx_lam3 =         column(slx_control,11);
 		slx_styr = ivector(column(slx_control,12));
 		slx_edyr = ivector(column(slx_control,13));
 
@@ -540,6 +577,10 @@ DATA_SECTION
 					slx_cols(k) = 2;
 					slx_rows(k) = bsex;
 				break;
+				case 4: // double normal
+					slx_cols(k) = 3;
+					slx_rows(k) = bsex;
+				break;			
 			}
 			// ivector tmp = ivector(slx_control(k).sub(12,11+slx_nsel_blocks(k)));
 			// slx_blks(k) = tmp.shift(1);
@@ -808,9 +849,9 @@ DATA_SECTION
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
 	init_vector model_controls(1,10);
-	int rdv_phz;                            ///> Estimated rec_dev phase
-	int verbose;                            ///> Flag to print to screen
-	int bInitializeUnfished;                ///> Flag to initialize at unfished conditions
+	int rdv_phz;             ///> Estimated rec_dev phase
+	int verbose;             ///> Flag to print to screen
+	int bInitializeUnfished; ///> Flag to initialize at unfished conditions
 	int spr_syr;
 	int spr_nyr;
 	number spr_target;
@@ -829,13 +870,13 @@ DATA_SECTION
 		spr_lambda          =     model_controls(8);
 		bUseEmpiricalGrowth = int(model_controls(9));
 		nSRR_flag           = int(model_controls(10));
-		WriteCtl(model_controls); 
+		WriteCtl(model_controls);
 	END_CALCS
 
 	init_int eof_ctl;
-	!! WriteCtl(eof_ctl); 
-	!! if(eof_ctl!=9999){cout<<"Error reading control file"<<endl; exit(1);}
-	!! cout<<"end of control section"<<endl;
+	!! WriteCtl(eof_ctl);
+	!! if(eof_ctl!=9999){cout << "Error reading control file" << endl; exit(1);}
+	!! cout << "end of control section" << endl;
 
 	LOC_CALCS
 		// ensure the phase for alpha & beta is -ve for GrowhtPars if bUseEmpiricalGrowth
@@ -843,7 +884,7 @@ DATA_SECTION
 		if ( bUseEmpiricalGrowth )
 		{
 			cerr << "WARNING:\n \tUsing empirical growth increment data,\n";
-			cerr << "\talpha & beta parameters will not be estimated."<<endl;
+			cerr << "\talpha & beta parameters will not be estimated." << endl;
 			for ( int h = 1; h <= nsex; h++ )
 			{
 				int icnt = h;
@@ -925,6 +966,15 @@ PARAMETER_SECTION
 					log_slx_pars(k)(j,2) = log(slx_stdv(k));
 				}
 			}
+			if( slx_type(k) == 4 )
+			{
+				for( int j = 1; j <= slx_rows(k); j++ )
+				{
+					log_slx_pars(k)(j,1) = log(slx_mean(k));
+					log_slx_pars(k)(j,2) = log(slx_stdv(k));
+					log_slx_pars(k)(j,3) = log(slx_stdv(k));
+				}
+			}
 		//COUT(log_slx_pars(k));
 		}
 	END_CALCS
@@ -976,13 +1026,13 @@ PARAMETER_SECTION
 
 	vector survey_q(1,nSurveys); ///> scalers for relative abundance indices (q)
 
-	matrix pre_catch(1,nCatchDF,1,nCatchRows);  ///> predicted catch (Baranov eq)
-	matrix res_catch(1,nCatchDF,1,nCatchRows);  ///> catch residuals in log-space
+	matrix pre_catch(1,nCatchDF,1,nCatchRows); ///> predicted catch (Baranov eq)
+	matrix res_catch(1,nCatchDF,1,nCatchRows); ///> catch residuals in log-space
 
-	matrix pre_cpue(1,nSurveys,1,nSurveyRows);  ///> predicted relative abundance index
-	matrix res_cpue(1,nSurveys,1,nSurveyRows);  ///> relative abundance residuals
+	matrix pre_cpue(1,nSurveys,1,nSurveyRows); ///> predicted relative abundance index
+	matrix res_cpue(1,nSurveys,1,nSurveyRows); ///> relative abundance residuals
 	
-	matrix molt_increment(1,nsex,1,nclass);     ///> linear molt increment
+	matrix molt_increment(1,nsex,1,nclass);    ///> linear molt increment
 
 	///> probability of molting
 	matrix molt_probability(1,nsex,1,nclass);
@@ -1018,7 +1068,7 @@ PRELIMINARY_CALCS_SECTION
 	{
 		if ( !global_parfile )
 		{
-			cerr << "Must have a gmacs.pin file to use the -sim command line option"<<endl;
+			cerr << "Must have a gmacs.pin file to use the -sim command line option" << endl;
 			ad_exit(1);
 		}
 		cout<<"|———————————————————————————————————————————|"<<endl;
@@ -1043,12 +1093,12 @@ PRELIMINARY_CALCS_SECTION
 PROCEDURE_SECTION
 	// Initialize model parameters
 	initialize_model_parameters();
-	if ( verbose == 1 ) cout<<"Ok after initializing model parameters ..."<<endl;
+	if ( verbose == 1 ) cout << "Ok after initializing model parameters ..." << endl;
 	
 	// Fishing fleet dynamics ...
 	calc_selectivities();
 	calc_fishing_mortality();
-	if ( verbose == 1 ) cout<<"Ok after fleet dynamics ..."<<endl;
+	if ( verbose == 1 ) cout << "Ok after fleet dynamics ..." << endl;
 
 	// Population dynamics ...
 	if ( !bUseEmpiricalGrowth )
@@ -1063,18 +1113,18 @@ PROCEDURE_SECTION
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	calc_stock_recruitment_relationship();
-	if ( verbose == 1 ) cout<<"Ok after population dynamcs ..."<<endl;
+	if ( verbose == 1 ) cout << "Ok after population dynamcs ..." << endl;
 
 	// observation models ...
 	calc_predicted_catch();
 	calc_relative_abundance();
 	calc_predicted_composition();
-	if( verbose == 1 ) cout<<"Ok after observation models ..."<<endl;
+	if( verbose == 1 ) cout << "Ok after observation models ..." << endl;
 
 	// objective function ...
 	calculate_prior_densities();
 	calc_objective_function();
-	if( verbose == 1 ) cout<<"Ok after objective function ..."<<endl;
+	if( verbose == 1 ) cout << "Ok after objective function ..." << endl;
 
 	// sd_report variables
 	if ( last_phase() ) 
@@ -1083,7 +1133,9 @@ PROCEDURE_SECTION
 	}
 	nf++;
 	if ( mceval_phase() ) 
+	{
         write_eval();
+	}
 
 
 	/**
@@ -1133,15 +1185,15 @@ FUNCTION initialize_model_parameters
 	for ( int h = 1; h <= nsex; h++ )
 	{
 		int icnt = h;
-		alpha(h)     = Grwth(icnt);
+		alpha(h)   = Grwth(icnt);
 		icnt += nsex;
-		beta(h)      = Grwth(icnt);
+		beta(h)    = Grwth(icnt);
 		icnt += nsex;
-		gscale(h)    = Grwth(icnt);
+		gscale(h)  = Grwth(icnt);
 		icnt += nsex;
-		molt_mu(h)   = Grwth(icnt);
+		molt_mu(h) = Grwth(icnt);
 		icnt += nsex;
-		molt_cv(h)   = Grwth(icnt);
+		molt_cv(h) = Grwth(icnt);
 	}
 	
 	if ( !bUseEmpiricalGrowth )
@@ -1153,9 +1205,11 @@ FUNCTION initialize_model_parameters
 
 	/**
 	 * @brief Calculate selectivies for each gear.
-	 * @author Steve Martell
+	 * @author Steve Martell, D'Arcy N. Webber
 	 * @details Three selectivities must be accounted for by each fleet.
-	 * 1) capture probability, 2) retention probability, and 3) release probability.
+	 * 1) capture probability, 2) retention probability, and 3) release/discard probability.
+	 * Only the parameters for capture probability and retention probability are estimated.
+	 * The discard probability is calculated from these two probabilities.
 	 * 
 	 * Maintain the possibility of estimating selectivity independently for
 	 * each sex; assumes there are data to estimate female selex.
@@ -1203,7 +1257,7 @@ FUNCTION calc_selectivities
 				case 4: // double normal
 					p1 = mfexp(log_slx_pars(k,block,1));
 					p2 = mfexp(log_slx_pars(k,block,2));
-					p3 = mfexp(log_slx_pars(k,block,3));
+					//p3 = mfexp(log_slx_pars(k,block,3));
 					//pSLX[j] = new class gsm::DoubleNormal<dvar_vector,dvariable>(p1,p2,p3);
 				break;
 			}
@@ -1229,6 +1283,7 @@ FUNCTION calc_selectivities
 			// Increment counter if sex-specific selectivity curves are defined.
 			if ( slx_bsex(k) ) j++;
 		}
+		// Free the allocated memory
 		for ( j = 0; j < slx_rows(k); j++ )
 		{
 			delete pSLX[j];
@@ -1803,7 +1858,7 @@ FUNCTION calc_stock_recruitment_relationship
 	dvar_vector rhat = elem_div(so * ssb , 1.0 + bb* ssb);
 	
 	// residuals
-	int byr = syr+1;
+	int byr = syr + 1;
 	res_recruit.initialize();
 	dvariable sigR = mfexp(logSigmaR);
 	dvariable sig2R = 0.5 * sigR * sigR;
@@ -1840,7 +1895,7 @@ FUNCTION calc_stock_recruitment_relationship
 	 * 
 	 * @param  [description]
 	 * @return NULL
-	 */
+	**/
 FUNCTION calc_predicted_catch
 	int h,i,j,k,ig;
 	int type,unit;
