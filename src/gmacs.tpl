@@ -426,7 +426,17 @@ DATA_SECTION
 	init_imatrix slx_nret(1,nfleet,1,nsex);
 
 	LOC_CALCS
-		nslx = sum(slx_nsel_blocks_in) + sum(ret_nret_blocks_in); // the number of gear,block,retained+discard selex
+		nslx = 0;
+		for ( int k = 1; k <= nfleet; k++ )
+		{
+			nslx += slx_nsel_blocks_in(k) * (slx_nsex_in(k) + 1);
+			for ( int h = 1; h <= nsex; h++ )
+			{
+				nslx += ret_nret_blocks_in(k) * slx_nret(k,h);
+			}
+		}
+		//nslx = sum(elem_prod(slx_nsel_blocks_in, (1+slx_nsex_in))) + sum(ret_nret_blocks_in); // the number of gear,block,retained selex
+		//nslx = sum(slx_nsel_blocks_in) + sum(elem_prod(ret_nret_blocks_in, )); // the number of gear,block,retained selex
 		nc = 10; // The number of columns
 		// Work out how many rows are in the selectivity/retention control inputs matrix
 		nslx_rows_in = 0;
@@ -470,20 +480,25 @@ DATA_SECTION
 	init_matrix slx_control(1,nslx_rows_in,1,nc);
 	//!! WriteCtl(slx_nsel_blocks); WriteCtl(ret_nret_blocks); WriteCtl(slx_control_in); WriteCtl(ret_control_in);
 
-	ivector slx_indx_in(1,nslx); // index for each gear type
-	ivector slx_type_in(1,nslx); // the type of selectivity function
+	ivector slx_indx_in(1,nslx); // index of the first parameter for each gear type
+	//ivector slx_type_in(1,nslx); // the type of selectivity function
 	ivector slx_bsex_in(1,nslx); // boolean 0 sex-independent, 1 sex-dependent
 	ivector slx_phzm_in(1,nslx); // phase/mirror
 	ivector slx_styr_in(1,nslx); // block start year
 	ivector slx_edyr_in(1,nslx); // block end year
 
-	ivector slx_indx(1,nslx); // index for each gear type
+	ivector slx_indx(1,nslx); // index for the first parameter for each gear type
+	ivector slx_gear(1,nslx); // index the gear type
 	ivector slx_type(1,nslx); // the type of selectivity function
-	ivector slx_bsex(1,nslx); // boolean 0 sex-independent, 1 sex-dependent
+	ivector slx_isex(1,nslx); // 0=males and females, 1=males only, 2=females only
 	ivector slx_phzm(1,nslx); // phase/mirror
 	ivector slx_styr(1,nslx); // block start year
 	ivector slx_edyr(1,nslx); // block end year
 	int nslx_par;
+
+	//ivector slx_bsex(1,nslx);
+	ivector slx_rows(1,nslx);
+	ivector slx_cols(1,nslx);
 
 	LOC_CALCS
 		nslx_par = 0;
@@ -514,47 +529,31 @@ DATA_SECTION
 			kk += 2;
 			//slx_indx(k) = int(slx_control(kk,1));
 			slx_indx(k) = kk;
-			slx_bsex(k) = kk;
 		}
-	END_CALCS
-
-
-	// poop
-	LOC_CALCS
-		cout << endl << "nslx_rows_in: " << nslx_rows_in << "\n" << endl;
-		cout << endl << "nslx: " << nslx << "\n" << endl;
-
-		cout << endl << "slx_type: " << slx_type << "\n" << endl;
-		cout << endl << "slx_indx: " << slx_indx << "\n" << endl;
-
-		cout << endl << slx_control << "\n" << endl;
-		cout << "exit now\n" << endl;
-		exit(1);
-	END_CALCS
-
-
-
-	vector  slx_mean(1,nslx);
-	vector  slx_stdv(1,nslx);
-	matrix  slx_par(1,nslx,1,nslx_par);
-
-	ivector slx_rows(1,nslx);
-	ivector slx_cols(1,nslx);
-
-	LOC_CALCS
-		slx_indx = ivector(column(slx_control,1));
-		slx_type = ivector(column(slx_control,2));
-		slx_mean =         column(slx_control,3);
-		slx_stdv =         column(slx_control,4);
-		slx_bsex = ivector(column(slx_control,5));
+		for ( int k = 1; k <= nslx; k++ )
+		{
+			kk = slx_indx(k);
+			slx_gear(k) = slx_control(kk,1);
+			slx_phzm(k) = slx_control(kk,8);
+			slx_styr(k) = slx_control(kk,9);
+			slx_edyr(k) = slx_control(kk,10);
+			if ( slx_gear(k) > 0 )
+			{
+				slx_isex(k) = slx_nsex_in(slx_gear(k));
+			} else {
+				slx_isex(k) = ret_nsex_in(abs(slx_gear(k)));
+			}
+		}
+		//slx_indx = ivector(column(slx_control,1));
+		//slx_type = ivector(column(slx_control,2));
+		//slx_bsex = ivector(column(slx_control,5));
 		//slx_xnod = ivector(column(slx_control,6));
 		//slx_inod = ivector(column(slx_control,7));
-		slx_phzm = ivector(column(slx_control,8));
+		//slx_phzm = ivector(column(slx_control,8));
 		//slx_lam2 =         column(slx_control,10);
 		//slx_lam3 =         column(slx_control,11);
-		slx_styr = ivector(column(slx_control,12));
-		slx_edyr = ivector(column(slx_control,13));
-
+		//slx_styr = ivector(column(slx_control,12));
+		//slx_edyr = ivector(column(slx_control,13));
 		// count up number of parameters required
 		slx_rows.initialize();
 		slx_cols.initialize();
@@ -562,7 +561,7 @@ DATA_SECTION
 		{
 			/* multiplier for sex dependent selectivities */
 			int bsex = 1;
-			if ( slx_bsex(k) ) bsex = 2;
+			//if ( slx_isex(k) > 0 ) bsex = 2;
 			switch ( slx_type(k) )
 			{
 				case 1: // coefficients
@@ -584,6 +583,19 @@ DATA_SECTION
 			}
 			// ivector tmp = ivector(slx_control(k).sub(12,11+slx_nsel_blocks(k)));
 			// slx_blks(k) = tmp.shift(1);
+		}
+	END_CALCS
+
+	matrix  slx_par(1,nslx,1,slx_cols);
+	LOC_CALCS
+		for ( int k = 1; k <= nslx; k++ )
+		{
+			int kk = slx_indx(k);
+			for ( int j = 1; j <= slx_cols(k); j++ )
+			{
+				int jj = kk + (j - 1);
+				slx_par(k,j) = slx_control(jj,4);
+			}
 		}
 	END_CALCS
 
@@ -704,48 +716,6 @@ DATA_SECTION
 	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
 	matrix size_comp_year(1,nSizeComps,1,nSizeCompRows);
 
-	// THIS IS A QUICK HACK TO TEST THINGS OUT
-	//LOC_CALCS
-	//	int k, kk;
-	//	for ( int k = 1; k <= 3; k++ )
-	//	{
-	//		for ( int i = 1; i <= nSizeCompRows(k); i++ )
-	//		{
-	//			d3_obs_size_comps(k,i) = d3_obs_size_comps_in(k,i);
-	//		}
-	//	}
-	//	k = 4;
-	//	for ( int i = 1; i <= nSizeCompRows(k); i++ )
-	//	{
-	//		for ( int j = 1; j <= 20; j++ )
-	//		{
-	//			kk = 4;
-	//			d3_obs_size_comps(k,i,j) = d3_obs_size_comps_in(kk,i,j);
-	//			kk = 5;
-	//			d3_obs_size_comps(k,i,j+20) = d3_obs_size_comps_in(kk,i,j);
-	//		}
-	//	}
-	//	k = 5;
-	//	for ( int i = 1; i <= nSizeCompRows(k); i++ )
-	//	{
-	//		for ( int j = 1; j <= 20; j++ )
-	//		{
-	//			kk = 6;
-	//			d3_obs_size_comps(k,i,j) = d3_obs_size_comps_in(kk,i,j);
-	//			kk = 7;
-	//			d3_obs_size_comps(k,i,j+20) = d3_obs_size_comps_in(kk,i,j);
-	//			kk = 8;
-	//			d3_obs_size_comps(k,i,j+40) = d3_obs_size_comps_in(kk,i,j);
-	//		}
-	//	}
-	//	k = 6;
-	//	for ( int i = 1; i <= nSizeCompRows(k); i++ )
-	//	{
-	//		kk = 9;
-	//		d3_obs_size_comps(k,i) = d3_obs_size_comps_in(kk,i);
-	//	}
-	//END_CALCS
-
 	LOC_CALCS
 		int i,j;
 		int oldk = 9999;
@@ -833,7 +803,7 @@ DATA_SECTION
 				Mdev_phz = -1;
 			break;
 			case 1: 
-				nMdev = nyr-syr; 
+				nMdev = nyr - syr; 
 			break;
 			case 2:
 				nMdev = m_nNodes;
@@ -958,25 +928,40 @@ PARAMETER_SECTION
 	LOC_CALCS
 		for( int k = 1; k <= nslx; k++ )
 		{
-			if( slx_type(k) == 2 || slx_type(k) == 3 )
+			for( int j = 1; j <= slx_rows(k); j++ )
 			{
-				for( int j = 1; j <= slx_rows(k); j++ )
+				for( int i = 1; i <= slx_cols(k); i++ )
 				{
-					log_slx_pars(k)(j,1) = log(slx_mean(k));
-					log_slx_pars(k)(j,2) = log(slx_stdv(k));
-				}
-			}
-			if( slx_type(k) == 4 )
-			{
-				for( int j = 1; j <= slx_rows(k); j++ )
-				{
-					log_slx_pars(k)(j,1) = log(slx_mean(k));
-					log_slx_pars(k)(j,2) = log(slx_stdv(k));
-					log_slx_pars(k)(j,3) = log(slx_stdv(k));
+					log_slx_pars(k,j,i) = log(slx_par(k,i));
 				}
 			}
 		//COUT(log_slx_pars(k));
 		}
+	END_CALCS
+
+	// poop
+	LOC_CALCS
+		cout << endl << "nslx_rows_in: " << nslx_rows_in << "\n" << endl;
+		cout << endl << "nslx: " << nslx << "\n" << endl;
+
+		cout << endl;
+		cout << "slx_indx: " << slx_indx << endl;
+		cout << "slx_type: " << slx_type << endl;
+		cout << "slx_gear: " << slx_gear << endl;
+		cout << "slx_isex: " << slx_isex << endl;
+		cout << "slx_phzm: " << slx_phzm << endl;
+		cout << "slx_styr: " << slx_styr << endl;
+		cout << "slx_edyr: " << slx_edyr << endl;
+
+		cout << "slx_rows: " << slx_rows << endl;
+		cout << "slx_cols: " << slx_cols << endl;
+
+		cout << "slx_par: " << endl << slx_par << endl;
+		//cout << "log_slx_pars: " << endl << log_slx_pars << endl;
+
+		cout << endl << endl << slx_control << "\n" << endl;
+		//cout << "exit now\n" << endl;
+		//exit(1);
 	END_CALCS
 
 	// Fishing mortality rate parameters
@@ -1071,9 +1056,9 @@ PRELIMINARY_CALCS_SECTION
 			cerr << "Must have a gmacs.pin file to use the -sim command line option" << endl;
 			ad_exit(1);
 		}
-		cout<<"|———————————————————————————————————————————|"<<endl;
-		cout<<"|*** RUNNING SIMULATION WITH RSEED = "<<rseed<<" ***|"<<endl;
-		cout<<"|———————————————————————————————————————————|"<<endl;
+		cout << "|———————————————————————————————————————————|" << endl;
+		cout << "|*** RUNNING SIMULATION WITH RSEED = "<<rseed<<" ***|" << endl;
+		cout << "|———————————————————————————————————————————|" << endl;
 		simulation_model();
 		//exit(1);
 	}
@@ -1228,68 +1213,79 @@ FUNCTION calc_selectivities
 	int block;
 	dvariable p1, p2, p3;
 	dvar_vector pv;
-	log_slx_capture.initialize();
-	log_slx_discard.initialize();
-	log_slx_retaind.initialize();
+	//log_slx_capture.initialize();
+	//log_slx_discard.initialize();
+	//log_slx_retaind.initialize();
+
+	for ( k = 1; k <= nfleet; k++ )
+	{
+		for ( h = 1; h <= nsex; h++ )
+		{
+			for ( i = syr; i <= nyr; i++ )
+			{
+				for ( i = syr; i <= nyr; i++ )
+				{
+					for ( int l = 1; l <= nclass; l++ )
+					{
+						log_slx_capture(k,h,i,l) = 0.0;
+						log_slx_discard(k,h,i,l) = 0.0;
+						log_slx_retaind(k,h,i,l) = 0.0;
+					}
+				}
+			}
+		}
+	}
 
 	for ( k = 1; k <= nslx; k++ )
 	{
 		block = 1;
+		int j = 0;
 		class gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
-		for ( j = 0; j < slx_rows(k); j++ )
+		switch ( slx_type(k) )
 		{
-			switch ( slx_type(k) )
-			{
-				case 1: // coefficients
-					pv = mfexp(log_slx_pars(k)(block));
-					pSLX[j] = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
-				break;
-				case 2: // logistic
-					p1 = mfexp(log_slx_pars(k,block,1));
-					p2 = mfexp(log_slx_pars(k,block,2));
-					pSLX[j] = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
-				break;
-				case 3: // logistic95
-					p1 = mfexp(log_slx_pars(k,block,1));
-					p2 = mfexp(log_slx_pars(k,block,2));
-					pSLX[j] = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
-				break;
-				case 4: // double normal
-					p1 = mfexp(log_slx_pars(k,block,1));
-					p2 = mfexp(log_slx_pars(k,block,2));
-					//p3 = mfexp(log_slx_pars(k,block,3));
-					//pSLX[j] = new class gsm::DoubleNormal<dvar_vector,dvariable>(p1,p2,p3);
-				break;
-			}
-			block ++;
+			case 1: // coefficients
+				pv = mfexp(log_slx_pars(k)(block));
+				pSLX[j] = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
+			break;
+			case 2: // logistic
+				p1 = mfexp(log_slx_pars(k,block,1));
+				p2 = mfexp(log_slx_pars(k,block,2));
+				pSLX[j] = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+			break;
+			case 3: // logistic95
+				p1 = mfexp(log_slx_pars(k,block,1));
+				p2 = mfexp(log_slx_pars(k,block,2));
+				pSLX[j] = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+			break;
 		}
-		// fill array with selectivity coefficients
-		j = 0;
-		for ( h = 1; h <= nsex; h++ )
+		int h1 = 1;
+		int h2 = 2;
+		if ( slx_isex(k) == 1 ) { h2 = 1; } // males only
+		if ( slx_isex(k) == 2 ) { h1 = 2; } // females only
+		for ( h = h1; h <= h2; h++ )
 		{
 			for ( i = slx_styr(k); i <= slx_edyr(k); i++ )
 			{
-				int kk = abs(slx_indx(k)); // gear index
-				if ( slx_indx(k) > 0 )
+				int kk = abs(slx_gear(k)); // gear index
+				if ( slx_gear(k) > 0 )
 				{
-					log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-				}
-				else
-				{
-					log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i))+TINY);
+					//log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+				} else {
+					//log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+					//log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i))+TINY);
 				}
 			}
-			// Increment counter if sex-specific selectivity curves are defined.
-			if ( slx_bsex(k) ) j++;
 		}
-		// Free the allocated memory
-		for ( j = 0; j < slx_rows(k); j++ )
-		{
-			delete pSLX[j];
-		}
+		//delete pSLX;
 	}
 
+	cout << "log_slx_capture(1)(1)(1975): " << exp(log_slx_capture(1)(1)(1975)) << endl;
+	cout << "log_slx_retaind(1)(1)(1975): " << exp(log_slx_retaind(1)(1)(1975)) << endl;
+	cout << "log_slx_discard(1)(1)(1975): " << exp(log_slx_discard(1)(1)(1975)) << endl;
+// THE PROBLEM IS THAT THE SELS ARE IN LOG SPACE SO A SEL CAN NEVER BE ZERO.
+	cout << "log_slx_capture(1)(2)(1975): " << exp(log_slx_capture(1)(1)(1975)) << endl;
+	cout << "log_slx_retaind(1)(2)(1975): " << exp(log_slx_retaind(1)(1)(1975)) << endl;
+	cout << "log_slx_discard(1)(2)(1975): " << exp(log_slx_discard(1)(1)(1975)) << endl;
 
 
 	/**
