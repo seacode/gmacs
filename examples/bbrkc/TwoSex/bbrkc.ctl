@@ -13,13 +13,13 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  0.18      0.01         1         -4       2   0.18    0.04         # M
+  0.18      0.01         1          4       2   0.18    0.04         # M
    7.0       -10        20          2       1    3.0     5.0         # logR0
-   7.0       -10        20          2       1    3.0     5.0         # logR1      
-  10.4       -10        20          1       1    3.0     5.0         # logRbar      
+   7.0       -10        20          2       1    3.0     5.0         # logR1
+  10.4       -10        20          1       1    3.0     5.0         # logRbar
   72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
-  0.55       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
- -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+  0.55       0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
+ -0.51       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
   0.01      0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -32,10 +32,10 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub        phz   prior     p1      p2         # parameter        ##                            
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha males or combined
-  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha
-  0.10       0.0       0.5         -3       0    0.0    10.0         # beta males or combined
-  0.10       0.0       0.5         -3       0    0.0    10.0         # beta
+  17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
+  17.5      10.0      30.0          3       0    0.0    20.0         # alpha
+  0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
+  0.10       0.0       0.5          3       0    0.0    10.0         # beta
   0.30       0.0      30.0         -3       0    0.0     3.0         # gscale males or combined
   0.30       0.0      30.0         -3       0    0.0     3.0         # gscale
   140.      65.0     165.0         -4       0    0.0     3.0         # molt_mu males or combined
@@ -51,43 +51,54 @@
 ##        gear index: use +ve for selectivity, -ve for retentio                         ##
 ##        sex dep: 0 for sex-independent, 1 for sex-dependent.                          ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## ivector for number of year blocks or nodes                                           ##
+## ivector for number of year periods or nodes                                           ##
 ## Gear-1    Gear-2    Gear-3   Gear-4
-   1         1         2        1         # Selectivity blocks
+   1         1         2        1         # Selectivity periods
    0         0         0        0         # sex specific selectivity
    3         3         3        3         # male   selectivity type
    3         3         3        3         # female selectivity type
 ## Gear-1    Gear-2    Gear-3   Gear-4
-   1         0         0        0         # Retention blocks
+   1         1         1        1         # Retention periods
    1         0         0        0         # sex specific retention
-   3         3         3        3         # male   retention type
-   3         3         3        3         # female retention type
+   3         2         2        2         # male   retention type
+   2         2         2        2         # female retention type
    1         0         0        0         # male   retention flag (0 = no, 1 = yes)
    0         0         0        0         # female retention flag (0 = no, 1 = yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## gear  par   sel      prior prior prior phz    start  end                         ##
-## index index par init type  mu    sd    mirror block  block                       ##
+## gear  par   sel            prior prior prior phz    start  end                       ##
+## index index par sex  init  type  mu    sd    mirror period period                    ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
 # Gear-1
-   1     1     1   100  0     10    200    3     1975   2014
-   1     2     2   120  0     10    200    3     1975   2014
+   1     1     1   0    100   0     10    200   -3     1975   2014
+   1     2     2   0    120   0     10    200   -3     1975   2014
 # Gear-2
-   2     3     1   110  0     10    200    -3     1975   2014
-   2     4     2   150  0     10    200    -3     1975   2014
+   2     3     1   0    110   0     10    200   -3     1975   2014
+   2     4     2   0    150   0     10    200   -3     1975   2014
 # Gear-3
-   3     5     1   60   0      5    100    -3     1975   1981
-   3     6     2   65   0      5    100    -3     1975   1981
-   3     7     1   60   0      5    100    -3     1982   2014
-   3     8     2   65   0      5    100    -3     1982   2014
+   3     5     1   0     90   0      5    100   -3     1975   1981
+   3     6     2   0    105   0      5    100   -3     1975   1981
+   3     7     1   0    100   0      5    100   -3     1982   2014
+   3     8     2   0    115   0      5    100   -3     1982   2014
 # Gear-4
-   4     9     1   10   0      1     50    -3     1975   2014
-   4     10    2   50   0     10    100    -3     1975   2014
+   4     9     1   0     70   0      1     50    4     1975   2014
+   4     10    2   0     90   0     10    100    4     1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
 # Gear-1
-  -1     11    1   133  0     10    200    -3     1975   2014
-  -1     12    2   137  0     10    200    -3     1975   2014
+  -1     11    1   1    133   0     10    200   -3     1975   2014
+  -1     12    2   1    137   0     10    200   -3     1975   2014
+  -1     13    1   2    591   0     10    200   -3     1975   2014
+  -1     14    2   2     11   0     10    200   -3     1975   2014
+# Gear-2
+  -2     15    1   0    595   0     10    200   -3     1975   2014
+  -2     16    2   0     10   0     10    200   -3     1975   2014
+# Gear-3
+  -3     17    1   0    590   0      5    100   -3     1975   1981
+  -3     18    2   0     10   0      5    100   -3     1982   2014
+# Gear-4
+  -4     19    1   0    580   0      1     50   -3     1975   2014
+  -4     20    2   0     20   0     10    100   -3     1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -98,7 +109,7 @@
 ## NMFS  BSFRF
 ## TYPE     Mean_q    SD_q      CPUE_Lambda
      1      0.896     0.13      80
-     0      0.001     0.01      50
+     0      0.001     0.1       50
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
  
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -150,7 +161,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
-  1       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2014    # Last year for average recruitment for Bspr calculation.

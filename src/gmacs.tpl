@@ -412,156 +412,122 @@ DATA_SECTION
 	// |--------------------------------|
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
-	int nc;
-	int nslx;         // number of selectivities (gears x blocks selectivity + gears * blocks retained)
-	int nslx_rows_in; // number of selectivity rows
+	int nslx;             // number of selectivities (gears x blocks selectivity + gears * blocks retained)
+	int nslx_rows_in;     // number of selectivity rows
+	int nslx_cols_in;     // number of selectivity columns
+	!! nslx_cols_in = 11; // number of columns in the control file to be read in
 
-	init_ivector slx_nsel_blocks_in(1,nfleet);
-	init_ivector slx_nsex_in(1,nfleet);
-	init_imatrix slx_type_in(1,nfleet,1,nsex);
+	init_ivector slx_nsel_period_in(1,nfleet); // number of selex time periods
+	init_ivector slx_bsex_in(1,nfleet);        // boolian for sex-specific selex
+	init_imatrix slx_type_in(1,nsex,1,nfleet); // integer for selectivity type (e.g. logistic, double normal)
 
-	init_ivector ret_nret_blocks_in(1,nfleet);
-	init_ivector ret_nsex_in(1,nfleet);
-	init_imatrix ret_type_in(1,nfleet,1,nsex);
-	init_imatrix slx_nret(1,nfleet,1,nsex);
+	init_ivector ret_nret_period_in(1,nfleet); // number of retention time periods
+	init_ivector ret_bsex_in(1,nfleet);        // boolian for sex-specific retention
+	init_imatrix ret_type_in(1,nsex,1,nfleet); // integer for retention type (e.g. logistic, double normal)
+	init_imatrix slx_nret(1,nsex,1,nfleet);    // boolian for rentention/discard
 
 	LOC_CALCS
+		// Work out how many selectivities we are dealing with, nfleet * nsex,
+		// plus any additonal sex-specific or time period selectivities
 		nslx = 0;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
-			nslx += slx_nsel_blocks_in(k) * (slx_nsex_in(k) + 1);
-			for ( int h = 1; h <= nsex; h++ )
-			{
-				nslx += ret_nret_blocks_in(k) * slx_nret(k,h);
-			}
+			nslx += slx_nsel_period_in(k) * (1 + slx_bsex_in(k));
+			nslx += ret_nret_period_in(k) * (1 + ret_bsex_in(k));
 		}
-		//nslx = sum(elem_prod(slx_nsel_blocks_in, (1+slx_nsex_in))) + sum(ret_nret_blocks_in); // the number of gear,block,retained selex
-		//nslx = sum(slx_nsel_blocks_in) + sum(elem_prod(ret_nret_blocks_in, )); // the number of gear,block,retained selex
-		nc = 10; // The number of columns
-		// Work out how many rows are in the selectivity/retention control inputs matrix
+		// Work out how many rows are in the selectivity/retention control
+		// inputs matrix based on the type of each selectivity and the number
+		// of blocks.
 		nslx_rows_in = 0;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
-			for ( int h = 1; h <= slx_nsex_in(k)+1; h++ )
+			for ( int h = 1; h <= slx_bsex_in(k)+1; h++ )
 			{
 				// Selectivity
-				switch ( slx_type_in(k,h) )
+				switch ( slx_type_in(h,k) )
 				{
 					case 2: // logistic
-						nslx_rows_in += 2 * slx_nsel_blocks_in(k);
+						nslx_rows_in += 2 * slx_nsel_period_in(k);
 					break;
 					case 3: // logistic95
-						nslx_rows_in += 2 * slx_nsel_blocks_in(k);
+						nslx_rows_in += 2 * slx_nsel_period_in(k);
 					break;
 					case 4: // double normal
-						nslx_rows_in += 3 * slx_nsel_blocks_in(k);
+						nslx_rows_in += 3 * slx_nsel_period_in(k);
 					break;
 				}
 			}
-			for ( int h = 1; h <= ret_nsex_in(k)+1; h++ )
+			for ( int h = 1; h <= ret_bsex_in(k)+1; h++ )
 			{
 				// Retention
-				switch ( ret_type_in(k,h) )
+				switch ( ret_type_in(h,k) )
 				{
 					case 2: // logistic
-						nslx_rows_in += 2 * ret_nret_blocks_in(k) * slx_nret(k,h);
+						nslx_rows_in += 2 * ret_nret_period_in(k);
 					break;
 					case 3: // logistic95
-						nslx_rows_in += 2 * ret_nret_blocks_in(k) * slx_nret(k,h);
+						nslx_rows_in += 2 * ret_nret_period_in(k);
 					break;
 					case 4: // double normal
-						nslx_rows_in += 3 * ret_nret_blocks_in(k) * slx_nret(k,h);
+						nslx_rows_in += 3 * ret_nret_period_in(k);
 					break;
 				}
 			}
 		}
 	END_CALCS
-	//init_matrix slx_control_in(1,nslx_rows_in,1,nc);
-	init_matrix slx_control(1,nslx_rows_in,1,nc);
-	//!! WriteCtl(slx_nsel_blocks); WriteCtl(ret_nret_blocks); WriteCtl(slx_control_in); WriteCtl(ret_control_in);
 
-	ivector slx_indx_in(1,nslx); // index of the first parameter for each gear type
-	//ivector slx_type_in(1,nslx); // the type of selectivity function
-	ivector slx_bsex_in(1,nslx); // boolean 0 sex-independent, 1 sex-dependent
-	ivector slx_phzm_in(1,nslx); // phase/mirror
-	ivector slx_styr_in(1,nslx); // block start year
-	ivector slx_edyr_in(1,nslx); // block end year
+	init_matrix slx_control_in(1,nslx_rows_in,1,nslx_cols_in);
 
+	imatrix slx_control(1,nslx,1,nslx_cols_in);
 	ivector slx_indx(1,nslx); // index for the first parameter for each gear type
 	ivector slx_gear(1,nslx); // index the gear type
 	ivector slx_type(1,nslx); // the type of selectivity function
 	ivector slx_isex(1,nslx); // 0=males and females, 1=males only, 2=females only
 	ivector slx_phzm(1,nslx); // phase/mirror
-	ivector slx_styr(1,nslx); // block start year
-	ivector slx_edyr(1,nslx); // block end year
-	int nslx_par;
-
-	//ivector slx_bsex(1,nslx);
-	ivector slx_rows(1,nslx);
+	ivector slx_styr(1,nslx); // period start year
+	ivector slx_edyr(1,nslx); // period end year
+	ivector slx_rows(1,nslx); // THIS IS NOW DEPRECIATED AND COULD BE REMOVED
 	ivector slx_cols(1,nslx);
 
 	LOC_CALCS
-		nslx_par = 0;
-		int kk = 0;
-		// First we gotta work out the type of each selectivity
+		// Work out the type of each selectivity and place in the ivector
+		// slx_type
+		int kk = 1;
+		cout << endl;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
-			int hh = slx_nsel_blocks_in(k) * (slx_nsex_in(k) + 1);
-			for ( int h = 1; h <= hh; h++ )
+			for ( int i = 1; i <= slx_nsel_period_in(k); i++ )
 			{
-				kk ++;
-				slx_type(kk) = slx_type_in(k,h);
+				int hh = 1 + slx_bsex_in(k);
+				for ( int h = 1; h <= hh; h++ )
+				{
+					cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
+					slx_type(kk) = slx_type_in(h,k);
+					kk ++;
+				}
 			}
 		}
 		for ( int k = 1; k <= nfleet; k++ )
 		{
-			int hh = ret_nret_blocks_in(k) * (ret_nsex_in(k) + 1);
-			for ( int h = 1; h <= hh; h++ )
+			for ( int i = 1; i <= ret_nret_period_in(k); i++ )
 			{
-				kk ++;
-				slx_type(kk) = ret_type_in(k,h) * slx_nret(k,h);
+				int hh = 1 + ret_bsex_in(k);
+				for ( int h = 1; h <= hh; h++ )
+				{
+					cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
+					slx_type(kk) = ret_type_in(h,k);
+					kk ++;
+				}
 			}
 		}
-		// Now we can start working out what all the other vectors should contain
-		kk = -1;
-		for ( int k = 1; k <= nslx; k++ )
-		{
-			kk += 2;
-			//slx_indx(k) = int(slx_control(kk,1));
-			slx_indx(k) = kk;
-		}
-		for ( int k = 1; k <= nslx; k++ )
-		{
-			kk = slx_indx(k);
-			slx_gear(k) = slx_control(kk,1);
-			slx_phzm(k) = slx_control(kk,8);
-			slx_styr(k) = slx_control(kk,9);
-			slx_edyr(k) = slx_control(kk,10);
-			if ( slx_gear(k) > 0 )
-			{
-				slx_isex(k) = slx_nsex_in(slx_gear(k));
-			} else {
-				slx_isex(k) = ret_nsex_in(abs(slx_gear(k)));
-			}
-		}
-		//slx_indx = ivector(column(slx_control,1));
-		//slx_type = ivector(column(slx_control,2));
-		//slx_bsex = ivector(column(slx_control,5));
-		//slx_xnod = ivector(column(slx_control,6));
-		//slx_inod = ivector(column(slx_control,7));
-		//slx_phzm = ivector(column(slx_control,8));
-		//slx_lam2 =         column(slx_control,10);
-		//slx_lam3 =         column(slx_control,11);
-		//slx_styr = ivector(column(slx_control,12));
-		//slx_edyr = ivector(column(slx_control,13));
+
 		// count up number of parameters required
 		slx_rows.initialize();
 		slx_cols.initialize();
 		for ( int k = 1; k <= nslx; k++ )
 		{
-			/* multiplier for sex dependent selectivities */
-			int bsex = 1;
-			//if ( slx_isex(k) > 0 ) bsex = 2;
+			int bsex = 1; // THIS IS DEPRECIATED AND COULD BE REMOVED
+			//if ( slx_isex(k) > 0 ) bsex = 2; // THIS IS DEPRECIATED AND COULD BE REMOVED
 			switch ( slx_type(k) )
 			{
 				case 1: // coefficients
@@ -581,12 +547,36 @@ DATA_SECTION
 					slx_rows(k) = bsex;
 				break;			
 			}
-			// ivector tmp = ivector(slx_control(k).sub(12,11+slx_nsel_blocks(k)));
-			// slx_blks(k) = tmp.shift(1);
+		}
+		// slx_indx is an ivector of the index for the first parameter of each
+		// nslx in the slx_control_in matrix
+		kk = 1;
+		for ( int k = 1; k <= nslx; k++ )
+		{
+			slx_indx(k) = kk;
+			kk += slx_cols(k);
+		}
+		// Store a version of the control file that only records the first
+		// parameter of each selectivity type - this is useful for R plots.
+		// Also extract vectors of elements from this matrix.
+		for ( int k = 1; k <= nslx; k++ )
+		{
+			int kk = slx_indx(k);
+			for ( int i = 1; i <= nslx_cols_in; i++ )
+			{
+				slx_control(k,i) = slx_control_in(kk,i);
+			}
+			slx_gear(k) = slx_control_in(kk,1);
+			slx_isex(k) = slx_control_in(kk,4);
+			slx_phzm(k) = slx_control_in(kk,9);
+			slx_styr(k) = slx_control_in(kk,10);
+			slx_edyr(k) = slx_control_in(kk,11);		
 		}
 	END_CALCS
 
-	matrix  slx_par(1,nslx,1,slx_cols);
+	// Load the parameters into their own ragged matrix
+	matrix slx_par(1,nslx,1,slx_cols);
+	3darray slx_priors(1,nslx,1,slx_cols,1,3);
 	LOC_CALCS
 		for ( int k = 1; k <= nslx; k++ )
 		{
@@ -594,9 +584,41 @@ DATA_SECTION
 			for ( int j = 1; j <= slx_cols(k); j++ )
 			{
 				int jj = kk + (j - 1);
-				slx_par(k,j) = slx_control(jj,4);
+				slx_par(k,j) = slx_control_in(jj,5);
+				slx_priors(k,j,1) = slx_control_in(jj,6);
+				slx_priors(k,j,2) = slx_control_in(jj,7);
+				slx_priors(k,j,3) = slx_control_in(jj,8);
 			}
 		}
+	END_CALCS
+	!! WriteCtl(slx_nsel_period_in); WriteCtl(ret_nret_period_in); WriteCtl(slx_control_in); WriteCtl(slx_control);
+
+	// poop
+	LOC_CALCS
+		cout << endl;
+		cout << "nslx: " << nslx << endl;
+		cout << "nslx_rows_in: " << nslx_rows_in << endl;
+		cout << "slx_type_in: " << endl;
+		cout << slx_type_in << endl;
+		cout << "slx_control_in: " << endl;
+		cout << slx_control_in << endl;
+
+		cout << endl;
+		cout << "slx_indx: " << slx_indx << endl;
+		cout << "slx_type: " << slx_type << endl;
+
+		cout << endl;
+		cout << "slx_gear: " << slx_gear << endl;
+		cout << "slx_isex: " << slx_isex << endl;
+		cout << "slx_phzm: " << slx_phzm << endl;
+		cout << "slx_styr: " << slx_styr << endl;
+		cout << "slx_edyr: " << slx_edyr << endl;
+
+		cout << "slx_rows: " << slx_rows << endl;
+		cout << "slx_cols: " << slx_cols << endl;
+
+		cout << "slx_par: " << endl << slx_par << endl;
+		//exit(1);
 	END_CALCS
 
 	// |---------------------------------------------------------|
@@ -935,33 +957,8 @@ PARAMETER_SECTION
 					log_slx_pars(k,j,i) = log(slx_par(k,i));
 				}
 			}
-		//COUT(log_slx_pars(k));
+		//COUT(exp(log_slx_pars(k)));
 		}
-	END_CALCS
-
-	// poop
-	LOC_CALCS
-		cout << endl << "nslx_rows_in: " << nslx_rows_in << "\n" << endl;
-		cout << endl << "nslx: " << nslx << "\n" << endl;
-
-		cout << endl;
-		cout << "slx_indx: " << slx_indx << endl;
-		cout << "slx_type: " << slx_type << endl;
-		cout << "slx_gear: " << slx_gear << endl;
-		cout << "slx_isex: " << slx_isex << endl;
-		cout << "slx_phzm: " << slx_phzm << endl;
-		cout << "slx_styr: " << slx_styr << endl;
-		cout << "slx_edyr: " << slx_edyr << endl;
-
-		cout << "slx_rows: " << slx_rows << endl;
-		cout << "slx_cols: " << slx_cols << endl;
-
-		cout << "slx_par: " << endl << slx_par << endl;
-		//cout << "log_slx_pars: " << endl << log_slx_pars << endl;
-
-		cout << endl << endl << slx_control << "\n" << endl;
-		//cout << "exit now\n" << endl;
-		//exit(1);
 	END_CALCS
 
 	// Fishing mortality rate parameters
@@ -1213,49 +1210,34 @@ FUNCTION calc_selectivities
 	int block;
 	dvariable p1, p2, p3;
 	dvar_vector pv;
-	//log_slx_capture.initialize();
-	//log_slx_discard.initialize();
-	//log_slx_retaind.initialize();
-
-	for ( k = 1; k <= nfleet; k++ )
-	{
-		for ( h = 1; h <= nsex; h++ )
-		{
-			for ( i = syr; i <= nyr; i++ )
-			{
-				for ( i = syr; i <= nyr; i++ )
-				{
-					for ( int l = 1; l <= nclass; l++ )
-					{
-						log_slx_capture(k,h,i,l) = 0.0;
-						log_slx_discard(k,h,i,l) = 0.0;
-						log_slx_retaind(k,h,i,l) = 0.0;
-					}
-				}
-			}
-		}
-	}
+	log_slx_capture.initialize();
+	log_slx_discard.initialize();
+	log_slx_retaind.initialize();
 
 	for ( k = 1; k <= nslx; k++ )
 	{
 		block = 1;
-		int j = 0;
-		class gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
+		//class gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
+		class gsm::Selex<dvar_vector> *pSLX;
+		//int j = 0;
 		switch ( slx_type(k) )
 		{
 			case 1: // coefficients
 				pv = mfexp(log_slx_pars(k)(block));
-				pSLX[j] = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
+				//pSLX[j] = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
+				pSLX = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
 			break;
 			case 2: // logistic
 				p1 = mfexp(log_slx_pars(k,block,1));
 				p2 = mfexp(log_slx_pars(k,block,2));
-				pSLX[j] = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+				//pSLX[j] = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+				pSLX = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
 			break;
 			case 3: // logistic95
 				p1 = mfexp(log_slx_pars(k,block,1));
 				p2 = mfexp(log_slx_pars(k,block,2));
-				pSLX[j] = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+				//pSLX[j] = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+				pSLX = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
 			break;
 		}
 		int h1 = 1;
@@ -1270,22 +1252,30 @@ FUNCTION calc_selectivities
 				if ( slx_gear(k) > 0 )
 				{
 					//log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+					log_slx_capture(kk)(h)(i) = pSLX->logSelectivity(mid_points);
 				} else {
 					//log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-					//log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i))+TINY);
+					log_slx_retaind(kk)(h)(i) = pSLX->logSelectivity(mid_points);
+					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i))+TINY);
 				}
 			}
 		}
-		//delete pSLX;
+		delete pSLX;
 	}
 
-	cout << "log_slx_capture(1)(1)(1975): " << exp(log_slx_capture(1)(1)(1975)) << endl;
-	cout << "log_slx_retaind(1)(1)(1975): " << exp(log_slx_retaind(1)(1)(1975)) << endl;
-	cout << "log_slx_discard(1)(1)(1975): " << exp(log_slx_discard(1)(1)(1975)) << endl;
+	//cout << "log_slx_capture(1)(1)(1975): " << exp(log_slx_capture(1)(1)(1975)) << endl;
+	//cout << "log_slx_retaind(1)(1)(1975): " << exp(log_slx_retaind(1)(1)(1975)) << endl;
+	//cout << "log_slx_discard(1)(1)(1975): " << exp(log_slx_discard(1)(1)(1975)) << endl;
 // THE PROBLEM IS THAT THE SELS ARE IN LOG SPACE SO A SEL CAN NEVER BE ZERO.
-	cout << "log_slx_capture(1)(2)(1975): " << exp(log_slx_capture(1)(1)(1975)) << endl;
-	cout << "log_slx_retaind(1)(2)(1975): " << exp(log_slx_retaind(1)(1)(1975)) << endl;
-	cout << "log_slx_discard(1)(2)(1975): " << exp(log_slx_discard(1)(1)(1975)) << endl;
+	//cout << "log_slx_capture(1)(2)(1975): " << exp(log_slx_capture(1)(2)(1975)) << endl;
+	//cout << "log_slx_retaind(1)(2)(1975): " << exp(log_slx_retaind(1)(2)(1975)) << endl;
+	//cout << "log_slx_discard(1)(2)(1975): " << exp(log_slx_discard(1)(2)(1975)) << endl;
+
+	//cout << "log_slx_capture(2)(1)(1975): " << exp(log_slx_capture(2)(1)(1975)) << endl;
+	//cout << "log_slx_retaind(2)(1)(1975): " << exp(log_slx_retaind(2)(1)(1975)) << endl;
+	//cout << "log_slx_discard(2)(1)(1975): " << exp(log_slx_discard(2)(1)(1975)) << endl;
+
+	//cout << "slx_nret: " << slx_nret << endl;
 
 
 	/**
@@ -1523,7 +1513,7 @@ FUNCTION calc_natural_mortality
 	 * 
 	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used.
 	 * Due to F.
-	 */
+	**/
 FUNCTION calc_total_mortality
 	int h;
 	Z.initialize();
@@ -1659,9 +1649,7 @@ FUNCTION calc_initial_numbers_at_length
 	if ( bInitializeUnfished )
 	{
 		log_initial_recruits = logR0;
-	}
-	else
-	{
+	} else {
 		log_initial_recruits = logRini;
 	}
 	recruits(syr) = exp(log_initial_recruits);
@@ -1741,9 +1729,7 @@ FUNCTION update_population_numbers_at_length
 	if ( bInitializeUnfished )
 	{
 		recruits(syr+1,nyr) = mfexp(logR0);
-	}
-	else
-	{
+	} else {
 		recruits(syr+1,nyr) = mfexp(logRbar);	
 	}
 
@@ -2307,33 +2293,33 @@ FUNCTION calculate_prior_densities
 	double lb,ub;
 	priorDensity.initialize();
 	
-	for ( int i = 1; i <= ntheta; i++)
+	for ( int i = 1; i <= ntheta; i++ )
 	{
-		if (active(theta(i)))
+		if ( active(theta(i)) )
 		{
 			int priorType = int(theta_control(i,5));
 			p1 = theta_control(i,6);
 			p2 = theta_control(i,7);
 			dvariable x = theta(i);
-			if (priorType == 3)
+			if ( priorType == 3 )
 			{
 				lb = theta_control(i,2);
 				ub = theta_control(i,3);
-				x = (x-lb)/(ub-lb);
+				x = (x - lb) / (ub - lb);
 			}
 			priorDensity(i) = get_prior_pdf(priorType, x, p1, p2);
 		}
 	}
 
-	for (int i = 1; i <= nGrwth; i++)
+	for ( int i = 1; i <= nGrwth; i++ )
 	{
-		if (active(Grwth(i)))
+		if ( active(Grwth(i)) )
 		{
 			int priorType = int(Grwth_control(i,5));
 			p1 = Grwth_control(i,6);
 			p2 = Grwth_control(i,7);
 			dvariable x = Grwth(i);
-			if (priorType == 3)
+			if ( priorType == 3 )
 			{
 				lb = Grwth_control(i,2);
 				ub = Grwth_control(i,3);
@@ -2348,14 +2334,12 @@ FUNCTION calculate_prior_densities
 	for ( int i = 1; i <= nSurveys; i++ )
 	{
 		int itype = int(prior_qtype(i));
-		switch(itype)
+		switch ( itype )
 		{
-			// Analytical soln, no prior (uniform, uniformative)
-			case 0:
+			case 0: // Analytical soln, no prior (uniform, uniformative)
 				priorDensity(iprior) = dunif(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
 			break;
-			// Prior on analytical soln, log-normal
-			case 1:
+			case 1: // Prior on analytical soln, log-normal
 				priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
 			break;
 		}
@@ -2623,16 +2607,17 @@ REPORT_SECTION
 	REPORT(pre_cpue);
 	REPORT(res_cpue);
 
-	report << "slx_capture"<<endl;
-	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
-		report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) <<endl;
-	report << "slx_retaind"<<endl;
-	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
-		report << i << " " << h << " " << j << " " << exp(log_slx_retaind(j,h,i)) <<endl;
-	report << "slx_discard"<<endl;
-	for (int i=syr;i<=nyr;i++) for (int h=1;h<=nsex;h++) for (int j=1;j<=nfleet;j++)
-		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) <<endl;
+	report << "slx_capture" << endl;
+	for ( int i = syr; i <= nyr; i++ ) for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
+		report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) << endl;
+	report << "slx_retaind" << endl;
+	for ( int i = syr; i <= nyr; i++ ) for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
+		report << i << " " << h << " " << j << " " << exp(log_slx_retaind(j,h,i)) << endl;
+	report << "slx_discard" << endl;
+	for ( int i = syr; i <= nyr; i++ ) for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
+		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) << endl;
 
+	REPORT(slx_control_in);
 	REPORT(slx_control);
 	REPORT(log_slx_capture);
 	REPORT(log_slx_retaind);
