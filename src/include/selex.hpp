@@ -56,7 +56,7 @@ namespace gsm {
 	 * const T Selectivity(const T &x) const <br>
 	 * 
 	 * @tparam x Independent variable (ie. age or size) for calculating selectivity.
-	 */
+	**/
 
 	template<class T>
 	class Selex
@@ -79,7 +79,7 @@ namespace gsm {
 // plogis: Base functions for logistic-based selectivity functions
 // =========================================================================================================
 
-	/* Traits for the vonBertalaffy template function*/
+	/* Traits for the vonBertalaffy template function */
 	template <typename T2>
 	class logisticTrait;
 
@@ -105,11 +105,11 @@ namespace gsm {
 	 * @tparam T2 double or dvariable for mean and standard deviation of the logistic curve
 	 * 
 	 * template <typename T, typename T1>
-		inline
-		typename vonBtrait<T>::vonBT vonBertalanffy(const T &lmin, const T &lmax, const T &rho, const T1 &age)
-		{
-			typedef typename vonBtrait<T>::vonBT vonBT;
-	 */
+	 *	inline
+	 *	typename vonBtrait<T>::vonBT vonBertalanffy(const T &lmin, const T &lmax, const T &rho, const T1 &age)
+	 *	{
+	 *		typedef typename vonBtrait<T>::vonBT vonBT;
+	**/
 	template<class T,class T2>
 	inline
 	const T plogis(const T &x, const T2 &mean, const T2 &sd)
@@ -125,9 +125,20 @@ namespace gsm {
 	const T plogis95(const T &x, const T2 &s50, const T2 &s95)
 	{
 		T selex = T2(1.0)/(T2(1.0)+(exp(-log(19)*((x-s50)/(s95-s50)))));
-		selex /= selex(selex.indexmax());	
+		selex /= selex(selex.indexmax());
 		return selex;
 	}
+
+
+	template<class T, class T2>
+	inline
+	const T pdubnorm(const T &x, const T2 &sL, const T2 &s50, const T2 &sR)
+	{
+		T selex = pow(2,-pow((x-sL)/sL,2)); // if x <= s50
+		//T selex = pow(2,-pow((x-sR)/sL,2); // if x > s50
+		return selex;
+	}
+
 
 // =========================================================================================================
 // LogisticCurve: Logistic-based selectivity function with options
@@ -139,7 +150,7 @@ namespace gsm {
 	 * 
 	 * @tparam T data vector or dvar vector
 	 * @tparam T2 double or dvariable for mean and standard deviation of the logistic curve
-	 */
+	**/
 	template<class T,class T2>
 	class LogisticCurve: public Selex<T>
 	{
@@ -186,7 +197,7 @@ namespace gsm {
    * 
    * @tparam T data vector or dvar vector
    * @tparam T2 double or dvariable for size at 5% and 95% selectivity
-   */
+  **/
 
   template<class T,class T2>
   class LogisticCurve95: public Selex<T>
@@ -225,6 +236,57 @@ namespace gsm {
   };
 
 // =========================================================================================================
+// DoubleNormal: Double normal (dome shaped) selectivity
+// =========================================================================================================
+
+  /**
+   * @brief Double normal curve
+   * @details Uses the logistic curve (plogis95) for a two parameter function
+   * 
+   * @tparam T data vector or dvar vector
+   * @tparam T2 double or dvariable for size at 5% and 95% selectivity
+  **/
+
+  template<class T,class T2>
+  class DoubleNormal: public Selex<T>
+  {
+  private:
+    T2 m_sL;
+    T2 m_s50;
+    T2 m_sR;
+
+  public:
+    DoubleNormal(T2 sL = T2(1), T2 s50 = T2(1), T2 sR = T2(1))
+    : m_sL(sL), m_s50(s50), m_sR(sR) {}
+
+    T2 GetSL()  const { return m_sL; }
+    T2 GetS59() const { return m_s50; }
+    T2 GetSR()  const { return m_sR; }
+
+    void SetSL(T2 sL)   { this->m_sL = sL; }
+    void SetS50(T2 s50) { this->m_s50 = s50; }
+    void SetSR(T2 sR)   { this->m_sR = sR; }
+
+    const T Selectivity(const T &x) const
+    {
+      return gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR());
+    }
+
+    const T logSelectivity(const T &x) const
+    {
+      return log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+    }
+
+    const T logSelexMeanOne(const T &x) const
+    {
+      T y = log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+      y  -= log(mean(mfexp(y)));
+      return y;
+    }
+
+  };
+
+// =========================================================================================================
 // Coefficients: Base function for non-parametric selectivity cooefficients 
 // =========================================================================================================
 
@@ -239,7 +301,7 @@ namespace gsm {
 	 * @param x Independent variable
 	 * @param sel_coeffs Vector of estimated selectivity coefficients logit transformed.
 	 * @return Selectivity coefficients.
-	 */
+	**/
 	template<class T>
 	const T coefficients(const T &x, const T &sel_coeffs)
 	{
@@ -264,7 +326,7 @@ namespace gsm {
 	 * @details Age or size-specific selectivity coefficients for n-1 age/size classes
 	 * 
 	 * @tparam T vector of coefficients
-	 */
+	**/
 	template<class T>
 	class SelectivityCoefficients: public Selex<T>
 	{
@@ -310,7 +372,7 @@ namespace gsm {
 	 * @param x Independent variable (number of classes)
 	 * @param selparms Vector of selectivity parameters (initial values).
 	 * @return Selectivity values.
-	 */
+	**/
 	template<class T>
 	const T nonparametric(const T &x, const T &selparms)
 	{
@@ -336,7 +398,7 @@ namespace gsm {
 	 * but Athol wanted to have this function in CSTAR
 	 * 
 	 * @tparam T vector of parameters (initial values)
-	 */
+	**/
 	template<class T>
 	class ParameterPerClass: public Selex<T>
 	{

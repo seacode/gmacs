@@ -413,6 +413,7 @@ DATA_SECTION
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
 	int nslx;             // number of selectivities (gears x blocks selectivity + gears * blocks retained)
+	int nSelex;           // number of selectivity parameters in total
 	int nslx_rows_in;     // number of selectivity rows
 	int nslx_cols_in;     // number of selectivity columns
 	!! nslx_cols_in = 11; // number of columns in the control file to be read in
@@ -486,7 +487,6 @@ DATA_SECTION
 	ivector slx_phzm(1,nslx); // phase/mirror
 	ivector slx_styr(1,nslx); // period start year
 	ivector slx_edyr(1,nslx); // period end year
-	ivector slx_rows(1,nslx); // THIS IS NOW DEPRECIATED AND COULD BE REMOVED
 	ivector slx_cols(1,nslx);
 
 	LOC_CALCS
@@ -522,29 +522,22 @@ DATA_SECTION
 		}
 
 		// count up number of parameters required
-		slx_rows.initialize();
 		slx_cols.initialize();
 		for ( int k = 1; k <= nslx; k++ )
 		{
-			int bsex = 1; // THIS IS DEPRECIATED AND COULD BE REMOVED
-			//if ( slx_isex(k) > 0 ) bsex = 2; // THIS IS DEPRECIATED AND COULD BE REMOVED
 			switch ( slx_type(k) )
 			{
 				case 1: // coefficients
 					slx_cols(k) = nclass - 1;
-					slx_rows(k) = bsex;
 				break;
 				case 2: // logistic
 					slx_cols(k) = 2;
-					slx_rows(k) = bsex;
 				break;
 				case 3: // logistic95
 					slx_cols(k) = 2;
-					slx_rows(k) = bsex;
 				break;
 				case 4: // double normal
 					slx_cols(k) = 3;
-					slx_rows(k) = bsex;
 				break;			
 			}
 		}
@@ -572,10 +565,12 @@ DATA_SECTION
 			slx_styr(k) = slx_control_in(kk,10);
 			slx_edyr(k) = slx_control_in(kk,11);		
 		}
+		nSelex = sum(slx_cols);
 	END_CALCS
 
 	// Load the parameters into their own ragged matrix
 	matrix slx_par(1,nslx,1,slx_cols);
+	matrix log_slx_pars_ival(1,nslx,1,slx_cols);
 	3darray slx_priors(1,nslx,1,slx_cols,1,3);
 	LOC_CALCS
 		for ( int k = 1; k <= nslx; k++ )
@@ -588,6 +583,13 @@ DATA_SECTION
 				slx_priors(k,j,1) = slx_control_in(jj,6);
 				slx_priors(k,j,2) = slx_control_in(jj,7);
 				slx_priors(k,j,3) = slx_control_in(jj,8);
+			}
+		}
+		for( int k = 1; k <= nslx; k++ )
+		{
+			for( int i = 1; i <= slx_cols(k); i++ )
+			{
+				log_slx_pars_ival(k,i) = log(slx_par(k,i));
 			}
 		}
 	END_CALCS
@@ -614,7 +616,6 @@ DATA_SECTION
 		cout << "slx_styr: " << slx_styr << endl;
 		cout << "slx_edyr: " << slx_edyr << endl;
 
-		cout << "slx_rows: " << slx_rows << endl;
 		cout << "slx_cols: " << slx_cols << endl;
 
 		cout << "slx_par: " << endl << slx_par << endl;
@@ -818,7 +819,7 @@ DATA_SECTION
 	init_int m_nNodes;
 	init_ivector m_nodeyear(1,m_nNodes);
 	LOC_CALCS
-		switch( m_type )
+		switch ( m_type )
 		{
 			case 0:
 				nMdev = 0; 
@@ -902,10 +903,10 @@ DATA_SECTION
 
 
 INITIALIZATION_SECTION
-	theta     theta_ival;
-	Grwth     Grwth_ival;
-	log_fbar  log_pen_fbar;
-	
+	theta        theta_ival;
+	Grwth        Grwth_ival;
+	log_fbar     log_pen_fbar;
+	//log_slx_pars log_slx_pars_ival;
 
 PARAMETER_SECTION
 	
@@ -945,17 +946,14 @@ PARAMETER_SECTION
 
 	// Selectivity parameters
 	// NOTE THIS NEEDS FIXING...cobbled together some bounds to make things work...
-	init_bounded_matrix_vector log_slx_pars(1,nslx,1,slx_rows,1,slx_cols,-15,15,slx_phzm);
+	init_bounded_vector_vector log_slx_pars(1,nslx,1,slx_cols,-15,15,slx_phzm);
 
 	LOC_CALCS
 		for( int k = 1; k <= nslx; k++ )
 		{
-			for( int j = 1; j <= slx_rows(k); j++ )
+			for( int i = 1; i <= slx_cols(k); i++ )
 			{
-				for( int i = 1; i <= slx_cols(k); i++ )
-				{
-					log_slx_pars(k,j,i) = log(slx_par(k,i));
-				}
+				log_slx_pars(k,i) = log(slx_par(k,i));
 			}
 		//COUT(exp(log_slx_pars(k)));
 		}
@@ -979,7 +977,7 @@ PARAMETER_SECTION
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,6);
-	vector priorDensity(1,ntheta+nGrwth+nSurveys);
+	vector priorDensity(1,ntheta+nGrwth+nSurveys+nSelex);
 
 	objective_function_value objfun;
 
@@ -1101,12 +1099,12 @@ PROCEDURE_SECTION
 	calc_predicted_catch();
 	calc_relative_abundance();
 	calc_predicted_composition();
-	if( verbose == 1 ) cout << "Ok after observation models ..." << endl;
+	if ( verbose == 1 ) cout << "Ok after observation models ..." << endl;
 
 	// objective function ...
 	calculate_prior_densities();
 	calc_objective_function();
-	if( verbose == 1 ) cout << "Ok after objective function ..." << endl;
+	if ( verbose == 1 ) cout << "Ok after objective function ..." << endl;
 
 	// sd_report variables
 	if ( last_phase() ) 
@@ -1122,14 +1120,14 @@ PROCEDURE_SECTION
 
 	/**
 	 * @brief write MCMC stuff
-	 */
+	**/
 FUNCTION write_eval
   MCout(theta);
 
 
 	/**
 	 * @brief calculate sdreport variables in final phase
-	 */
+	**/
 FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
 	sd_log_ssb = log(calc_ssb());
@@ -1146,9 +1144,9 @@ FUNCTION calc_sdreport
 	 * @details Set global variable equal to the estimated parameter vectors.
 	 * 
 	 * SM:  Note if using empirical growth increment data, then alpha and beta
-         * Growth parameters should not be estimated.  Need to warn the user
-         * if the following condition is true:
-         * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
+     * Growth parameters should not be estimated. Need to warn the user
+     * if the following condition is true:
+     * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
 	**/
 FUNCTION initialize_model_parameters
 	// Get parameters from theta control matrix:
@@ -1177,7 +1175,7 @@ FUNCTION initialize_model_parameters
 		icnt += nsex;
 		molt_cv(h) = Grwth(icnt);
 	}
-	
+
 	if ( !bUseEmpiricalGrowth )
 	{
 		alpha = mle_alpha;
@@ -1203,7 +1201,6 @@ FUNCTION initialize_model_parameters
 	 *  -# Loop over years and block-in the log_selectivity at mid points.
 	 * 
 	 * Need to deprecate the abstract class for selectivity, 7X slower. 
-	 * BUG: There should be no retention of female crabs in the directed fishery.
 	**/
 FUNCTION calc_selectivities
 	int h,i,j,k;
@@ -1216,32 +1213,26 @@ FUNCTION calc_selectivities
 
 	for ( k = 1; k <= nslx; k++ )
 	{
-		block = 1;
-		//class gsm::Selex<dvar_vector> *pSLX[slx_rows(k)-1];
 		class gsm::Selex<dvar_vector> *pSLX;
-		//int j = 0;
 		switch ( slx_type(k) )
 		{
 			case 1: // coefficients
-				pv = mfexp(log_slx_pars(k)(block));
-				//pSLX[j] = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
+				pv = mfexp(log_slx_pars(k));
 				pSLX = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
 			break;
 			case 2: // logistic
-				p1 = mfexp(log_slx_pars(k,block,1));
-				p2 = mfexp(log_slx_pars(k,block,2));
-				//pSLX[j] = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
+				p1 = mfexp(log_slx_pars(k,1));
+				p2 = mfexp(log_slx_pars(k,2));
 				pSLX = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
 			break;
 			case 3: // logistic95
-				p1 = mfexp(log_slx_pars(k,block,1));
-				p2 = mfexp(log_slx_pars(k,block,2));
-				//pSLX[j] = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+				p1 = mfexp(log_slx_pars(k,1));
+				p2 = mfexp(log_slx_pars(k,2));
 				pSLX = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
 			break;
 		}
 		int h1 = 1;
-		int h2 = 2;
+		int h2 = nsex;
 		if ( slx_isex(k) == 1 ) { h2 = 1; } // males only
 		if ( slx_isex(k) == 2 ) { h1 = 2; } // females only
 		for ( h = h1; h <= h2; h++ )
@@ -1261,7 +1252,7 @@ FUNCTION calc_selectivities
 			}
 		}
 		delete pSLX;
-	}
+ 	}
 
 	//cout << "log_slx_capture(1)(1)(1975): " << exp(log_slx_capture(1)(1)(1975)) << endl;
 	//cout << "log_slx_retaind(1)(1)(1975): " << exp(log_slx_retaind(1)(1)(1975)) << endl;
@@ -2230,41 +2221,30 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 		dvariable prior_pdf;
 		switch(pType)
 		{
-				// uniform
-				case 0: 
+				case 0: // uniform
 					if ( (p2-p1) > 0 )
 					{
 						prior_pdf = -log(1.0 / (p2-p1));
-					}
-					else
-					{
-						cerr <<"Error in uniform prior, p1 > p2.\n";
+					} else {
+						cerr << "Error in uniform prior, p1 > p2.\n";
 						ad_exit(1);
 					}
 				break;
-
-				// normal
-				case 1:
+				case 1: // normal
 					// COUT(p1);COUT(p2);
 					prior_pdf = dnorm(theta,p1,p2);
 					// COUT(prior_pdf);
 				break;
-
-				// lognormal
-				case 2:
+				case 2: // lognormal
 					prior_pdf = dlnorm(theta,log(p1),p2);
 				break;
-
-				// beta
-				case 3:
+				case 3: // beta
 					//lb = theta_control(i,2);
 					//ub = theta_control(i,3);
 					//prior_pdf = dbeta((theta-lb)/(ub-lb),p1,p2);
 					prior_pdf = dbeta(theta,p1,p2);
 				break;
-
-				// gamma
-				case 4:
+				case 4: // gamma
 					prior_pdf = dgamma(theta,p1,p2);
 				break;
 			}
@@ -2287,12 +2267,12 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 	 *  @param theta a vector of parameters
 	 *  @param C matrix of controls (priorType, p1, p2, lb, ub)
 	 *  @return vector of prior densities for each parameter
-	 */
+	**/
 FUNCTION calculate_prior_densities
 	double p1,p2;
 	double lb,ub;
 	priorDensity.initialize();
-	
+	// Key parameter priors
 	for ( int i = 1; i <= ntheta; i++ )
 	{
 		if ( active(theta(i)) )
@@ -2310,7 +2290,7 @@ FUNCTION calculate_prior_densities
 			priorDensity(i) = get_prior_pdf(priorType, x, p1, p2);
 		}
 	}
-
+	// Growth parameter priors
 	for ( int i = 1; i <= nGrwth; i++ )
 	{
 		if ( active(Grwth(i)) )
@@ -2323,13 +2303,12 @@ FUNCTION calculate_prior_densities
 			{
 				lb = Grwth_control(i,2);
 				ub = Grwth_control(i,3);
-				x = (x-lb)/(ub-lb);
+				x = (x - lb) / (ub - lb);
 			}
 			priorDensity(ntheta+i) = get_prior_pdf(priorType, x, p1, p2);
 		}
 	}
-
-	// ---Continue with catchability priors-----------------------
+	// Catchability parameter priors
 	int iprior = ntheta + nGrwth + 1; 
 	for ( int i = 1; i <= nSurveys; i++ )
 	{
@@ -2344,6 +2323,22 @@ FUNCTION calculate_prior_densities
 			break;
 		}
 		iprior++;
+	}
+	// Selctivity parameter priors
+	for ( int k = 1; k <= nslx; k++ )
+	{
+		for ( int j = 1; j <= slx_cols(k); j++ )
+		{
+			if ( active(log_slx_pars(k)) )
+			{
+				int priorType = int(slx_priors(k,j,1));
+				p1 = slx_priors(k,j,2);
+				p2 = slx_priors(k,j,3);
+				dvariable x = mfexp(log_slx_pars(k,j));
+				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2); // NEED TO ADD THE ADJUSTMENT JACOBIAN/DERIVATIVE
+			}
+			iprior++;
+		}
 	}
 
 
@@ -2360,7 +2355,7 @@ FUNCTION calculate_prior_densities
 	 *  -# Penalty on log_fdev to ensure they sum to zero.
 	 *  -# Penalty to regularize values of log_fbar.
 	 *  -# Penalty to constrain random walk in natural mortaliy rates
-	 */
+	**/
 FUNCTION calc_objective_function
 	// |---------------------------------------------------------------------------------|
 	// | NEGATIVE LOGLIKELIHOOD COMPONENTS FOR THE OBJECTIVE FUNCTION                    |
