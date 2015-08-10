@@ -139,6 +139,8 @@ Macros</h2></td></tr>
 <tr class="memitem:a156b862ebf6d213f5da19b9e3ccb779e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a156b862ebf6d213f5da19b9e3ccb779e"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TOL</b>&#160;&#160;&#160;1.0e-4</td></tr>
 <tr class="separator:a156b862ebf6d213f5da19b9e3ccb779e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af99ac909b17d2e76651cdc35299aa6c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2c/gmacs_8cpp.html#af99ac909b17d2e76651cdc35299aa6c4">MCout</a>(object)&#160;&#160;&#160;mcout &lt;&lt; #object &lt;&lt; &quot; &quot; &lt;&lt; object &lt;&lt; endl;</td></tr>
+<tr class="separator:af99ac909b17d2e76651cdc35299aa6c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75043b221356d60fee82df0d7f74213f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2c/gmacs_8cpp.html#a75043b221356d60fee82df0d7f74213f">ECHO</a>(object)&#160;&#160;&#160;echoinput &lt;&lt; #object &lt;&lt; &quot;\n&quot; &lt;&lt; object &lt;&lt; endl;</td></tr>
 <tr class="separator:a75043b221356d60fee82df0d7f74213f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadde80cc5bc6819d015377d5f7df0980"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2c/gmacs_8cpp.html#aadde80cc5bc6819d015377d5f7df0980">WriteFileName</a>(object)&#160;&#160;&#160;<a class="el" href="../../dd/d2c/gmacs_8cpp.html#a75043b221356d60fee82df0d7f74213f">ECHO</a>(object); gmacs_files &lt;&lt; &quot;# &quot; &lt;&lt; #object &lt;&lt; &quot;\n&quot; &lt;&lt; object &lt;&lt; endl;</td></tr>
@@ -147,8 +149,6 @@ Macros</h2></td></tr>
 <tr class="separator:abc9dcba4371eb3e8a4c2ab3ea84bf1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab18ea4093c45d6aaaf227afd69118f66"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2c/gmacs_8cpp.html#ab18ea4093c45d6aaaf227afd69118f66">WRITEDAT</a>(object)&#160;&#160;&#160;<a class="el" href="../../dd/d2c/gmacs_8cpp.html#a75043b221356d60fee82df0d7f74213f">ECHO</a>(object); gmacs_data &lt;&lt; &quot;# &quot; &lt;&lt; #object &lt;&lt; &quot;\n&quot; &lt;&lt; object &lt;&lt; endl;</td></tr>
 <tr class="separator:ab18ea4093c45d6aaaf227afd69118f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70246e9ac30d8d3e1fba7ca97cd5f4e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d2c/gmacs_8cpp.html#a70246e9ac30d8d3e1fba7ca97cd5f4e8">CHECK</a>(object)&#160;&#160;&#160;checkfile &lt;&lt; #object &lt;&lt; &quot;\n&quot; &lt;&lt; object &lt;&lt; endl;</td></tr>
-<tr class="separator:a70246e9ac30d8d3e1fba7ca97cd5f4e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -179,9 +179,12 @@ long&#160;</td><td class="memItemRight" valign="bottom"><b>second</b></td></tr>
 <tr class="memitem:ae0b00447734bbd9264fdbe9f063fb0fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0b00447734bbd9264fdbe9f063fb0fb"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>elapsed_time</b></td></tr>
 <tr class="separator:ae0b00447734bbd9264fdbe9f063fb0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71111351c5f80aeab1cbd427cf372e04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71111351c5f80aeab1cbd427cf372e04"></a>
-<a class="el" href="../../d9/d93/classofstream.html">ofstream</a>&#160;</td><td class="memItemRight" valign="bottom"><b>echoinput</b> (&quot;gmacs_data.rep&quot;)</td></tr>
-<tr class="separator:a71111351c5f80aeab1cbd427cf372e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5feb34c500b528783064292023f5dfb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5feb34c500b528783064292023f5dfb2"></a>
+<a class="el" href="../../d9/d93/classofstream.html">ofstream</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mcout</b> (&quot;mcout.rep&quot;)</td></tr>
+<tr class="separator:a5feb34c500b528783064292023f5dfb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af82cb6f9de3ead49ce827028f4a8ff48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af82cb6f9de3ead49ce827028f4a8ff48"></a>
+<a class="el" href="../../d9/d93/classofstream.html">ofstream</a>&#160;</td><td class="memItemRight" valign="bottom"><b>echoinput</b> (&quot;checkfile.rep&quot;)</td></tr>
+<tr class="separator:af82cb6f9de3ead49ce827028f4a8ff48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8b96a448d94ab0598e99dad0d302d7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8b96a448d94ab0598e99dad0d302d7b"></a>
 <a class="el" href="../../d9/d93/classofstream.html">ofstream</a>&#160;</td><td class="memItemRight" valign="bottom"><b>gmacs_files</b> (&quot;gmacs_files_in.dat&quot;)</td></tr>
 <tr class="separator:ae8b96a448d94ab0598e99dad0d302d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -191,9 +194,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>elapsed_time</b></t
 <tr class="memitem:a67f6894d22a3844999a702188b4ac39c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67f6894d22a3844999a702188b4ac39c"></a>
 <a class="el" href="../../d9/d93/classofstream.html">ofstream</a>&#160;</td><td class="memItemRight" valign="bottom"><b>gmacs_ctl</b> (&quot;gmacs_in.ctl&quot;)</td></tr>
 <tr class="separator:a67f6894d22a3844999a702188b4ac39c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76314ff8cfd08b17fc56c0c89cc51a58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76314ff8cfd08b17fc56c0c89cc51a58"></a>
-<a class="el" href="../../d9/d93/classofstream.html">ofstream</a>&#160;</td><td class="memItemRight" valign="bottom"><b>checkfile</b> (&quot;checkfile.rep&quot;)</td></tr>
-<tr class="separator:a76314ff8cfd08b17fc56c0c89cc51a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82e64ac8b0ab88f7ec62b66e4f1a9acf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82e64ac8b0ab88f7ec62b66e4f1a9acf"></a>
 long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>arrmblsize</b> =0</td></tr>
 <tr class="separator:a82e64ac8b0ab88f7ec62b66e4f1a9acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,25 +203,6 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 
 <p>Definition in file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a70246e9ac30d8d3e1fba7ca97cd5f4e8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CHECK</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">object</td><td>)</td>
-          <td>&#160;&#160;&#160;checkfile &lt;&lt; #object &lt;&lt; &quot;\n&quot; &lt;&lt; object &lt;&lt; endl;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Prints name and value of <em>object</em> on checkfile ofstream output file. </p>
-
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00070">70</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a63517c11ad73b1912e42c60169661159"></a>
 <div class="memitem">
 <div class="memproto">
@@ -239,7 +220,7 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 <div class="line">     &lt;&lt; setprecision(3) &lt;&lt; setfixed() &lt;&lt; <span class="keywordtype">object</span> &lt;&lt; endl;</div>
 </div><!-- fragment --><p>Prints object to screen during runtime. cout &lt;&lt;setw(6) &lt;&lt; setprecision(3) &lt;&lt; setfixed() &lt;&lt; x &lt;&lt; endl; </p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00035">35</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00032">32</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 
 </div>
 </div>
@@ -258,7 +239,26 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 </div><div class="memdoc">
 <p>Prints name and value of <em>object</em> on echoinput ofstream file. </p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00046">46</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00049">49</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af99ac909b17d2e76651cdc35299aa6c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MCout</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">object</td><td>)</td>
+          <td>&#160;&#160;&#160;mcout &lt;&lt; #object &lt;&lt; &quot; &quot; &lt;&lt; object &lt;&lt; endl;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints name and value of <em>object</em> on echoinput ofstream file. </p>
+
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00043">43</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 
 </div>
 </div>
@@ -278,7 +278,7 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 <b>Value:</b><div class="fragment"><div class="line">report &lt;&lt; #<span class="keywordtype">object</span> <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; setw(8) \</div>
 <div class="line">    &lt;&lt; setprecision(4) &lt;&lt; setfixed() &lt;&lt; <span class="keywordtype">object</span> &lt;&lt; endl;</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00026">26</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00024">24</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 
 </div>
 </div>
@@ -297,7 +297,7 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 </div><div class="memdoc">
 <p>Prints name and value of <em>object</em> on control ofstream file. </p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00058">58</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 
 </div>
 </div>
@@ -316,7 +316,7 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 </div><div class="memdoc">
 <p>Prints name and value of <em>object</em> on data ofstream file. </p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00064">64</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00067">67</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 
 </div>
 </div>
@@ -335,7 +335,7 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 </div><div class="memdoc">
 <p>Prints name and value of <em>object</em> on control ofstream file. </p>
 
-<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00052">52</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
+<p>Definition at line <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html#l00055">55</a> of file <a class="el" href="../../dd/d2c/gmacs_8cpp_source.html">gmacs.cpp</a>.</p>
 
 </div>
 </div>
@@ -345,7 +345,7 @@ long <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dd/d2c/gmacs_8cpp.html">gmacs.cpp</a></li>
-    <li class="footer">Generated on Sun Jun 28 2015 12:40:01 for GMACS by
+    <li class="footer">Generated on Mon Aug 10 2015 15:57:51 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

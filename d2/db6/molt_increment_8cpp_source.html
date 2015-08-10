@@ -125,65 +125,59 @@ $(document).ready(function(){initNavTree('d2/db6/molt_increment_8cpp_source.html
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;dmatrix get_empirical_molt_increment(<span class="keyword">const</span> dvector&amp; bin, <span class="keyword">const</span> dmatrix&amp; data)</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;In get_empirical_molt_increment&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">int</span> n = bin.size();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="../../de/d39/classivector.html">ivector</a> sex = <a class="code" href="../../de/d39/classivector.html">ivector</a>(column(data,2));</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">int</span> nsex = count_factor(sex);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;dmatrix get_empirical_molt_increment(<span class="keyword">const</span> dvector&amp; bin, <span class="keyword">const</span> dmatrix&amp; data)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;In get_empirical_molt_increment&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">int</span> n = bin.size();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="../../de/d39/classivector.html">ivector</a> sex = <a class="code" href="../../de/d39/classivector.html">ivector</a>(column(data,2));</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">int</span> nsex = count_factor(sex);</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    dmatrix mi(1,nsex,1,n);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="../../de/d39/classivector.html">ivector</a> nh(1,nsex); nh.initialize();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">// Count number of observations in each sex.</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= data.rowmax(); ++i)</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordtype">int</span> h = sex(i);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        nh(h) ++;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="../../de/d39/classivector.html">ivector</a> nh(1,nsex);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    nh.initialize();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment">// Count number of observations in each sex.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">for</span> ( <span class="keywordtype">int</span> i = 1; i &lt;= data.rowmax(); ++i )</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a> = sex(i);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        nh(h) ++;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// get male and famale arrays</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    dmatrix x(1,nsex,1,nh);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    dmatrix y(1,nsex,1,nh);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">int</span> bb=1; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">int</span> gg=1;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt;= data.rowmax(); ++i)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">for</span> ( <span class="keywordtype">int</span> i = 1; i &lt;= data.rowmax(); ++i )</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">int</span> h = sex(i);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a> = sex(i);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">int</span> j = h==1 ? bb++ : gg++ ;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        x(h,j) = data(i,1);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        y(h,j) = data(i,3); </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">// rescale size to 0-1 over bin width</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> h = 1; h &lt;= nsex; ++h)</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        dvector knts = (x(h) - min(x(h))) / (max(x(h)) - min(x(h)));</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        dvector pnts = (bin  - min(bin)) / (max(bin) - min(bin));</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(knts);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(y(h));</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        cubic_spline_function cSmooth(knts,y(h));</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        dvector test = cSmooth(pnts);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(cSmooth(0.5));</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(test);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    cout&lt;&lt;<span class="stringliteral">&quot;leaving get_empirical_molt_increment&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> mi;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        x(h,j) = data(i,1);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        y(h,j) = data(i,3); </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">// rescale size to 0-1 over bin width</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">for</span> ( <span class="keywordtype">int</span> <a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a> = 1; <a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a> &lt;= nsex; ++<a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a> )</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        dvector knts = (x(<a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a>) - min(x(<a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a>))) / (max(x(<a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a>)) - min(x(<a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a>)));</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        dvector pnts = (bin  - min(bin)) / (max(bin) - min(bin));</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(knts);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(y(<a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a>));</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        cubic_spline_function cSmooth(knts,y(<a class="code" href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a>));</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        dvector test = cSmooth(pnts);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(cSmooth(0.5));</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a>(test);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;leaving get_empirical_molt_increment&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordflow">return</span> mi;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="ttc" id="classivector_html"><div class="ttname"><a href="../../de/d39/classivector.html">ivector</a></div><div class="ttdef"><b>Definition:</b> <a href="../../dd/da9/gmacs_8tpl_source.html#l00217">gmacs.tpl:217</a></div></div>
-<div class="ttc" id="gmacs_8cpp_html_a63517c11ad73b1912e42c60169661159"><div class="ttname"><a href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a></div><div class="ttdeci">#define COUT(object)</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/d2c/gmacs_8cpp_source.html#l00035">gmacs.cpp:35</a></div></div>
+<div class="ttc" id="group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n_html_ga4696487a9a9145c7e20085e62003912c"><div class="ttname"><a href="../../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga4696487a9a9145c7e20085e62003912c">h</a></div><div class="ttdeci">FUNCTION calc_total_mortality int h</div><div class="ttdoc">Calculate total instantaneous mortality rate and survival rate. </div><div class="ttdef"><b>Definition:</b> <a href="../../dd/da9/gmacs_8tpl_source.html#l00310">gmacs.tpl:310</a></div></div>
+<div class="ttc" id="gmacs_8cpp_html_a63517c11ad73b1912e42c60169661159"><div class="ttname"><a href="../../dd/d2c/gmacs_8cpp.html#a63517c11ad73b1912e42c60169661159">COUT</a></div><div class="ttdeci">#define COUT(object)</div><div class="ttdef"><b>Definition:</b> <a href="../../dd/d2c/gmacs_8cpp_source.html#l00032">gmacs.cpp:32</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="../../dir_c85d3e3c5052e9ad9ce18c6863244a25.html">lib</a></li><li class="navelem"><b>moltIncrement.cpp</b></li>
-    <li class="footer">Generated on Sun Jun 28 2015 12:40:01 for GMACS by
+    <li class="footer">Generated on Mon Aug 10 2015 15:57:51 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

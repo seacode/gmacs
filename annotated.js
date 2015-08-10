@@ -58,7 +58,6 @@ var annotated =
     [ "likeprof_number", "d4/dd7/classlikeprof__number.html", "d4/dd7/classlikeprof__number" ],
     [ "matrix", "d1/d8d/classmatrix.html", "d1/d8d/classmatrix" ],
     [ "model_data", "da/d41/classmodel__data.html", null ],
-    [ "model_parameters", "d6/d9c/classmodel__parameters.html", null ],
     [ "normal_prior", "d6/da5/classnormal__prior.html", "d6/da5/classnormal__prior" ],
     [ "number", "d9/d28/classnumber.html", "d9/d28/classnumber" ],
     [ "objective_function_value", "d2/d02/classobjective__function__value.html", "d2/d02/classobjective__function__value" ],

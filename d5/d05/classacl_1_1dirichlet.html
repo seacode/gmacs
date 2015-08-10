@@ -156,9 +156,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>set_P</b> (dvar_matri
 <tr class="memitem:ad76f2aa5adf810f553ec31328be7ac11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad76f2aa5adf810f553ec31328be7ac11"></a>
 const dvariable&#160;</td><td class="memItemRight" valign="bottom"><b>nloglike</b> (const dvar_vector &amp;log_vn, const dvar_matrix &amp;_P) const </td></tr>
 <tr class="separator:ad76f2aa5adf810f553ec31328be7ac11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7c3711a3030805addc25aae62a12093"><td class="memItemLeft" align="right" valign="top">const dvariable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d05/classacl_1_1dirichlet.html#aa7c3711a3030805addc25aae62a12093">pdf</a> (const dvar_vector &amp;log_vn, const dmatrix &amp;o, const dvar_matrix &amp;p) const </td></tr>
-<tr class="memdesc:aa7c3711a3030805addc25aae62a12093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dirichlet desity function.  <a href="#aa7c3711a3030805addc25aae62a12093">More...</a><br /></td></tr>
-<tr class="separator:aa7c3711a3030805addc25aae62a12093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa152bde8abeee6c5d24c90754b65f64c"><td class="memItemLeft" align="right" valign="top">const dvariable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d05/classacl_1_1dirichlet.html#aa152bde8abeee6c5d24c90754b65f64c">ddirichlet</a> (const dvar_vector &amp;alpha_o, const dvar_vector &amp;alpha_t, const dmatrix &amp;o, const dvar_matrix &amp;p) const </td></tr>
+<tr class="memdesc:aa152bde8abeee6c5d24c90754b65f64c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dirichlet desity function.  <a href="#aa152bde8abeee6c5d24c90754b65f64c">More...</a><br /></td></tr>
+<tr class="separator:aa152bde8abeee6c5d24c90754b65f64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classacl_1_1negative_log_likelihood"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classacl_1_1negative_log_likelihood')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html">acl::negativeLogLikelihood</a></td></tr>
 <tr class="memitem:ad2ec390ac6f5791b7fd2270986a3b6b3 inherit pub_methods_classacl_1_1negative_log_likelihood"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad2ec390ac6f5791b7fd2270986a3b6b3"></a>
 virtual const dmatrix&#160;</td><td class="memItemRight" valign="bottom"><b>residual</b> (const dvar_vector &amp;_n, const dvar_matrix &amp;_P) const =0</td></tr>
@@ -200,17 +200,23 @@ template&lt;typename T &gt; </td></tr>
 <div class="textblock"><p>Class for Dirichlet negative log-likelihood. </p>
 <p>This is a derived class which inherits the virtual methods in <a class="el" href="../../d3/d8c/classacl_1_1negative_log_likelihood.html">negativeLogLikelihood</a>. </p>
 
-<p>Definition at line <a class="el" href="../../de/d33/nloglike_8h_source.html#l00224">224</a> of file <a class="el" href="../../de/d33/nloglike_8h_source.html">nloglike.h</a>.</p>
+<p>Definition at line <a class="el" href="../../de/d33/nloglike_8h_source.html#l00227">227</a> of file <a class="el" href="../../de/d33/nloglike_8h_source.html">nloglike.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aa7c3711a3030805addc25aae62a12093"></a>
+<a class="anchor" id="aa152bde8abeee6c5d24c90754b65f64c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const dvariable acl::dirichlet::pdf </td>
+          <td class="memname">const dvariable acl::dirichlet::ddirichlet </td>
           <td>(</td>
           <td class="paramtype">const dvar_vector &amp;&#160;</td>
-          <td class="paramname"><em>log_vn</em>, </td>
+          <td class="paramname"><em>alpha_o</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const dvar_vector &amp;&#160;</td>
+          <td class="paramname"><em>alpha_t</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -233,7 +239,7 @@ template&lt;typename T &gt; </td></tr>
 </div><div class="memdoc">
 
 <p>Dirichlet desity function. </p>
-<p>Negative log likelihood using the Dirichlet distribution. </p><dl class="section author"><dt>Author</dt><dd>Darcy N. Webber </dd></dl>
+<p>Negative log likelihood using the Dirichlet distribution. </p><dl class="section author"><dt>Author</dt><dd>D'Arcy N. Webber </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">alpha_0</td><td>log of effective sample size. </td></tr>
@@ -259,7 +265,7 @@ template&lt;typename T &gt; </td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="../../dc/d28/namespaceacl.html">acl</a></li><li class="navelem"><a class="el" href="../../d5/d05/classacl_1_1dirichlet.html">dirichlet</a></li>
-    <li class="footer">Generated on Sun Jun 28 2015 12:40:01 for GMACS by
+    <li class="footer">Generated on Mon Aug 10 2015 15:57:52 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

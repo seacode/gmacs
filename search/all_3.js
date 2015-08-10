@@ -1,6 +1,7 @@
 var searchData=
 [
   ['data_5fsection',['DATA_SECTION',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html',1,'']]],
+  ['ddirichlet',['ddirichlet',['../d5/d05/classacl_1_1dirichlet.html#aa152bde8abeee6c5d24c90754b65f64c',1,'acl::dirichlet']]],
   ['dirichlet',['dirichlet',['../d5/d05/classacl_1_1dirichlet.html',1,'acl']]],
   ['dll_5f3darray',['dll_3darray',['../d2/d88/classdll__3darray.html',1,'']]],
   ['dll_5fadstring',['dll_adstring',['../de/df0/classdll__adstring.html',1,'']]],
@@ -18,5 +19,6 @@ var searchData=
   ['dll_5fnumber',['dll_number',['../de/da1/classdll__number.html',1,'']]],
   ['dll_5frandom_5feffects_5fvector',['dll_random_effects_vector',['../d6/dd5/classdll__random__effects__vector.html',1,'']]],
   ['dll_5fvector',['dll_vector',['../d2/d52/classdll__vector.html',1,'']]],
-  ['dmultinom',['dmultinom',['../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4',1,'acl::multinomial']]]
+  ['dmultinom',['dmultinom',['../d6/d28/classacl_1_1multinomial.html#a6b985edbc7fd7298a8c45b300c3220e4',1,'acl::multinomial']]],
+  ['doublenormal',['DoubleNormal',['../da/de5/classgsm_1_1_double_normal.html',1,'gsm']]]
 ];

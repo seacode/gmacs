@@ -1,5 +1,6 @@
 var namespacegsm =
 [
+    [ "DoubleNormal", "da/de5/classgsm_1_1_double_normal.html", "da/de5/classgsm_1_1_double_normal" ],
     [ "LogisticCurve", "d4/d62/classgsm_1_1_logistic_curve.html", "d4/d62/classgsm_1_1_logistic_curve" ],
     [ "LogisticCurve95", "d4/d64/classgsm_1_1_logistic_curve95.html", "d4/d64/classgsm_1_1_logistic_curve95" ],
     [ "logisticTrait", "d0/d59/classgsm_1_1logistic_trait.html", null ],

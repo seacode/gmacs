@@ -6,9 +6,7 @@ var hierarchy =
     [ "_6darray", "df/d23/class__6darray.html", null ],
     [ "_7darray", "d8/d5f/class__7darray.html", null ],
     [ "ad_comm", null, [
-      [ "model_data", "da/d41/classmodel__data.html", [
-        [ "model_parameters", "d6/d9c/classmodel__parameters.html", null ]
-      ] ]
+      [ "model_data", "da/d41/classmodel__data.html", null ]
     ] ],
     [ "adstring", "d5/dd1/classadstring.html", null ],
     [ "constant_quadratic_penalty", "df/dcc/classconstant__quadratic__penalty.html", null ],
@@ -29,9 +27,6 @@ var hierarchy =
     [ "dll_random_effects_vector", "d6/dd5/classdll__random__effects__vector.html", null ],
     [ "dll_vector", "d2/d52/classdll__vector.html", null ],
     [ "equality_constraint_vector", "da/d59/classequality__constraint__vector.html", null ],
-    [ "function_minimizer", null, [
-      [ "model_parameters", "d6/d9c/classmodel__parameters.html", null ]
-    ] ],
     [ "gaussian_prior", "d2/d9e/classgaussian__prior.html", null ],
     [ "imatrix", "dc/d7e/classimatrix.html", null ],
     [ "inequality_constraint_vector", "d6/df8/classinequality__constraint__vector.html", null ],
@@ -87,6 +82,7 @@ var hierarchy =
     [ "sdreport_number", "d2/d70/classsdreport__number.html", null ],
     [ "sdreport_vector", "d5/dae/classsdreport__vector.html", null ],
     [ "gsm::Selex< T >", "d5/dc5/classgsm_1_1_selex.html", [
+      [ "gsm::DoubleNormal< T, T2 >", "da/de5/classgsm_1_1_double_normal.html", null ],
       [ "gsm::LogisticCurve< T, T2 >", "d4/d62/classgsm_1_1_logistic_curve.html", null ],
       [ "gsm::LogisticCurve95< T, T2 >", "d4/d64/classgsm_1_1_logistic_curve95.html", null ],
       [ "gsm::ParameterPerClass< T >", "dd/d12/classgsm_1_1_parameter_per_class.html", null ],

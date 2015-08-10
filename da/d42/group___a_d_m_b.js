@@ -282,6 +282,5 @@ var group___a_d_m_b =
     [ "_3darray", "dd/de8/class__3darray.html", [
       [ "_3darray", "dd/de8/class__3darray.html#a92a2547a61366f55d286d0a44b4ff37f", null ]
     ] ],
-    [ "model_data", "da/d41/classmodel__data.html", null ],
-    [ "model_parameters", "d6/d9c/classmodel__parameters.html", null ]
+    [ "model_data", "da/d41/classmodel__data.html", null ]
 ];

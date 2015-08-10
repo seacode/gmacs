@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['update_5fpopulation_5fnumbers_5fat_5flength',['update_population_numbers_at_length',['../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html#ga946ab60c4cc9aafe91f8b8c085d0408c',1,'gmacs.tpl']]]
+  ['tpl_20functions',['tpl FUNCTIONS',['../dc/d0a/group___p_r_o_c_e_d_u_r_e___s_e_c_t_i_o_n.html',1,'']]],
+  ['tail_5fcompression',['tail_compression',['../d3/d8c/classacl_1_1negative_log_likelihood.html#a10f4175a1f51ecff3e14d37213ab8748',1,'acl::negativeLogLikelihood']]],
+  ['tailcompression_2ecpp',['tailcompression.cpp',['../d0/d26/tailcompression_8cpp.html',1,'']]]
 ];

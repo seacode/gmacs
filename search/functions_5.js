@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pdf',['pdf',['../df/dea/classacl_1_1robust__multi.html#a534457998bcf849b4b9395a704214c51',1,'acl::robust_multi::pdf()'],['../d5/d05/classacl_1_1dirichlet.html#aa7c3711a3030805addc25aae62a12093',1,'acl::dirichlet::pdf()']]],
-  ['plogis',['plogis',['../dd/db3/namespacegsm.html#a71842a823e4de704c512c878fa21a646',1,'gsm']]]
+  ['spr',['spr',['../df/d47/classspr.html#ab4ae833a7352d4d416731ac44e2efc8a',1,'spr::spr(const double &amp;_r, const double &amp;_lambda, const dvector &amp;_rx, const dmatrix &amp;_wa, const d3_array &amp;_M, const d3_array &amp;_A)'],['../df/d47/classspr.html#adaff487e1c7c4bd4fe7cb3599cfbafc9',1,'spr::spr(const double &amp;_r, const double &amp;_lambda, const dvector &amp;_rx, const dmatrix &amp;_wa, const d3_array &amp;_M, const d3_array &amp;_P, const d3_array &amp;_A)']]]
 ];
