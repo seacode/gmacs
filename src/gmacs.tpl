@@ -42,7 +42,7 @@ DATA_SECTION
 	// |---------------------|
 	
 	int simflag; 
-	!! ///> flag for simulating data 
+	!! ///> flag for simulating data - WHAT HAPPENED HERE!!
 	int rseed
 	LOC_CALCS
 		simflag = 0;
@@ -416,7 +416,7 @@ DATA_SECTION
 	int nSelex;           // number of selectivity parameters in total
 	int nslx_rows_in;     // number of selectivity rows
 	int nslx_cols_in;     // number of selectivity columns
-	!! nslx_cols_in = 11; // number of columns in the control file to be read in
+	!! nslx_cols_in = 13; // number of columns in the control file to be read in
 
 	init_ivector slx_nsel_period_in(1,nfleet); // number of selex time periods
 	init_ivector slx_bsex_in(1,nfleet);        // boolian for sex-specific selex
@@ -489,6 +489,9 @@ DATA_SECTION
 	ivector slx_edyr(1,nslx); // period end year
 	ivector slx_cols(1,nslx);
 
+	vector slx_lb(1,nslx); // lower bound
+	vector slx_ub(1,nslx); // uppder bound
+
 	LOC_CALCS
 		// Work out the type of each selectivity and place in the ivector
 		// slx_type
@@ -501,7 +504,7 @@ DATA_SECTION
 				int hh = 1 + slx_bsex_in(k);
 				for ( int h = 1; h <= hh; h++ )
 				{
-					cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
+					//cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
 					slx_type(kk) = slx_type_in(h,k);
 					kk ++;
 				}
@@ -514,7 +517,7 @@ DATA_SECTION
 				int hh = 1 + ret_bsex_in(k);
 				for ( int h = 1; h <= hh; h++ )
 				{
-					cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
+					//cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
 					slx_type(kk) = ret_type_in(h,k);
 					kk ++;
 				}
@@ -561,16 +564,18 @@ DATA_SECTION
 			}
 			slx_gear(k) = slx_control_in(kk,1);
 			slx_isex(k) = slx_control_in(kk,4);
-			slx_phzm(k) = slx_control_in(kk,9);
-			slx_styr(k) = slx_control_in(kk,10);
-			slx_edyr(k) = slx_control_in(kk,11);		
+			slx_lb(k)   = log(slx_control_in(kk,6));
+			slx_ub(k)   = log(slx_control_in(kk,7));
+			slx_phzm(k) = slx_control_in(kk,11);
+			slx_styr(k) = slx_control_in(kk,12);
+			slx_edyr(k) = slx_control_in(kk,13);		
 		}
 		nSelex = sum(slx_cols);
 	END_CALCS
 
 	// Load the parameters into their own ragged matrix
 	matrix slx_par(1,nslx,1,slx_cols);
-	matrix log_slx_pars_ival(1,nslx,1,slx_cols);
+	matrix log_slx_pars_ival(1,nslx,1,slx_cols); // THIS IS NOT USED AND COULD BE REMOVED
 	3darray slx_priors(1,nslx,1,slx_cols,1,3);
 	LOC_CALCS
 		for ( int k = 1; k <= nslx; k++ )
@@ -579,10 +584,10 @@ DATA_SECTION
 			for ( int j = 1; j <= slx_cols(k); j++ )
 			{
 				int jj = kk + (j - 1);
-				slx_par(k,j) = slx_control_in(jj,5);
-				slx_priors(k,j,1) = slx_control_in(jj,6);
-				slx_priors(k,j,2) = slx_control_in(jj,7);
-				slx_priors(k,j,3) = slx_control_in(jj,8);
+				slx_par(k,j)      = slx_control_in(jj,5);  // init
+				slx_priors(k,j,1) = slx_control_in(jj,8);  // prior
+				slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
+				slx_priors(k,j,3) = slx_control_in(jj,10); // p2
 			}
 		}
 		for( int k = 1; k <= nslx; k++ )
@@ -594,33 +599,6 @@ DATA_SECTION
 		}
 	END_CALCS
 	!! WriteCtl(slx_nsel_period_in); WriteCtl(ret_nret_period_in); WriteCtl(slx_control_in); WriteCtl(slx_control);
-
-	// poop
-	LOC_CALCS
-		cout << endl;
-		cout << "nslx: " << nslx << endl;
-		cout << "nslx_rows_in: " << nslx_rows_in << endl;
-		cout << "slx_type_in: " << endl;
-		cout << slx_type_in << endl;
-		cout << "slx_control_in: " << endl;
-		cout << slx_control_in << endl;
-
-		cout << endl;
-		cout << "slx_indx: " << slx_indx << endl;
-		cout << "slx_type: " << slx_type << endl;
-
-		cout << endl;
-		cout << "slx_gear: " << slx_gear << endl;
-		cout << "slx_isex: " << slx_isex << endl;
-		cout << "slx_phzm: " << slx_phzm << endl;
-		cout << "slx_styr: " << slx_styr << endl;
-		cout << "slx_edyr: " << slx_edyr << endl;
-
-		cout << "slx_cols: " << slx_cols << endl;
-
-		cout << "slx_par: " << endl << slx_par << endl;
-		//exit(1);
-	END_CALCS
 
 	// |---------------------------------------------------------|
 	// | PRIORS FOR CATCHABILITIES FOR INDICES                   |
@@ -735,7 +713,6 @@ DATA_SECTION
 
 	3darray d3_SizeComps(1,nSizeComps,1,nSizeCompRows,-7,nSizeCompCols);
 	3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
-	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	matrix size_comp_sample_size(1,nSizeComps,1,nSizeCompRows);
 	matrix size_comp_year(1,nSizeComps,1,nSizeCompRows);
 
@@ -795,7 +772,7 @@ DATA_SECTION
 			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}
 		}
-		WRITEDAT(nSizeComps); WRITEDAT(nSizeCompRows); WRITEDAT(nSizeCompCols); WRITEDAT(d3_obs_size_comps); // SHOULD WRITE THESE TO Ctl INSTEAD
+		WriteCtl(nSizeComps); WriteCtl(nSizeCompRows); WriteCtl(nSizeCompCols); WriteCtl(d3_obs_size_comps);
 		WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz);
 		ECHO(d3_obs_size_comps);
 	END_CALCS
@@ -945,8 +922,7 @@ PARAMETER_SECTION
 	// init_bounded_vector molt_cv(1,nsex,0,1,1);
 
 	// Selectivity parameters
-	// NOTE THIS NEEDS FIXING...cobbled together some bounds to make things work...
-	init_bounded_vector_vector log_slx_pars(1,nslx,1,slx_cols,-15,15,slx_phzm);
+	init_bounded_vector_vector log_slx_pars(1,nslx,1,slx_cols,slx_lb,slx_ub,slx_phzm);
 
 	LOC_CALCS
 		for( int k = 1; k <= nslx; k++ )
@@ -1029,6 +1005,10 @@ PARAMETER_SECTION
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
 	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass); ///> Old shell crabs-at-length.
 	3darray d3_pre_size_comps_in(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in);
+	3darray d3_res_size_comps_in(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in);
+	3darray d3_obs_size_comps_out(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in); // _out is for output/plotting purposes
+	3darray d3_pre_size_comps_out(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in); // _out is for output/plotting purposes
+	3darray d3_res_size_comps_out(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in); // _out is for output/plotting purposes
 	3darray d3_pre_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	3darray d3_res_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 
@@ -1254,26 +1234,12 @@ FUNCTION calc_selectivities
 		delete pSLX;
  	}
 
-	//cout << "log_slx_capture(1)(1)(1975): " << exp(log_slx_capture(1)(1)(1975)) << endl;
-	//cout << "log_slx_retaind(1)(1)(1975): " << exp(log_slx_retaind(1)(1)(1975)) << endl;
-	//cout << "log_slx_discard(1)(1)(1975): " << exp(log_slx_discard(1)(1)(1975)) << endl;
-// THE PROBLEM IS THAT THE SELS ARE IN LOG SPACE SO A SEL CAN NEVER BE ZERO.
-	//cout << "log_slx_capture(1)(2)(1975): " << exp(log_slx_capture(1)(2)(1975)) << endl;
-	//cout << "log_slx_retaind(1)(2)(1975): " << exp(log_slx_retaind(1)(2)(1975)) << endl;
-	//cout << "log_slx_discard(1)(2)(1975): " << exp(log_slx_discard(1)(2)(1975)) << endl;
-
-	//cout << "log_slx_capture(2)(1)(1975): " << exp(log_slx_capture(2)(1)(1975)) << endl;
-	//cout << "log_slx_retaind(2)(1)(1975): " << exp(log_slx_retaind(2)(1)(1975)) << endl;
-	//cout << "log_slx_discard(2)(1)(1975): " << exp(log_slx_discard(2)(1)(1975)) << endl;
-
-	//cout << "slx_nret: " << slx_nret << endl;
-
 
 	/**
 	 * @brief Calculate fishing mortality rates for each fleet.
 	 * @details For each fleet estimate scaler log_fbar and deviates (f_devs).
-         *
-         * dmr is the discard mortality rate
+     *
+     * dmr is the discard mortality rate
 	 * 
 	 * In the event that there is effort data and catch data, then it's possible
 	 * to estimate a catchability coefficient and predict the catch for the
@@ -1291,7 +1257,7 @@ FUNCTION calc_selectivities
 	 * 
 	 * TODO 
 	 * -[ ] fix discard mortality rate.
-	 */
+	**/
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik,yk;
 	double xi; // discard mortality rate
@@ -1343,12 +1309,12 @@ FUNCTION calc_fishing_mortality
 	 * @param vSizes is a vector of doubles of size data from which to compute predicted values
 	 * @param iSex   is an integer vector indexing sex (1 = male, 2 = female)
 	 * @return dvar_vector of predicted growth increments
-	 */
+	**/
 FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
 	{
 	if ( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
 	{
-		cerr<<"indices don't match..."<<endl;
+		cerr << "indices don't match..." << endl;
 		ad_exit(1);
 	}
 	RETURN_ARRAYS_INCREMENT();
@@ -1370,7 +1336,7 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	 * 
 	 * TODO
 	 * Option for empirical molt increments.
-	 */
+	**/
 FUNCTION calc_growth_increments
 	int h,l;
 	for ( h = 1; h <= nsex; h++ )
@@ -1398,7 +1364,7 @@ FUNCTION calc_growth_increments
 	 * transition matrix (alpha, beta, scale) for each sex.
    	 *
   	 * Issue 112 details some of evolution of code development here
-	 */
+	**/
 FUNCTION calc_growth_transition
 	//cout<<"Start of calc_growth_transition"<<endl;
 	int h,l,ll;
@@ -1439,7 +1405,7 @@ FUNCTION calc_growth_transition
 	 * todo:  
 	 *      - Add time varying components
 	 *      - Size-dependent mortality
-	 */
+	**/
 FUNCTION calc_natural_mortality
 	int h;
 	M.initialize();
@@ -1479,7 +1445,7 @@ FUNCTION calc_natural_mortality
 			M and it then returns back to the previous state.
 			*/
 			case 3:  // Specific break points
-			        for ( int idev = 1; idev <= nMdev; idev++ )
+			    for ( int idev = 1; idev <= nMdev; idev++ )
 			  	{
   					delta(m_nodeyear(idev)) = m_dev(idev);
 			  	}
@@ -1530,7 +1496,7 @@ FUNCTION calc_total_mortality
 	 * 
 	 * Note that the diagonal of the P matrix != 0, otherwise the matrix
 	 * is singular in inv(P).
-	 */
+	**/
 FUNCTION calc_molting_probability
 	int l,h;
 	molt_probability.initialize();
@@ -1912,7 +1878,6 @@ FUNCTION calc_predicted_catch
 							}
 						}
 					break;
-
 					case 2:     // discard catch
 						sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
 						for ( int m = 1; m <= nmature; m++ )
@@ -2134,19 +2099,17 @@ FUNCTION calc_predicted_composition
 				
 				switch ( type )
 				{
-					case 1:  // retained
+					case 1: // retained
 						dNtmp = elem_prod(tmp,elem_prod(sel,ret));
 					break;
-					case 2:  // discarded
+					case 2: // discarded
 						dNtmp = elem_prod(tmp,elem_prod(sel,dis));
 					break;
 					default: // both retained and discarded
 						dNtmp = elem_prod(tmp,sel);
 					break;
 				}
-			}
-			else // sexes combined in the observations
-			{
+			} else { // sexes combined in the observations
 				for ( h = 1; h <= nsex; h++ )
 				{
 					dvar_vector sel = exp(log_slx_capture(k)(h)(i));
@@ -2179,7 +2142,6 @@ FUNCTION calc_predicted_composition
 					}
 				}
 			}
-			//d3_pre_size_comps(ii)(jj) = dNtmp / sum(dNtmp);
 			d3_pre_size_comps_in(ii)(jj) = dNtmp;
 		}
 	}
@@ -2619,11 +2581,22 @@ REPORT_SECTION
 	REPORT(log_slx_discard);
 	
 	REPORT(F);
-	REPORT(d3_SizeComps);
 
-	REPORT(d3_obs_size_comps);
-	REPORT(d3_pre_size_comps);
-	REPORT(d3_res_size_comps);
+	for ( int kk = 1; kk <= nSizeComps_in; kk++ )
+	{
+		for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
+		{
+			d3_obs_size_comps_out(kk,ii) = d3_obs_size_comps_in(kk,ii) / sum(d3_obs_size_comps_in(kk,ii));
+			d3_pre_size_comps_out(kk,ii) = d3_pre_size_comps_in(kk,ii) / sum(d3_pre_size_comps_in(kk,ii));
+			d3_res_size_comps_out(kk,ii) = d3_obs_size_comps_in(kk,ii) - d3_pre_size_comps_in(kk,ii);
+		}
+	}
+
+	REPORT(d3_SizeComps_in);
+	REPORT(d3_obs_size_comps_out);
+	REPORT(d3_pre_size_comps_out);
+	REPORT(d3_res_size_comps_out);
+
 	REPORT(ft);
 	REPORT(rec_sdd);
 	
@@ -2636,12 +2609,12 @@ REPORT_SECTION
 	REPORT(Z);
 	REPORT(mean_wt);
 	REPORT(maturity);
-	REPORT(molt_probability);	///> vector of molt probabilities
+	REPORT(molt_probability); ///> vector of molt probabilities
 
 	dvector ssb = value(calc_ssb());
 	REPORT(ssb);
 
-	if(last_phase())
+	if ( last_phase() )
 	{
 		int refyear = nyr-1;
 		calc_spr_reference_points(refyear,spr_fleet);
@@ -2670,7 +2643,7 @@ REPORT_SECTION
 		}
 		REPORT(growth_matrix);
 		REPORT(mean_size);
-		for(int ii = 1; ii <= nSizeComps; ii++)
+		for ( int ii = 1; ii <= nSizeComps; ii++ )
 		{
 			// Set final sample-size for composition data for comparisons
 			size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
@@ -2695,9 +2668,9 @@ REPORT_SECTION
 	    	if (isex(k)==1)
 	    	{
 	    		N_males(i,j) += d3_N(k,i,j);
-					if (ishell(k)==2)
+				if (ishell(k)==2)
 		    		N_males_old(i,j) += d3_N(k,i,j);
-					if (imature(k)==1)
+				if (imature(k)==1)
 		    		N_mm(i,j) += d3_N(k,i,j);
 	    	}
 	    	N_len(i,j) += d3_N(k,i,j);
@@ -2717,9 +2690,7 @@ REPORT_SECTION
 	{
 		dvector pMoltInc = dMoltInc;
 		REPORT(pMoltInc);
-	}
-	else
-	{
+	} else {
 		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
 		REPORT(pMoltInc);
 	}
@@ -2749,7 +2720,7 @@ REPORT_SECTION
 	size_transition_M = value(P(1) * growth_transition(1));
 	for (int i=1;i<=nclass;i++)
 	{
-	  size_transition_M(i,i) += value(1.-P(1,i,i));
+		size_transition_M(i,i) += value(1.-P(1,i,i));
 	}
 
 	REPORT(size_transition_M);
@@ -2759,7 +2730,7 @@ REPORT_SECTION
 	  	size_transition_F = value(P(2) * growth_transition(2));
   		for (int i=1;i<=nclass;i++)
 		{
-			    size_transition_M(i,i) += value(1.-P(2,i,i));
+			size_transition_M(i,i) += value(1.-P(2,i,i));
 		}
 		REPORT(size_transition_F);
 	}
@@ -2931,7 +2902,6 @@ GLOBALS_SECTION
 	<< setprecision(4) << setfixed() << object << endl;
 
 	/**
-	 *
 	 * \def COUT(object)
 	 * Prints object to screen during runtime.
 	 * cout <<setw(6) << setprecision(3) << setfixed() << x << endl;

@@ -10,20 +10,19 @@
     n <- length(M)
     ldf <- list()
     mdf <- mpf <- mrf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
         A <- M[[i]]
         df <- data.frame(Model = names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8], A$d3_obs_size_comps))
+                         cbind(A$d3_SizeComps[,1:8], A$d3_obs_size_comps_out))
         pf <- data.frame(Model = names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8], A$d3_pre_size_comps))
+                         cbind(A$d3_SizeComps[,1:8], A$d3_pre_size_comps_out))
         rf <- data.frame(Model = names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8], A$d3_res_size_comps))
+                         cbind(A$d3_SizeComps[,1:8], A$d3_res_size_comps_out))
+        
         colnames(df) <- tolower(c("Model",
-                                  "Year", "Seas",
-                                  "Fleet", "Sex",
-                                  "Type", "Shell",
-                                  "Maturity", "Nsamp",
+                                  "Year", "Seas", "Fleet", "Sex",
+                                  "Type", "Shell", "Maturity", "Nsamp",
                                   as.character(A$mid_points)))
         colnames(pf) <- colnames(rf) <- colnames(df)
         
@@ -33,14 +32,15 @@
         df$maturity <- pf$maturity <- rf$maturity <- .MATURITY[df$maturity+1]
         df$type     <- pf$type     <- rf$type     <- .TYPE[df$type+1]
         df$seas     <- pf$seas     <- rf$seas     <- .SEAS[df$seas]
-		
-        mdf <- rbind(mdf,df)
-        mpf <- rbind(mpf,pf)
-        mrf <- rbind(mrf,rf)
+	
+        mdf <- rbind(mdf, df)
+        mpf <- rbind(mpf, pf)
+        mrf <- rbind(mrf, rf)
     }
-    mdf <- melt(mdf,id.var=1:9)
-    mpf <- melt(mpf,id.var=1:9)
-    mrf <- melt(mrf,id.var=1:9)
+    
+    mdf <- melt(mdf, id.var = 1:9)
+    mpf <- melt(mpf, id.var = 1:9)
+    mrf <- melt(mrf, id.var = 1:9)
     
     for(i in 1:n)
     {
@@ -84,7 +84,7 @@
 				# tdf$icol = icol[tdf$year-syr+1]
 				# cat(" n = ",nn,"\n")
 				# print(tdf$year - syr + 1)
-                            ldf[[j]] <-cbind(tdf,pred=tpf$value,resd=trf$value)
+                            ldf[[j]] <- cbind(tdf, pred = tpf$value, resd = trf$value)
                             j <- j + 1
 			}
                     }
@@ -118,11 +118,11 @@ plot_size_comps <- function(M, which_plots = "all", xlab = "Size (mm)", ylab = "
     ylab <- paste0(ylab, "\n")
 
     mdf <- .get_sizeComps_df(M)
-    
     ix <- pretty(1:length(M[[1]]$mid_points))
-    p <- ggplot(data=mdf[[1]])
-    p <- p + geom_bar(aes(variable,value),stat="identity",position="dodge",alpha=0.5,fill="grey")
-    p <- p + geom_line(aes(as.numeric(variable),pred,col=model),alpha=0.85)
+    
+    p <- ggplot(data = mdf[[1]])
+    p <- p + geom_bar(aes(variable, value), stat = "identity", position = "dodge", alpha = 0.5, fill = "grey")
+    p <- p + geom_line(aes(as.numeric(variable), pred, col = model), alpha = 0.85)
     p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
     p <- p + labs(x = xlab, y = ylab, col = mlab, fill = slab, linetype = tlab)
     p <- p + ggtitle("title")
@@ -161,8 +161,8 @@ plot_sizeCompRes <- function(M, which_plot = "all")
     mdf <- .get_sizeComps_df(M)
     
     p <- ggplot(data=mdf[[1]])
-    p <- p + geom_point(aes(factor(year),variable,col=factor(sign(resd)),size=abs(resd)),alpha=0.6)
-    p <- p + scale_size_area(max_size=10)
+    p <- p + geom_point(aes(factor(year), variable, col = factor(sign(resd)), size = abs(resd)), alpha = 0.6)
+    p <- p + scale_size_area(max_size = 10)
     p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
     p <- p + scale_x_discrete(breaks=pretty(mdf[[1]]$mod_yrs))
     p <- p + scale_y_discrete(breaks=pretty(mdf[[1]]$mid_points))

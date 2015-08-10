@@ -376,13 +376,13 @@ namespace gsm {
 	template<class T>
 	const T nonparametric(const T &x, const T &selparms)
 	{
-	  int x2 = x.indexmax();
-	  dvar_vector selex(1,x2);
-	  for (int i = 1; i <= x2; i++)
-	    selex(i) = (1.0)/(1.0+mfexp(selparms(i)));
-	  dvariable temp = selex(x2);
-	  selex /= temp;
-	  return selex;
+		int x2 = x.indexmax();
+	  	dvar_vector selex(1,x2);
+	  	for (int i = 1; i <= x2; i++)
+	  		selex(i) = (1.0)/(1.0+mfexp(selparms(i)));
+	  	dvariable temp = selex(x2);
+	  	selex /= temp;
+	  	return selex;
 	}
 
 // =========================================================================================================
@@ -433,6 +433,5 @@ namespace gsm {
 	};
 
 } //gsm namespace
-
 
 #endif /* SELEX_HPP */   	

@@ -11,5 +11,3 @@ default: Doxyfile
 
 clean:
 	@cd html; rm -rf d* *.* search
-
-	

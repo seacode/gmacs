@@ -9,7 +9,7 @@
 {
     n   <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
         A <- M[[i]]
         # captured
@@ -23,9 +23,9 @@
         dr$sex   = .SEX[dr$sex + 1]
         dr$fleet = .FLEET[dr$fleet]
         Mslx <- M[[i]][["slx_control"]]
-        blkyr <- Mslx[Mslx[,1] > 0, 10]
+        blkyr <- Mslx[Mslx[,1] > 0, 12]
         df <- filter(df, year %in% blkyr)
-        blkyr <- Mslx[Mslx[,1] < 0, 10]
+        blkyr <- Mslx[Mslx[,1] < 0, 12]
         dr <- filter(dr, year %in% blkyr)
         mdf <- rbind(mdf, melt(df, id.var = 1:5), melt(dr, id.var = 1:5))
         mdf$variable <- as.numeric(as.character(mdf$variable))
@@ -65,7 +65,7 @@ plot_selectivity <- function(M,
     mdf <- .get_selectivity_df(M)
     
     p <- ggplot(mdf) + expand_limits(y = 0)
-    if(.OVERLAY)
+    if (.OVERLAY)
     {
         p <- p + geom_line(aes(variable, value, col = type, linetype = factor(year)))
         p <- p + facet_wrap(~Model + sex + fleet, nrow = nrow, ncol = ncol)
