@@ -1,9 +1,17 @@
+/**
+ *  @file tailcompression.cpp
+ *  @author Steve Martell, D'Arcy N. Webber
+**/
+
+// Global headers
 #include <admodel.h>
+
+// Local headers
 #if defined __APPLE__ || defined __linux
-	#include "../include/nloglike.h"
+#include "../include/nloglike.h"
 #endif
 #if defined _WIN32 || defined _WIN64
-	#include "include\nloglike.h"
+#include "include\nloglike.h"
 #endif
 
 
@@ -15,8 +23,8 @@
  * pmin, and 1-pmin respectively. This is then later used to construct ragged
  * objects to be used in the likelihood functions.
  *
- * @return description
- * @author Steve Martell
+ * @return void
+ * @author Steve Martell, D'Arcy N. Webber
 **/
 void acl::negativeLogLikelihood::tail_compression()
 {
@@ -33,9 +41,11 @@ void acl::negativeLogLikelihood::tail_compression()
 		dvector cumsum = o / sum(o);
 		for ( int j = c1+1; j <= c2; j++ )
 		{
-			 cumsum(j) += cumsum(j-1);
-			 cumsum(j) <= pmin ? m_jmin(i)++ : NULL;
-			 j != c2 ? 1.0 - cumsum(j) < pmin ? m_jmax(i)-- : NULL : NULL;
+			cumsum(j) += cumsum(j-1);
+			//cumsum(j) <= pmin ? m_jmin(i)++ : NULL;
+			//j != c2 ? 1.0 - cumsum(j) < pmin ? m_jmax(i)-- : NULL : NULL;
+			if (cumsum(j) <= pmin) m_jmin(i)++;
+			if (j != c2 && 1.0-cumsum(j) < pmin) m_jmax(i);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 /**
  * @file selex.hpp 
  * @defgroup Selectivities
- * @author Steven Martell
+ * @author Steven Martell, D'Arcy N. Webber
  * @namespace gsm
  * @date Feb 10, 2014
  * @title Selectivity functions
@@ -35,10 +35,11 @@
  * |Coefficients    |selcoffs      |SelectivityCoefficients |
  * |Nonparameteric  |nonparametric |ParameterPerClass       |
 **/
+
 #ifndef SELEX_HPP
 #define SELEX_HPP
 
-// Local Headers
+// Global headers
 #include <admodel.h>
 // #include "gsm.h"
 
@@ -72,7 +73,6 @@ namespace gsm {
 		virtual ~Selex(){}
 		void Set_x(T & x) { this-> m_x = x; }
 		T    Get_x() const{ return m_x;     }
-
 	};
 
 // =========================================================================================================
@@ -260,7 +260,7 @@ namespace gsm {
     : m_sL(sL), m_s50(s50), m_sR(sR) {}
 
     T2 GetSL()  const { return m_sL; }
-    T2 GetS59() const { return m_s50; }
+    T2 GetS50() const { return m_s50; }
     T2 GetSR()  const { return m_sR; }
 
     void SetSL(T2 sL)   { this->m_sL = sL; }

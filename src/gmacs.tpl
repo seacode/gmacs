@@ -41,7 +41,7 @@ DATA_SECTION
 	// | SIMULATION CONTROLS |
 	// |---------------------|
 	
-	int simflag; 
+	int simflag;
 	!! ///> flag for simulating data - WHAT HAPPENED HERE!!
 	int rseed
 	LOC_CALCS
@@ -52,13 +52,13 @@ DATA_SECTION
 		/**
 		 * @brief command line option for simulating data.
 		**/
-		if((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
+		if ((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
 		{
 			simflag = 1;
 			rseed   = atoi(ad_comm::argv[on+1]);
 		}
 
-		if((on=option_match(ad_comm::argc,ad_comm::argv,"-i",opt))>-1)
+		if ((on=option_match(ad_comm::argc,ad_comm::argv,"-i",opt))>-1)
 		{
 			cout<<"\n";
 			cout<<"  |----------------------------------------------------------|\n";
@@ -95,7 +95,7 @@ DATA_SECTION
 		}
 
 		// Command line option here to do retrospective analysis
-		if((on=option_match(ad_comm::argc,ad_comm::argv,"-retro",opt))>-1)
+		if ((on=option_match(ad_comm::argc,ad_comm::argv,"-retro",opt))>-1)
 		{
 			cout<<"\n";
 			cout<<"  |----------------------------------------------------------|\n";
@@ -372,7 +372,7 @@ DATA_SECTION
 	// | LEADING PARAMETER CONTROLS |
 	// |----------------------------|
 	!! ad_comm::change_datafile_name(controlfile);
-	!! cout<<"*** Reading control file ***"<<endl;
+	!! cout << "*** Reading control file ***" << endl;
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
 	
@@ -484,19 +484,18 @@ DATA_SECTION
 	ivector slx_gear(1,nslx); // index the gear type
 	ivector slx_type(1,nslx); // the type of selectivity function
 	ivector slx_isex(1,nslx); // 0=males and females, 1=males only, 2=females only
+	vector  slx_lb(1,nslx);   // lower bound
+	vector  slx_ub(1,nslx);   // uppder bound
 	ivector slx_phzm(1,nslx); // phase/mirror
 	ivector slx_styr(1,nslx); // period start year
 	ivector slx_edyr(1,nslx); // period end year
 	ivector slx_cols(1,nslx);
 
-	vector slx_lb(1,nslx); // lower bound
-	vector slx_ub(1,nslx); // uppder bound
 
 	LOC_CALCS
 		// Work out the type of each selectivity and place in the ivector
 		// slx_type
 		int kk = 1;
-		cout << endl;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
 			for ( int i = 1; i <= slx_nsel_period_in(k); i++ )
@@ -504,7 +503,6 @@ DATA_SECTION
 				int hh = 1 + slx_bsex_in(k);
 				for ( int h = 1; h <= hh; h++ )
 				{
-					//cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
 					slx_type(kk) = slx_type_in(h,k);
 					kk ++;
 				}
@@ -517,7 +515,6 @@ DATA_SECTION
 				int hh = 1 + ret_bsex_in(k);
 				for ( int h = 1; h <= hh; h++ )
 				{
-					//cout << "k = " << k << ", i = " << i << ", h = " << h << ", kk = " << kk << endl;
 					slx_type(kk) = ret_type_in(h,k);
 					kk ++;
 				}
@@ -575,7 +572,6 @@ DATA_SECTION
 
 	// Load the parameters into their own ragged matrix
 	matrix slx_par(1,nslx,1,slx_cols);
-	matrix log_slx_pars_ival(1,nslx,1,slx_cols); // THIS IS NOT USED AND COULD BE REMOVED
 	3darray slx_priors(1,nslx,1,slx_cols,1,3);
 	LOC_CALCS
 		for ( int k = 1; k <= nslx; k++ )
@@ -588,13 +584,6 @@ DATA_SECTION
 				slx_priors(k,j,1) = slx_control_in(jj,8);  // prior
 				slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
 				slx_priors(k,j,3) = slx_control_in(jj,10); // p2
-			}
-		}
-		for( int k = 1; k <= nslx; k++ )
-		{
-			for( int i = 1; i <= slx_cols(k); i++ )
-			{
-				log_slx_pars_ival(k,i) = log(slx_par(k,i));
 			}
 		}
 	END_CALCS
@@ -883,7 +872,6 @@ INITIALIZATION_SECTION
 	theta        theta_ival;
 	Grwth        Grwth_ival;
 	log_fbar     log_pen_fbar;
-	//log_slx_pars log_slx_pars_ival;
 
 PARAMETER_SECTION
 	
@@ -1209,6 +1197,12 @@ FUNCTION calc_selectivities
 				p1 = mfexp(log_slx_pars(k,1));
 				p2 = mfexp(log_slx_pars(k,2));
 				pSLX = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
+			break;
+			case 4: // double normal
+				p1 = mfexp(log_slx_pars(k,1));
+				p2 = mfexp(log_slx_pars(k,2));
+				p3 = mfexp(log_slx_pars(k,3));
+				//pSLX = new class gsm::DoubleNormal<dvar_vector,dvariable>(p1,p2,p3);
 			break;
 		}
 		int h1 = 1;
