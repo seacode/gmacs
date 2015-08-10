@@ -45,7 +45,7 @@ void acl::negativeLogLikelihood::tail_compression()
 			//cumsum(j) <= pmin ? m_jmin(i)++ : NULL;
 			//j != c2 ? 1.0 - cumsum(j) < pmin ? m_jmax(i)-- : NULL : NULL;
 			if (cumsum(j) <= pmin) m_jmin(i)++;
-			if (j != c2 && 1.0-cumsum(j) < pmin) m_jmax(i);
+			if (j != c2 && 1.0-cumsum(j) < pmin) m_jmax(i)--;
 		}
 	}
 }

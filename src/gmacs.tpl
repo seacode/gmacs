@@ -442,25 +442,25 @@ DATA_SECTION
 		nslx_rows_in = 0;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
+			// Selectivity
 			for ( int h = 1; h <= slx_bsex_in(k)+1; h++ )
 			{
-				// Selectivity
 				switch ( slx_type_in(h,k) )
 				{
-					case 2: // logistic
+					case 2: // logistic has 2 parameters
 						nslx_rows_in += 2 * slx_nsel_period_in(k);
 					break;
-					case 3: // logistic95
+					case 3: // logistic95 has 2 parameters
 						nslx_rows_in += 2 * slx_nsel_period_in(k);
 					break;
-					case 4: // double normal
+					case 4: // double normal has 3 parameters
 						nslx_rows_in += 3 * slx_nsel_period_in(k);
 					break;
 				}
 			}
+			// Retention
 			for ( int h = 1; h <= ret_bsex_in(k)+1; h++ )
 			{
-				// Retention
 				switch ( ret_type_in(h,k) )
 				{
 					case 2: // logistic
@@ -1033,7 +1033,7 @@ PRELIMINARY_CALCS_SECTION
 		{
 			int h = dGrowthData(i,2);
 			molt_increment(h)(l++) = dGrowthData(i,3);
-			if ( l > nclass ) l=1;
+			if ( l > nclass ) l = 1;
 		}
 	}
 
@@ -1277,7 +1277,7 @@ FUNCTION calc_fishing_mortality
 						log_ftmp += (h-1) * (log_foff(k) + log_fdov(k,yk++));
 					}
 					ft(k)(h)(i) = mfexp(log_ftmp);
-					xi = dmr(i,k);                                       // Discard mortality rate
+					xi  = dmr(i,k);                                      // Discard mortality rate
 					sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
 					ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
 					vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
@@ -1413,7 +1413,6 @@ FUNCTION calc_natural_mortality
 	{
 		dvar_vector delta(syr+1,nyr);
 		delta.initialize();
-
 		switch( m_type )
 		{
 			// would this line ever occur if m_dev active?
@@ -1433,7 +1432,7 @@ FUNCTION calc_natural_mortality
 			}
 			break;
 			/*
-			JIm Question about below.  I'm not sure if you were intending to
+			Jim Question about below.  I'm not sure if you were intending to
 			have this set up as a random walk, where the shift occurs in a specifc year
 			to a new state.  I think what Jie had  was just a block wiht a different
 			M and it then returns back to the previous state.
@@ -1597,12 +1596,7 @@ FUNCTION calc_initial_numbers_at_length
 	d3_oldShell.initialize();
 
 	// Initial recrutment.
-	if ( bInitializeUnfished )
-	{
-		log_initial_recruits = logR0;
-	} else {
-		log_initial_recruits = logRini;
-	}
+	log_initial_recruits = (bInitializeUnfished) ? logR0 : logRini;
 	recruits(syr) = exp(log_initial_recruits);
 	dvar_vector rt = 1.0/nsex * recruits(syr) * rec_sdd;
 
@@ -1660,12 +1654,12 @@ FUNCTION calc_initial_numbers_at_length
 	/**
 	 * @brief Update numbers-at-length
 	 * @author Team
-	 * @details  Numbers at length are propagated each year for each sex based on the 
+	 * @details Numbers at length are propagated each year for each sex based on the 
 	 * size transition matrix and a vector of size-specifc survival rates. The columns
 	 * of the size-transition matrix are multiplied by the size-specific survival rate
-	 * (a scalar).  New recruits are added based on the estimated aveerage recruitment and 
+	 * (a scalar). New recruits are added based on the estimated average recruitment and 
 	 * annual deviate, multiplied by a vector of size-proportions (rec_sdd).
-	 */
+	**/
 FUNCTION update_population_numbers_at_length
 	int h,i,ig,o,m;
 
@@ -1718,11 +1712,9 @@ FUNCTION update_population_numbers_at_length
 			}
 			if ( o == 1 && m == 2 ) // terminal molt to new shell.
 			{
-
 			}
 			if ( o == 2 && m == 2 ) // terminal molt newshell to oldshell.
 			{
-
 			}
 		}
 	}
@@ -1796,7 +1788,7 @@ FUNCTION calc_stock_recruitment_relationship
 	dvariable sigR = mfexp(logSigmaR);
 	dvariable sig2R = 0.5 * sigR * sigR;
 
-	switch(nSRR_flag)
+	switch ( nSRR_flag )
 	{
 		case 0: // NO SRR
 			//res_recruit(syr) = log(recruits(syr)) - logRbar;
@@ -1835,30 +1827,25 @@ FUNCTION calc_predicted_catch
 	pre_catch.initialize();
 	dvariable tmp_ft;
 	dvar_vector sel(1,nclass);
-	dvar_vector nal(1,nclass);      // numbers or biomass at length.
+	dvar_vector nal(1,nclass); // numbers or biomass at length.
 	
 	for ( int kk = 1; kk <= nCatchDF; kk++ )
 	{
 		for ( j = 1; j <= nCatchRows(kk); j++ )
-		{   
-			i = dCatchData(kk,j,1);        // year index
-			k = dCatchData(kk,j,3);        // gear index
-			h = dCatchData(kk,j,4);        // sex index
-
-			// Type of catch (retained = 1, discard = 2)
-			type = int(dCatchData(kk,j,7));
-
-			// Units of catch equation (1 = biomass, 2 = numbers)
-			unit = int(dCatchData(kk)(j,8));
-			
+		{
+			i = dCatchData(kk,j,1); // year index
+			k = dCatchData(kk,j,3); // gear index
+			h = dCatchData(kk,j,4); // sex index
+			type = int(dCatchData(kk,j,7)); // Type of catch (retained = 1, discard = 2)
+			unit = int(dCatchData(kk)(j,8)); // Units of catch equation (1 = biomass, 2 = numbers)
 			// Total catch
-			if ( h )   // sex specific
+			if ( h ) // sex specific
 			{
 				nal.initialize();
 				sel = log_slx_capture(k)(h)(i);
 				switch( type )
 				{
-					case 1:     // retained catch
+					case 1: // retained catch
 						// Question here about what the retained catch is.
 						// Should probably include shell condition here as well.
 						// Now assuming both old and new shell are retained.
@@ -1867,29 +1854,28 @@ FUNCTION calc_predicted_catch
 						{   
 							for ( int o = 1; o <= nshell; o++ )
 							{
-								ig   = pntr_hmo(h,m,o); 
+								ig = pntr_hmo(h,m,o); 
 								nal += d3_N(ig)(i);
 							}
 						}
 					break;
-					case 2:     // discard catch
-						sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+					case 2: // discarded catch
+						sel = elem_prod(exp(sel), 1.0-exp(log_slx_retaind(k)(h)(i)));
 						for ( int m = 1; m <= nmature; m++ )
 						{
 							for ( int o = 1; o <= nshell; o++ )
 							{
-								ig   = pntr_hmo(h,m,o);
+								ig = pntr_hmo(h,m,o);
 								nal += d3_N(ig)(i);
 							}
 						}
 					break;
 				}
 				tmp_ft = ft(k)(h)(i);
-				nal = (unit==1) ? elem_prod(nal,mean_wt(h)) : nal;
-
-				pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - exp(-Z(h)(i))), Z(h)(i));
+				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
+				pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0-exp(-Z(h)(i))), Z(h)(i));
 			}
-			else    // sexes combibed
+			else // sexes combibed
 			{
 				for ( h = 1; h <= nsex; h++ )
 				{
@@ -1901,27 +1887,24 @@ FUNCTION calc_predicted_catch
 							sel = exp( sel + log_slx_retaind(k)(h)(i) );
 							for ( int m = 1; m <= nmature; m++ )
 							{
-								ig   = pntr_hmo(h,m,1); //indexes new shell.
+								ig = pntr_hmo(h,m,1); // indexes new shell.
 								nal += d3_N(ig)(i);
 							}
 						break;
-
-						case 2: // discard catch
+						case 2: // discarded catch
 							sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
-							//COUT(sel)
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								for ( int o = 1; o <= nshell; o++ )
 								{
-									ig   = pntr_hmo(h,m,o);
+									ig = pntr_hmo(h,m,o);
 									nal += d3_N(ig)(i);
 								}
 							}
 						break;
 					}
 					tmp_ft = ft(k)(h)(i);
-					nal = (unit==1) ? elem_prod(nal,mean_wt(h)) : nal;
-
+					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)) : nal;
 					pre_catch(kk,j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
 				}
 			}
@@ -2503,8 +2486,8 @@ FUNCTION simulation_model
 	{
 		catch_sd(k)  = sqrt(log(1.0 + square(catch_cv(k))));
 		obs_catch(k) = value(pre_catch(k));
-		err_catch(k) = elem_prod(catch_sd(k),err_catch(k)) - 0.5*square(catch_sd(k));
-		obs_catch(k) = elem_prod(obs_catch(k),exp(err_catch(k)));
+		err_catch(k) = elem_prod(catch_sd(k), err_catch(k)) - 0.5*square(catch_sd(k));
+		obs_catch(k) = elem_prod(obs_catch(k), exp(err_catch(k)));
 	}
 	
 

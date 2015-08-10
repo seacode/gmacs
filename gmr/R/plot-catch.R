@@ -7,7 +7,7 @@
 #' 
 .get_catch_df <- function(M)
 {
-    n  <- length(M)
+    n <- length(M)
     mdf <- NULL
     for( i in 1:n )
     {
@@ -26,6 +26,9 @@
         mdf <- rbind(mdf, df)
     }
     mdf$year <- as.integer(mdf$year)
+    mdf$sex <- factor(mdf$sex, levels = .SEX)
+    mdf$type <- factor(mdf$type, levels = .TYPE)
+    mdf$fleet <- factor(mdf$fleet, levels = .FLEET)
     return(mdf)
 }
 
