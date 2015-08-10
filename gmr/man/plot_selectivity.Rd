@@ -5,8 +5,8 @@
 \title{Plot selectivity}
 \usage{
 plot_selectivity(M, xlab = "Mid-point of size class (mm)",
-  ylab = "Selectivity", tlab = "Type", ilab = "Block year", nrow = NULL,
-  ncol = NULL)
+  ylab = "Selectivity", tlab = "Type", ilab = "Period year",
+  nrow = NULL, ncol = NULL)
 }
 \arguments{
 \item{M}{list of lists created by the read_admb function}

@@ -9,26 +9,30 @@
 {
     n   <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
-        A  <- M[[i]]
+        A <- M[[i]]
         # captured
-        df <- data.frame(Model=names(M)[i], type = .TYPE[1], M[[i]]$slx_capture)
-        # retained 
-        dr <- data.frame(Model=names(M)[i], type = .TYPE[2], M[[i]]$slx_retaind)
-        colnames(df) <- c("Model","type","year","sex","fleet",as.character(A$mid_points))
+        df <- data.frame(Model = names(M)[i], type = .TYPE[1], M[[i]]$slx_capture)
+        # retained
+        dr <- data.frame(Model = names(M)[i], type = .TYPE[2], M[[i]]$slx_retaind)
+        colnames(df) <- c("Model", "type", "year", "sex", "fleet", as.character(A$mid_points))
         colnames(dr) <- colnames(df)
-        df$sex   = .SEX[df$sex+1]
+        df$sex   = .SEX[df$sex + 1]
         df$fleet = .FLEET[df$fleet]
-        dr$sex   = .SEX[dr$sex+1]
+        dr$sex   = .SEX[dr$sex + 1]
         dr$fleet = .FLEET[dr$fleet]
-        blkyr <- M[[i]]$slx_control[,12]
-        df    <- filter(df,year %in% blkyr)
-        dr    <- filter(dr,year %in% blkyr)
-        mdf <- rbind(mdf,melt(df, id.var = 1:5), melt(dr, id.var = 1:5))
+        Mslx <- M[[i]][["slx_control"]]
+        blkyr <- Mslx[Mslx[,1] > 0, 12]
+        df <- filter(df, year %in% blkyr)
+        blkyr <- Mslx[Mslx[,1] < 0, 12]
+        dr <- filter(dr, year %in% blkyr)
+        mdf <- rbind(mdf, melt(df, id.var = 1:5), melt(dr, id.var = 1:5))
         mdf$variable <- as.numeric(as.character(mdf$variable))
     }
-    return(mdf)  
+    mdf$fleet <- factor(mdf$fleet, levels = .FLEET)
+    mdf$sex <- factor(mdf$sex, levels = .SEX)
+    return(mdf)
 }
 
 
@@ -49,8 +53,11 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_selectivity <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Selectivity",
-                             tlab = "Type", ilab = "Block year", nrow = NULL, ncol = NULL)
+plot_selectivity <- function(M,
+                             xlab = "Mid-point of size class (mm)",
+                             ylab = "Selectivity",
+                             tlab = "Type", ilab = "Period year",
+                             nrow = NULL, ncol = NULL)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -58,7 +65,7 @@ plot_selectivity <- function(M, xlab = "Mid-point of size class (mm)", ylab = "S
     mdf <- .get_selectivity_df(M)
     
     p <- ggplot(mdf) + expand_limits(y = 0)
-    if(.OVERLAY)
+    if (.OVERLAY)
     {
         p <- p + geom_line(aes(variable, value, col = type, linetype = factor(year)))
         p <- p + facet_wrap(~Model + sex + fleet, nrow = nrow, ncol = ncol)

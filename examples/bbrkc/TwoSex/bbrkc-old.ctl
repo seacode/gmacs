@@ -15,90 +15,64 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1          4       2   0.18    0.04         # M
    7.0       -10        20          2       1    3.0     5.0         # logR0
-   7.0       -10        20          2       1    3.0     5.0         # logR1
-  10.4       -10        20          1       1    3.0     5.0         # logRbar
+   7.0       -10        20          2       1    3.0     5.0         # logR1      
+  10.4       -10        20          1       1    3.0     5.0         # logRbar      
   72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
-  0.55       0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
- -0.51       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
+  0.55       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
+ -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
   0.01      0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## GROWTH PARAM CONTROLS                                                                ##
-## nGrwth                                                                               ##
+## nGrwth
 ##                                                                                      ##
 ## Two lines for each parameter if split sex, one line if not                           ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-# ival        lb        ub        phz   prior     p1      p2         # parameter        ##                            
-## ———————————————————————————————————————————————————————————————————————————————————— ##
+# ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
+# —————————————————————————————————————————————————————————————————————————————————————— #
   17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
   17.5      10.0      30.0          3       0    0.0    20.0         # alpha
   0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
   0.10       0.0       0.5          3       0    0.0    10.0         # beta
   0.30       0.0      30.0         -3       0    0.0     3.0         # gscale males or combined
   0.30       0.0      30.0         -3       0    0.0     3.0         # gscale
-  140.      65.0     165.0         -4       0    0.0     3.0         # molt_mu males or combined
+  140.      65.0     165.0          4       0    0.0     3.0         # molt_mu males or combined
   159.      65.0     165.0         -2       0    0.0     3.0         # molt_mu
- 0.071       0.0       1.0         -3       0    0.0     3.0         # molt_cv males or combined
+ 0.071       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
  0.1         0.0       1.0         -3       0    0.0     3.0         # molt_cv
-## ——————————————————————————————————————————————————————————————————————————————————— ##
+# ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
 ##    -Each gear must have a selectivity and a retention selectivity                    ##
-## LEGEND sel type:   1=coefficients, 2=logistic, 3=logistic95                          ##
-##        gear index: use +ve for selectivity, -ve for retentio                         ##
-##        sex dep: 0 for sex-independent, 1 for sex-dependent.                          ##
+## LEGEND sel_type:1=coefficients,2=logistic,3=logistic95                               ##
+##        Index: use +ve for selectivity, -ve for retention
+##        sex dep: 0 for sex-independent, 1 for sex-dependent.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## ivector for number of year periods or nodes                                           ##
-## Gear-1    Gear-2    Gear-3   Gear-4
-   1         1         2        1         # Selectivity periods
-   0         0         0        0         # sex specific selectivity
-   3         3         3        3         # male   selectivity type
-   3         3         3        3         # female selectivity type
-## Gear-1    Gear-2    Gear-3   Gear-4
-   1         1         1        1         # Retention periods
-   1         0         0        0         # sex specific retention
-   3         2         2        2         # male   retention type
-   2         2         2        2         # female retention type
-   1         0         0        0         # male   retention flag (0 = no, 1 = yes)
-   0         0         0        0         # female retention flag (0 = no, 1 = yes)
+## ivector for number of year blocks or nodes                                           ##
+## Gear-1    Gear-2    Gear-3   Gear-4    
+   1         1         2        1         #Selectivity blocks
+   1         1         1        1         #Retention blocks 
+   1         0         0        0         #male   retention flag (0 -> no, 1 -> yes)
+   0         0         0        0         #female retention flag (0 -> no, 1 -> yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## gear  par   sel                                             phz    start  end           ##
-## index index par sex  init  lb    ub     prior p1     p2     mirror period period        ##
+##        sel   sel  sel sex  size   year  phz                       start  end         ##
+## Index  type  mu   sd  dep  nodes  nodes mirror lam1  lam2  lam3 | block  block       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
-# Gear-1
-   1     1     1   0    100   10    180    0      10    200    3     1975   2014
-   1     2     2   0    120   10    180    0      10    200    3     1975   2014
-# Gear-2
-   2     3     1   0    110   10    180    0      10    200    3     1975   2014
-   2     4     2   0    150   10    180    0      10    200    3     1975   2014
-# Gear-3
-   3     5     1   0     90   10    200    0       1    200    4     1975   1981
-   3     6     2   0    105   10    200    0       1    200    4     1975   1981
-   3     7     1   0    100    1    200    0       1    200    3     1982   2014
-   3     8     2   0    115    1    200    0       1    200    3     1982   2014
-# Gear-4
-   4     9     1   0     70    1    200    0       1    200    4     1975   2014
-   4     10    2   0     90    1    200    0       1    200    4     1975   2014
+   1      3    100  120  0    1      1    -1      12.5  12.5  12.5   1975   2014
+   2      3    110  150  0    1      1     4      12.5  12.5  12.5   1975   2014 
+   3      3     60   65  0    1      1    -3      12.5  12.5  12.5   1975   1981
+   3      3     60   65  0    1      1    -3      12.5  12.5  12.5   1982   2014
+   4      3     70   90  0    1      1    -4      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
-# Gear-1
-  -1     11    1   1    133   50    200    0      1    900   -4     1975   2014
-  -1     12    2   1    137   50    200    0      1    900   -4     1975   2014
-  -1     13    1   2    591    1    700    0      1    900   -3     1975   2014
-  -1     14    2   2     11    1    700    0      1    900   -3     1975   2014
-# Gear-2
-  -2     15    1   0    595    1    700    0      1    900   -3     1975   2014
-  -2     16    2   0     10    1    700    0      1    900   -3     1975   2014
-# Gear-3
-  -3     17    1   0    590    1    700    0      1    900   -3     1975   1981
-  -3     18    2   0     10    1    700    0      1    900   -3     1982   2014
-# Gear-4
-  -4     19    1   0    580    1    700    0      1    900   -3     1975   2014
-  -4     20    2   0     20    1    700    0      1    900   -3     1975   2014
+  -1      3    133  137  1    1      1    -1      12.5  12.5  12.5   1975   2014
+  -2      2    595   10  0    1      1    -2      12.5  12.5  12.5   1975   2014
+  -3      2    590   10  0    1      1    -3      12.5  12.5  12.5   1975   2014
+  -4      2    580   20  0    1      1    -4      12.5  12.5  12.5   1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -108,10 +82,10 @@
 ## SURVEYS/INDICES ONLY
 ## NMFS  BSFRF
 ## TYPE     Mean_q    SD_q      CPUE_Lambda
-     1      0.896     0.13      1
-     0      0.001     0.1       1
+     1      0.896     0.13      80
+     0      0.001     0.01      50
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-
+ 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -128,15 +102,15 @@
 ## LIKELIHOOD OPTIONS:
 ##   -1) multinomial with estimated/fixed sample size
 ##   -2) robust_multi. Robust approximation to multinomial
-##   -3) logistic normal (NIY)
-##   -4) multivariate-t  (NIY)
+##   -3) logistic normal  (NIY)
+##   -4) multivariate-t   (NIY)
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
  1   1   1   1   1   1   1   1   1   # Type of likelihood.
  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
- 1   2   2   3   3   4   4   4   5   # Composition aggregator
+ 1   2   3   4   5   6   7   8   9   # Composition aggregator
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
