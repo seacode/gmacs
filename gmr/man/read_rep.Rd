@@ -7,15 +7,15 @@
 read_rep(fn)
 }
 \arguments{
-\item{repfile}{name of ADMB output file to be read (no extension needed)}
+\item{fn}{name of ADMB output file to be read (no extension needed)}
 }
 \value{
-object of type 'list' with ADMB outputs therein
+object of type "list" with ADMB outputs therein
 }
 \description{
 Read ADMB .rep file and return an R object of type 'list'
 }
 \author{
-Steve Martell
+Steve Martell, D'Arcy N. Webber
 }
 

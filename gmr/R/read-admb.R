@@ -10,12 +10,12 @@
 read_admb <- function(repfile)
 {
     ret <- read_fit(repfile)
-    fn <- paste0(repfile, '.rep')
+    fn <- paste0(repfile, ".rep")
     A <- read_rep(fn)
     A$fit <- ret
     A$run_name <- fn
-    pfn <- paste0(repfile, '.psv')
-    if(file.exists(pfn)) A$post.samp <- read_psv(pfn)
+    pfn <- paste0(repfile, ".psv")
+    if (file.exists(pfn)) A$post.samp <- read_psv(pfn)
     return(A)
 }
 
@@ -30,12 +30,12 @@ read_admb <- function(repfile)
 read_fit <- function(repfile)
 {
     ret <- list()
-    parfile <- as.numeric(scan(paste(repfile,'.par', sep=''), what='', n=16, quiet=TRUE)[c(6,11,16)])
+    parfile <- as.numeric(scan(paste0(repfile, ".par"), what = '', n=16, quiet=TRUE)[c(6,11,16)])
     ret$nopar <- as.integer(parfile[1])
     ret$nlogl <- parfile[2]
     ret$maxgrad <- parfile[3]
-    file <- paste(repfile,'.cor', sep='')
-    if(file.exists(file))
+    file <- paste0(repfile, ".cor")
+    if (file.exists(file))
     {
         lin <- readLines(file)
         ret$npar <- length(lin)-2
@@ -58,28 +58,38 @@ read_fit <- function(repfile)
 #'
 #' Read ADMB .rep file and return an R object of type 'list'
 #'
-#' @author Steve Martell
-#' @param repfile name of ADMB output file to be read (no extension needed)
-#' @return object of type 'list' with ADMB outputs therein
+#' @author Steve Martell, D'Arcy N. Webber
+#' @param fn name of ADMB output file to be read (no extension needed)
+#' @return object of type "list" with ADMB outputs therein
 #' @export
 #' 
 read_rep <- function(fn)
 {
-    options(warn=-1)  #Suppress the NA message in the coercion to double
-    repfile <- scan(fn, what="character", flush=TRUE, blank.lines.skip=FALSE, quiet=TRUE)
-    idx 		<- sapply(as.double(repfile),is.na)
-    vnam 		<- repfile[idx] #list names
-    # cat(vnam)
-    nv 		<- length(vnam) #number of objects
-    A 		<- list()
-    ir 		<- 0
-    for(i in 1:nv)
+    options(warn = -1) # Suppress the NA message in the coercion to double
+    repfile <- scan(fn, what = "character", flush = TRUE, blank.lines.skip = FALSE, quiet = TRUE, na.strings = c("nan","-nan"))
+    #repfile <- scan(fn, what = "character", flush = TRUE, blank.lines.skip = FALSE, quiet = TRUE)
+    inan <- which(is.na(repfile)) # Identify any nan entries so that they are not picked up as objects
+    idx <- sapply(as.double(repfile), is.na)
+    idx[inan] <- FALSE
+    vnam <- repfile[idx] # list names
+    nv <- length(vnam) # number of objects
+    A <- list()
+    ir <- 0
+    for (i in 1:nv)
     {
-        ir <- match(vnam[i],repfile)
-        if(i!=nv) irr=match(vnam[i+1],repfile) else irr=length(repfile)+1 #next row
-        dum=NA
-        if(irr-ir==2) dum=as.double(scan(fn,skip=ir,nlines=1,quiet=TRUE,what=""))
-        if(irr-ir>2)
+        ir <- match(vnam[i], repfile)
+        if (i != nv)
+        {
+            irr <- match(vnam[i+1], repfile)
+        } else {
+            irr <- length(repfile) + 1 # next row
+        }
+        dum <- NA
+        if (irr-ir == 2)
+        {
+            dum <- as.double(scan(fn, skip = ir, nlines = 1, quiet = TRUE, what = ""))
+        }
+        if (irr-ir > 2)
         {
 			# ncols <- 0
 			# irows <- ir:irr-1
@@ -92,14 +102,14 @@ read_rep <- function(fn)
 			# cname <- paste(1:ncols)
 			# dum=as.matrix(read.table(fn,skip=ir,nrow=irr-ir-1,fill=TRUE,col.names=cname))
 			# cat("\n ir ",ir," irr ",irr)
-            dum=as.matrix(read.table(fn,skip=ir,nrow=irr-ir-1,fill=TRUE,row.names = NULL))
+            dum <- as.matrix(read.table(fn, skip = ir, nrow = irr-ir-1, fill = TRUE, row.names = NULL))
         }
-        if(is.numeric(dum))#Logical test to ensure dealing with numbers
+        if (is.numeric(dum)) # Logical test to ensure dealing with numbers
         {
-            A[[vnam[i]]]=dum
+            A[[vnam[i]]] <- dum
         }
     }
-    options(warn=0)
+    options(warn = 0)
     return(A)
 }
 

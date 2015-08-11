@@ -12,18 +12,23 @@
     for( i in 1:n )
     {
         A <- M[[i]]
-        df <- data.frame(Model = names(M)[i], A$dCatchData)
+        df <- data.frame(Model = names(M)[i], A$dCatchData_out)
         colnames(df) <- c("model","year","seas","fleet","sex","obs","cv","type","units","mult","effort","discard.mortality")
-        df$observed  <- na.omit(as.vector(t(A$obs_catch)))
-        df$predicted <- na.omit(as.vector(t(A$pre_catch)))
-        df$residuals <- na.omit(as.vector(t(A$res_catch)))
+        df$observed  <- na.omit(as.vector(t(A$obs_catch_out)))
+        df$predicted <- na.omit(as.vector(t(A$pre_catch_out)))
+        #df$residuals <- na.omit(as.vector(t(A$res_catch_out)))
+        df$residuals <- (as.vector(t(A$res_catch_out)))
         df$sex       <- .SEX[df$sex+1]
         df$fleet     <- .FLEET[df$fleet]
         df$type      <- .TYPE[df$type+1]
-        sd    <- sqrt(log(1+df$cv^2))
-        df$lb <- exp(log(df$obs)-1.96*sd)
-        df$ub <- exp(log(df$obs)+1.96*sd)
+        df$sd        <- sqrt(log(1+df$cv^2))
+        df$lb        <- exp(log(df$obs)-1.96*df$sd)
+        df$ub        <- exp(log(df$obs)+1.96*df$sd)
         mdf <- rbind(mdf, df)
+        if (!all(df$observed == df$obs))
+        {
+            stop("Error: observed catch data is buggered.")
+        }
     }
     mdf$year <- as.integer(mdf$year)
     mdf$sex <- factor(mdf$sex, levels = .SEX)
@@ -63,10 +68,12 @@ plot_catch <- function(M , plot_res = FALSE,
     #}
     #else
     #p <- ggplot(mdf, aes(x = as.integer(year), y = observed, fill = sex))
+    
     p <- ggplot(mdf, aes(x = year, y = observed)) +
         geom_bar(stat = "identity", position = "dodge", alpha = 0.15) +
         geom_linerange(aes(year, observed, ymax = ub, ymin = lb, position = "dodge"), size = 0.2, alpha = 0.5, col = "black") +
         labs(x = xlab, y = ylab)
+    
     if(.OVERLAY)
     {
         if (length(M) == 1)
