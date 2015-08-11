@@ -1,5 +1,5 @@
 /**
- * @file selex.hpp 
+ * @file selex.hpp
  * @defgroup Selectivities
  * @author Steven Martell, D'Arcy N. Webber
  * @namespace gsm

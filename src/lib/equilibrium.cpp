@@ -1,11 +1,13 @@
 /**
- * \file equilibrium.cpp
- * \author Steve Martell
+ * @file equilibrium.cpp
+ * @author Steve Martell, D'Arcy N. Webber
  * @defgroup GMACS
 **/
 
-
+// Global headers
 #include <admodel.h>
+
+// Local headers
 #if defined __APPLE__ || defined __linux
 	#include "../include/libgmacs.h"
 #endif

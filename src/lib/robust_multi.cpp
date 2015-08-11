@@ -1,4 +1,12 @@
+/**
+ * @file robust_multi.cpp
+ * @author Steve Martell, D'Arcy N. Webber
+**/
+
+// Global headers
 #include <admodel.h>
+
+// Local headers
 #if defined __APPLE__ || defined __linux
 	#include "../include/nloglike.h"
 #endif

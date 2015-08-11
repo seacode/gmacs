@@ -1955,13 +1955,13 @@ FUNCTION calc_predicted_catch
 	}
 
 
-	/**
-	 * @brief Calculate predicted catch for all years (not just data years)
-	 * @author D'Arcy N. Webber
-	 * @details The function uses the Baranov catch equation to predict the retained
-	 * and discarded catch for all model years (not just those years for which we have observations). This is used for plotting purposes only.
-	 * @return NULL
-	**/
+/**
+ * @brief Calculate predicted catch for all years (not just data years)
+ * @author D'Arcy N. Webber
+ * @details The function uses the Baranov catch equation to predict the retained
+ * and discarded catch for all model years (not just those years for which we have observations). This is used for plotting purposes only.
+ * @return NULL
+**/
 FUNCTION calc_predicted_catch_out
 	int h,i,j,k,ig;
 	int type,unit;
@@ -2290,7 +2290,14 @@ FUNCTION calc_predicted_composition
 
 
 
-
+/**
+ * @brief Calculate prior pdf
+ * @details Function to calculate prior pdf
+ * @param pType the type of prior
+ * @param theta the parameter
+ * @param p1 the first prior parameter
+ * @param p2 the second prior parameter
+**/
 FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const double &p1, const double &p2)
 	{
 		dvariable prior_pdf;
