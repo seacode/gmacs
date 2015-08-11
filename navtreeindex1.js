@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"da/de5/classgsm_1_1_double_normal.html":[4,1,0],
+"da/de5/classgsm_1_1_double_normal.html#a1a77a7d64243902f6c3e9af47213493c":[4,1,0,4],
 "da/de5/classgsm_1_1_double_normal.html#a324773ba440f185805d81e4e73d8bbad":[4,1,0,7],
 "da/de5/classgsm_1_1_double_normal.html#a3a62414660012a279d67656162efbb16":[4,1,0,9],
 "da/de5/classgsm_1_1_double_normal.html#a44d74c842e878989e3d573faaba887db":[4,1,0,8],
@@ -72,8 +74,8 @@ var NAVTREEINDEX1 =
 "dd/d95/class_s_pinit__int.html":[2,3,1,45],
 "dd/d95/class_s_pinit__int.html#a7d2cecd49837cee385671b54d751dcf3":[2,3,1,45,0],
 "dd/da9/gmacs_8tpl_source.html":[8,0,0,3],
-"dd/db3/namespacegsm.html":[4,1],
 "dd/db3/namespacegsm.html":[3,0,1],
+"dd/db3/namespacegsm.html":[4,1],
 "dd/dd9/classsplus__imatrix.html":[2,3,1,73],
 "dd/dd9/classsplus__imatrix.html#a944ac4062b1815aa0815d87fc72aa066":[2,3,1,73,0],
 "dd/de5/classdll__init__3darray.html":[2,3,1,14],

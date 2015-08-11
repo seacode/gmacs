@@ -9,6 +9,7 @@ var NAVTREEINDEX0 =
 "d0/d45/classinit__bounded__3darray.html":[2,3,1,43],
 "d0/d45/classinit__bounded__3darray.html#afccdee0c577d90f946e5afdae82de06c":[2,3,1,43,0],
 "d0/d59/classgsm_1_1logistic_trait.html":[4,1,3],
+"d0/de4/dirichlet_8cpp.html":[8,0,0,1,0],
 "d0/de4/dirichlet_8cpp_source.html":[8,0,0,1,0],
 "d1/d0f/classinit__number__vector.html":[2,3,1,55],
 "d1/d0f/classinit__number__vector.html#ad83eedd29b40594e1b39f9e1634e1128":[2,3,1,55,0],
@@ -167,6 +168,7 @@ var NAVTREEINDEX0 =
 "d6/d28/classacl_1_1multinomial.html#adcd286316c81fb17897bdc8c03a6f0ac":[4,0,1,3],
 "d6/d28/classacl_1_1multinomial.html#ae12f6f17401bf870557e16bf284c9245":[4,0,1,1],
 "d6/d28/classacl_1_1multinomial.html#af42a48c5016a489112498c71972643b9":[4,0,1,9],
+"d6/d53/robust__multi_8cpp.html":[8,0,0,1,5],
 "d6/d53/robust__multi_8cpp_source.html":[8,0,0,1,5],
 "d6/d72/class_s_pvector.html":[2,3,1,1],
 "d6/d72/class_s_pvector.html#abcdd0f43ef44097402d78e3948632385":[2,3,1,1,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "da/d98/classrandom__effects__bounded__matrix.html":[2,3,1,19],
 "da/d98/classrandom__effects__bounded__matrix.html#aa73ef5cb69e411d87ce1b7410d3323d8":[2,3,1,19,0],
 "da/dc8/classsplus__int.html":[2,3,1,32],
-"da/dc8/classsplus__int.html#a750eedb7076ce5d367f32376babbe1f7":[2,3,1,32,0],
-"da/de5/classgsm_1_1_double_normal.html":[4,1,0],
-"da/de5/classgsm_1_1_double_normal.html#a1a77a7d64243902f6c3e9af47213493c":[4,1,0,4]
+"da/dc8/classsplus__int.html#a750eedb7076ce5d367f32376babbe1f7":[2,3,1,32,0]
 };

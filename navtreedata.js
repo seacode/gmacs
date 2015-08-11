@@ -32,7 +32,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"da/de5/classgsm_1_1_double_normal.html#a324773ba440f185805d81e4e73d8bbad"
+"da/de5/classgsm_1_1_double_normal.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -119,17 +119,23 @@ Variables</h2></td></tr>
 <tr class="memdesc:ga4696487a9a9145c7e20085e62003912c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total instantaneous mortality rate and survival rate.  <a href="#ga4696487a9a9145c7e20085e62003912c">More...</a><br /></td></tr>
 <tr class="separator:ga4696487a9a9145c7e20085e62003912c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2951179386878d18a8cd5235175a028a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2951179386878d18a8cd5235175a028a"></a>
-FUNCTION calc_predicted_catch <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>i</b></td></tr>
+FUNCTION update_population_numbers_at_length <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>i</b></td></tr>
 <tr class="separator:ga2951179386878d18a8cd5235175a028a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5da3ac5a3d5d1c7c3b29eeaf21e30751"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5da3ac5a3d5d1c7c3b29eeaf21e30751"></a>
+FUNCTION update_population_numbers_at_length <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ig</b></td></tr>
+<tr class="separator:ga5da3ac5a3d5d1c7c3b29eeaf21e30751"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b65f465d4ab5b1f5be6c54c5ef25750"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4b65f465d4ab5b1f5be6c54c5ef25750"></a>
+FUNCTION update_population_numbers_at_length <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>o</b></td></tr>
+<tr class="separator:ga4b65f465d4ab5b1f5be6c54c5ef25750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4667691cf7884e3bdc3f290d74f29893"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4667691cf7884e3bdc3f290d74f29893"></a>
+FUNCTION update_population_numbers_at_length <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m</b></td></tr>
+<tr class="separator:ga4667691cf7884e3bdc3f290d74f29893"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga898ca4172d7d92944a0212187d7f78b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga898ca4172d7d92944a0212187d7f78b5"></a>
 FUNCTION calc_predicted_catch <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>j</b></td></tr>
 <tr class="separator:ga898ca4172d7d92944a0212187d7f78b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga67e6f5a0b1b262cfee4d93bb50ca367d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga67e6f5a0b1b262cfee4d93bb50ca367d"></a>
 FUNCTION calc_predicted_catch <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>k</b></td></tr>
 <tr class="separator:ga67e6f5a0b1b262cfee4d93bb50ca367d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5da3ac5a3d5d1c7c3b29eeaf21e30751"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5da3ac5a3d5d1c7c3b29eeaf21e30751"></a>
-FUNCTION calc_predicted_catch <a class="el" href="../../d1/da0/classint.html">int</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ig</b></td></tr>
-<tr class="separator:ga5da3ac5a3d5d1c7c3b29eeaf21e30751"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>FUNCTIONS declared in the tpl PROCEDURE_SECTION. </p>
@@ -146,9 +152,13 @@ FUNCTION calc_predicted_catch <a class="el" href="../../d1/da0/classint.html">in
 
 <p>Calculate total instantaneous mortality rate and survival rate. </p>
 <p>Calculate predicted size composition data.</p>
+<p>Calculate predicted catch for all years (not just data years)</p>
 <p>Calculate predicted catch observations.</p>
+<p>Update numbers-at-length.</p>
 <p>\( S = exp(-Z) \) </p><dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 <p>ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.</p>
+<dl class="section author"><dt>Author</dt><dd>Team</dd></dl>
+<p>Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a scalar). New recruits are added based on the estimated average recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).</p>
 <p>The function uses the Baranov catch equation to predict the retained and discarded catch.</p>
 <p>Assumptions: 1) retained (landed catch) is assume to be newshell male only. 2) discards are all females (new and old) and male only crab. 3) Natural and fishing mortality occur simultaneously. 4) discard is the total number of crab caught and discarded.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -158,6 +168,8 @@ FUNCTION calc_predicted_catch <a class="el" href="../../d1/da0/classint.html">in
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>D'Arcy N. Webber</dd></dl>
+<p>The function uses the Baranov catch equation to predict the retained and discarded catch for all model years (not just those years for which we have observations). This is used for plotting purposes only. </p><dl class="section return"><dt>Returns</dt><dd>NULL</dd></dl>
 <p>Predicted size composition data are given in proportions. Size composition strata:</p><ul>
 <li>sex (0 = both sexes, 1 = male, 2 = female)</li>
 <li>type (0 = all catch, 1 = retained, 2 = discard)</li>
@@ -184,7 +196,7 @@ FUNCTION calc_predicted_catch <a class="el" href="../../d1/da0/classint.html">in
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Aug 10 2015 15:58:32 for GMACS by
+    <li class="footer">Generated on Tue Aug 11 2015 10:07:52 for GMACS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="../../doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

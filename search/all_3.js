@@ -3,6 +3,7 @@ var searchData=
   ['data_5fsection',['DATA_SECTION',['../dc/d17/group___d_a_t_a___s_e_c_t_i_o_n.html',1,'']]],
   ['ddirichlet',['ddirichlet',['../d5/d05/classacl_1_1dirichlet.html#aa152bde8abeee6c5d24c90754b65f64c',1,'acl::dirichlet']]],
   ['dirichlet',['dirichlet',['../d5/d05/classacl_1_1dirichlet.html',1,'acl']]],
+  ['dirichlet_2ecpp',['dirichlet.cpp',['../d0/de4/dirichlet_8cpp.html',1,'']]],
   ['dll_5f3darray',['dll_3darray',['../d2/d88/classdll__3darray.html',1,'']]],
   ['dll_5fadstring',['dll_adstring',['../de/df0/classdll__adstring.html',1,'']]],
   ['dll_5fimatrix',['dll_imatrix',['../dc/d65/classdll__imatrix.html',1,'']]],
