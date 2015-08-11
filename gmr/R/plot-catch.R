@@ -79,15 +79,15 @@ plot_catch <- function(M , plot_res = FALSE,
         if (length(M) == 1)
         {
             p <- p + facet_wrap(~sex + fleet + type, scales = "free_y")	+
-                geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.8)
+                geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4)
         } else {
             p <- p + facet_wrap(~sex + fleet + type, scales = "free_y")	+
-                geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.8) +
+                geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
                 labs(col = mlab)
         }
     } else {
         p <- p + facet_wrap(~model + sex + fleet + type, scales = "free_y") +
-            geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.8)
+            geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4)
     }
     print(p + .THEME)
 }

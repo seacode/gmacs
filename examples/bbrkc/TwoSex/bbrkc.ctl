@@ -11,15 +11,15 @@
 # ntheta
   9
 # —————————————————————————————————————————————————————————————————————————————————————— #
-# ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
+# ival        lb        ub        phz   prior     p1      p2         # parameter         #
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1          4       2   0.18    0.04         # M
    7.0       -10        20          2       1    3.0     5.0         # logR0
    7.0       -10        20          2       1    3.0     5.0         # logR1
   10.4       -10        20          1       1    3.0     5.0         # logRbar
-  72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
-  0.55       0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
- -0.51       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
+  72.5        55       100          4       1   72.5    7.25         # Recruitment Expected Value
+  0.55       0.1         5          3       0    0.1     5.0         # Recruitment scale (variance component)
+ -0.51       -10      0.75          4       0  -10.0    0.75         # ln(sigma_R)
   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
   0.01      0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -30,18 +30,18 @@
 ##                                                                                      ##
 ## Two lines for each parameter if split sex, one line if not                           ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-# ival        lb        ub        phz   prior     p1      p2         # parameter        ##                            
+# ival        lb        ub        phz   prior     p1      p2         # parameter        ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta
-  0.30       0.0      30.0         -3       0    0.0     3.0         # gscale males or combined
-  0.30       0.0      30.0         -3       0    0.0     3.0         # gscale
-  140.      65.0     165.0         -4       0    0.0     3.0         # molt_mu males or combined
-  159.      65.0     165.0         -2       0    0.0     3.0         # molt_mu
- 0.071       0.0       1.0         -3       0    0.0     3.0         # molt_cv males or combined
- 0.1         0.0       1.0         -3       0    0.0     3.0         # molt_cv
+  17.5       1.0      90.0          3       0    0.0    999.0         # alpha males or combined
+  17.5       1.0      90.0          3       0    0.0    999.0         # alpha
+  0.10       0.0       0.9          3       0    0.0    999.0         # beta males or combined
+  0.10       0.0       0.9          3       0    0.0    999.0         # beta
+  0.30       0.0      90.0          4       0    0.0    999.0         # gscale males or combined
+  0.30       0.15     90.0          4       0    0.0    999.0         # gscale
+  140.       1.0     195.0          3       0    0.0    999.0         # molt_mu males or combined
+  159.       1.0     195.0          3       0    0.0    999.0         # molt_mu
+ 0.071       0.0001    9.0          4       0    0.0    999.0         # molt_cv males or combined
+ 0.1         0.0001    9.0          4       0    0.0    999.0         # molt_cv
 ## ——————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -51,7 +51,7 @@
 ##        gear index: use +ve for selectivity, -ve for retentio                         ##
 ##        sex dep: 0 for sex-independent, 1 for sex-dependent.                          ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## ivector for number of year periods or nodes                                           ##
+## ivector for number of year periods or nodes                                          ##
 ## Gear-1    Gear-2    Gear-3   Gear-4
    1         1         2        1         # Selectivity periods
    0         0         0        0         # sex specific selectivity
@@ -66,18 +66,18 @@
    0         0         0        0         # female retention flag (0 = no, 1 = yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## gear  par   sel                                             phz    start  end           ##
-## index index par sex  init  lb    ub     prior p1     p2     mirror period period        ##
+## index index par sex  ival  lb    ub     prior p1     p2     mirror period period        ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
 # Gear-1
-   1     1     1   0    100   10    180    0      10    200    3     1975   2014
-   1     2     2   0    120   10    180    0      10    200    3     1975   2014
+   1     1     1   0    100    5    185    0      10    200    3     1975   2014
+   1     2     2   0    120    5    185    0      10    200    3     1975   2014
 # Gear-2
-   2     3     1   0    110   10    180    0      10    200    3     1975   2014
-   2     4     2   0    150   10    180    0      10    200    3     1975   2014
+   2     3     1   0    110    5    185    0      10    200    3     1975   2014
+   2     4     2   0    150    5    185    0      10    200    3     1975   2014
 # Gear-3
-   3     5     1   0     90   10    200    0       1    200    4     1975   1981
-   3     6     2   0    105   10    200    0       1    200    4     1975   1981
+   3     5     1   0     90    5    200    0       1    200    4     1975   1981
+   3     6     2   0    105    5    200    0       1    200    4     1975   1981
    3     7     1   0    100    1    200    0       1    200    3     1982   2014
    3     8     2   0    115    1    200    0       1    200    3     1982   2014
 # Gear-4
@@ -133,7 +133,7 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 1   1   1   1   1   1   1   1   1   # Type of likelihood.
+ 2   2   2   1   1   1   1   1   1   # Type of likelihood.
  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
  1   2   2   3   3   4   4   4   5   # Composition aggregator
@@ -155,7 +155,7 @@
 ## Number of nodes for cubic spline or number of step-changes for option 3
   4
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1976 1980 1985 1994
+  1976 1980 1985 1994
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS
