@@ -65,8 +65,8 @@
    1         0         0        0         # male   retention flag (0 = no, 1 = yes)
    0         0         0        0         # female retention flag (0 = no, 1 = yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## gear  par   sel                                             phz    start  end           ##
-## index index par sex  ival  lb    ub     prior p1     p2     mirror period period        ##
+## gear  par   sel                                             phz    start  end        ##
+## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
 # Gear-1
