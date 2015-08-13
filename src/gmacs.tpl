@@ -114,6 +114,7 @@ DATA_SECTION
 	init_adstring datafile;
 	init_adstring controlfile;
 	!! ad_comm::change_datafile_name(datafile); WriteFileName(datafile); WriteFileName(controlfile);
+	!! cout << "*** Reading data file ***" << endl;
 
 	// |------------------|
 	// | MODEL DIMENSIONS |
@@ -531,7 +532,6 @@ DATA_SECTION
 	ivector slx_edyr(1,nslx); // period end year
 	ivector slx_cols(1,nslx);
 
-
 	LOC_CALCS
 		// Work out the type of each selectivity and place in the ivector
 		// slx_type
@@ -560,7 +560,6 @@ DATA_SECTION
 				}
 			}
 		}
-
 		// count up number of parameters required
 		slx_cols.initialize();
 		for ( int k = 1; k <= nslx; k++ )
