@@ -1212,8 +1212,7 @@ FUNCTION initialize_model_parameters
 	 * Need to deprecate the abstract class for selectivity, 7X slower. 
 	**/
 FUNCTION calc_selectivities
-	int h,i,j,k;
-	int block;
+	int h,i,k;
 	dvariable p1, p2, p3;
 	dvar_vector pv;
 	log_slx_capture.initialize();
