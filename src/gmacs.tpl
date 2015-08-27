@@ -2303,6 +2303,8 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 		switch(pType)
 		{
 				case 0: // uniform
+					prior_pdf = dunif(theta,p1,p2);
+					/*
 					if ( (p2-p1) > 0 )
 					{
 						prior_pdf = -log(1.0 / (p2-p1));
@@ -2310,6 +2312,7 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 						cerr << "Error in uniform prior, p1 > p2.\n";
 						ad_exit(1);
 					}
+					*/
 				break;
 				case 1: // normal
 					// COUT(p1);COUT(p2);
@@ -2416,7 +2419,8 @@ FUNCTION calculate_prior_densities
 				p1 = slx_priors(k,j,2);
 				p2 = slx_priors(k,j,3);
 				dvariable x = mfexp(log_slx_pars(k,j));
-				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2); // NEED TO ADD THE ADJUSTMENT JACOBIAN/DERIVATIVE
+				// Above is a change of variable so an adjustment is required - DOUBLE CHECK THIS
+				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2) + log_slx_pars(k,j);
 			}
 			iprior++;
 		}

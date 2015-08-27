@@ -1,7 +1,7 @@
 ---
 title: "Gmacs Example Stock Assessment"
 author: "The Gmacs development team"
-date: "June 2015"
+date: "September 2015"
 output:
   pdf_document:
     highlight: zenburn
@@ -167,19 +167,18 @@ and -independent indices of abundance. Gmacs is coded using AD Model Builder.
 
 Crab stocks of Alaska are managed by the North Pacific Fisheries Management
 Council ([NPFMC](http://npfmc.org)). Some stocks are assessed with integrated
-size-structured assessment models of the form described in
-@punt_review_2013. Currenlty, each stock is assessed using a stock-specific
-assessment model (e.g. @zheng_bristol_2014). The Gmacs project aims to provide
-software that will allow each stock to be assessed inside a single modelling
-framework.
+size-structured assessment models of the form described in @punt_review_2013.
+Currenlty, each stock is assessed using a stock-specific assessment model
+(e.g. @zheng_bristol_2014). The Gmacs project aims to provide software that
+will allow each stock to be assessed independently but using a single
+modelling framework.
 
 Gmacs is used here to develop an assessment model for the Bristol Bay Red King
-Crab (BBRKC) stock. This document serves as a test-case for the development of
-Gmacs. The example assessment is intended to match closely with a model scenario
-presented to the Spring 2014 BSAI Crab Plan Team Meeting by @zheng_bristol_2014.
-The following summarizes the outcome of some comparisons between the existing
-BBRKC stock assessment model [@zheng_bristol_2014] and an emulated version using
-the Gmacs platform.
+Crab (BBRKC) stock. The example assessment is intended to match closely with a
+model scenario presented to the Spring 2014 BSAI Crab Plan Team Meeting by
+@zheng_bristol_2014. The following summarizes the outcome of some comparisons
+between the existing BBRKC stock assessment model [@zheng_bristol_2014] and an
+emulated version using the Gmacs platform.
 
 An important component of the Gmacs framework is the provision of software for
 plotting Gmacs model outputs. In what follows, we demonstrate the use of the
@@ -249,10 +248,11 @@ The data and model specifications used in the Gmacs-BBRKC model are very similar
 to those used in the '4nb' scenario developed by @zheng_bristol_2014, herein
 referred to as the ADFG-BBRKC model.
 
-Since the BBRKC model from @zheng_bristol_2014 treats recruits by sex along with
-sex-specific natural mortality and fishing mortality, results from the male
-components are compared with results from a Gmacs model implementation tuned to
-male-only data.
+The BBRKC model from @zheng_bristol_2014 treats recruits by sex along with
+sex-specific natural mortality and fishing mortality. Here we provide results
+from two different Gmacs models (1) a two-sex model and (2) a single sex model
+in which the male components are compared with results from a Gmacs model
+implementation tuned to male-only data.
 
 Parameter Number of estimated parameters Value Natural mortality 1 Males
 (1980-84) 1 Females (1980-84) 1 Females (1976-79; 1984-1993) 0.18 yr-1 Other
@@ -264,7 +264,7 @@ Females? 2 Molt probability (slope and intercept) (1979+) Females? 2 Molt
 probability (slope and intercept) Males? Pre-specified
 
 Recruitment
-Gamma distribution parameters 4 Annual deviations ??
+Gamma distribution parameters 4 Annual deviations
 
 Fishing mortality
 Mean fishing mortality (directed fishery) 1 Annual fishery deviations (directed fishery) ??
@@ -294,24 +294,22 @@ No. maturity        | $m$       | 2          | 1            | 1            |
 No. size-classes    | $\ell$    | 20         | 20           | 20           |
 
 
-Life History Trait  | Parameter | ADFG Value | Gmacs Value | Comments
-------------------  | --------- | ---------- | ----------- | --------
-Natural Mortality   | M         | Fixed      | Fixed       | M is fixed in both models
+Life History Trait | Parameter | ADFG Value | Gmacs Value | Comments
+------------------ | --------- | ---------- | ----------- | --------
+Natural Mortality  | M         | Fixed      | Fixed       | M is fixed in both models
 
 
 # Fishery Dynamics
 
-Specification       | Parameter | ADFG Value | Gmacs Value | Comments
-------------------  | --------- | ---------- | ----------- | --------
-No. Fleets          |           | 5          | 2           |
-No. Fleets          |           | 5          | 5           |
+Specification      | Parameter | ADFG Value | Gmacs Value | Comments
+------------------ | --------- | ---------- | ----------- | --------
+No. Fleets         |           | 5          | 2           |
+No. Fleets         |           | 5          | 5           |
 
 
 
 ## File Description
 
-  * The `*.tpl` file is working, it builds and the `*.exe` file runs successfully.
-  * The main `*.dat` file is read in as expected (comments within).
   * There is a second data file `rksize13s.dat` with sample sizes for 
     various rows of size-comp data. See lines 81-87 of `*.tpl`. 
   * Input sample sizes appear to be capped to the constant numbers entered in 
@@ -337,7 +335,7 @@ and the TwoSex model.
 
 ## Fit to survey abundance indices
 
-The model fit to survey biomass for males was better for the @zheng_bristol_2014
+The model fit to survey biomass for males was XXX in the @zheng_bristol_2014
 model (at least visually) than for either of the current implementations of
 Gmacs (Figure \ref{fig:survey_biomass}).
 
@@ -510,11 +508,14 @@ plot_recruitment(M)
 
 ## Mature male biomass (MMB)
 
-The spawning stock biomass of mature males, termed the mature male biomass
-($\mathit{MMB}_t$), also differs a lot bewteen the two models (Figure
-\ref{fig:ssb}).
+The spawning stock biomass (tonnes) of mature males, termed the mature male
+biomass ($\mathit{MMB}_t$), also differs a lot bewteen the two models (Figure
+\ref{fig:ssb}). The OneSex model is not plotted here as the uncertainty during
+the early years is extremely high. The Zheng model is plotted without
+uncertainty.
 
 ```{r spawning_stock_biomass, fig.cap = "Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.\\label{fig:ssb}"}
+A <- M; A[[1]] <- NULL
 plot_ssb(M)
 ```
 

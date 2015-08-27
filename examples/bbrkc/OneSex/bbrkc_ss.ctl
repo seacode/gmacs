@@ -13,13 +13,13 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  0.18      0.01         1          4       2   0.18    0.02         # M
+  0.18      0.01         1          4       2   0.18    0.04         # M
   -1.2       -10        20          2       1   -1.2     0.1         # logR0
    5.0       -10        20          2       1    3.0     5.0         # logR1      
    5.0       -10        20          1       1    3.0     5.0         # logRbar      
-  72.5        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
-  0.55       0.1         5         -3       0    0.1       5         # Recruitment scale (variance component)
- -0.6931     -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+  72.5        55       100          4       1   72.5    7.25         # Recruitment Expected Value
+  0.55       0.1         5          3       0    0.1     5.0         # Recruitment scale (variance component)
+ -0.6931     -10      0.75          4       0  -10.0    0.75         # ln(sigma_R)
   0.85      0.20      1.00         -2       3    3.0    2.00         # steepness
   0.001     0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -34,9 +34,9 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
   17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
   0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
-  0.30       0.01      1.0         -3       0    0.0     3.0         # gscale males or combined
-  140.      65.0     165.0         -4       0    0.0     3.0         # molt_mu males or combined
-  0.071      0.0       1.0         -3       0    0.0     3.0         # molt_cv males or combined
+  0.30       0.01      1.0          3       0    0.0     3.0         # gscale males or combined
+  140.      65.0     165.0          4       0    0.0     3.0         # molt_mu males or combined
+  0.071      0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
 # ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -49,30 +49,29 @@
 ## ivector for number of year blocks or nodes
 ## POT       TBycatch  NMFS_S   BSFR_S
 ## Gear-1    Gear-2    Gear-3   Gear-4
-   1         1         2        1         # Selectivity blocks
+   1         1         2        1         # Selectivity periods
    0         0         0        0         # sex specific selectivity
-   3         3         3        3         # male   selectivity type
+   3         3         3        3         # male selectivity type
 ## Gear-1    Gear-2    Gear-3   Gear-4
-   1         1         1        1         # Retention blocks 
+   1         1         1        1         # Retention periods 
    0         0         0        0         # sex specific retention
-   3         2         2        2         # male   retention type
-   1         0         0        0         # male   retention flag (0 -> no, 1 -> yes)
+   3         2         2        2         # male retention type
+   1         0         0        0         # male retention flag (0 -> no, 1 -> yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## gear  par   sel                                             phz    start  end        ##
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## Selectivity P(capture of all sizes)
 # Gear-1
-   1     1     1   0    100   90    160    0      10    200   -3     1975   2014
-   1     2     2   0    120   90    160    0      10    200   -3     1975   2014
+   1     1     1   0    100   70    120    0      10    200    3     1975   2014
+   1     2     2   0    120  100    150    0      10    200    3     1975   2014
 # Gear-2
    2     3     1   0    110    5    185    0      10    200    3     1975   2014
    2     4     2   0    150    5    185    0      10    200    3     1975   2014
 # Gear-3
-   3     5     1   0     90    5    200    0       1    200   -4     1975   1981
-   3     6     2   0    105    5    200    0       1    200   -4     1975   1981
-   3     7     1   0    100    1    200    0       1    200   -3     1982   2014
-   3     8     2   0    115    1    200    0       1    200   -3     1982   2014
+   3     5     1   0     90    5    200    0       1    200    4     1975   1981
+   3     6     2   0    105    5    200    0       1    200    4     1975   1981
+   3     7     1   0    100    5    200    0       1    200    3     1982   2014
+   3     8     2   0    115    5    200    0       1    200    3     1982   2014
 # Gear-4
    4     9     1   0     70    1    200    0       1    200    4     1975   2014
    4     10    2   0     90    1    200    0       1    200    4     1975   2014
@@ -141,7 +140,7 @@
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
   3
 ## Phase of estimation
-  4
+  3
 ## STDEV in m_dev for Random walk
   0.20
 ## Number of nodes for cubic spline or number of step-changes for option 3
