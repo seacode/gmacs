@@ -440,9 +440,7 @@ DATA_SECTION
 	vector Grwth_lb(1,nGrwth);
 	vector Grwth_ub(1,nGrwth);
 	ivector Grwth_phz(1,nGrwth);
-	// ivector ipar_vector(1,nGrwth);
 	LOC_CALCS
-		// ipar_vector = nsex;
 		Grwth_ival = column(Grwth_control,1);
 		Grwth_lb   = column(Grwth_control,2);
 		Grwth_ub   = column(Grwth_control,3);
@@ -488,6 +486,9 @@ DATA_SECTION
 			{
 				switch ( slx_type_in(h,k) )
 				{
+					case 1: // coefficients
+						nslx_rows_in += 1 * slx_nsel_period_in(k);
+					break;
 					case 2: // logistic has 2 parameters
 						nslx_rows_in += 2 * slx_nsel_period_in(k);
 					break;
@@ -504,6 +505,9 @@ DATA_SECTION
 			{
 				switch ( ret_type_in(h,k) )
 				{
+					case 1: // coefficients
+						nslx_rows_in += 1 * ret_nret_period_in(k);
+					break;
 					case 2: // logistic
 						nslx_rows_in += 2 * ret_nret_period_in(k);
 					break;
@@ -531,6 +535,7 @@ DATA_SECTION
 	ivector slx_styr(1,nslx); // period start year
 	ivector slx_edyr(1,nslx); // period end year
 	ivector slx_cols(1,nslx);
+	ivector slx_npar(1,nslx);
 
 	LOC_CALCS
 		// Work out the type of each selectivity and place in the ivector
@@ -567,17 +572,21 @@ DATA_SECTION
 			switch ( slx_type(k) )
 			{
 				case 1: // coefficients
-					slx_cols(k) = nclass - 1;
+					slx_cols(k) = 1;
+					slx_npar(k) = nclass - 1;
 				break;
 				case 2: // logistic
 					slx_cols(k) = 2;
+					slx_npar(k) = 2;
 				break;
 				case 3: // logistic95
 					slx_cols(k) = 2;
+					slx_npar(k) = 2;
 				break;
 				case 4: // double normal
 					slx_cols(k) = 3;
-				break;			
+					slx_npar(k) = 3;
+				break;
 			}
 		}
 		// slx_indx is an ivector of the index for the first parameter of each
@@ -598,19 +607,19 @@ DATA_SECTION
 			{
 				slx_control(k,i) = slx_control_in(kk,i);
 			}
-			slx_gear(k) = slx_control_in(kk,1);
-			slx_isex(k) = slx_control_in(kk,4);
-			slx_lb(k)   = log(slx_control_in(kk,6));
-			slx_ub(k)   = log(slx_control_in(kk,7));
-			slx_phzm(k) = slx_control_in(kk,11);
-			slx_styr(k) = slx_control_in(kk,12);
-			slx_edyr(k) = slx_control_in(kk,13);		
+			slx_gear(k) =     slx_control_in(kk,1);
+			slx_isex(k) =     slx_control_in(kk,4);
+			  slx_lb(k) = log(slx_control_in(kk,6));
+			  slx_ub(k) = log(slx_control_in(kk,7));
+			slx_phzm(k) =     slx_control_in(kk,11);
+			slx_styr(k) =     slx_control_in(kk,12);
+			slx_edyr(k) =     slx_control_in(kk,13);		
 		}
 		nSelex = sum(slx_cols);
 	END_CALCS
 
 	// Load the parameters into their own ragged matrix
-	matrix slx_par(1,nslx,1,slx_cols);
+	matrix slx_par(1,nslx,1,slx_npar);
 	3darray slx_priors(1,nslx,1,slx_cols,1,3);
 	LOC_CALCS
 		for ( int k = 1; k <= nslx; k++ )
@@ -623,6 +632,15 @@ DATA_SECTION
 				slx_priors(k,j,1) = slx_control_in(jj,8);  // prior
 				slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
 				slx_priors(k,j,3) = slx_control_in(jj,10); // p2
+			}
+			if ( slx_type(k) == 1 )
+			{
+				slx_par(k,1) = 0.001;
+				for ( int j = 2; j <= slx_npar(k)-1; j++ )
+				{
+					slx_par(k,j) = slx_par(k,j-1) + 1.0/nclass;
+				}
+				slx_par(k,slx_npar(k)) = 0.999;
 			}
 		}
 	END_CALCS
@@ -949,16 +967,16 @@ PARAMETER_SECTION
 	// init_bounded_vector molt_cv(1,nsex,0,1,1);
 
 	// Selectivity parameters
-	init_bounded_vector_vector log_slx_pars(1,nslx,1,slx_cols,slx_lb,slx_ub,slx_phzm);
+	init_bounded_vector_vector log_slx_pars(1,nslx,1,slx_npar,slx_lb,slx_ub,slx_phzm);
 
 	LOC_CALCS
-		for( int k = 1; k <= nslx; k++ )
+		for ( int k = 1; k <= nslx; k++ )
 		{
-			for( int i = 1; i <= slx_cols(k); i++ )
+			for ( int i = 1; i <= slx_npar(k); i++ )
 			{
 				log_slx_pars(k,i) = log(slx_par(k,i));
 			}
-		//COUT(exp(log_slx_pars(k)));
+			//COUT(exp(log_slx_pars(k)));
 		}
 	END_CALCS
 
@@ -1048,7 +1066,7 @@ PARAMETER_SECTION
 
 	//sdreport_vector sd_fbar(1,nfleet);
 	sdreport_vector sd_log_recruits(syr,nyr);
-	sdreport_vector sd_log_ssb(syr,nyr);
+	sdreport_vector      sd_log_ssb(syr,nyr);
 	friend_class population_model;
 
 
@@ -1213,8 +1231,8 @@ FUNCTION initialize_model_parameters
 	**/
 FUNCTION calc_selectivities
 	int h,i,k;
-	dvariable p1, p2, p3;
 	dvar_vector pv;
+	dvariable p1, p2, p3;
 	log_slx_capture.initialize();
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
@@ -1287,10 +1305,7 @@ FUNCTION calc_selectivities
 	 * 
 	 * Note also that Jie estimates F for retained fishery, f for male discards and
 	 * f for female discards.  Not recommended to have separate F's for retained and 
-	 * discard fisheries, but might be ok to have sex-specific F's.  
-	 * 
-	 * TODO 
-	 * -[ ] fix discard mortality rate.
+	 * discard fisheries, but might be ok to have sex-specific F's.
 	**/
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik,yk;
@@ -1341,27 +1356,27 @@ FUNCTION calc_fishing_mortality
 	 * @details Presently based on liner form
 	 * 
 	 * @param vSizes is a vector of doubles of size data from which to compute predicted values
-	 * @param iSex   is an integer vector indexing sex (1 = male, 2 = female)
+	 * @param iSex is an integer vector indexing sex (1 = male, 2 = female)
 	 * @return dvar_vector of predicted growth increments
 	**/
 FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
 	{
-	if ( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
-	{
-		cerr << "indices don't match..." << endl;
-		ad_exit(1);
-	}
-	RETURN_ARRAYS_INCREMENT();
-	dvar_vector pMoltInc(1,vSizes.indexmax());
-	pMoltInc.initialize();
-	int h,i;
-	for ( i = 1; i <= nGrowthObs; i++ )
-	{
-		h = iSex(i);
-		pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
-	}
-	RETURN_ARRAYS_DECREMENT();
-	return pMoltInc;
+		if ( vSizes.indexmin() != iSex.indexmin() || vSizes.indexmax() != iSex.indexmax() )
+		{
+			cerr << "indices don't match..." << endl;
+			ad_exit(1);
+		}
+		RETURN_ARRAYS_INCREMENT();
+		dvar_vector pMoltInc(1,vSizes.indexmax());
+		pMoltInc.initialize();
+		int h,i;
+		for ( i = 1; i <= nGrowthObs; i++ )
+		{
+			h = iSex(i);
+			pMoltInc(i) = alpha(h) - beta(h) * vSizes(i);
+		}
+		RETURN_ARRAYS_DECREMENT();
+		return pMoltInc;
 	}
 
 
@@ -1628,7 +1643,7 @@ FUNCTION calc_recruitment_size_distribution
 	 * 
 	 *  April 28, 2015.  There is no case here for initializing the model at unfished
 	 *  equilibrium conditions.  Need to fix this for SRA purposes.  SJDM. 
-	 */
+	**/
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
 	//N.initialize();
@@ -2301,37 +2316,37 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 		dvariable prior_pdf;
 		switch(pType)
 		{
-				case 0: // uniform
-					prior_pdf = dunif(theta,p1,p2);
-					/*
-					if ( (p2-p1) > 0 )
-					{
-						prior_pdf = -log(1.0 / (p2-p1));
-					} else {
-						cerr << "Error in uniform prior, p1 > p2.\n";
-						ad_exit(1);
-					}
-					*/
-				break;
-				case 1: // normal
-					// COUT(p1);COUT(p2);
-					prior_pdf = dnorm(theta,p1,p2);
-					// COUT(prior_pdf);
-				break;
-				case 2: // lognormal
-					prior_pdf = dlnorm(theta,log(p1),p2);
-				break;
-				case 3: // beta
-					//lb = theta_control(i,2);
-					//ub = theta_control(i,3);
-					//prior_pdf = dbeta((theta-lb)/(ub-lb),p1,p2);
-					prior_pdf = dbeta(theta,p1,p2);
-				break;
-				case 4: // gamma
-					prior_pdf = dgamma(theta,p1,p2);
-				break;
-			}
-			return prior_pdf;
+			case 0: // uniform
+				prior_pdf = dunif(theta,p1,p2);
+				/*
+				if ( (p2-p1) > 0 )
+				{
+					prior_pdf = -log(1.0 / (p2-p1));
+				} else {
+					cerr << "Error in uniform prior, p1 > p2.\n";
+					ad_exit(1);
+				}
+				*/
+			break;
+			case 1: // normal
+				// COUT(p1);COUT(p2);
+				prior_pdf = dnorm(theta,p1,p2);
+				// COUT(prior_pdf);
+			break;
+			case 2: // lognormal
+				prior_pdf = dlnorm(theta,log(p1),p2);
+			break;
+			case 3: // beta
+				//lb = theta_control(i,2);
+				//ub = theta_control(i,3);
+				//prior_pdf = dbeta((theta-lb)/(ub-lb),p1,p2);
+				prior_pdf = dbeta(theta,p1,p2);
+			break;
+			case 4: // gamma
+				prior_pdf = dgamma(theta,p1,p2);
+			break;
+		}
+		return prior_pdf;
 	}
 
 
@@ -2592,7 +2607,7 @@ FUNCTION calc_objective_function
    * @details Uses many of the same routines as the assessment
    * model, over-writes the observed data in memory with simulated 
    * data.
-  */
+  **/
 FUNCTION simulation_model
 	// random number generator
 	random_number_generator rng(rseed);
@@ -2872,7 +2887,7 @@ REPORT_SECTION
 	 * Add female component if lamnda < 1
 	 * 
 	 * @return dvar_vector ssb (model mature biomass).
-	 */
+	**/
 FUNCTION dvar_vector calc_ssb()
 	int ig,m,o;
 	int h = 1; // males
@@ -3104,11 +3119,11 @@ FINAL_SECTION
 	hour=long(elapsed_time)/3600;
 	minute=long(elapsed_time)%3600/60;
 	second=(long(elapsed_time)%3600)%60;
-	cout<<endl<<endl<<"*******************************************"<<endl;
-	cout<<endl<<endl<<"-------------------------------------------"<<endl;
-	cout<<"--Start time: "<<ctime(&start)<<endl;
-	cout<<"--Finish time: "<<ctime(&finish)<<endl;
-	cout<<"--Runtime: ";
-	cout<<hour<<" hours, "<<minute<<" minutes, "<<second<<" seconds"<<endl;
-	cout<<"--Number of function evaluations: "<<nf<<endl;
-	cout<<"*******************************************"<<endl;
+	cout << endl <<endl << "*******************************************" << endl;
+	cout << endl <<endl << "-------------------------------------------" << endl;
+	cout << "--Start time: " << ctime(&start) << endl;
+	cout << "--Finish time: " << ctime(&finish) << endl;
+	cout << "--Runtime: ";
+	cout << hour << " hours, " << minute << " minutes, " << second << " seconds" << endl;
+	cout << "--Number of function evaluations: " << nf << endl;
+	cout << "*******************************************" << endl;

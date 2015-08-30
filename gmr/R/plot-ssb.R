@@ -40,14 +40,20 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_ssb <- function(M, xlab = "Year", ylab = "SSB (tonnes)")
+plot_ssb <- function(M, xlab = "Year", ylab = "SSB (tonnes)", ylim = NULL)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     
     mdf <- .get_ssb_df(M)
     
-    p <- ggplot(mdf) + labs(x = xlab, y = ylab) + expand_limits(y = 0)
+    p <- ggplot(mdf) + labs(x = xlab, y = ylab)
+    if (is.null(ylim))
+    {
+        p <- p + expand_limits(y = 0)
+    } else {
+        p <- p + ylim(ylim[1], ylim[2])        
+    }
     if (length(M) == 1)
     {
         p <- p + geom_line(aes(x = year, y = ssb)) +

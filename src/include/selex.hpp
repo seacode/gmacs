@@ -269,19 +269,19 @@ namespace gsm {
 
     const T Selectivity(const T &x) const
     {
-      return gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR());
+    	return gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR());
     }
 
     const T logSelectivity(const T &x) const
     {
-      return log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+    	return log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
     }
 
     const T logSelexMeanOne(const T &x) const
     {
-      T y = log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
-      y  -= log(mean(mfexp(y)));
-      return y;
+    	T y = log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+    	y  -= log(mean(mfexp(y)));
+    	return y;
     }
 
   };
@@ -338,7 +338,7 @@ namespace gsm {
 		SelectivityCoefficients(T params = T(1))
 		:m_sel_coeffs(params) {}
 
-		T GetSelCoeffs() const { return m_sel_coeffs;    }
+		T GetSelCoeffs() const { return m_sel_coeffs; }
 		void SetSelCoeffs(T x) { this->m_sel_coeffs = x; }
 
 		const T Selectivity(const T &x) const
@@ -362,7 +362,7 @@ namespace gsm {
 	};
 
 // =========================================================================================================
-// nonparametric: Base function for parametric selectivity option 
+// nonparametric: Base function for nonparametric selectivity option 
 // =========================================================================================================
 
 	/**

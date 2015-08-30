@@ -17,7 +17,7 @@
    7.0       -10        20          2       1    3.0     5.0         # logR0
    7.0       -10        20          2       1    3.0     5.0         # logR1
   10.4       -10        20          1       1    3.0     5.0         # logRbar
-  72.5        55       100          4       1   72.5    7.25         # Recruitment Expected Value
+  72.5        55       100          4       1   62.5    7.25         # Recruitment Expected Value
   0.55       0.1         5          3       0    0.1     5.0         # Recruitment scale (variance component)
  -0.51       -10      0.75          4       0  -10.0    0.75         # ln(sigma_R)
   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
@@ -34,27 +34,27 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   17.5       1.0      90.0          3       0    0.0    999.0         # alpha males or combined
   17.5       1.0      90.0          3       0    0.0    999.0         # alpha
-  0.10       0.0       0.9          3       0    0.0    999.0         # beta males or combined
-  0.10       0.0       0.9          3       0    0.0    999.0         # beta
-  0.30       0.0      90.0          4       0    0.0    999.0         # gscale males or combined
-  0.30       0.15     90.0          4       0    0.0    999.0         # gscale
-  140.       1.0     195.0          3       0    0.0    999.0         # molt_mu males or combined
-  159.       1.0     195.0          3       0    0.0    999.0         # molt_mu
- 0.071       0.0001    9.0          4       0    0.0    999.0         # molt_cv males or combined
- 0.1         0.0001    9.0          4       0    0.0    999.0         # molt_cv
+   0.10      0.0       0.9          3       0    0.0    999.0         # beta males or combined
+   0.10      0.0       0.9          3       0    0.0    999.0         # beta
+   0.30      0.0      90.0          4       0    0.0    999.0         # gscale males or combined
+   0.30      0.15     90.0          4       0    0.0    999.0         # gscale
+ 140.0       1.0     195.0          3       0    0.0    999.0         # molt_mu males or combined
+ 155.0       1.0     195.0         -3       0    0.0    999.0         # molt_mu
+   0.071     0.0001    9.0          4       0    0.0    999.0         # molt_cv males or combined
+   0.1       0.0001    9.0          4       0    0.0    999.0         # molt_cv
 ## ——————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
 ##    -Each gear must have a selectivity and a retention selectivity                    ##
-## LEGEND sel type:   1=coefficients, 2=logistic, 3=logistic95                          ##
+## LEGEND sel type: 1 = coefficients, 2 = logistic, 3 = logistic95, 4 = double normal   ##
 ##        gear index: use +ve for selectivity, -ve for retentio                         ##
 ##        sex dep: 0 for sex-independent, 1 for sex-dependent.                          ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ivector for number of year periods or nodes                                          ##
 ## Gear-1    Gear-2    Gear-3   Gear-4
    1         1         2        1         # Selectivity periods
-   0         0         0        0         # sex specific selectivity
+   1         0         0        0         # sex specific selectivity
    3         3         3        3         # male   selectivity type
    3         3         3        3         # female selectivity type
 ## Gear-1    Gear-2    Gear-3   Gear-4
@@ -70,8 +70,10 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Selectivity P(capture of all sizes)
 # Gear-1
-   1     1     1   0    100    5    185    0      10    200    3     1975   2014
-   1     2     2   0    120    5    185    0      10    200    3     1975   2014
+   1     1     1   1    100    5    185    0      10    200    3     1975   2014
+   1     2     2   1    120    5    185    0      10    200    3     1975   2014
+   1     1     1   2    100    5    185    0      10    200    3     1975   2014
+   1     2     2   2    120    5    185    0      10    200    3     1975   2014
 # Gear-2
    2     3     1   0    110    5    185    0      10    200    3     1975   2014
    2     4     2   0    150    5    185    0      10    200    3     1975   2014
@@ -133,7 +135,7 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 2   2   2   1   1   1   1   1   1   # Type of likelihood.
+ 2   2   2   2   2   2   2   2   2   # Type of likelihood.
  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
  1   2   2   3   3   4   4   4   5   # Composition aggregator

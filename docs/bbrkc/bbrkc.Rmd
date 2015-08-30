@@ -191,6 +191,16 @@ what should follow for other crab stocks: that is, direct model comparisons to
 practice to closely match the outputs of existing ADFG stock assessment models.
 
 
+## New features
+
+New features added to Gmacs since the CIE review include:
+
+  * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; coefficient selectivity type; provision for additonal selectivity types (i.e. double normal is being developed/tested).
+  * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneoulsy within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
+  * Prior specification for all model parameters.
+
+
+
 ## Summary of analytical approach
 
 To reduce annual measurement errors associated with abundance estimates derived
@@ -339,7 +349,7 @@ The model fit to survey biomass for males was XXX in the @zheng_bristol_2014
 model (at least visually) than for either of the current implementations of
 Gmacs (Figure \ref{fig:survey_biomass}).
 
-```{r survey_biomass, fig.cap = "Model fits to NMFS trawl survey biomass.\\label{fig:survey_biomass}"}
+```{r survey_biomass, fig.cap = "Model fits to NMFS trawl survey biomass (tonnes).\\label{fig:survey_biomass}"}
 #plot_cpue(M)
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass")
 ```
@@ -351,7 +361,7 @@ The observed and predicted catches by gear type are summarized in (Figure
 \ref{fig:fit_to_catch}). Data for discard fisheries were read in with 100%
 mortality (as clarified in Table 1 of @zheng_bristol_2014).
 
-```{r fit_to_catch, fig.cap = "Observed and predicted catch by gear type for the Gmacs models.\\label{fig:fit_to_catch}"}
+```{r fit_to_catch, fig.cap = "Observed and predicted catch (tonnes) by gear type for the Gmacs models.\\label{fig:fit_to_catch}"}
 # Create a list that only contains the OneSex and TwoSex models
 A <- M; A[[3]] <- NULL
 plot_catch(A)
@@ -369,43 +379,43 @@ fisheries for males (Figure \ref{fig:sc_trawl_bycatch_m}) and females (Figure
 \ref{fig:sc_trawl_bycatch_f}), and the NMFS trawl survey (Figure
 \ref{fig:sc_NMFS_m}).
 
-```{r sc_pot_m, fig.cap = "Observed and model estimated length-frequencies of male BBRKC by year retained in the directed pot fishery.\\label{fig:sc_pot_m}"}
+```{r sc_pot_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\\label{fig:sc_pot_m}"}
 plot_size_comps(A, 1)
 ```
 
-```{r sc_pot_discarded_m, fig.cap = "Observed and model estimated length-frequencies of male BBRKC by year discarded in the directed pot fishery.\\label{fig:sc_pot_discarded_m}"}
+```{r sc_pot_discarded_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year discarded in the directed pot fishery.\\label{fig:sc_pot_discarded_m}"}
 plot_size_comps(A, 2)
 ```
 
-```{r sc_pot_discarded_f, fig.cap = "Observed and model estimated length-frequencies of female BBRKC by year discarded in the directed pot fishery.\\label{fig:sc_pot_discarded_f}"}
+```{r sc_pot_discarded_f, fig.cap = "Observed and model estimated size-frequencies of female BBRKC by year discarded in the directed pot fishery.\\label{fig:sc_pot_discarded_f}"}
 plot_size_comps(A, 3)
 ```
 
-```{r sc_trawl_bycatch_m, fig.cap = "Observed and model estimated length-frequencies of male BBRKC by year in the groundfish trawl bycatch fisheries.\\label{fig:sc_trawl_bycatch_m}"}
+```{r sc_trawl_bycatch_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year in the groundfish trawl bycatch fisheries.\\label{fig:sc_trawl_bycatch_m}"}
 plot_size_comps(A, 4)
 ```
 
-```{r sc_trawl_bycatch_f, fig.cap = "Observed and model estimated length-frequencies of female BBRKC by year in the groundfish trawl bycatch fisheries.\\label{fig:sc_trawl_bycatch_f}"}
+```{r sc_trawl_bycatch_f, fig.cap = "Observed and model estimated size-frequencies of female BBRKC by year in the groundfish trawl bycatch fisheries.\\label{fig:sc_trawl_bycatch_f}"}
 plot_size_comps(A, 5)
 ```
 
-```{r , sc_NMFS_m, fig.cap = "Observed and model estimated length-frequencies of male BBRKC by year in the NMFS trawl fishery.\\label{fig:sc_NMFS_m}"}
+```{r , sc_NMFS_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year in the NMFS trawl fishery.\\label{fig:sc_NMFS_m}"}
 plot_size_comps(A, 6)
 ```
 
 
-## Mean weight-at-length
+## Mean weight-at-size
 
-The mean weight-at-length ($w_\ell$) of crabs is defined in kg and the carapace
-length ($\ell$, CL) in mm. The mean weight-at-length of males used in all models
+The mean weight-at-size ($w_\ell$) of crabs is defined in kg and the carapace
+length ($\ell$, CL) in mm. The mean weight-at-size of males used in all models
 is nearly identical. The only difference between the Gmacs models and Zheng's is
-in the final length class (160mm) where the mean weight is greater in Zheng's
+in the final size class (160mm) where the mean weight is greater in Zheng's
 model than in Gmacs (Figure \ref{fig:length-weight}). However, the pattern is
 very different for females. This difference is due to...
 
-```{r length_weight, fig.cap = "Relationship between carapace length (mm) and weight (kg) by sex in each of the models.\\label{fig:length-weight}"}
+```{r length_weight, fig.cap = "Relationship between carapace width (mm) and weight (kg) by sex in each of the models.\\label{fig:length-weight}"}
 .OVERLAY <- FALSE
-plot_length_weight(M, xlab = "Carapace length (mm)", ylab = "Weight (kg)")
+plot_length_weight(M, xlab = "Carapace width (mm)", ylab = "Weight (kg)")
 .OVERLAY <- TRUE
 ```
 
@@ -415,8 +425,8 @@ plot_length_weight(M, xlab = "Carapace length (mm)", ylab = "Weight (kg)")
 Gmacs was configured to match the @zheng_bristol_2014 model recruitment size
 distribution closely (Figure \ref{fig:init_rec}).
 
-```{r init_rec, fig.cap = "Distribution of carapace length (mm) at recruitment.\\label{fig:init_rec}"}
-plot_recruitment_size(M, xlab = "Carapace length (mm)")
+```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
+plot_recruitment_size(M, xlab = "Carapace width (mm)")
 ```
 
 
@@ -461,17 +471,20 @@ and final year ($t=T$) in each model differ substantially (Figure
 related to the interaction with natural mortality estimates and how the initial
 population-at-lengths were established (the BBRKC model assumes all new-shell).
 
-```{r init_N, fig.cap = "Numbers at length in 1975.\\label{fig:init_N}"}
+```{r init_N, fig.cap = "Numbers at length in 1975 and 2014.\\label{fig:init_N}"}
 plot_numbers(M, c("1975","2014"))
 ```
 
 
 ## Selectivity
 
-The selectivity by length ($S_\ell$) for each of the fisheries (Figure
-\ref{fig:selectivity}).
+The selectivity by size ($S_\ell$) for each of the fisheries (Figure
+\ref{fig:selectivity}). In the TwoSex model, selectivity in the directed pot
+fishery is sex-specific. In the remaining fisheries, selectivity is constant
+by sex. In the NMFS trawl fishery, a different selectivity curve is estimated
+for the 1975-1981 period and for the 1982-2014 period.
 
-```{r selectivity, fig.cap = "Estimated selectivity functions.\\label{fig:selectivity}"}
+```{r selectivity, fig.cap = "Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models.\\label{fig:selectivity}"}
 plot_selectivity(M, ncol = 4)
 ```
 
@@ -487,7 +500,7 @@ priori. The pattern in time-varying natural mortality is resonably similar
 between the two models (Figure \ref{fig:M_t}), however the peak in natural
 mortality during the early 1980 is not as high in the Gmacs-BBRKC model.
 
-```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$).\\label{fig:M_t}"}
+```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Periods begin at 1976, 1980, 1985 and 1994.\\label{fig:M_t}"}
 plot_natural_mortality(M)
 ```
 
@@ -516,7 +529,7 @@ uncertainty.
 
 ```{r spawning_stock_biomass, fig.cap = "Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.\\label{fig:ssb}"}
 A <- M; A[[1]] <- NULL
-plot_ssb(M)
+plot_ssb(M, ylim = c(0, 1e6))
 ```
 
 
