@@ -8,7 +8,7 @@ plot_growth_transition(M, xlab = "Size-class",
   ylab = "P(size transition | molt)", slab = "Sex")
 }
 \arguments{
-\item{M}{list of object(s) created by read_admb function}
+\item{M}{a list of object(s) created by read_admb function}
 
 \item{xlab}{the x-axis label for the plot}
 
@@ -20,7 +20,7 @@ plot_growth_transition(M, xlab = "Size-class",
 plot of size transition matrix
 }
 \description{
-The growth probabilities (G_h, for all crabs that molt)
+The sex-specific growth transition probabilities (G_h, for all crabs that molt)
 }
 \author{
 SJD Martell, D'Arcy N. Webber

@@ -1,8 +1,8 @@
 #' Plot growth transition
 #'
-#' The growth probabilities (G_h, for all crabs that molt)
+#' The sex-specific growth transition probabilities (G_h, for all crabs that molt)
 #'
-#' @param M list of object(s) created by read_admb function
+#' @param M a list of object(s) created by read_admb function
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @param slab the sex label for the plot that appears above the key
@@ -20,7 +20,8 @@ plot_growth_transition <- function(M, xlab = "Size-class", ylab = "P(size transi
     for(i in 1:n)
     {
         x <- M[[i]]$mid_points
-        G <- M[[i]]$tG
+        #G <- M[[i]]$tG
+        G <- M[[i]]$plot_growth_transition
         h <- dim(G)[1] / dim(G)[2]
         colnames(G) <- paste(x)
         s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]

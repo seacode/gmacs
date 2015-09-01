@@ -23,27 +23,27 @@ opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, me
 library(gmr)
 
 # The model specs
-.MODELDIR = c("../../examples/bbrkc/OneSex/","../../examples/bbrkc/TwoSex/","../../examples/bbrkc/TwoSex/")
+.MODELDIR = c("../../examples/bbrkc/OneSex/", "../../examples/bbrkc/TwoSex/", "../../examples/bbrkc/TwoSex/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
-.SEX      = c("Aggregate","Male","Female")
-.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
-.TYPE     = c("Retained & Discarded","Retained","Discarded")
-.SHELL    = c("Aggregate","New Shell","Old Shell")
-.MATURITY = c("Aggregate","Immature","Mature")
+.SEX      = c("Aggregate", "Male", "Female")
+.FLEET    = c("Pot", "Trawl bycatch", "NMFS Trawl", "BSFRF")
+.TYPE     = c("Retained & Discarded", "Retained", "Discarded")
+.SHELL    = c("Aggregate", "New Shell", "Old Shell")
+.MATURITY = c("Aggregate", "Immature", "Mature")
 .SEAS     = c("Annual")
 
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("OneSex","TwoSex","Zheng")
+names(M) <- c("OneSex", "TwoSex", "Zheng")
 
 # Read in Jie's file
-j_ssb  = read.table("jieOutput/jie_mmb.rep",       header = TRUE)
-j_surv = read.table("jieOutput/jie_survb.rep",     header = TRUE)
-j_len  = read.table("jieOutput/jie_len_sched.rep", header = TRUE)
-j_ltr  = read.table("jieOutput/jie_lentrans.rep",  header = FALSE)
-jj <- 3 # The position in the list that Jies model is
+j_ssb  <- read.table("jieOutput/jie_mmb.rep",       header = TRUE)
+j_surv <- read.table("jieOutput/jie_survb.rep",     header = TRUE)
+j_len  <- read.table("jieOutput/jie_len_sched.rep", header = TRUE)
+j_ltr  <- read.table("jieOutput/jie_lentrans.rep",  header = FALSE)
+jj <- 3 # The position in the list that Jies model outputs sit
 
 # Add selectivity data
 # year, sex, fleet, vec
@@ -137,7 +137,7 @@ M[[jj]]$fit$est[ii] <- log(j_ssb$R*1e+3)
 M[[jj]]$fit$std[ii] <- rep(0, length(j_ssb$R))
 
 # Add growth transition data
-M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
+M[[jj]]$growth_transition <- t(rbind(j_ltr, j_ltr))
 M[[jj]]$tG <- rbind(j_ltr, j_ltr)
 
 # Add size transition data
@@ -378,6 +378,12 @@ pot fishery (Figure \ref{fig:sc_pot_discarded_f}), the groundfish trawl bycatch
 fisheries for males (Figure \ref{fig:sc_trawl_bycatch_m}) and females (Figure
 \ref{fig:sc_trawl_bycatch_f}), and the NMFS trawl survey (Figure
 \ref{fig:sc_NMFS_m}).
+
+All size composition data were fitted using the robust multinomail
+distribution. In the OneSex model, new shell and old shell males were fitted
+simultaneously. In the TwoSex model the following size compositions were
+fitted simultaneously: discarded males and females; trawl bycatch males and
+females; NMFS trawl survey new shell males, old shell males and females.
 
 ```{r sc_pot_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\\label{fig:sc_pot_m}"}
 plot_size_comps(A, 1)

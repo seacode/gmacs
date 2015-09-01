@@ -232,6 +232,12 @@ fisheries for males (Figure \ref{fig:sc_trawl_bycatch_m}) and females (Figure
 \ref{fig:sc_trawl_bycatch_f}), and the NMFS trawl survey (Figure
 \ref{fig:sc_NMFS_m}).
 
+All size composition data were fitted using the robust multinomail
+distribution. In the OneSex model, new shell and old shell males were fitted
+simultaneously. In the TwoSex model the following size compositions were
+fitted simultaneously: discarded males and females; trawl bycatch males and
+females; NMFS trawl survey new shell males, old shell males and females.
+
 ![Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\label{fig:sc_pot_m}](figure/sc_pot_m-1.png) 
 
 ![Observed and model estimated size-frequencies of male BBRKC by year discarded in the directed pot fishery.\label{fig:sc_pot_discarded_m}](figure/sc_pot_discarded_m-1.png) 
@@ -284,7 +290,10 @@ The first set of figures is the growth probabilities (for all crabs that molt)
 growth and molting and represents the size transition (Figure
 \ref{fig:size_trans}).
 
-![Growth transitions.\label{fig:growth_trans}](figure/growth_trans-1.png) 
+
+```
+## Error in `colnames<-`(`*tmp*`, value = c("67.5", "72.5", "77.5", "82.5", : attempt to set 'colnames' on an object with less than two dimensions
+```
 
 ![Size transitions.\label{fig:size_trans}](figure/size_trans-1.png) 
 
@@ -322,7 +331,7 @@ priori. The pattern in time-varying natural mortality is resonably similar
 between the two models (Figure \ref{fig:M_t}), however the peak in natural
 mortality during the early 1980 is not as high in the Gmacs-BBRKC model.
 
-![Time-varying natural mortality ($M_t$).\label{fig:M_t}](figure/natural_mortality-1.png) 
+![Time-varying natural mortality ($M_t$). Periods begin at 1976, 1980, 1985 and 1994.\label{fig:M_t}](figure/natural_mortality-1.png) 
 
 
 ## Recruitment
@@ -334,7 +343,7 @@ time ($R_t$) estimated in the two models are similar, but differences in
 natural mortality schedules will affect these matches (Figure
 \ref{fig:recruitment}).
 
-![Estimated recruitment time series ($R_t$). Periods begin at 1976, 1980, 1985 and 1994.\label{fig:recruitment}](figure/recruitment-1.png) 
+![Estimated recruitment time series ($R_t$).\label{fig:recruitment}](figure/recruitment-1.png) 
 
 
 ## Mature male biomass (MMB)

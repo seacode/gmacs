@@ -159,6 +159,7 @@
 </div>
 <h2 id="fit-to-size-composition-data">Fit to size composition data</h2>
 <p>The fit of the Gmacs models to the BBRKC size composition data are given in the following plots. These include fits to the directed pot fishery for males (Figure ), male crabs discarded in the directed pot fishery (Figure ), female crabs discarded in the directed pot fishery (Figure ), the groundfish trawl bycatch fisheries for males (Figure ) and females (Figure ), and the NMFS trawl survey (Figure ).</p>
+<p>All size composition data were fitted using the robust multinomail distribution. In the OneSex model, new shell and old shell males were fitted simultaneously. In the TwoSex model the following size compositions were fitted simultaneously: discarded males and females; trawl bycatch males and females; NMFS trawl survey new shell males, old shell males and females.</p>
 <div class="figure">
 <img src="figure/sc_pot_m-1.png" alt="Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery." /><p class="caption">Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.</p>
 </div>
@@ -197,9 +198,7 @@
 </div>
 <h2 id="transition-processes">Transition processes</h2>
 <p>The first set of figures is the growth probabilities (for all crabs that molt) (Figure ). The second set of figures is the combination of growth and molting and represents the size transition (Figure ).</p>
-<div class="figure">
-<img src="figure/growth_trans-1.png" alt="Growth transitions." /><p class="caption">Growth transitions.</p>
-</div>
+<pre><code>## Error in `colnames&lt;-`(`*tmp*`, value = c(&quot;67.5&quot;, &quot;72.5&quot;, &quot;77.5&quot;, &quot;82.5&quot;, : attempt to set &#39;colnames&#39; on an object with less than two dimensions</code></pre>
 <div class="figure">
 <img src="figure/size_trans-1.png" alt="Size transitions." /><p class="caption">Size transitions.</p>
 </div>
@@ -216,12 +215,12 @@
 <h2 id="natural-mortality">Natural mortality</h2>
 <p>The figure below illustrates implementation of four step changes in <span class="math"><em>M</em><sub><em>t</em></sub></span> (freely estimated) in gmacs relative to the estimates from Zheng et al. 2014 (Figure ). In both the ADFG-BBRKC and Gmacs-BBRKC models, time-varying natural mortality (<span class="math"><em>M</em><sub><em>t</em></sub></span>) is freely estimated with four step changes through time. The years (<span class="math"><em>t</em></span>) that each of these steps cover are fixed a priori. The pattern in time-varying natural mortality is resonably similar between the two models (Figure ), however the peak in natural mortality during the early 1980 is not as high in the Gmacs-BBRKC model.</p>
 <div class="figure">
-<img src="figure/natural_mortality-1.png" alt="Time-varying natural mortality (M_t)." /><p class="caption">Time-varying natural mortality (<span class="math"><em>M</em><sub><em>t</em></sub></span>).</p>
+<img src="figure/natural_mortality-1.png" alt="Time-varying natural mortality (M_t). Periods begin at 1976, 1980, 1985 and 1994." /><p class="caption">Time-varying natural mortality (<span class="math"><em>M</em><sub><em>t</em></sub></span>). Periods begin at 1976, 1980, 1985 and 1994.</p>
 </div>
 <h2 id="recruitment">Recruitment</h2>
 <p>Recruitment patterns are similar, but differences in natural mortality schedules will affect these matches. The figure below plots the values to have the same mean (Figure ). Patterns in recruitment through time (<span class="math"><em>R</em><sub><em>t</em></sub></span>) estimated in the two models are similar, but differences in natural mortality schedules will affect these matches (Figure ).</p>
 <div class="figure">
-<img src="figure/recruitment-1.png" alt="Estimated recruitment time series (R_t). Periods begin at 1976, 1980, 1985 and 1994." /><p class="caption">Estimated recruitment time series (<span class="math"><em>R</em><sub><em>t</em></sub></span>). Periods begin at 1976, 1980, 1985 and 1994.</p>
+<img src="figure/recruitment-1.png" alt="Estimated recruitment time series (R_t)." /><p class="caption">Estimated recruitment time series (<span class="math"><em>R</em><sub><em>t</em></sub></span>).</p>
 </div>
 <h2 id="mature-male-biomass-mmb">Mature male biomass (MMB)</h2>
 <p>The spawning stock biomass (tonnes) of mature males, termed the mature male biomass (<span class="math"><em>MMB</em><sub><em>t</em></sub></span>), also differs a lot bewteen the two models (Figure ). The OneSex model is not plotted here as the uncertainty during the early years is extremely high. The Zheng model is plotted without uncertainty.</p>
