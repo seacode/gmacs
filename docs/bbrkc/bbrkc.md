@@ -20,7 +20,7 @@ bibliography: Gmacs.bib
 
 # Introduction
 
-Gmacs is a generalized size-structured stock assessment modelling framework for
+Gmacs is a generalized size-structured stock assessment modeling framework for
 molting crustacean species. Gmacs can make use of a wide variety of data,
 including fishery- and survey-based size-composition data, and fishery-dependent
 and -independent indices of abundance. Gmacs is coded using AD Model Builder.
@@ -31,7 +31,7 @@ size-structured assessment models of the form described in @punt_review_2013.
 Currenlty, each stock is assessed using a stock-specific assessment model
 (e.g. @zheng_bristol_2014). The Gmacs project aims to provide software that
 will allow each stock to be assessed independently but using a single
-modelling framework.
+modeling framework.
 
 Gmacs is used here to develop an assessment model for the Bristol Bay Red King
 Crab (BBRKC) stock. The example assessment is intended to match closely with a
@@ -55,7 +55,7 @@ practice to closely match the outputs of existing ADFG stock assessment models.
 
 New features added to Gmacs since the CIE review include:
 
-  * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; coefficient selectivity type; provision for additonal selectivity types (i.e. double normal is being developed/tested).
+  * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; provision for additonal selectivity types (i.e. coefficient selectivity and double normal).
   * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneoulsy within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
   * Prior specification for all model parameters.
 
@@ -63,7 +63,11 @@ New features added to Gmacs since the CIE review include:
 
 New features that will be coming soon include:
 
-  * Something
+  * Double normal and coefficient selectivity types
+  * Dirichlet size composition option
+  * Addtional time-varying options for molt, growth and maturity
+  * Allowing addtional variances to be estimated for abundance indices
+  * Fully Bayesian MCMC functionality
 
 
 
@@ -215,7 +219,9 @@ The model fit to survey biomass for males was XXX in the @zheng_bristol_2014
 model (at least visually) than for either of the current implementations of
 Gmacs (Figure \ref{fig:survey_biomass}).
 
-![Model fits to NMFS trawl survey biomass (tonnes).\label{fig:survey_biomass}](figure/survey_biomass-1.png) 
+![Model fits to sex-specific NMFS trawl survey biomass (tonnes) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.\label{fig:survey_biomass}](figure/survey_biomass-1.png) 
+
+![Model fits to the BSFRF survey biomass (tonnes) in 2007 and 2008. The error bars represent plus and minus 2 standard deviations.\label{fig:survey_biomass_BSFRF}](figure/survey_biomass_BSFRF-1.png) 
 
 
 ## Estimated retained catch and discards
@@ -224,7 +230,7 @@ The observed and predicted catches by gear type are summarized in (Figure
 \ref{fig:fit_to_catch}). Data for discard fisheries were read in with 100%
 mortality (as clarified in Table 1 of @zheng_bristol_2014).
 
-![Observed and predicted catch (tonnes) by gear type for the Gmacs models.\label{fig:fit_to_catch}](figure/fit_to_catch-1.png) 
+![Observed and predicted catch (tonnes) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013.\label{fig:fit_to_catch}](figure/fit_to_catch-1.png) 
 
 
 ## Fit to size composition data
@@ -320,7 +326,7 @@ fishery is sex-specific. In the remaining fisheries, selectivity is constant
 by sex. In the NMFS trawl fishery, a different selectivity curve is estimated
 for the 1975-1981 period and for the 1982-2014 period.
 
-![Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models.\label{fig:selectivity}](figure/selectivity-1.png) 
+![Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey.\label{fig:selectivity}](figure/selectivity-1.png) 
 
 
 ## Natural mortality

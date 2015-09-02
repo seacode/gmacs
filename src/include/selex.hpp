@@ -362,7 +362,7 @@ namespace gsm {
 	};
 
 // =========================================================================================================
-// nonparametric: Base function for nonparametric selectivity option 
+// nonparametric: Base function for non-parametric selectivity option 
 // =========================================================================================================
 
 	/**

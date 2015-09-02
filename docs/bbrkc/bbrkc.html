@@ -1,20 +1,24 @@
 <h1 id="introduction">Introduction</h1>
-<p>Gmacs is a generalized size-structured stock assessment modelling framework for molting crustacean species. Gmacs can make use of a wide variety of data, including fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs is coded using AD Model Builder.</p>
-<p>Crab stocks of Alaska are managed by the North Pacific Fisheries Management Council (<a href="http://npfmc.org">NPFMC</a>). Some stocks are assessed with integrated size-structured assessment models of the form described in <span class="citation">Punt, Huang, and Maunder (2013)</span>. Currenlty, each stock is assessed using a stock-specific assessment model (e.g. <span class="citation">Zheng and Siddeek (2014)</span>). The Gmacs project aims to provide software that will allow each stock to be assessed independently but using a single modelling framework.</p>
+<p>Gmacs is a generalized size-structured stock assessment modeling framework for molting crustacean species. Gmacs can make use of a wide variety of data, including fishery- and survey-based size-composition data, and fishery-dependent and -independent indices of abundance. Gmacs is coded using AD Model Builder.</p>
+<p>Crab stocks of Alaska are managed by the North Pacific Fisheries Management Council (<a href="http://npfmc.org">NPFMC</a>). Some stocks are assessed with integrated size-structured assessment models of the form described in <span class="citation">Punt, Huang, and Maunder (2013)</span>. Currenlty, each stock is assessed using a stock-specific assessment model (e.g. <span class="citation">Zheng and Siddeek (2014)</span>). The Gmacs project aims to provide software that will allow each stock to be assessed independently but using a single modeling framework.</p>
 <p>Gmacs is used here to develop an assessment model for the Bristol Bay Red King Crab (BBRKC) stock. The example assessment is intended to match closely with a model scenario presented to the Spring 2014 BSAI Crab Plan Team Meeting by <span class="citation">Zheng and Siddeek (2014)</span>. The following summarizes the outcome of some comparisons between the existing BBRKC stock assessment model <span class="citation">(Zheng and Siddeek 2014)</span> and an emulated version using the Gmacs platform.</p>
 <p>An important component of the Gmacs framework is the provision of software for plotting Gmacs model outputs. In what follows, we demonstrate the use of the <code>gmr</code> package to process the output of the Gmacs-BBRKC model and produce plots that can be used in assessment reports.</p>
 <p>Together, the Gmacs-BBRKC model and this report serve as the first example of what should follow for other crab stocks: that is, direct model comparisons to (1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in practice to closely match the outputs of existing ADFG stock assessment models.</p>
 <h2 id="new-features">New features</h2>
 <p>New features added to Gmacs since the CIE review include:</p>
 <ul>
-<li>Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; coefficient selectivity type; provision for additonal selectivity types (i.e. double normal is being developed/tested).</li>
+<li>Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; provision for additonal selectivity types (i.e. coefficient selectivity and double normal).</li>
 <li>Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneoulsy within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.</li>
 <li>Prior specification for all model parameters.</li>
 </ul>
 <h2 id="coming-soon">Coming soon</h2>
 <p>New features that will be coming soon include:</p>
 <ul>
-<li>Something</li>
+<li>Double normal and coefficient selectivity types</li>
+<li>Dirichlet size composition option</li>
+<li>Addtional time-varying options for molt, growth and maturity</li>
+<li>Allowing addtional variances to be estimated for abundance indices</li>
+<li>Fully Bayesian MCMC functionality</li>
 </ul>
 <h2 id="summary-of-analytical-approach">Summary of analytical approach</h2>
 <p>To reduce annual measurement errors associated with abundance estimates derived from the area-swept method, the ADFG developed a length-based analysis (LBA) in 1994 that incorporates multiple years of data and multiple data sources in the estimation procedure (Zheng et al. 1995a). Annual abundance estimates of the BBRKC stock from the LBA have been used to manage the directed crab fishery and to set crab bycatch limits in the groundfish fisheries since 1995. An alternative LBA (research model) was developed in 2004 to include small size groups for federal overfishing limits. The crab abundance declined sharply during the early 1980s. The LBA estimated natural mortality for different periods of years, whereas the research model estimated additional mortality beyond a basic constant natural mortality during 1976-1993.</p>
@@ -155,12 +159,15 @@
 <h2 id="fit-to-survey-abundance-indices">Fit to survey abundance indices</h2>
 <p>The model fit to survey biomass for males was XXX in the <span class="citation">Zheng and Siddeek (2014)</span> model (at least visually) than for either of the current implementations of Gmacs (Figure ).</p>
 <div class="figure">
-<img src="figure/survey_biomass-1.png" alt="Model fits to NMFS trawl survey biomass (tonnes)." /><p class="caption">Model fits to NMFS trawl survey biomass (tonnes).</p>
+<img src="figure/survey_biomass-1.png" alt="Model fits to sex-specific NMFS trawl survey biomass (tonnes) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations." /><p class="caption">Model fits to sex-specific NMFS trawl survey biomass (tonnes) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.</p>
+</div>
+<div class="figure">
+<img src="figure/survey_biomass_BSFRF-1.png" alt="Model fits to the BSFRF survey biomass (tonnes) in 2007 and 2008. The error bars represent plus and minus 2 standard deviations." /><p class="caption">Model fits to the BSFRF survey biomass (tonnes) in 2007 and 2008. The error bars represent plus and minus 2 standard deviations.</p>
 </div>
 <h2 id="estimated-retained-catch-and-discards">Estimated retained catch and discards</h2>
 <p>The observed and predicted catches by gear type are summarized in (Figure ). Data for discard fisheries were read in with 100% mortality (as clarified in Table 1 of <span class="citation">Zheng and Siddeek (2014)</span>).</p>
 <div class="figure">
-<img src="figure/fit_to_catch-1.png" alt="Observed and predicted catch (tonnes) by gear type for the Gmacs models." /><p class="caption">Observed and predicted catch (tonnes) by gear type for the Gmacs models.</p>
+<img src="figure/fit_to_catch-1.png" alt="Observed and predicted catch (tonnes) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013." /><p class="caption">Observed and predicted catch (tonnes) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013.</p>
 </div>
 <h2 id="fit-to-size-composition-data">Fit to size composition data</h2>
 <p>The fit of the Gmacs models to the BBRKC size composition data are given in the following plots. These include fits to the directed pot fishery for males (Figure ), male crabs discarded in the directed pot fishery (Figure ), female crabs discarded in the directed pot fishery (Figure ), the groundfish trawl bycatch fisheries for males (Figure ) and females (Figure ), and the NMFS trawl survey (Figure ).</p>
@@ -217,7 +224,7 @@
 <h2 id="selectivity">Selectivity</h2>
 <p>The selectivity by size (<span class="math"><em>S</em><sub>ℓ</sub></span>) for each of the fisheries (Figure ). In the TwoSex model, selectivity in the directed pot fishery is sex-specific. In the remaining fisheries, selectivity is constant by sex. In the NMFS trawl fishery, a different selectivity curve is estimated for the 1975-1981 period and for the 1982-2014 period.</p>
 <div class="figure">
-<img src="figure/selectivity-1.png" alt="Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models." /><p class="caption">Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models.</p>
+<img src="figure/selectivity-1.png" alt="Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey." /><p class="caption">Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey.</p>
 </div>
 <h2 id="natural-mortality">Natural mortality</h2>
 <p>The figure below illustrates implementation of four step changes in <span class="math"><em>M</em><sub><em>t</em></sub></span> (freely estimated) in gmacs relative to the estimates from Zheng et al. 2014 (Figure ). In both the ADFG-BBRKC and Gmacs-BBRKC models, time-varying natural mortality (<span class="math"><em>M</em><sub><em>t</em></sub></span>) is freely estimated with four step changes through time. The years (<span class="math"><em>t</em></span>) that each of these steps cover are fixed a priori. The pattern in time-varying natural mortality is resonably similar between the two models (Figure ), however the peak in natural mortality during the early 1980 is not as high in the Gmacs-BBRKC model.</p>
