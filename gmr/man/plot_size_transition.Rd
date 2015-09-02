@@ -5,7 +5,7 @@
 \title{Plot size transition}
 \usage{
 plot_size_transition(M, xlab = "Size-class",
-  ylab = "P(size transition | molt)", slab = "Sex")
+  ylab = "P(size transition | molt)", slab = "Sex", females = FALSE)
 }
 \arguments{
 \item{M}{list of object(s) created by read_admb function}
@@ -15,6 +15,8 @@ plot_size_transition(M, xlab = "Size-class",
 \item{ylab}{the y-axis label for the plot}
 
 \item{slab}{the sex label for the plot that appears above the key}
+
+\item{females}{logical indicating if the females are to be plotted or not}
 }
 \value{
 plot of size transition matrix
@@ -24,6 +26,6 @@ The combination of growth transitions (G_h) and molting probability (P_h)
 represents the size transition.
 }
 \author{
-SJD Martell, DN Webber
+SJD Martell, D'Arcy N. Webber
 }
 

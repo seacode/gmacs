@@ -59,6 +59,12 @@ New features added to Gmacs since the CIE review include:
   * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneoulsy within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
   * Prior specification for all model parameters.
 
+## Coming soon
+
+New features that will be coming soon include:
+
+  * Something
+
 
 
 ## Summary of analytical approach
@@ -290,10 +296,7 @@ The first set of figures is the growth probabilities (for all crabs that molt)
 growth and molting and represents the size transition (Figure
 \ref{fig:size_trans}).
 
-
-```
-## Error in `colnames<-`(`*tmp*`, value = c("67.5", "72.5", "77.5", "82.5", : attempt to set 'colnames' on an object with less than two dimensions
-```
+![Growth transitions.\label{fig:growth_trans}](figure/growth_trans-1.png) 
 
 ![Size transitions.\label{fig:size_trans}](figure/size_trans-1.png) 
 

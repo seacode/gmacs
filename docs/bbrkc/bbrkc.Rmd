@@ -96,19 +96,15 @@ for (i in ind)
 	M[[jj]]$slx_retaind[i,4:23] <- NA
 }
 
-C <- M#; C[[1]] <- NULL
-plot_selectivity(C, ncol = 4)
-
-
-
-head(M[[jj]]$slx_capture)
-tail(M[[jj]]$slx_capture)
-dim(M[[jj]]$slx_capture)
-dim(M[[jj]]$slx_retaind)
-dim(j_len)
-names(j_len)
-
-M[[jj]]$slx_retained
+#C <- M#; C[[1]] <- NULL
+#plot_selectivity(C, ncol = 4)
+#head(M[[jj]]$slx_capture)
+#tail(M[[jj]]$slx_capture)
+#dim(M[[jj]]$slx_capture)
+#dim(M[[jj]]$slx_retaind)
+#dim(j_len)
+#names(j_len)
+#M[[jj]]$slx_retained
 
 # Add mmb data
 ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
@@ -133,11 +129,11 @@ M[[jj]]$N_len[ii,] <- (j_len$N1975_female + j_len$N1975_male_n + j_len$N1976_mal
 
 # Add recruitment data
 ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-M[[jj]]$fit$est[ii] <- log(j_ssb$R*1e+4)
+M[[jj]]$fit$est[ii] <- log(j_ssb$R*10000)
 M[[jj]]$fit$std[ii] <- rep(0, length(j_ssb$R))
 
 # Add growth transition data
-M[[jj]]$growth_transition <- t(rbind(j_ltr, j_ltr))
+M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
 M[[jj]]$tG <- rbind(j_ltr, j_ltr)
 
 # Add size transition data
@@ -146,7 +142,8 @@ diag(m) <- j_len$MP_1987
 m <- as.matrix(j_ltr) %*% m
 diag(m) <- diag(m)+(1-j_len$MP_1987)
 M[[jj]]$size_transition_M <- m
-M[[jj]]$size_transition_F <- m
+#M[[jj]]$size_transition_F <- m
+M[[jj]]$size_transition_F <- NULL
 M[[jj]]$tS <- rbind(m, m)
 
 # Add molting probability data
@@ -198,6 +195,12 @@ New features added to Gmacs since the CIE review include:
   * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; coefficient selectivity type; provision for additonal selectivity types (i.e. double normal is being developed/tested).
   * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneoulsy within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
   * Prior specification for all model parameters.
+
+## Coming soon
+
+New features that will be coming soon include:
+
+  * Something
 
 
 
@@ -461,11 +464,11 @@ growth and molting and represents the size transition (Figure
 \ref{fig:size_trans}).
 
 ```{r growth_trans, fig.cap = "Growth transitions.\\label{fig:growth_trans}"}
-plot_growth_transition(M)
+plot_growth_transition(M, xlab = "Carapace length (mm)")
 ```
 
 ```{r size_trans, fig.cap = "Size transitions.\\label{fig:size_trans}"}
-plot_size_transition(M)
+plot_size_transition(M, xlab = "Carapace length (mm)", female = TRUE)
 ```
 
 

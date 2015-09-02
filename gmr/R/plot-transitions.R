@@ -17,17 +17,18 @@ plot_growth_transition <- function(M, xlab = "Size-class", ylab = "P(size transi
     
     n <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
         x <- M[[i]]$mid_points
+        G <- M[[i]]$growth_transition
         #G <- M[[i]]$tG
-        G <- M[[i]]$plot_growth_transition
         h <- dim(G)[1] / dim(G)[2]
         colnames(G) <- paste(x)
         s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]
         df <- data.frame(Model = names(M)[i], mp = x, sex = s, G)
         mdf <- rbind(mdf, df)
     }
+    
     mdf <- melt(mdf, id.var = c("Model", "sex", "mp"))
     mdf$variable <- as.character(mdf$variable)
     mdf$variable <- as.factor(gsub("X", "", mdf$variable))
@@ -52,20 +53,26 @@ plot_growth_transition <- function(M, xlab = "Size-class", ylab = "P(size transi
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @param slab the sex label for the plot that appears above the key
+#' @param females logical indicating if the females are to be plotted or not
 #' @return plot of size transition matrix
-#' @author SJD Martell, DN Webber
+#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_size_transition <- function(M, xlab = "Size-class", ylab = "P(size transition | molt)", slab = "Sex")
+plot_size_transition <- function(M, xlab = "Size-class", ylab = "P(size transition | molt)",
+                                 slab = "Sex", females = FALSE)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
+    
     n <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
         x <- M[[i]]$mid_points
-        G <- M[[i]]$tS
+        G <- M[[i]]$size_transition_M
+        if (females) G <- rbind(G, M[[i]]$size_transition_F)
+        #G <- M[[i]]$tS
+        #G <- M[[i]]$growth_matrix
         h <- dim(G)[1] / dim(G)[2]
         colnames(G) <- paste(x)
         s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]
