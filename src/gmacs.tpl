@@ -2870,7 +2870,7 @@ REPORT_SECTION
 	if (nsex==2)
 	{
 	  	size_transition_F = value(P(2) * growth_transition(2));
-  		for (int i=1;i<=nclass;i++)
+  		for (int i=1; i<=nclass; i++)
 		{
 			size_transition_M(i,i) += value(1.-P(2,i,i));
 		}

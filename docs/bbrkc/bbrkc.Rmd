@@ -40,9 +40,10 @@ names(M) <- c("OneSex", "TwoSex", "Zheng")
 
 # Read in Jie's file
 j_ssb  <- read.table("jieOutput/jie_mmb.rep",       header = TRUE)
-j_surv <- read.table("jieOutput/jie_survb.rep",     header = TRUE)
+j_surv1 <- read.table("jieOutput/jie_survb.rep",     header = TRUE)
 j_len  <- read.table("jieOutput/jie_len_sched.rep", header = TRUE)
 j_ltr  <- read.table("jieOutput/jie_lentrans.rep",  header = FALSE)
+j_surv <- read.table("jieOutput/survey-bio.csv",   header = TRUE, skip = 1, sep = ",")
 jj <- 3 # The position in the list that Jies model outputs sit
 
 # Add selectivity data
@@ -119,8 +120,8 @@ M[[jj]]$mid_points <- j_len$Size
 M[[jj]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
 
 # Add cpue data
-M[[jj]]$obs_cpue[1,] <- j_surv$obs
-M[[jj]]$pre_cpue[1,] <- j_surv$pred
+#M[[jj]]$pre_cpue[1,] <- j_surv1$pred
+M[[jj]]$pre_cpue[1,] <- c(j_surv$Males*1000, j_surv$Females*1000)
 
 # Add numbers data
 M[[jj]]$N_len[41,] <- (j_len$N2014_female + j_len$N2014_male_n + j_len$N2014_male_o)/1000
@@ -133,7 +134,8 @@ M[[jj]]$fit$est[ii] <- log(j_ssb$R*10000)
 M[[jj]]$fit$std[ii] <- rep(0, length(j_ssb$R))
 
 # Add growth transition data
-M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
+#M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
+M[[jj]]$growth_transition <- rbind(j_ltr)
 M[[jj]]$tG <- rbind(j_ltr, j_ltr)
 
 # Add size transition data
@@ -365,11 +367,6 @@ Gmacs (Figure \ref{fig:survey_biomass}).
 
 ```{r survey_biomass, fig.cap = "Model fits to sex-specific NMFS trawl survey biomass (tonnes) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.\\label{fig:survey_biomass}"}
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
-```
-
-```{r survey_biomass_BSFRF, fig.cap = "Model fits to the BSFRF survey biomass (tonnes) in 2007 and 2008. The error bars represent plus and minus 2 standard deviations.\\label{fig:survey_biomass_BSFRF}"}
-plot_cpue(M, "BSFRF", ylab = "Survey biomass (tonnes)")
-#plot_cpue(M, ylab = "Survey biomass (tonnes)")
 ```
 
 

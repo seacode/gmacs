@@ -228,8 +228,6 @@ Gmacs (Figure \ref{fig:survey_biomass}).
 
 ![Model fits to sex-specific NMFS trawl survey biomass (tonnes) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.\label{fig:survey_biomass}](figure/survey_biomass-1.png) 
 
-![Model fits to the BSFRF survey biomass (tonnes) in 2007 and 2008. The error bars represent plus and minus 2 standard deviations.\label{fig:survey_biomass_BSFRF}](figure/survey_biomass_BSFRF-1.png) 
-
 
 ## Estimated retained catch and discards
 

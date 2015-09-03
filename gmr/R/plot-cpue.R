@@ -7,23 +7,23 @@
 #' 
 .get_cpue_df <- function(M)
 {
-	n   <- length(M)
+	n <- length(M)
 	mdf <- NULL
-	for(i in 1:n)
+	for (i in 1:n)
 	{
 		A  <- M[[i]]
-		df <- data.frame(Model=names(M)[i], as.data.frame(A$dSurveyData))
-		colnames(df) <- c("Model","year","seas","fleet","sex","cpue","cv","units")	
+		df <- data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData))
+		colnames(df) <- c("Model","year","seas","fleet","sex","cpue","cv","units")
 		df$sex = .SEX[df$sex+1]
 		df$fleet = .FLEET[df$fleet]
-		sd <- sqrt(log(1+df$cv^2))
-		df$lb <- exp(log(df$cpue)-1.96*sd)
-		df$ub <- exp(log(df$cpue)+1.96*sd)
+		sd <- sqrt(log(1 + df$cv^2))
+		df$lb <- exp(log(df$cpue) - 1.96*sd)
+		df$ub <- exp(log(df$cpue) + 1.96*sd)
 		df$pred <- na.exclude(as.vector(t(A$pre_cpue)))
 		df$resd <- na.exclude(as.vector(t(A$res_cpue)))
-		mdf <- rbind(mdf,df)
-	} 
-	return(mdf)	
+		mdf <- rbind(mdf, df)
+	}
+	return(mdf)
 }
 
 
