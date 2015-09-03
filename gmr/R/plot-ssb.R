@@ -12,12 +12,12 @@
 {
     n <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
         A <- M[[i]]
         df <- data.frame(Model = names(M)[i],
                          par = A$fit$names,
-	                 log_ssb = A$fit$est,
+	                     log_ssb = A$fit$est,
                          log_sd = A$fit$std)
         df <- subset(df, par == "sd_log_ssb")
         df$year <- A$mod_yrs

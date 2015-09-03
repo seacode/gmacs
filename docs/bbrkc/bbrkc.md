@@ -35,7 +35,7 @@ modeling framework.
 
 Gmacs is used here to develop an assessment model for the Bristol Bay Red King
 Crab (BBRKC) stock. The example assessment is intended to match closely with a
-model scenario presented to the Spring 2014 BSAI Crab Plan Team Meeting by
+model scenario presented to the Fall 2014 BSAI Crab Plan Team Meeting by
 @zheng_bristol_2014. The following summarizes the outcome of some comparisons
 between the existing BBRKC stock assessment model [@zheng_bristol_2014] and an
 emulated version using the Gmacs platform.
@@ -138,10 +138,17 @@ Parameter Number of estimated parameters Value Natural mortality 1 Males
 (1980-84) 1 Females (1980-84) 1 Females (1976-79; 1984-1993) 0.18 yr-1 Other
 years
 
-Growth
-Transition matrix Pre-specified Molt probability (slope and intercept) (1975-78)
-Females? 2 Molt probability (slope and intercept) (1979+) Females? 2 Molt
-probability (slope and intercept) Males? Pre-specified
+In the BBRKC model, females molt annually, so molting probability is always 1
+for females. This was replicated in the Gmacs model by fixing the logistic
+curves parameters to values that result in the molting probability being 1 for
+females across all modeled length classes. For the males, the BBRKC model has
+two molting probability curves, one during 1975-78 and another during
+1979-present, each with two logistic curve parameters.  In the current version
+of Gmacs, only a single molting probability curve is modeled.
+
+The "slope and intercept" parameters are likely for growth increment per molt.
+The growth increment per molt is one function for males and three functions
+for females (due to changing sizes at maturity).
 
 Recruitment
 Gamma distribution parameters 4 Annual deviations

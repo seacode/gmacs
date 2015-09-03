@@ -106,10 +106,10 @@ for (i in ind)
 #names(j_len)
 #M[[jj]]$slx_retained
 
-# Add mmb data
+# Add MMB data
 ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
-M[[jj]]$fit$est[ii] <- log(j_ssb$mmb*10000)
-M[[jj]]$fit$std[ii] <- 0
+M[[jj]]$fit$est[ii] <- log(j_ssb$mmb*1000)
+M[[jj]]$fit$std[ii] <- log(j_ssb$mmb_sd)
 
 # Add natural mortality data
 M[[jj]]$M <- matrix(c(j_ssb$M, j_ssb$M), nrow = 80, ncol = 20)
@@ -147,7 +147,7 @@ M[[jj]]$size_transition_F <- NULL
 M[[jj]]$tS <- rbind(m, m)
 
 # Add molting probability data
-M[[jj]]$molt_probability <- rbind(j_len$MP_1987, j_len$MP_1987)
+M[[jj]]$molt_probability <- rbind(j_len$MP_1987, rep(1, length(j_len$MP_1987)))
 
 # Add recruitment size distribution data
 M[[jj]]$mid_points <- j_len$Size
@@ -172,7 +172,7 @@ modeling framework.
 
 Gmacs is used here to develop an assessment model for the Bristol Bay Red King
 Crab (BBRKC) stock. The example assessment is intended to match closely with a
-model scenario presented to the Spring 2014 BSAI Crab Plan Team Meeting by
+model scenario presented to the Fall 2014 BSAI Crab Plan Team Meeting by
 @zheng_bristol_2014. The following summarizes the outcome of some comparisons
 between the existing BBRKC stock assessment model [@zheng_bristol_2014] and an
 emulated version using the Gmacs platform.
@@ -275,10 +275,17 @@ Parameter Number of estimated parameters Value Natural mortality 1 Males
 (1980-84) 1 Females (1980-84) 1 Females (1976-79; 1984-1993) 0.18 yr-1 Other
 years
 
-Growth
-Transition matrix Pre-specified Molt probability (slope and intercept) (1975-78)
-Females? 2 Molt probability (slope and intercept) (1979+) Females? 2 Molt
-probability (slope and intercept) Males? Pre-specified
+In the BBRKC model, females molt annually, so molting probability is always 1
+for females. This was replicated in the Gmacs model by fixing the logistic
+curves parameters to values that result in the molting probability being 1 for
+females across all modeled length classes. For the males, the BBRKC model has
+two molting probability curves, one during 1975-78 and another during
+1979-present, each with two logistic curve parameters.  In the current version
+of Gmacs, only a single molting probability curve is modeled.
+
+The "slope and intercept" parameters are likely for growth increment per molt.
+The growth increment per molt is one function for males and three functions
+for females (due to changing sizes at maturity).
 
 Recruitment
 Gamma distribution parameters 4 Annual deviations
@@ -546,7 +553,9 @@ uncertainty.
 
 ```{r spawning_stock_biomass, fig.cap = "Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.\\label{fig:ssb}"}
 A <- M; A[[1]] <- NULL
-plot_ssb(M, ylim = c(0, 1e6))
+mval <- 5e5
+#mval <- max(j_ssb$mmb*1000)
+plot_ssb(M, ylim = c(0, mval))
 ```
 
 
