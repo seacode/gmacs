@@ -23,11 +23,14 @@
 ##
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)                                                         
 65  70  75  80  85  90  95  100 105 110 115 120 125 130 135 140 145 150 155 160 165
-# weight-at-length  allometry w_l = a*l^b
+# weight-at-length input method (1 = allometry w_l = a*l^b, 2 = vector by sex)
+2
 ##  a (male,  female)
 4.03E-07
 ##  b (male,  female)
 3.141334
+## Males
+0.224781 0.281351 0.346923 0.422209 0.507927 0.604802 0.713564 0.83495 0.9697 1.11856 1.28229 1.46163 1.65736 1.87023 2.10101 2.35048 2.61942 2.90861 3.21882 3.9059
 # Male  mature  weight-at-length  (weight * proportion  mature)
 0 0 0 0 0 0 0 0 0 0 0 1.432 1.625 1.835 2.063 2.31  2.576 2.862 3.169 3.7
 # Proportion  mature  by  sex

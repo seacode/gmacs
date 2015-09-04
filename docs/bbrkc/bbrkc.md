@@ -58,6 +58,7 @@ New features added to Gmacs since the CIE review include:
   * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; provision for additonal selectivity types (i.e. coefficient selectivity and double normal).
   * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneoulsy within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
   * Prior specification for all model parameters.
+  * Ability to provide a vector of weight at size rather than parameters
 
 ## Coming soon
 
@@ -68,6 +69,7 @@ New features that will be coming soon include:
   * Addtional time-varying options for molt, growth and maturity
   * Allowing addtional variances to be estimated for abundance indices
   * Fully Bayesian MCMC functionality
+  * Please feel free to make suggestions
 
 
 
@@ -124,15 +126,14 @@ Critical assumptions of the model include:
 
 # Gmacs
 
-The data and model specifications used in the Gmacs-BBRKC model are very similar
-to those used in the '4nb' scenario developed by @zheng_bristol_2014, herein
-referred to as the ADFG-BBRKC model.
-
-The BBRKC model from @zheng_bristol_2014 treats recruits by sex along with
-sex-specific natural mortality and fishing mortality. Here we provide results
-from two different Gmacs models (1) a two-sex model and (2) a single sex model
-in which the male components are compared with results from a Gmacs model
-implementation tuned to male-only data.
+The data and model specifications used in the Gmacs-BBRKC model are very
+similar to those used in the '4nb' scenario developed by @zheng_bristol_2014,
+herein referred to as the BBRKC model. The BBRKC model from
+@zheng_bristol_2014 treats recruits by sex along with sex-specific natural
+mortality and fishing mortality. Here we provide results from two different
+Gmacs models (1) a two-sex model and (2) a single sex model in which the male
+components are compared with results from a Gmacs model implementation tuned
+to male-only data.
 
 Parameter Number of estimated parameters Value Natural mortality 1 Males
 (1980-84) 1 Females (1980-84) 1 Females (1976-79; 1984-1993) 0.18 yr-1 Other
@@ -146,47 +147,31 @@ two molting probability curves, one during 1975-78 and another during
 1979-present, each with two logistic curve parameters.  In the current version
 of Gmacs, only a single molting probability curve is modeled.
 
-The "slope and intercept" parameters are likely for growth increment per molt.
 The growth increment per molt is one function for males and three functions
 for females (due to changing sizes at maturity).
 
-Recruitment
-Gamma distribution parameters 4 Annual deviations
+Each fishery has a mean fishing mortality with annual deviations. Describe
+selectivity.
 
-Fishing mortality
-Mean fishing mortality (directed fishery) 1 Annual fishery deviations (directed fishery) ??
-Mean fishing mortality (groundfish fishery) 1 Annual fishery deviations (groundfish fishery) ??
-Mean fishing mortality (Tanner fishery) 1 Annual fishery deviations (Tanner fishery) ??
-
-Fishery selectivity
-Directed fishery slope and intercept (by sex) 4 Groundfishery slope and intercept (both sexes) 2 Tanner crab
-fishery slope and intercept (both sexes) 4 Retention
-Slope, inflection point, asymptote 3 Initial conditions ??
-Survey catchability 1 Survey selectivity
-NMFS Slope and intercept (1975-81) by sex 4 NMFS Slope and intercept (1982+) by sex 4 BSFRF selectivity
-Pre-specified BSFRF CV 1
-
-
-# Population Dynamics
+Total abundance and the proportions by length and sex are estimated in 1975
+(the models initial year).
 
 Comparison tables of two different model approaches could be done by
 
-Specification       | Parameter | ADFG Value | Gmacs OneSex | Gmacs TwoSex |
-------------------- | --------- | ---------- | ------------ | ------------ |
-Start year          | $t=0$     | 1975       | 1953         | 1975         |
-End year            | $t=T$     | 2014       | 2014         | 2014         |
-No. sexes           | $s$       | 2          | 1            | 2            |
-No. shell condition | $\nu$     | 2          | 2            | 2            |
-No. maturity        | $m$       | 2          | 1            | 1            |
-No. size-classes    | $\ell$    | 20         | 20           | 20           |
+Specification        | Parameter | ADFG Value | Gmacs OneSex | Gmacs TwoSex |
+-------------------- | --------- | ---------- | ------------ | ------------ |
+Start year           | $t=0$     | 1975       | 1953         | 1975         |
+End year             | $t=T$     | 2014       | 2014         | 2014         |
+No. sexes            | $s$       | 2          | 1            | 2            |
+No. shell condition  | $\nu$     | 2          | 2            | 2            |
+No. maturity classes | $m$       | 2          | 1            | 1            |
+No. size-classes     | $\ell$    | 20         | 20           | 20           |
 
 
 Life History Trait | Parameter | ADFG Value | Gmacs Value | Comments
 ------------------ | --------- | ---------- | ----------- | --------
 Natural Mortality  | M         | Fixed      | Fixed       | M is fixed in both models
 
-
-# Fishery Dynamics
 
 Specification      | Parameter | ADFG Value | Gmacs Value | Comments
 ------------------ | --------- | ---------- | ----------- | --------
@@ -270,14 +255,25 @@ females; NMFS trawl survey new shell males, old shell males and females.
 
 ## Mean weight-at-size
 
-The mean weight-at-size ($w_\ell$) of crabs is defined in kg and the carapace
-length ($\ell$, CL) in mm. The mean weight-at-size of males used in all models
-is nearly identical. The only difference between the Gmacs models and Zheng's is
-in the final size class (160mm) where the mean weight is greater in Zheng's
-model than in Gmacs (Figure \ref{fig:length-weight}). However, the pattern is
-very different for females. This difference is due to...
+The mean weight-at-size ($w_\ell$) is defined in kg and the carapace length
+($\ell$, CL) in mm. The mean weight-at-size used in all models is identical
+becuase the new option to provide a vector of weights at length is used
+(Figure \ref{fig:length-weight}).
 
-![Relationship between carapace width (mm) and weight (kg) by sex in each of the models.\label{fig:length-weight}](figure/length_weight-1.png) 
+There are differences between immature and mature females hence the unusual
+shape of the length-weight relationship for females. Given a size, once
+females mature with eggs, they are heavier than immature females. ADFG uses
+immature mean weight-at-size for females < 90 mm and mature mean weight- at-
+size for females > 89 mm. The last four values of mean weight-at-size for
+females are not used (exceeding the last length group), so the plus group
+value is simply repeated. In the future, when the immature and mature females
+are modeled separately, two mean weight- at-size functions should be used. The
+mean weights for both male and female plus length groups are higher than the
+function values to reflect that there are more crabs larger than the plus
+group mid sizes. The adjustment is based on the survey length frequency data
+over time.
+
+![Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs so lines all overlap).\label{fig:length-weight}](figure/length_weight-1.png) 
 
 
 ## Initial recruitment size distribution
@@ -295,9 +291,9 @@ system, a size-specific vector was used to determine molt increments as shown
 below (Figure \ref{fig:growth_inc}). Fixed parameters in gmacs were set to
 represent that assumed from @zheng_bristol_2014 (Figure \ref{fig:molt_prob}).
 
-![Growth increment (mm).\label{fig:growth_inc}](figure/growth_inc-1.png) 
+![Growth increment (mm) each molt by sex in the OneSex and TwoSex models.\label{fig:growth_inc}](figure/growth_inc-1.png) 
 
-![Molting probability.\label{fig:molt_prob}](figure/molt_prob-1.png) 
+![Molting probability for each of the models by sex. The molting probability for females is fixed at 1 as females molt every year.\label{fig:molt_prob}](figure/molt_prob-1.png) 
 
 
 ## Transition processes

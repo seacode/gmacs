@@ -158,24 +158,38 @@ DATA_SECTION
 			}
 		}
 	END_CALCS
-
 	init_vector size_breaks(1,nclass+1);
 	vector mid_points(1,nclass);
-	!! mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
-	!! WRITEDAT(size_breaks);
 
 	// |-----------|
 	// | ALLOMETRY |
 	// |-----------|
+	init_int lw_type; ///> length-weight type/method (i.e. provide parameters or a vector)
 	init_vector lw_alfa(1,nsex);
 	init_vector lw_beta(1,nsex);
+	init_matrix mean_wt_in(1,nsex,1,nclass);
 	matrix mean_wt(1,nsex,1,nclass);
 	LOC_CALCS
-		for ( int h = 1; h <= nsex; h++ )
+		mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
+		switch ( lw_type )
 		{
-			mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
+			case 1:
+				for ( int h = 1; h <= nsex; h++ )
+				{
+					mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
+				}
+			break;
+			case 2:
+				for ( int h = 1; h <= nsex; h++ )
+				{
+					for ( int l = 1; l <= nclass; l++ )
+					{
+						mean_wt(h,l) = mean_wt_in(h,l);
+					}
+				}
+			break;
 		}
-		WRITEDAT(lw_alfa); WRITEDAT(lw_beta); ECHO(mean_wt);
+		WRITEDAT(size_breaks); WRITEDAT(lw_alfa); WRITEDAT(lw_beta); ECHO(mean_wt);
 	END_CALCS
 
 	// |-------------------------------|
@@ -403,7 +417,7 @@ DATA_SECTION
 	// |------------------|
 	init_int eof;
 	!! WRITEDAT(eof);
-	!! if (eof != 9999) {cout<<"Error reading data"<<endl; exit(1);}
+	!! if (eof != 9999) {cout << "Error reading data" << endl; exit(1);}
 
 
 
