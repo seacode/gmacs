@@ -250,7 +250,13 @@ females; NMFS trawl survey new shell males, old shell males and females.
 
 ![Observed and model estimated size-frequencies of female BBRKC by year in the groundfish trawl bycatch fisheries.\label{fig:sc_trawl_bycatch_f}](figure/sc_trawl_bycatch_f-1.png) 
 
-![Observed and model estimated size-frequencies of male BBRKC by year in the NMFS trawl fishery.\label{fig:sc_NMFS_m}](figure/sc_NMFS_m-1.png) 
+![Observed and model estimated size-frequencies of new shell male BBRKC by year in the NMFS trawl fishery.\label{fig:sc_NMFS_nm}](figure/sc_NMFS_nm-1.png) 
+
+![Observed and model estimated size-frequencies of old shell male BBRKC by year in the NMFS trawl fishery.\label{fig:sc_NMFS_om}](figure/sc_NMFS_om-1.png) 
+
+![Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl fishery.\label{fig:sc_NMFS_f}](figure/sc_NMFS_f-1.png) 
+
+![Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.\label{fig:sc_BSFRF}](figure/sc_BSFRF-1.png) 
 
 
 ## Mean weight-at-size

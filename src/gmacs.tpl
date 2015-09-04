@@ -2477,22 +2477,22 @@ FUNCTION calc_objective_function
 	
 	// 1) Likelihood of the catch data.
 	if (verbose == 1) COUT(res_catch(1));
-	for (int k = 1; k <= nCatchDF; k++)
+	for ( int k = 1; k <= nCatchDF; k++ )
 	{
 		dvector catch_sd = sqrt(log(1.0 + square(catch_cv(k))));
 		nloglike(1,k) += dnorm(res_catch(k), catch_sd);
 	}
 
 	// 2) Likelihood of the relative abundance data.
-        if (verbose == 1) COUT(res_cpue(1));
-	for (int k = 1; k <= nSurveys; k++)
+    if (verbose == 1) COUT(res_cpue(1));
+	for ( int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
 		nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
 	}
 
 	// 3) Likelihood for size composition data. 
-	for (int ii = 1; ii <= nSizeComps; ii++)
+	for ( int ii = 1; ii <= nSizeComps; ii++ )
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
@@ -2502,7 +2502,7 @@ FUNCTION calc_objective_function
 		bool bCmp = bTailCompression(ii);
 		class acl::negativeLogLikelihood *ploglike;
 		
-		switch(nAgeCompType(ii))
+		switch ( nAgeCompType(ii) )
 		{
 			case 0: // ignore composition data in model fitting.
 				ploglike = NULL;
@@ -2511,7 +2511,7 @@ FUNCTION calc_objective_function
 				ploglike = new class acl::multinomial(O, bCmp);
 			break;
 			case 2: // robust approximation to the multinomial
-				if(current_phase() <= 3 || !last_phase())
+				if (current_phase() <= 3 || !last_phase())
 				{
 					ploglike = new class acl::multinomial(O, bCmp);
 				} else {
@@ -2533,10 +2533,10 @@ FUNCTION calc_objective_function
 	}
 
 	// 4) Likelihood for recruitment deviations.
-	if (active(rec_dev))
+	if ( active(rec_dev) )
 	{
 		dvariable sigR = mfexp(logSigmaR);
-		switch(nSRR_flag)
+		switch ( nSRR_flag )
 		{
 			case 0:
 				//nloglike(4,1) = dnorm(rec_dev, sigR);
@@ -2573,13 +2573,13 @@ FUNCTION calc_objective_function
 
 	// 2) Penalty on mean F to regularize the solution.
 	int irow=1;
-	if (last_phase()) irow=2;
+	if (last_phase()) irow = 2;
 	dvariable fbar;
 	dvariable log_fbar;
-	for (int k = 1; k <= nfleet; k++)
+	for ( int k = 1; k <= nfleet; k++ )
 	{
 		fbar = mean(ft(k)(1));
-		if (pen_fbar(k) > 0  && fbar != 0)
+		if ( pen_fbar(k) > 0  && fbar != 0 )
 		{
 			log_fbar = log(fbar);
 			nlogPenalty(2) += dnorm(log_fbar, log(pen_fbar(k)), pen_fstd(irow,k));
@@ -2587,32 +2587,30 @@ FUNCTION calc_objective_function
 	}
 
 	// 3) Penalty to constrain M in random walk
-	if(active(m_dev))
+	if ( active(m_dev) )
 	{
 		nlogPenalty(3) = dnorm(m_dev, m_stdev);
 	}
 
 	// 4 Penalty on recruitment devs.
-	if(active(rec_dev) && nSRR_flag !=0)
+	if ( active(rec_dev) && nSRR_flag !=0 )
 	{
 		nlogPenalty(4) = dnorm(rec_dev, 1.0);
 	}
-	if(active(rec_ini) && nSRR_flag !=0)
+	if ( active(rec_ini) && nSRR_flag !=0 )
 	{
 		nlogPenalty(5) = dnorm(rec_ini, 1.0);
 	}
-	if(active(rec_dev))
+	if ( active(rec_dev) )
 	{
 		nlogPenalty(6) = dnorm(first_difference(rec_dev), 1.0);
 	}
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
-	if (verbose == 2) 
+
+	if ( verbose == 2 ) 
 	{
-		COUT(objfun);
-		COUT(nloglike);
-		COUT(nlogPenalty);
-		COUT(priorDensity);
+		COUT(objfun); COUT(nloglike); COUT(nlogPenalty); COUT(priorDensity);
 	}
 
 
@@ -2908,9 +2906,9 @@ FUNCTION dvar_vector calc_ssb()
 	dvar_vector ssb(syr,nyr);
 	ssb.initialize();
 
-	for( int i = syr; i <= nyr; i++ )
+	for ( int i = syr; i <= nyr; i++ )
 	{
-		for( ig = 1; ig <= n_grp; ig++ )
+		for ( ig = 1; ig <= n_grp; ig++ )
 		{
 			h = isex(ig);
 			o = ishell(ig);
@@ -2962,9 +2960,9 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	dmatrix _wa(1,nsex,1,nclass);
 	d3_array _A = value(growth_transition);
 	d3_array _P = value(P);
-	for(int h = 1; h <= nsex; h++ )
+	for ( int h = 1; h <= nsex; h++ )
 	{
-		for(int l = 1; l <= nclass; l++ )
+		for ( int l = 1; l <= nclass; l++ )
 		{
 			_M(h)(l,l) = value(M(h)(iyr)(l));
 		}
@@ -2976,9 +2974,9 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	dmatrix  _fhk(1,nsex,1,nfleet);
 	d3_array _sel(1,nsex,1,nfleet,1,nclass);
 	d3_array _ret(1,nsex,1,nfleet,1,nclass);
-	for(int h = 1; h <= nsex; h++ )
+	for ( int h = 1; h <= nsex; h++ )
 	{
-		for(int k=1;k<=nfleet;k++)
+		for ( int k = 1; k <= nfleet; k++ )
 		{
 			_fhk(h)(k) = value(ft(k)(h)(iyr));
 			_sel(h)(k) = exp(value(log_slx_capture(k)(h)(iyr)));
@@ -2989,7 +2987,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	// Discard Mortality rates
 	dvector  _dmr(1,nfleet);
 	_dmr.initialize();
-	for(int k = 1; k <= nfleet; k++ )
+	for ( int k = 1; k <= nfleet; k++ )
 	{
 		_dmr(k) = dmr(iyr,k);
 	}
@@ -2998,13 +2996,13 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	spr *ptrSPR = 0;
 	
 	// SPR reference points for a single shell condition.
-	if(nshell == 1)
+	if ( nshell == 1 )
 	{
 		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_A);
 		ptrSPR = &c_spr;
 	}
 	// SPR reference points for new and old shell condition.
-	if(nshell == 2)
+	if ( nshell == 2 )
 	{
 		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_P,_A);
 		ptrSPR = &c_spr;    
@@ -3023,7 +3021,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 
 RUNTIME_SECTION
   maximum_function_evaluations 500,   500,   1500,  25000, 25000
-  convergence_criteria         1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4, 
+  convergence_criteria         1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4
 
 
 GLOBALS_SECTION
