@@ -257,7 +257,7 @@ females; NMFS trawl survey new shell males, old shell males and females.
 
 The mean weight-at-size ($w_\ell$) is defined in kg and the carapace length
 ($\ell$, CL) in mm. The mean weight-at-size used in all models is identical
-becuase the new option to provide a vector of weights at length is used
+because the new option to provide a vector of weights at length is used
 (Figure \ref{fig:length-weight}).
 
 There are differences between immature and mature females hence the unusual
