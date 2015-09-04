@@ -33,6 +33,7 @@ auto/
 *.R~
 .RData
 .Rhistory
+*.Rmd.bak
 
 # ADMB standard output files
 *.b0*

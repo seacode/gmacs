@@ -28,7 +28,7 @@ and -independent indices of abundance. Gmacs is coded using AD Model Builder.
 Crab stocks of Alaska are managed by the North Pacific Fisheries Management
 Council ([NPFMC](http://npfmc.org)). Some stocks are assessed with integrated
 size-structured assessment models of the form described in @punt_review_2013.
-Currenlty, each stock is assessed using a stock-specific assessment model
+Currently, each stock is assessed using a stock-specific assessment model
 (e.g. @zheng_bristol_2014). The Gmacs project aims to provide software that
 will allow each stock to be assessed independently but using a single
 modeling framework.
@@ -55,8 +55,8 @@ practice to closely match the outputs of existing ADFG stock assessment models.
 
 New features added to Gmacs since the CIE review include:
 
-  * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selecitvity parameter; priors for each selectivity parameter; provision for additonal selectivity types (i.e. coefficient selectivity and double normal).
-  * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneoulsy within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
+  * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selectivity parameter; priors for each selectivity parameter; provision for additional selectivity types (i.e. coefficient selectivity and double normal).
+  * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneously within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
   * Prior specification for all model parameters.
   * Ability to provide a vector of weight at size rather than parameters
 
@@ -66,8 +66,8 @@ New features that will be coming soon include:
 
   * Double normal and coefficient selectivity types
   * Dirichlet size composition option
-  * Addtional time-varying options for molt, growth and maturity
-  * Allowing addtional variances to be estimated for abundance indices
+  * Additional time-varying options for molt, growth and maturity
+  * Allowing additional variances to be estimated for abundance indices
   * Fully Bayesian MCMC functionality
   * Please feel free to make suggestions
 
@@ -158,25 +158,21 @@ Total abundance and the proportions by length and sex are estimated in 1975
 
 Comparison tables of two different model approaches could be done by
 
-Specification        | Parameter | ADFG Value | Gmacs OneSex | Gmacs TwoSex |
--------------------- | --------- | ---------- | ------------ | ------------ |
+Specification        | Parameter | ADFG Value | Gmacs OneSex | Gmacs TwoSex | Comments
+-------------------- | --------- | ---------- | ------------ | ------------ | --------
 Start year           | $t=0$     | 1975       | 1953         | 1975         |
 End year             | $t=T$     | 2014       | 2014         | 2014         |
 No. sexes            | $s$       | 2          | 1            | 2            |
 No. shell condition  | $\nu$     | 2          | 2            | 2            |
 No. maturity classes | $m$       | 2          | 1            | 1            |
 No. size-classes     | $\ell$    | 20         | 20           | 20           |
+No. Fleets           | $k$       | 5          | 2            | 5            | Pot fishery, trawl bycatch, NMFS trawl, BSFRF
 
 
 Life History Trait | Parameter | ADFG Value | Gmacs Value | Comments
 ------------------ | --------- | ---------- | ----------- | --------
 Natural Mortality  | M         | Fixed      | Fixed       | M is fixed in both models
 
-
-Specification      | Parameter | ADFG Value | Gmacs Value | Comments
------------------- | --------- | ---------- | ----------- | --------
-No. Fleets         |           | 5          | 2           |
-No. Fleets         |           | 5          | 5           |
 
 
 
@@ -234,7 +230,7 @@ fisheries for males (Figure \ref{fig:sc_trawl_bycatch_m}) and females (Figure
 \ref{fig:sc_trawl_bycatch_f}), and the NMFS trawl survey (Figure
 \ref{fig:sc_NMFS_m}).
 
-All size composition data were fitted using the robust multinomail
+All size composition data were fitted using the robust multinomial
 distribution. In the OneSex model, new shell and old shell males were fitted
 simultaneously. In the TwoSex model the following size compositions were
 fitted simultaneously: discarded males and females; trawl bycatch males and
@@ -263,7 +259,7 @@ females; NMFS trawl survey new shell males, old shell males and females.
 
 The mean weight-at-size ($w_\ell$) is defined in kg and the carapace length
 ($\ell$, CL) in mm. The mean weight-at-size used in all models is identical
-becuase the new option to provide a vector of weights at length is used
+because the new option to provide a vector of weights at length is used
 (Figure \ref{fig:length-weight}).
 
 There are differences between immature and mature females hence the unusual
@@ -343,7 +339,7 @@ The figure below illustrates implementation of four step changes in $M_t$
 (Figure \ref{fig:M_t}). In both the ADFG-BBRKC and Gmacs-BBRKC models,
 time-varying natural mortality ($M_t$) is freely estimated with four step
 changes through time. The years ($t$) that each of these steps cover are fixed a
-priori. The pattern in time-varying natural mortality is resonably similar
+priori. The pattern in time-varying natural mortality is reasonably similar
 between the two models (Figure \ref{fig:M_t}), however the peak in natural
 mortality during the early 1980 is not as high in the Gmacs-BBRKC model.
 
