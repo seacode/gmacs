@@ -158,15 +158,17 @@ Total abundance and the proportions by length and sex are estimated in 1975
 
 Comparison tables of two different model approaches could be done by
 
-Specification        | Parameter | ADFG Value | Gmacs OneSex | Gmacs TwoSex | Comments
--------------------- | --------- | ---------- | ------------ | ------------ | --------
-Start year           | $t=0$     | 1975       | 1953         | 1975         |
-End year             | $t=T$     | 2014       | 2014         | 2014         |
-No. sexes            | $s$       | 2          | 1            | 2            |
-No. shell condition  | $\nu$     | 2          | 2            | 2            |
-No. maturity classes | $m$       | 2          | 1            | 1            |
-No. size-classes     | $\ell$    | 20         | 20           | 20           |
-No. Fleets           | $k$       | 5          | 2            | 5            | Pot fishery, trawl bycatch, NMFS trawl, BSFRF
+Pot fishery, trawl bycatch, NMFS trawl, BSFRF
+
+Specification        | Parameter | ADFG Value | Gmacs OneSex | Gmacs TwoSex
+-------------------- | --------- | ---------- | ------------ | ------------
+Start year           | $t=0$     | 1975       | 1953         | 1975        
+End year             | $t=T$     | 2014       | 2014         | 2014        
+No. sexes            | $s$       | 2          | 1            | 2           
+No. shell condition  | $\nu$     | 2          | 2            | 2           
+No. maturity classes | $m$       | 2          | 1            | 1           
+No. size-classes     | $\ell$    | 20         | 20           | 20          
+No. Fleets           | $k$       | 5          | 2            | 5            
 
 
 Life History Trait | Parameter | ADFG Value | Gmacs Value | Comments

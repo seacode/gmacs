@@ -8,6 +8,8 @@ plot_ssb(M, xlab = "Year", ylab = "SSB (tonnes)", ylim = NULL)
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}
+
+\item{ylim}{is the upper limit for figure}
 }
 \value{
 Plot of model estimates of spawning stock biomass

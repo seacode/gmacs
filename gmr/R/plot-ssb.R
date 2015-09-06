@@ -36,6 +36,7 @@
 #' females
 #'
 #' @param M List object(s) created by read_admb function
+#' @param ylim is the upper limit for figure
 #' @return Plot of model estimates of spawning stock biomass 
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
