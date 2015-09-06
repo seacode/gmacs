@@ -110,7 +110,7 @@ for (i in ind)
 # Add MMB data
 ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
 M[[jj]]$fit$est[ii] <- log(j_ssb$mmb*1000)
-M[[jj]]$fit$std[ii] <- log(j_ssb$mmb_sd*1000)
+M[[jj]]$fit$std[ii] <- sqrt(log((j_ssb$mmb_sd/j_ssb$mmb)^2+1))
 
 # Add natural mortality data
 M[[jj]]$M <- matrix(c(j_ssb$M, j_ssb$M), nrow = 80, ncol = 20)
