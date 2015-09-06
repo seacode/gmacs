@@ -130,7 +130,7 @@ M[[jj]]$N_len[ii,] <- (j_len$N1975_female + j_len$N1975_male_n + j_len$N1976_mal
 
 # Add recruitment data
 ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-M[[jj]]$fit$est[ii] <- log(j_ssb$R*10000)
+M[[jj]]$fit$est[ii] <- log(j_ssb$R*1000)
 M[[jj]]$fit$std[ii] <- rep(0, length(j_ssb$R))
 
 # Add growth transition data
