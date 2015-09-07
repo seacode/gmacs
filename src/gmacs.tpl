@@ -1113,28 +1113,23 @@ PRELIMINARY_CALCS_SECTION
 
 PROCEDURE_SECTION
 	// Initialize model parameters
-	initialize_model_parameters();
-	if ( verbose == 1 ) cout << "Ok after initializing model parameters ..." << endl;
+	initialize_model_parameters(); if ( verbose == 1 ) cout << "Ok after initializing model parameters ..." << endl;
 	
 	// Fishing fleet dynamics ...
 	calc_selectivities();
-	calc_fishing_mortality();
-	if ( verbose == 1 ) cout << "Ok after fleet dynamics ..." << endl;
+	calc_fishing_mortality(); if ( verbose == 1 ) cout << "Ok after fleet dynamics ..." << endl;
 
 	// Population dynamics ...
 	if ( !bUseEmpiricalGrowth )
-	{
-		calc_growth_increments();
-	}
-	calc_molting_probability();
-	calc_growth_transition();
-	calc_natural_mortality();
-	calc_total_mortality();
-	calc_recruitment_size_distribution();
-	calc_initial_numbers_at_length();
-	update_population_numbers_at_length();
-	calc_stock_recruitment_relationship();
-	if ( verbose == 1 ) cout << "Ok after population dynamcs ..." << endl;
+		calc_growth_increments(); if ( verbose == 1 ) cout << "Ok after Growth increments ..." << endl;
+	calc_molting_probability(); if ( verbose == 1 ) cout << "Ok after molt increment ..." << endl;
+	calc_growth_transition();   if ( verbose == 1 ) cout << "Ok after growth transition ..." << endl;
+	calc_natural_mortality();   if ( verbose == 1 ) cout << "Ok after natural mortality ..." << endl;
+	calc_total_mortality();     if ( verbose == 1 ) cout << "Ok after total mortality ..." << endl;
+	calc_recruitment_size_distribution();  if ( verbose == 1 ) cout << "Ok after rec size distribution ..." << endl;
+	calc_initial_numbers_at_length();      if ( verbose == 1 ) cout << "Ok after n at length initial ..." << endl;
+	update_population_numbers_at_length(); if ( verbose == 1 ) cout << "Ok after n at length ..." << endl;
+	calc_stock_recruitment_relationship(); if ( verbose == 1 ) cout << "Ok after population dynamcs ..." << endl;
 
 	// observation models ...
 	calc_predicted_catch();
@@ -1205,6 +1200,7 @@ FUNCTION initialize_model_parameters
 	// Get Growth & Molting parameters 
 	for ( int h = 1; h <= nsex; h++ )
 	{
+		// Note that for 2 sexes, the odd numbered rows of "Grwth" are for males, even for females
 		int icnt = h;
 		alpha(h)   = Grwth(icnt);
 		icnt += nsex;
@@ -1567,7 +1563,7 @@ FUNCTION calc_molting_probability
 	for ( h = 1; h <= nsex; h++ )
 	{
 		dvariable mu = molt_mu(h);
-		dvariable sd = mu* molt_cv(h);
+		dvariable sd = mu * molt_cv(h);
 		molt_probability(h) = 1.0 - ((1.0-2.*tiny)*plogis(mid_points,mu,sd) + tiny);
 		for ( l = 1; l <= nclass; l++ )
 		{
@@ -1666,8 +1662,8 @@ FUNCTION calc_initial_numbers_at_length
 
 	// Initial recrutment.
 	log_initial_recruits = (bInitializeUnfished) ? logR0 : logRini;
-	recruits(syr) = exp(log_initial_recruits);
-	dvar_vector rt = 1.0/nsex * recruits(syr) * rec_sdd;
+	recruits(syr)        = mfexp(log_initial_recruits);
+	dvar_vector rt       = 1.0/nsex * recruits(syr) * rec_sdd;
 
 	// Analytical equilibrium soln.
 	int ig;
@@ -1687,7 +1683,7 @@ FUNCTION calc_initial_numbers_at_length
 		{
 			for ( int i = 1; i <= nclass; i++ )
 			{
-				_S(i,i) = exp(-M(h)(syr)(i));
+				_S(i,i) = mfexp(-M(h)(syr)(i));
 			}
 		}
 		// Steady-state fished conditions
@@ -1695,24 +1691,29 @@ FUNCTION calc_initial_numbers_at_length
 		{
 			_S = S(h)(syr);
 		}
+	  if ( verbose == 1 ) cout << "in init length 1" <<endl;
 
 		// Single shell condition
 		if ( nshell == 1 && nmature == 1 )
 		{
 			calc_equilibrium(x,A,_S,rt);
-			ig = pntr_hmo(h,1,1);
-			d3_N(ig)(syr) = elem_prod(x , exp(rec_ini));
+			ig            = pntr_hmo(h,1,1);
+			d3_N(ig)(syr) = elem_prod(x , mfexp(rec_ini));
 		}
 
+	  if ( verbose == 1 ) cout << "in init length 2" <<endl;
+	  if ( verbose == 1 ) COUT(P(h));
+	  if ( verbose == 1 ) COUT(x);
+	  if ( verbose == 1 ) COUT(y);
 		// Continuous molt (newshell/oldshell)
 		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,A,_S,P(h),rt);
 			ig = pntr_hmo(h,1,1);
-			d3_N(ig)(syr)   = elem_prod(x , exp(rec_ini));;
-			d3_N(ig+1)(syr) = elem_prod(y , exp(rec_ini));;
+			d3_N(ig)(syr)   = elem_prod(x , mfexp(rec_ini));;
+			d3_N(ig+1)(syr) = elem_prod(y , mfexp(rec_ini));;
 		}
-
+	  if ( verbose == 1 ) cout << "in init length 3" <<endl;
 		// Insert terminal molt case here.
 
 	}
@@ -1817,7 +1818,7 @@ FUNCTION calc_stock_recruitment_relationship
 	{
 		for ( int l = 1; l <= nclass; ++l )
 		{
-			_S(l,l) = exp(-M(h)(syr)(l));
+			_S(l,l) = mfexp(-M(h)(syr)(l));
 		}
 		_A = growth_transition(h);
 		dvar_vector x(1,nclass);
@@ -1917,7 +1918,7 @@ FUNCTION calc_predicted_catch
 						// Question here about what the retained catch is.
 						// Should probably include shell condition here as well.
 						// Now assuming both old and new shell are retained.
-						sel = exp( sel + log_slx_retaind(k)(h)(i) );
+						sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
 						for ( int m = 1; m <= nmature; m++ )
 						{   
 							for ( int o = 1; o <= nshell; o++ )
@@ -1928,7 +1929,7 @@ FUNCTION calc_predicted_catch
 						}
 					break;
 					case 2: // discarded catch
-						sel = elem_prod(exp(sel), 1.0-exp(log_slx_retaind(k)(h)(i)));
+						sel = elem_prod(mfexp(sel), 1.0-mfexp(log_slx_retaind(k)(h)(i)));
 						for ( int m = 1; m <= nmature; m++ )
 						{
 							for ( int o = 1; o <= nshell; o++ )
@@ -1941,7 +1942,7 @@ FUNCTION calc_predicted_catch
 				}
 				tmp_ft = ft(k)(h)(i);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
-				pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0-exp(-Z(h)(i))), Z(h)(i));
+				pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0-mfexp(-Z(h)(i))), Z(h)(i));
 			}
 			else // sexes combibed
 			{
@@ -1952,7 +1953,7 @@ FUNCTION calc_predicted_catch
 					switch( type )
 					{
 						case 1: // retained catch
-							sel = exp( sel + log_slx_retaind(k)(h)(i) );
+							sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								ig = pntr_hmo(h,m,1); // indexes new shell.
@@ -1960,7 +1961,7 @@ FUNCTION calc_predicted_catch
 							}
 						break;
 						case 2: // discarded catch
-							sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+							sel = elem_prod(mfexp(sel),1.0 - mfexp( log_slx_retaind(k)(h)(i) ));
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								for ( int o = 1; o <= nshell; o++ )
@@ -1973,7 +1974,7 @@ FUNCTION calc_predicted_catch
 					}
 					tmp_ft = ft(k)(h)(i);
 					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)) : nal;
-					pre_catch(kk,j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+					pre_catch(kk,j) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i))),Z(h)(i));
 				}
 			}
 		}
@@ -2015,7 +2016,7 @@ FUNCTION calc_predicted_catch_out
 						// Question here about what the retained catch is.
 						// Should probably include shell condition here as well.
 						// Now assuming both old and new shell are retained.
-						sel = exp( sel + log_slx_retaind(k)(h)(i) );
+						sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
 						for ( int m = 1; m <= nmature; m++ )
 						{   
 							for ( int o = 1; o <= nshell; o++ )
@@ -2026,7 +2027,7 @@ FUNCTION calc_predicted_catch_out
 						}
 					break;
 					case 2: // discarded catch
-						sel = elem_prod(exp(sel), 1.0-exp(log_slx_retaind(k)(h)(i)));
+						sel = elem_prod(mfexp(sel), 1.0-mfexp(log_slx_retaind(k)(h)(i)));
 						for ( int m = 1; m <= nmature; m++ )
 						{
 							for ( int o = 1; o <= nshell; o++ )
@@ -2039,7 +2040,7 @@ FUNCTION calc_predicted_catch_out
 				}
 				tmp_ft = ft(k)(h)(i);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
-				pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+				pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i))),Z(h)(i));
 			}
 			else // sexes combibed
 			{
@@ -2050,7 +2051,7 @@ FUNCTION calc_predicted_catch_out
 					switch( type )
 					{
 						case 1: // retained catch
-							sel = exp( sel + log_slx_retaind(k)(h)(i) );
+							sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								ig = pntr_hmo(h,m,1); // indexes new shell.
@@ -2058,7 +2059,7 @@ FUNCTION calc_predicted_catch_out
 							}
 						break;
 						case 2: // discarded catch
-							sel = elem_prod(exp(sel),1.0 - exp( log_slx_retaind(k)(h)(i) ));
+							sel = elem_prod(mfexp(sel),1.0 - mfexp( log_slx_retaind(k)(h)(i) ));
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								for ( int o = 1; o <= nshell; o++ )
@@ -2071,7 +2072,7 @@ FUNCTION calc_predicted_catch_out
 					}
 					tmp_ft = ft(k)(h)(i);
 					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)) : nal;
-					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-exp(-Z(h)(i))),Z(h)(i));
+					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i))),Z(h)(i));
 				}
 			}
 		}
@@ -2112,7 +2113,7 @@ FUNCTION calc_relative_abundance
 
 			if ( h )
 			{
-				sel = exp(log_slx_capture(g)(h)(i));
+				sel = mfexp(log_slx_capture(g)(h)(i));
 				for ( int m = 1; m <= nmature; m++ )
 				{
 					for ( int o = 1; o <= nshell; o++ )
@@ -2129,7 +2130,7 @@ FUNCTION calc_relative_abundance
 			{
 				for ( h = 1; h <= nsex; h++ )
 				{
-					sel = exp(log_slx_capture(g)(h)(i));
+					sel = mfexp(log_slx_capture(g)(h)(i));
 					for ( int m = 1; m <= nmature; m++ )
 					{
 						for ( int o = 1; o <= nshell; o++ )
@@ -2221,9 +2222,9 @@ FUNCTION calc_predicted_composition
 			
 			if ( h ) // sex specific
 			{
-				dvar_vector sel = exp(log_slx_capture(k)(h)(i));
-				dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
-				dvar_vector dis = exp(log_slx_discard(k)(h)(i));
+				dvar_vector sel = mfexp(log_slx_capture(k)(h)(i));
+				dvar_vector ret = mfexp(log_slx_retaind(k)(h)(i));
+				dvar_vector dis = mfexp(log_slx_discard(k)(h)(i));
 				// dvar_vector tmp = N(h)(i);
 
 				for ( int m = 1; m <= nmature; m++ )
@@ -2252,9 +2253,9 @@ FUNCTION calc_predicted_composition
 			} else { // sexes combined in the observations
 				for ( h = 1; h <= nsex; h++ )
 				{
-					dvar_vector sel = exp(log_slx_capture(k)(h)(i));
-					dvar_vector ret = exp(log_slx_retaind(k)(h)(i));
-					dvar_vector dis = exp(log_slx_discard(k)(h)(i));
+					dvar_vector sel = mfexp(log_slx_capture(k)(h)(i));
+					dvar_vector ret = mfexp(log_slx_retaind(k)(h)(i));
+					dvar_vector dis = mfexp(log_slx_discard(k)(h)(i));
 					// dvar_vector tmp = N(h)(i);
 
 					for ( int m = 1; m <= nmature; m++ )
@@ -2496,7 +2497,7 @@ FUNCTION calc_objective_function
 	{
 		dmatrix     O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
-		dvar_vector log_effn = log(exp(log_vn(ii)) * size_comp_sample_size(ii));
+		dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii));
 		d3_res_size_comps.initialize();
 
 		bool bCmp = bTailCompression(ii);
@@ -2633,7 +2634,7 @@ FUNCTION simulation_model
 	
 	dvector drec_dev(syr+1,nyr);
 	drec_dev.fill_randn(rng);
-	rec_dev = exp(logSigmaR) * drec_dev;
+	rec_dev = mfexp(logSigmaR) * drec_dev;
 
 	// Population dynamics ...
 	calc_growth_increments();
@@ -2659,7 +2660,7 @@ FUNCTION simulation_model
 		catch_sd(k)  = sqrt(log(1.0 + square(catch_cv(k))));
 		obs_catch(k) = value(pre_catch(k));
 		err_catch(k) = elem_prod(catch_sd(k), err_catch(k)) - 0.5*square(catch_sd(k));
-		obs_catch(k) = elem_prod(obs_catch(k), exp(err_catch(k)));
+		obs_catch(k) = elem_prod(obs_catch(k), mfexp(err_catch(k)));
 	}
 	
 
@@ -2669,7 +2670,7 @@ FUNCTION simulation_model
 	err_cpue.fill_randn(rng);
 	obs_cpue = value(pre_cpue);
 	err_cpue = elem_prod(cpue_sd,err_cpue) - 0.5*square(cpue_sd);
-	obs_cpue = elem_prod(obs_cpue,exp(err_cpue));
+	obs_cpue = elem_prod(obs_cpue,mfexp(err_cpue));
 	for(int k = 1; k <= nSurveys; k++ )
 	{
 		for(int i = 1; i <= nSurveyRows(k); i++ )
@@ -2695,6 +2696,7 @@ FUNCTION simulation_model
 
 
 REPORT_SECTION
+  save_gradients(gradients);
 	calc_predicted_catch_out();
 	dvector mod_yrs(syr,nyr); 
 	mod_yrs.fill_seqadd(syr,1);	
@@ -2720,13 +2722,13 @@ REPORT_SECTION
 
 	report << "slx_capture" << endl;
 	for ( int i = syr; i <= nyr; i++ ) for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
-		report << i << " " << h << " " << j << " " << exp(log_slx_capture(j,h,i)) << endl;
+		report << i << " " << h << " " << j << " " << mfexp(log_slx_capture(j,h,i)) << endl;
 	report << "slx_retaind" << endl;
 	for ( int i = syr; i <= nyr; i++ ) for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
-		report << i << " " << h << " " << j << " " << exp(log_slx_retaind(j,h,i)) << endl;
+		report << i << " " << h << " " << j << " " << mfexp(log_slx_retaind(j,h,i)) << endl;
 	report << "slx_discard" << endl;
 	for ( int i = syr; i <= nyr; i++ ) for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
-		report << i << " " << h << " " << j << " " << exp(log_slx_discard(j,h,i)) << endl;
+		report << i << " " << h << " " << j << " " << mfexp(log_slx_discard(j,h,i)) << endl;
 
 	REPORT(slx_control_in);
 	REPORT(slx_control);
@@ -2800,7 +2802,7 @@ REPORT_SECTION
 		for ( int ii = 1; ii <= nSizeComps; ii++ )
 		{
 			// Set final sample-size for composition data for comparisons
-			size_comp_sample_size(ii) = value(exp(log_vn(ii))) * size_comp_sample_size(ii);
+			size_comp_sample_size(ii) = value(mfexp(log_vn(ii))) * size_comp_sample_size(ii);
 		}
 		REPORT(size_comp_sample_size);
 	}
@@ -2979,8 +2981,8 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		for ( int k = 1; k <= nfleet; k++ )
 		{
 			_fhk(h)(k) = value(ft(k)(h)(iyr));
-			_sel(h)(k) = exp(value(log_slx_capture(k)(h)(iyr)));
-			_ret(h)(k) = exp(value(log_slx_retaind(k)(h)(iyr)));
+			_sel(h)(k) = mfexp(value(log_slx_capture(k)(h)(iyr)));
+			_ret(h)(k) = mfexp(value(log_slx_retaind(k)(h)(iyr)));
 		}
 	}
 
@@ -3020,9 +3022,8 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 
 
 RUNTIME_SECTION
-  maximum_function_evaluations 500,   500,   1500,  25000, 25000
+  maximum_function_evaluations 500,   800,   1500,  25000, 25000
   convergence_criteria         1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4
-
 
 GLOBALS_SECTION
 	/**

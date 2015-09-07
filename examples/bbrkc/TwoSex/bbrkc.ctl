@@ -13,7 +13,7 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  0.18      0.01         1          4       2   0.18    0.04         # M
+  0.18      0.01         1         -4       2   0.18    0.04         # M
    7.0       -10        20          2       1    3.0     5.0         # logR0
    7.0       -10        20          2       1    3.0     5.0         # logR1
   10.4       -10        20          1       1    3.0     5.0         # logRbar
@@ -114,7 +114,7 @@
 ## SURVEYS/INDICES ONLY
 ## NMFS  BSFRF
 ## TYPE     Mean_q    SD_q      CPUE_Lambda
-     1      0.896     0.13      1
+     1      0.896     0.01      1
      0      0.001     0.1       1
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -158,7 +158,7 @@
 ## Phase of estimation
   3
 ## STDEV in m_dev for Random walk
-  0.30
+  0.60
 ## Number of nodes for cubic spline or number of step-changes for option 3
   4
 ## Year position of the knots (vector must be equal to the number of nodes)
@@ -168,7 +168,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
-  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+  2       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2014    # Last year for average recruitment for Bspr calculation.

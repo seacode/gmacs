@@ -4,7 +4,7 @@ ifeq ($(SAFE),TRUE)
 else
 	DIST = ../../../src/build/release/
 endif
-ARGS = -nox -iprint 50 -est
+ARGS = -nox -iprint 50 
 
 all: run
 
