@@ -340,6 +340,7 @@ DATA_SECTION
 	3darray d3_obs_size_comps_in(1,nSizeComps_in,1,nSizeCompRows_in,1,nSizeCompCols_in);
 	matrix size_comp_sample_size_in(1,nSizeComps_in,1,nSizeCompRows_in);
 	matrix size_comp_year_in(1,nSizeComps_in,1,nSizeCompRows_in);
+
 	LOC_CALCS
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
@@ -726,6 +727,7 @@ DATA_SECTION
 	ivector nAgeCompType(1,nSizeComps);
 	ivector bTailCompression(1,nSizeComps);
 	ivector nvn_phz(1,nSizeComps);
+	
 	LOC_CALCS
 		nSizeCompCols.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
