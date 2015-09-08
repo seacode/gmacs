@@ -727,7 +727,7 @@ DATA_SECTION
 	ivector nAgeCompType(1,nSizeComps);
 	ivector bTailCompression(1,nSizeComps);
 	ivector nvn_phz(1,nSizeComps);
-	
+
 	LOC_CALCS
 		nSizeCompCols.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
@@ -1680,20 +1680,18 @@ FUNCTION calc_initial_numbers_at_length
 	for ( int h = 1; h <= nsex; h++ )
 	{
 		A = growth_transition(h);
-		// Unfished conditions
 		if ( bInitializeUnfished )
 		{
+			// Unfished conditions
 			for ( int i = 1; i <= nclass; i++ )
 			{
 				_S(i,i) = mfexp(-M(h)(syr)(i));
 			}
-		}
-		// Steady-state fished conditions
-		else
-		{
+		} else {
+			// Steady-state fished conditions
 			_S = S(h)(syr);
 		}
-	  if ( verbose == 1 ) cout << "in init length 1" <<endl;
+	  	if ( verbose == 1 ) cout << "in init length 1" << endl;
 
 		// Single shell condition
 		if ( nshell == 1 && nmature == 1 )
@@ -1703,7 +1701,7 @@ FUNCTION calc_initial_numbers_at_length
 			d3_N(ig)(syr) = elem_prod(x , mfexp(rec_ini));
 		}
 
-	  if ( verbose == 1 ) cout << "in init length 2" <<endl;
+	  if ( verbose == 1 ) cout << "in init length 2" << endl;
 	  if ( verbose == 1 ) COUT(P(h));
 	  if ( verbose == 1 ) COUT(x);
 	  if ( verbose == 1 ) COUT(y);
@@ -1715,7 +1713,7 @@ FUNCTION calc_initial_numbers_at_length
 			d3_N(ig)(syr)   = elem_prod(x , mfexp(rec_ini));;
 			d3_N(ig+1)(syr) = elem_prod(y , mfexp(rec_ini));;
 		}
-	  if ( verbose == 1 ) cout << "in init length 3" <<endl;
+	  if ( verbose == 1 ) cout << "in init length 3" << endl;
 		// Insert terminal molt case here.
 
 	}

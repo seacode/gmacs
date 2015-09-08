@@ -7,10 +7,10 @@
 <h2 id="new-features">New features</h2>
 <p>New features added to Gmacs since the CIE review include:</p>
 <ul>
-<li>Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention); lower and upper bound specification for each selectivity parameter; priors for each selectivity parameter; provision for additional selectivity types (i.e. coefficient selectivity and double normal).</li>
+<li>Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention as well); lower and upper bound specification for each selectivity parameter; priors for each selectivity parameter; provision for additional selectivity types (i.e. coefficient selectivity and double normal).</li>
 <li>Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneously within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.</li>
 <li>Prior specification for all model parameters.</li>
-<li>Ability to provide a vector of weight at size rather than parameters</li>
+<li>Option to provide a vector of weight at size rather than parameters</li>
 </ul>
 <h2 id="coming-soon">Coming soon</h2>
 <p>New features that will be coming soon include:</p>
@@ -20,6 +20,7 @@
 <li>Additional time-varying options for molt, growth and maturity</li>
 <li>Allowing additional variances to be estimated for abundance indices</li>
 <li>Fully Bayesian MCMC functionality</li>
+<li>A new series of MCMC diagnostic plots including plots of MCMC traces, histograms with priors overlayed, correlation plots, data and posterior predictive distributions</li>
 <li>Please feel free to make suggestions</li>
 </ul>
 <h2 id="summary-of-analytical-approach">Summary of analytical approach</h2>
@@ -33,18 +34,12 @@
 <li>Molting probabilities are an inverse logistic function of size for males. Females molt annually.</li>
 <li>Annual fishing seasons for the directed fishery are short.</li>
 <li>Survey catchability (<span class="math"><em>q</em></span>) was estimated to be 0.896, based on a trawl experiment by Weinberg et al. (2004) with a standard deviation of 0.025. Survey catchability was assumed to be constant over time. Some scenarios estimate <span class="math"><em>q</em></span> in the model.</li>
-<li>Males mature at sizes =120 mm CL. For convenience, female abundance was summarized at sizes =90 mm CL as an index of mature females. viii. For summer trawl survey data, shell ages of newshell crabs were 12 months or less, and shell ages of oldshell and very oldshell crabs were more than 12 months.</li>
-<li>Measurement errors were assumed to be normally distributed for size compositions and were log- normally distributed for biomasses.</li>
+<li>Males mature at sizes = 120 mm CL. For convenience, female abundance was summarized at sizes = 90 mm CL as an index of mature females. For summer trawl survey data, shell ages of newshell crabs were 12 months or less, and shell ages of oldshell and very oldshell crabs were more than 12 months.</li>
+<li>Measurement errors were assumed to be normally distributed for size compositions and log-normally distributed for biomasses.</li>
 </ul>
 <h1 id="gmacs">Gmacs</h1>
 <p>The data and model specifications used in the Gmacs-BBRKC model are very similar to those used in the '4nb' scenario developed by <span class="citation">Zheng and Siddeek (2014)</span>, herein referred to as the BBRKC model. The BBRKC model from <span class="citation">Zheng and Siddeek (2014)</span> treats recruits by sex along with sex-specific natural mortality and fishing mortality. Here we provide results from two different Gmacs models (1) a two-sex model and (2) a single sex model in which the male components are compared with results from a Gmacs model implementation tuned to male-only data.</p>
-<p>Parameter Number of estimated parameters Value Natural mortality 1 Males (1980-84) 1 Females (1980-84) 1 Females (1976-79; 1984-1993) 0.18 yr-1 Other years</p>
-<p>In the BBRKC model, females molt annually, so molting probability is always 1 for females. This was replicated in the Gmacs model by fixing the logistic curves parameters to values that result in the molting probability being 1 for females across all modeled length classes. For the males, the BBRKC model has two molting probability curves, one during 1975-78 and another during 1979-present, each with two logistic curve parameters. In the current version of Gmacs, only a single molting probability curve is modeled.</p>
-<p>The growth increment per molt is one function for males and three functions for females (due to changing sizes at maturity).</p>
-<p>Each fishery has a mean fishing mortality with annual deviations. Describe selectivity.</p>
-<p>Total abundance and the proportions by length and sex are estimated in 1975 (the models initial year).</p>
 <p>Comparison tables of two different model approaches could be done by</p>
-<p>Pot fishery, trawl bycatch, NMFS trawl, BSFRF</p>
 <table>
 <thead>
 <tr class="header">
@@ -127,15 +122,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="file-description">File Description</h2>
-<ul>
-<li>There is a second data file <code>rksize13s.dat</code> with sample sizes for various rows of size-comp data. See lines 81-87 of <code>*.tpl</code>.</li>
-<li>Input sample sizes appear to be capped to the constant numbers entered in the main data file under 'number of samples' or 'sample sizes' (variously).</li>
-<li>There is a third data file <code>tc7513s.dat</code> specifically for data from the tanner crab fishery (with red crab bycatch).</li>
-<li>There is a standard control file <code>*.ctl</code> with internal comments.</li>
-<li>There is an excel spreadsheet which can be used to read in the model output files and display related plots (it's a bit clunky).</li>
-<li>There are two batch files in the model directory: <code>clean.bat</code> and <code>scratch.bat</code>. The 'clean' batch file deletes files related to a single model run. The 'scratch' batch file deletes all files relating to the model build and leaves only source and data files.</li>
-</ul>
 <h1 id="comparison-of-model-results">Comparison of model results</h1>
 <p>The following plots summarize plots made using <code>gmr</code> based on output from <span class="citation">Zheng and Siddeek (2014)</span> and Gmacs. Two Gmacs models are provided, the OneSex model and the TwoSex model.</p>
 <h2 id="fit-to-survey-abundance-indices">Fit to survey abundance indices</h2>
@@ -144,6 +130,7 @@
 <img src="figure/survey_biomass-1.png" alt="Model fits to sex-specific NMFS trawl survey biomass (tonnes) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations." /><p class="caption">Model fits to sex-specific NMFS trawl survey biomass (tonnes) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.</p>
 </div>
 <h2 id="estimated-retained-catch-and-discards">Estimated retained catch and discards</h2>
+<p>There are four fisheries defined in each of the models: the directed pot fishery, the groundfish trawl bycatch, the NMFS trawl surveys, and the BSFRF surveys. Each fishery has a mean fishing mortality with annual deviations.</p>
 <p>The observed and predicted catches by gear type are summarized in (Figure ). Data for discard fisheries were read in with 100% mortality (as clarified in Table 1 of <span class="citation">Zheng and Siddeek (2014)</span>).</p>
 <div class="figure">
 <img src="figure/fit_to_catch-1.png" alt="Observed and predicted catch (tonnes) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013." /><p class="caption">Observed and predicted catch (tonnes) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013.</p>
@@ -176,6 +163,9 @@
 <img src="figure/sc_NMFS_f-1.png" alt="Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl fishery." /><p class="caption">Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl fishery.</p>
 </div>
 <div class="figure">
+<img src="figure/sc_BSFRF_no-1.png" alt="Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys." /><p class="caption">Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.</p>
+</div>
+<div class="figure">
 <img src="figure/sc_BSFRF-1.png" alt="Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys." /><p class="caption">Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.</p>
 </div>
 <h2 id="mean-weight-at-size">Mean weight-at-size</h2>
@@ -190,10 +180,12 @@
 <img src="figure/init_rec-1.png" alt="Distribution of carapace width (mm) at recruitment." /><p class="caption">Distribution of carapace width (mm) at recruitment.</p>
 </div>
 <h2 id="molting-increment-and-probability">Molting increment and probability</h2>
+<p>The growth increment per molt is one function for males and three functions for females (due to changing sizes at maturity).</p>
 <p>Options to fit relationship based on data was developed but for the BBRKC system, a size-specific vector was used to determine molt increments as shown below (Figure ). Fixed parameters in gmacs were set to represent that assumed from <span class="citation">Zheng and Siddeek (2014)</span> (Figure ).</p>
 <div class="figure">
 <img src="figure/growth_inc-1.png" alt="Growth increment (mm) each molt by sex in the OneSex and TwoSex models." /><p class="caption">Growth increment (mm) each molt by sex in the OneSex and TwoSex models.</p>
 </div>
+<p>In the BBRKC model, females molt annually, so molting probability is always 1 for females. This was replicated in the Gmacs model by fixing the logistic curves parameters to values that result in the molting probability being 1 for females across all modeled length classes. For the males, the BBRKC model has two molting probability curves, one during 1975-78 and another during 1979-present, each with two logistic curve parameters. In the current version of Gmacs, only a single molting probability curve is modeled.</p>
 <div class="figure">
 <img src="figure/molt_prob-1.png" alt="Molting probability for each of the models by sex. The molting probability for females is fixed at 1 as females molt every year." /><p class="caption">Molting probability for each of the models by sex. The molting probability for females is fixed at 1 as females molt every year.</p>
 </div>
@@ -206,6 +198,7 @@
 <img src="figure/size_trans-1.png" alt="Size transitions." /><p class="caption">Size transitions.</p>
 </div>
 <h2 id="numbers-at-length-in-1975-and-2014">Numbers at length in 1975 and 2014</h2>
+<p>Total abundance and the proportions by length and sex are estimated in 1975 (the models initial year).</p>
 <p>The number of crabs in each size class (<span class="math">${\bf n}$</span>) in the initial year (<span class="math"><em>t</em> = 1</span>) and final year (<span class="math"><em>t</em> = <em>T</em></span>) in each model differ substantially (Figure ). The scale of these results differ significantly and may be related to the interaction with natural mortality estimates and how the initial population-at-lengths were established (the BBRKC model assumes all new-shell).</p>
 <div class="figure">
 <img src="figure/init_N-1.png" alt="Numbers at length in 1975 and 2014." /><p class="caption">Numbers at length in 1975 and 2014.</p>
