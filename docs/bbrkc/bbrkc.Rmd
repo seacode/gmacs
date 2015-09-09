@@ -168,17 +168,17 @@ M[[jj]]$rec_sdd <- j_len$Male_R_sd #j_len$Female_R_sd
 Gmacs is a generalized size-structured stock assessment modeling framework for
 molting crustacean species. Gmacs can make use of a wide variety of data,
 including fishery- and survey-based size-composition data, and fishery-dependent
-and -independent indices of abundance. Gmacs is coded using AD Model Builder.
+and -independent indices of abundance. Gmacs is coded using AD Model Builder (@Fournier2012b).
 
 Crab stocks of Alaska are managed by the North Pacific Fisheries Management
 Council ([NPFMC](http://npfmc.org)). Some stocks are assessed with integrated
 size-structured assessment models of the form described in @punt_review_2013.
 Currently, each stock is assessed using a stock-specific assessment model
 (e.g. @zheng_bristol_2014). The Gmacs project aims to provide software that
-will allow each stock to be assessed independently but using a single
+will allow each stock to be assessed independently but using a single flexible
 modeling framework.
 
-Gmacs is used here to develop an assessment model for the Bristol Bay Red King
+This application is developed to compare with the current assessment model for the Bristol Bay Red King
 Crab (BBRKC) stock. The example assessment is intended to match closely with a
 model scenario presented to the Fall 2014 BSAI Crab Plan Team Meeting by
 @zheng_bristol_2014. The following summarizes the outcome of some comparisons
@@ -190,31 +190,36 @@ plotting Gmacs model outputs. In what follows, we demonstrate the use of the
 `gmr` package to process the output of the Gmacs-BBRKC model and produce plots
 that can be used in assessment reports.
 
-Together, the Gmacs-BBRKC model and this report serve as the first example of
-what should follow for other crab stocks: that is, direct model comparisons to
-(1) test the efficacy of Gmacs, and (2) determine whether Gmacs can be used in
-practice to closely match the outputs of existing ADFG stock assessment models.
-
+The Gmacs-BBRKC model presented here is intended to be an example comparison which may
+ follow for application to other crab stocks. We provide some direct model comparisons to
+which test the efficacy of Gmacs and illustrate how alternative models can be specified.
 
 ## New features
 
 New features added to Gmacs since the CIE review include:
 
-  * Improved control over selectivity specification including: sex-specific parameter specification (allowing sex-specific retention as well); lower and upper bound specification for each selectivity parameter; priors for each selectivity parameter; provision for additional selectivity types (i.e. coefficient selectivity and double normal).
-  * Improved control over fitting of size composition data including: the ability to aggregate size compositions (e.g. male and female size compositions from the same fishery) and fit them simultaneously within the multivariate distribution of choice; output files that are read into R for automated plotting of the observed and expected size compositions.
-  * Prior specification for all model parameters.
-  * Option to provide a vector of weight at size rather than parameters
+  * Improved **control over selectivity specification** including: sex-specific parameter
+   specification (allowing sex-specific retention as well); lower and upper bound specification for 
+   each selectivity parameter; priors for each selectivity parameter; provision for additional 
+   selectivity types (i.e. coefficient selectivity and double normal).
+  * Improved **control over fitting of size composition** data including: the ability to aggregate size 
+  compositions (e.g. male and female size compositions from the same fishery) and fit them 
+  simultaneously within the multivariate distribution of choice; output files that are read into R for 
+  automated plotting of the observed and expected size compositions.
+  * **Prior specification explicit** now for all model parameters.
+  * Option to provide a **vector of weight at size** rather than parameters
 
 ## Coming soon
 
-New features that will be coming soon include:
+New features that under development include:
 
   * Double normal and coefficient selectivity types
   * Dirichlet size composition option
   * Additional time-varying options for molt, growth and maturity
   * Allowing additional variances to be estimated for abundance indices
   * Fully Bayesian MCMC functionality
-  * A new series of MCMC diagnostic plots including plots of MCMC traces, histograms with priors overlayed, correlation plots, data and posterior predictive distributions
+  * A new series of MCMC diagnostic plots including plots of MCMC traces, histograms with priors 
+  overlayed, correlation plots, data and posterior predictive distributions
   * Please feel free to make suggestions
 
 
