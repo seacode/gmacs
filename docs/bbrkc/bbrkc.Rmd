@@ -58,43 +58,49 @@ ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 1)
 for (i in ind)
 {
 	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Pot_Fem
-	M[[jj]]$slx_retaind[i,4:23] <- NA
+	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Pot_Fem))
 }
 ind <- which(M[[jj]]$slx_capture[,2] %in% 1 & M[[jj]]$slx_capture[,3] %in% 2)
 for (i in ind)
 {
 	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Trawl_Male
-	M[[jj]]$slx_retaind[i,4:23] <- NA
+	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Trawl_Male))
 }
 ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 2)
 for (i in ind)
 {
 	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Trawl_Fem
-	M[[jj]]$slx_retaind[i,4:23] <- NA
+	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Trawl_Fem))
 }
+
+# NMFS trawl survey selectivities
 ind <- which(M[[jj]]$slx_capture[,2] %in% 1 & M[[jj]]$slx_capture[,3] %in% 3)
 for (i in ind)
 {
-	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Male
-	M[[jj]]$slx_retaind[i,4:23] <- NA
+	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Male2
+	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Surv_Male))
 }
+M[[jj]]$slx_capture[ind[1],4:23] <- j_len$Sel_Surv_Male
 ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 3)
 for (i in ind)
 {
-	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Fem
-	M[[jj]]$slx_retaind[i,4:23] <- NA
+	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Fem2
+	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Surv_Fem))
 }
+M[[jj]]$slx_capture[ind[1],4:23] <- j_len$Sel_Surv_Fem
+
+# BSFRF selectivities
 ind <- which(M[[jj]]$slx_capture[,2] %in% 1 & M[[jj]]$slx_capture[,3] %in% 4)
 for (i in ind)
 {
-	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Male2
-	M[[jj]]$slx_retaind[i,4:23] <- NA
+	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_BSFRF_Male
+	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_BSFRF_Male))
 }
 ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 4)
 for (i in ind)
 {
-	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Fem2
-	M[[jj]]$slx_retaind[i,4:23] <- NA
+	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_BSFRF_Fem
+	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_BSFRF_Fem))
 }
 
 #C <- M#; C[[1]] <- NULL
@@ -537,8 +543,7 @@ uncertainty.
 
 ```{r spawning_stock_biomass, fig.cap = "Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.\\label{fig:ssb}"}
 A <- M; A[[1]] <- NULL
-mval <- 4e5
-#mval <- max(j_ssb$mmb*1000)
+mval <- 3.2e5
 plot_ssb(M, ylim = c(0, mval))
 ```
 

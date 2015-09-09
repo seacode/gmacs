@@ -16,7 +16,7 @@
   0.18      0.01         1         -4       2   0.18    0.04         # M
    7.0       -10        20          2       1    3.0     5.0         # logR0
    7.0       -10        20         -2       1    3.0     5.0         # logR1
-  10.4       -10        20          1       1    3.0     5.0         # logRbar
+  10.4       -10        20         -1       1    3.0     5.0         # logRbar
   73.0        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
   0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
  -0.51       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
@@ -67,13 +67,13 @@
    2     3     1   0    110    5    185    0      10    200    3     1953   2014
    2     4     2   0    150    5    185    0      10    200    3     1953   2014
 # Gear-3
-   3     5     1   0    100   60    200    0       1    200    4     1975   1981
-   3     6     2   0    115   60    200    0       1    200    4     1975   1981
-   3     7     1   0    100   60    200    0       1    200    3     1982   2014
-   3     8     2   0    115   60    200    0       1    200    3     1982   2014
+   3     5     1   0     74   60    200    0       1    200   -4     1953   1981
+   3     6     2   0     95   60    200    0       1    200   -4     1953   1981
+   3     7     1   0     95   60    200    0       1    200   -3     1982   2014
+   3     8     2   0    150   60    200    0       1    200   -3     1982   2014
 # Gear-4
-   4     9     1   0     70    1    200    0       1    200    4     1975   2014
-   4     10    2   0     90    1    200    0       1    200    4     1975   2014
+   4     9     1   0     70    1    200    0       1    200    4     1953   2014
+   4     10    2   0     90    1    200    0       1    200    4     1953   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
 # Gear-1
@@ -98,8 +98,8 @@
 ## SURVEYS/INDICES ONLY
 ## NMFS  BSFRF
 ## TYPE     Mean_q    SD_q      LAMBDA
-     1      0.896     0.01       1
-     0      0.001     0.01       1
+     1      0.843136  0.01       1
+     1      1.0       0.05       1
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
@@ -140,7 +140,7 @@
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
   3
 ## Phase of estimation
- -2
+  2
 ## STDEV in m_dev for Random walk
   0.40
 ## Number of nodes for cubic spline or number of step-changes for option 3
@@ -152,7 +152,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
-  2       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2014    # Last year for average recruitment for Bspr calculation.
