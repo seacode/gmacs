@@ -1709,7 +1709,7 @@ FUNCTION calc_initial_numbers_at_length
 		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,A,_S,P(h),rt);
-			ig = pntr_hmo(h,1,1);
+			ig              = pntr_hmo(h,1,1);
 			d3_N(ig)(syr)   = elem_prod(x , mfexp(rec_ini));;
 			d3_N(ig+1)(syr) = elem_prod(y , mfexp(rec_ini));;
 		}
