@@ -370,13 +370,13 @@ biomass ($\mathit{MMB}_t$), varies some between the models (Figure
 
 ## Comparison of likelihoods between models
 
-I had a quick hack at one one we could produce the comparative table using
-R and the xtable environment to do this.
+In the tables below the OneSex and TwoSex model likelihoods (Table
+\ref{tab:likelihoods}) and penalties (Table \ref{tab:penalties}) are compared.
 
 \begin{table}[ht]
 \centering
 \caption{Likelihoods in log-space.} 
-\begin{tabular}{rrr}
+\begin{tabular}{lrr}
   \hline
  & OneSex & TwoSex \\ 
   \hline
@@ -385,6 +385,7 @@ Abundance1 & 52.74 & 166.23 \\
   Catch1 & -38.95 & 683.16 \\ 
   Catch2 & 203.80 & 221.91 \\ 
   Catch3 & -65.63 & -49.75 \\ 
+  Catch4 &  & -78.62 \\ 
   Growth increment1 & 0.00 & 0.00 \\ 
   Recruitment deviations1 & 242.44 & 810.67 \\ 
   Size composition1 & 469.10 & 820.81 \\ 
@@ -392,7 +393,6 @@ Abundance1 & 52.74 & 166.23 \\
   Size composition3 & 1019.66 & 2448.87 \\ 
   Size composition4 & 2388.65 & 32232.31 \\ 
   Size composition5 & 13.84 & 257.15 \\ 
-  Catch4 &  & -78.62 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -400,7 +400,7 @@ Abundance1 & 52.74 & 166.23 \\
 \begin{table}[ht]
 \centering
 \caption{Penalties in log-space.} 
-\begin{tabular}{rrr}
+\begin{tabular}{lrr}
   \hline
  & OneSex & TwoSex \\ 
   \hline

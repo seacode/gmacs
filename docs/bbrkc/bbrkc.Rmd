@@ -589,8 +589,8 @@ plot_ssb(M)
 
 ## Comparison of likelihoods between models
 
-I had a quick hack at one one we could produce the comparative table using
-R and the xtable environment to do this.
+In the tables below the OneSex and TwoSex model likelihoods (Table
+\ref{tab:likelihoods}) and penalties (Table \ref{tab:penalties}) are compared.
 
 ```{r likelihoods, results = "asis"}
 nloglike <- NULL
@@ -613,11 +613,12 @@ for (m in 1:length(like))
         nloglike <- merge(nloglike, nll, by = 1, all = TRUE)
     }
 }
+nloglike <- nloglike[match(sort(levels(nloglike$V1)), as.character(nloglike$V1)),]
 rownames(nloglike) <- nloglike[,1]; nloglike[,1] <- NULL
 colnames(nloglike) <- c("OneSex","TwoSex")
 nloglike[,1] <- as.numeric(as.character(nloglike[,1]))
 nloglike[,2] <- as.numeric(as.character(nloglike[,2]))
-tab <- xtable(nloglike, digits = c(2), caption = "Likelihoods in log-space.")
+tab <- xtable(nloglike, digits = c(2), align = "lrr", caption = "Likelihoods in log-space.")
 print(tab, caption.placement = "top")
 ```
 
@@ -633,7 +634,7 @@ for (m in 1:length(like))
 }
 rownames(nlogPenalty) <- c("log_fdev","mean F","M","rec_dev","rec_ini","rec_dev_")
 colnames(nlogPenalty) <- c("OneSex","TwoSex")
-tab <- xtable(nlogPenalty, digits = c(2), caption = "Penalties in log-space.")
+tab <- xtable(nlogPenalty, digits = c(2), align = "lrr", caption = "Penalties in log-space.")
 print(tab, caption.placement = "top")
 ```
 
