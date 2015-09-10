@@ -567,7 +567,8 @@ biomass ($\mathit{MMB}_t$), varies some between the models (Figure
 ```{r spawning_stock_biomass, fig.cap = "Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.\\label{fig:ssb}"}
 A <- M; A[[1]] <- NULL
 mval <- 3.2e5
-plot_ssb(M, ylim = c(0, mval))
+#plot_ssb(M, ylim = c(0, mval))
+plot_ssb(M)
 
 ## Comparison of model results
 #The results of the ADFG-BBRKC model are compared here to the results of the
@@ -592,30 +593,30 @@ I had a quick hack at one one we could produce the comparative table using
 R and the xtable environment to do this.
 
 ```{r likelihoods, results = "asis"}
-nll <- NULL
 nloglike <- NULL
 rnames <- c("Catch","Abundance","Size composition","Recruitment deviations","Growth increment")
 for (m in 1:length(like))
 {
-  j <- which(like[[m]] %in% "nloglike")
-  pin <- like[[m]][(i+1):(i+5)]
-  for (n in 1:length(pin))
-  {
-    pout <- matrix(na.omit(as.numeric(unlist(strsplit(pin[n], " ")))))
-    pout <- cbind(paste0(rnames[n], 1:nrow(pout)), pout)
-    nll <- rbind(nll, pout)
-  }
-  if (is.null(nloglike)) 
-  {
-    nloglike <- nll
-  } 
-  else 
-  {
-    nloglike <- merge(nloglike, nll, by.x = 1, by.y = 1, all = TRUE)
-  }
+    nll <- NULL
+    j <- which(like[[m]] %in% "nloglike")
+    pin <- like[[m]][(j+1):(j+5)]
+    for (n in 1:length(pin))
+    {
+        pout <- matrix(na.omit(as.numeric(unlist(strsplit(pin[n], " ")))))
+        pout <- cbind(paste0(rnames[n], 1:nrow(pout)), pout)
+        nll <- rbind(nll, pout)
+    }
+    if (is.null(nloglike)) 
+    {
+        nloglike <- nll
+    } else {
+        nloglike <- merge(nloglike, nll, by = 1, all = TRUE)
+    }
 }
-rownames(nloglike) <- c("Catch","Abundance","Size composition","Recruitment deviations","Growth increment")
+rownames(nloglike) <- nloglike[,1]; nloglike[,1] <- NULL
 colnames(nloglike) <- c("OneSex","TwoSex")
+nloglike[,1] <- as.numeric(as.character(nloglike[,1]))
+nloglike[,2] <- as.numeric(as.character(nloglike[,2]))
 tab <- xtable(nloglike, digits = c(2), caption = "Likelihoods in log-space.")
 print(tab, caption.placement = "top")
 ```
@@ -663,7 +664,10 @@ natural mortality over time, time-varying selectivity, etc).
 The current Gmacs models require that many of the key model parameters be fixed to
 obtain model fits that look similar to the BBRKC model.
 
-```{r appdx}
-knit("app.Rmd")
 
+# References
+
+
+```{r appdx}
+#knit("app.Rmd")
 ```

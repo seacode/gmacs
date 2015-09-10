@@ -373,229 +373,26 @@ biomass ($\mathit{MMB}_t$), varies some between the models (Figure
 I had a quick hack at one one we could produce the comparative table using
 R and the xtable environment to do this.
 
-
-```
-## Error in `row.names<-.data.frame`(`*tmp*`, value = value): invalid 'row.names' length
-```
-
 \begin{table}[ht]
 \centering
 \caption{Likelihoods in log-space.} 
-\begin{tabular}{rlll}
+\begin{tabular}{rrr}
   \hline
- & OneSex & TwoSex & NA \\ 
+ & OneSex & TwoSex \\ 
   \hline
-1 & Abundance1 & 1998 & 1998 \\ 
-  2 & Abundance10 & 0 & 0 \\ 
-  3 & Abundance11 & 0.8 & 0.8 \\ 
-  4 & Abundance2 & 1 & 1 \\ 
-  5 & Abundance3 & 2 & 2 \\ 
-  6 & Abundance4 & 0 & 0 \\ 
-  7 & Abundance5 & 159.848 & 159.848 \\ 
-  8 & Abundance6 & 0.0707 & 0.0707 \\ 
-  9 & Abundance7 & 2 & 2 \\ 
-  10 & Abundance8 & 2 & 2 \\ 
-  11 & Abundance9 & 1 & 1 \\ 
-  12 & Catch1 & 1997 & 1997 \\ 
-  13 & Catch1 & 1997 & 0 \\ 
-  14 & Catch10 & 0 & 1094.04 \\ 
-  15 & Catch10 & 0 & 0 \\ 
-  16 & Catch11 & 0.8 & 390.061 \\ 
-  17 & Catch11 & 0.8 & 0.8 \\ 
-  18 & Catch2 & 1 & 1 \\ 
-  19 & Catch2 & 1 & 682.795 \\ 
-  20 & Catch3 & 2 & 1249.85 \\ 
-  21 & Catch3 & 2 & 2 \\ 
-  22 & Catch4 & 0 & 0 \\ 
-  23 & Catch4 & 0 & 1320.62 \\ 
-  24 & Catch5 & 73.4005 & 1331.94 \\ 
-  25 & Catch5 & 73.4005 & 73.4005 \\ 
-  26 & Catch6 & 0.0707 & 0.0707 \\ 
-  27 & Catch6 & 0.0707 & 1036.5 \\ 
-  28 & Catch7 & 2 & 2 \\ 
-  29 & Catch7 & 2 & 219.383 \\ 
-  30 & Catch8 & 2 & 574.888 \\ 
-  31 & Catch8 & 2 & 2 \\ 
-  32 & Catch9 & 1 & 420.443 \\ 
-  33 & Catch9 & 1 & 1 \\ 
-  34 & Growth increment1 & 2001 & 2001 \\ 
-  35 & Growth increment1 & 2001 & 25575.3786 \\ 
-  36 & Growth increment10 & 0 & 0 \\ 
-  37 & Growth increment10 & 0 & 21185.2811 \\ 
-  38 & Growth increment11 & 0.8 & 0.8 \\ 
-  39 & Growth increment11 & 0.8 & 14872.2125 \\ 
-  40 & Growth increment2 & 1 & 53037.8475 \\ 
-  41 & Growth increment2 & 1 & 1 \\ 
-  42 & Growth increment3 & 2 & 71468.8639 \\ 
-  43 & Growth increment3 & 2 & 2 \\ 
-  44 & Growth increment4 & 0 & 0 \\ 
-  45 & Growth increment4 & 0 & 98134.4466 \\ 
-  46 & Growth increment5 & 164.565 & 164.565 \\ 
-  47 & Growth increment5 & 164.565 & 133691.142 \\ 
-  48 & Growth increment6 & 0.0707 & 224133.5224 \\ 
-  49 & Growth increment6 & 0.0707 & 0.0707 \\ 
-  50 & Growth increment7 & 2 & 141610.5656 \\ 
-  51 & Growth increment7 & 2 & 2 \\ 
-  52 & Growth increment8 & 2 & 2 \\ 
-  53 & Growth increment8 & 2 & 27873.2596 \\ 
-  54 & Growth increment9 & 1 & 1 \\ 
-  55 & Growth increment9 & 1 & 15.9581 \\ 
-  56 & Recruitment deviations1 & 2000 & 2000 \\ 
-  57 & Recruitment deviations1 & 2000 & 580.5969 \\ 
-  58 & Recruitment deviations10 & 0 & 1452.5688 \\ 
-  59 & Recruitment deviations10 & 0 & 0 \\ 
-  60 & Recruitment deviations11 & 0.8 & 0.8 \\ 
-  61 & Recruitment deviations11 & 0.8 & 1494.1358 \\ 
-  62 & Recruitment deviations2 & 1 & 3051.0025 \\ 
-  63 & Recruitment deviations2 & 1 & 1 \\ 
-  64 & Recruitment deviations3 & 2 & 6285.0139 \\ 
-  65 & Recruitment deviations3 & 2 & 2 \\ 
-  66 & Recruitment deviations4 & 0 & 11746.2985 \\ 
-  67 & Recruitment deviations4 & 0 & 0 \\ 
-  68 & Recruitment deviations5 & 100.354 & 13848.353 \\ 
-  69 & Recruitment deviations5 & 100.354 & 100.354 \\ 
-  70 & Recruitment deviations6 & 0.0707 & 15892.2769 \\ 
-  71 & Recruitment deviations6 & 0.0707 & 0.0707 \\ 
-  72 & Recruitment deviations7 & 2 & 2 \\ 
-  73 & Recruitment deviations7 & 2 & 8194.955 \\ 
-  74 & Recruitment deviations8 & 2 & 1445.8374 \\ 
-  75 & Recruitment deviations8 & 2 & 2 \\ 
-  76 & Recruitment deviations9 & 1 & 0.8966 \\ 
-  77 & Recruitment deviations9 & 1 & 1 \\ 
-  78 & Size composition1 & 1999 & 14193.2092 \\ 
-  79 & Size composition1 & 1999 & 1999 \\ 
-  80 & Size composition10 & 0 & 0 \\ 
-  81 & Size composition10 & 0 & 1683.4623 \\ 
-  82 & Size composition11 & 0.8 & 0.8 \\ 
-  83 & Size composition11 & 0.8 & 1596.3958 \\ 
-  84 & Size composition2 & 1 & 20982.0861 \\ 
-  85 & Size composition2 & 1 & 1 \\ 
-  86 & Size composition3 & 2 & 2 \\ 
-  87 & Size composition3 & 2 & 22386.0088 \\ 
-  88 & Size composition4 & 0 & 28391.2455 \\ 
-  89 & Size composition4 & 0 & 0 \\ 
-  90 & Size composition5 & 201.575 & 37748.2974 \\ 
-  91 & Size composition5 & 201.575 & 201.575 \\ 
-  92 & Size composition6 & 0.0707 & 0.0707 \\ 
-  93 & Size composition6 & 0.0707 & 45366.8326 \\ 
-  94 & Size composition7 & 2 & 2 \\ 
-  95 & Size composition7 & 2 & 13587.4 \\ 
-  96 & Size composition8 & 2 & 1328.487 \\ 
-  97 & Size composition8 & 2 & 2 \\ 
-  98 & Size composition9 & 1 & 1.0039 \\ 
-  99 & Size composition9 & 1 & 1 \\ 
-  100 & Catch12 &  & 200.606 \\ 
-  101 & Catch13 &  & 186.436 \\ 
-  102 & Catch14 &  & 597.816 \\ 
-  103 & Catch15 &  & 174.066 \\ 
-  104 & Catch16 &  & 247.553 \\ 
-  105 & Catch17 &  & 315.959 \\ 
-  106 & Catch18 &  & 335.39 \\ 
-  107 & Catch19 &  & 426.564 \\ 
-  108 & Catch20 &  & 88.9147 \\ 
-  109 & Catch21 &  & 194.24 \\ 
-  110 & Catch22 &  & 106.509 \\ 
-  111 & Catch23 &  & 73.4005 \\ 
-  112 & Catch24 &  & 159.848 \\ 
-  113 & Catch25 &  & 201.575 \\ 
-  114 & Catch26 &  & 100.354 \\ 
-  115 & Catch27 &  & 164.565 \\ 
-  116 & Catch28 &  & 155.091 \\ 
-  117 & Catch29 &  & 172.32 \\ 
-  118 & Catch30 &  & 119.557 \\ 
-  119 & Catch31 &  & 155.222 \\ 
-  120 & Catch32 &  & 116.676 \\ 
-  121 & Catch33 &  & 138.486 \\ 
-  122 & Catch34 &  & 159.516 \\ 
-  123 & Catch35 &  & 103.743 \\ 
-  124 & Catch36 &  & 89.0308 \\ 
-  125 & Catch37 &  & 69.2305 \\ 
-  126 & Catch38 &  & 62.2251 \\ 
-  127 & Catch39 &  & 126.832 \\ 
-  128 & Growth increment12 &  & 22601.9338 \\ 
-  129 & Growth increment13 &  & 16452.6066 \\ 
-  130 & Growth increment14 &  & 6741.5119 \\ 
-  131 & Growth increment15 &  & 6398.551 \\ 
-  132 & Growth increment16 &  & 655.0192 \\ 
-  133 & Growth increment17 &  & 75.3031 \\ 
-  134 & Growth increment18 &  & 422.3743 \\ 
-  135 & Growth increment19 &  & 643.7567 \\ 
-  136 & Growth increment20 &  & 1.8653 \\ 
-  137 & Growth increment21 &  & 1.6129 \\ 
-  138 & Growth increment22 &  & 1.0292 \\ 
-  139 & Growth increment23 &  & 19.6735 \\ 
-  140 & Growth increment24 &  & 875.31 \\ 
-  141 & Growth increment25 &  & 8.8472 \\ 
-  142 & Growth increment26 &  & 40.5669 \\ 
-  143 & Growth increment27 &  & 173.2765 \\ 
-  144 & Growth increment28 &  & 7.2643 \\ 
-  145 & Growth increment29 &  & 431.6295 \\ 
-  146 & Growth increment30 &  & 187.8347 \\ 
-  147 & Growth increment31 &  & 500.5929 \\ 
-  148 & Growth increment32 &  & 36.6365 \\ 
-  149 & Growth increment33 &  & 187.0521 \\ 
-  150 & Growth increment34 &  & 147.7655 \\ 
-  151 & Growth increment35 &  & 85.062 \\ 
-  152 & Growth increment36 &  & 122.1231 \\ 
-  153 & Growth increment37 &  & 24.0528 \\ 
-  154 & Growth increment38 &  & 12.2952 \\ 
-  155 & Growth increment39 &  & 99.695 \\ 
-  156 & Recruitment deviations12 &  & 2747.6651 \\ 
-  157 & Recruitment deviations13 &  & 2169.2739 \\ 
-  158 & Recruitment deviations14 &  & 892.8118 \\ 
-  159 & Recruitment deviations15 &  & 823.9982 \\ 
-  160 & Recruitment deviations16 &  & 744.2598 \\ 
-  161 & Recruitment deviations17 &  & 540.4608 \\ 
-  162 & Recruitment deviations18 &  & 461.3055 \\ 
-  163 & Recruitment deviations19 &  & 776.1702 \\ 
-  164 & Recruitment deviations20 &  & 4.7891 \\ 
-  165 & Recruitment deviations21 &  & 3.3783 \\ 
-  166 & Recruitment deviations22 &  & 223.6849 \\ 
-  167 & Recruitment deviations23 &  & 337.131 \\ 
-  168 & Recruitment deviations24 &  & 992.8002 \\ 
-  169 & Recruitment deviations25 &  & 523.6807 \\ 
-  170 & Recruitment deviations26 &  & 374.0069 \\ 
-  171 & Recruitment deviations27 &  & 407.0197 \\ 
-  172 & Recruitment deviations28 &  & 515.8374 \\ 
-  173 & Recruitment deviations29 &  & 878.7255 \\ 
-  174 & Recruitment deviations30 &  & 559.7382 \\ 
-  175 & Recruitment deviations31 &  & 1319.9289 \\ 
-  176 & Recruitment deviations32 &  & 838.8427 \\ 
-  177 & Recruitment deviations33 &  & 1273.8664 \\ 
-  178 & Recruitment deviations34 &  & 1445.6859 \\ 
-  179 & Recruitment deviations35 &  & 1074.0894 \\ 
-  180 & Recruitment deviations36 &  & 822.5743 \\ 
-  181 & Recruitment deviations37 &  & 345.4237 \\ 
-  182 & Recruitment deviations38 &  & 240.3815 \\ 
-  183 & Recruitment deviations39 &  & 346.6002 \\ 
-  184 & Size composition12 &  & 3858.139 \\ 
-  185 & Size composition13 &  & 4279.5853 \\ 
-  186 & Size composition14 &  & 2882.5256 \\ 
-  187 & Size composition15 &  & 3829.9957 \\ 
-  188 & Size composition16 &  & 5060.7501 \\ 
-  189 & Size composition17 &  & 4899.9376 \\ 
-  190 & Size composition18 &  & 3636.2754 \\ 
-  191 & Size composition19 &  & 4742.8402 \\ 
-  192 & Size composition20 &  & 33.5409 \\ 
-  193 & Size composition21 &  & 35.0981 \\ 
-  194 & Size composition22 &  & 2430.826 \\ 
-  195 & Size composition23 &  & 2519.3853 \\ 
-  196 & Size composition24 &  & 4705.0166 \\ 
-  197 & Size composition25 &  & 2825.583 \\ 
-  198 & Size composition26 &  & 3209.6601 \\ 
-  199 & Size composition27 &  & 3432.503 \\ 
-  200 & Size composition28 &  & 3247.3905 \\ 
-  201 & Size composition29 &  & 5844.8957 \\ 
-  202 & Size composition30 &  & 3796.4672 \\ 
-  203 & Size composition31 &  & 6962.3315 \\ 
-  204 & Size composition32 &  & 4411.351 \\ 
-  205 & Size composition33 &  & 6932.2102 \\ 
-  206 & Size composition34 &  & 6857.3349 \\ 
-  207 & Size composition35 &  & 5830.5623 \\ 
-  208 & Size composition36 &  & 6427.9045 \\ 
-  209 & Size composition37 &  & 3929.9557 \\ 
-  210 & Size composition38 &  & 2997.8702 \\ 
-  211 & Size composition39 &  & 3545.4033 \\ 
+Abundance1 & 52.74 & 166.23 \\ 
+  Abundance2 & -1.31 & -1.28 \\ 
+  Catch1 & -38.95 & 683.16 \\ 
+  Catch2 & 203.80 & 221.91 \\ 
+  Catch3 & -65.63 & -49.75 \\ 
+  Growth increment1 & 0.00 & 0.00 \\ 
+  Recruitment deviations1 & 242.44 & 810.67 \\ 
+  Size composition1 & 469.10 & 820.81 \\ 
+  Size composition2 & 1099.60 & 3834.18 \\ 
+  Size composition3 & 1019.66 & 2448.87 \\ 
+  Size composition4 & 2388.65 & 32232.31 \\ 
+  Size composition5 & 13.84 & 257.15 \\ 
+  Catch4 &  & -78.62 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -607,12 +404,12 @@ R and the xtable environment to do this.
   \hline
  & OneSex & TwoSex \\ 
   \hline
-log\_fdev & 0.03 & 0.11 \\ 
-  mean F & 9.47 & 9.47 \\ 
-  M & 7.19 & 18.91 \\ 
+log\_fdev & 0.00 & 0.00 \\ 
+  mean F & 9.48 & 9.47 \\ 
+  M & 10.53 & 18.93 \\ 
   rec\_dev & 0.00 & 0.00 \\ 
   rec\_ini & 0.00 & 0.00 \\ 
-  rec\_dev\_ & 86.29 & 213.11 \\ 
+  rec\_dev\_ & 77.64 & 212.36 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -631,29 +428,7 @@ The current Gmacs models require that many of the key model parameters be fixed 
 obtain model fits that look similar to the BBRKC model.
 
 
-```
-##   |                                                                         |                                                                 |   0%  |                                                                         |.............                                                    |  20%
-##   ordinary text without R code
-## 
-##   |                                                                         |..........................                                       |  40%
-## label: unnamed-chunk-1 (with options) 
-## List of 2
-##  $ eval   : logi TRUE
-##  $ include: logi FALSE
-## 
-##   |                                                                         |.......................................                          |  60%
-##   ordinary text without R code
-## 
-##   |                                                                         |....................................................             |  80%
-## label: unnamed-chunk-2 (with options) 
-## List of 2
-##  $ eval   : logi TRUE
-##  $ include: logi FALSE
-## 
-##   |                                                                         |.................................................................| 100%
-##   ordinary text without R code
-```
+# References
 
-```
-## [1] "app.md"
-```
+
+
