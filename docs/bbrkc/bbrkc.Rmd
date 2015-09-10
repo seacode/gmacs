@@ -597,21 +597,22 @@ nloglike <- NULL
 rnames <- c("Catch","Abundance","Size composition","Recruitment deviations","Growth increment")
 for (m in 1:length(like))
 {
-    j <- which(like[[m]] %in% "nloglike")
-    pin <- like[[m]][(i+1):(i+5)]
-    for (n in 1:length(pin))
-    {
-        pout <- matrix(na.omit(as.numeric(unlist(strsplit(pin[n], " ")))))
-        pout <- cbind(paste0(rnames[n], 1:nrow(pout)), pout)
-        nll <- rbind(nll, pout)
-    }
-    if (is.null(nloglike)) 
-    {
-        nloglike <- nll
-    } else {
-        nloglike <- 
-merge(nloglike, nll, by.x = 1, by.y = 1, all = TRUE)
-    }
+  j <- which(like[[m]] %in% "nloglike")
+  pin <- like[[m]][(i+1):(i+5)]
+  for (n in 1:length(pin))
+  {
+    pout <- matrix(na.omit(as.numeric(unlist(strsplit(pin[n], " ")))))
+    pout <- cbind(paste0(rnames[n], 1:nrow(pout)), pout)
+    nll <- rbind(nll, pout)
+  }
+  if (is.null(nloglike)) 
+  {
+    nloglike <- nll
+  } 
+  else 
+  {
+    nloglike <- merge(nloglike, nll, by.x = 1, by.y = 1, all = TRUE)
+  }
 }
 rownames(nloglike) <- c("Catch","Abundance","Size composition","Recruitment deviations","Growth increment")
 colnames(nloglike) <- c("OneSex","TwoSex")
@@ -659,27 +660,10 @@ but more  detailed evaluation is needed. Simulation testing is also slated for
 evaluating alternative model specifications for robustness (e.g., constant
 natural mortality over time, time-varying selectivity, etc).
 
-The current Gmacs models require that most of the model parameters be fixed to
-obatin model fits that look similar to the BBRKC model.
+The current Gmacs models require that many of the key model parameters be fixed to
+obtain model fits that look similar to the BBRKC model.
 
+```{r appdx}
+knit("app.Rmd")
 
-# Appendix
-
-I need to figure out how to place this after the reference list.
-
-The OneSex model control file:
-
-```{r eval = TRUE}
-ts <- readLines("../../examples/bbrkc/OneSex/bbrkc_ss.ctl")
-for (i in 1:length(ts)) cat(ts[i], "\n")
 ```
-
-The TwoSex model control file:
-
-```{r eval = TRUE}
-ts <- readLines("../../examples/bbrkc/TwoSex/bbrkc.ctl")
-for (i in 1:length(ts)) cat(ts[i], "\n")
-```
-
-
-# References

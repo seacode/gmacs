@@ -373,19 +373,246 @@ biomass ($\mathit{MMB}_t$), varies some between the models (Figure
 I had a quick hack at one one we could produce the comparative table using
 R and the xtable environment to do this.
 
+
+```
+## Error in `row.names<-.data.frame`(`*tmp*`, value = value): invalid 'row.names' length
+```
+
 \begin{table}[ht]
 \centering
-\caption{Penalties.} 
+\caption{Likelihoods in log-space.} 
+\begin{tabular}{rlll}
+  \hline
+ & OneSex & TwoSex & NA \\ 
+  \hline
+1 & Abundance1 & 1998 & 1998 \\ 
+  2 & Abundance10 & 0 & 0 \\ 
+  3 & Abundance11 & 0.8 & 0.8 \\ 
+  4 & Abundance2 & 1 & 1 \\ 
+  5 & Abundance3 & 2 & 2 \\ 
+  6 & Abundance4 & 0 & 0 \\ 
+  7 & Abundance5 & 159.848 & 159.848 \\ 
+  8 & Abundance6 & 0.0707 & 0.0707 \\ 
+  9 & Abundance7 & 2 & 2 \\ 
+  10 & Abundance8 & 2 & 2 \\ 
+  11 & Abundance9 & 1 & 1 \\ 
+  12 & Catch1 & 1997 & 1997 \\ 
+  13 & Catch1 & 1997 & 0 \\ 
+  14 & Catch10 & 0 & 1094.04 \\ 
+  15 & Catch10 & 0 & 0 \\ 
+  16 & Catch11 & 0.8 & 390.061 \\ 
+  17 & Catch11 & 0.8 & 0.8 \\ 
+  18 & Catch2 & 1 & 1 \\ 
+  19 & Catch2 & 1 & 682.795 \\ 
+  20 & Catch3 & 2 & 1249.85 \\ 
+  21 & Catch3 & 2 & 2 \\ 
+  22 & Catch4 & 0 & 0 \\ 
+  23 & Catch4 & 0 & 1320.62 \\ 
+  24 & Catch5 & 73.4005 & 1331.94 \\ 
+  25 & Catch5 & 73.4005 & 73.4005 \\ 
+  26 & Catch6 & 0.0707 & 0.0707 \\ 
+  27 & Catch6 & 0.0707 & 1036.5 \\ 
+  28 & Catch7 & 2 & 2 \\ 
+  29 & Catch7 & 2 & 219.383 \\ 
+  30 & Catch8 & 2 & 574.888 \\ 
+  31 & Catch8 & 2 & 2 \\ 
+  32 & Catch9 & 1 & 420.443 \\ 
+  33 & Catch9 & 1 & 1 \\ 
+  34 & Growth increment1 & 2001 & 2001 \\ 
+  35 & Growth increment1 & 2001 & 25575.3786 \\ 
+  36 & Growth increment10 & 0 & 0 \\ 
+  37 & Growth increment10 & 0 & 21185.2811 \\ 
+  38 & Growth increment11 & 0.8 & 0.8 \\ 
+  39 & Growth increment11 & 0.8 & 14872.2125 \\ 
+  40 & Growth increment2 & 1 & 53037.8475 \\ 
+  41 & Growth increment2 & 1 & 1 \\ 
+  42 & Growth increment3 & 2 & 71468.8639 \\ 
+  43 & Growth increment3 & 2 & 2 \\ 
+  44 & Growth increment4 & 0 & 0 \\ 
+  45 & Growth increment4 & 0 & 98134.4466 \\ 
+  46 & Growth increment5 & 164.565 & 164.565 \\ 
+  47 & Growth increment5 & 164.565 & 133691.142 \\ 
+  48 & Growth increment6 & 0.0707 & 224133.5224 \\ 
+  49 & Growth increment6 & 0.0707 & 0.0707 \\ 
+  50 & Growth increment7 & 2 & 141610.5656 \\ 
+  51 & Growth increment7 & 2 & 2 \\ 
+  52 & Growth increment8 & 2 & 2 \\ 
+  53 & Growth increment8 & 2 & 27873.2596 \\ 
+  54 & Growth increment9 & 1 & 1 \\ 
+  55 & Growth increment9 & 1 & 15.9581 \\ 
+  56 & Recruitment deviations1 & 2000 & 2000 \\ 
+  57 & Recruitment deviations1 & 2000 & 580.5969 \\ 
+  58 & Recruitment deviations10 & 0 & 1452.5688 \\ 
+  59 & Recruitment deviations10 & 0 & 0 \\ 
+  60 & Recruitment deviations11 & 0.8 & 0.8 \\ 
+  61 & Recruitment deviations11 & 0.8 & 1494.1358 \\ 
+  62 & Recruitment deviations2 & 1 & 3051.0025 \\ 
+  63 & Recruitment deviations2 & 1 & 1 \\ 
+  64 & Recruitment deviations3 & 2 & 6285.0139 \\ 
+  65 & Recruitment deviations3 & 2 & 2 \\ 
+  66 & Recruitment deviations4 & 0 & 11746.2985 \\ 
+  67 & Recruitment deviations4 & 0 & 0 \\ 
+  68 & Recruitment deviations5 & 100.354 & 13848.353 \\ 
+  69 & Recruitment deviations5 & 100.354 & 100.354 \\ 
+  70 & Recruitment deviations6 & 0.0707 & 15892.2769 \\ 
+  71 & Recruitment deviations6 & 0.0707 & 0.0707 \\ 
+  72 & Recruitment deviations7 & 2 & 2 \\ 
+  73 & Recruitment deviations7 & 2 & 8194.955 \\ 
+  74 & Recruitment deviations8 & 2 & 1445.8374 \\ 
+  75 & Recruitment deviations8 & 2 & 2 \\ 
+  76 & Recruitment deviations9 & 1 & 0.8966 \\ 
+  77 & Recruitment deviations9 & 1 & 1 \\ 
+  78 & Size composition1 & 1999 & 14193.2092 \\ 
+  79 & Size composition1 & 1999 & 1999 \\ 
+  80 & Size composition10 & 0 & 0 \\ 
+  81 & Size composition10 & 0 & 1683.4623 \\ 
+  82 & Size composition11 & 0.8 & 0.8 \\ 
+  83 & Size composition11 & 0.8 & 1596.3958 \\ 
+  84 & Size composition2 & 1 & 20982.0861 \\ 
+  85 & Size composition2 & 1 & 1 \\ 
+  86 & Size composition3 & 2 & 2 \\ 
+  87 & Size composition3 & 2 & 22386.0088 \\ 
+  88 & Size composition4 & 0 & 28391.2455 \\ 
+  89 & Size composition4 & 0 & 0 \\ 
+  90 & Size composition5 & 201.575 & 37748.2974 \\ 
+  91 & Size composition5 & 201.575 & 201.575 \\ 
+  92 & Size composition6 & 0.0707 & 0.0707 \\ 
+  93 & Size composition6 & 0.0707 & 45366.8326 \\ 
+  94 & Size composition7 & 2 & 2 \\ 
+  95 & Size composition7 & 2 & 13587.4 \\ 
+  96 & Size composition8 & 2 & 1328.487 \\ 
+  97 & Size composition8 & 2 & 2 \\ 
+  98 & Size composition9 & 1 & 1.0039 \\ 
+  99 & Size composition9 & 1 & 1 \\ 
+  100 & Catch12 &  & 200.606 \\ 
+  101 & Catch13 &  & 186.436 \\ 
+  102 & Catch14 &  & 597.816 \\ 
+  103 & Catch15 &  & 174.066 \\ 
+  104 & Catch16 &  & 247.553 \\ 
+  105 & Catch17 &  & 315.959 \\ 
+  106 & Catch18 &  & 335.39 \\ 
+  107 & Catch19 &  & 426.564 \\ 
+  108 & Catch20 &  & 88.9147 \\ 
+  109 & Catch21 &  & 194.24 \\ 
+  110 & Catch22 &  & 106.509 \\ 
+  111 & Catch23 &  & 73.4005 \\ 
+  112 & Catch24 &  & 159.848 \\ 
+  113 & Catch25 &  & 201.575 \\ 
+  114 & Catch26 &  & 100.354 \\ 
+  115 & Catch27 &  & 164.565 \\ 
+  116 & Catch28 &  & 155.091 \\ 
+  117 & Catch29 &  & 172.32 \\ 
+  118 & Catch30 &  & 119.557 \\ 
+  119 & Catch31 &  & 155.222 \\ 
+  120 & Catch32 &  & 116.676 \\ 
+  121 & Catch33 &  & 138.486 \\ 
+  122 & Catch34 &  & 159.516 \\ 
+  123 & Catch35 &  & 103.743 \\ 
+  124 & Catch36 &  & 89.0308 \\ 
+  125 & Catch37 &  & 69.2305 \\ 
+  126 & Catch38 &  & 62.2251 \\ 
+  127 & Catch39 &  & 126.832 \\ 
+  128 & Growth increment12 &  & 22601.9338 \\ 
+  129 & Growth increment13 &  & 16452.6066 \\ 
+  130 & Growth increment14 &  & 6741.5119 \\ 
+  131 & Growth increment15 &  & 6398.551 \\ 
+  132 & Growth increment16 &  & 655.0192 \\ 
+  133 & Growth increment17 &  & 75.3031 \\ 
+  134 & Growth increment18 &  & 422.3743 \\ 
+  135 & Growth increment19 &  & 643.7567 \\ 
+  136 & Growth increment20 &  & 1.8653 \\ 
+  137 & Growth increment21 &  & 1.6129 \\ 
+  138 & Growth increment22 &  & 1.0292 \\ 
+  139 & Growth increment23 &  & 19.6735 \\ 
+  140 & Growth increment24 &  & 875.31 \\ 
+  141 & Growth increment25 &  & 8.8472 \\ 
+  142 & Growth increment26 &  & 40.5669 \\ 
+  143 & Growth increment27 &  & 173.2765 \\ 
+  144 & Growth increment28 &  & 7.2643 \\ 
+  145 & Growth increment29 &  & 431.6295 \\ 
+  146 & Growth increment30 &  & 187.8347 \\ 
+  147 & Growth increment31 &  & 500.5929 \\ 
+  148 & Growth increment32 &  & 36.6365 \\ 
+  149 & Growth increment33 &  & 187.0521 \\ 
+  150 & Growth increment34 &  & 147.7655 \\ 
+  151 & Growth increment35 &  & 85.062 \\ 
+  152 & Growth increment36 &  & 122.1231 \\ 
+  153 & Growth increment37 &  & 24.0528 \\ 
+  154 & Growth increment38 &  & 12.2952 \\ 
+  155 & Growth increment39 &  & 99.695 \\ 
+  156 & Recruitment deviations12 &  & 2747.6651 \\ 
+  157 & Recruitment deviations13 &  & 2169.2739 \\ 
+  158 & Recruitment deviations14 &  & 892.8118 \\ 
+  159 & Recruitment deviations15 &  & 823.9982 \\ 
+  160 & Recruitment deviations16 &  & 744.2598 \\ 
+  161 & Recruitment deviations17 &  & 540.4608 \\ 
+  162 & Recruitment deviations18 &  & 461.3055 \\ 
+  163 & Recruitment deviations19 &  & 776.1702 \\ 
+  164 & Recruitment deviations20 &  & 4.7891 \\ 
+  165 & Recruitment deviations21 &  & 3.3783 \\ 
+  166 & Recruitment deviations22 &  & 223.6849 \\ 
+  167 & Recruitment deviations23 &  & 337.131 \\ 
+  168 & Recruitment deviations24 &  & 992.8002 \\ 
+  169 & Recruitment deviations25 &  & 523.6807 \\ 
+  170 & Recruitment deviations26 &  & 374.0069 \\ 
+  171 & Recruitment deviations27 &  & 407.0197 \\ 
+  172 & Recruitment deviations28 &  & 515.8374 \\ 
+  173 & Recruitment deviations29 &  & 878.7255 \\ 
+  174 & Recruitment deviations30 &  & 559.7382 \\ 
+  175 & Recruitment deviations31 &  & 1319.9289 \\ 
+  176 & Recruitment deviations32 &  & 838.8427 \\ 
+  177 & Recruitment deviations33 &  & 1273.8664 \\ 
+  178 & Recruitment deviations34 &  & 1445.6859 \\ 
+  179 & Recruitment deviations35 &  & 1074.0894 \\ 
+  180 & Recruitment deviations36 &  & 822.5743 \\ 
+  181 & Recruitment deviations37 &  & 345.4237 \\ 
+  182 & Recruitment deviations38 &  & 240.3815 \\ 
+  183 & Recruitment deviations39 &  & 346.6002 \\ 
+  184 & Size composition12 &  & 3858.139 \\ 
+  185 & Size composition13 &  & 4279.5853 \\ 
+  186 & Size composition14 &  & 2882.5256 \\ 
+  187 & Size composition15 &  & 3829.9957 \\ 
+  188 & Size composition16 &  & 5060.7501 \\ 
+  189 & Size composition17 &  & 4899.9376 \\ 
+  190 & Size composition18 &  & 3636.2754 \\ 
+  191 & Size composition19 &  & 4742.8402 \\ 
+  192 & Size composition20 &  & 33.5409 \\ 
+  193 & Size composition21 &  & 35.0981 \\ 
+  194 & Size composition22 &  & 2430.826 \\ 
+  195 & Size composition23 &  & 2519.3853 \\ 
+  196 & Size composition24 &  & 4705.0166 \\ 
+  197 & Size composition25 &  & 2825.583 \\ 
+  198 & Size composition26 &  & 3209.6601 \\ 
+  199 & Size composition27 &  & 3432.503 \\ 
+  200 & Size composition28 &  & 3247.3905 \\ 
+  201 & Size composition29 &  & 5844.8957 \\ 
+  202 & Size composition30 &  & 3796.4672 \\ 
+  203 & Size composition31 &  & 6962.3315 \\ 
+  204 & Size composition32 &  & 4411.351 \\ 
+  205 & Size composition33 &  & 6932.2102 \\ 
+  206 & Size composition34 &  & 6857.3349 \\ 
+  207 & Size composition35 &  & 5830.5623 \\ 
+  208 & Size composition36 &  & 6427.9045 \\ 
+  209 & Size composition37 &  & 3929.9557 \\ 
+  210 & Size composition38 &  & 2997.8702 \\ 
+  211 & Size composition39 &  & 3545.4033 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Penalties in log-space.} 
 \begin{tabular}{rrr}
   \hline
  & OneSex & TwoSex \\ 
   \hline
-log\_fdev & 0.00 & 0.00 \\ 
+log\_fdev & 0.03 & 0.11 \\ 
   mean F & 9.47 & 9.47 \\ 
-  M & 7.28 & 18.93 \\ 
+  M & 7.19 & 18.91 \\ 
   rec\_dev & 0.00 & 0.00 \\ 
   rec\_ini & 0.00 & 0.00 \\ 
-  rec\_dev\_ & 86.75 & 212.36 \\ 
+  rec\_dev\_ & 86.29 & 213.11 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -400,373 +627,33 @@ but more  detailed evaluation is needed. Simulation testing is also slated for
 evaluating alternative model specifications for robustness (e.g., constant
 natural mortality over time, time-varying selectivity, etc).
 
-The current Gmacs models require that most of the model parameters be fixed to
-obatin model fits that look similar to the BBRKC model.
-
-
-# Appendix
-
-I need to figure out how to place this after the reference list.
-
-The OneSex model control file:
+The current Gmacs models require that many of the key model parameters be fixed to
+obtain model fits that look similar to the BBRKC model.
 
 
 ```
-## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-## # Controls for leading parameter vector theta    
-## # LEGEND FOR PRIOR: 
-## #                  0 -> uniform 
-## #                  1 -> normal 
-## #                  2 -> lognormal 
-## #                  3 -> beta 
-## #                  4 -> gamma 
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-## # ntheta 
-##   9 
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-## # ival        lb        ub        phz   prior     p1      p2         # parameter         #                             
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-##   0.18      0.01         1         -4       2   0.18    0.04         # M 
-##    7.0       -10        20          2       1    3.0     5.0         # logR0 
-##    7.0       -10        20         -2       1    3.0     5.0         # logR1 
-##   10.4       -10        20         -1       1    3.0     5.0         # logRbar 
-##   73.0        55       100         -4       1   72.5    7.25         # Recruitment Expected Value 
-##   0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component) 
-##  -0.51       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R) 
-##   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness 
-##   0.01      0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## GROWTH PARAM CONTROLS                                                                ## 
-## ## nGrwth 
-## ##                                                                                      ## 
-## ## Two lines for each parameter if split sex, one line if not                           ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## # ival        lb        ub        phz   prior     p1      p2         # parameter         #                             
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-##   17.5       1.0      90.0          3       0    0.0    999.0         # alpha males or combined 
-##    0.10      0.0       0.9         -3       0    0.0    999.0         # beta males or combined 
-##    0.30      0.0      90.0         -4       0    0.0    999.0         # gscale males or combined 
-##  140.5       1.0     195.0         -3       0    0.0    999.0         # molt_mu males or combined 
-##    0.071     0.0001    9.0         -4       0    0.0    999.0         # molt_cv males or combined 
-## # ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## SELECTIVITY CONTROLS                                                                 ## 
-## ##    -Each gear must have a selectivity and a retention selectivity                    ## 
-## ## LEGEND sel_type:1=coefficients,2=logistic,3=logistic95                               ## 
-## ##        Index: use +ve for selectivity, -ve for retention 
-## ##        sex dep: 0 for sex-independent, 1 for sex-dependent. 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## ivector for number of year blocks or nodes 
-## ## POT       TBycatch  NMFS_S   BSFR_S 
-## ## Gear-1    Gear-2    Gear-3   Gear-4 
-##    1         1         2        1         # Selectivity periods 
-##    0         0         0        0         # sex specific selectivity 
-##    3         3         3        3         # male selectivity type 
-## ## Gear-1    Gear-2    Gear-3   Gear-4 
-##    1         1         1        1         # Retention periods  
-##    0         0         0        0         # sex specific retention 
-##    3         2         2        2         # male retention type 
-##    1         0         0        0         # male retention flag (0 -> no, 1 -> yes) 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## gear  par   sel                                             phz    start  end        ## 
-## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## # Gear-1 
-##    1     1     1   0    100    5    185    0      10    200    3     1953   2014 
-##    1     2     2   0    120    5    185    0      10    200    3     1953   2014 
-## # Gear-2 
-##    2     3     1   0    110    5    185    0      10    200    3     1953   2014 
-##    2     4     2   0    150    5    185    0      10    200    3     1953   2014 
-## # Gear-3 
-##    3     5     1   0     74   60    200    0       1    200   -4     1953   1981 
-##    3     6     2   0     95   60    200    0       1    200   -4     1953   1981 
-##    3     7     1   0     95   60    200    0       1    200   -3     1982   2014 
-##    3     8     2   0    150   60    200    0       1    200   -3     1982   2014 
-## # Gear-4 
-##    4     9     1   0     70    1    200    0       1    200    4     1953   2014 
-##    4     10    2   0     90    1    200    0       1    200    4     1953   2014 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## Retained 
-## # Gear-1 
-##   -1     11    1   0    133   50    200    0      1    900   -4     1953   2014 
-##   -1     12    2   0    137   50    200    0      1    900   -4     1953   2014 
-## # Gear-2 
-##   -2     15    1   0    595    1    700    0      1    900   -3     1953   2014 
-##   -2     16    2   0     10    1    700    0      1    900   -3     1953   2014 
-## # Gear-3 
-##   -3     17    1   0    590    1    700    0      1    900   -3     1953   1981 
-##   -3     18    2   0     10    1    700    0      1    900   -3     1982   2014 
-## # Gear-4 
-##   -4     19    1   0    580    1    700    0      1    900   -3     1953   2014 
-##   -4     20    2   0     20    1    700    0      1    900   -3     1953   2014 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## PRIORS FOR CATCHABILITY 
-## ##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi) 
-## ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit. 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## SURVEYS/INDICES ONLY 
-## ## NMFS  BSFRF 
-## ## TYPE     Mean_q    SD_q      LAMBDA 
-##      1      0.843136  0.01       1 
-##      1      1.0       0.05       1 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ 
-## ##   0.30      0.07      10.50     1 
-## ##   0.002     0.01      10.50     1 
-##      0.20      0.05     45.50      1  # Trap 
-##      0.05      0.05     45.50      1  # Trawl 
-##      0.00      2.00     20.00     -1  # NMFS 
-##      0.00      2.00     20.00     -1  # BSFRF 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX) 
-## ## LIKELIHOOD OPTIONS: 
-## ##  • 0 ignore composition data in model fitting. 
-## ##  • 1 multinomial with estimated/fixed sample size 
-## ##  • 2 robust_multi. Robust approximation to multinomial 
-## ##  • 3 logistic normal  (NIY) 
-## ##  • 4 multivariate-t   (NIY) 
-## ## AUTOTAIL COMPRESSION: 
-## ##   - pmin is the cumulative proportion used in tail compression. 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  1   1   1   1   1   1 # Type of likelihood. 
-##  0   0   0   0   0   0 # Auto tail compression (pmin) 
-## -4  -4  -4  -4  -4  -4 # Phz for estimating effective sample size (if appl.) 
-##  1   2   3   4   4   5 # Composition aggregator 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## TIME VARYING NATURAL MORTALIIY RATES                                                 ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## TYPE: 
-## ##      0 = constant natural mortality 
-## ##      1 = Random walk (deviates constrained by variance in M) 
-## ##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
-## ##      3 = Blocked changes (deviates constrained by variance AT specific knots) 
-##   3 
-## ## Phase of estimation 
-##   2 
-## ## STDEV in m_dev for Random walk 
-##   0.40 
-## ## Number of nodes for cubic spline or number of step-changes for option 3 
-##   4 
-## ## Year position of the knots (vector must be equal to the number of nodes) 
-##    1976 1980 1985 1994 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## OTHER CONTROLS 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##   3       # Estimated rec_dev phase 
-##   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
-##   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE) 
-##   1984    # First year for average recruitment for Bspr calculation. 
-##   2014    # Last year for average recruitment for Bspr calculation. 
-##   0.35    # Target SPR ratio for Bmsy proxy. 
-##   1       # Gear index for SPR calculations (i.e., directed fishery). 
-##   1       # Lambda (proportion of mature male biomass for SPR reference points.) 
-##   1       # Use empirical molt increment data (0=FALSE, 1=TRUE) 
-##   0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt) 
-## ## EOF 
-## 9999
+##   |                                                                         |                                                                 |   0%  |                                                                         |.............                                                    |  20%
+##   ordinary text without R code
+## 
+##   |                                                                         |..........................                                       |  40%
+## label: unnamed-chunk-1 (with options) 
+## List of 2
+##  $ eval   : logi TRUE
+##  $ include: logi FALSE
+## 
+##   |                                                                         |.......................................                          |  60%
+##   ordinary text without R code
+## 
+##   |                                                                         |....................................................             |  80%
+## label: unnamed-chunk-2 (with options) 
+## List of 2
+##  $ eval   : logi TRUE
+##  $ include: logi FALSE
+## 
+##   |                                                                         |.................................................................| 100%
+##   ordinary text without R code
 ```
 
-The TwoSex model control file:
-
-
 ```
-## # Model 1, fixed multinomial sample sizes 
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-## # Controls for leading parameter vector theta    
-## # LEGEND FOR PRIOR: 
-## #                  0 -> uniform 
-## #                  1 -> normal 
-## #                  2 -> lognormal 
-## #                  3 -> beta 
-## #                  4 -> gamma 
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-## # ntheta 
-##   9 
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-## # ival        lb        ub        phz   prior     p1      p2         # parameter         # 
-## # —————————————————————————————————————————————————————————————————————————————————————— # 
-##   0.18      0.01         1         -4       2   0.18    0.04         # M 
-##    7.0       -10        20          2       1    3.0     5.0         # logR0 
-##    7.0       -10        20         -2       1    3.0     5.0         # logR1 
-##    9.0       -10        20         -1       1    3.0     5.0         # logRbar 
-##   73.0        55       100         -4       1   72.5    7.25         # Recruitment Expected Value 
-##   0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component) 
-##  -0.40       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R) 
-##   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness 
-##   0.01      0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## GROWTH PARAM CONTROLS                                                                ## 
-## ## nGrwth                                                                               ## 
-## ##                                                                                      ## 
-## ## Two lines for each parameter if split sex, one line if not                           ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## # ival        lb        ub        phz   prior     p1      p2         # parameter        ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##   17.5       1.0      90.0         -3       0    0.0    999.0         # alpha males or combined 
-##   17.5       1.0      90.0         -3       0    0.0    999.0         # alpha 
-##    0.10      0.0       0.9         -3       0    0.0    999.0         # beta males or combined 
-##    0.10      0.0       0.9         -3       0    0.0    999.0         # beta 
-##    0.30      0.0      90.0         -4       0    0.0    999.0         # gscale males or combined 
-##    0.30      0.15     90.0         -4       0    0.0    999.0         # gscale 
-##  140.5       1.0     195.0         -3       0    0.0    999.0         # molt_mu males or combined 
-##  400.0       1.0     999.0         -4       0    0.0    999.0         # molt_mu 
-##    0.071     0.0001    9.0         -4       0    0.0    999.0         # molt_cv males or combined 
-##    0.1       0.0001    9.0         -4       0    0.0    999.0         # molt_cv 
-## ## ——————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## SELECTIVITY CONTROLS                                                                 ## 
-## ##    -Each gear must have a selectivity and a retention selectivity                    ## 
-## ## LEGEND sel type: 1 = coefficients, 2 = logistic, 3 = logistic95, 4 = double normal   ## 
-## ##        gear index: use +ve for selectivity, -ve for retentio                         ## 
-## ##        sex dep: 0 for sex-independent, 1 for sex-dependent.                          ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## ivector for number of year periods or nodes                                          ## 
-## ## Gear-1    Gear-2    Gear-3   Gear-4 
-##    1         1         2        1         # Selectivity periods 
-##    1         0         1        1         # sex specific selectivity 
-##    3         3         3        3         # male   selectivity type 
-##    3         3         3        3         # female selectivity type 
-## ## Gear-1    Gear-2    Gear-3   Gear-4 
-##    1         1         1        1         # Retention periods 
-##    1         0         0        0         # sex specific retention 
-##    3         2         2        2         # male   retention type 
-##    2         2         2        2         # female retention type 
-##    1         0         0        0         # male   retention flag (0 = no, 1 = yes) 
-##    0         0         0        0         # female retention flag (0 = no, 1 = yes) 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## gear  par   sel                                             phz    start  end        ## 
-## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## Selectivity P(capture of all sizes) 
-## # Gear-1 
-##    1     1     1   1    100    5    185    0      10    200    3     1975   2014 
-##    1     2     2   1    120    5    185    0      10    200    3     1975   2014 
-##    1     1     1   2     80   60    150    0      10    200   -4     1975   2014 
-##    1     2     2   2     95   60    150    0      10    200   -4     1975   2014 
-## # Gear-2 
-##    2     3     1   0    110    5    185    0      10    200    3     1975   2014 
-##    2     4     2   0    150    5    185    0      10    200    3     1975   2014 
-## # Gear-3 
-##    3     5     1   1     74   60    200    0       1    200   -4     1975   1981 
-##    3     6     2   1     95   60    200    0       1    200   -4     1975   1981 
-##    3     7     1   1     95   60    200    0       1    200   -3     1982   2014 
-##    3     8     2   1    140   60    200    0       1    200   -3     1982   2014 
-##    3     5     1   2     90   60    200    0       1    200   -4     1975   1981 
-##    3     6     2   2    160   60    200    0       1    200   -4     1975   1981 
-##    3     7     1   2    100   60    200    0       1    200   -3     1982   2014 
-##    3     8     2   2    170   60    200    0       1    200   -3     1982   2014 
-## # Gear-4 
-##    4     9     1   1     70    1    200    0       1    200    4     1975   2014 
-##    4     10    2   1     90    1    200    0       1    200    4     1975   2014 
-##    4     9     1   2    110    1    200    0       1    200   -4     1975   2014 
-##    4     10    2   2    190    1    200    0       1    200   -4     1975   2014 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## Retained 
-## # Gear-1 
-##   -1     11    1   1    133   50    200    0      1    900   -4     1975   2014 
-##   -1     12    2   1    137   50    200    0      1    900   -4     1975   2014 
-##   -1     13    1   2    591    1    700    0      1    900   -3     1975   2014 
-##   -1     14    2   2     11    1    700    0      1    900   -3     1975   2014 
-## # Gear-2 
-##   -2     15    1   0    595    1    700    0      1    900   -3     1975   2014 
-##   -2     16    2   0     10    1    700    0      1    900   -3     1975   2014 
-## # Gear-3 
-##   -3     17    1   0    590    1    700    0      1    900   -3     1975   1981 
-##   -3     18    2   0     10    1    700    0      1    900   -3     1982   2014 
-## # Gear-4 
-##   -4     19    1   0    580    1    700    0      1    900   -3     1975   2014 
-##   -4     20    2   0     20    1    700    0      1    900   -3     1975   2014 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## PRIORS FOR CATCHABILITY 
-## ##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi) 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## SURVEYS/INDICES ONLY 
-## ## NMFS  BSFRF 
-## ## TYPE     Mean_q    SD_q      CPUE_Lambda 
-##      1      0.843136  0.01      1 # 0.896 is the magic number * 0.941 (Jies max selex) 
-##      1      1.0       0.03      1 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## Trap  Trawl NMFS  BSFRF 
-## ## Mean_F  STD_PHZ1  STD_PHZ2  PHZ 
-##      0.20      0.05     45.50    1  #TRAP 
-##      0.05      0.05     45.50    1  #Trawl 
-##      0.00      2.00     20.00   -1  #NMFS trawl survey (0 catch) 
-##      0.00      2.00     20.00   -1  #BSFRF (0) 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX) 
-## ## LIKELIHOOD OPTIONS: 
-## ##   -1) multinomial with estimated/fixed sample size 
-## ##   -2) robust_multi. Robust approximation to multinomial 
-## ##   -3) logistic normal (NIY) 
-## ##   -4) multivariate-t  (NIY) 
-## ## AUTOTAIL COMPRESSION: 
-## ##   - pmin is the cumulative proportion used in tail compression. 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## # 2   2   2   2   2   2   2   2   2   # Type of likelihood. 
-##  1   1   1   1   1   1   1   1   1   # Type of likelihood. 
-##  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin) 
-## -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
-##  1   2   2   3   3   4   4   4   5   # Composition aggregator 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## TIME VARYING NATURAL MORTALIIY RATES                                                 ## 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## TYPE:  
-## ##      0 = constant natural mortality 
-## ##      1 = Random walk (deviates constrained by variance in M) 
-## ##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
-## ##      3 = Blocked changes (deviates constrained by variance AT specific knots) 
-##   3 
-## ## Phase of estimation 
-##   3 
-## ## STDEV in m_dev for Random walk 
-##   0.60 
-## ## Number of nodes for cubic spline or number of step-changes for option 3 
-##   4 
-## ## Year position of the knots (vector must be equal to the number of nodes) 
-##   1976 1980 1985 1994 
-##  
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## ## OTHER CONTROLS 
-## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-##   3       # Estimated rec_dev phase 
-##   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
-##   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE) 
-##   1984    # First year for average recruitment for Bspr calculation. 
-##   2014    # Last year for average recruitment for Bspr calculation. 
-##   0.35    # Target SPR ratio for Bmsy proxy. 
-##   1       # Gear index for SPR calculations (i.e., directed fishery). 
-##   1       # Lambda (proportion of mature male biomass for SPR reference points). 
-##   1       # Use empirical molt increment data (0=FALSE, 1=TRUE) 
-##   0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt) 
-## ## EOF 
-## 9999
+## [1] "app.md"
 ```
-
-
-# References
