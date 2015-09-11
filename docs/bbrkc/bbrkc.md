@@ -244,6 +244,8 @@ future plotting versions the scales will be retained as an option_.
 
 ![Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.\label{fig:sc_BSFRF}](figure/sc_BSFRF-1.png) 
 
+![Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.\label{fig:sc_BSFRF}](figure/sc_BSFRF_2-1.png) 
+
 
 ## Mean weight-at-size
 
@@ -380,19 +382,19 @@ In the tables below the OneSex and TwoSex model likelihoods (Table
   \hline
  & OneSex & TwoSex \\ 
   \hline
-Abundance1 & 26.78 & 172.25 \\ 
-  Abundance2 & -1.25 & -1.25 \\ 
-  Catch1 & 89.10 & 582.80 \\ 
-  Catch2 & 92.18 & 228.63 \\ 
-  Catch3 & -78.75 & -49.78 \\ 
-  Catch4 &  & -78.67 \\ 
+Abundance1 & 52.74 & 166.23 \\ 
+  Abundance2 & -1.31 & -1.28 \\ 
+  Catch1 & -38.95 & 683.16 \\ 
+  Catch2 & 203.80 & 221.91 \\ 
+  Catch3 & -65.63 & -49.75 \\ 
+  Catch4 &  & -78.62 \\ 
   Growth increment1 & 0.00 & 0.00 \\ 
-  Recruitment deviations1 & 117.45 & 255.97 \\ 
-  Size composition1 & 445.35 & 571.10 \\ 
-  Size composition2 & 1097.31 & 3879.39 \\ 
-  Size composition3 & 1011.17 & 2341.26 \\ 
-  Size composition4 & 41504.62 & 31257.80 \\ 
-  Size composition5 & 14.24 & 247.68 \\ 
+  Recruitment deviations1 & 242.44 & 810.67 \\ 
+  Size composition1 & 469.10 & 820.81 \\ 
+  Size composition2 & 1099.60 & 3834.18 \\ 
+  Size composition3 & 1019.66 & 2448.87 \\ 
+  Size composition4 & 2388.65 & 32232.31 \\ 
+  Size composition5 & 13.84 & 257.15 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -405,11 +407,11 @@ Abundance1 & 26.78 & 172.25 \\
  & OneSex & TwoSex \\ 
   \hline
 log\_fdev & 0.00 & 0.00 \\ 
-  mean F & 9.47 & 9.47 \\ 
-  M & 24.00 & 12.44 \\ 
+  mean F & 9.48 & 9.47 \\ 
+  M & 10.53 & 18.93 \\ 
   rec\_dev & 0.00 & 0.00 \\ 
   rec\_ini & 0.00 & 0.00 \\ 
-  rec\_dev\_ & 55.42 & 56.49 \\ 
+  rec\_dev\_ & 77.64 & 212.36 \\ 
    \hline
 \end{tabular}
 \end{table}

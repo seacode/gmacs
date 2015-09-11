@@ -413,10 +413,14 @@ plot_size_comps(A, 7)
 ```
 
 ```{r , sc_NMFS_f, fig.cap = "Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl survey.\\label{fig:sc_NMFS_f}"}
-plot_size_comps(A, 9)
+plot_size_comps(A, 8)
 ```
 
 ```{r , sc_BSFRF, fig.cap = "Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.\\label{fig:sc_BSFRF}"}
+plot_size_comps(A, 9)
+```
+
+```{r , sc_BSFRF_2, fig.cap = "Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.\\label{fig:sc_BSFRF}"}
 plot_size_comps(A, 10)
 ```
 
