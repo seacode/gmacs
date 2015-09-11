@@ -658,6 +658,7 @@ DATA_SECTION
 				slx_par(k,slx_npar(k)) = 0.999;
 			}
 		}
+	  ECHO(slx_priors);
 	END_CALCS
 	!! WriteCtl(slx_nsel_period_in); WriteCtl(ret_nret_period_in); WriteCtl(slx_control_in); WriteCtl(slx_control);
 
@@ -1007,7 +1008,7 @@ PARAMETER_SECTION
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr,nyr-1,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -1754,7 +1755,7 @@ FUNCTION update_population_numbers_at_length
 
 	for ( i = syr; i <= nyr; i++ )
 	{
-		if ( i < nyr )
+		if ( i > syr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
 		}
@@ -2148,6 +2149,7 @@ FUNCTION calc_relative_abundance
 					V(j) += nal * sel;
 				}
 			}
+			// cout<<"SurveySel "<<sel<<endl;
 		} // nSurveyRows(k)
 		dvar_vector zt = log(obs_cpue(k)) - log(V);
 		dvariable zbar = mean(zt);
@@ -2330,13 +2332,13 @@ FUNCTION calc_predicted_composition
    * @param p1 the first prior parameter
    * @param p2 the second prior parameter
   **/
-FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const double &p1, const double &p2)
+FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &_theta, const double &p1, const double &p2)
 	{
 		dvariable prior_pdf;
 		switch(pType)
 		{
 			case 0: // uniform
-				prior_pdf = dunif(theta,p1,p2);
+				prior_pdf = dunif(_theta,p1,p2);
 				/*
 				if ( (p2-p1) > 0 )
 				{
@@ -2349,20 +2351,20 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &theta, const
 			break;
 			case 1: // normal
 				// COUT(p1);COUT(p2);
-				prior_pdf = dnorm(theta,p1,p2);
+				prior_pdf = dnorm(_theta,p1,p2);
 				// COUT(prior_pdf);
 			break;
 			case 2: // lognormal
-				prior_pdf = dlnorm(theta,log(p1),p2);
+				prior_pdf = dlnorm(_theta,log(p1),p2);
 			break;
 			case 3: // beta
-				//lb = theta_control(i,2);
-				//ub = theta_control(i,3);
-				//prior_pdf = dbeta((theta-lb)/(ub-lb),p1,p2);
-				prior_pdf = dbeta(theta,p1,p2);
+				//lb = _theta_control(i,2);
+				//ub = _theta_control(i,3);
+				//prior_pdf = dbeta((_theta-lb)/(ub-lb),p1,p2);
+				prior_pdf = dbeta(_theta,p1,p2);
 			break;
 			case 4: // gamma
-				prior_pdf = dgamma(theta,p1,p2);
+				prior_pdf = dgamma(_theta,p1,p2);
 			break;
 		}
 		return prior_pdf;
@@ -2437,8 +2439,13 @@ FUNCTION calculate_prior_densities
 			break;
 			case 1: // Prior on analytical soln, log-normal
 				priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
+				// cout << "q, density "<<survey_q(i) <<" "<<priorDensity(iprior)<<endl;
 			break;
 		}
+		if (last_phase())
+		  priorDensity(iprior) = priorDensity(iprior) ;
+		else
+		  priorDensity(iprior) = .1*priorDensity(iprior) ;
 		iprior++;
 	}
 	// Selctivity parameter priors
@@ -2454,6 +2461,7 @@ FUNCTION calculate_prior_densities
 				dvariable x = mfexp(log_slx_pars(k,j));
 				// Above is a change of variable so an adjustment is required - DOUBLE CHECK THIS
 				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2) + log_slx_pars(k,j);
+				if (verbose == 2) cout << " Prior no, val, dens "<<iprior<<" "<<x<<" "<<priorDensity(iprior)<<endl;
 			}
 			iprior++;
 		}
@@ -2616,7 +2624,11 @@ FUNCTION calc_objective_function
 	if ( verbose == 2 ) 
 	{
 		cout <<"------------------------"<<endl;
-		COUT(objfun); COUT(like_names);COUT(nloglike); COUT(nlogPenalty); COUT(priorDensity);
+		COUT(objfun); cout<<" Phase: "<<current_phase()<<endl;COUT(like_names);COUT(nloglike); COUT(nlogPenalty); 
+		cout<<"priortheta  "<< priorDensity(1,ntheta)<<endl;;
+		cout<<"priorGrowth "<< priorDensity(1+ntheta,ntheta+nGrwth)<<endl;;
+		cout<<"priorSrvQ   "<< priorDensity(1+ntheta+nGrwth,ntheta+nGrwth+nSurveys)<<endl;
+		cout<<"priorselex  "<< priorDensity(1+ntheta+nGrwth+nSurveys, ntheta+nGrwth+nSurveys+nSelex)<<endl;
 	}
 
 

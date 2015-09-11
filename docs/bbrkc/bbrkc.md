@@ -382,19 +382,19 @@ In the tables below the OneSex and TwoSex model likelihoods (Table
   \hline
  & OneSex & TwoSex \\ 
   \hline
-Abundance1 & 52.74 & 166.23 \\ 
-  Abundance2 & -1.31 & -1.28 \\ 
-  Catch1 & -38.95 & 683.16 \\ 
-  Catch2 & 203.80 & 221.91 \\ 
-  Catch3 & -65.63 & -49.75 \\ 
-  Catch4 &  & -78.62 \\ 
+Abundance1 & 125.47 & 172.04 \\ 
+  Abundance2 & -1.42 & -1.25 \\ 
+  Catch1 & 3329.39 & 581.88 \\ 
+  Catch2 & 4534.98 & 229.31 \\ 
+  Catch3 & -78.82 & -49.78 \\ 
+  Catch4 &  & -78.73 \\ 
   Growth increment1 & 0.00 & 0.00 \\ 
-  Recruitment deviations1 & 242.44 & 810.67 \\ 
-  Size composition1 & 469.10 & 820.81 \\ 
-  Size composition2 & 1099.60 & 3834.18 \\ 
-  Size composition3 & 1019.66 & 2448.87 \\ 
-  Size composition4 & 2388.65 & 32232.31 \\ 
-  Size composition5 & 13.84 & 257.15 \\ 
+  Recruitment deviations1 & 198.82 & 266.08 \\ 
+  Size composition1 & 596.15 & 579.06 \\ 
+  Size composition2 & 45027.77 & 3877.05 \\ 
+  Size composition3 & 6043.93 & 2336.41 \\ 
+  Size composition4 & 468825.59 & 31242.93 \\ 
+  Size composition5 & 422.78 & 247.73 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -407,11 +407,11 @@ Abundance1 & 52.74 & 166.23 \\
  & OneSex & TwoSex \\ 
   \hline
 log\_fdev & 0.00 & 0.00 \\ 
-  mean F & 9.48 & 9.47 \\ 
-  M & 10.53 & 18.93 \\ 
+  mean F & 9.47 & 9.47 \\ 
+  M & 4.74 & 12.29 \\ 
   rec\_dev & 0.00 & 0.00 \\ 
   rec\_ini & 0.00 & 0.00 \\ 
-  rec\_dev\_ & 77.64 & 212.36 \\ 
+  rec\_dev\_ & 112.44 & 60.60 \\ 
    \hline
 \end{tabular}
 \end{table}
