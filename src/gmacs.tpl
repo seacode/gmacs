@@ -2588,14 +2588,14 @@ FUNCTION calc_objective_function
 	int irow=1;
 	if (last_phase()) irow = 2;
 	dvariable fbar;
-	dvariable log_fbar;
+	dvariable ln_fbar;
 	for ( int k = 1; k <= nfleet; k++ )
 	{
 		fbar = mean(ft(k)(1));
 		if ( pen_fbar(k) > 0  && fbar != 0 )
 		{
-			log_fbar = log(fbar);
-			nlogPenalty(2) += dnorm(log_fbar, log(pen_fbar(k)), pen_fstd(irow,k));
+			ln_fbar = log(fbar);
+			nlogPenalty(2) += dnorm(ln_fbar, log(pen_fbar(k)), pen_fstd(irow,k));
 		}
 	}
 

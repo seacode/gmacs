@@ -65,12 +65,12 @@
    1     1     1   0    135    1    200    0      1     200   -1     1975   2014
    1     2     2   0    140    1    200    0      1     200   -1     1975   2014
 # Gear-2
-   2     3     1   0    090    10   200    0      10    200   -3     1975   2014
-   2     4     2   0    180    10   200    0      10    200   -4     1975   2014
+   2     3     1   0    090    10   200    0      10    200   -2     1975   2014
+   2     4     2   0    180    10   200    0      10    200   -2     1975   2014
 # Gear-3
    3     5     1   0     94   60    200    0       1    200   -3     1975   1981
    3     6     2   0    140   60    200    0       1    200   -3     1975   1981
-   3     7     1   0     95   60    200    0       1    200   -3     1982   2014
+   3     7     1   0     95   60    200    0       1    200    3     1982   2014
    3     8     2   0    140   60    200    0       1    200   -3     1982   2014
 # Gear-4
    4     9     1   0     70    1    200    0       1    200   -4     1975   2014
@@ -153,7 +153,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-  0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
+  1       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2014    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
