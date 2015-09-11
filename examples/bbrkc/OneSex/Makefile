@@ -4,7 +4,11 @@ ifeq ($(OPT),TRUE)
 else
 	DIST = ../../../src/build/debug/
 endif
-ARGS = -nox -iprint 50 
+ifeq ($(est),T)
+  ARGS = -nox -iprint 50 -est
+else
+  ARGS = -nox -iprint 50 
+endif
 ts := $(shell /bin/date "+%Y-%m-%d---%H-%M-%S")
 pn = gmpl_$(ts)
 R_OPTS=--no-save --no-restore --no-init-file --no-site-file -e 'library(knitr); knit("plot.Rmd")'

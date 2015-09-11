@@ -14,11 +14,11 @@
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1         -4       2   0.18    0.04         # M
-   7.0       -10        20          2       1    3.0     5.0         # logR0
-   7.0       -10        20         -2       1    3.0     5.0         # logR1
-   9.0       -10        20         -1       1    3.0     5.0         # logRbar
-  73.0        55       100         -4       1   72.5    7.25         # Recruitment Expected Value
-  0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
+   7.0       -10        20          2       1    3.0    30.0         # logR0
+   7.0       -10        20          2       1    3.0    30.0         # logR1
+   9.0       -10        20         -1       1    3.0    30.0         # logRbar
+  73.0        55       100          4       1   72.5    7.25         # Recruitment Expected Value
+  0.561      0.1         5          3       0    0.1     5.0         # Recruitment scale (variance component)
  -0.40       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
   0.01      0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
@@ -160,7 +160,7 @@
 ## Phase of estimation
   3
 ## STDEV in m_dev for Random walk
-  0.60
+  0.80
 ## Number of nodes for cubic spline or number of step-changes for option 3
   4
 ## Year position of the knots (vector must be equal to the number of nodes)
@@ -171,7 +171,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-  0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
+  1       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2014    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
