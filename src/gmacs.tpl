@@ -1586,7 +1586,7 @@ FUNCTION calc_molting_probability
 	 * 
 	 * @param ra is the mean of the distribution.
 	 * @param rbeta scales the variance of the distribution
-	 */
+	**/
 FUNCTION calc_recruitment_size_distribution
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
@@ -1604,7 +1604,7 @@ FUNCTION calc_recruitment_size_distribution
 	 * @details This function initializes the populations numbers-at-length
 	 * in the initial year of the model.  
 	 * 
-	 * Psuedocode:  See note from Dave Fournier.
+	 * Psuedocode: See note from Dave Fournier.
 	 * 
 	 * For the initial numbers-at-lengt a vector of deviates is estimated,
 	 * one for each size class, and have the option to initialize
@@ -1703,11 +1703,11 @@ FUNCTION calc_initial_numbers_at_length
 			ig            = pntr_hmo(h,1,1);
 			d3_N(ig)(syr) = elem_prod(x , mfexp(rec_ini));
 		}
+	  	if ( verbose == 1 ) cout << "in init length 2" << endl;
+	  	if ( verbose == 1 ) COUT(P(h));
+	  	if ( verbose == 1 ) COUT(x);
+	  	if ( verbose == 1 ) COUT(y);
 
-	  if ( verbose == 1 ) cout << "in init length 2" << endl;
-	  if ( verbose == 1 ) COUT(P(h));
-	  if ( verbose == 1 ) COUT(x);
-	  if ( verbose == 1 ) COUT(y);
 		// Continuous molt (newshell/oldshell)
 		if ( nshell == 2 && nmature == 1 )
 		{
@@ -1716,7 +1716,8 @@ FUNCTION calc_initial_numbers_at_length
 			d3_N(ig)(syr)   = elem_prod(x , mfexp(rec_ini));;
 			d3_N(ig+1)(syr) = elem_prod(y , mfexp(rec_ini));;
 		}
-	  if ( verbose == 1 ) cout << "in init length 3" << endl;
+	  	if ( verbose == 1 ) cout << "in init length 3" << endl;
+
 		// Insert terminal molt case here.
 
 	}
