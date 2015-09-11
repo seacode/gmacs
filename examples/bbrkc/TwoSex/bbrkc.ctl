@@ -15,10 +15,10 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1         -4       2   0.18    0.04         # M
    7.0       -10        20          2       1    3.0    30.0         # logR0
-   7.0       -10        20          2       1    3.0    30.0         # logR1
+   7.0       -10        20         -2       1    3.0    30.0         # logR1
    9.0       -10        20         -1       1    3.0    30.0         # logRbar
-  73.0        55       100          4       1   72.5    7.25         # Recruitment Expected Value
-  0.561      0.1         5          3       0    0.1     5.0         # Recruitment scale (variance component)
+  72.0        55       100          4       1   72.5    7.25         # Recruitment Expected Value
+  0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
  -0.40       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
   0.75      0.20      1.00         -2       3    3.0    2.00         # steepness
   0.01      0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation

@@ -1007,7 +1007,7 @@ PARAMETER_SECTION
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr,nyr-1,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -1753,7 +1753,7 @@ FUNCTION update_population_numbers_at_length
 
 	for ( i = syr; i <= nyr; i++ )
 	{
-		if ( i > syr )
+		if ( i < nyr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
 		}
@@ -2570,9 +2570,9 @@ FUNCTION calc_objective_function
 	for( int k = 1; k <= nfleet; k++ )
 	{
 		dvariable s     = mean(log_fdev(k));
-		nlogPenalty(1) += 1000.0*s*s;
+		nlogPenalty(1) += 10000.0*s*s;
 		dvariable r     = mean(log_fdov(k));
-		nlogPenalty(1) += 1000.0*r*r;
+		nlogPenalty(1) += 10000.0*r*r;
 	}
 
 	// 2) Penalty on mean F to regularize the solution.
