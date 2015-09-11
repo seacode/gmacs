@@ -1166,7 +1166,6 @@ PROCEDURE_SECTION
 FUNCTION write_eval
   MCout(theta);
 
-
 	/**
 	 * @brief calculate sdreport variables in final phase
 	**/
@@ -1178,7 +1177,6 @@ FUNCTION calc_sdreport
 	//	sd_fbar(k) = mean(ft(k));
 	//	
 	//}
-	
 	
 
 	/**
@@ -1757,7 +1755,7 @@ FUNCTION update_population_numbers_at_length
 
 	for ( i = syr; i <= nyr; i++ )
 	{
-		if ( i > syr & i < nyr )
+		if ( i > syr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
 		}
