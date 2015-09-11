@@ -99,7 +99,7 @@
 ## SURVEYS/INDICES ONLY
 ## NMFS  BSFRF
 ## TYPE     Mean_q    SD_q      LAMBDA
-     1      0.843136  0.02       1
+     1      0.843136  0.02       5
      1      1.000     0.03       1
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -123,7 +123,8 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
- 1   1   1   1   1   1 # Type of likelihood.
+# 1   1   1   1   1   1 # Type of likelihood.
+ 2   2   2   2   2   2 # Type of likelihood.
  0   0   0   0   0   0 # Auto tail compression (pmin)
 -4  -4  -4  -4  -4  -4 # Phz for estimating effective sample size (if appl.)
  1   2   3   4   4   5 # Composition aggregator
