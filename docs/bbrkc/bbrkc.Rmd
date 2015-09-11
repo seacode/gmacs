@@ -177,7 +177,7 @@ including fishery- and survey-based size-composition data, and fishery-
 dependent and -independent indices of abundance. Gmacs is coded using AD Model
 Builder [@Fournier2012b].
 
-Crab stocks of Alaska are managed by the North Pacific Fisheries Management
+Crab stocks of Alaska are managed by the North Pacific Fishery Management
 Council ([NPFMC](http://npfmc.org)). Some stocks are assessed with integrated
 size-structured assessment models of the form described in @punt_review_2013.
 Currently, each stock is assessed using a stock-specific assessment model
@@ -696,15 +696,14 @@ natural mortality over time, time-varying selectivity, etc).
 The current Gmacs models require that many of the key model parameters be fixed to
 obtain model fits that look similar to the BBRKC model.
 
-We feel that the differences between Gmacs and the BBRKC model produced by
-@zheng_bristol_2014 are largely due to the use of the Baranov catch equation
-in Gmacs amd the way that the initial numbers at length are derived. We intend
-to change the catch equations and intialization of Gmacs to a method more
-similar to that used by @zheng_bristol_2014.
+Differences between Gmacs and the BBRKC model produced by
+@zheng_bristol_2014 are likely due to the use of the Baranov catch equation
+in Gmacs and the way that the initial numbers at length are derived (both new and old-shell are estimated in Gmacs).
+As part of the model development schedule, alternative catch equations and intialization options in Gmacs will be added
+so that a broader range of assumptions can be made (and perhaps become more similar to that used by @zheng_bristol_2014).
 
 
 # References
-
 ```{r appdx,  results = "asis" , include=FALSE}
 knit("app.Rmd")
 ```
