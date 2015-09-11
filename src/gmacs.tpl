@@ -841,11 +841,14 @@ DATA_SECTION
 
 	ivector ilike_vector(1,nlikes)
 	LOC_CALCS
-	  ilike_vector(1) = nCatchDF;
-	  ilike_vector(2) = nSurveys;
-	  ilike_vector(3) = nSizeComps;
-	  ilike_vector(4) = 1;
-	  ilike_vector(5) = 1;
+		ilike_vector(1) = nCatchDF;
+		like_names      =  adstring("Catch ");
+		ilike_vector(2) = nSurveys;
+		like_names      = like_names + adstring("Survey_Indices ");
+		ilike_vector(3) = nSizeComps;
+		like_names      = like_names + adstring("SizeComps ");
+		ilike_vector(4) = 1;
+		ilike_vector(5) = 1;
 	END_CALCS
 
 	// |--------------------------------------------------|
@@ -2567,9 +2570,9 @@ FUNCTION calc_objective_function
 	for( int k = 1; k <= nfleet; k++ )
 	{
 		dvariable s     = mean(log_fdev(k));
-		nlogPenalty(1) += 10000.0*s*s;
+		nlogPenalty(1) += 1000.0*s*s;
 		dvariable r     = mean(log_fdov(k));
-		nlogPenalty(1) += 10000.0*r*r;
+		nlogPenalty(1) += 1000.0*r*r;
 	}
 
 	// 2) Penalty on mean F to regularize the solution.
@@ -2611,7 +2614,8 @@ FUNCTION calc_objective_function
 
 	if ( verbose == 2 ) 
 	{
-		COUT(objfun); COUT(nloglike); COUT(nlogPenalty); COUT(priorDensity);
+		cout <<"------------------------"<<endl;
+		COUT(objfun); COUT(like_names);COUT(nloglike); COUT(nlogPenalty); COUT(priorDensity);
 	}
 
 
@@ -3030,9 +3034,10 @@ GLOBALS_SECTION
 	 * @file gmacs.cpp
 	 * @authors Steve Martell and Jim Ianelli
 	 */
-
 	#include <admodel.h>
 	#include <time.h>
+  adstring like_names;
+  adstring prior_names;
 	//#include "./test/comm.h"
 	//#include <contrib.h>
 	#if defined __APPLE__ || defined __linux
