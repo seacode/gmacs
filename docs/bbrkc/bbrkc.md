@@ -178,6 +178,9 @@ No. size-classes     | $\ell$    | 20         | 20           | 20
 No. Fleets           | $k$       | 5          | 2            | 5            
 
 
+
+
+
 # Comparison of model results
 
 The following plots summarize plots made using `gmr` based on output from
@@ -401,19 +404,19 @@ In the tables below the OneSex and TwoSex model likelihoods (Table
   \hline
  & OneSex & TwoSex \\ 
   \hline
-Abundance1 & 110.70 & 172.04 \\ 
-  Abundance2 & -1.41 & -1.25 \\ 
-  Catch1 & 3522.11 & 581.88 \\ 
-  Catch2 & 4432.07 & 229.31 \\ 
-  Catch3 & -78.86 & -49.78 \\ 
-  Catch4 &  & -78.73 \\ 
+Abundance1 & 82.87 & 201.66 \\ 
+  Abundance2 & -1.28 & -1.13 \\ 
+  Catch1 & 235.06 & 295.25 \\ 
+  Catch2 & 182.56 & 185.98 \\ 
+  Catch3 & -78.71 & -49.70 \\ 
+  Catch4 &  & -78.76 \\ 
   Growth increment1 & 0.00 & 0.00 \\ 
-  Recruitment deviations1 & 166.76 & 266.08 \\ 
-  Size composition1 & 590.89 & 579.06 \\ 
-  Size composition2 & 45005.77 & 3877.05 \\ 
-  Size composition3 & 6017.39 & 2336.41 \\ 
-  Size composition4 & 468473.11 & 31242.93 \\ 
-  Size composition5 & 429.45 & 247.73 \\ 
+  Recruitment deviations1 & 106.46 & 126.90 \\ 
+  Size composition1 & 487.27 & 516.23 \\ 
+  Size composition2 & 1208.63 & 3026.14 \\ 
+  Size composition3 & 924.92 & 2293.09 \\ 
+  Size composition4 & 41630.20 & 31002.78 \\ 
+  Size composition5 & 13.33 & 254.25 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -427,10 +430,10 @@ Abundance1 & 110.70 & 172.04 \\
   \hline
 log\_fdev & 0.00 & 0.00 \\ 
   mean F & 9.47 & 9.47 \\ 
-  M & 18.91 & 12.29 \\ 
+  M & 11.70 & 4.43 \\ 
   rec\_dev & 0.00 & 0.00 \\ 
   rec\_ini & 0.00 & 0.00 \\ 
-  rec\_dev\_ & 73.70 & 60.60 \\ 
+  rec\_dev\_ & 57.34 & 59.92 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -439,7 +442,6 @@ log\_fdev & 0.00 & 0.00 \\
 
 
 # Discussion
-
 Comparisons of likelihood function components are available from the output
 but more  detailed evaluation is needed. Simulation testing is also slated for
 evaluating alternative model specifications for robustness (e.g. constant
@@ -456,6 +458,5 @@ similar to that used by @zheng_bristol_2014.
 
 
 # References
-
 
 

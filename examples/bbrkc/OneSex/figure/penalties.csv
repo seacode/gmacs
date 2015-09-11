@@ -1,7 +1,7 @@
 "Model","component","nlogPenalty"
-"OneSex","log_fdev",0
-"OneSex","mean_F",9.4767
-"OneSex","M_walk",10.5251
+"OneSex","log_fdev",3e-04
+"OneSex","mean_F",9.4736
+"OneSex","M_walk",11.6998
 "OneSex","rec_dev1",0
 "OneSex","rec_dev2",0
-"OneSex","rec_dev3",77.6362
+"OneSex","rec_dev3",57.3418

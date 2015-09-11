@@ -23,6 +23,7 @@ $(DIST)$(EXEC).tpl:
 
 run: $(EXEC)
 	 ./$(EXEC) $(ARGS)
+	 R CMD BATCH plot.R
 
 png: 
 	R CMD BATCH plot.R

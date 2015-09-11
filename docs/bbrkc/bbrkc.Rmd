@@ -329,6 +329,17 @@ No. size-classes     | $\ell$    | 20         | 20           | 20
 No. Fleets           | $k$       | 5          | 2            | 5            
 
 
+
+```{r data_extent} 
+#fig.cap = "Data extent for the gmacs model configuration \\label{fig:data_extent}"
+# text:
+#The data extent and availability is shown in Figure \ref{fig:data_extent}). 
+# Create a list that only contains the OneSex and TwoSex models
+#A <- M[[1]]
+#names(A$run_name) <- "Gmacs"
+#plot_datarange(A)
+```
+
 # Comparison of model results
 
 The following plots summarize plots made using `gmr` based on output from
@@ -677,7 +688,6 @@ for (m in 1:length(like))
 
 
 # Discussion
-
 Comparisons of likelihood function components are available from the output
 but more  detailed evaluation is needed. Simulation testing is also slated for
 evaluating alternative model specifications for robustness (e.g. constant
@@ -695,7 +705,6 @@ similar to that used by @zheng_bristol_2014.
 
 # References
 
-
-```{r appdx}
-#knit("app.Rmd")
+```{r appdx,  results = "asis" , include=FALSE}
+knit("app.Rmd")
 ```

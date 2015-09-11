@@ -1008,7 +1008,7 @@ PARAMETER_SECTION
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr+1,nyr-1,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -1749,13 +1749,15 @@ FUNCTION update_population_numbers_at_length
 	if ( bInitializeUnfished )
 	{
 		recruits(syr+1,nyr) = mfexp(logR0);
-	} else {
+	} 
+	else 
+	{
 		recruits(syr+1,nyr) = mfexp(logRbar);	
 	}
 
 	for ( i = syr; i <= nyr; i++ )
 	{
-		if ( i > syr )
+		if ( i > syr & i < nyr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
 		}
