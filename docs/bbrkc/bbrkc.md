@@ -26,7 +26,7 @@ including fishery- and survey-based size-composition data, and fishery-
 dependent and -independent indices of abundance. Gmacs is coded using AD Model
 Builder [@Fournier2012b].
 
-Crab stocks of Alaska are managed by the North Pacific Fisheries Management
+Crab stocks of Alaska are managed by the North Pacific Fishery Management
 Council ([NPFMC](http://npfmc.org)). Some stocks are assessed with integrated
 size-structured assessment models of the form described in @punt_review_2013.
 Currently, each stock is assessed using a stock-specific assessment model
@@ -404,19 +404,19 @@ In the tables below the OneSex and TwoSex model likelihoods (Table
   \hline
  & OneSex & TwoSex \\ 
   \hline
-Abundance1 & 82.87 & 201.66 \\ 
-  Abundance2 & -1.28 & -1.13 \\ 
-  Catch1 & 235.06 & 295.25 \\ 
-  Catch2 & 182.56 & 185.98 \\ 
-  Catch3 & -78.71 & -49.70 \\ 
-  Catch4 &  & -78.76 \\ 
+Abundance1 & 173.09 & 201.31 \\ 
+  Abundance2 & -1.44 & -1.12 \\ 
+  Catch1 & 958.41 & 292.69 \\ 
+  Catch2 & 1148.15 & 187.63 \\ 
+  Catch3 & -78.91 & -49.68 \\ 
+  Catch4 &  & -78.78 \\ 
   Growth increment1 & 0.00 & 0.00 \\ 
-  Recruitment deviations1 & 106.46 & 126.90 \\ 
-  Size composition1 & 487.27 & 516.23 \\ 
-  Size composition2 & 1208.63 & 3026.14 \\ 
-  Size composition3 & 924.92 & 2293.09 \\ 
-  Size composition4 & 41630.20 & 31002.78 \\ 
-  Size composition5 & 13.33 & 254.25 \\ 
+  Recruitment deviations1 & 361.97 & 126.63 \\ 
+  Size composition1 & 793.53 & 516.09 \\ 
+  Size composition2 & 11048.15 & 3027.11 \\ 
+  Size composition3 & 2340.58 & 2293.44 \\ 
+  Size composition4 & 42936.49 & 31004.84 \\ 
+  Size composition5 & 153.84 & 254.82 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -430,10 +430,10 @@ Abundance1 & 82.87 & 201.66 \\
   \hline
 log\_fdev & 0.00 & 0.00 \\ 
   mean F & 9.47 & 9.47 \\ 
-  M & 11.70 & 4.43 \\ 
+  M & 14.64 & 4.43 \\ 
   rec\_dev & 0.00 & 0.00 \\ 
   rec\_ini & 0.00 & 0.00 \\ 
-  rec\_dev\_ & 57.34 & 59.92 \\ 
+  rec\_dev\_ & 103.32 & 61.64 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -450,13 +450,12 @@ natural mortality over time, time-varying selectivity, etc).
 The current Gmacs models require that many of the key model parameters be fixed to
 obtain model fits that look similar to the BBRKC model.
 
-We feel that the differences between Gmacs and the BBRKC model produced by
-@zheng_bristol_2014 are largely due to the use of the Baranov catch equation
-in Gmacs amd the way that the initial numbers at length are derived. We intend
-to change the catch equations and intialization of Gmacs to a method more
-similar to that used by @zheng_bristol_2014.
+Differences between Gmacs and the BBRKC model produced by
+@zheng_bristol_2014 are likely due to the use of the Baranov catch equation
+in Gmacs and the way that the initial numbers at length are derived (both new and old-shell are estimated in Gmacs).
+As part of the model development schedule, alternative catch equations and intialization options in Gmacs will be added
+so that a broader range of assumptions can be made (and perhaps become more similar to that used by @zheng_bristol_2014).
 
 
 # References
-
 

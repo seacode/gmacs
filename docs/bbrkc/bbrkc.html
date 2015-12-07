@@ -1,7 +1,7 @@
 <h1 id="introduction">Introduction</h1>
-<p>Gmacs is a generalized size-structured stock assessment modeling framework for molting crustacean species. Gmacs can make use of a wide variety of data, including fishery- and survey-based size-composition data, and fishery- dependent and -independent indices of abundance. Gmacs is coded using AD Model Builder <span class="citation">(Fournier et al. <a href="#ref-Fournier2012b">2012</a>)</span>.</p>
-<p>Crab stocks of Alaska are managed by the North Pacific Fisheries Management Council (<a href="http://npfmc.org">NPFMC</a>). Some stocks are assessed with integrated size-structured assessment models of the form described in <span class="citation">Punt, Huang, and Maunder (<a href="#ref-punt_review_2013">2013</a>)</span>. Currently, each stock is assessed using a stock-specific assessment model (e.g. <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span>). The Gmacs project aims to provide software that will allow each stock to be assessed independently but using a single flexible modeling framework.</p>
-<p>This document presents the development and application of two Gmacs models and compares these to the current assessment model for the Bristol Bay Red King Crab (BBRKC) stock. The example assessments are intended to match closely with a model scenario presented to the Fall 2014 BSAI Crab Plan Team Meeting by <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span>.</p>
+<p>Gmacs is a generalized size-structured stock assessment modeling framework for molting crustacean species. Gmacs can make use of a wide variety of data, including fishery- and survey-based size-composition data, and fishery- dependent and -independent indices of abundance. Gmacs is coded using AD Model Builder <span class="citation">(<span class="citeproc-not-found" data-reference-id="Fournier2012b"><strong>???</strong></span>)</span>.</p>
+<p>Crab stocks of Alaska are managed by the North Pacific Fishery Management Council (<a href="http://npfmc.org">NPFMC</a>). Some stocks are assessed with integrated size-structured assessment models of the form described in <span class="citation">Punt, Huang, and Maunder (2013)</span>. Currently, each stock is assessed using a stock-specific assessment model (e.g. <span class="citation">Zheng and Siddeek (2014)</span>). The Gmacs project aims to provide software that will allow each stock to be assessed independently but using a single flexible modeling framework.</p>
+<p>This document presents the development and application of two Gmacs models and compares these to the current assessment model for the Bristol Bay Red King Crab (BBRKC) stock. The example assessments are intended to match closely with a model scenario presented to the Fall 2014 BSAI Crab Plan Team Meeting by <span class="citation">Zheng and Siddeek (2014)</span>.</p>
 <p>An important component of the Gmacs framework is the provision of software for understanding the outputs produced by the Gmacs model. This includes plotting Gmacs model outputs and incorporating model outputs directly into documentation. In what follows, we demonstrate the use of the <code>gmr</code> package to process the output of the Gmacs-BBRKC model and produce plots that can be used in assessment reports. This document serves as an example of how Gmacs outputs can be directly incorporated into text in an automated way (for example, this document is compiled by simply typing &quot;make&quot; at the command line in the &quot;gmacs/docs/bbrkc&quot; directory).</p>
 <p>The Gmacs-BBRKC model presented here is intended to provide an example of what may follow for application to other crab stocks. We provide some direct model comparisons to illustrate the efficacy of Gmacs and show how alternative models can be specified (but please see <a href="https://github.com/seacode/gmacs/wiki">Wiki</a> for up to date details of model specification and estimation).</p>
 <h2 id="new-features">New features</h2>
@@ -25,7 +25,7 @@
 <li>Fully Bayesian MCMC functionality</li>
 <li>A new series of MCMC diagnostic plots including plots of MCMC traces, histograms with priors overlayed, correlation plots, data and posterior predictive distributions</li>
 <li>Adding diagnostics of likelihood fitting properties</li>
-<li>Specifying <span class="math inline"><em>q</em></span> as a model parameter rather than a derived variable</li>
+<li>Specifying <span class="math"><em>q</em></span> as a model parameter rather than a derived variable</li>
 </ul>
 <h2 id="summary-of-analytical-approach">Summary of analytical approach</h2>
 <p>To reduce annual measurement errors associated with abundance estimates derived from the area-swept method, the ADFG developed a length-based analysis (LBA) in 1994 that incorporates multiple years of data and multiple data sources in the estimation procedure (Zheng et al. 1995a). Annual abundance estimates of the BBRKC stock from the LBA have been used to manage the directed crab fishery and to set crab bycatch limits in the groundfish fisheries since 1995. An alternative LBA (research model) was developed in 2004 to include small size groups for federal overfishing limits. The crab abundance declined sharply during the early 1980s. The LBA estimated natural mortality for different periods of years, whereas the research model estimated additional mortality beyond a basic constant natural mortality during 1976-1993.</p>
@@ -37,12 +37,12 @@
 <li>Growth is a function of size and is constant over time for males. For females, three growth increments per molt as a function of size were estimated based on sizes at maturity (1975-1982, 1983-1993, and 1994-2013). Once mature, female red king crabs grow with a much smaller growth increment per molt. <em>Note: this feature for dimorphic time-varying growth is currently unavailable in Gmacs</em></li>
 <li>Molting probabilities are an inverse logistic function of size for males. Females molt annually.</li>
 <li>Annual fishing seasons for the directed fishery are short. <em>Note: Gmacs uses the Baranov catch equation though options for developing pulse sequential forms are in development</em></li>
-<li>Survey catchability (<span class="math inline"><em>q</em></span>) was estimated to be 0.896, based on a trawl experiment by Weinberg et al. (2004) with a standard deviation of 0.025. Survey catchability was assumed to be constant over time. Some scenarios estimate <span class="math inline"><em>q</em></span> in the model.</li>
+<li>Survey catchability (<span class="math"><em>q</em></span>) was estimated to be 0.896, based on a trawl experiment by Weinberg et al. (2004) with a standard deviation of 0.025. Survey catchability was assumed to be constant over time. Some scenarios estimate <span class="math"><em>q</em></span> in the model.</li>
 <li>Males mature at sizes = 120 mm CL. For convenience, female abundance was summarized at sizes = 90 mm CL as an index of mature females. For summer trawl survey data, shell ages of newshell crabs were 12 months or less, and shell ages of oldshell and very oldshell crabs were more than 12 months.</li>
 <li>Measurement errors were assumed to be normally distributed for size compositions and log-normally distributed for biomasses.</li>
 </ul>
 <h1 id="gmacs-model-configurations">Gmacs model configurations</h1>
-<p>The data and model specifications used in the Gmacs-BBRKC model were patterned after those in the '4nb' scenario developed by <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span>, herein referred to as the BBRKC model. The BBRKC model treats recruits independently by sex along with sex-specific natural mortality (<span class="math inline"><em>M</em></span>) and fishing mortality (<span class="math inline"><em>F</em></span>). Presently, the split-sex options in Gmacs only allows the assumption that the sex ratio at recruitment is 50:50. After recruiting, sexually dimorphic growth and mortality along with fishery effects can play a role in changes in sex ratio over time. In an attempt to provide a comparison with the male- component of the BBRKC model, we drafted one Gmacs configuration as a &quot;male- only&quot; or single sex model (OneSex) in addition to the split two-sex Gmacs configuration (TwoSex). A full comparison of the approaches are shown in the following table:</p>
+<p>The data and model specifications used in the Gmacs-BBRKC model were patterned after those in the '4nb' scenario developed by <span class="citation">Zheng and Siddeek (2014)</span>, herein referred to as the BBRKC model. The BBRKC model treats recruits independently by sex along with sex-specific natural mortality (<span class="math"><em>M</em></span>) and fishing mortality (<span class="math"><em>F</em></span>). Presently, the split-sex options in Gmacs only allows the assumption that the sex ratio at recruitment is 50:50. After recruiting, sexually dimorphic growth and mortality along with fishery effects can play a role in changes in sex ratio over time. In an attempt to provide a comparison with the male- component of the BBRKC model, we drafted one Gmacs configuration as a &quot;male- only&quot; or single sex model (OneSex) in addition to the split two-sex Gmacs configuration (TwoSex). A full comparison of the approaches are shown in the following table:</p>
 <table>
 <thead>
 <tr class="header">
@@ -56,49 +56,49 @@
 <tbody>
 <tr class="odd">
 <td align="left">Start year</td>
-<td align="left"><span class="math inline"><em>t</em> = 0</span></td>
+<td align="left"><span class="math"><em>t</em> = 0</span></td>
 <td align="left">1975</td>
 <td align="left">1975</td>
 <td align="left">1975</td>
 </tr>
 <tr class="even">
 <td align="left">End year</td>
-<td align="left"><span class="math inline"><em>t</em> = <em>T</em></span></td>
+<td align="left"><span class="math"><em>t</em> = <em>T</em></span></td>
 <td align="left">2014</td>
 <td align="left">2014</td>
 <td align="left">2014</td>
 </tr>
 <tr class="odd">
 <td align="left">No. sexes</td>
-<td align="left"><span class="math inline"><em>s</em></span></td>
+<td align="left"><span class="math"><em>s</em></span></td>
 <td align="left">2</td>
 <td align="left">1</td>
 <td align="left">2</td>
 </tr>
 <tr class="even">
 <td align="left">No. shell conditions</td>
-<td align="left"><span class="math inline"><em>ν</em></span></td>
+<td align="left"><span class="math"><em>ν</em></span></td>
 <td align="left">2</td>
 <td align="left">2</td>
 <td align="left">2</td>
 </tr>
 <tr class="odd">
 <td align="left">No. maturity classes</td>
-<td align="left"><span class="math inline"><em>m</em></span></td>
+<td align="left"><span class="math"><em>m</em></span></td>
 <td align="left">2</td>
 <td align="left">1</td>
 <td align="left">1</td>
 </tr>
 <tr class="even">
 <td align="left">No. size-classes</td>
-<td align="left"><span class="math inline">ℓ</span></td>
+<td align="left"><span class="math">ℓ</span></td>
 <td align="left">20</td>
 <td align="left">20</td>
 <td align="left">20</td>
 </tr>
 <tr class="odd">
 <td align="left">No. Fleets</td>
-<td align="left"><span class="math inline"><em>k</em></span></td>
+<td align="left"><span class="math"><em>k</em></span></td>
 <td align="left">5</td>
 <td align="left">2</td>
 <td align="left">5</td>
@@ -106,129 +106,106 @@
 </tbody>
 </table>
 <h1 id="comparison-of-model-results">Comparison of model results</h1>
-<p>The following plots summarize plots made using <code>gmr</code> based on output from <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span> and Gmacs. Two Gmacs models are presented, the OneSex model and the TwoSex model.</p>
+<p>The following plots summarize plots made using <code>gmr</code> based on output from <span class="citation">Zheng and Siddeek (2014)</span> and Gmacs. Two Gmacs models are presented, the OneSex model and the TwoSex model.</p>
 <h2 id="fit-to-survey-abundance-indices">Fit to survey abundance indices</h2>
-<p>In both the OneSex and TwoSex models priors were placed on the catchability coefficient (<span class="math inline"><em>q</em></span>) for the NMFS and BSFRF trawl surveys. A normal prior for the NMFS trawl survey was used with <span class="math inline"><em>μ</em> = 0.843136</span> (i.e. <span class="math inline">0.896 × 0.941</span> which is the maximum selectivity of the NMFS survey in Jies model) and <span class="math inline"><em>σ</em> = 0.01</span>. A normal prior is also used for the BSFRF trawl survey with <span class="math inline"><em>μ</em> = 1</span> and <span class="math inline"><em>σ</em> = 0.03</span>.</p>
-<p>The Gmacs model fits to survey biomass was somewhat better in the <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span> model (at least visually) than for either of the current implementations of Gmacs (Figure ). We feel that the way that <span class="math inline"><em>q</em></span> is currently specified in the model (i.e. <span class="math inline"><em>q</em></span> is integrated out) is inadequate as it allows the model to explore unrealistic parameter space. We intend to provide an option to specify <span class="math inline"><em>q</em></span> as a parameter of the model.</p>
+<p>In both the OneSex and TwoSex models priors were placed on the catchability coefficient (<span class="math"><em>q</em></span>) for the NMFS and BSFRF trawl surveys. A normal prior for the NMFS trawl survey was used with <span class="math"><em>μ</em> = 0. 843136</span> (i.e. <span class="math">0. 896 × 0. 941</span> which is the maximum selectivity of the NMFS survey in Jies model) and <span class="math"><em>σ</em> = 0. 01</span>. A normal prior is also used for the BSFRF trawl survey with <span class="math"><em>μ</em> = 1</span> and <span class="math"><em>σ</em> = 0. 03</span>.</p>
+<p>The Gmacs model fits to survey biomass was somewhat better in the <span class="citation">Zheng and Siddeek (2014)</span> model (at least visually) than for either of the current implementations of Gmacs (Figure ). We feel that the way that <span class="math"><em>q</em></span> is currently specified in the model (i.e. <span class="math"><em>q</em></span> is integrated out) is inadequate as it allows the model to explore unrealistic parameter space. We intend to provide an option to specify <span class="math"><em>q</em></span> as a parameter of the model.</p>
 <div class="figure">
-<img src="figure/survey_biomass-1.png" alt="Model fits to sex-specific NMFS trawl survey biomass (tons) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations." />
-<p class="caption">Model fits to sex-specific NMFS trawl survey biomass (tons) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.</p>
+<img src="figure/survey_biomass-1.png" alt="Model fits to sex-specific NMFS trawl survey biomass (tons) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations." /><p class="caption">Model fits to sex-specific NMFS trawl survey biomass (tons) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.</p>
 </div>
 <h2 id="estimated-retained-catch-and-discards">Estimated retained catch and discards</h2>
 <p>There are four fisheries defined in each of the models: the directed pot fishery, the groundfish trawl bycatch, the NMFS trawl surveys, and the BSFRF surveys. Each fishery has a mean fishing mortality with annual deviations. The mean fishing mortality in the directed pot fishery and the trawl bycatch fishery is 0.2 and 0.05, respectively. The mean fishing mortality in the two surveys is zero.</p>
-<p>The observed and predicted catches by gear type in each of the Gmacs models are summarized (Figure ). Data for discard fisheries were read in with 100% mortality (as clarified in Table 1 of <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span>).</p>
+<p>The observed and predicted catches by gear type in each of the Gmacs models are summarized (Figure ). Data for discard fisheries were read in with 100% mortality (as clarified in Table 1 of <span class="citation">Zheng and Siddeek (2014)</span>).</p>
 <div class="figure">
-<img src="figure/fit_to_catch-1.png" alt="Observed and predicted catch (tons) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013." />
-<p class="caption">Observed and predicted catch (tons) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013.</p>
+<img src="figure/fit_to_catch-1.png" alt="Observed and predicted catch (tons) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013." /><p class="caption">Observed and predicted catch (tons) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013.</p>
 </div>
 <h2 id="fit-to-size-composition-data">Fit to size composition data</h2>
 <p>The fit of the Gmacs models to the BBRKC size composition data are shown in the following plots. These include fits to the directed pot fishery for males (Figure ), male crabs discarded in the directed pot fishery (Figure ), female crabs discarded in the directed pot fishery (Figure ), the groundfish trawl bycatch fisheries for males (Figure ) and females (Figure ), the NMFS trawl survey for newshell males (Figure ), oldshell males (Figure ) and females (Figure ), and the BSFRF survey (Figure ).</p>
 <p>All size composition data were fitted using the robust multinomial distribution. In the OneSex model, new shell and old shell males were fitted simultaneously. In the TwoSex model the following size compositions were fitted simultaneously: discarded males and females; trawl bycatch males and females; NMFS trawl survey new shell males together with old shell males and females. The plots shown below have been normalized for display purposes. <em>In future plotting versions the scales will be retained as an option</em>.</p>
 <div class="figure">
-<img src="figure/sc_pot_m-1.png" alt="Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery." />
-<p class="caption">Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.</p>
+<img src="figure/sc_pot_m-1.png" alt="Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery." /><p class="caption">Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_pot_discarded_m-1.png" alt="Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery." />
-<p class="caption">Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery.</p>
+<img src="figure/sc_pot_discarded_m-1.png" alt="Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery." /><p class="caption">Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_pot_discarded_f-1.png" alt="Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery." />
-<p class="caption">Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery.</p>
+<img src="figure/sc_pot_discarded_f-1.png" alt="Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery." /><p class="caption">Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_trawl_bycatch_m-1.png" alt="Observed and model estimated size-frequencies of male BBRKC by year in the groundfish trawl bycatch fisheries." />
-<p class="caption">Observed and model estimated size-frequencies of male BBRKC by year in the groundfish trawl bycatch fisheries.</p>
+<img src="figure/sc_trawl_bycatch_m-1.png" alt="Observed and model estimated size-frequencies of male BBRKC by year in the groundfish trawl bycatch fisheries." /><p class="caption">Observed and model estimated size-frequencies of male BBRKC by year in the groundfish trawl bycatch fisheries.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_trawl_bycatch_f-1.png" alt="Observed and model estimated size-frequencies of female BBRKC by year in the groundfish trawl bycatch fisheries." />
-<p class="caption">Observed and model estimated size-frequencies of female BBRKC by year in the groundfish trawl bycatch fisheries.</p>
+<img src="figure/sc_trawl_bycatch_f-1.png" alt="Observed and model estimated size-frequencies of female BBRKC by year in the groundfish trawl bycatch fisheries." /><p class="caption">Observed and model estimated size-frequencies of female BBRKC by year in the groundfish trawl bycatch fisheries.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_NMFS_nm-1.png" alt="Observed and model estimated size-frequencies of new shell male BBRKC by year in the NMFS trawl survey." />
-<p class="caption">Observed and model estimated size-frequencies of new shell male BBRKC by year in the NMFS trawl survey.</p>
+<img src="figure/sc_NMFS_nm-1.png" alt="Observed and model estimated size-frequencies of new shell male BBRKC by year in the NMFS trawl survey." /><p class="caption">Observed and model estimated size-frequencies of new shell male BBRKC by year in the NMFS trawl survey.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_NMFS_om-1.png" alt="Observed and model estimated size-frequencies of old shell male BBRKC by year in the NMFS trawl survey." />
-<p class="caption">Observed and model estimated size-frequencies of old shell male BBRKC by year in the NMFS trawl survey.</p>
+<img src="figure/sc_NMFS_om-1.png" alt="Observed and model estimated size-frequencies of old shell male BBRKC by year in the NMFS trawl survey." /><p class="caption">Observed and model estimated size-frequencies of old shell male BBRKC by year in the NMFS trawl survey.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_NMFS_f-1.png" alt="Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl survey." />
-<p class="caption">Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl survey.</p>
+<img src="figure/sc_NMFS_f-1.png" alt="Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl survey." /><p class="caption">Observed and model estimated size-frequencies of female BBRKC by year in the NMFS trawl survey.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_BSFRF-1.png" alt="Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys." />
-<p class="caption">Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.</p>
+<img src="figure/sc_BSFRF-1.png" alt="Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys." /><p class="caption">Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_BSFRF_2-1.png" alt="Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys." />
-<p class="caption">Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.</p>
+<img src="figure/sc_BSFRF_2-1.png" alt="Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys." /><p class="caption">Observed and model estimated size-frequencies of both male and female BBRKC by year in the BSFRF trawl surveys.</p>
 </div>
 <h2 id="mean-weight-at-size">Mean weight-at-size</h2>
-<p>The mean weight-at-size (<span class="math inline"><em>w</em><sub>ℓ</sub></span>) is defined in kg and the carapace length (<span class="math inline">ℓ</span>, CL) in mm. The mean weight-at-size used in all models is set to be identical to that of the BBRKC model (Figure ).</p>
-<p>There are differences between immature and mature females hence the unusual shape of the length-weight relationship for females <span class="citation">(Zheng and Siddeek <a href="#ref-zheng_bristol_2014">2014</a>)</span>. Given a size, once females mature with eggs, they are heavier than immature females. BBRKC uses immature mean weight-at-size for females &lt; 90 mm and mature mean weight- at- size for females &gt; 89 mm. The last four values of mean weight-at-size for females are effectively excluded (they exceed the last observed length group), so the plus group value is simply repeated. In future versions, when the immature and mature females are modeled separately, two mean weight- at-size functions can be used. The mean weights for both male and female plus length groups are higher than the function values to reflect that there are more crabs larger than the plus group mid sizes. This adjustment is based on the survey length frequency data over time.</p>
+<p>The mean weight-at-size (<span class="math"><em>w</em><sub>ℓ</sub></span>) is defined in kg and the carapace length (<span class="math">ℓ</span>, CL) in mm. The mean weight-at-size used in all models is set to be identical to that of the BBRKC model (Figure ).</p>
+<p>There are differences between immature and mature females hence the unusual shape of the length-weight relationship for females <span class="citation">(Zheng and Siddeek 2014)</span>. Given a size, once females mature with eggs, they are heavier than immature females. BBRKC uses immature mean weight-at-size for females &lt; 90 mm and mature mean weight- at- size for females &gt; 89 mm. The last four values of mean weight-at-size for females are effectively excluded (they exceed the last observed length group), so the plus group value is simply repeated. In future versions, when the immature and mature females are modeled separately, two mean weight- at-size functions can be used. The mean weights for both male and female plus length groups are higher than the function values to reflect that there are more crabs larger than the plus group mid sizes. This adjustment is based on the survey length frequency data over time.</p>
 <div class="figure">
-<img src="figure/length_weight-1.png" alt="Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs so lines all overlap)." />
-<p class="caption">Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs so lines all overlap).</p>
+<img src="figure/length_weight-1.png" alt="Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs so lines all overlap)." /><p class="caption">Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs so lines all overlap).</p>
 </div>
 <h2 id="initial-recruitment-size-distribution">Initial recruitment size distribution</h2>
-<p>Gmacs was configured to match the <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span> model recruitment size distribution closely (Figure ).</p>
+<p>Gmacs was configured to match the <span class="citation">Zheng and Siddeek (2014)</span> model recruitment size distribution closely (Figure ).</p>
 <div class="figure">
-<img src="figure/init_rec-1.png" alt="Distribution of carapace width (mm) at recruitment." />
-<p class="caption">Distribution of carapace width (mm) at recruitment.</p>
+<img src="figure/init_rec-1.png" alt="Distribution of carapace width (mm) at recruitment." /><p class="caption">Distribution of carapace width (mm) at recruitment.</p>
 </div>
 <h2 id="molting-increment-and-probability">Molting increment and probability</h2>
 <p>In the BBRKC model one function for for growth increment per molt is used for males and three functions for females (due to changing sizes at maturity).</p>
-<p>Options to fit relationship based on data were developed within Gmacs but for the BBRKC system, a size-specific vector was used to determine molt increments as shown below (Figure ). Fixed parameters in gmacs were set to match assumptions in <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span> (Figure ).</p>
+<p>Options to fit relationship based on data were developed within Gmacs but for the BBRKC system, a size-specific vector was used to determine molt increments as shown below (Figure ). Fixed parameters in gmacs were set to match assumptions in <span class="citation">Zheng and Siddeek (2014)</span> (Figure ).</p>
 <div class="figure">
-<img src="figure/growth_inc-1.png" alt="Growth increment (mm) each molt by sex in the OneSex and TwoSex models." />
-<p class="caption">Growth increment (mm) each molt by sex in the OneSex and TwoSex models.</p>
+<img src="figure/growth_inc-1.png" alt="Growth increment (mm) each molt by sex in the OneSex and TwoSex models." /><p class="caption">Growth increment (mm) each molt by sex in the OneSex and TwoSex models.</p>
 </div>
 <p>In the BBRKC model, females are specified to molt annually consistent with their biology. This means that molting probability is always 1 for females. This was replicated in the Gmacs model by fixing the logistic curve parameters to values that result in the molting probability being 1 for females across all modeled length classes. Male BBRKC molting patterns differ from females. As such, the BBRKC model was specified to have two molting probability curves, one during 1975-78 and another from 1979 to the present. <em>For the current version of Gmacs, only a single molting probability curve is allowed</em>.</p>
 <div class="figure">
-<img src="figure/molt_prob-1.png" alt="Molting probability for each of the models by sex. The molting probability for females is fixed at 1 as females molt every year." />
-<p class="caption">Molting probability for each of the models by sex. The molting probability for females is fixed at 1 as females molt every year.</p>
+<img src="figure/molt_prob-1.png" alt="Molting probability for each of the models by sex. The molting probability for females is fixed at 1 as females molt every year." /><p class="caption">Molting probability for each of the models by sex. The molting probability for females is fixed at 1 as females molt every year.</p>
 </div>
 <h2 id="transition-processes">Transition processes</h2>
 <p>The first set of figures include the growth probabilities (for all crabs that molt) (Figure ). The second set of figures is the combination of growth and molting probabilities and represents the size transition (Figure ).</p>
 <div class="figure">
-<img src="figure/growth_trans-1.png" alt="Growth transitions." />
-<p class="caption">Growth transitions.</p>
+<img src="figure/growth_trans-1.png" alt="Growth transitions." /><p class="caption">Growth transitions.</p>
 </div>
 <div class="figure">
-<img src="figure/size_trans-1.png" alt="Size transitions." />
-<p class="caption">Size transitions.</p>
+<img src="figure/size_trans-1.png" alt="Size transitions." /><p class="caption">Size transitions.</p>
 </div>
 <h2 id="numbers-at-length-in-the-first-and-last-year">Numbers at length in the first and last year</h2>
 <p>Total abundance and the proportions by length and sex are estimated in 1975 (the models initial year).</p>
-<p>The number of crabs in each size class (<span class="math inline">${\bf n}$</span>) in the initial year (<span class="math inline"><em>t</em> = 1</span>) and final year (<span class="math inline"><em>t</em> = <em>T</em></span>) in each model differ substantially (Figure ). The scale of these results differ significantly and may be related to the interaction with natural mortality estimates and how the initial population-at-lengths were established (the BBRKC model assumes all new-shell).</p>
+<p>The number of crabs in each size class (<span class="math">${\bf n}$</span>) in the initial year (<span class="math"><em>t</em> = 1</span>) and final year (<span class="math"><em>t</em> = <em>T</em></span>) in each model differ substantially (Figure ). The scale of these results differ significantly and may be related to the interaction with natural mortality estimates and how the initial population-at-lengths were established (the BBRKC model assumes all new-shell).</p>
 <div class="figure">
-<img src="figure/init_N-1.png" alt="Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975." />
-<p class="caption">Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.</p>
+<img src="figure/init_N-1.png" alt="Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975." /><p class="caption">Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.</p>
 </div>
 <h2 id="selectivity">Selectivity</h2>
-<p>The selectivity by size (<span class="math inline"><em>S</em><sub>ℓ</sub></span>) for each of the fisheries are presented below (Figure ). In the all models, selectivity in the trawl bycatch fishery is constant by sex. In all other fisheries, selectivity is sex-specific. In the NMFS trawl fishery, a different selectivity curve is estimated for the 1975-1981 period and for the 1982-2014 period.</p>
+<p>The selectivity by size (<span class="math"><em>S</em><sub>ℓ</sub></span>) for each of the fisheries are presented below (Figure ). In the all models, selectivity in the trawl bycatch fishery is constant by sex. In all other fisheries, selectivity is sex-specific. In the NMFS trawl fishery, a different selectivity curve is estimated for the 1975-1981 period and for the 1982-2014 period.</p>
 <div class="figure">
-<img src="figure/selectivity-1.png" alt="Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey." />
-<p class="caption">Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey.</p>
+<img src="figure/selectivity-1.png" alt="Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey." /><p class="caption">Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey.</p>
 </div>
 <h2 id="natural-mortality">Natural mortality</h2>
-<p>In both the BBRKC and Gmacs models, time-varying natural mortality (<span class="math inline"><em>M</em><sub><em>t</em></sub></span>) is freely estimated with four step changes through time. The years (<span class="math inline"><em>t</em></span>) that each of these steps cover are fixed a priori at 1976, 1980, 1985 and 1994. The pattern in time-varying natural mortality is reasonably similar between the three models (Figure ), however the peak in natural mortality during the early 1980 is not as high in the Gmacs models. <em>In the Gmacs model, a spline function for natural mortality changes over time is also available as an option.</em></p>
+<p>In both the BBRKC and Gmacs models, time-varying natural mortality (<span class="math"><em>M</em><sub><em>t</em></sub></span>) is freely estimated with four step changes through time. The years (<span class="math"><em>t</em></span>) that each of these steps cover are fixed a priori at 1976, 1980, 1985 and 1994. The pattern in time-varying natural mortality is reasonably similar between the three models (Figure ), however the peak in natural mortality during the early 1980 is not as high in the Gmacs models. <em>In the Gmacs model, a spline function for natural mortality changes over time is also available as an option.</em></p>
 <div class="figure">
-<img src="figure/natural_mortality-1.png" alt="Time-varying natural mortality (M_t). Periods begin at 1976, 1980, 1985 and 1994." />
-<p class="caption">Time-varying natural mortality (<span class="math inline"><em>M</em><sub><em>t</em></sub></span>). Periods begin at 1976, 1980, 1985 and 1994.</p>
+<img src="figure/natural_mortality-1.png" alt="Time-varying natural mortality (M_t). Periods begin at 1976, 1980, 1985 and 1994." /><p class="caption">Time-varying natural mortality (<span class="math"><em>M</em><sub><em>t</em></sub></span>). Periods begin at 1976, 1980, 1985 and 1994.</p>
 </div>
 <h2 id="recruitment">Recruitment</h2>
-<p>Recruitment (<span class="math inline"><em>R</em><sub><em>t</em></sub></span>) patterns are similar among models, but differences in natural mortality schedules will affect these matches. It is also important to keep in mind that recruitment in the OneSex model only represents recruitment of males, while in the TwoSex and BBRKC models recruitment is for females and males combined. The figure below shows that the values have roughly the same mean (Figure ).</p>
+<p>Recruitment (<span class="math"><em>R</em><sub><em>t</em></sub></span>) patterns are similar among models, but differences in natural mortality schedules will affect these matches. It is also important to keep in mind that recruitment in the OneSex model only represents recruitment of males, while in the TwoSex and BBRKC models recruitment is for females and males combined. The figure below shows that the values have roughly the same mean (Figure ).</p>
 <div class="figure">
-<img src="figure/recruitment-1.png" alt="Estimated recruitment time series (R_t) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only." />
-<p class="caption">Estimated recruitment time series (<span class="math inline"><em>R</em><sub><em>t</em></sub></span>) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.</p>
+<img src="figure/recruitment-1.png" alt="Estimated recruitment time series (R_t) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only." /><p class="caption">Estimated recruitment time series (<span class="math"><em>R</em><sub><em>t</em></sub></span>) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.</p>
 </div>
 <h2 id="mature-male-biomass-mmb">Mature male biomass (MMB)</h2>
-<p>The spawning stock biomass (tons) of mature males, termed the mature male biomass (<span class="math inline"><em>M</em><em>M</em><em>B</em><sub><em>t</em></sub></span>), varies somewhat between each of the models (Figure ).</p>
+<p>The spawning stock biomass (tons) of mature males, termed the mature male biomass (<span class="math"><em>MMB</em><sub><em>t</em></sub></span>), varies somewhat between each of the models (Figure ).</p>
 <div class="figure">
-<img src="figure/spawning_stock_biomass-1.png" alt="Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model." />
-<p class="caption">Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.</p>
+<img src="figure/spawning_stock_biomass-1.png" alt="Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model." /><p class="caption">Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.</p>
 </div>
 <h2 id="comparison-of-likelihoods-between-models">Comparison of likelihoods between models</h2>
 <p>In the tables below the OneSex and TwoSex model likelihoods (Table 2) and penalties (Table 3) are compared.</p>
@@ -237,7 +214,7 @@
 <h1 id="discussion">Discussion</h1>
 <p>Comparisons of likelihood function components are available from the output but more detailed evaluation is needed. Simulation testing is also slated for evaluating alternative model specifications for robustness (e.g. constant natural mortality over time, time-varying selectivity, etc).</p>
 <p>The current Gmacs models require that many of the key model parameters be fixed to obtain model fits that look similar to the BBRKC model.</p>
-<p>We feel that the differences between Gmacs and the BBRKC model produced by <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span> are largely due to the use of the Baranov catch equation in Gmacs amd the way that the initial numbers at length are derived. We intend to change the catch equations and intialization of Gmacs to a method more similar to that used by <span class="citation">Zheng and Siddeek (<a href="#ref-zheng_bristol_2014">2014</a>)</span>.</p>
+<p>Differences between Gmacs and the BBRKC model produced by <span class="citation">Zheng and Siddeek (2014)</span> are likely due to the use of the Baranov catch equation in Gmacs and the way that the initial numbers at length are derived (both new and old-shell are estimated in Gmacs). As part of the model development schedule, alternative catch equations and intialization options in Gmacs will be added so that a broader range of assumptions can be made (and perhaps become more similar to that used by <span class="citation">Zheng and Siddeek (2014)</span>).</p>
 <h1 id="references">References</h1>
 <h2 id="the-onesex-model-control-file">The OneSex model control file:</h2>
 <pre><code>## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
@@ -590,13 +567,6 @@
 ## ## EOF 
 ## 9999</code></pre>
 <div class="references">
-<div id="ref-Fournier2012b">
-<p>Fournier, David A., Hans J. Skaug, Johnoel Ancheta, James Ianelli, Arni Magnusson, Mark N. Maunder, Anders Nielsen, and John Sibert. 2012. “AD Model Builder: using automatic differentiation for statistical inference of highly parameterized complex nonlinear models.” <em>Optimization Methods and Software</em> 27 (2): 233–49. <a href="http://doi.org/10.1080/10556788.2011.597854">doi:10.1080/10556788.2011.597854</a>.</p>
-</div>
-<div id="ref-punt_review_2013">
-<p>Punt, A. E., T. Huang, and M. N. Maunder. 2013. “Review of Integrated Size-Structured Models for Stock Assessment of Hard-to-Age Crustacean and Mollusc Species.” <em>ICES Journal of Marine Science</em> 70 (1): 16–33. <a href="http://doi.org/10.1093/icesjms/fss185">doi:10.1093/icesjms/fss185</a>.</p>
-</div>
-<div id="ref-zheng_bristol_2014">
-<p>Zheng, J., and M.S.M Siddeek. 2014. “Bristol Bay Red King Crab Stock Assessment in Spring 2014.” <em>Alaska Department of Fish and Game</em>, 149.</p>
-</div>
+<p>Punt, A. E., T. Huang, and M. N. Maunder. 2013. “Review of Integrated Size-Structured Models for Stock Assessment of Hard-to-Age Crustacean and Mollusc Species.” <em>ICES Journal of Marine Science</em> 70 (1) (January): 16–33. doi:<a href="http://dx.doi.org/10.1093/icesjms/fss185">10.1093/icesjms/fss185</a>. <a href="http://icesjms.oxfordjournals.org/cgi/doi/10.1093/icesjms/fss185">http://icesjms.oxfordjournals.org/cgi/doi/10.1093/icesjms/fss185</a>.</p>
+<p>Zheng, J., and M.S.M Siddeek. 2014. “Bristol Bay Red King Crab Stock Assessment in Spring 2014.” <em>Alaska Department of Fish and Game</em>: 149.</p>
 </div>
