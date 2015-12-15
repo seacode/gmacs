@@ -1,3 +1,4 @@
-sudo rm /usr/bin/gmacs
-sudo ln -s ~/Projects/gmacs/src/build/release/gmacs /usr/bin/gmacs
+sudo rm /usr/local/bin/gmacs
+# sudo ln -s ../../src/build/release/gmacs /usr/local/bin/gmacs
+sudo ln -s ../../src/build/release/gmacs gmacs
 gmacs
