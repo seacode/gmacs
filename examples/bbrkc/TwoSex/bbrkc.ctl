@@ -123,7 +123,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## Trap  Trawl NMFS  BSFRF
+## Trap Trawl NMFS BSFRF
 ## Mean_F  STD_PHZ1  STD_PHZ2  PHZ
      0.20      0.05     45.50    1  #TRAP
      0.05      0.05     45.50    1  #Trawl
@@ -171,7 +171,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-  0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
+  0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0 = FALSE, 1 = TRUE)
   1984    # First year for average recruitment for Bspr calculation.
   2014    # Last year for average recruitment for Bspr calculation.
   0.35    # Target SPR ratio for Bmsy proxy.
