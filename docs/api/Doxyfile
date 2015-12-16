@@ -8,7 +8,7 @@ PROJECT_NAME           = "GMACS"
 PROJECT_NUMBER         = 0.1
 PROJECT_BRIEF          = "Length structured assessment model for crustaceans"
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       = html
+OUTPUT_DIRECTORY       = .
 CREATE_SUBDIRS         = YES
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
@@ -32,7 +32,7 @@ OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
 OPTIMIZE_FOR_FORTRAN   = NO
 OPTIMIZE_OUTPUT_VHDL   = NO
-EXTENSION_MAPPING      = .tpl=.cpp
+EXTENSION_MAPPING      = tpl=C++
 MARKDOWN_SUPPORT       = YES
 AUTOLINK_SUPPORT       = YES
 BUILTIN_STL_SUPPORT    = NO
@@ -81,7 +81,7 @@ SHOW_USED_FILES        = YES
 SHOW_FILES             = YES
 SHOW_NAMESPACES        = YES
 FILE_VERSION_FILTER    =
-LAYOUT_FILE            =
+LAYOUT_FILE            = TPLLayout.xml
 CITE_BIB_FILES         =
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -109,8 +109,8 @@ EXAMPLE_PATTERNS       =
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             =
 INPUT_FILTER           = 
-FILTER_PATTERNS        = *.tpl=tpl2dox
-FILTER_SOURCE_FILES    = NO
+FILTER_PATTERNS        = *.tpl=tpl2dox.sh
+FILTER_SOURCE_FILES    = YES
 FILTER_SOURCE_PATTERNS =
 USE_MDFILE_AS_MAINPAGE =
 #---------------------------------------------------------------------------

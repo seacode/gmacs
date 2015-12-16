@@ -14,7 +14,7 @@ ifdef ComSpec
     CXX:=g++
 else
     RM=rm -rf
-		CXX:=clang++
+    CXX:=clang++
 endif 
 
 
@@ -40,14 +40,14 @@ LDFLAGS:=
 RELEASE_CXXFLAGS:=-O3 -DOPT_LIB
 RELEASE_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contribo.a            \
 	              $(LIBINCLUDE)/release/libgmacs.a               \
-	              lib/bin/release/libgmacs.a 						 \
+	              # lib/bin/release/libgmacs.a 						 \
 	              -lxml2
 
 # Debug specific flags.
 DEBUG_CXXFLAGS:=-O0 -DSAFE_ALL
 DEBUG_LDFLAGS:= $(ADMB_HOME)/lib/libadmb-contrib.a               \
 	            $(LIBINCLUDE)/debug/libgmacs.a                   \
-	            lib/bin/debug/libgmacs.a                           \
+	            # lib/bin/debug/libgmacs.a                           \
 	            -lxml2
 
 # Name of text file containing build number.

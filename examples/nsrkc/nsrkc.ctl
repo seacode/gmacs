@@ -9,17 +9,19 @@
 #  4  ->  gamma                              
 #  ——————————————————————————————————————————————————————————————————————————————————————  #                                
 #  ntheta                                  
-7
+9
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  0.18      0.01         1          5       2   0.18    0.04         # M
+  0.18      0.01         1         -5       2   0.18    0.04         # M
    7.0       -10        20         -1       1    3.0     5.0         # logR0
    7.0       -10        20          2       1    3.0     5.0         # logR1      
    7.0       -10        20          2       1    3.0     5.0         # logRbar      
   72.5        65       150          4       1   72.5    7.25         # Recruitment mBeta
-  1.50       0.1         5          4       0    0.1       5         # Recruitment m50
+  1.50       0.1         5         -4       0    0.1       5         # Recruitment m50
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
+  0.75      0.20      1.00         -4       3    3.0    2.00         # steepness
+  0.001     0.00      1.00         -3       3    1.01   1.01         # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -30,10 +32,10 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  17.5      10.0      30.0          3       0    0.0    20.0         # alpha males or combined
-  0.10       0.0       0.5          3       0    0.0    10.0         # beta males or combined
-   6.0       1.0      30.0          3       0    0.0     3.0         # gscale males or combined
-  115.      65.0     165.0          2       0    0.0     3.0         # molt_mu males or combined
+  17.5      10.0      30.0         -3       0    0.0    20.0         # alpha males or combined
+  0.10       0.0       0.5         -3       0    0.0    10.0         # beta males or combined
+   0.75      1.0      30.0         -3       0    0.0     3.0         # gscale males or combined
+  115.      65.0     165.0         -2       0    0.0     3.0         # molt_mu males or combined
    0.2       0.0       1.0          3       0    0.0     3.0         # molt_cv males or combined
 # ———————————————————————————————————————————————————————————————————————————————————— ##
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
@@ -45,7 +47,7 @@
 ##  ivector  for  number  of  year  blocks  or  nodes  ##                  
 ##  Gear-1  Gear-2  Gear-3  ...                            
   1  1 1 1 1 1   #Selectivity  blocks                        
-  1  0 0 0 0 0   #Retention  blocks                        
+  0  0 0 0 0 0   #Retention  blocks                        
   1  0 0 0 0 0   #male   retention flag (0 -> no, 1 -> yes)
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 ##  sel  sel  sel  sex  size  year  phz  start  end  ##                
@@ -62,12 +64,12 @@
 ##
 ##  Retained                                  
 ##
- -1  2  180  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
- -2  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
- -3  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
- -4  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
- -5  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
- -6  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ # -1  2  180  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ # -2  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ # -3  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ # -4  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ # -5  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
+ # -6  2  90  10  0  1  1  2  12.5  12.5  12.5  1976  2014          
 ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
@@ -75,9 +77,9 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SURVEYS/INDICES ONLY
 ## NMFS_Trawl:ADFG:STCPUE                                        
-## TYPE     Mean_q    SD_q       
-     1      0.896      0.23      
-     1      0.896     10.23      
+## TYPE     Mean_q    SD_q       lambda
+     1      0.896      0.23      1.0
+     1      0.896     10.23      1.0
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
@@ -87,8 +89,8 @@
 ##  Mean_F  STD_PHZ1  STD_PHZ2  PHZ                            
   0.2         0.1       1.1      1                            
   0.1         0.1       1.1      1                            
-  0.01        2         2        1                            
-  0.01        2         2        1                            
+  0.01        2         2       -1                            
+  0.01        2         2       -1                            
   0.01        2         2       -1                            
   0.01        2         2       -1                            
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
@@ -102,7 +104,8 @@
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
   1  1  1  1  # 1  1  #1  1  1  #  Type  of  likelihood.          
   0  0  0  0  # 0  0  #0  0  0  #  Auto  tail  compression  (pmin)        
-  4  4  4  4  # 4  4  #4  4  4  #  Phz  for  estimating  effective  sample  size  (if  appl.)
+ -4 -4 -4 -4  # 4  4  #4  4  4  #  Phz  for  estimating  effective  sample  size  (if  appl.)
+ -4 -4 -4 -4  # 4  4  #4  4  4  #  Phz  for  estimating  effective  sample  size  (if  appl.)
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 ##  TIME  VARYING  NATURAL  MORTALIIY  RATES  ##                        
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
@@ -122,14 +125,15 @@
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 ##  OTHER  CONTROLS                                
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
-  3  #  Estimated  rec_dev  phase                          
-  0  #  VERBOSE  FLAG  (0  =  off  1  =  on  2  =  objective  func)        
-  0  #  INITIALIZE  MODEL  AT  UNFISHED  RECRUITS  (0=FALSE  1=TRUE)                  
+  3     #  Estimated  rec_dev  phase                          
+  0     #  VERBOSE  FLAG  (0  =  off  1  =  on  2  =  objective  func)        
+  0     #  INITIALIZE  MODEL  AT  UNFISHED  RECRUITS  (0=FALSE  1=TRUE)                  
   1984  #  First  year  for  average  recruitment  for  Bspr  calculation.                
   2013  #  Last  year  for  average  recruitment  for  Bspr  calculation.                
   0.35  #  Target  SPR  ratio  for  Bmsy  proxy.                    
-  1  #  Gear  index  for  SPR  calculations  (i.e.  directed  fishery).                
-  1  #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
-  1  #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
+  1     #  Gear  index  for  SPR  calculations  (i.e.  directed  fishery).                
+  1     #  Lambda  (proportion  of  mature  male  biomass  for  SPR  reference  points.)            
+  1     # Use empirical molt increment data (0=FALSE, 1=TRUE)
+  0     # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ##  EOF                                  
 9999                                    
