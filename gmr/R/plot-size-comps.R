@@ -107,28 +107,43 @@
 #' @param slab the sex label for the plot that appears above the key
 #' @param mlab the model label for the plot that appears above the key
 #' @param tlab the fleet label for the plot that appears above the key
+#' @param res boolean if residual or observed and predicted
 #' @return Plots of observed and predicted size composition values
-#' @author SJD Martell, D'Arcy N. Webber
+#' @author SJD Martell, Jim Ianelli, D'Arcy N. Webber
 #' @export
 #'
 plot_size_comps <- function(M, which_plots = "all", xlab = "Size (mm)", ylab = "Proportion",
-                            slab = "Sex", mlab = "Model", tlab = "Fleet")
+                            slab = "Sex", mlab = "Model", tlab = "Fleet",res=FALSE)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
 
     mdf <- .get_sizeComps_df(M)
     ix <- pretty(1:length(M[[1]]$mid_points))
-    
-    p <- ggplot(data = mdf[[1]])
-    p <- p + geom_bar(aes(variable, value), stat = "identity", position = "dodge", alpha = 0.5, fill = "grey")
-    p <- p + geom_line(aes(as.numeric(variable), pred, col = model), alpha = 0.85)
-    p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
-    p <- p + labs(x = xlab, y = ylab, col = mlab, fill = slab, linetype = tlab)
-    p <- p + ggtitle("title")
-    p <- p + facet_wrap(~year) + .THEME
-    #p <- p + facet_grid(irow~icol,labeller=label_both) + .THEME
-    p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+    if (res)
+    {
+        p <- ggplot(data=mdf[[1]])
+        p <- p + geom_point(aes(factor(year), variable, col = factor(sign(resd)), size = abs(resd)), alpha = 0.6)
+        p <- p + scale_size_area(max_size = 10)
+        p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
+        p <- p + scale_x_discrete(breaks=pretty(mdf[[1]]$mod_yrs))
+        p <- p + scale_y_discrete(breaks=pretty(mdf[[1]]$mid_points))
+        p <- p + facet_wrap(~model) + .THEME
+        p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+
+    }
+    else
+    {
+        p <- ggplot(data = mdf[[1]])
+        p <- p + geom_bar(aes(variable, value), stat = "identity", position = "dodge", alpha = 0.5, fill = "grey")
+        p <- p + geom_line(aes(as.numeric(variable), pred, col = model), alpha = 0.85)
+        p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
+        p <- p + labs(x = xlab, y = ylab, col = mlab, fill = slab, linetype = tlab)
+        p <- p + ggtitle("title")
+        p <- p + facet_wrap(~year) + .THEME
+        #p <- p + facet_grid(irow~icol,labeller=label_both) + .THEME
+        p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+    }
     
     fun <- function(x, p)
     {
@@ -143,39 +158,5 @@ plot_size_comps <- function(M, which_plots = "all", xlab = "Size (mm)", ylab = "
         print(plist)
     } else {
         print(plist[[which_plots]])
-    }
-}
-
-
-#' plot_sizeCompRes
-#' 
-#' Get observed and predicted size composition values
-#'
-#' @param M List object(s) created by read_admb function
-#' @return Plots of observed and predicted size composition values
-#' @author SJD Martell, D'Arcy N. Webber
-#' @export
-#'
-plot_sizeCompRes <- function(M, which_plot = "all")
-{
-    mdf <- .get_sizeComps_df(M)
-    
-    p <- ggplot(data=mdf[[1]])
-    p <- p + geom_point(aes(factor(year), variable, col = factor(sign(resd)), size = abs(resd)), alpha = 0.6)
-    p <- p + scale_size_area(max_size = 10)
-    p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
-    p <- p + scale_x_discrete(breaks=pretty(mdf[[1]]$mod_yrs))
-    p <- p + scale_y_discrete(breaks=pretty(mdf[[1]]$mid_points))
-    p <- p + facet_wrap(~model)+ .THEME
-    fun <- function(x,p)
-    {
-        p %+% x
-    }
-    plist <- lapply(mdf,fun,p=p)
-    if (which_plot == "all")
-    {
-        print(plist)
-    } else {
-        print(plist[[which.plot]])
     }
 }

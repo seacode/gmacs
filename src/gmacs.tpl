@@ -2779,7 +2779,7 @@ REPORT_SECTION
 		{
 			d3_obs_size_comps_out(kk,ii) = d3_obs_size_comps_in(kk,ii) / sum(d3_obs_size_comps_in(kk,ii));
 			d3_pre_size_comps_out(kk,ii) = d3_pre_size_comps_in(kk,ii) / sum(d3_pre_size_comps_in(kk,ii));
-			d3_res_size_comps_out(kk,ii) = d3_obs_size_comps_in(kk,ii) - d3_pre_size_comps_in(kk,ii);
+			d3_res_size_comps_out(kk,ii) = d3_obs_size_comps_out(kk,ii) - d3_pre_size_comps_out(kk,ii);
 		}
 	}
 
