@@ -897,7 +897,7 @@ DATA_SECTION
 	int spr_fleet;
 	number spr_lambda;
 	int bUseEmpiricalGrowth;
-	int nSRR_flag;
+	int nSRR_flag; //  if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -1011,7 +1011,7 @@ PARAMETER_SECTION
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr-1,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -2624,17 +2624,20 @@ FUNCTION calc_objective_function
 	}
 
 	// 4 Penalty on recruitment devs.
-	if ( active(rec_dev) && nSRR_flag !=0 )
+	if (!last_phase())
 	{
-		nlogPenalty(4) = dnorm(rec_dev, 1.0);
-	}
-	if ( active(rec_ini) && nSRR_flag !=0 )
-	{
-		nlogPenalty(5) = dnorm(rec_ini, 1.0);
-	}
-	if ( active(rec_dev) )
-	{
-		nlogPenalty(6) = dnorm(first_difference(rec_dev), 1.0);
+		if ( active(rec_dev) && nSRR_flag !=0 )
+		{
+			nlogPenalty(4) = dnorm(rec_dev, 1.0);
+		}
+		if ( active(rec_ini) && nSRR_flag !=0 )
+		{
+			nlogPenalty(5) = dnorm(rec_ini, 1.0);
+		}
+		if ( active(rec_dev) )
+		{
+			nlogPenalty(6) = dnorm(first_difference(rec_dev), 1.0);
+		}
 	}
 
 	objfun = sum(nloglike) + sum(nlogPenalty) + sum(priorDensity);
