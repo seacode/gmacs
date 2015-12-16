@@ -4,8 +4,10 @@
 #require(devtools)
 #devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
-setwd()
-.MODELDIR = c("/Users/Jim/_mymods/seacode/gmacs/examples/smbbc/")
+#setwd()
+
+#.MODELDIR = c("/Users/Jim/_mymods/seacode/gmacs/examples/smbbc/")
+.MODELDIR = c("")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
