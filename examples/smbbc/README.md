@@ -1,6 +1,10 @@
 # Setup for Saint Matthews Blue King Crab model
   run.sh for linux machines 
   run.bat for windows
+## Notes on model
+	First selectivity parameters have an issue (huge gradients)            
+	LogR0 probably shouldn't be turned on since model not initialized at unfished            
+  size at recruitment can't really be estimated with this number of bins?
 
 
 ### Resources

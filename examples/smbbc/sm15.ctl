@@ -11,9 +11,9 @@
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
   0.18      0.01         1        -4       2   0.18    0.02          # M
   9.0       -7         20         -2       1    7.1     30.1         # logR0
-  8.0       -7         20          2       1    7.0     35.0         # logR1
-  8.0       -7         20          1       1    7.0     35.0         # logRbar
-  95.0      30         310         2       1    72.5    7.25         # Recruitment Expected Value
+  8.0       -7         20          1       1    7.0     35.0         # logR1
+  8.0       -7         20         -1       1    7.0     35.0         # logRbar
+  95.0      30         310        -2       1    72.5    7.25         # Recruitment Expected Value
   0.15       0.1         5        -4       0    0.1     5.0          # Recruitment scale (variance component)
  -0.40       -10      0.75        -4       0  -10.0    0.75          # ln(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
@@ -25,10 +25,10 @@
 ## Two lines for each parameter if split sex, one line if not                           ##
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
   14.1      10.0      30.0         -3       0    0.0   999.0         # alpha males or combined
-  0.0001      0.0       0.01        -3       0    0.0   999.0         # beta males or combined
-  0.26130       0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
+  0.0001     0.0       0.01        -3       0    0.0   999.0         # beta males or combined
+  0.26130    0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
  115.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined
-  0.0621      0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
+  0.0621     0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
 
 ## SELECTIVITY CONTROLS                                                                 ##
 ##    -Each gear must have a selectivity and a retention selectivity                    ##
@@ -49,8 +49,8 @@
 ## gear  par   sel                                             phz    start  end        ##
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 # Gear-1
-   1     1     1   0    107.5  107  108    0      70    200    -3     1978   2015
-   1     2     2   0    125.5  100  200    0     100    200    -3     1978   2015
+   1     1     1   0    107.5  107  108    0      70    200    -1     1978   2015
+   1     2     2   0    125.5  100  200    0     100    200    -1     1978   2015
 # Gear-2
    2     3     1   0    40     10   200    0      10    200    -2     1978   2015
    2     4     2   0    60     10   200    0      10    200    -2     1978   2015
@@ -58,8 +58,8 @@
    3     5     1   0    40     10   200    0      10    200    -3     1978   2015
    3     6     2   0    60     10   200    0      10    200    -3     1978   2015
 # Gear-4
-   4     7     1   0    105.0   70  200    0      70    200    -3     1978   2015
-   4     8     2   0    127.5  100  200    0     100    200    -3     1978   2015
+   4     7     1   0    105.0   70  200    0      70    200    -4     1978   2015
+   4     8     2   0    127.5  100  200    0     100    200    -4     1978   2015
 # Gear-5
    5     9     1   0    107.5  70   200    0      70    200    -4     1978   2015
    5     10    2   0    125.5  100  200    0     100    200    -4     1978   2015
