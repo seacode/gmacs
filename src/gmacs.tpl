@@ -1488,13 +1488,13 @@ FUNCTION calc_natural_mortality
 		switch( m_type )
 		{
 			// would this line ever occur if m_dev active?
-			case 0:  // constant natural mortality
+			case 0: // constant natural mortality
 				delta = 0;
 			break;
-			case 1:  // random walk in natural mortality
+			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
 			break;
-			case 2:  // cubic splines
+			case 2: // cubic splines
 			{
 				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
 				dvector jyr(syr+1,nyr);
@@ -1509,14 +1509,14 @@ FUNCTION calc_natural_mortality
 			to a new state.  I think what Jie had  was just a block wiht a different
 			M and it then returns back to the previous state.
 			*/
-			case 3:  // Specific break points
+			case 3: // Specific break points
 			    for ( int idev = 1; idev <= nMdev; idev++ )
 			  	{
   					delta(m_nodeyear(idev)) = m_dev(idev);
 			  	}
 			break;
  // Modifying by Jie Zheng for specific time blocks
-			case 4:  // time blocks
+			case 4: // time blocks
 			    for ( int idev = 1; idev <= nMdev; idev++ )
 			  	{
 			       for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
@@ -2478,8 +2478,9 @@ FUNCTION calculate_prior_densities
 				p2 = slx_priors(k,j,3);
 				dvariable x = mfexp(log_slx_pars(k,j));
 				// Above is a change of variable so an adjustment is required - DOUBLE CHECK THIS
-				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2) + log_slx_pars(k,j);
-				if (verbose == 2) cout << " Prior no, val, dens "<<iprior<<" "<<x<<" "<<priorDensity(iprior)<<endl;
+				//priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2) + log_slx_pars(k,j);
+				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2);
+				if ( verbose == 2 ) cout << " Prior no, val, dens " << iprior << " " << x << " " << priorDensity(iprior) << endl;
 			}
 			iprior++;
 		}

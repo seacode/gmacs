@@ -1,6 +1,6 @@
-Code  | Species                       | Scientific name
-------|-------------------------------|----------------
-bbrkc | Britol Bay Red King Crab      |
-smbkc | Saint Matthews Blue King Crab |
-pirkc |                               |
-nsrkc |                               |
+Code  | Species                           | Scientific name
+------|-----------------------------------|-----------------------------
+bbrkc | Bristol Bay Red King Crab         | *Paralithodes camtschaticus*
+smbkc | St. Matthew Island Blue King Crab | *Paralithodes platypus*
+pirkc | Pribilof Islands Red King Crab    | *Paralithodes camtschaticus*
+nsrkc |                                   |

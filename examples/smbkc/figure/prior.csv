@@ -1,7 +1,7 @@
 "Model","variable","value"
 "OneSex","X1",0
 "OneSex","X2",0
-"OneSex","X3",4.476
+"OneSex","X3",4.475
 "OneSex","X4",0
 "OneSex","X5",0
 "OneSex","X6",0
@@ -21,10 +21,10 @@
 "OneSex","X20",0
 "OneSex","X21",0
 "OneSex","X22",0
-"OneSex","X23",0
-"OneSex","X24",0
-"OneSex","X25",0
-"OneSex","X26",0
+"OneSex","X23",4.867
+"OneSex","X24",4.605
+"OneSex","X25",4.867
+"OneSex","X26",4.605
 "OneSex","X27",0
 "OneSex","X28",0
 "OneSex","X29",0
@@ -35,4 +35,4 @@
 "OneSex","X34",0
 "OneSex","X35",0
 "OneSex","X36",0
-"OneSex","Total",8.252
+"OneSex","Total",27.197

@@ -49,8 +49,8 @@
 ## gear  par   sel                                             phz    start  end        ##
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 # Gear-1
-   1     1     1   0    107.5  107  108    0      70    200    -1     1978   2015
-   1     2     2   0    125.5  100  200    0     100    200    -1     1978   2015
+   1     1     1   0    107.5  107  108    0      70    200    -4     1978   2015
+   1     2     2   0    125.5  100  200    0     100    200    -4     1978   2015
 # Gear-2
    2     3     1   0    40     10   200    0      10    200    -2     1978   2015
    2     4     2   0    60     10   200    0      10    200    -2     1978   2015
@@ -58,11 +58,11 @@
    3     5     1   0    40     10   200    0      10    200    -3     1978   2015
    3     6     2   0    60     10   200    0      10    200    -3     1978   2015
 # Gear-4
-   4     7     1   0    105.0   70  200    0      70    200    -4     1978   2015
-   4     8     2   0    127.5  100  200    0     100    200    -4     1978   2015
+   4     7     1   0    105.0   70  200    0      70    200    4     1978   2015
+   4     8     2   0    127.5  100  200    0     100    200    4     1978   2015
 # Gear-5
-   5     9     1   0    107.5  70   200    0      70    200    -4     1978   2015
-   5     10    2   0    125.5  100  200    0     100    200    -4     1978   2015
+   5     9     1   0    107.5  70   200    0      70    200    4     1978   2015
+   5     10    2   0    125.5  100  200    0     100    200    4     1978   2015
 ## Retained
 # Gear-1
   -1     11    1   0    120   100   200    0      1    900   -1     1978   2015
@@ -105,8 +105,8 @@
 ##  • 4 multivariate-t   (NIY)
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
-# 1   1   1  # Type of likelihood.
- 2   2   2   # Type of likelihood.
+ 1   1   1  # Type of likelihood.
+# 2   2   2   # Type of likelihood.
  0   0   0   # Auto tail compression (pmin)
 -4  -4  -4   # Phz for estimating effective sample size (if appl.)
  1   2   3   # Composition aggregator
@@ -118,7 +118,7 @@
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
 ##      4 = Time blocks
-  1
+  0
 ## Phase of estimation
   2
 ## STDEV in m_dev for Random walk
