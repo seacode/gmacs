@@ -198,7 +198,6 @@ namespace gsm {
    * @tparam T data vector or dvar vector
    * @tparam T2 double or dvariable for size at 5% and 95% selectivity
   **/
-
   template<class T,class T2>
   class LogisticCurve95: public Selex<T>
   {
@@ -210,8 +209,8 @@ namespace gsm {
     LogisticCurve95(T2 s50 = T2(1), T2 s95 = T2(1))
     : m_s50(s50), m_s95(s95) {}
 
-    T2 GetS50()  const { return m_s50; }
-    T2 GetS95()  const { return m_s95; }
+    T2 GetS50() const { return m_s50; }
+    T2 GetS95() const { return m_s95; }
 
     void SetS50(T2 s50) { this->m_s50 = s50; }
     void SetS95(T2 s95) { this->m_s95 = s95; }
@@ -246,7 +245,6 @@ namespace gsm {
    * @tparam T data vector or dvar vector
    * @tparam T2 double or dvariable for size at 5% and 95% selectivity
   **/
-
   template<class T,class T2>
   class DoubleNormal: public Selex<T>
   {
@@ -293,7 +291,7 @@ namespace gsm {
 	/**
 	 * @brief Nonparametric selectivity coefficients
 	 * @details The length of the vector sel_coeffs must be less than or equal to 
-	 * length of the indepoendent variabls x.  If it it shorter, then it is assumed that
+	 * length of the independent variabls x.  If it it shorter, then it is assumed that
 	 * the parameters in the last element of sel_coeffs is the same for all elements in
 	 * the terminus of the independent vector.  Also use a logit transformation to ensure
 	 * that selectivities are bounded between 0-1.
@@ -368,7 +366,6 @@ namespace gsm {
 	/**
 	 * @brief Nonparametric selectivity function
 	 * @details Estimate one parameter per age/size class, and rescale to maximum of one.
-	 * @author Athol Whitten
 	 * @param x Independent variable (number of classes)
 	 * @param selparms Vector of selectivity parameters (initial values).
 	 * @return Selectivity values.
@@ -378,9 +375,13 @@ namespace gsm {
 	{
 		int x2 = x.indexmax();
 	  	dvar_vector selex(1,x2);
-	  	for (int i = 1; i <= x2; i++)
-	  		selex(i) = (1.0)/(1.0+mfexp(selparms(i)));
-	  	dvariable temp = selex(x2);
+	  	for ( int i = 1; i <= x2; i++ )
+	  	{
+	  		//selex(i) = 1.0 / (1.0 + mfexp(selparms(i)));
+	  		selex(i) = mfexp(selparms(i)) / (1.0 + mfexp(selparms(i)));
+	  	}
+	  	//dvariable temp = selex(x2);
+	  	dvariable temp = max(selex);
 	  	selex /= temp;
 	  	return selex;
 	}
@@ -392,7 +393,6 @@ namespace gsm {
 	/**
 	 * @brief Parametric selectivity function
 	 * @details One age or size-specific selectivity parameter for each age/size class.
-	 * @author Athol Whitten
 	 * 
 	 * Note that the same can be accomplished using the SelectivityCoefficients class
 	 * but Athol wanted to have this function in CSTAR

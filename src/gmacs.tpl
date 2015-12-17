@@ -283,7 +283,7 @@ DATA_SECTION
 				int j = 1;
 				for ( int ii = 1; ii <= nCatchRows(k); ii++ )
 				{
-					if (i == dCatchData(k,ii,1)) // year index
+					if ( i == dCatchData(k,ii,1) ) // year index
 					{
 						j = ii;
 						obs_catch_out(k,i) = dCatchData(k,ii,5);
@@ -501,8 +501,11 @@ DATA_SECTION
 			{
 				switch ( slx_type_in(h,k) )
 				{
+					case 0: // parametric
+						nslx_rows_in += nclass * slx_nsel_period_in(k);
+					break;
 					case 1: // coefficients
-						nslx_rows_in += 1 * slx_nsel_period_in(k);
+						nslx_rows_in += (nclass - 0) * slx_nsel_period_in(k);
 					break;
 					case 2: // logistic has 2 parameters
 						nslx_rows_in += 2 * slx_nsel_period_in(k);
@@ -520,8 +523,11 @@ DATA_SECTION
 			{
 				switch ( ret_type_in(h,k) )
 				{
+					case 0: // parametric
+						nslx_rows_in += nclass * ret_nret_period_in(k);
+					break;
 					case 1: // coefficients
-						nslx_rows_in += 1 * ret_nret_period_in(k);
+						nslx_rows_in += (nclass - 0) * ret_nret_period_in(k);
 					break;
 					case 2: // logistic
 						nslx_rows_in += 2 * ret_nret_period_in(k);
@@ -586,9 +592,13 @@ DATA_SECTION
 		{
 			switch ( slx_type(k) )
 			{
+				case 0: // parametric
+					slx_cols(k) = nclass;
+					slx_npar(k) = nclass;
+				break;
 				case 1: // coefficients
-					slx_cols(k) = 1;
-					slx_npar(k) = nclass - 1;
+					slx_cols(k) = nclass - 0;
+					slx_npar(k) = nclass - 0;
 				break;
 				case 2: // logistic
 					slx_cols(k) = 2;
@@ -624,8 +634,14 @@ DATA_SECTION
 			}
 			slx_gear(k) =     slx_control_in(kk,1);
 			slx_isex(k) =     slx_control_in(kk,4);
-			  slx_lb(k) = log(slx_control_in(kk,6));
-			  slx_ub(k) = log(slx_control_in(kk,7));
+			if ( slx_type(k) == 0 || slx_type(k) == 1 )
+			{
+				slx_lb(k) = log(slx_control_in(kk,6) / (1 - slx_control_in(kk,6)));
+				slx_ub(k) = log(slx_control_in(kk,7) / (1 - slx_control_in(kk,7)));
+			} else {
+				slx_lb(k) = log(slx_control_in(kk,6));
+				slx_ub(k) = log(slx_control_in(kk,7));
+			}
 			slx_phzm(k) =     slx_control_in(kk,11);
 			slx_styr(k) =     slx_control_in(kk,12);
 			slx_edyr(k) =     slx_control_in(kk,13);		
@@ -648,17 +664,18 @@ DATA_SECTION
 				slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
 				slx_priors(k,j,3) = slx_control_in(jj,10); // p2
 			}
-			if ( slx_type(k) == 1 )
-			{
-				slx_par(k,1) = 0.001;
-				for ( int j = 2; j <= slx_npar(k)-1; j++ )
-				{
-					slx_par(k,j) = slx_par(k,j-1) + 1.0/nclass;
-				}
-				slx_par(k,slx_npar(k)) = 0.999;
-			}
+			//if ( slx_type(k) == 1 )
+			//{
+				//slx_par(k,1) = 0.001;
+				//for ( int j = 2; j <= slx_npar(k)-1; j++ )
+				//for ( int j = 1; j <= slx_cols(k); j++ )
+				//{
+				//	slx_par(k,j) = slx_par(k,j-1) + 1.0/nclass;
+				//}
+				//slx_par(k,slx_npar(k)) = 0.999;
+			//}
 		}
-	  ECHO(slx_priors);
+		ECHO(slx_priors);
 	END_CALCS
 	!! WriteCtl(slx_nsel_period_in); WriteCtl(ret_nret_period_in); WriteCtl(slx_control_in); WriteCtl(slx_control);
 
@@ -995,11 +1012,21 @@ PARAMETER_SECTION
 	LOC_CALCS
 		for ( int k = 1; k <= nslx; k++ )
 		{
-			for ( int i = 1; i <= slx_npar(k); i++ )
+			// Logit transform if using parametric or coefficients selectivity type, otherwise just log transform
+			if ( slx_type(k) == 0 || slx_type(k) == 1 )
 			{
-				log_slx_pars(k,i) = log(slx_par(k,i));
+				for ( int i = 1; i <= slx_npar(k); i++ )
+				{
+					log_slx_pars(k,i) = log(slx_par(k,i) / (1 - slx_par(k,i)));
+				}
+			} else {
+				for ( int i = 1; i <= slx_npar(k); i++ )
+				{
+					log_slx_pars(k,i) = log(slx_par(k,i));
+				}
 			}
 			//COUT(exp(log_slx_pars(k)));
+			//COUT(log_slx_pars(k));
 		}
 	END_CALCS
 
@@ -1102,7 +1129,7 @@ PRELIMINARY_CALCS_SECTION
 			ad_exit(1);
 		}
 		cout << "|———————————————————————————————————————————|" << endl;
-		cout << "|*** RUNNING SIMULATION WITH RSEED = "<<rseed<<" ***|" << endl;
+		cout << "|*** RUNNING SIMULATION WITH RSEED = " << rseed << " ***|" << endl;
 		cout << "|———————————————————————————————————————————|" << endl;
 		simulation_model();
 		//exit(1);
@@ -1259,8 +1286,14 @@ FUNCTION calc_selectivities
 		class gsm::Selex<dvar_vector> *pSLX;
 		switch ( slx_type(k) )
 		{
+			case 0: // parametric
+				//pv = elem_div(mfexp(log_slx_pars(k)), 1 + mfexp(log_slx_pars(k)));
+				pv = log_slx_pars(k);
+				pSLX = new class gsm::ParameterPerClass<dvar_vector>(pv);
+			break;
 			case 1: // coefficients
-				pv = mfexp(log_slx_pars(k));
+				//pv = elem_div(mfexp(log_slx_pars(k)), 1 + mfexp(log_slx_pars(k)));
+				pv = log_slx_pars(k);
 				pSLX = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
 			break;
 			case 2: // logistic
@@ -2408,6 +2441,7 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &_theta, cons
 FUNCTION calculate_prior_densities
 	double p1,p2;
 	double lb,ub;
+	dvariable x;
 	priorDensity.initialize();
 	// Key parameter priors
 	for ( int i = 1; i <= ntheta; i++ )
@@ -2460,10 +2494,12 @@ FUNCTION calculate_prior_densities
 				// cout << "q, density "<<survey_q(i) <<" "<<priorDensity(iprior)<<endl;
 			break;
 		}
-		if (last_phase())
-		  priorDensity(iprior) = priorDensity(iprior) ;
-		else
-		  priorDensity(iprior) = .1*priorDensity(iprior) ;
+		if ( last_phase() )
+		{
+			priorDensity(iprior) = priorDensity(iprior) ;
+		} else {
+			priorDensity(iprior) = .1*priorDensity(iprior) ;
+		}
 		iprior++;
 	}
 	// Selctivity parameter priors
@@ -2476,7 +2512,12 @@ FUNCTION calculate_prior_densities
 				int priorType = int(slx_priors(k,j,1));
 				p1 = slx_priors(k,j,2);
 				p2 = slx_priors(k,j,3);
-				dvariable x = mfexp(log_slx_pars(k,j));
+				if ( slx_type(k) == 0 || slx_type(k) == 1 )
+				{
+					x = mfexp(log_slx_pars(k,j)) / (1 + mfexp(log_slx_pars(k,j)));
+				} else {
+					x = mfexp(log_slx_pars(k,j));
+				}
 				// Above is a change of variable so an adjustment is required - DOUBLE CHECK THIS
 				//priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2) + log_slx_pars(k,j);
 				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2);
@@ -2485,7 +2526,6 @@ FUNCTION calculate_prior_densities
 			iprior++;
 		}
 	}
-
 
 	/**
 	 * @brief calculate objective function
@@ -2508,7 +2548,7 @@ FUNCTION calc_objective_function
 	nloglike.initialize();
 	
 	// 1) Likelihood of the catch data.
-	if (verbose == 1) COUT(res_catch(1));
+	if ( verbose == 1 ) COUT(res_catch(1));
 	for ( int k = 1; k <= nCatchDF; k++ )
 	{
 		dvector catch_sd = sqrt(log(1.0 + square(catch_cv(k))));
@@ -2516,7 +2556,7 @@ FUNCTION calc_objective_function
 	}
 
 	// 2) Likelihood of the relative abundance data.
-    if (verbose == 1) COUT(res_cpue(1));
+    if ( verbose == 1 ) COUT(res_cpue(1));
 	for ( int k = 1; k <= nSurveys; k++ )
 	{
 		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
@@ -2543,7 +2583,7 @@ FUNCTION calc_objective_function
 				ploglike = new class acl::multinomial(O, bCmp);
 			break;
 			case 2: // robust approximation to the multinomial
-				if (current_phase() <= 3 || !last_phase())
+				if ( current_phase() <= 3 || !last_phase() )
 				{
 					ploglike = new class acl::multinomial(O, bCmp);
 				} else {
@@ -2625,7 +2665,7 @@ FUNCTION calc_objective_function
 	}
 
 	// 4 Penalty on recruitment devs.
-	if (!last_phase())
+	if ( !last_phase() )
 	{
 		if ( active(rec_dev) && nSRR_flag !=0 )
 		{
@@ -2694,7 +2734,7 @@ FUNCTION simulation_model
 	dmatrix err_catch(1,nCatchDF,1,nCatchRows);
 	err_catch.fill_randn(rng);
 	dmatrix catch_sd(1,nCatchDF,1,nCatchRows);
-	for(int k = 1; k <= nCatchDF; k++ )
+	for ( int k = 1; k <= nCatchDF; k++ )
 	{
 		catch_sd(k)  = sqrt(log(1.0 + square(catch_cv(k))));
 		obs_catch(k) = value(pre_catch(k));
@@ -2710,9 +2750,9 @@ FUNCTION simulation_model
 	obs_cpue = value(pre_cpue);
 	err_cpue = elem_prod(cpue_sd,err_cpue) - 0.5*square(cpue_sd);
 	obs_cpue = elem_prod(obs_cpue,mfexp(err_cpue));
-	for(int k = 1; k <= nSurveys; k++ )
+	for ( int k = 1; k <= nSurveys; k++ )
 	{
-		for(int i = 1; i <= nSurveyRows(k); i++ )
+		for ( int i = 1; i <= nSurveyRows(k); i++ )
 		{
 			dSurveyData(k)(i,5) = obs_cpue(k,i);
 		}
@@ -2721,9 +2761,9 @@ FUNCTION simulation_model
 	// add sampling errors to size-composition.
 	// 3darray d3_obs_size_comps(1,nSizeComps,1,nSizeCompRows,1,nSizeCompCols);
 	double tau;
-	for(int k = 1; k <= nSizeComps; k++ )
+	for ( int k = 1; k <= nSizeComps; k++ )
 	{
-		for(int i = 1; i <= nSizeCompRows(k); i++ )
+		for ( int i = 1; i <= nSizeCompRows(k); i++ )
 		{
 			tau = sqrt(1.0 / size_comp_sample_size(k)(i));
 			dvector p = value(d3_pre_size_comps(k)(i));
