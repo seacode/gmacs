@@ -23,4 +23,21 @@ clean:
 	rm admodel.hes
 	rm checkfile.rep
 	rm fmin.log
+	rm gmacs.b0*
+	rm gmacs.bar
+	rm gmacs.cor
+	rm gmacs.eva
+	rm gmacs.log
+	rm gmacs.p0*
+	rm gmacs.par
+	rm gmacs.r0*
+	rm gmacs.rep
+	rm gmacs.std
+	rm gmacs_files_in.dat
+	rm gmacs_in.ctl
+	rm gmacs_in.dat
+	rm gradient.*
+	rm mcout.rep
+	rm plot.Rout
+	rm Rplots.pdf
 	rm variance
