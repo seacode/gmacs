@@ -1,43 +1,49 @@
+ifdef ComSpec
+    RM=del /F /Q
+else
+    RM=rm -rf
+endif
+
 all: mpd
 
 mpd: gmacs
-	sudo rm gmacs
-	sudo ln -s ../../src/build/release/gmacs gmacs
+	rm gmacs
+	ln -s ../../src/build/release/gmacs gmacs
 	gmacs
 
 debug: gmacs
-	sudo rm gmacs
-	sudo ln -s ../../src/build/debug/gmacs gmacs
+	rm gmacs
+	ln -s ../../src/build/debug/gmacs gmacs
 	gmacs
 
 plot:
 	R CMD BATCH plot.R
 
 gmacs:
-	sudo ln -s ../../src/build/release/gmacs gmacs
+	ln -s ../../src/build/release/gmacs gmacs
 
 clean:
 	sudo rm gmacs
-	rm admodel.cov
-	rm admodel.dep
-	rm admodel.hes
-	rm checkfile.rep
-	rm fmin.log
-	rm gmacs.b0*
-	rm gmacs.bar
-	rm gmacs.cor
-	rm gmacs.eva
-	rm gmacs.log
-	rm gmacs.p0*
-	rm gmacs.par
-	rm gmacs.r0*
-	rm gmacs.rep
-	rm gmacs.std
-	rm gmacs_files_in.dat
-	rm gmacs_in.ctl
-	rm gmacs_in.dat
-	rm gradient.*
-	rm mcout.rep
-	rm plot.Rout
-	rm Rplots.pdf
-	rm variance
+	@$(RM) admodel.cov
+	@$(RM) admodel.dep
+	@$(RM) admodel.hes
+	@$(RM) checkfile.rep
+	@$(RM) fmin.log
+	@$(RM) gmacs.b0*
+	@$(RM) gmacs.bar
+	@$(RM) gmacs.cor
+	@$(RM) gmacs.eva
+	@$(RM) gmacs.log
+	@$(RM) gmacs.p0*
+	@$(RM) gmacs.par
+	@$(RM) gmacs.r0*
+	@$(RM) gmacs.rep
+	@$(RM) gmacs.std
+	@$(RM) gmacs_files_in.dat
+	@$(RM) gmacs_in.ctl
+	@$(RM) gmacs_in.dat
+	@$(RM) gradient.*
+	@$(RM) mcout.rep
+	@$(RM) plot.Rout
+	@$(RM) Rplots.pdf
+	@$(RM) variance
