@@ -683,6 +683,8 @@ DATA_SECTION
 	// | PRIORS FOR CATCHABILITIES FOR INDICES                   |
 	// |---------------------------------------------------------|
 	init_matrix q_controls(1,nSurveys,1,4);
+	init_vector add_cv_ival(1,nSurveys);
+	init_ivector cv_phz(1,nSurveys);
 
 	vector prior_qbar(1,nSurveys);
 	vector prior_qsd(1,nSurveys);
@@ -969,6 +971,7 @@ INITIALIZATION_SECTION
 	theta        theta_ival;
 	Grwth        Grwth_ival;
 	log_fbar     log_pen_fbar;
+	add_cv       add_cv_ival;
 
 PARAMETER_SECTION
 	
@@ -1045,6 +1048,9 @@ PARAMETER_SECTION
 
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
+
+	// Addtional CV for surveys/indices
+	init_number_vector add_cv(1,nSurveys,cv_phz);
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,6);
@@ -1893,8 +1899,7 @@ FUNCTION calc_stock_recruitment_relationship
 		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,_A,_S,P(h),rec_sdd);
-			phiB += lam * x * elem_prod(mean_wt(h), maturity(h))
-			     +  lam * y * elem_prod(mean_wt(h), maturity(h));
+			phiB += lam * x * elem_prod(mean_wt(h), maturity(h)) +  lam * y * elem_prod(mean_wt(h), maturity(h));
 		}
 		// Insert terminal molt case here
 
@@ -2559,8 +2564,10 @@ FUNCTION calc_objective_function
     if ( verbose == 1 ) COUT(res_cpue(1));
 	for ( int k = 1; k <= nSurveys; k++ )
 	{
-		dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
-		nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
+		//dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
+		//nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
+		dvar_vector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k) + add_cv(k))));
+		nloglike(2,k) += cpue_lambda(k) * (log(cpue_sd(k)) + dnorm(res_cpue(k), cpue_sd));
 	}
 
 	// 3) Likelihood for size composition data.

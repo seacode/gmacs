@@ -90,10 +90,14 @@
 ##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi)
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
-## NMFS ADF&G
-## TYPE     Mean_q    SD_q      LAMBDA
-     0      0.01       2.0       1
-     0      0.01       2.0       1
+## TYPE    Mean_q    SD_q    LAMBDA
+   0       0.01      2.0     1      # NMFS
+   0       0.01      2.0     1      # ADF&G
+## ADDITIONAL CV FOR SURVEYS/INDICES
+## NMFS   ADF&G
+   0.0    0.0   # ival
+   4      4     # Phz for estimating additional CV
+
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
      0.20      0.05     45.50      1  # Trap
