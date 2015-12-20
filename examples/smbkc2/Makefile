@@ -1,5 +1,6 @@
 MODS:=model_1 model_2
 DEL:=admodel.cov admodel.dep admodel.hes checkfile.rep fmin.log gmacs.b0* gmacs.bar gmacs.cor gmacs.eva gmacs.log gmacs.p0* gmacs.par gmacs.r0* gmacs.rep gmacs.std gmacs_files_in.dat gmacs_in.ctl gmacs_in.dat gradient.* mcout.rep variance
+MODS_DESC= Models to be run
 
 ifdef ComSpec
     RM=del /F /Q
@@ -13,7 +14,7 @@ mpd:
 	for number in $(MODS) ; do \
 		cd $$number ; \
 		ln -s ../../../src/build/release/gmacs gmacs ; \
-		gmacs ; \
+		gmacs -nox ; \
 		$(RM) gmacs ; \
 		cd .. ; \
 	done
@@ -22,7 +23,7 @@ debug:
 	for number in $(MODS) ; do \
 		cd $$number ; \
 		ln -s ../../../src/build/debug/gmacs gmacs ; \
-		gmacs ; \
+		gmacs -nox ; \
 		$(RM) gmacs ; \
 		cd .. ; \
 	done
