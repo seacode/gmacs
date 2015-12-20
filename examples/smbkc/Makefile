@@ -9,12 +9,12 @@ all: mpd
 mpd: gmacs
 	rm gmacs
 	ln -s ../../src/build/release/gmacs gmacs
-	gmacs
+	gmacs -nox
 
 debug: gmacs
 	rm gmacs
 	ln -s ../../src/build/debug/gmacs gmacs
-	gmacs
+	gmacs -nox
 
 plot:
 	R CMD BATCH plot.R
