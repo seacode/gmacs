@@ -125,7 +125,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## NMFS   BSFRF
    0.0    0.0   # ival
-   -4     4     # Phz for estimating additional CV
+   -4     -4     # Phz for estimating additional CV
 #   0      0     # Prior type (NIY)
 #   0      10.0  # Prior par 1
 #   0      10.0  # Prior par 2
