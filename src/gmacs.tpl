@@ -2569,11 +2569,14 @@ FUNCTION calc_objective_function
 	{
 		if (active(add_cv(k)))
 		{
-		  dvar_vector cpue_sd_est = sqrt(log(1.0 + square(cpue_cv(k) + add_cv(k))));
-		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd_est); // Tuned to geometric mean index?
+	    for (int i=1;i<=nSurveyRows(k);i++)
+	    {
+        dvariable sdtmp = sqrt(log(1.0 + square(cpue_cv(k,i) + add_cv(k))));
+        nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
+	    }
 		}
 		else
-		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); // Tuned to geometric mean index?
+		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); 
 	}
 
 	// 3) Likelihood for size composition data.

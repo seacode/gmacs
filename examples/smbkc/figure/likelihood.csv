@@ -1,11 +1,11 @@
 "Model","Component","Fishery","nloglike"
 "OneSex","catch","1",-66.6724
-"OneSex","cpue","1",24.4794
+"OneSex","cpue","1",-10.4403
 "OneSex","size_comp","1",22.9693
 "OneSex","rec_dev","1",60.0726
 "OneSex","growth_inc","1",0
 "OneSex","catch","2",3.4374
-"OneSex","cpue","2",5.6999
+"OneSex","cpue","2",-1.6516
 "OneSex","size_comp","2",64.5025
 "OneSex","rec_dev","2",NA
 "OneSex","growth_inc","2",NA

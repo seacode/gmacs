@@ -54,9 +54,9 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
     if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
     
     p  <- ggplot(mdf, aes(year, cpue))
-    p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
+    p  <- p + geom_pointrange(aes(year-.1, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
     if (ShowEstErr)
-      p  <- p + geom_pointrange(aes(year+.1, cpue, ymax = ube, ymin = lbe), col = "green", alpha = 0.5)
+      p  <- p + geom_pointrange(aes(year+.2, cpue, ymax = ube, ymin = lbe), col = "green", alpha = 0.5)
 
     if(.OVERLAY)
     {
