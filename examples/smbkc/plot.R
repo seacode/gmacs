@@ -1,8 +1,8 @@
 # ----------------------------------------------------------------------------- #
 # OneSex
 # ----------------------------------------------------------------------------- #
-#require(devtools)
-#devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
+require(devtools)
+devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
 #setwd()
 
@@ -46,15 +46,15 @@ plot_catch(M)
 ggsave(paste0(.FIGS, "catch.png"), width = ww*2.5, height = hh)
 dev.off()
 
-plot_cpue(M)
+plot_cpue(M, ShowEstErr=TRUE)
 ggsave(paste0(.FIGS, "cpue.png"), width = ww*2.5, height = hh)
 dev.off()
 
-plot_cpue(M, "ADFG Pot")
+plot_cpue(M, "ADFG Pot", ShowEstErr=TRUE)
 ggsave(paste0(.FIGS, "cpue_BSFRF.png"), width = ww, height = hh)
 dev.off()
 
-plot_cpue(M, "NMFS Trawl")
+plot_cpue(M, "NMFS Trawl", ShowEstErr=TRUE)
 ggsave(paste0(.FIGS, "cpue_NMFS.png"), width = ww*2.5, height = hh)
 dev.off()
 

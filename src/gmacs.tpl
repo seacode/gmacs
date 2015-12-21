@@ -319,14 +319,17 @@ DATA_SECTION
 	init_3darray dSurveyData(1,nSurveys,1,nSurveyRows,1,7);
 	matrix obs_cpue(1,nSurveys,1,nSurveyRows);
 	matrix cpue_cv(1,nSurveys,1,nSurveyRows);
+	matrix cpue_sd(1,nSurveys,1,nSurveyRows);
+	matrix cpue_cv_add(1,nSurveys,1,nSurveyRows);
 	LOC_CALCS
 		for ( int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
 			cpue_cv(k)  = column(dSurveyData(k),6);
+		  cpue_sd(k)  = sqrt(log(1.0 + square(cpue_cv(k))));
 		}
 		WRITEDAT(nSurveys); WRITEDAT(nSurveyRows); WRITEDAT(dSurveyData);
-		ECHO(obs_cpue); ECHO(cpue_cv);
+		ECHO(obs_cpue); ECHO(cpue_cv);ECHO(cpue_sd);
 	END_CALCS
 
 	// |-----------------------|
@@ -1529,10 +1532,10 @@ FUNCTION calc_natural_mortality
 			// would this line ever occur if m_dev active?
 			case 0: // constant natural mortality
 				delta = 0;
-			break;
+		  	break;
 			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
-			break;
+			  break;
 			case 2: // cubic splines
 			{
 				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
@@ -1541,7 +1544,7 @@ FUNCTION calc_natural_mortality
 				vcubic_spline_function csf(iyr,m_dev);
 				delta = csf(jyr);
 			}
-			break;
+			  break;
 			/*
 			Jim Question about below.  I'm not sure if you were intending to
 			have this set up as a random walk, where the shift occurs in a specifc year
@@ -1549,34 +1552,37 @@ FUNCTION calc_natural_mortality
 			M and it then returns back to the previous state.
 			*/
 			case 3: // Specific break points
-			    for ( int idev = 1; idev <= nMdev; idev++ )
-			  	{
-  					delta(m_nodeyear(idev)) = m_dev(idev);
-			  	}
-			break;
- // Modifying by Jie Zheng for specific time blocks
+			  for ( int idev = 1; idev <= nMdev; idev++ )
+			  {
+  				delta(m_nodeyear(idev)) = m_dev(idev);
+			  }
+			  break;
+      // Modifying by Jie Zheng for specific time blocks
 			case 4: // time blocks
-			    for ( int idev = 1; idev <= nMdev; idev++ )
+			  for ( int idev = 1; idev <= nMdev; idev++ )
+			  {
+			  	// Is this syntax for split sex?
+			    for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
 			  	{
-			       for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
-			  	   {
-                      delta(i) = m_dev(idev);
-                      for ( h = 1; h <= nsex; h++ )
-	                  {
-                          M(h)(i)  = mfexp(m_dev(idev));
-                      }
-                   }
-			  	}
-			break;                        
+            delta(i) = m_dev(idev);
+            for ( h = 1; h <= nsex; h++ )
+	          {
+              M(h)(i)  = mfexp(m_dev(idev));
+            }
+          }
+			  }
+			  break;                        
 		}
 
 		// Update M by year.
-		for ( int h = 1; h <= nsex; h++ )
+		if (m_type < 4)                                                    //add by Jie Zheng
 		{
-			for ( int i = syr+1; i <= nyr; i++ )
+			for ( int h = 1; h <= nsex; h++ )
 			{
-			 if (m_type < 4)                                                    //add by Jie Zheng
-               M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
+				for ( int i = syr+1; i <= nyr; i++ )
+				{
+	        M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
+				}
 			}
 		}
 	}
@@ -2561,14 +2567,27 @@ FUNCTION calc_objective_function
 	}
 
 	// 2) Likelihood of the relative abundance data.
-    if ( verbose == 1 ) COUT(res_cpue(1));
+  if ( verbose == 1 ) COUT(res_cpue(1));
 	for ( int k = 1; k <= nSurveys; k++ )
 	{
+<<<<<<< HEAD
 		//dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
 		//nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
 		dvar_vector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k) + add_cv(k))));
 		//nloglike(2,k) += cpue_lambda(k) * (log(cpue_sd(k)) + dnorm(res_cpue(k), cpue_sd));
 		nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd);
+=======
+		if (active(add_cv(k)))
+		{
+	    for (int i=1;i<=nSurveyRows(k);i++)
+	    {
+        dvariable sdtmp = sqrt(log(1.0 + square(cpue_cv(k,i) + add_cv(k))));
+        nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
+	    }
+		}
+		else
+		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); 
+>>>>>>> dc4dd2e124af2b1010ff9359ace2a6a12c5a3ca4
 	}
 
 	// 3) Likelihood for size composition data.
@@ -2752,10 +2771,10 @@ FUNCTION simulation_model
 
 	// add observation errors to cpue. & fill in dSurveyData column 5
 	dmatrix err_cpue(1,nSurveys,1,nSurveyRows);
-	dmatrix cpue_sd = sqrt(log(1.0 + square(cpue_cv)));
+	dmatrix cpue_sd_sim = sqrt(log(1.0 + square(cpue_cv))); // Note if this should include add_cv
 	err_cpue.fill_randn(rng);
 	obs_cpue = value(pre_cpue);
-	err_cpue = elem_prod(cpue_sd,err_cpue) - 0.5*square(cpue_sd);
+	err_cpue = elem_prod(cpue_sd_sim,err_cpue) - 0.5*square(cpue_sd_sim);
 	obs_cpue = elem_prod(obs_cpue,mfexp(err_cpue));
 	for ( int k = 1; k <= nSurveys; k++ )
 	{
@@ -2802,6 +2821,9 @@ REPORT_SECTION
 	REPORT(pre_catch_out);
 	REPORT(res_catch_out);
 	REPORT(dSurveyData);
+	for (int k = 1;k<=nSurveys;k++)
+	  cpue_cv_add(k) = cpue_cv(k) + value(add_cv(k)); 
+	REPORT(cpue_cv_add);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
 	REPORT(res_cpue);

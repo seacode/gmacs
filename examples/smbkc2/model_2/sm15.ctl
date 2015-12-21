@@ -90,10 +90,14 @@
 ##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi)
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
-## NMFS ADF&G
-## TYPE     Mean_q    SD_q      LAMBDA
-     0      0.01       2.0       1
-     0      0.01       2.0       1
+## TYPE    Mean_q    SD_q    LAMBDA
+   0       0.01      2.0     1      # NMFS
+   0       0.01      2.0     1      # ADF&G
+## ADDITIONAL CV FOR SURVEYS/INDICES
+## NMFS   ADF&G
+   0.0    0.0   # ival
+   4      4     # Phz for estimating additional CV
+
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
      0.20      0.05     45.50      1  # Trap
@@ -124,15 +128,15 @@
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
 ##      4 = Time blocks
-  0
+  3
 ## Phase of estimation
-  2
+  5
 ## STDEV in m_dev for Random walk
-  0.01
+  0.6
 ## Number of nodes for cubic spline or number of step-changes for option 3
-  1
+  2
 ## Year position of the knots (vector must be equal to the number of nodes)
-  1978
+  1998 1999
 
 ## OTHER CONTROLS
   2       # Estimated rec_dev phase

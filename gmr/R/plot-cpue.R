@@ -7,21 +7,27 @@
 #' 
 .get_cpue_df <- function(M)
 {
-	n <- length(M)
+	n   <- length(M)
 	mdf <- NULL
 	for (i in 1:n)
 	{
-		A  <- M[[i]]
-		df <- data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData))
+		A        <- M[[i]]
+		df       <- data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData))
 		colnames(df) <- c("Model","year","seas","fleet","sex","cpue","cv","units")
-		df$sex = .SEX[df$sex+1]
-		df$fleet = .FLEET[df$fleet]
-		sd <- sqrt(log(1 + df$cv^2))
-		df$lb <- exp(log(df$cpue) - 1.96*sd)
-		df$ub <- exp(log(df$cpue) + 1.96*sd)
-		df$pred <- na.exclude(as.vector(t(A$pre_cpue)))
-		df$resd <- na.exclude(as.vector(t(A$res_cpue)))
-		mdf <- rbind(mdf, df)
+		df$sex   <- .SEX[df$sex+1]
+		df$fleet <- .FLEET[df$fleet]
+        sd       <- sqrt(log(1 + df$cv^2))
+        df$lb    <- exp(log(df$cpue) - 1.96*sd)
+        df$ub    <- exp(log(df$cpue) + 1.96*sd)
+
+        df$cvest <- na.exclude(as.vector(t(A$cpue_cv_add)))
+        sde      <- sqrt(log(1 + df$cvest^2))
+        df$lbe   <- exp(log(df$cpue) - 1.96*sde)
+        df$ube   <- exp(log(df$cpue) + 1.96*sde)
+
+        df$pred  <- na.exclude(as.vector(t(A$pre_cpue)))
+        df$resd  <- na.exclude(as.vector(t(A$res_cpue)))
+        mdf      <- rbind(mdf, df)
 	}
 	return(mdf)
 }
@@ -33,12 +39,13 @@
 #' @param subsetby the fleet to subset the data to
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
+#' @param ShowEstErr Shows errorbars from estimated CVs as well
 #' @param slab the sex label for the plot that appears above the key
 #' @return plot of all observed and predicted incices
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex")
+plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex", ShowEstErr=FALSE)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -47,18 +54,24 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
     if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
     
     p  <- ggplot(mdf, aes(year, cpue))
-    p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
+    p  <- p + geom_pointrange(aes(year-.1, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
+    if (ShowEstErr)
+      p  <- p + geom_pointrange(aes(year+.2, cpue, ymax = ube, ymin = lbe), col = "green", alpha = 0.5)
 
     if(.OVERLAY)
     {
         if (length(M) == 1)
         {
             p  <- p + geom_line(data = mdf, aes(year, pred, color = sex)) + labs(col = slab)
-        } else {
+        } 
+        else 
+        {
             p  <- p + geom_line(data = mdf, aes(year, pred, color = Model))
         }
         p  <- p + facet_wrap(~fleet + sex, scales = "free_y")
-    } else {
+    } 
+    else 
+    {
         p  <- p + geom_line(data = mdf, aes(year, pred))
         p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")
     }

@@ -21,8 +21,18 @@ debug: gmacs
 plot:
 	R CMD BATCH plot.R
 
+<<<<<<< HEAD
 gmacs:
 	ln -s ../../../src/build/release/gmacs gmacs
+=======
+plot: $(EXEC)
+	R CMD BATCH plot.R
+
+clean:
+	rm -f $(EXEC)
+	rm -f admodel.*
+	rm -f $(EXEC)  $(EXEC).[brces]* $(EXEC).*[0123456789] *.rpt *.log variance
+>>>>>>> dc4dd2e124af2b1010ff9359ace2a6a12c5a3ca4
 
 clean:
 	@$(RM) gmacs
