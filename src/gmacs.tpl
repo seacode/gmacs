@@ -319,14 +319,17 @@ DATA_SECTION
 	init_3darray dSurveyData(1,nSurveys,1,nSurveyRows,1,7);
 	matrix obs_cpue(1,nSurveys,1,nSurveyRows);
 	matrix cpue_cv(1,nSurveys,1,nSurveyRows);
+	matrix cpue_sd(1,nSurveys,1,nSurveyRows);
+	matrix cpue_cv_add(1,nSurveys,1,nSurveyRows);
 	LOC_CALCS
 		for ( int k = 1; k <= nSurveys; k++ )
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
 			cpue_cv(k)  = column(dSurveyData(k),6);
+		  cpue_sd(k)  = sqrt(log(1.0 + square(cpue_cv(k))));
 		}
 		WRITEDAT(nSurveys); WRITEDAT(nSurveyRows); WRITEDAT(dSurveyData);
-		ECHO(obs_cpue); ECHO(cpue_cv);
+		ECHO(obs_cpue); ECHO(cpue_cv);ECHO(cpue_sd);
 	END_CALCS
 
 	// |-----------------------|
@@ -2561,13 +2564,16 @@ FUNCTION calc_objective_function
 	}
 
 	// 2) Likelihood of the relative abundance data.
-    if ( verbose == 1 ) COUT(res_cpue(1));
+  if ( verbose == 1 ) COUT(res_cpue(1));
 	for ( int k = 1; k <= nSurveys; k++ )
 	{
-		//dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
-		//nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
-		dvar_vector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k) + add_cv(k))));
-		nloglike(2,k) += cpue_lambda(k) * (log(cpue_sd(k)) + dnorm(res_cpue(k), cpue_sd));
+		if (active(add_cv(k)))
+		{
+		  dvar_vector cpue_sd_est = sqrt(log(1.0 + square(cpue_cv(k) + add_cv(k))));
+		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd_est); // Tuned to geometric mean index?
+		}
+		else
+		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); // Tuned to geometric mean index?
 	}
 
 	// 3) Likelihood for size composition data.
@@ -2752,10 +2758,10 @@ FUNCTION simulation_model
 
 	// add observation errors to cpue. & fill in dSurveyData column 5
 	dmatrix err_cpue(1,nSurveys,1,nSurveyRows);
-	dmatrix cpue_sd = sqrt(log(1.0 + square(cpue_cv)));
+	dmatrix cpue_sd_sim = sqrt(log(1.0 + square(cpue_cv))); // Note if this should include add_cv
 	err_cpue.fill_randn(rng);
 	obs_cpue = value(pre_cpue);
-	err_cpue = elem_prod(cpue_sd,err_cpue) - 0.5*square(cpue_sd);
+	err_cpue = elem_prod(cpue_sd_sim,err_cpue) - 0.5*square(cpue_sd_sim);
 	obs_cpue = elem_prod(obs_cpue,mfexp(err_cpue));
 	for ( int k = 1; k <= nSurveys; k++ )
 	{
@@ -2802,6 +2808,9 @@ REPORT_SECTION
 	REPORT(pre_catch_out);
 	REPORT(res_catch_out);
 	REPORT(dSurveyData);
+	for (int k = 1;k<=nSurveys;k++)
+	  cpue_cv_add(k) = cpue_cv(k) + value(add_cv(k)); 
+	REPORT(cpue_cv_add);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
 	REPORT(res_cpue);
