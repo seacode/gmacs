@@ -96,7 +96,7 @@
 ## ADDITIONAL CV FOR SURVEYS/INDICES
 ## NMFS   ADF&G
    0.0    0.0   # ival
-   -4      -4     # Phz for estimating additional CV
+   4      4     # Phz for estimating additional CV
 
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
@@ -128,15 +128,15 @@
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
 ##      4 = Time blocks
-  3
-## Phase of estimation
-  4
-## STDEV in m_dev for Random walk
-  0.01
-## Number of nodes for cubic spline or number of step-changes for option 3
   1
+## Phase of estimation
+  5
+## STDEV in m_dev for Random walk
+  0.06
+## Number of nodes for cubic spline or number of step-changes for option 3
+  5
 ## Year position of the knots (vector must be equal to the number of nodes)
-  1999
+  1980 1990 1997 1999 2002
 
 ## OTHER CONTROLS
   2       # Estimated rec_dev phase

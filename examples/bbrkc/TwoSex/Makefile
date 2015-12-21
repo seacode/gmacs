@@ -18,6 +18,9 @@ run: $(EXEC)
 	./$(EXEC) $(ARGS)
 	R CMD BATCH plot.R
 
+plot: $(EXEC)
+	R CMD BATCH plot.R
+
 clean:
 	rm -f $(EXEC)
 	rm -f admodel.*

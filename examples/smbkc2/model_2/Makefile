@@ -1,0 +1,42 @@
+EXEC = gmacs
+ifeq ($(SAFE),TRUE)
+	DIST = ../../../src/build/debug/
+else
+	DIST = ../../../src/build/release/
+endif
+ARGS = -nox -iprint 50 
+
+ifdef ComSpec
+    RM=del /F /Q
+else
+    RM=rm -rf
+endif
+
+all: mpd
+$(EXEC): $(DIST)$(EXEC).tpl
+	ln -sf $(DIST)$(EXEC) $@
+
+$(DIST)$(EXEC).tpl:
+	$(MAKE) --directory=../../../src
+
+
+mpd: $(EXEC)
+	./$(EXEC) $(ARGS)
+
+debug: $(EXEC)
+	./$(EXEC) $(ARGS)
+
+plot:
+	R CMD BATCH plot.R
+
+clean:
+	@$(RM) $(EXEC)
+	@$(RM) $(EXEC)  $(EXEC).[brces]* $(EXEC).*[0123456789] *.rpt *.log variance gradient.*
+	@$(RM) admodel.*
+	@$(RM) checkfile.rep
+	@$(RM) gmacs_files_in.dat
+	@$(RM) gmacs_in.ctl
+	@$(RM) gmacs_in.dat
+	@$(RM) mcout.rep
+	@$(RM) plot.Rout
+	@$(RM) Rplots.pdf

@@ -1532,10 +1532,10 @@ FUNCTION calc_natural_mortality
 			// would this line ever occur if m_dev active?
 			case 0: // constant natural mortality
 				delta = 0;
-			break;
+		  	break;
 			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
-			break;
+			  break;
 			case 2: // cubic splines
 			{
 				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
@@ -1544,7 +1544,7 @@ FUNCTION calc_natural_mortality
 				vcubic_spline_function csf(iyr,m_dev);
 				delta = csf(jyr);
 			}
-			break;
+			  break;
 			/*
 			Jim Question about below.  I'm not sure if you were intending to
 			have this set up as a random walk, where the shift occurs in a specifc year
@@ -1552,34 +1552,37 @@ FUNCTION calc_natural_mortality
 			M and it then returns back to the previous state.
 			*/
 			case 3: // Specific break points
-			    for ( int idev = 1; idev <= nMdev; idev++ )
-			  	{
-  					delta(m_nodeyear(idev)) = m_dev(idev);
-			  	}
-			break;
- // Modifying by Jie Zheng for specific time blocks
+			  for ( int idev = 1; idev <= nMdev; idev++ )
+			  {
+  				delta(m_nodeyear(idev)) = m_dev(idev);
+			  }
+			  break;
+      // Modifying by Jie Zheng for specific time blocks
 			case 4: // time blocks
-			    for ( int idev = 1; idev <= nMdev; idev++ )
+			  for ( int idev = 1; idev <= nMdev; idev++ )
+			  {
+			  	// Is this syntax for split sex?
+			    for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
 			  	{
-			       for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
-			  	   {
-                      delta(i) = m_dev(idev);
-                      for ( h = 1; h <= nsex; h++ )
-	                  {
-                          M(h)(i)  = mfexp(m_dev(idev));
-                      }
-                   }
-			  	}
-			break;                        
+            delta(i) = m_dev(idev);
+            for ( h = 1; h <= nsex; h++ )
+	          {
+              M(h)(i)  = mfexp(m_dev(idev));
+            }
+          }
+			  }
+			  break;                        
 		}
 
 		// Update M by year.
-		for ( int h = 1; h <= nsex; h++ )
+		if (m_type < 4)                                                    //add by Jie Zheng
 		{
-			for ( int i = syr+1; i <= nyr; i++ )
+			for ( int h = 1; h <= nsex; h++ )
 			{
-			 if (m_type < 4)                                                    //add by Jie Zheng
-               M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
+				for ( int i = syr+1; i <= nyr; i++ )
+				{
+	        M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
+				}
 			}
 		}
 	}
