@@ -96,7 +96,7 @@
 ## ADDITIONAL CV FOR SURVEYS/INDICES
 ## NMFS   ADF&G
    0.0    0.0   # ival
-   4      4     # Phz for estimating additional CV
+   -4     -4     # Phz for estimating additional CV
 
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ

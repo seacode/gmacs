@@ -693,11 +693,13 @@ DATA_SECTION
 	vector prior_qsd(1,nSurveys);
 	vector prior_qtype(1,nSurveys);
 	vector cpue_lambda(1,nSurveys);
+	vector log_add_cv_ival(1,nSurveys);
 	LOC_CALCS
 		prior_qtype = column(q_controls,1);
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
 		cpue_lambda = column(q_controls,4);
+		log_add_cv_ival = log(add_cv_ival + 1.0e-14);
 		WriteCtl(q_controls);
 		ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); ECHO(cpue_lambda);
 	END_CALCS
@@ -713,7 +715,7 @@ DATA_SECTION
 	matrix pen_fstd(1,2,1,nfleet);
 	LOC_CALCS
 		pen_fbar = column(f_controls,1);
-		log_pen_fbar = log(pen_fbar+1.0e-14);
+		log_pen_fbar = log(pen_fbar + 1.0e-14);
 		for ( int i = 1; i <= 2; i++ )
 		{
 			pen_fstd(i) = trans(f_controls)(i+1);
@@ -974,7 +976,7 @@ INITIALIZATION_SECTION
 	theta        theta_ival;
 	Grwth        Grwth_ival;
 	log_fbar     log_pen_fbar;
-	add_cv       add_cv_ival;
+	log_add_cv   log_add_cv_ival;
 
 PARAMETER_SECTION
 	
@@ -1053,7 +1055,7 @@ PARAMETER_SECTION
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
 	// Addtional CV for surveys/indices
-	init_number_vector add_cv(1,nSurveys,cv_phz);
+	init_number_vector log_add_cv(1,nSurveys,cv_phz);
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,6);
@@ -2567,27 +2569,19 @@ FUNCTION calc_objective_function
 	}
 
 	// 2) Likelihood of the relative abundance data.
-  if ( verbose == 1 ) COUT(res_cpue(1));
+	if ( verbose == 1 ) COUT(res_cpue(1));
 	for ( int k = 1; k <= nSurveys; k++ )
 	{
-<<<<<<< HEAD
-		//dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
-		//nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
-		dvar_vector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k) + add_cv(k))));
-		//nloglike(2,k) += cpue_lambda(k) * (log(cpue_sd(k)) + dnorm(res_cpue(k), cpue_sd));
-		nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd);
-=======
-		if (active(add_cv(k)))
+		if ( active(log_add_cv(k)) )
 		{
-	    for (int i=1;i<=nSurveyRows(k);i++)
-	    {
-        dvariable sdtmp = sqrt(log(1.0 + square(cpue_cv(k,i) + add_cv(k))));
-        nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
-	    }
-		}
-		else
+	    	for ( int i = 1; i <= nSurveyRows(k); i++ )
+	    	{
+        		dvariable sdtmp = sqrt(log(1.0 + square(cpue_cv(k,i) + mfexp(log_add_cv(k)))));
+        		nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
+	    	}
+		} else {
 		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); 
->>>>>>> dc4dd2e124af2b1010ff9359ace2a6a12c5a3ca4
+		}
 	}
 
 	// 3) Likelihood for size composition data.
@@ -2821,8 +2815,8 @@ REPORT_SECTION
 	REPORT(pre_catch_out);
 	REPORT(res_catch_out);
 	REPORT(dSurveyData);
-	for (int k = 1;k<=nSurveys;k++)
-	  cpue_cv_add(k) = cpue_cv(k) + value(add_cv(k)); 
+	for ( int k = 1; k <= nSurveys; k++ )
+		cpue_cv_add(k) = cpue_cv(k) + value(mfexp(log_add_cv(k)));
 	REPORT(cpue_cv_add);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);

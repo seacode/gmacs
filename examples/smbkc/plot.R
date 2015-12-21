@@ -1,8 +1,8 @@
 # ----------------------------------------------------------------------------- #
 # OneSex
 # ----------------------------------------------------------------------------- #
-require(devtools)
-devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
+#require(devtools)
+#devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
 #setwd()
 
