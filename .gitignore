@@ -44,6 +44,7 @@ Rplots.pdf
 *.dep
 *.ecm
 *.eva
+gradient.*
 *.hes
 *.log
 *.mc2

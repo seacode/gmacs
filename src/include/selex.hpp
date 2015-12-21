@@ -5,11 +5,10 @@
  * @namespace gsm
  * @date Feb 10, 2014
  * @title Selectivity functions
- * @details Alternative selectivity functions in the gsm namespace are
- * derived from the gsm::Selex base class. 
+ * @details Alternative selectivity functions in the gsm namespace are derived from the gsm::Selex base class. 
  * 
  * The Selex class is an abstract class that contains 3 virtual methods.
- * - **Selectivity** 	Arithmatic 0-1 values of selectivity values.
+ * - **Selectivity** 	Arithmetic 0-1 values of selectivity values.
  * - **logSelectivity**	Returns selectivity vector in log-space.
  * - **logSelexMeanOne** Returns selectivity in log-space and rescaled to have mean 1
  * in arithmatic space.
@@ -24,16 +23,16 @@
  * 		pSLX = new gsm::LogisticCurve<dvector,double>(p1,p2);	
  * 		
  * 		// Call one of the available methods in the abstract class for size bins x
- * 		sex  = pSLX -> Selectivity(x);
+ * 		sex = pSLX -> Selectivity(x);
  * 
  * Table 1. List of available selectivity functions, function names, and the class
  * object.
- * |Selectivity     |FUNCTIONS     |Class name				|
- * |----------------|--------------|------------------------|
- * |Logistic        |plogis        |LogisticCurve           |
- * |Logistic95      |plogis95      |LogisticCurve95         |
- * |Coefficients    |selcoffs      |SelectivityCoefficients |
- * |Nonparameteric  |nonparametric |ParameterPerClass       |
+ * | Selectivity    | Functions     | Class name              |
+ * |----------------|---------------|-------------------------|
+ * | Logistic       | plogis        | LogisticCurve           |
+ * | Logistic95     | plogis95      | LogisticCurve95         |
+ * | Coefficients   | selcoffs      | SelectivityCoefficients |
+ * | Nonparameteric | nonparametric | ParameterPerClass       |
 **/
 
 #ifndef SELEX_HPP
@@ -46,9 +45,9 @@
 
 namespace gsm {
 
-// =========================================================================================================
-// Selex: Defined Base Class for Selectivity Functions
-// =========================================================================================================
+	// =========================================================================================================
+	// Selex: Defined Base Class for Selectivity Functions
+	// =========================================================================================================
 
 	/**
 	 * @ingroup Selectivities
@@ -75,9 +74,9 @@ namespace gsm {
 		T    Get_x() const{ return m_x;     }
 	};
 
-// =========================================================================================================
-// plogis: Base functions for logistic-based selectivity functions
-// =========================================================================================================
+	// =========================================================================================================
+	// plogis: Base functions for logistic-based selectivity functions
+	// =========================================================================================================
 
 	/* Traits for the vonBertalaffy template function */
 	template <typename T2>
@@ -139,10 +138,9 @@ namespace gsm {
 		return selex;
 	}
 
-
-// =========================================================================================================
-// LogisticCurve: Logistic-based selectivity function with options
-// =========================================================================================================
+	// =========================================================================================================
+	// LogisticCurve: Logistic-based selectivity function with options
+	// =========================================================================================================
 
 	/**
 	 * @brief Logistic curve
@@ -184,109 +182,106 @@ namespace gsm {
 			y  -= log(mean(mfexp(y)));
 			return y;
 		}
-
 	};
 
-// =========================================================================================================
-// LogisticCurve95: Logistic-based selectivity function with options
-// =========================================================================================================
+	// =========================================================================================================
+	// LogisticCurve95: Logistic-based selectivity function with options
+	// =========================================================================================================
 
-  /**
-   * @brief Logistic curve parameterised with 5% and 95% selectivity
-   * @details Uses the logistic curve (plogis95) for a two parameter function
-   * 
-   * @tparam T data vector or dvar vector
-   * @tparam T2 double or dvariable for size at 5% and 95% selectivity
-  **/
-  template<class T,class T2>
-  class LogisticCurve95: public Selex<T>
-  {
-  private:
-    T2 m_s50;
-    T2 m_s95;
+	/**
+	 * @brief Logistic curve parameterised with 5% and 95% selectivity
+	 * @details Uses the logistic curve (plogis95) for a two parameter function
+	 * 
+	 * @tparam T data vector or dvar vector
+	 * @tparam T2 double or dvariable for size at 5% and 95% selectivity
+	**/
+	template<class T,class T2>
+	class LogisticCurve95: public Selex<T>
+	{
+	private:
+		T2 m_s50;
+		T2 m_s95;
 
-  public:
-    LogisticCurve95(T2 s50 = T2(1), T2 s95 = T2(1))
-    : m_s50(s50), m_s95(s95) {}
+	public:
+		LogisticCurve95(T2 s50 = T2(1), T2 s95 = T2(1))
+		: m_s50(s50), m_s95(s95) {}
 
-    T2 GetS50() const { return m_s50; }
-    T2 GetS95() const { return m_s95; }
+		T2 GetS50() const { return m_s50; }
+		T2 GetS95() const { return m_s95; }
 
-    void SetS50(T2 s50) { this->m_s50 = s50; }
-    void SetS95(T2 s95) { this->m_s95 = s95; }
+		void SetS50(T2 s50) { this->m_s50 = s50; }
+		void SetS95(T2 s95) { this->m_s95 = s95; }
 
-    const T Selectivity(const T &x) const
-    {
-      return gsm::plogis95<T>(x, this->GetS50(), this->GetS95());
-    }
+		const T Selectivity(const T &x) const
+		{
+			return gsm::plogis95<T>(x, this->GetS50(), this->GetS95());
+		}
 
-    const T logSelectivity(const T &x) const
-    {
-      return log(gsm::plogis95<T>(x, this->GetS50(), this->GetS95()));
-    }
+		const T logSelectivity(const T &x) const
+		{
+			return log(gsm::plogis95<T>(x, this->GetS50(), this->GetS95()));
+		}
 
-    const T logSelexMeanOne(const T &x) const
-    {
-      T y = log(gsm::plogis95<T>(x, this->GetS50(), this->GetS95()));
-      y  -= log(mean(mfexp(y)));
-      return y;
-    }
+		const T logSelexMeanOne(const T &x) const
+		{
+			T y = log(gsm::plogis95<T>(x, this->GetS50(), this->GetS95()));
+			y  -= log(mean(mfexp(y)));
+			return y;
+		}
+	};
 
-  };
+	// =========================================================================================================
+	// DoubleNormal: Double normal (dome shaped) selectivity
+	// =========================================================================================================
 
-// =========================================================================================================
-// DoubleNormal: Double normal (dome shaped) selectivity
-// =========================================================================================================
+	/**
+	 * @brief Double normal curve
+	 * @details Uses the logistic curve (plogis95) for a two parameter function
+	 * 
+	 * @tparam T data vector or dvar vector
+	 * @tparam T2 double or dvariable for size at 5% and 95% selectivity
+	**/
+	template<class T,class T2>
+	class DoubleNormal: public Selex<T>
+	{
+	private:
+		T2 m_sL;
+		T2 m_s50;
+		T2 m_sR;
 
-  /**
-   * @brief Double normal curve
-   * @details Uses the logistic curve (plogis95) for a two parameter function
-   * 
-   * @tparam T data vector or dvar vector
-   * @tparam T2 double or dvariable for size at 5% and 95% selectivity
-  **/
-  template<class T,class T2>
-  class DoubleNormal: public Selex<T>
-  {
-  private:
-    T2 m_sL;
-    T2 m_s50;
-    T2 m_sR;
+	public:
+		DoubleNormal(T2 sL = T2(1), T2 s50 = T2(1), T2 sR = T2(1))
+		: m_sL(sL), m_s50(s50), m_sR(sR) {}
 
-  public:
-    DoubleNormal(T2 sL = T2(1), T2 s50 = T2(1), T2 sR = T2(1))
-    : m_sL(sL), m_s50(s50), m_sR(sR) {}
+		T2 GetSL()  const { return m_sL; }
+		T2 GetS50() const { return m_s50; }
+		T2 GetSR()  const { return m_sR; }
 
-    T2 GetSL()  const { return m_sL; }
-    T2 GetS50() const { return m_s50; }
-    T2 GetSR()  const { return m_sR; }
+		void SetSL(T2 sL)   { this->m_sL = sL; }
+		void SetS50(T2 s50) { this->m_s50 = s50; }
+		void SetSR(T2 sR)   { this->m_sR = sR; }
 
-    void SetSL(T2 sL)   { this->m_sL = sL; }
-    void SetS50(T2 s50) { this->m_s50 = s50; }
-    void SetSR(T2 sR)   { this->m_sR = sR; }
+		const T Selectivity(const T &x) const
+		{
+			return gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR());
+		}
 
-    const T Selectivity(const T &x) const
-    {
-    	return gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR());
-    }
+		const T logSelectivity(const T &x) const
+		{
+			return log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+		}
 
-    const T logSelectivity(const T &x) const
-    {
-    	return log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
-    }
+		const T logSelexMeanOne(const T &x) const
+		{
+			T y = log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+			y  -= log(mean(mfexp(y)));
+			return y;
+		}
+	};
 
-    const T logSelexMeanOne(const T &x) const
-    {
-    	T y = log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
-    	y  -= log(mean(mfexp(y)));
-    	return y;
-    }
-
-  };
-
-// =========================================================================================================
-// Coefficients: Base function for non-parametric selectivity cooefficients 
-// =========================================================================================================
+	// =========================================================================================================
+	// Coefficients: Base function for non-parametric selectivity cooefficients 
+	// =========================================================================================================
 
 	/**
 	 * @brief Nonparametric selectivity coefficients
@@ -315,9 +310,9 @@ namespace gsm {
 		return y;
 	}
 
-// =========================================================================================================
-// SelectivityCoefficients: Age/size-specific selectivity coefficients for n-1 age/size classes
-// =========================================================================================================	
+	// =========================================================================================================
+	// SelectivityCoefficients: Age/size-specific selectivity coefficients for n-1 age/size classes
+	// =========================================================================================================	
 
 	/**
 	 * @brief Selectivity coefficients
@@ -328,7 +323,6 @@ namespace gsm {
 	template<class T>
 	class SelectivityCoefficients: public Selex<T>
 	{
-
 	private:
 		T m_sel_coeffs;
 
@@ -359,9 +353,9 @@ namespace gsm {
 		}
 	};
 
-// =========================================================================================================
-// nonparametric: Base function for non-parametric selectivity option 
-// =========================================================================================================
+	// =========================================================================================================
+	// nonparametric: Base function for non-parametric selectivity option 
+	// =========================================================================================================
 
 	/**
 	 * @brief Nonparametric selectivity function
@@ -386,9 +380,9 @@ namespace gsm {
 	  	return selex;
 	}
 
-// =========================================================================================================
-// ParameterPerClass: One age/size-specific selectivity parameter for each age/size class
-// =========================================================================================================	
+	// =========================================================================================================
+	// ParameterPerClass: One age/size-specific selectivity parameter for each age/size class
+	// =========================================================================================================	
 
 	/**
 	 * @brief Parametric selectivity function

@@ -46,63 +46,63 @@ DATA_SECTION
 	int rseed
 	LOC_CALCS
 		simflag = 0;
-		rseed   = 0;
+		rseed = 0;
 		int opt,on;
 
 		/**
 		 * @brief command line option for simulating data.
 		**/
-		if ((on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1)
+		if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-sim",opt))>-1 )
 		{
 			simflag = 1;
-			rseed   = atoi(ad_comm::argv[on+1]);
+			rseed = atoi(ad_comm::argv[on+1]);
 		}
 
-		if ((on=option_match(ad_comm::argc,ad_comm::argv,"-i",opt))>-1)
+		if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-i",opt))>-1 )
 		{
-			cout<<"\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | CONTRIBUTIONS (code and intellectual)                    |\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | Name:                        Organization:               |\n";
-			cout<<"  | James Ianelli                NOAA-NMFS                   |\n";
-			cout<<"  | D'Arcy Webber                Quantifish                  |\n";
-			cout<<"  | Steven Martell               IPHC                        |\n";
-			cout<<"  | Jack Turnock                 NOAA-NMFS                   |\n";
-			cout<<"  | Jie Zheng 	                ADF&G                       |\n";
-			cout<<"  | Hamachan Hamazaki 	        ADF&G                       |\n";
-			cout<<"  | Athol Whitten                University of Washington    |\n";
-			cout<<"  | André Punt                   University of Washington    |\n";
-			cout<<"  | Dave Fournier                Otter Research              |\n";
-			cout<<"  | John Levitt                  Mathemetician               |\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | FINANCIAL SUPPORT                                        |\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | Financial support for this project was provided by the   |\n";
-			cout<<"  | National Marine Fisheries Service, the Bering Sea        |\n";
-			cout<<"  | Fisheries Research Foundation,....                       |\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | DOCUMENTATION                                            |\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | online api: http://seacode.github.io/gmacs/index.html    |\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"\n";
+			cout << "\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | CONTRIBUTIONS (code and intellectual)                    |\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | Name:                        Organization:               |\n";
+			cout << "  | James Ianelli                NOAA-NMFS                   |\n";
+			cout << "  | D'Arcy Webber                Quantifish                  |\n";
+			cout << "  | Steven Martell               IPHC                        |\n";
+			cout << "  | Jack Turnock                 NOAA-NMFS                   |\n";
+			cout << "  | Jie Zheng 	                  ADF&G                       |\n";
+			cout << "  | Hamachan Hamazaki 	          ADF&G                       |\n";
+			cout << "  | Athol Whitten                University of Washington    |\n";
+			cout << "  | André Punt                   University of Washington    |\n";
+			cout << "  | Dave Fournier                Otter Research              |\n";
+			cout << "  | John Levitt                  Mathemetician               |\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | FINANCIAL SUPPORT                                        |\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | Financial support for this project was provided by the   |\n";
+			cout << "  | National Marine Fisheries Service, the Bering Sea        |\n";
+			cout << "  | Fisheries Research Foundation, ...                       |\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | DOCUMENTATION                                            |\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | online api: http://seacode.github.io/gmacs/index.html    |\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "\n";
 			exit(1);
 		}
 
 		// Command line option here to do retrospective analysis
-		if ((on=option_match(ad_comm::argc,ad_comm::argv,"-retro",opt))>-1)
+		if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-retro",opt))>-1 )
 		{
-			cout<<"\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | Running retrospective model with "<< ad_comm::argv[on+1]<<" recent yrs removed |\n";
-			cout<<"  |----------------------------------------------------------|\n";
-			cout<<"  | YET TO BE IMPLEMENTED                                    |\n";
-			cout<<"  |----------------------------------------------------------|\n";
+			cout << "\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | Running retrospective model with " << ad_comm::argv[on+1] << " recent yrs removed |\n";
+			cout << "  |----------------------------------------------------------|\n";
+			cout << "  | YET TO BE IMPLEMENTED                                    |\n";
+			cout << "  |----------------------------------------------------------|\n";
 			exit(1);
 		}
 	END_CALCS
@@ -418,7 +418,7 @@ DATA_SECTION
 	// |------------------|
 	init_int eof;
 	!! WRITEDAT(eof);
-	!! if (eof != 9999) {cout << "Error reading data" << endl; exit(1);}
+	!! if ( eof != 9999 ) {cout << "Error reading data" << endl; exit(1);}
 
 
 
@@ -916,7 +916,7 @@ DATA_SECTION
 	int spr_fleet;
 	number spr_lambda;
 	int bUseEmpiricalGrowth;
-	int nSRR_flag; //  if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
+	int nSRR_flag; // if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
 		verbose             = int(model_controls(2));
@@ -933,7 +933,7 @@ DATA_SECTION
 
 	init_int eof_ctl;
 	!! WriteCtl(eof_ctl);
-	!! if(eof_ctl!=9999){cout << "Error reading control file" << endl; exit(1);}
+	!! if( eof_ctl!=9999 ){cout << "Error reading control file" << endl; exit(1);}
 	!! cout << "end of control section" << endl;
 
 	LOC_CALCS
@@ -2503,7 +2503,7 @@ FUNCTION calculate_prior_densities
 		{
 			priorDensity(iprior) = priorDensity(iprior) ;
 		} else {
-			priorDensity(iprior) = .1*priorDensity(iprior) ;
+			priorDensity(iprior) = 0.1 * priorDensity(iprior) ;
 		}
 		iprior++;
 	}
@@ -2567,7 +2567,8 @@ FUNCTION calc_objective_function
 		//dvector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k))));
 		//nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
 		dvar_vector cpue_sd = sqrt(log(1.0 + square(cpue_cv(k) + add_cv(k))));
-		nloglike(2,k) += cpue_lambda(k) * (log(cpue_sd(k)) + dnorm(res_cpue(k), cpue_sd));
+		//nloglike(2,k) += cpue_lambda(k) * (log(cpue_sd(k)) + dnorm(res_cpue(k), cpue_sd));
+		nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd);
 	}
 
 	// 3) Likelihood for size composition data.
@@ -2599,12 +2600,12 @@ FUNCTION calc_objective_function
 			break;
 		}
 		// Compute residuals in the last phase.
-		if (last_phase() && ploglike != NULL)
+		if ( last_phase() && ploglike != NULL )
 		{
 			d3_res_size_comps(ii) = ploglike->residual(log_effn, P);
 		}
-		// now compute the likelihood.
-		if (ploglike != NULL)
+		// Now compute the likelihood.
+		if ( ploglike != NULL )
 		{
 			nloglike(3,ii) += ploglike->nloglike(log_effn, P);
 			delete ploglike;
@@ -2629,7 +2630,7 @@ FUNCTION calc_objective_function
 	}
 
 	// 5) Likelihood for growth increment data
-	if (!bUseEmpiricalGrowth && (active(Grwth(1)) || active(Grwth(2))))
+	if ( !bUseEmpiricalGrowth && (active(Grwth(1)) || active(Grwth(2))) )
 	{
 		dvar_vector MoltIncPred = calc_growth_increments(dPreMoltSize, iMoltIncSex);
 		nloglike(5,1) = dnorm(log(dMoltInc) - log(MoltIncPred), dMoltIncCV);
@@ -2651,8 +2652,8 @@ FUNCTION calc_objective_function
 	}
 
 	// 2) Penalty on mean F to regularize the solution.
-	int irow=1;
-	if (last_phase()) irow = 2;
+	int irow = 1;
+	if ( last_phase() ) irow = 2;
 	dvariable fbar;
 	dvariable ln_fbar;
 	for ( int k = 1; k <= nfleet; k++ )
@@ -2692,20 +2693,19 @@ FUNCTION calc_objective_function
 
 	if ( verbose == 2 )
 	{
-		cout <<"------------------------"<<endl;
-		COUT(objfun); cout<<" Phase: "<<current_phase()<<endl;COUT(like_names);COUT(nloglike); COUT(nlogPenalty);
-		cout<<"priortheta  "<< priorDensity(1,ntheta)<<endl;;
-		cout<<"priorGrowth "<< priorDensity(1+ntheta,ntheta+nGrwth)<<endl;;
-		cout<<"priorSrvQ   "<< priorDensity(1+ntheta+nGrwth,ntheta+nGrwth+nSurveys)<<endl;
-		cout<<"priorselex  "<< priorDensity(1+ntheta+nGrwth+nSurveys, ntheta+nGrwth+nSurveys+nSelex)<<endl;
+		cout << "------------------------" << endl;
+		COUT(objfun); cout << " Phase: " << current_phase() << endl; COUT(like_names); COUT(nloglike); COUT(nlogPenalty);
+		cout << "priortheta  " << priorDensity(1, ntheta) << endl;;
+		cout << "priorGrowth " << priorDensity(1 + ntheta, ntheta+nGrwth) << endl;;
+		cout << "priorSrvQ   " << priorDensity(1 + ntheta + nGrwth, ntheta + nGrwth + nSurveys) << endl;
+		cout << "priorselex  " << priorDensity(1 + ntheta + nGrwth + nSurveys, ntheta + nGrwth + nSurveys + nSelex) << endl;
 	}
 
 
   /**
    * @brief Simulation model
    * @details Uses many of the same routines as the assessment
-   * model, over-writes the observed data in memory with simulated
-   * data.
+   * model, over-writes the observed data in memory with simulated data.
   **/
 FUNCTION simulation_model
 	// random number generator
@@ -2871,13 +2871,13 @@ REPORT_SECTION
 		dvar_matrix mean_size(1,nsex,1,nclass);
 		///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
 		dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
-		for (int isex=1;isex<=nsex;isex++)
+		for ( int isex = 1; isex <= nsex; isex++ )
 		{
 			int iage=1;
 			// Set the initial size frequency
 			growth_matrix(isex,iage) = growth_transition(isex,iage);
 			mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points /sum(growth_matrix(isex,iage));
-			for (iage=2;iage<=nclass;iage++)
+			for ( iage = 2; iage <= nclass; iage++ )
 			{
 				growth_matrix(isex,iage) = growth_matrix(isex,iage-1) * growth_transition(isex);
 				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
@@ -2901,19 +2901,23 @@ REPORT_SECTION
 	N_males.initialize();
 	N_mm.initialize();
 	N_males_old.initialize();
-	for (int i=syr;i<=nyr+1;i++)
+	for ( int i = syr; i <= nyr+1; i++ )
 	{
-	  for (int j=1;j<=nclass;j++)
+	  for ( int j = 1; j <= nclass; j++ )
 	  {
-	    for (int k=1;k<=n_grp;k++)
+	    for ( int k = 1; k <= n_grp; k++ )
 	    {	
-	    	if (isex(k)==1)
+	    	if ( isex(k) == 1 )
 	    	{
 	    		N_males(i,j) += d3_N(k,i,j);
-				if (ishell(k)==2)
+				if ( ishell(k) == 2 )
+				{
 		    		N_males_old(i,j) += d3_N(k,i,j);
-				if (imature(k)==1)
+				}
+				if ( imature(k) == 1 )
+				{
 		    		N_mm(i,j) += d3_N(k,i,j);
+				}
 	    	}
 	    	N_len(i,j) += d3_N(k,i,j);
 	    }
@@ -2928,7 +2932,7 @@ REPORT_SECTION
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
 	REPORT(dMoltInc);
-	if(bUseEmpiricalGrowth)
+	if( bUseEmpiricalGrowth )
 	{
 		dvector pMoltInc = dMoltInc;
 		REPORT(pMoltInc);
@@ -2944,11 +2948,11 @@ REPORT_SECTION
 	d3_array tG(1,nsex,1,nclass,1,nclass);
 	d3_array tS(1,nsex,1,nclass,1,nclass);
 
-	for(int h = 1; h<=nsex; h++)
+	for( int h = 1; h <= nsex; h++ )
 	{
 		tG(h)=trans(value(growth_transition(h)));
 		tS(h)=trans(value(P(h) * growth_transition(h)));
-		for(int l = 1; l <= nclass; ++l)
+		for( int l = 1; l <= nclass; ++l )
 		{
 			tS(h)(l,l) += value(1.0-P(h)(l,l));
 		}
@@ -2960,19 +2964,19 @@ REPORT_SECTION
 
 	// For Jim's r-script.
 	size_transition_M = value(P(1) * growth_transition(1));
-	for (int i=1;i<=nclass;i++)
+	for ( int i = 1; i <= nclass; i++ )
 	{
 		size_transition_M(i,i) += value(1.-P(1,i,i));
 	}
 
 	REPORT(size_transition_M);
 	
-	if (nsex==2)
+	if ( nsex == 2 )
 	{
 	  	size_transition_F = value(P(2) * growth_transition(2));
-  		for (int i=1; i<=nclass; i++)
+  		for ( int i = 1; i <= nclass; i++ )
 		{
-			size_transition_M(i,i) += value(1.-P(2,i,i));
+			size_transition_M(i,i) += value(1.0 - P(2,i,i));
 		}
 		REPORT(size_transition_F);
 	}
@@ -3215,12 +3219,12 @@ TOP_OF_MAIN_SECTION
 FINAL_SECTION
 	//  Print run time statistics to the screen.
 	time(&finish);
-	elapsed_time=difftime(finish,start);
-	hour=long(elapsed_time)/3600;
-	minute=long(elapsed_time)%3600/60;
-	second=(long(elapsed_time)%3600)%60;
-	cout << endl <<endl << "*******************************************" << endl;
-	cout << endl <<endl << "-------------------------------------------" << endl;
+	elapsed_time = difftime(finish,start);
+	hour = long(elapsed_time)/3600;
+	minute = long(elapsed_time)%3600/60;
+	second = (long(elapsed_time)%3600)%60;
+	cout << endl << endl << "*******************************************" << endl;
+	cout << endl << endl << "-------------------------------------------" << endl;
 	cout << "--Start time: " << ctime(&start) << endl;
 	cout << "--Finish time: " << ctime(&finish) << endl;
 	cout << "--Runtime: ";

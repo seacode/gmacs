@@ -1,3 +1,5 @@
+ARGS = -nox -iprint 50
+
 ifdef ComSpec
     RM=del /F /Q
 else
@@ -7,14 +9,14 @@ endif
 all: mpd
 
 mpd: gmacs
-	rm gmacs
+	$(RM) gmacs
 	ln -s ../../src/build/release/gmacs gmacs
-	gmacs -nox
+	gmacs $(ARGS)
 
 debug: gmacs
-	rm gmacs
+	$(RM) gmacs
 	ln -s ../../src/build/debug/gmacs gmacs
-	gmacs -nox
+	gmacs $(ARGS)
 
 plot:
 	R CMD BATCH plot.R
@@ -23,7 +25,7 @@ gmacs:
 	ln -s ../../src/build/release/gmacs gmacs
 
 clean:
-	sudo rm gmacs
+	@$(RM) gmacs
 	@$(RM) admodel.cov
 	@$(RM) admodel.dep
 	@$(RM) admodel.hes
@@ -32,8 +34,12 @@ clean:
 	@$(RM) gmacs.b0*
 	@$(RM) gmacs.bar
 	@$(RM) gmacs.cor
+	@$(RM) gmacs.ecm
 	@$(RM) gmacs.eva
+	@$(RM) gmacs.hst
 	@$(RM) gmacs.log
+	@$(RM) gmacs.mc2
+	@$(RM) gmacs.mcm
 	@$(RM) gmacs.p0*
 	@$(RM) gmacs.par
 	@$(RM) gmacs.r0*
@@ -46,4 +52,5 @@ clean:
 	@$(RM) mcout.rep
 	@$(RM) plot.Rout
 	@$(RM) Rplots.pdf
+	@$(RM) sims
 	@$(RM) variance
