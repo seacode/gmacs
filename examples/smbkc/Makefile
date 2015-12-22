@@ -27,6 +27,9 @@ mpd: $(EXEC)
 debug: $(EXEC)
 	./$(EXEC) $(ARGS)
 
+sim: $(EXEC)
+	./$(EXEC) -ainp gmacs.par -sim 123
+
 plot:
 	R CMD BATCH plot.R
 

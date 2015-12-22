@@ -42,8 +42,7 @@ DATA_SECTION
 	// |---------------------|
 	
 	int simflag;
-	!! ///> flag for simulating data - WHAT HAPPENED HERE!!
-	int rseed
+	int rseed;
 	LOC_CALCS
 		simflag = 0;
 		rseed = 0;
@@ -272,7 +271,7 @@ DATA_SECTION
 				}
 			}
 		}
-		// Create the dCatchData_out object for output and plotting in R
+		// Create the dCatchData_out object for output and plotting in R, this object simply fills in the years that don't have data with zero catch
 		dCatchData_out.initialize();
 		obs_catch_out.initialize();
 		for ( int k = 1; k <= nCatchDF; k++ )
@@ -289,14 +288,6 @@ DATA_SECTION
 						obs_catch_out(k,i) = dCatchData(k,ii,5);
 						dCatchData_out(k,i,5) = dCatchData(k,ii,5);
 						dCatchData_out(k,i,6) = dCatchData(k,ii,6);
-						//dCatchData_out(k,i,2) = dCatchData(k,j,2);
-						//dCatchData_out(k,i,3) = dCatchData(k,j,3);
-						//dCatchData_out(k,i,4) = dCatchData(k,j,4);
-						//dCatchData_out(k,i,7) = dCatchData(k,j,7);
-						//dCatchData_out(k,i,8) = dCatchData(k,j,8);
-						//dCatchData_out(k,i,9) = dCatchData(k,j,9);
-						//dCatchData_out(k,i,10) = dCatchData(k,j,10);
-						//dCatchData_out(k,i,11) = dCatchData(k,j,11);
 					}
 				}
 				dCatchData_out(k,i,2) = dCatchData(k,j,2);
@@ -1168,7 +1159,9 @@ PROCEDURE_SECTION
 
 	// Population dynamics ...
 	if ( !bUseEmpiricalGrowth )
+	{
 		calc_growth_increments(); if ( verbose == 1 ) cout << "Ok after Growth increments ..." << endl;
+	}
 	calc_molting_probability(); if ( verbose == 1 ) cout << "Ok after molt increment ..." << endl;
 	calc_growth_transition();   if ( verbose == 1 ) cout << "Ok after growth transition ..." << endl;
 	calc_natural_mortality();   if ( verbose == 1 ) cout << "Ok after natural mortality ..." << endl;
@@ -2656,7 +2649,7 @@ FUNCTION calc_objective_function
 	nlogPenalty.initialize();
 
 	// 1) Penalty on log_fdev to ensure they sum to zero
-	for( int k = 1; k <= nfleet; k++ )
+	for ( int k = 1; k <= nfleet; k++ )
 	{
 		dvariable s     = mean(log_fdev(k));
 		nlogPenalty(1) += 10000.0*s*s;
@@ -2717,8 +2710,7 @@ FUNCTION calc_objective_function
 
   /**
    * @brief Simulation model
-   * @details Uses many of the same routines as the assessment
-   * model, over-writes the observed data in memory with simulated data.
+   * @details Uses many of the same routines as the assessment model, over-writes the observed data in memory with simulated data.
   **/
 FUNCTION simulation_model
 	// random number generator
@@ -2760,10 +2752,20 @@ FUNCTION simulation_model
 		obs_catch(k) = value(pre_catch(k));
 		err_catch(k) = elem_prod(catch_sd(k), err_catch(k)) - 0.5*square(catch_sd(k));
 		obs_catch(k) = elem_prod(obs_catch(k), mfexp(err_catch(k)));
+		for ( int i = syr; i <= nyr-1; i++ )
+		{
+			for ( int ii = 1; ii <= nCatchRows(k); ii++ )
+			{
+				if ( dCatchData(k,ii,1) == dCatchData_out(k,i,1) ) // year index
+				{
+					obs_catch_out(k,i) = obs_catch(k,ii);
+					dCatchData_out(k,i,5) = obs_catch(k,ii);
+				}
+			}
+		}
 	}
-	
 
-	// add observation errors to cpue. & fill in dSurveyData column 5
+	// add observation errors to cpue & fill in dSurveyData column 5
 	dmatrix err_cpue(1,nSurveys,1,nSurveyRows);
 	dmatrix cpue_sd_sim = sqrt(log(1.0 + square(cpue_cv))); // Note if this should include add_cv
 	err_cpue.fill_randn(rng);
@@ -2774,7 +2776,7 @@ FUNCTION simulation_model
 	{
 		for ( int i = 1; i <= nSurveyRows(k); i++ )
 		{
-			dSurveyData(k)(i,5) = obs_cpue(k,i);
+			dSurveyData(k,i,5) = obs_cpue(k,i);
 		}
 	}
 	
@@ -2795,7 +2797,7 @@ FUNCTION simulation_model
 
 
 REPORT_SECTION
-  save_gradients(gradients);
+	save_gradients(gradients);
 	calc_predicted_catch_out();
 	dvector mod_yrs(syr,nyr);
 	mod_yrs.fill_seqadd(syr,1);	
