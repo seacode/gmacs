@@ -699,7 +699,7 @@ DATA_SECTION
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
 		cpue_lambda = column(q_controls,4);
-		log_add_cv_ival = log(add_cv_ival + 1.0e-14);
+		log_add_cv_ival = log(add_cv_ival);
 		WriteCtl(q_controls);
 		ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); ECHO(cpue_lambda);
 	END_CALCS
@@ -2574,13 +2574,13 @@ FUNCTION calc_objective_function
 	{
 		if ( active(log_add_cv(k)) )
 		{
-	    	for ( int i = 1; i <= nSurveyRows(k); i++ )
-	    	{
-        		dvariable sdtmp = sqrt(log(1.0 + square(cpue_cv(k,i) + mfexp(log_add_cv(k)))));
-        		nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
-	    	}
+			for ( int i = 1; i <= nSurveyRows(k); i++ )
+			{
+				dvariable sdtmp = sqrt(log(1.0 + square(cpue_cv(k,i) + mfexp(log_add_cv(k)))));
+				nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
+			}
 		} else {
-		  nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); 
+			nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); 
 		}
 	}
 
@@ -2816,7 +2816,9 @@ REPORT_SECTION
 	REPORT(res_catch_out);
 	REPORT(dSurveyData);
 	for ( int k = 1; k <= nSurveys; k++ )
+	{
 		cpue_cv_add(k) = cpue_cv(k) + value(mfexp(log_add_cv(k)));
+	}
 	REPORT(cpue_cv_add);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
