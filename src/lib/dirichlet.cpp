@@ -25,59 +25,114 @@
  * @param p predicted proportions
  * @return negative loglikelihood.
 **/
-const dvariable acl::dirichlet::ddirichlet(const dvar_vector& alpha_o,
-					   const dvar_vector& alpha_t, 
-					   const dmatrix& o, 
-					   const dvar_matrix& p) const
+//const dvariable acl::dirichlet::ddirichlet(const dvar_vector& alpha_o, const dvar_vector& alpha_t, const dmatrix& o, const dvar_matrix& p) const
+const dvariable acl::dirichlet::ddirichlet(const dvar_vector& log_vn, const dmatrix& o, const dvar_matrix& p) const
 {
 	if ( o.colsize() != p.colsize() || o.rowsize() != p.rowsize() )
 	{
-		cerr<<"Error in dirichlet.cpp, "
+		cerr << "Error in dirichlet.cpp, "
 		" observed and predicted matrixes"
-		" are not the same size"<<endl;
+		" are not the same size" << endl;
 		ad_exit(1);
 	}
 
 	/*
-	dvar_vector vn = mfexp(alpha_t);
-	dvariable lmnB = 0.0;
+	dvar_vector vn = mfexp(log_vn);
+	dvariable ff = 0;
 	int r1 = o.rowmin();
 	int r2 = o.rowmax();
-	for( int i = r1; i <= r2; i++ )
+	for ( int i = r1; i <= r2; i++ )
 	{
   		int c1 = o(i).indexmin();
 	  	int c2 = o(i).indexmax();
+		//scale observed numbers by effective sample size.
 		dvar_vector sobs = vn(i) * o(i)/sum(o(i));  
 		ff -= gammln(vn(i));
-		for(int j = c1; j <= c2; j++ )
+		for ( int j = c1; j <= c2; j++ )
 		{
-			if( value(sobs(j)) > 0.0 )
+			if ( value(sobs(j)) > 0.0 )
+			{
 				ff += gammln(sobs(j));
+			}
 		}
 		ff -= sobs * log(TINY + p(i));
 	}
 	return ff;
-
-    function Dirichlet{T <: Real}(alpha::Vector{T})
-        alpha0::Float64 = 0.0
-        lmnB::Float64 = 0.0
-        for i in 1:length(alpha)
-            ai = alpha[i]
-            ai > 0 || throw(ArgumentError("alpha must be a positive vector."))
-            alpha0 += ai
-            lmnB += lgamma(ai)
-        end
-        lmnB -= lgamma(alpha0)
-        new(convert(Vector{Float64}, alpha), alpha0, lmnB)
-    end
-
-function _logpdf{T<:Real}(d::Dirichlet, x::AbstractVector{T})
-    a = d.alpha
-    s = 0.
-    for i in 1:length(a)
-        @inbounds s += (a[i] - 1.0) * log(x[i])
-    end
-    return s - d.lmnB
-end
 	*/
+
+	dvar_vector vn = mfexp(log_vn);
+	dvariable ff = 0.0;
+	dvariable lmnB;
+	dvariable aj;
+	dvariable sj;
+	dvariable alpha0;
+	int r1 = o.rowmin();
+	int r2 = o.rowmax();
+	for ( int i = r1; i <= r2; i++ )
+	{
+		lmnB = 0.0;
+		sj = 0.0;
+		alpha0 = 0.0;
+		dvar_vector alpha = vn(i) * p(i)/sum(p(i));
+		dvar_vector obs = o(i)/sum(o(i));
+  		int c1 = o(i).indexmin();
+	  	int c2 = o(i).indexmax();
+		for ( int j = c1; j <= c2; j++ )
+		{
+			aj = alpha(j);
+			alpha0 += aj;
+			lmnB += gammln(aj);
+			sj += (aj - 1.0) * log(1e-10 + obs(j));
+		}
+		lmnB -= gammln(alpha0);
+		ff += sj - lmnB;
+	}
+	return -ff;
+}
+
+/*
+function loglike_dirichlet(alpha::Vector{Float64}, x::Vector{Float64})
+    if all(alpha .> 0)
+        return logpdf(Dirichlet(alpha), x)
+    else
+        return -Inf
+    end
+    # This is only slightly faster as does not do a check
+    #lmnB   = 0.0
+    #s      = 0.0
+    #alpha0 = 0.0
+    #for i in 1:length(alpha)
+    #    ai = alpha[i]
+    #    alpha0 += ai
+    #    lmnB += lgamma(ai)
+    #    s += (ai - 1.0) * log(x[i])
+    #end
+    #lmnB -= lgamma(alpha0)
+    #return s - lmnB
+end
+*/
+	/*
+	cout << endl << "o: " << endl;
+	cout << o << endl;
+	cout << "p: " << endl;
+	cout << p << endl;
+	cout << "vn: " << vn << endl;
+	cout << "aj: " << aj << endl;
+	cout << "alpha0: " << alpha0 << endl;
+	cout << "lmnB: " << lmnB << endl;
+	cout << "sj: " << sj << endl;
+	cout << "ff: " << ff << endl;
+	*/
+
+const dmatrix acl::dirichlet::pearson_residuals(const dvar_vector& log_vn, const dmatrix& o, const dvar_matrix p) const
+{
+	dvector vn = value(mfexp(log_vn));
+	dmatrix res = o - value(p);
+	// dmatrix var = value(elem_prod(p,1.0-p)) / vn;
+	for ( int i = o.rowmin(); i <= o.rowmax(); i++ )
+	{
+		dvector var = value(elem_prod(p(i),1.0-p(i))) / vn(i);
+		res(i) = elem_div(res(i),sqrt(var+TINY));
+	}
+	return res;
 }

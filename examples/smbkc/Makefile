@@ -13,7 +13,7 @@ else
     RM=rm -rf
 endif
 
-all: mpd
+all: run
 
 $(EXEC): $(DIST)$(EXEC).tpl
 	ln -sf $(DIST)$(EXEC) $@
@@ -21,11 +21,9 @@ $(EXEC): $(DIST)$(EXEC).tpl
 $(DIST)$(EXEC).tpl:
 	$(MAKE) --directory=../../src
 
-mpd: $(EXEC)
+run: $(EXEC)
 	./$(EXEC) $(ARGS)
-
-debug: $(EXEC)
-	./$(EXEC) $(ARGS)
+	R CMD BATCH plot.R
 
 sim: $(EXEC)
 	./$(EXEC) -ainp gmacs.par -sim 123
@@ -34,13 +32,9 @@ plot:
 	R CMD BATCH plot.R
 
 clean:
-	@$(RM) $(EXEC)
-	@$(RM) $(EXEC)  $(EXEC).[brces]* $(EXEC).*[0123456789] *.rpt *.log variance gradient.*
-	@$(RM) admodel.*
-	@$(RM) checkfile.rep
-	@$(RM) gmacs_files_in.dat
-	@$(RM) gmacs_in.ctl
-	@$(RM) gmacs_in.dat
-	@$(RM) mcout.rep
-	@$(RM) plot.Rout
-	@$(RM) Rplots.pdf
+	@$(RM) -f $(EXEC)
+	@$(RM) -f admodel.*
+	@$(RM) -f $(EXEC)  $(EXEC).[brces]* $(EXEC).*[0123456789] *.rpt *.log variance
+
+clobber: clean
+	@$(RM) -f *.par *_in.* *.rep

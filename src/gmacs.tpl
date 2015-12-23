@@ -733,6 +733,7 @@ DATA_SECTION
 	// |-----------------------------------|
 	init_ivector nAgeCompType_in(1,nSizeComps_in);
 	init_ivector bTailCompression_in(1,nSizeComps_in);
+	init_vector nvn_ival_in(1,nSizeComps_in);	
 	init_ivector nvn_phz_in(1,nSizeComps_in);
 	init_ivector iCompAggregator(1,nSizeComps_in);
 
@@ -742,6 +743,7 @@ DATA_SECTION
 	ivector nSizeCompCols(1,nSizeComps);
 	ivector nAgeCompType(1,nSizeComps);
 	ivector bTailCompression(1,nSizeComps);
+	vector log_nvn_ival(1,nSizeComps);
 	ivector nvn_phz(1,nSizeComps);
 
 	LOC_CALCS
@@ -760,6 +762,7 @@ DATA_SECTION
 			// that these are the same and throw an error if not.
 			nAgeCompType(k) = nAgeCompType_in(kk);
 			bTailCompression(k) = bTailCompression_in(kk);
+			log_nvn_ival(k) = log(nvn_ival_in(kk));
 			nvn_phz(k) = nvn_phz_in(kk);
 		}
 		// Do the checks mentioned above
@@ -781,7 +784,11 @@ DATA_SECTION
 				cout << "Error: mismatch in auto tail compression for size-compositons being aggregated" << endl;
 				exit(1);
 			}
-			if ( nvn_phz(k) != nvn_phz_in(kk) )
+			if ( log_nvn_ival(k) != log(nvn_ival_in(kk)) )
+			{
+				cout << "Error: mismatch in initial value of effctive sample size for size-compositons being aggregated" << endl;
+				exit(1);
+			}			if ( nvn_phz(k) != nvn_phz_in(kk) )
 			{
 				cout << "Error: mismatch in phase for estimation of effctive sample size for size-compositons being aggregated" << endl;
 				exit(1);
@@ -967,6 +974,7 @@ INITIALIZATION_SECTION
 	theta        theta_ival;
 	Grwth        Grwth_ival;
 	log_fbar     log_pen_fbar;
+	log_vn       log_nvn_ival;
 	log_add_cv   log_add_cv_ival;
 
 PARAMETER_SECTION
@@ -2603,6 +2611,9 @@ FUNCTION calc_objective_function
 				} else {
 					ploglike = new class acl::robust_multi(O, bCmp);
 				}
+			break;
+			case 5: // Dirichlet
+				ploglike = new class acl::dirichlet(O, bCmp);
 			break;
 		}
 		// Compute residuals in the last phase.

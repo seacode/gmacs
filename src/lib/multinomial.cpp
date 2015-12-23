@@ -18,20 +18,18 @@
  * @param p predicted proportions
  * @return negative loglikelihood.
 **/
-const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
-                                            const dmatrix& o, 
-                                            const dvar_matrix& p) const
+const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn, const dmatrix& o, const dvar_matrix& p) const
 {
-	if ( o.colsize()!=p.colsize() || o.rowsize()!=p.rowsize() )
+	if ( o.colsize() != p.colsize() || o.rowsize() != p.rowsize() )
 	{
-		cerr<<"Error in dmultinom, "
+		cerr << "Error in dmultinom, "
 		" observed and predicted matrixes"
-		" are not the same size"<<endl;
+		" are not the same size" << endl;
 		ad_exit(1);
 	}
 
 	dvar_vector vn = mfexp(log_vn);
-	dvariable ff = 0;
+	dvariable ff = 0.0;
 	int r1 = o.rowmin();
 	int r2 = o.rowmax();
 	for ( int i = r1; i <= r2; i++ )
@@ -43,7 +41,7 @@ const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
 		ff -= gammln(vn(i));
 		for ( int j = c1; j <= c2; j++ )
 		{
-			if( value(sobs(j)) > 0.0 )
+			if ( value(sobs(j)) > 0.0 )
 			{
 				ff += gammln(sobs(j));
 			}
@@ -54,9 +52,7 @@ const dvariable acl::multinomial::dmultinom(const dvar_vector& log_vn,
 }
 
 
-const dmatrix acl::multinomial::pearson_residuals(const dvar_vector& log_vn,
-						  const dmatrix& o,
-						  const dvar_matrix p) const
+const dmatrix acl::multinomial::pearson_residuals(const dvar_vector& log_vn, const dmatrix& o, const dvar_matrix p) const
 {
 	dvector vn = value(mfexp(log_vn));
 	dmatrix res = o - value(p);

@@ -3,20 +3,22 @@ INC:=include/*.h include/*.hpp
 
 ifdef ComSpec
     RM=del /F /Q
+    COPY=copy
 else
     RM=rm -rf
+    COPY=cp
 endif
 
 all: build/debug/gmacs build/release/gmacs
 
 build/debug/gmacs: build/debug gmacs.tpl $(LIB) $(INC)
 	@admb -g gmacs.tpl $(LIB)
-	@cp gmacs build/debug/
+	@$(COPY) gmacs build/debug/
 	@$(RM) gmacs
 
 build/release/gmacs: build/release gmacs.tpl $(LIB) $(INC)
 	@admb -g gmacs.tpl $(LIB)
-	@cp gmacs build/release/
+	@$(COPY) gmacs build/release/
 	@$(RM) gmacs
 
 build/debug:
