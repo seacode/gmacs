@@ -149,7 +149,7 @@
 ##   -2) Robust approximation to multinomial
 ##   -3) logistic normal (NIY)
 ##   -4) multivariate-t (NIY)
-##   -5) Dirichlet (NIY)
+##   -5) Dirichlet
 ## AUTO TAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

@@ -40,7 +40,7 @@
 ## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5
    2         1        1         1        1         # Selectivity periods
    0         0        0         0        0         # sex specific selectivity
-   0         3        3         0        1         # male selectivity type
+   0         3        3         0        0         # male selectivity type
 ## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5
    1         1        1         1        1         # Retention periods
    0         0        0         0        0         # sex specific retention
@@ -124,7 +124,7 @@
 ##   -2) Robust approximation to multinomial
 ##   -3) logistic normal (NIY)
 ##   -4) multivariate-t (NIY)
-##   -5) Dirichlet (NIY)
+##   -5) Dirichlet
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
