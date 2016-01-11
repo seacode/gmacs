@@ -317,7 +317,7 @@ DATA_SECTION
 		{
 			obs_cpue(k) = column(dSurveyData(k),5);
 			cpue_cv(k)  = column(dSurveyData(k),6);
-		  cpue_sd(k)  = sqrt(log(1.0 + square(cpue_cv(k))));
+			cpue_sd(k)  = sqrt(log(1.0 + square(cpue_cv(k))));
 		}
 		WRITEDAT(nSurveys); WRITEDAT(nSurveyRows); WRITEDAT(dSurveyData);
 		ECHO(obs_cpue); ECHO(cpue_cv);ECHO(cpue_sd);
@@ -476,17 +476,14 @@ DATA_SECTION
 	init_imatrix slx_nret(1,nsex,1,nfleet);    // boolian for rentention/discard
 
 	LOC_CALCS
-		// Work out how many selectivities we are dealing with, nfleet * nsex,
-		// plus any additonal sex-specific or time period selectivities
+		// Work out how many selectivities we are dealing with, nfleet * nsex, plus any additonal sex-specific or time period selectivities
 		nslx = 0;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
 			nslx += slx_nsel_period_in(k) * (1 + slx_bsex_in(k));
 			nslx += ret_nret_period_in(k) * (1 + ret_bsex_in(k));
 		}
-		// Work out how many rows are in the selectivity/retention control
-		// inputs matrix based on the type of each selectivity and the number
-		// of blocks.
+		// Work out how many rows are in the selectivity/retention control inputs matrix based on the type of each selectivity and the number of blocks
 		nslx_rows_in = 0;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
@@ -543,7 +540,7 @@ DATA_SECTION
 	ivector slx_indx(1,nslx); // index for the first parameter for each gear type
 	ivector slx_gear(1,nslx); // index the gear type
 	ivector slx_type(1,nslx); // the type of selectivity function
-	ivector slx_isex(1,nslx); // 0=males and females, 1=males only, 2=females only
+	ivector slx_isex(1,nslx); // 0 = males and females, 1 = males only, 2 = females only
 	vector  slx_lb(1,nslx);   // lower bound
 	vector  slx_ub(1,nslx);   // uppder bound
 	ivector slx_phzm(1,nslx); // phase/mirror
@@ -608,17 +605,14 @@ DATA_SECTION
 				break;
 			}
 		}
-		// slx_indx is an ivector of the index for the first parameter of each
-		// nslx in the slx_control_in matrix
+		// slx_indx is an ivector of the index for the first parameter of each nslx in the slx_control_in matrix
 		kk = 1;
 		for ( int k = 1; k <= nslx; k++ )
 		{
 			slx_indx(k) = kk;
 			kk += slx_cols(k);
 		}
-		// Store a version of the control file that only records the first
-		// parameter of each selectivity type - this is useful for R plots.
-		// Also extract vectors of elements from this matrix.
+		// Store a version of the control file that only records the first parameter of each selectivity type - this is useful for R plots. Also extract vectors of elements from this matrix
 		for ( int k = 1; k <= nslx; k++ )
 		{
 			int kk = slx_indx(k);
@@ -653,10 +647,16 @@ DATA_SECTION
 			for ( int j = 1; j <= slx_cols(k); j++ )
 			{
 				int jj = kk + (j - 1);
-				slx_par(k,j)      = slx_control_in(jj,5);  // init
-				slx_priors(k,j,1) = slx_control_in(jj,8);  // prior
-				slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
-				slx_priors(k,j,3) = slx_control_in(jj,10); // p2
+				slx_par(k,j)      = slx_control_in(jj,5); // init
+				slx_priors(k,j,1) = slx_control_in(jj,8); // prior
+				if ( slx_priors(k,j,1) == 0 )
+				{
+					slx_priors(k,j,2) = slx_control_in(jj,6); // p1
+					slx_priors(k,j,3) = slx_control_in(jj,7); // p2
+				} else {
+					slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
+					slx_priors(k,j,3) = slx_control_in(jj,10); // p2
+				}
 			}
 			//if ( slx_type(k) == 1 )
 			//{
@@ -2226,18 +2226,13 @@ FUNCTION calc_relative_abundance
 
 	/**
 	 * @brief Calculate predicted size composition data.
-         *
+     *
 	 * @details Predicted size composition data are given in proportions.
 	 * Size composition strata:
 	 *  - sex  (0 = both sexes, 1 = male, 2 = female)
 	 *  - type (0 = all catch, 1 = retained, 2 = discard)
 	 *  - shell condition (0 = all, 1 = new shell, 2 = oldshell)
 	 *  - mature or immature (0 = both, 1 = immature, 2 = mature)
-	 *
-	 * TODO:
-	 *  - add pointers for shell type.   DONE
-	 *  - add pointers for maturity state. DONE
-	 *  - need pointer for retained vs. discarded.
 	 *
 	 *  Jan 5, 2015.
 	 *  Size compostion data can come in a number of forms.
@@ -2357,8 +2352,7 @@ FUNCTION calc_predicted_composition
 			d3_pre_size_comps_in(ii)(jj) = dNtmp;
 		}
 	}
-	// This aggregates the size composition data by appending size comps
-	// horizontally
+	// This aggregates the size composition data by appending size compositions horizontally
 	int oldk = 9999;
 	for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 	{

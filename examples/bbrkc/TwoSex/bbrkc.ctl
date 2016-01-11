@@ -1,7 +1,7 @@
 # Model 1, fixed multinomial sample sizes
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # Controls for leading parameter vector theta   
-# LEGEND FOR PRIOR:
+# LEGEND FOR PRIORS
 #                  0 -> uniform
 #                  1 -> normal
 #                  2 -> lognormal
@@ -25,12 +25,10 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## GROWTH PARAM CONTROLS                                                                ##
-## nGrwth                                                                               ##
-##                                                                                      ##
-## Two lines for each parameter if split sex, one line if not                           ##
+## GROWTH PARAMETER CONTROLS                                                            ##
+##     Two lines for each parameter if split sex, one line if not                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-# ival        lb        ub        phz   prior     p1      p2         # parameter        ##
+## ival       lb        ub        phz   prior     p1      p2          # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   17.5       1.0      90.0         -3       0    0.0    999.0         # alpha males or combined
   17.5       1.0      90.0         -3       0    0.0    999.0         # alpha
@@ -46,24 +44,27 @@
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
-##    -Each gear must have a selectivity and a retention selectivity                    ##
-## LEGEND sel type: 1 = coefficients, 2 = logistic, 3 = logistic95, 4 = double normal   ##
-##        gear index: use +ve for selectivity, -ve for retentio                         ##
-##        sex dep: 0 for sex-independent, 1 for sex-dependent.                          ##
+##     Each gear must have a selectivity and a retention selectivity. If a uniform      ##
+##     prior is selected for a parameter then the lb and ub are used (p1 and p2 are     ##
+##     ignored)                                                                         ##
+## LEGEND                                                                               ##
+##     sel type: 1 = coefficients, 2 = logistic, 3 = logistic95, 4 = double normal      ##
+##     gear index: use +ve for selectivity, -ve for retention                           ##
+##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ivector for number of year periods or nodes                                          ##
-## Gear-1    Gear-2    Gear-3   Gear-4
-   1         1         2        1         # Selectivity periods
-   1         0         1        1         # sex specific selectivity
-   3         3         3        3         # male   selectivity type
-   3         3         3        3         # female selectivity type
-## Gear-1    Gear-2    Gear-3   Gear-4
-   1         1         1        1         # Retention periods
-   1         0         0        0         # sex specific retention
-   3         2         2        2         # male   retention type
-   2         2         2        2         # female retention type
-   1         0         0        0         # male   retention flag (0 = no, 1 = yes)
-   0         0         0        0         # female retention flag (0 = no, 1 = yes)
+## Gear-1    Gear-2    Gear-3    Gear-4
+   1         1         2         1         # selectivity periods
+   1         0         1         1         # sex specific selectivity
+   3         3         3         3         # male selectivity type
+   3         3         3         3         # female selectivity type
+## Gear-1    Gear-2    Gear-3    Gear-4
+   1         1         1         1         # retention periods
+   1         0         0         0         # sex specific retention
+   3         2         2         2         # male   retention type
+   2         2         2         2         # female retention type
+   1         0         0         0         # male   retention flag (0 = no, 1 = yes)
+   0         0         0         0         # female retention flag (0 = no, 1 = yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## gear  par   sel                                             phz    start  end        ##
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
@@ -72,45 +73,45 @@
 # Gear-1
    1     1     1   1    100    5    185    0      10    200    3     1975   2014
    1     2     2   1    120    5    185    0      10    200    3     1975   2014
-   1     1     1   2     80   60    150    0      10    200    3     1975   2014
-   1     2     2   2     95   60    150    0      10    200    3     1975   2014
+   1     3     1   2     80   60    150    0      10    200    3     1975   2014
+   1     4     2   2     95   60    150    0      10    200    3     1975   2014
 # Gear-2
-   2     3     1   0    110    5    185    0      10    200    3     1975   2014
-   2     4     2   0    150    5    185    0      10    200    3     1975   2014
+   2     5     1   0    110    5    185    0      10    200    3     1975   2014
+   2     6     2   0    150    5    185    0      10    200    3     1975   2014
 # Gear-3
-   3     5     1   1     74   60    150    0       1    200   -3     1975   1981
-   3     6     2   1     95   60    150    0       1    200   -3     1975   1981
-   3     7     1   1     95   60    200    0       1    200   -3     1982   2014
-   3     8     2   1    140   60    200    0       1    200   -3     1982   2014
-   3     5     1   2     90   60    200    0       1    200   -3     1975   1981
-   3     6     2   2    160   60    200    0       1    200   -3     1975   1981
-   3     7     1   2    100   60    200    0       1    200   -3     1982   2014
-   3     8     2   2    170   60    200    0       1    200   -3     1982   2014
+   3     7     1   1     74   60    150    0       1    200   -3     1975   1981
+   3     8     2   1     95   60    150    0       1    200   -3     1975   1981
+   3     9     1   1     95   60    200    0       1    200   -3     1982   2014
+   3    10     2   1    140   60    200    0       1    200   -3     1982   2014
+   3    11     1   2     90   60    200    0       1    200   -3     1975   1981
+   3    12     2   2    160   60    200    0       1    200   -3     1975   1981
+   3    13     1   2    100   60    200    0       1    200   -3     1982   2014
+   3    14     2   2    170   60    200    0       1    200   -3     1982   2014
 # Gear-4
-   4     9     1   1     70    1    200    0       1    200    4     1975   2014
-   4     10    2   1     90    1    200    0       1    200    4     1975   2014
-   4     11    1   2    110    1    200    0       1    200    4     1975   2014
-   4     12    2   2    190    1    200    0       1    200    4     1975   2014
+   4    15     1   1     70    1    200    0       1    200    4     1975   2014
+   4    16     2   1     90    1    200    0       1    200    4     1975   2014
+   4    17     1   2    110    1    200    0       1    200    4     1975   2014
+   4    18     2   2    190    1    200    0       1    200    4     1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
 # Gear-1
-  -1     13    1   1    133   50    200    0      1    900   -4     1975   2014
-  -1     14    2   1    137   50    200    0      1    900   -4     1975   2014
-  -1     15    1   2    591    1    700    0      1    900   -3     1975   2014
-  -1     16    2   2     11    1    700    0      1    900   -3     1975   2014
+  -1    19     1   1    133    1    700    0      1    900   -4     1975   2014
+  -1    20     2   1    137    1    700    0      1    900   -4     1975   2014
+  -1    21     1   2    591    1    700    0      1    900   -3     1975   2014
+  -1    22     2   2     11    1    700    0      1    900   -3     1975   2014
 # Gear-2
-  -2     17    1   0    595    1    700    0      1    900   -3     1975   2014
-  -2     18    2   0     10    1    700    0      1    900   -3     1975   2014
+  -2    23     1   0    595    1    700    0      1    900   -3     1975   2014
+  -2    24     2   0     10    1    700    0      1    900   -3     1975   2014
 # Gear-3
-  -3     19    1   0    590    1    700    0      1    900   -3     1975   1981
-  -3     20    2   0     10    1    700    0      1    900   -3     1982   2014
+  -3    25     1   0    590    1    700    0      1    900   -3     1975   1981
+  -3    26     2   0     10    1    700    0      1    900   -3     1982   2014
 # Gear-4
-  -4     21    1   0    580    1    700    0      1    900   -3     1975   2014
-  -4     22    2   0     20    1    700    0      1    900   -3     1975   2014
+  -4    27     1   0    580    1    700    0      1    900   -3     1975   2014
+  -4    28     2   0     20    1    700    0      1    900   -3     1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## PRIORS FOR CATCHABILITY
+## PRIORS FOR CATCHABILITY                                                              ##
 ##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SURVEYS/INDICES ONLY
@@ -143,7 +144,8 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
+## OPTIONS FOR SIZE COMPOSTION DATA                                                     ##
+##     One column for eacdh matrix                                                      ##
 ## LIKELIHOOD OPTIONS:
 ##   -1) Multinomial with estimated/fixed sample size
 ##   -2) Robust approximation to multinomial
@@ -154,9 +156,9 @@
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # 0   0   0   0   0   1   1   1   1   # Type of likelihood
-# 1   1   1   1   1   1   1   1   1   # Type of likelihood
+ 1   1   1   1   1   1   1   1   1   # Type of likelihood
 # 2   2   2   2   2   2   2   2   2   # Type of likelihood
- 5   5   5   5   5   5   5   5   5   # Type of likelihood
+# 5   5   5   5   5   5   5   5   5   # Type of likelihood
  0   0   0   0   0   0   0   0   0   # Auto tail compression (pmin)
  1   1   1   1   1   1   1   1   1   # Initial value for effective sample size multiplier
 -4  -4  -4  -4  -4  -4  -4  -4  -4   # Phz for estimating effective sample size (if appl.)

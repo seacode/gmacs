@@ -31,7 +31,7 @@
 ##  b (male,  female)
 3.141334
 ## Males
- 0.748   1.166     1.932
+ 0.748   1.166   1.932
 # (lbs) 1.65 2.57  4.26
 # Male  mature  weight-at-length  (weight * proportion  mature)
 0 1.166   1.932
