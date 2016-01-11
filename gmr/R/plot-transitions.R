@@ -24,7 +24,8 @@ plot_growth_transition <- function(M, xlab = "Size-class", ylab = "P(size transi
         #G <- M[[i]]$tG
         h <- dim(G)[1] / dim(G)[2]
         colnames(G) <- paste(x)
-        s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]
+        #s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]
+        s <- .SEX[as.vector(sapply(1:h, rep, length(x))) + 1]
         df <- data.frame(Model = names(M)[i], mp = x, sex = s, G)
         mdf <- rbind(mdf, df)
     }
@@ -75,7 +76,8 @@ plot_size_transition <- function(M, xlab = "Size-class", ylab = "P(size transiti
         #G <- M[[i]]$growth_matrix
         h <- dim(G)[1] / dim(G)[2]
         colnames(G) <- paste(x)
-        s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]
+        #s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]
+        s <- .SEX[as.vector(sapply(1:h, rep, length(x))) + 1]
         df <- data.frame(Model = names(M)[i], mp = x, sex = s, G)
         mdf <- rbind(mdf, df)
     }

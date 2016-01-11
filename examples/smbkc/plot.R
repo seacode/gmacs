@@ -29,14 +29,14 @@ png(paste0(.FIGS, "data.png"), width = ww*2, height = ww, units = "in", res = 30
 plot_datarange(M)
 dev.off()
 
-priors <- table_priors(M)
-write.table(priors, file = paste0(.FIGS, "prior.csv"), sep = ",", row.names = FALSE)
+#priors <- table_priors(M)
+#write.table(priors, file = paste0(.FIGS, "prior.csv"), sep = ",", row.names = FALSE)
 
-likes <- table_likelihoods(M)
-write.table(likes, file = paste0(.FIGS, "likelihood.csv"), sep = ",", row.names = FALSE)
+#likes <- table_likelihoods(M)
+#write.table(likes, file = paste0(.FIGS, "likelihood.csv"), sep = ",", row.names = FALSE)
 
-pen <- table_penalties(M)
-write.table(pen, file = paste0(.FIGS, "penalties.csv"), sep = ",", row.names = FALSE)
+#pen <- table_penalties(M)
+#write.table(pen, file = paste0(.FIGS, "penalties.csv"), sep = ",", row.names = FALSE)
 
 plot_recruitment_size(M)
 ggsave(paste0(.FIGS, "rec_size.png"), width = ww*2.5, height = hh*1.5)
@@ -74,34 +74,34 @@ plot_selectivity(M)
 ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
-# plot_growth_transition(M)
-# ggsave(paste0(.FIGS, "growth_transition.png"), width = ww*1.5, height = hh*1.5)
-# dev.off()
-# 
-# plot_molt_prob(M)
-# ggsave(paste0(.FIGS, "molt_prob.png"), width = ww*1.5, height = hh*1.5)
-# dev.off()
-# 
-# plot_size_transition(M)
-# ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
-# # dev.off()
-# 
-# plot_growth_inc(M)
-# ggsave(paste0(.FIGS, "gi.png"), width = ww, height = hh)
-# dev.off()
-# 
-# plot_length_weight(M)
-# ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
-# dev.off()
-# 
+#plot_growth_transition(M)
+#ggsave(paste0(.FIGS, "growth_transition.png"), width = ww*1.5, height = hh*1.5)
+#dev.off()
+ 
+plot_molt_prob(M)
+ggsave(paste0(.FIGS, "molt_prob.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+ 
+plot_size_transition(M)
+ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+ 
+plot_growth_inc(M)
+ggsave(paste0(.FIGS, "gi.png"), width = ww, height = hh)
+dev.off()
+ 
+plot_length_weight(M)
+ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
+dev.off()
+ 
 plot_numbers(M)
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*2, height = hh*1.5)
 dev.off()
-# 
+ 
 # plot_numbers(M, subsetby = c("1975","2014"))
 # ggsave(paste0(.FIGS, "numbers.png"), width = ww*1.2, height = hh)
 # dev.off()
-# 
+ 
 plot_size_comps(M, 1)
 ggsave(paste0(.FIGS, "lf_1.png"), width = ww*2, height = hh*1.5)
 dev.off()
@@ -113,15 +113,3 @@ dev.off()
 plot_size_comps(M, 3)
 ggsave(paste0(.FIGS, "lf_3.png"), width = ww*2, height = hh*1.5)
 dev.off()
- 
-# plot_size_comps(M, 4)
-# ggsave(paste0(.FIGS, "lf_4.png"), width = ww*2, height = hh*1.5)
-# dev.off()
-# 
-# plot_size_comps(M, 5)
-# ggsave(paste0(.FIGS, "lf_5.png"), width = ww*2, height = hh*1.5)
-# dev.off()
-# 
-# plot_size_comps(M, 6)
-# ggsave(paste0(.FIGS, "lf_6.png"), width = ww*2, height = hh*1.5)
-# # # dev.off()
