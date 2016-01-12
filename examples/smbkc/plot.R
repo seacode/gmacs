@@ -43,7 +43,7 @@ ggsave(paste0(.FIGS, "rec_size.png"), width = ww*2.5, height = hh*1.5)
 dev.off()
 
 plot_catch(M)
-ggsave(paste0(.FIGS, "catch.png"), width = ww*2.5, height = hh)
+ggsave(paste0(.FIGS, "catch.png"), width = ww*1.2, height = hh*1.2)
 dev.off()
 
 plot_cpue(M, ShowEstErr = TRUE)

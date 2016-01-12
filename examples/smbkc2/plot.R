@@ -6,8 +6,7 @@
 require(gmr)
 #setwd()
 
-#.MODELDIR = c("/Users/Jim/_mymods/seacode/gmacs/examples/smbbc/")
-.MODELDIR = c("")
+.MODELDIR = c("model_1/","model_2/","model_3/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -20,42 +19,21 @@ require(gmr)
 
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- "OneSex"
+names(M) <- c("model_1","model_2","model_3")
 
 ww <- 6
 hh <- 5
-
-png(paste0(.FIGS, "data.png"), width = ww*2, height = ww, units = "in", res = 300)
-plot_datarange(M)
-dev.off()
-
-priors <- table_priors(M)
-write.table(priors, file = paste0(.FIGS, "prior.csv"), sep = ",", row.names = FALSE)
-
-likes <- table_likelihoods(M)
-write.table(likes, file = paste0(.FIGS, "likelihood.csv"), sep = ",", row.names = FALSE)
-
-pen <- table_penalties(M)
-write.table(pen, file = paste0(.FIGS, "penalties.csv"), sep = ",", row.names = FALSE)
 
 plot_recruitment_size(M)
 ggsave(paste0(.FIGS, "rec_size.png"), width = ww*2.5, height = hh*1.5)
 dev.off()
 
 plot_catch(M)
-ggsave(paste0(.FIGS, "catch.png"), width = ww*2.5, height = hh)
+ggsave(paste0(.FIGS, "catch.png"), width = ww*1.2, height = hh*1.2)
 dev.off()
 
-plot_cpue(M)
+plot_cpue(M, ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue.png"), width = ww*2.5, height = hh)
-dev.off()
-
-plot_cpue(M, "ADFG Pot")
-ggsave(paste0(.FIGS, "cpue_BSFRF.png"), width = ww, height = hh)
-dev.off()
-
-plot_cpue(M, "NMFS Trawl")
-ggsave(paste0(.FIGS, "cpue_NMFS.png"), width = ww*2.5, height = hh)
 dev.off()
 
 plot_natural_mortality(M, plt_knots = TRUE, knots = c(1976, 1980, 1985, 1994))
@@ -70,7 +48,7 @@ plot_recruitment(M)
 ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
 dev.off()
 
-plot_selectivity(M)
+plot_selectivity(M, ncol = 5)
 ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 

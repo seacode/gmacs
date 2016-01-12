@@ -30,12 +30,18 @@
  115.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined
    0.0621    0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
-##    -Each gear must have a selectivity and a retention selectivity                    ##
-## LEGEND sel_type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95      ##
-##        Index: use +ve for selectivity, -ve for retention
-##        sex dep: 0 = sex-independent, 1 = sex-dependent.
-## ivector for number of year blocks or nodes
+##     Each gear must have a selectivity and a retention selectivity. If a uniform      ##
+##     prior is selected for a parameter then the lb and ub are used (p1 and p2 are     ##
+##     ignored)                                                                         ##
+## LEGEND                                                                               ##
+##     sel type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95,        ##
+##               4 = double normal (NIY)                                                ##
+##     gear index: use +ve for selectivity, -ve for retention                           ##
+##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ##
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ivector for number of year periods or nodes                                          ##
 ## POT       TBycatch FBycatch  NMFS_S   ADFG_pot
 ## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5
    2         1        1         1        1         # Selectivity periods
@@ -100,7 +106,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ADDITIONAL CV FOR SURVEYS/INDICES
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## NMFS   ADF&G
+## NMFS     ADF&G
    0.0001   0.001 # ival (must be > 0)
    -4       4     # Phz for estimating additional CV
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -119,14 +125,14 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## LIKELIHOOD OPTIONS:
+## LIKELIHOOD OPTIONS
 ##   -1) Multinomial with estimated/fixed sample size
 ##   -2) Robust approximation to multinomial
 ##   -3) logistic normal (NIY)
 ##   -4) multivariate-t (NIY)
 ##   -5) Dirichlet
-## AUTOTAIL COMPRESSION:
-##   - pmin is the cumulative proportion used in tail compression.
+## AUTOTAIL COMPRESSION
+##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  0   0   0  # Type of likelihood
 #  1   1   1  # Type of likelihood

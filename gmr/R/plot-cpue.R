@@ -45,7 +45,7 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex", ShowEstErr=FALSE)
+plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex", ShowEstErr = FALSE)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -54,24 +54,28 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
     if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
     
     p  <- ggplot(mdf, aes(year, cpue))
-    p  <- p + geom_pointrange(aes(year-.1, cpue, ymax = ub, ymin = lb), col = "black", alpha = 0.5)
+    p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black")
+    
     if (ShowEstErr)
-      p  <- p + geom_pointrange(aes(year+.2, cpue, ymax = ube, ymin = lbe), col = "green", alpha = 0.5)
-
-    if(.OVERLAY)
+    {
+        if (length(M) == 1)
+        {
+            p  <- p + geom_pointrange(aes(year, cpue, ymax = ube, ymin = lbe, col = sex), shape = 1, linetype = "dotted", position = position_dodge(width = 1))
+        } else {
+            p  <- p + geom_pointrange(aes(year, cpue, ymax = ube, ymin = lbe, col = Model), shape = 1, linetype = "dotted", position = position_dodge(width = 1))
+        }
+    }
+    
+    if( .OVERLAY)
     {
         if (length(M) == 1)
         {
             p  <- p + geom_line(data = mdf, aes(year, pred, color = sex)) + labs(col = slab)
-        } 
-        else 
-        {
+        } else {
             p  <- p + geom_line(data = mdf, aes(year, pred, color = Model))
         }
         p  <- p + facet_wrap(~fleet + sex, scales = "free_y")
-    } 
-    else 
-    {
+    } else {
         p  <- p + geom_line(data = mdf, aes(year, pred))
         p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")
     }

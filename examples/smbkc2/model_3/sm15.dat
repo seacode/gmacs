@@ -31,7 +31,7 @@
 ##  b (male,  female)
 3.141334
 ## Males
- 0.748   1.166     1.932
+ 0.748   1.166   1.932
 # (lbs) 1.65 2.57  4.26
 # Male  mature  weight-at-length  (weight * proportion  mature)
 0 1.166   1.932
@@ -280,9 +280,9 @@ NMFS_Trawl:ADFG_Pot
   2015  1 5 1 0 0 0 100  0.0706  0.2431  0.6859
 ##  Growth data (increment)
 # nobs_growth
-3
+ 3
 # MidPoint Sex Increment CV
- 97.5   1 14.1 0.2197
+  97.5  1 14.1 0.2197
  112.5  1 14.1 0.2197
  127.5  1 14.1 0.2197
 #  97.5   1 13.8 0.2197

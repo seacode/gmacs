@@ -10,7 +10,7 @@
   9
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
   0.18      0.01         1        -4       2   0.18    0.02          # M
-  9.0       -7         20         -2       1    7.1     30.1         # logR0
+  9.0       -7         20          2       1    7.1     30.1         # logR0
   8.0       -7         20          1       1    7.0     35.0         # logR1
   8.0       -7         20         -1       1    7.0     35.0         # logRbar
   95.0      30         310        -2       1    72.5    7.25         # Recruitment Expected Value
@@ -23,19 +23,25 @@
 ## nGrwth
 ##                                                                                      ##
 ## Two lines for each parameter if split sex, one line if not                           ##
-# ival        lb        ub        phz   prior     p1      p2         # parameter         #
+# ival        lb        ub         phz  prior     p1      p2         # parameter         #
   14.1      10.0      30.0         -3       0    0.0   999.0         # alpha males or combined
-  0.0001     0.0       0.01        -3       0    0.0   999.0         # beta males or combined
-  0.26130    0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
+   0.0001    0.0       0.01        -3       0    0.0   999.0         # beta males or combined
+   0.26130   0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
  115.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined
-  0.0621     0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
+   0.0621    0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
-##    -Each gear must have a selectivity and a retention selectivity                    ##
-## LEGEND sel_type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95      ##
-##        Index: use +ve for selectivity, -ve for retention
-##        sex dep: 0 = sex-independent, 1 = sex-dependent.
-## ivector for number of year blocks or nodes
+##     Each gear must have a selectivity and a retention selectivity. If a uniform      ##
+##     prior is selected for a parameter then the lb and ub are used (p1 and p2 are     ##
+##     ignored)                                                                         ##
+## LEGEND                                                                               ##
+##     sel type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95,        ##
+##               4 = double normal (NIY)                                                ##
+##     gear index: use +ve for selectivity, -ve for retention                           ##
+##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ##
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ivector for number of year periods or nodes                                          ##
 ## POT       TBycatch FBycatch  NMFS_S   ADFG_pot
 ## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5
    2         1        1         1        1         # Selectivity periods
@@ -86,57 +92,78 @@
   -5     22    1   0    580    1    700    0      1    900   -3     1978   2015
   -5     23    2   0     20    1    700    0      1    900   -3     1978   2015
 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi)
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
 ## TYPE    Mean_q    SD_q    LAMBDA
    0       0.01      2.0     1      # NMFS
    0       0.01      2.0     1      # ADF&G
-## ADDITIONAL CV FOR SURVEYS/INDICES
-## NMFS   ADF&G
-   0.0    0.0   # ival
-   -4      -4     # Phz for estimating additional CV
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ADDITIONAL CV FOR SURVEYS/INDICES
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## NMFS     ADF&G
+   0.0001   0.001 # ival (must be > 0)
+   -4       4     # Phz for estimating additional CV
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
      0.20      0.05     45.50      1  # Trap
      0.001     0.05     45.50      1  # Trawl
      0.001     0.05     45.50      1  # Fixed
      0.00      2.00     20.00     -1  # NMFS
      0.00      2.00     20.00     -1  # ADF&G
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX)
-## LIKELIHOOD OPTIONS:
-##  • 0 ignore composition data in model fitting.
-##  • 1 multinomial with estimated/fixed sample size
-##  • 2 robust_multi. Robust approximation to multinomial
-##  • 3 logistic normal (NIY)
-##  • 4 multivariate-t  (NIY)
-## AUTOTAIL COMPRESSION:
-##   - pmin is the cumulative proportion used in tail compression.
- 1   1   1  # Type of likelihood.
-# 2   2   2   # Type of likelihood.
- 0   0   0   # Auto tail compression (pmin)
--4  -4  -4   # Phz for estimating effective sample size (if appl.)
- 1   2   3   # Composition aggregator
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## LIKELIHOOD OPTIONS
+##   -1) Multinomial with estimated/fixed sample size
+##   -2) Robust approximation to multinomial
+##   -3) logistic normal (NIY)
+##   -4) multivariate-t (NIY)
+##   -5) Dirichlet
+## AUTOTAIL COMPRESSION
+##   pmin is the cumulative proportion used in tail compression.
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+#  0   0   0  # Type of likelihood
+#  1   1   1  # Type of likelihood
+#  2   2   2  # Type of likelihood
+  5   5   5   # Type of likelihood
+  0   0   0   # Auto tail compression (pmin)
+  1   1   1   # Initial value for effective sample size multiplier
+  4   4   4   # Phz for estimating effective sample size (if appl.)
+  1   2   3   # Composition aggregator
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## TIME VARYING NATURAL MORTALIIY RATES                                                 ##
-## TYPE:
-##      0 = Constant natural mortality
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## TYPE: 
+##      0 = constant natural mortality
 ##      1 = Random walk (deviates constrained by variance in M)
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
 ##      4 = Time blocks
-  3
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+  0
 ## Phase of estimation
-  4
+  2
 ## STDEV in m_dev for Random walk
   0.01
 ## Number of nodes for cubic spline or number of step-changes for option 3
   1
 ## Year position of the knots (vector must be equal to the number of nodes)
-  1999
+  1978
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## OTHER CONTROLS
   2       # Estimated rec_dev phase

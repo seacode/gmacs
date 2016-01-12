@@ -48,7 +48,8 @@
 ##     prior is selected for a parameter then the lb and ub are used (p1 and p2 are     ##
 ##     ignored)                                                                         ##
 ## LEGEND                                                                               ##
-##     sel type: 1 = coefficients, 2 = logistic, 3 = logistic95, 4 = double normal      ##
+##     sel type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95,        ##
+##               4 = double normal (NIY)                                                ##
 ##     gear index: use +ve for selectivity, -ve for retention                           ##
 ##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
