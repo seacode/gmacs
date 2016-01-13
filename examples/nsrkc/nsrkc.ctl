@@ -15,9 +15,9 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1         -5       2   0.18    0.04         # M
    7.0       -10        20         -1       1    3.0     5.0         # logR0
-   7.0       -10        20          2       1    3.0     5.0         # logR1      
+   7.0       -10        20         -2       1    3.0     5.0         # logR1      
    7.0       -10        20          2       1    3.0     5.0         # logRbar      
-  72.5        65       150          4       1   72.5    7.25         # Recruitment mBeta
+  72.5        65       150         -4       1   72.5    7.25         # Recruitment mBeta
   1.50       0.1         5         -4       0    0.1       5         # Recruitment m50
  -0.51       -10      0.75         -4       0    -10    0.75         # ln(sigma_R)
   0.75      0.20      1.00         -4       3    3.0    2.00         # steepness
@@ -107,8 +107,8 @@
 ## SURVEYS/INDICES ONLY
 ## NMFS_Trawl:ADFG:STCPUE                                        
 ## TYPE     Mean_q    SD_q       lambda
-     1      0.896      0.23      1.0
-     1      0.896     10.23      1.0
+     1      1.000     0.03      1.0
+     0      0.0001    1.23      1.0
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                
 ## ADDITIONAL CV FOR SURVEYS/INDICES
 ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
