@@ -96,7 +96,7 @@ plot_numbers(M)
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*2, height = hh*1.5)
 dev.off()
 
-plot_numbers(M, subsetby = c("1975","2014"))
+plot_numbers(M, subsetby = c("1976","2014"))
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*1.2, height = hh)
 dev.off()
 
