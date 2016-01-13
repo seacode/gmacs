@@ -9,7 +9,7 @@ require(gmr)
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
-.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
+.FLEET    = c("Summer Pot","Winter commercial","Winter subsistence","Winter discard","NMFS Trawl","ADFG")
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
@@ -18,7 +18,7 @@ require(gmr)
 
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- "OneSex"
+names(M) <- "NSRKC"
 
 ww <- 6
 hh <- 5
