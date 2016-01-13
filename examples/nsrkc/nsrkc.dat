@@ -8,12 +8,16 @@
 6     # Number of size-classes in the model             
 # size_breaks (a vector giving the break points between size intervals, dim=nclass+1)         
 74 84 94 104 114 124 134               
+# Wt at length input method 1 use params, 2 input
+1
 # weight-at-length allometry w_l = a•l^b               
 ## a (male, female)                 
 1.24E-04                    
 ## b (male, female)                 
 2.89                    
 # Male mature weight-at-length (weight * proportion mature)             
+0 0 1.652 2.187 2.825 3.697               
+# Male  mature  weight-at-length  (weight * proportion  mature)
 0 0 1.652 2.187 2.825 3.697               
 # Proportion mature by sex.                
 0 0 1 1 1 1 
