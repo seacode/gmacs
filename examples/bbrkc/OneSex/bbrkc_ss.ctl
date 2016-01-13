@@ -1,11 +1,7 @@
 # Set up to do Stock Reduction Analysis using Catch data and informative priors.
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # Controls for leading parameter vector theta   
-# LEGEND FOR PRIOR:
-#                  0 -> uniform
-#                  1 -> normal
-#                  2 -> lognormal
-#                  3 -> beta
+# LEGEND FOR PRIOR: #                  0 -> uniform #                  1 -> normal #                  2 -> lognormal #                  3 -> beta
 #                  4 -> gamma
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ntheta
@@ -77,6 +73,8 @@
    4     10    2   0     90    1    200    0       1    200   -4     1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
+## gear  par   sel                                             phz    start  end        ##
+## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 # Gear-1
   -1     11    1   0    133   50    200    0      1    900   -1     1975   2014
   -1     12    2   0    137   50    200    0      1    900   -1     1975   2014
@@ -99,9 +97,20 @@
 ## SURVEYS/INDICES ONLY
 ## NMFS  BSFRF
 ## TYPE     Mean_q    SD_q      LAMBDA
-     1      0.843136  0.01       5
+     1      0.843136  0.01       1
      1      1.000     0.03       1
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ADDITIONAL CV FOR SURVEYS/INDICES
+##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
+##     and p2 are ignored). ival must be > 0                                            ##
+## LEGEND                                                                               ##
+##     prior type: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma          ##
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ival        lb        ub        phz   prior     p1      p2
+   0.001       0.0       10.0      -4    4         1.0     100   # NMFS
+   0.001       0.0       10.0      -4    4         1.0     100   # BSFRF
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -126,6 +135,7 @@
 # 1   1   1   1   1   1 # Type of likelihood.
  2   2   2   2   2   2 # Type of likelihood.
  0   0   0   0   0   0 # Auto tail compression (pmin)
+ 1   1   1   1   1   1 # Initial value for effective sample size multiplier
 -4  -4  -4  -4  -4  -4 # Phz for estimating effective sample size (if appl.)
  1   2   3   4   4   5 # Composition aggregator
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -140,26 +150,26 @@
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
   3
 ## Phase of estimation
- 2
+   3
 ## STDEV in m_dev for Random walk
-  0.40
+   0.80
 ## Number of nodes for cubic spline or number of step-changes for option 3
-  4
+   4
 ## Year position of the knots (vector must be equal to the number of nodes)
    1976 1980 1985 1994
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  3       # Estimated rec_dev phase
-  1       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-  0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
-  1984    # First year for average recruitment for Bspr calculation.
-  2014    # Last year for average recruitment for Bspr calculation.
-  0.35    # Target SPR ratio for Bmsy proxy.
-  1       # Gear index for SPR calculations (i.e., directed fishery).
-  1       # Lambda (proportion of mature male biomass for SPR reference points.)
-  1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
-  0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
+   3       # Estimated rec_dev phase
+   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
+   1984    # First year for average recruitment for Bspr calculation.
+   2014    # Last year for average recruitment for Bspr calculation.
+   0.35    # Target SPR ratio for Bmsy proxy.
+   1       # Gear index for SPR calculations (i.e., directed fishery).
+   1       # Lambda (proportion of mature male biomass for SPR reference points.)
+   1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
+   0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ## EOF
 9999
