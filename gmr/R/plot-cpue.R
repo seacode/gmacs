@@ -66,7 +66,7 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
         }
     }
     
-    if( .OVERLAY)
+    if (.OVERLAY)
     {
         if (length(M) == 1)
         {

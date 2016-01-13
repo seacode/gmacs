@@ -104,18 +104,22 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## ADDITIONAL CV FOR SURVEYS/INDICES
+## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ##
+##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
+##     and p2 are ignored). ival must be > 0                                            ##
+## LEGEND                                                                               ##
+##     prior type: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma          ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## NMFS     ADF&G
-   0.0001   0.0001 # ival (must be > 0)
-   4        4      # Phz for estimating additional CV
+## ival        lb        ub        phz   prior     p1      p2
+   0.0001      0.0       10.0      -4    4         1.0     100   # NMFS
+   0.001       0.0001    10.0       4    4         1.0     100   # ADF&G
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
-     0.20      0.05     45.50      1  # Trap
+     0.20      0.05     45.50      1  # Pot
      0.001     0.05     45.50      1  # Trawl
      0.001     0.05     45.50      1  # Fixed
      0.00      2.00     20.00     -1  # NMFS
@@ -135,9 +139,9 @@
 ##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  0   0   0  # Type of likelihood
-#  1   1   1  # Type of likelihood
+  1   1   1  # Type of likelihood
 #  2   2   2  # Type of likelihood
-  5   5   5   # Type of likelihood
+#  5   5   5   # Type of likelihood
   0   0   0   # Auto tail compression (pmin)
   1   1   1   # Initial value for effective sample size multiplier
   4   4   4   # Phz for estimating effective sample size (if appl.)

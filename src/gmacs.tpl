@@ -674,25 +674,52 @@ DATA_SECTION
 	!! WriteCtl(slx_nsel_period_in); WriteCtl(ret_nret_period_in); WriteCtl(slx_control_in); WriteCtl(slx_control);
 
 	// |---------------------------------------------------------|
-	// | PRIORS FOR CATCHABILITIES FOR INDICES                   |
+	// | PRIORS FOR CATCHABILITIES OF SURVEYS/INDICES            |
 	// |---------------------------------------------------------|
 	init_matrix q_controls(1,nSurveys,1,4);
-	init_vector add_cv_ival(1,nSurveys);
-	init_ivector cv_phz(1,nSurveys);
 
 	vector prior_qbar(1,nSurveys);
 	vector prior_qsd(1,nSurveys);
 	vector prior_qtype(1,nSurveys);
 	vector cpue_lambda(1,nSurveys);
-	vector log_add_cv_ival(1,nSurveys);
 	LOC_CALCS
 		prior_qtype = column(q_controls,1);
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
 		cpue_lambda = column(q_controls,4);
-		log_add_cv_ival = log(add_cv_ival);
 		WriteCtl(q_controls);
 		ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); ECHO(cpue_lambda);
+	END_CALCS
+
+	// |---------------------------------------------------------|
+	// | ADDITIONAL SURVEY CV CONTROLS                           |
+	// |---------------------------------------------------------|
+	init_matrix cv_controls(1,nSurveys,1,7);
+
+	vector add_cv_ival(1,nSurveys);
+	vector add_cv_lb(1,nSurveys);
+	vector add_cv_ub(1,nSurveys);
+	ivector prior_add_cv_type(1,nSurveys);
+	vector prior_add_cv_p1(1,nSurveys);
+	vector prior_add_cv_p2(1,nSurveys);
+	ivector cv_phz(1,nSurveys);
+
+	vector log_add_cv_ival(1,nSurveys);
+	vector log_add_cv_lb(1,nSurveys);
+	vector log_add_cv_ub(1,nSurveys);
+
+	LOC_CALCS
+		add_cv_ival       = column(cv_controls,1);
+		add_cv_lb         = column(cv_controls,2);
+		add_cv_ub         = column(cv_controls,3);
+		cv_phz            = ivector(column(cv_controls,4));
+		prior_add_cv_type = ivector(column(cv_controls,5));
+		prior_add_cv_p1   = column(cv_controls,6);
+		prior_add_cv_p2   = column(cv_controls,7);
+		log_add_cv_ival = log(add_cv_ival);
+		log_add_cv_lb = log(add_cv_lb);
+		log_add_cv_ub = log(add_cv_ub);
+		ECHO(prior_add_cv_type); ECHO(prior_add_cv_p1); ECHO(prior_add_cv_p2);
 	END_CALCS
 
 	// |---------------------------------------------------------|
@@ -1054,11 +1081,11 @@ PARAMETER_SECTION
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
 	// Addtional CV for surveys/indices
-	init_number_vector log_add_cv(1,nSurveys,cv_phz);
+	init_bounded_number_vector log_add_cv(1,nSurveys,log_add_cv_lb,log_add_cv_ub,cv_phz);
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,6);
-	vector priorDensity(1,ntheta+nGrwth+nSurveys+nSelex);
+	vector priorDensity(1,ntheta+nGrwth+nSurveys+nSurveys+nSelex);
 
 	objective_function_value objfun;
 
@@ -2449,6 +2476,7 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &_theta, cons
 FUNCTION calculate_prior_densities
 	double p1,p2;
 	double lb,ub;
+	int iprior,itype;
 	dvariable x;
 	priorDensity.initialize();
 	// Key parameter priors
@@ -2456,17 +2484,17 @@ FUNCTION calculate_prior_densities
 	{
 		if ( active(theta(i)) )
 		{
-			int priorType = int(theta_control(i,5));
+			itype = int(theta_control(i,5));
 			p1 = theta_control(i,6);
 			p2 = theta_control(i,7);
 			dvariable x = theta(i);
-			if ( priorType == 3 )
+			if ( itype == 3 )
 			{
 				lb = theta_control(i,2);
 				ub = theta_control(i,3);
 				x = (x - lb) / (ub - lb);
 			}
-			priorDensity(i) = get_prior_pdf(priorType, x, p1, p2);
+			priorDensity(i) = get_prior_pdf(itype, x, p1, p2);
 		}
 	}
 	// Growth parameter priors
@@ -2474,24 +2502,24 @@ FUNCTION calculate_prior_densities
 	{
 		if ( active(Grwth(i)) )
 		{
-			int priorType = int(Grwth_control(i,5));
+			itype = int(Grwth_control(i,5));
 			p1 = Grwth_control(i,6);
 			p2 = Grwth_control(i,7);
 			dvariable x = Grwth(i);
-			if ( priorType == 3 )
+			if ( itype == 3 )
 			{
 				lb = Grwth_control(i,2);
 				ub = Grwth_control(i,3);
 				x = (x - lb) / (ub - lb);
 			}
-			priorDensity(ntheta+i) = get_prior_pdf(priorType, x, p1, p2);
+			priorDensity(ntheta+i) = get_prior_pdf(itype, x, p1, p2);
 		}
 	}
 	// Catchability parameter priors
-	int iprior = ntheta + nGrwth + 1;
+	iprior = ntheta + nGrwth + 1;
 	for ( int i = 1; i <= nSurveys; i++ )
 	{
-		int itype = int(prior_qtype(i));
+		itype = int(prior_qtype(i));
 		switch ( itype )
 		{
 			case 0: // Analytical soln, no prior (uniform, uniformative)
@@ -2510,6 +2538,24 @@ FUNCTION calculate_prior_densities
 		}
 		iprior++;
 	}
+	// Additional CV parameter priors
+	for ( int i = 1; i <= nSurveys; i++ )
+	{
+		if ( active(log_add_cv(i)) )
+		{
+			itype = int(prior_add_cv_type(i));
+			if (itype == 0)
+			{
+				p1 = add_cv_lb(i);
+				p2 = add_cv_ub(i);
+			} else {
+				p1 = prior_add_cv_p1(i);
+				p2 = prior_add_cv_p2(i);
+			}
+			priorDensity(iprior) = get_prior_pdf(itype, mfexp(log_add_cv(i)), p1, p2);
+		}
+		iprior++;
+	}
 	// Selctivity parameter priors
 	for ( int k = 1; k <= nslx; k++ )
 	{
@@ -2517,7 +2563,7 @@ FUNCTION calculate_prior_densities
 		{
 			if ( active(log_slx_pars(k)) )
 			{
-				int priorType = int(slx_priors(k,j,1));
+				itype = int(slx_priors(k,j,1));
 				p1 = slx_priors(k,j,2);
 				p2 = slx_priors(k,j,3);
 				if ( slx_type(k) == 0 || slx_type(k) == 1 )
@@ -2527,13 +2573,14 @@ FUNCTION calculate_prior_densities
 					x = mfexp(log_slx_pars(k,j));
 				}
 				// Above is a change of variable so an adjustment is required - DOUBLE CHECK THIS
-				//priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2) + log_slx_pars(k,j);
-				priorDensity(iprior) = get_prior_pdf(priorType, x, p1, p2);
+				//priorDensity(iprior) = get_prior_pdf(itype, x, p1, p2) + log_slx_pars(k,j);
+				priorDensity(iprior) = get_prior_pdf(itype, x, p1, p2);
 				if ( verbose == 2 ) cout << " Prior no, val, dens " << iprior << " " << x << " " << priorDensity(iprior) << endl;
 			}
 			iprior++;
 		}
 	}
+
 
 	/**
 	 * @brief calculate objective function
