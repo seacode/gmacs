@@ -2314,6 +2314,7 @@ FUNCTION calc_predicted_composition
 
 	for ( int ii = 1; ii <= nSizeComps_in; ii++ )
 	{
+		int nbins = nSizeCompCols_in(ii);
 		for ( int jj = 1; jj <= nSizeCompRows_in(ii); jj++ )
 		{
 			dNtmp.initialize();
@@ -2390,7 +2391,10 @@ FUNCTION calc_predicted_composition
 					}
 				}
 			}
-			d3_pre_size_comps_in(ii)(jj) = dNtmp;
+			// This was incompatible with variable numbers of bins
+			// d3_pre_size_comps_in(ii)(jj) = dNtmp;
+			d3_pre_size_comps_in(ii)(jj)        = dNtmp(1,nbins);
+			d3_pre_size_comps_in(ii)(jj)(nbins) = sum(dNtmp(nbins,nclass));
 		}
 	}
 	// This aggregates the size composition data by appending size compositions horizontally

@@ -30,6 +30,7 @@ build/release:
 	@mkdir -p build/release
 
 clean:
+	@$(RM) build
 	@$(RM) gmacs.cpp
 	@$(RM) gmacs.htp
 	@$(RM) gmacs.obj
