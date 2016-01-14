@@ -14,7 +14,7 @@
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1         -2       2  -1.74    0.04         # M
-   7.0       -10        20          1       0    3.0     5.0         # logR0
+   7.0       -10        20         -1       0    3.0     5.0         # logR0
    7.0       -10        20          1       0    3.0     5.0         # logR1      
    7.0       -10        20          1       0    3.0     5.0         # logRbar      
   62.5        55       100         -4       0   72.5    7.25         # Recruitment Expected Value
@@ -43,44 +43,70 @@
   0.10       0.0       1.0         -3       0    0.0     3.0         # molt_cv males or combined
   0.10       0.0       1.0         -3       0    0.0     3.0         # molt_cv
 # ———————————————————————————————————————————————————————————————————————————————————— ##
-
-## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
-##    -Each gear must have a selectivity and a retention selectivity                    ##
-## LEGEND sel_type:1=coefficients,2=logistic,3=logistic95                               ##
-##        Index: use +ve for selectivity, -ve for retention
-##        sex dep: 0 for sex-independent, 1 for sex-dependent.
+##     Each gear must have a selectivity and a retention selectivity. If a uniform      ##
+##     prior is selected for a parameter then the lb and ub are used (p1 and p2 are     ##
+##     ignored)                                                                         ##
+## LEGEND                                                                               ##
+##     sel type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95,        ##
+##               4 = double normal (NIY)                                                ##
+##     gear index: use +ve for selectivity, -ve for retention                           ##
+##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## ivector for number of year blocks or nodes                                           ##
-## Gear-1    Gear-2    Gear-3     
-   1         1         1         #Selectivity blocks
-   1         1         1         #Retention blocks 
-   1         0         0         #male   retention flag (0 -> no, 1 -> yes) Deprecate
-   0         0         0         #female retention flag (0 -> no, 1 -> yes) Deprecate
-## ———————————————————————————————————————————————————————————————————————————————————— ##
-## Selectivity P(capture of all sizes)
-## Fishery has no lencomp; set sel at legal size; use trawl sel from BBRKC
-##        sel   sel  sel     sex  size   year  phz                       start  end         ##
-## Index  type  mu   sd      dep  nodes  nodes mirror lam1  lam2  lam3 | block  block       ##
-## ———————————————————————————————————————————————————————————————————————————————————— ##
-   1      2     100.9  13.8  0    1      1     -1     12.5  12.5  12.5   1975   2014
-   2      2     120.00 13.0  0    1      1     -2     12.5  12.5  12.5   1975   2014 
-   3      2     80     10.0  0    1      1     -3     12.5  12.5  12.5   1975   2014
-## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ivector for number of year periods or nodes                                          ##
+## POT       TBycatch FBycatch  NMFS_S   ADFG_pot
+## Gear-1    Gear-2   Gear-3    
+   2         1        1         # Selectivity periods
+   0         0        0         # sex specific selectivity
+   3         3        3         # male selectivity type
+## Gear-1    Gear-2   Gear-3    
+   1         1        1         # Retention periods
+   0         0        0         # sex specific retention
+   3         2        2         # male retention type
+   1         0        0         # male retention flag (0 -> no, 1 -> yes)
+## gear  par   sel                                             phz    start  end        ##
+## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
+# Gear-1
+   2     4     1   0    40     10   200    0      10    200    -2     1975   2014
+   2     5     2   0    60     10   200    0      10    200    -2     1975   2014
+# Gear-2
+   3     6     1   0    40     10   200    0      10    200    -3     1975   2014
+   3     7     2   0    60     10   200    0      10    200    -3     1975   2014
+# Gear-3
+   4     8     1   0    0.3     0.1  0.5    0       0      1    4     1975   2014
+   4     9     2   0    0.8     0.2  0.9    0       0      1    4     1975   2014
+   4     10    3   0    0.8     0.5  0.9    0       0      1    4     1975   2014
 ## Retained
-  -1      2     137.9  0.123 0    1      1     -1     12.5  12.5  12.5   1975   2014
-  -2      2     64.84  153   0    1      1     -2     12.5  12.5  12.5   1975   2014 
-  -3      2     80     100   0    1      1     -3     12.5  12.5  12.5   1975   2014
-## ———————————————————————————————————————————————————————————————————————————————————— ##
+# Gear-1
+  -1     14    1   0    120   100   200    0      1    900   -1     1975   2014
+  -1     15    2   0    123   110   200    0      1    900   -1     1975   2014
+# Gear-2
+  -2     16    1   0    595    1    700    0      1    900   -3     1975   2014
+  -2     17    2   0     10    1    700    0      1    900   -3     1975   2014
+# Gear-3
+  -3     18    1   0    590    1    700    0      1    900   -3     1975   2014
+  -3     19    2   0     10    1    700    0      1    900   -3     1975   2014
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
-##  TYPE: 0 = UNINFORMATIVE, 1 - NORMAL (log-space), 2 = time-varying (nyi)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
+##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi)
+##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
-## NMFS 
-## TYPE     Mean_q    SD_q     Lambda  
-    0      0.00      0.00      1
+## TYPE    Mean_q    SD_q    LAMBDA
+   0       0.01      2.0     1      # NMFS
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ##
+##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
+##     and p2 are ignored). ival must be > 0                                            ##
+## LEGEND                                                                               ##
+##     prior type: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma          ##
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## ival        lb        ub        phz   prior     p1      p2
+   0.0001      0.0       10.0      -4    4         1.0     100   # NMFS
+   0.001       0.0001    10.0       4    4         1.0     100   # ADF&G
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -106,8 +132,9 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
  1   1   # Type of likelihood.
  0   0   # Auto tail compression (pmin)
--3  -3   # Phz for estimating effective sample size (if appl.)
- 0   0   # Auto tail compression (pmin)
+  1   1   # Initial value for effective sample size multiplier
+  4   4   # Phz for estimating effective sample size (if appl.)
+  1   2   # Composition aggregator
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

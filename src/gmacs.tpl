@@ -1553,7 +1553,7 @@ FUNCTION calc_natural_mortality
 	}
 
 	// Add random walk to natural mortality rate.
-	if ( active( m_dev ) )
+	// if ( active( m_dev ) )
 	{
 		dvar_vector delta(syr+1,nyr);
 		delta.initialize();
@@ -1600,6 +1600,20 @@ FUNCTION calc_natural_mortality
               M(h)(i)  = mfexp(m_dev(idev));
             }
           }
+			  }
+			  break;                        
+      // Case for specific years
+			case 5: // time blocks
+			  for ( int idev = 1; idev <= nMdev; idev++ )
+			  {
+  				delta(m_nodeyear(idev)) = m_dev(idev);
+			  }
+			  for ( int h = 1; h <= nsex; h++ )
+			  {
+			  	for ( int i = syr+1; i <= nyr; i++ )
+			  	{
+	          M(h)(i)  = M(h)(syr) * mfexp(delta(i)); // Deltas are devs from base value (not a walk)                                                   
+			  	}
 			  }
 			  break;                        
 		}

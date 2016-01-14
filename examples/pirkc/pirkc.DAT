@@ -27,10 +27,14 @@
 #a=0.003593,b=2.666076  female  > 89mm                                                                          
 #a=0.000408,b=3.127956  female  < 90  new shell                                                                     
 #a=0.000403,  b=3.141334  male  new shell                                                                       
+#Type of read on length-wt
+1
 ##  a (male,  female)                                                                         
 3.61e-4  0.01027                                                                            
 ##  b (male,  female)                                                                         
 3.16  2.38849                                                                            
+# Male  mature  weight-at-length  (weight * proportion  mature)                                                                 
+2.85E-09    1.79E-08    1.07E-07    6.21E-07    3.49E-06    1.91E-05    1.03E-04    5.46E-04    2.85E-03    1.47E-02    7.44E-02    3.74E-01    1.86E+00    9.13E+00    4.32E+01    1.84E+02    5.77E+02    1.12E+03    1.52E+03    1.81E+03    2.06E+03    2.31E+03    2.58E+03    2.86E+03    3.17E+03    3.50E+03    3.85E+03    4.22E+03    4.62E+03    5.05E+03    5.50E+03    5.97E+03    6.48E+03    7.01E+03    7.57E+03
 # Male  mature  weight-at-length  (weight * proportion  mature)                                                                 
 2.85E-09    1.79E-08    1.07E-07    6.21E-07    3.49E-06    1.91E-05    1.03E-04    5.46E-04    2.85E-03    1.47E-02    7.44E-02    3.74E-01    1.86E+00    9.13E+00    4.32E+01    1.84E+02    5.77E+02    1.12E+03    1.52E+03    1.81E+03    2.06E+03    2.31E+03    2.58E+03    2.86E+03    3.17E+03    3.50E+03    3.85E+03    4.22E+03    4.62E+03    5.05E+03    5.50E+03    5.97E+03    6.48E+03    7.01E+03    7.57E+03
 # Proportion mature by sex (male then female)

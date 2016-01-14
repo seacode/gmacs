@@ -148,9 +148,10 @@
 ##      1 = Random walk (deviates constrained by variance in M)
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
+##      5 = Blocked changes (deviates constrained by variance AT specific knots relative to base)
   3
 ## Phase of estimation
-   3
+  -3
 ## STDEV in m_dev for Random walk
    0.80
 ## Number of nodes for cubic spline or number of step-changes for option 3
