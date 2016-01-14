@@ -128,7 +128,7 @@ M[[jj]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
 
 # Add cpue data
 #M[[jj]]$pre_cpue[1,] <- j_surv1$pred
-M[[jj]]$pre_cpue[1,] <- c(j_surv$Males*1000, j_surv$Females*1000)
+M[[jj]]$pre_cpue[1,] <- c(j_surv$Males*1000,NA, j_surv$Females*1000,NA)
 
 # Add numbers data
 M[[jj]]$N_len[41,] <- (j_len$N2014_female + j_len$N2014_male_n + j_len$N2014_male_o)/1000
