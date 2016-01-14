@@ -363,6 +363,27 @@ way that $q$ is currently specified in the model (i.e. $q$ is integrated out)
 is inadequate as it allows the model to explore unrealistic parameter space.
 We intend to provide an option to specify $q$ as a parameter of the model.
 
+    n <- length(M)
+    mdf <- NULL
+    for (i in 1:n) {
+        A <- M[[i]]
+        df <- data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData))
+        colnames(df) <- c("Model", "year", "seas", "fleet", "sex", 
+            "cpue", "cv", "units")
+        df$sex <- .SEX[df$sex + 1]
+        df$fleet <- .FLEET[df$fleet]
+        sd <- sqrt(log(1 + df$cv^2))
+        df$lb <- exp(log(df$cpue) - 1.96 * sd)
+        df$ub <- exp(log(df$cpue) + 1.96 * sd)
+        df$cvest <- na.exclude(as.vector(t(A$cpue_cv_add)))
+        sde <- sqrt(log(1 + df$cvest^2))
+        df$lbe <- exp(log(df$cpue) - 1.96 * sde)
+        df$ube <- exp(log(df$cpue) + 1.96 * sde)
+        df$pred <- na.exclude(as.vector(t(A$pre_cpue)))
+        df$resd <- na.exclude(as.vector(t(A$res_cpue)))
+        mdf <- rbind(mdf, df)
+    }
+
 ```{r survey_biomass, fig.cap = "Model fits to sex-specific NMFS trawl survey biomass (tons) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.\\label{fig:survey_biomass}"}
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)")
 #plot_cpue(M, ylab = "Survey biomass (tons)")
