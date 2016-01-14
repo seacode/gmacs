@@ -58,7 +58,7 @@ plot_cpue(M, "NMFS Trawl", ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue_NMFS.png"), width = ww*2.5, height = hh)
 dev.off()
 
-plot_natural_mortality(M, plt_knots = TRUE, knots = c(1976, 1980, 1985, 1994))
+plot_natural_mortality(M, plt_knots = FALSE, knots = c(1976, 1980, 1985, 1994))
 ggsave(paste0(.FIGS, "M_t.png"), width = ww, height = hh)
 dev.off()
 
