@@ -206,7 +206,7 @@ We intend to provide an option to specify $q$ as a parameter of the model.
 
 
 ```
-## Error in t.default(A$cpue_cv_add): argument is not a matrix
+## Error in `$<-.data.frame`(`*tmp*`, "pred", value = structure(c(177545, : replacement has 82 rows, data has 84
 ```
 
 
@@ -407,19 +407,19 @@ In the tables below the OneSex and TwoSex model likelihoods (Table
   \hline
  & OneSex & TwoSex \\ 
   \hline
-Abundance1 & 83.60 & 23.34 \\ 
-  Abundance2 & -1.28 & -0.77 \\ 
-  Catch1 & 236.65 & 370.65 \\ 
-  Catch2 & 181.69 & 192.65 \\ 
-  Catch3 & -78.65 & -51.62 \\ 
-  Catch4 &  & -80.96 \\ 
+Abundance1 & 68.48 & 167.78 \\ 
+  Abundance2 & -1.05 & -0.86 \\ 
+  Catch1 & 123.83 & 361.14 \\ 
+  Catch2 & 136.49 & 186.13 \\ 
+  Catch3 & -78.70 & -51.68 \\ 
+  Catch4 &  & -80.40 \\ 
   Growth increment1 & 0.00 & 0.00 \\ 
-  Recruitment deviations1 & 107.52 & 155.17 \\ 
-  Size composition1 & 487.42 & 507.81 \\ 
-  Size composition2 & 1208.45 & 3217.63 \\ 
-  Size composition3 & 924.11 & 2391.75 \\ 
-  Size composition4 & 41630.73 & 32086.52 \\ 
-  Size composition5 & 13.34 & 332.68 \\ 
+  Recruitment deviations1 & 97.05 & 132.06 \\ 
+  Size composition1 & 475.94 & 533.11 \\ 
+  Size composition2 & 1188.57 & 3210.95 \\ 
+  Size composition3 & 913.79 & 2077.51 \\ 
+  Size composition4 & 41607.33 & 32014.48 \\ 
+  Size composition5 & 19.66 & 298.05 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -433,10 +433,10 @@ Abundance1 & 83.60 & 23.34 \\
   \hline
 log\_fdev & 0.00 & 0.00 \\ 
   mean F & 9.47 & 9.47 \\ 
-  M & 11.65 & 5.25 \\ 
+  M & 5.54 & 6.95 \\ 
   rec\_dev & 0.00 & 0.00 \\ 
   rec\_ini & 0.00 & 0.00 \\ 
-  rec\_dev\_ & 57.23 & 0.00 \\ 
+  rec\_dev\_ & 0.00 & 0.00 \\ 
    \hline
 \end{tabular}
 \end{table}

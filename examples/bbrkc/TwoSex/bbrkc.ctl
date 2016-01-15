@@ -174,9 +174,9 @@
 ## STDEV in m_dev for Random walk
    0.80
 ## Number of nodes for cubic spline or number of step-changes for option 3
-   4
+   2
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1976 1980 1985 1994
+   1980 1985 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

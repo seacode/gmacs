@@ -120,7 +120,8 @@ M[[jj]]$fit$est[ii] <- c(log(j_ssb$mmb*1000), NA)
 M[[jj]]$fit$std[ii] <- c(sqrt(log((j_ssb$mmb_sd/j_ssb$mmb)^2+1)), NA)
 
 # Add natural mortality data
-M[[jj]]$M <- matrix(c(j_ssb$M, j_ssb$M), nrow = 80, ncol = 20)
+M[[jj]]$M <- matrix(c(j_ssb$M,NA,NA,j_ssb$M,NA,NA), nrow = 84, ncol = 20)
+#M[[jj]]$M <- matrix(c(j_ssb$M, j_ssb$M), nrow = 80, ncol = 20)
 
 # Add size-weight data
 M[[jj]]$mid_points <- j_len$Size

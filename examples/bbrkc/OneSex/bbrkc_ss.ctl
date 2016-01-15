@@ -151,13 +151,13 @@
 ##      5 = Blocked changes (deviates constrained by variance AT specific knots relative to base)
   3
 ## Phase of estimation
-  -3
+ -3
 ## STDEV in m_dev for Random walk
    0.80
 ## Number of nodes for cubic spline or number of step-changes for option 3
-   4
+   2
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1976 1980 1985 1994
+   1980 1985 
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS
