@@ -2923,7 +2923,16 @@ REPORT_SECTION
 	REPORT(log_slx_discard);
 	
 	REPORT(F);
-
+  dmatrix effN(1,nSizeComps,1,nSizeCompRows);
+  // Compute effective N's
+	for ( int kk = 1; kk <= nSizeComps; kk++ )
+	{
+		for ( int ii = 1; ii <= nSizeCompRows(kk); ii++ )
+		{
+			effN(kk,ii) = Eff_N(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
+		}
+	}
+	REPORT(effN);
 	for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 	{
 		for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
@@ -3210,6 +3219,19 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,ssb(nyr));
 	spr_cofl = ptrSPR->get_cofl(_N);
 
+	/**
+	 * @brief calculate effective sample size 
+	 * @details Calculate the effective sample size 
+	 *
+	 *  ARGS:
+	 *  @param observed proportions
+	 *  @param predicted proportions
+	 */
+FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
+  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
+  double vtmp;
+  vtmp = value(norm2(rtmp)/size_count(rtmp));
+  return 1./vtmp;
 
 RUNTIME_SECTION
   maximum_function_evaluations 500,   800,   1500,  25000, 25000
