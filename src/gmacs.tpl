@@ -2923,6 +2923,8 @@ REPORT_SECTION
 	REPORT(log_slx_discard);
 	
 	REPORT(F);
+	REPORT(d3_pre_size_comps);
+	REPORT(d3_obs_size_comps);
   dmatrix effN(1,nSizeComps,1,nSizeCompRows);
   // Compute effective N's
 	for ( int kk = 1; kk <= nSizeComps; kk++ )

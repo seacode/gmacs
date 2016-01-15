@@ -124,6 +124,6 @@ plot_size_comps(M, 10)
 ggsave(paste0(.FIGS, "lf_10.png"), width = ww, height = hh*0.5)
 dev.off()
 
-
-
 plot_datarange(M)
+ggsave(paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0)
+dev.off()

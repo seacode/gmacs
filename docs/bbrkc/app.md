@@ -81,10 +81,10 @@ bibliography:
 ##    2     3     1   0    090    10   200    0      10    200    2     1975   2014 
 ##    2     4     2   0    180    10   200    0      10    200   -2     1975   2014 
 ## # Gear-3 
-##    3     5     1   0    136   60    200    0       1    200   -3     1975   1981 
-##    3     6     2   0    182   60    200    0       1    200   -3     1975   1981 
-##    3     7     1   0     95   60    200    0       1    200   -3     1982   2014 
-##    3     8     2   0    140   60    200    0       1    200   -3     1982   2014 
+##    3     5     1   0    136   60    200    0       1    200    3     1975   1981 
+##    3     6     2   0    182   60    200    0       1    200    4     1975   1981 
+##    3     7     1   0     95   60    200    0       1    200    3     1982   2014 
+##    3     8     2   0    140   60    200    0       1    200    4     1982   2014 
 ## # Gear-4 
 ##    4     9     1   0     80    1    200    0       1    200   -4     1975   2014 
 ##    4     10    2   0     90    1    200    0       1    200   -4     1975   2014 
@@ -168,7 +168,7 @@ bibliography:
 ## ##      5 = Blocked changes (deviates constrained by variance AT specific knots relative to base) 
 ##   3 
 ## ## Phase of estimation 
-##   3 
+##  -3 
 ## ## STDEV in m_dev for Random walk 
 ##    0.80 
 ## ## Number of nodes for cubic spline or number of step-changes for option 3 
