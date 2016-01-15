@@ -188,7 +188,7 @@ DATA_SECTION
 				}
 			break;
 		}
-		WRITEDAT(size_breaks); WRITEDAT(lw_alfa); WRITEDAT(lw_beta); ECHO(mean_wt);
+		WRITEDAT(size_breaks); WRITEDAT(lw_type); WRITEDAT(lw_alfa); WRITEDAT(lw_beta); WRITEDAT(mean_wt_in); ECHO(mean_wt);
 	END_CALCS
 
 	// |-------------------------------|
@@ -476,6 +476,13 @@ DATA_SECTION
 	init_imatrix slx_nret(1,nsex,1,nfleet);    // boolian for rentention/discard
 
 	LOC_CALCS
+	   WriteCtl(slx_nsel_period_in); 
+	   WriteCtl(slx_bsex_in); 
+	   WriteCtl(slx_type_in); 
+	   WriteCtl(ret_nret_period_in); 
+	   WriteCtl(ret_bsex_in); 
+	   WriteCtl(ret_type_in); 
+	   WriteCtl(slx_nret); 
 		// Work out how many selectivities we are dealing with, nfleet * nsex, plus any additonal sex-specific or time period selectivities
 		nslx = 0;
 		for ( int k = 1; k <= nfleet; k++ )
@@ -535,7 +542,7 @@ DATA_SECTION
 	END_CALCS
 
 	init_matrix slx_control_in(1,nslx_rows_in,1,nslx_cols_in);
-
+	!! WriteCtl(slx_control_in);
 	imatrix slx_control(1,nslx,1,nslx_cols_in);
 	ivector slx_indx(1,nslx); // index for the first parameter for each gear type
 	ivector slx_gear(1,nslx); // index the gear type
@@ -671,7 +678,6 @@ DATA_SECTION
 		}
 		ECHO(slx_priors);
 	END_CALCS
-	!! WriteCtl(slx_nsel_period_in); WriteCtl(ret_nret_period_in); WriteCtl(slx_control_in); WriteCtl(slx_control);
 
 	// |---------------------------------------------------------|
 	// | PRIORS FOR CATCHABILITIES OF SURVEYS/INDICES            |
@@ -683,11 +689,11 @@ DATA_SECTION
 	vector prior_qtype(1,nSurveys);
 	vector cpue_lambda(1,nSurveys);
 	LOC_CALCS
+		WriteCtl(q_controls);
 		prior_qtype = column(q_controls,1);
 		prior_qbar  = column(q_controls,2);
 		prior_qsd   = column(q_controls,3);
 		cpue_lambda = column(q_controls,4);
-		WriteCtl(q_controls);
 		ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); ECHO(cpue_lambda);
 	END_CALCS
 
@@ -695,6 +701,7 @@ DATA_SECTION
 	// | ADDITIONAL SURVEY CV CONTROLS                           |
 	// |---------------------------------------------------------|
 	init_matrix cv_controls(1,nSurveys,1,7);
+	!!	WriteCtl(cv_controls);
 
 	vector add_cv_ival(1,nSurveys);
 	vector add_cv_lb(1,nSurveys);
@@ -732,6 +739,7 @@ DATA_SECTION
 	vector log_pen_fbar(1,nfleet);
 	matrix pen_fstd(1,2,1,nfleet);
 	LOC_CALCS
+		WriteCtl(f_controls);
 		pen_fbar = column(f_controls,1);
 		log_pen_fbar = log(pen_fbar + 1.0e-14);
 		for ( int i = 1; i <= 2; i++ )
@@ -751,7 +759,6 @@ DATA_SECTION
 				}
 			}
 		}
-		WriteCtl(f_controls);
 		ECHO(f_phz);
 	END_CALCS
 
@@ -774,6 +781,11 @@ DATA_SECTION
 	ivector nvn_phz(1,nSizeComps);
 
 	LOC_CALCS
+		WriteCtl(nAgeCompType); 
+		WriteCtl(bTailCompression); 
+		WriteCtl(nvn_ival_in); 
+		WriteCtl(nvn_phz_in);
+		WriteCtl(iCompAggregator);
 		nSizeCompCols.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
@@ -884,8 +896,6 @@ DATA_SECTION
 			   d3_obs_size_comps(k,i) /= sum(d3_obs_size_comps(k,i));
 			}
 		}
-		WriteCtl(nSizeComps); WriteCtl(nSizeCompRows); WriteCtl(nSizeCompCols); WriteCtl(d3_obs_size_comps);
-		WriteCtl(nAgeCompType); WriteCtl(bTailCompression); WriteCtl(nvn_phz);
 		ECHO(d3_obs_size_comps);
 	END_CALCS
 
@@ -911,6 +921,7 @@ DATA_SECTION
 	init_int m_nNodes;
 	init_ivector m_nodeyear(1,m_nNodes);
 	LOC_CALCS
+		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear);
 		switch ( m_type )
 		{
 			case 0:
@@ -930,7 +941,6 @@ DATA_SECTION
 				nMdev = m_nNodes/2;
 		    break;
 		}
-		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear);
 	END_CALCS
 
 	// |---------------------------------------------------------|
