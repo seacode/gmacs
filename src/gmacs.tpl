@@ -2578,7 +2578,7 @@ FUNCTION calculate_prior_densities
 			break;
 			case 1: // Prior on analytical soln, log-normal
 				priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
-				// cout << "q, density "<<survey_q(i) <<" "<<priorDensity(iprior)<<endl;
+				// cout << "q, density " << survey_q(i) << " " << priorDensity(iprior) << endl;
 			break;
 		}
 		if ( last_phase() )
