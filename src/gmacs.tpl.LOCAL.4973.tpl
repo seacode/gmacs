@@ -1163,8 +1163,6 @@ PARAMETER_SECTION
 	vector res_recruit(syr,nyr); ///> vector of estimated recruits
 	vector          xi(syr,nyr); ///> vector of residuals for SRR
 
-
-
 	matrix pre_catch(1,nCatchDF,1,nCatchRows); ///> predicted catch (Baranov eq)
 	matrix res_catch(1,nCatchDF,1,nCatchRows); ///> catch residuals in log-space
 	matrix pre_catch_out(1,nCatchDF,syr,nyr-1);
@@ -1301,7 +1299,6 @@ FUNCTION calc_sdreport
 	calc_initial_numbers_at_length();      
 	update_population_numbers_at_length(); 
 	sd_log_dyn_Bzero    = log(calc_ssb());
-	sd_log_dyn_Bzero    = sd_log_ssb     ;
 	calc_total_mortality();     
 
 	/**
@@ -1666,7 +1663,6 @@ FUNCTION calc_natural_mortality
 				}
 			break;                        
 		}
-
 		// Update M by year.
 		if (m_type < 4) //add by Jie Zheng
 		{
@@ -3314,13 +3310,15 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	 *
 	 *  @param observed proportions
 	 *  @param predicted proportions
+<<<<<<< HEAD
 	**/
 FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
 	dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
 	double vtmp;
 	vtmp = value(norm2(rtmp)/size_count(rtmp));
 	return 1./vtmp;
-
+=======
+	 */
 FUNCTION double mn_length(const dvector& pobs)
   double mobs = (pobs*mid_points);
   return mobs;
@@ -3401,7 +3399,8 @@ FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
   double vtmp;
   vtmp = value(norm2(rtmp)/size_count(rtmp));
   return 1./vtmp;
-
+  
+>>>>>>> develop
 
 RUNTIME_SECTION
     maximum_function_evaluations 500,   800,   1500,  25000, 25000

@@ -1163,8 +1163,6 @@ PARAMETER_SECTION
 	vector res_recruit(syr,nyr); ///> vector of estimated recruits
 	vector          xi(syr,nyr); ///> vector of residuals for SRR
 
-
-
 	matrix pre_catch(1,nCatchDF,1,nCatchRows); ///> predicted catch (Baranov eq)
 	matrix res_catch(1,nCatchDF,1,nCatchRows); ///> catch residuals in log-space
 	matrix pre_catch_out(1,nCatchDF,syr,nyr-1);
@@ -1666,7 +1664,6 @@ FUNCTION calc_natural_mortality
 				}
 			break;                        
 		}
-
 		// Update M by year.
 		if (m_type < 4) //add by Jie Zheng
 		{
@@ -2604,6 +2601,7 @@ FUNCTION calculate_prior_densities
 	iprior = ntheta + nGrwth + 1;
 	for ( int i = 1; i <= nSurveys; i++ )
 	{
+<<<<<<< HEAD
 		//itype = int(prior_qtype(i));
 		priorDensity(iprior) = get_prior_pdf(prior_qtype(i), survey_q(i), prior_p1(i), prior_p2(i));
 		//switch ( itype )
@@ -2616,6 +2614,19 @@ FUNCTION calculate_prior_densities
 		//		// cout << "q, density " << survey_q(i) << " " << priorDensity(iprior) << endl;
 		//	break;
 		//}
+=======
+		itype = int(prior_qtype(i));
+		switch ( itype )
+		{
+			case 0: // Analytical soln, no prior (uniform, uniformative)
+				priorDensity(iprior) = dunif(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
+			break;
+			case 1: // Prior on analytical soln, log-normal
+				priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
+				// cout << "q, density "<<survey_q(i) <<" "<<priorDensity(iprior)<<endl;
+			break;
+		}
+>>>>>>> develop
 		if ( last_phase() )
 		{
 			priorDensity(iprior) = priorDensity(iprior) ;
@@ -3314,13 +3325,15 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	 *
 	 *  @param observed proportions
 	 *  @param predicted proportions
+<<<<<<< HEAD
 	**/
 FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
 	dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
 	double vtmp;
 	vtmp = value(norm2(rtmp)/size_count(rtmp));
 	return 1./vtmp;
-
+=======
+	 */
 FUNCTION double mn_length(const dvector& pobs)
   double mobs = (pobs*mid_points);
   return mobs;
@@ -3401,7 +3414,8 @@ FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
   double vtmp;
   vtmp = value(norm2(rtmp)/size_count(rtmp));
   return 1./vtmp;
-
+  
+>>>>>>> develop
 
 RUNTIME_SECTION
     maximum_function_evaluations 500,   800,   1500,  25000, 25000
