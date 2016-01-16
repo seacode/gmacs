@@ -64,7 +64,7 @@ plot_recruitment(M)
 ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
 dev.off()
 
-plot_size_transition(M)
+plot_size_transition(M, females = TRUE)
 ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
@@ -122,6 +122,46 @@ dev.off()
 
 plot_size_comps(M, 10)
 ggsave(paste0(.FIGS, "lf_10.png"), width = ww, height = hh*0.5)
+dev.off()
+
+plot_size_comps(M, 1, res = TRUE)
+ggsave(paste0(.FIGS, "lf_1b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 2, res = TRUE)
+ggsave(paste0(.FIGS, "lf_2b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 3, res = TRUE)
+ggsave(paste0(.FIGS, "lf_3b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 4, res = TRUE)
+ggsave(paste0(.FIGS, "lf_4b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 5, res = TRUE)
+ggsave(paste0(.FIGS, "lf_5b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 6, res = TRUE)
+ggsave(paste0(.FIGS, "lf_6b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 7, res = TRUE)
+ggsave(paste0(.FIGS, "lf_7b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 8, res = TRUE)
+ggsave(paste0(.FIGS, "lf_8b.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 9, res = TRUE)
+ggsave(paste0(.FIGS, "lf_9b.png"), width = ww, height = hh*0.5)
+dev.off()
+
+plot_size_comps(M, 10, res = TRUE)
+ggsave(paste0(.FIGS, "lf_10b.png"), width = ww, height = hh*0.5)
 dev.off()
 
 plot_datarange(M)
