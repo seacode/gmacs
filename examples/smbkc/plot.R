@@ -61,8 +61,10 @@ dev.off()
 plot_natural_mortality(M, plt_knots = FALSE, knots = c(1976, 1980, 1985, 1994))
 ggsave(paste0(.FIGS, "M_t.png"), width = ww, height = hh)
 dev.off()
-M[[1]]
-plot_dynB0(M,ylim=c(0,30000))
+
+#M[[1]]
+#plot_dynB0(M, ylim = c(0,30000))
+
 plot_ssb(M)
 ggsave(paste0(.FIGS, "ssb.png"), width = ww, height = hh)
 dev.off()

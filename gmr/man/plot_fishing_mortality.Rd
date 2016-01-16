@@ -20,6 +20,6 @@ plot of fishing mortality (F)
 Plot fishing mortality (F)
 }
 \author{
-SJD Martell, DN Webber
+JN Ianelli, SJD Martell, DN Webber
 }
 
