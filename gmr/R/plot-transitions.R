@@ -10,7 +10,7 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_growth_transition <- function(M, xlab = "Size-class", ylab = "P(size transition | molt)", slab = "Sex")
+plot_growth_transition <- function(M, xlab = "Size-class (mm)", ylab = "P(size transition | molt)", slab = "Sex")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -59,7 +59,7 @@ plot_growth_transition <- function(M, xlab = "Size-class", ylab = "P(size transi
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_size_transition <- function(M, xlab = "Size-class", ylab = "P(size transition | molt)",
+plot_size_transition <- function(M, xlab = "Size-class (mm)", ylab = "P(size transition | molt)",
                                  slab = "Sex", females = FALSE)
 {
     xlab <- paste0("\n", xlab)
