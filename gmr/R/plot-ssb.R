@@ -8,7 +8,7 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-.get_dynB0 <- function(M)
+.get_ssb_df <- function(M)
 {
     n <- length(M)
     mdf <- NULL
@@ -16,15 +16,15 @@
     {
         A <- M[[i]]
         df <- data.frame(Model = names(M)[i],
-                         par = A$fit$names,
-	                 log_ssb = A$fit$est,
-                         log_sd = A$fit$std)
-        df <- subset(df, par == "sd_log_dyn_Bzero")
+                           par = A$fit$names,
+	                     log_ssb = A$fit$est,
+                        log_sd = A$fit$std)
+        df      <- subset(df, par == "sd_log_ssb")
         df$year <- A$mod_yrs
-        df$ssb <- exp(df$log_ssb)
-        df$lb <- exp(df$log_ssb - 1.96*df$log_sd)
-        df$ub <- exp(df$log_ssb + 1.96*df$log_sd)
-        mdf <- rbind(mdf, df)
+        df$ssb  <- exp(df$log_ssb)
+        df$lb   <- exp(df$log_ssb - 1.96*df$log_sd)
+        df$ub   <- exp(df$log_ssb + 1.96*df$log_sd)
+        mdf     <- rbind(mdf, df)
     }
     return(mdf)
 }
