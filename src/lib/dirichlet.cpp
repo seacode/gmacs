@@ -30,35 +30,9 @@ const dvariable acl::dirichlet::ddirichlet(const dvar_vector& log_vn, const dmat
 {
 	if ( o.colsize() != p.colsize() || o.rowsize() != p.rowsize() )
 	{
-		cerr << "Error in dirichlet.cpp, "
-		" observed and predicted matrixes"
-		" are not the same size" << endl;
+		cerr << "Error in dirichlet.cpp, observed and predicted matrixes are not the same size" << endl;
 		ad_exit(1);
 	}
-
-	/*
-	dvar_vector vn = mfexp(log_vn);
-	dvariable ff = 0;
-	int r1 = o.rowmin();
-	int r2 = o.rowmax();
-	for ( int i = r1; i <= r2; i++ )
-	{
-  		int c1 = o(i).indexmin();
-	  	int c2 = o(i).indexmax();
-		//scale observed numbers by effective sample size.
-		dvar_vector sobs = vn(i) * o(i)/sum(o(i));  
-		ff -= gammln(vn(i));
-		for ( int j = c1; j <= c2; j++ )
-		{
-			if ( value(sobs(j)) > 0.0 )
-			{
-				ff += gammln(sobs(j));
-			}
-		}
-		ff -= sobs * log(TINY + p(i));
-	}
-	return ff;
-	*/
 
 	dvar_vector vn = mfexp(log_vn);
 	dvariable ff = 0.0;
@@ -89,40 +63,6 @@ const dvariable acl::dirichlet::ddirichlet(const dvar_vector& log_vn, const dmat
 	}
 	return -ff;
 }
-
-/*
-function loglike_dirichlet(alpha::Vector{Float64}, x::Vector{Float64})
-    if all(alpha .> 0)
-        return logpdf(Dirichlet(alpha), x)
-    else
-        return -Inf
-    end
-    # This is only slightly faster as does not do a check
-    #lmnB   = 0.0
-    #s      = 0.0
-    #alpha0 = 0.0
-    #for i in 1:length(alpha)
-    #    ai = alpha[i]
-    #    alpha0 += ai
-    #    lmnB += lgamma(ai)
-    #    s += (ai - 1.0) * log(x[i])
-    #end
-    #lmnB -= lgamma(alpha0)
-    #return s - lmnB
-end
-*/
-	/*
-	cout << endl << "o: " << endl;
-	cout << o << endl;
-	cout << "p: " << endl;
-	cout << p << endl;
-	cout << "vn: " << vn << endl;
-	cout << "aj: " << aj << endl;
-	cout << "alpha0: " << alpha0 << endl;
-	cout << "lmnB: " << lmnB << endl;
-	cout << "sj: " << sj << endl;
-	cout << "ff: " << ff << endl;
-	*/
 
 const dmatrix acl::dirichlet::pearson_residuals(const dvar_vector& log_vn, const dmatrix& o, const dvar_matrix p) const
 {

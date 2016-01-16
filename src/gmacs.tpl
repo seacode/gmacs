@@ -285,17 +285,17 @@ DATA_SECTION
 					if ( i == dCatchData(k,ii,1) ) // year index
 					{
 						j = ii;
-						obs_catch_out(k,i) = dCatchData(k,ii,5);
+						obs_catch_out(k,i)    = dCatchData(k,ii,5);
 						dCatchData_out(k,i,5) = dCatchData(k,ii,5);
 						dCatchData_out(k,i,6) = dCatchData(k,ii,6);
 					}
 				}
-				dCatchData_out(k,i,2) = dCatchData(k,j,2);
-				dCatchData_out(k,i,3) = dCatchData(k,j,3);
-				dCatchData_out(k,i,4) = dCatchData(k,j,4);
-				dCatchData_out(k,i,7) = dCatchData(k,j,7);
-				dCatchData_out(k,i,8) = dCatchData(k,j,8);
-				dCatchData_out(k,i,9) = dCatchData(k,j,9);
+				dCatchData_out(k,i,2)  = dCatchData(k,j,2);
+				dCatchData_out(k,i,3)  = dCatchData(k,j,3);
+				dCatchData_out(k,i,4)  = dCatchData(k,j,4);
+				dCatchData_out(k,i,7)  = dCatchData(k,j,7);
+				dCatchData_out(k,i,8)  = dCatchData(k,j,8);
+				dCatchData_out(k,i,9)  = dCatchData(k,j,9);
 				dCatchData_out(k,i,10) = dCatchData(k,j,10);
 				dCatchData_out(k,i,11) = dCatchData(k,j,11);
 			}
@@ -656,6 +656,7 @@ DATA_SECTION
 				int jj = kk + (j - 1);
 				slx_par(k,j)      = slx_control_in(jj,5); // init
 				slx_priors(k,j,1) = slx_control_in(jj,8); // prior
+				// If a uniform prior is specified then use the lb and ub rather than p1 and p2
 				if ( slx_priors(k,j,1) == 0 )
 				{
 					slx_priors(k,j,2) = slx_control_in(jj,6); // p1
@@ -682,26 +683,57 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | PRIORS FOR CATCHABILITIES OF SURVEYS/INDICES            |
 	// |---------------------------------------------------------|
-	init_matrix q_controls(1,nSurveys,1,4);
+	init_matrix q_controls(1,nSurveys,1,9);
 
-	vector prior_qbar(1,nSurveys);
-	vector prior_qsd(1,nSurveys);
-	vector prior_qtype(1,nSurveys);
+	vector q_ival(1,nSurveys);
+	vector q_lb(1,nSurveys);
+	vector q_ub(1,nSurveys);
+	ivector q_phz(1,nSurveys);
+	ivector prior_qtype(1,nSurveys);
+	vector prior_p1(1,nSurveys);
+	vector prior_p2(1,nSurveys);
+	ivector q_anal(1,nSurveys);
 	vector cpue_lambda(1,nSurveys);
 	LOC_CALCS
 		WriteCtl(q_controls);
-		prior_qtype = column(q_controls,1);
-		prior_qbar  = column(q_controls,2);
-		prior_qsd   = column(q_controls,3);
-		cpue_lambda = column(q_controls,4);
-		ECHO(prior_qtype); ECHO(prior_qbar); ECHO(prior_qsd); ECHO(cpue_lambda);
+		q_ival      = column(q_controls,1);
+		q_lb        = column(q_controls,2);
+		q_ub        = column(q_controls,3);
+		q_phz       = ivector(column(q_controls,4));
+		prior_qtype = ivector(column(q_controls,5));
+		prior_p1    = column(q_controls,6);
+		prior_p2    = column(q_controls,7);
+		q_anal      = ivector(column(q_controls,8));
+		cpue_lambda = column(q_controls,9);
+
+		for ( int k = 1; k <= nSurveys; k++ )
+		{
+			// If a uniform prior is specified then use the lb and ub rather than p1 and p2.
+			if ( prior_qtype(k) == 0 )
+			{
+				prior_p1(k) = q_lb(k);
+				prior_p2(k) = q_ub(k);
+			}
+			if ( q_anal(k) == 1 )
+			{
+				if ( prior_qtype(k) != 0 || prior_qtype(k) != 2 )
+				{
+					cout << "Error: you're only allowed to use a uniform or lognormal prior if the analytic q option is being used," << endl;
+					cout << "       you can either specify a uniform or lognormal prior for q or switch analytic q off." << endl;
+					exit(1);					
+				}
+				// If we are using analytic q then turn off estimating this parameter by changing the estimation phase to be -ve.
+				q_phz(k) = -1;
+			}
+		}
+		ECHO(prior_qtype); ECHO(prior_p1); ECHO(prior_p2); ECHO(cpue_lambda);
 	END_CALCS
 
 	// |---------------------------------------------------------|
 	// | ADDITIONAL SURVEY CV CONTROLS                           |
 	// |---------------------------------------------------------|
 	init_matrix cv_controls(1,nSurveys,1,7);
-	!!	WriteCtl(cv_controls);
+	!! WriteCtl(cv_controls);
 
 	vector add_cv_ival(1,nSurveys);
 	vector add_cv_lb(1,nSurveys);
@@ -723,9 +755,19 @@ DATA_SECTION
 		prior_add_cv_type = ivector(column(cv_controls,5));
 		prior_add_cv_p1   = column(cv_controls,6);
 		prior_add_cv_p2   = column(cv_controls,7);
-		log_add_cv_ival = log(add_cv_ival);
-		log_add_cv_lb = log(add_cv_lb);
-		log_add_cv_ub = log(add_cv_ub);
+		log_add_cv_ival   = log(add_cv_ival);
+		log_add_cv_lb     = log(add_cv_lb);
+		log_add_cv_ub     = log(add_cv_ub);
+
+		for ( int k = 1; k <= nSurveys; k++ )
+		{
+			// If a uniform prior is specified then use the lb and ub rather than p1 and p2.
+			if ( prior_add_cv_type(k) == 0 )
+			{
+				prior_add_cv_p1(k) = add_cv_lb(k);
+				prior_add_cv_p2(k) = add_cv_ub(k);
+			}
+		}
 		ECHO(prior_add_cv_type); ECHO(prior_add_cv_p1); ECHO(prior_add_cv_p2);
 	END_CALCS
 
@@ -790,15 +832,11 @@ DATA_SECTION
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
 			int k = iCompAggregator(kk);
-			// Currently this only works if the number of rows in
-			// each size composition group are the same and have the
-			// same years. If not then gmacs throws an error.
+			// Currently this only works if the number of rows in each size composition group are the same and have the same years. If not then gmacs throws an error.
 			nSizeCompRows(k) = nSizeCompRows_in(kk);
 			// We are appending the arrays horizontally.
 			nSizeCompCols(k) += nSizeCompCols_in(kk);
-			// Again, we are using only the last specification here,
-			// may want to add a check to ensure the user specifies
-			// that these are the same and throw an error if not.
+			// Again, we are using only the last specification here, may want to add a check to ensure the user specifies that these are the same and throw an error if not.
 			nAgeCompType(k) = nAgeCompType_in(kk);
 			bTailCompression(k) = bTailCompression_in(kk);
 			log_nvn_ival(k) = log(nvn_ival_in(kk));
@@ -827,7 +865,8 @@ DATA_SECTION
 			{
 				cout << "Error: mismatch in initial value of effctive sample size for size-compositons being aggregated" << endl;
 				exit(1);
-			}			if ( nvn_phz(k) != nvn_phz_in(kk) )
+			}
+			if ( nvn_phz(k) != nvn_phz_in(kk) )
 			{
 				cout << "Error: mismatch in phase for estimation of effctive sample size for size-compositons being aggregated" << endl;
 				exit(1);
@@ -843,8 +882,7 @@ DATA_SECTION
 	LOC_CALCS
 		int i,j;
 		int oldk = 9999;
-		// This aggregates the size composition data by appending size
-		// comps horizontally
+		// This aggregates the size composition data by appending size comps horizontally
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
 			int k = iCompAggregator(kk);
@@ -863,8 +901,7 @@ DATA_SECTION
 				}
 			}
 		}
-		// The size composition sample sizes are calculated as the sum
-		// of the aggregated sample sizes
+		// The size composition sample sizes are calculated as the sum of the aggregated sample sizes
 		size_comp_sample_size.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
@@ -1012,6 +1049,7 @@ INITIALIZATION_SECTION
 	Grwth        Grwth_ival;
 	log_fbar     log_pen_fbar;
 	log_vn       log_nvn_ival;
+	survey_q     q_ival;
 	log_add_cv   log_add_cv_ival;
 
 PARAMETER_SECTION
@@ -1090,6 +1128,9 @@ PARAMETER_SECTION
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
 
+	// Catchability coefficient (q)
+	init_bounded_number_vector survey_q(1,nSurveys,q_lb,q_ub,q_phz);	
+
 	// Addtional CV for surveys/indices
 	init_bounded_number_vector log_add_cv(1,nSurveys,log_add_cv_lb,log_add_cv_ub,cv_phz);
 
@@ -1121,8 +1162,6 @@ PARAMETER_SECTION
 	vector    recruits(syr,nyr); ///> vector of estimated recruits
 	vector res_recruit(syr,nyr); ///> vector of estimated recruits
 	vector          xi(syr,nyr); ///> vector of residuals for SRR
-
-	vector survey_q(1,nSurveys); ///> scalers for relative abundance indices (q)
 
 	matrix pre_catch(1,nCatchDF,1,nCatchRows); ///> predicted catch (Baranov eq)
 	matrix res_catch(1,nCatchDF,1,nCatchRows); ///> catch residuals in log-space
@@ -1514,7 +1553,7 @@ FUNCTION calc_growth_increments
   	 * Issue 112 details some of evolution of code development here
 	**/
 FUNCTION calc_growth_transition
-	//cout<<"Start of calc_growth_transition"<<endl;
+	//cout << "Start of calc_growth_transition" << endl;
 	int h,l,ll;
 	
 	dvariable dMeanSizeAfterMolt;
@@ -1551,7 +1590,6 @@ FUNCTION calc_growth_transition
 	 * @return NULL
 	 *
 	 * todo:
-	 *      - Add time varying components
 	 *      - Size-dependent mortality
 	**/
 FUNCTION calc_natural_mortality
@@ -1575,7 +1613,7 @@ FUNCTION calc_natural_mortality
 		  	break;
 			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
-			  break;
+			break;
 			case 2: // cubic splines
 			{
 				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
@@ -1584,58 +1622,51 @@ FUNCTION calc_natural_mortality
 				vcubic_spline_function csf(iyr,m_dev);
 				delta = csf(jyr);
 			}
-			  break;
-			/*
-			Jim Question about below.  I'm not sure if you were intending to
-			have this set up as a random walk, where the shift occurs in a specifc year
-			to a new state.  I think what Jie had  was just a block wiht a different
-			M and it then returns back to the previous state.
-			*/
+			break;
 			case 3: // Specific break points
-			  for ( int idev = 1; idev <= nMdev; idev++ )
-			  {
-  				delta(m_nodeyear(idev)) = m_dev(idev);
-			  }
-			  break;
-      // Modifying by Jie Zheng for specific time blocks
+				for ( int idev = 1; idev <= nMdev; idev++ )
+				{
+  					delta(m_nodeyear(idev)) = m_dev(idev);
+				}
+			break;
+			// Modifying by Jie Zheng for specific time blocks
 			case 4: // time blocks
-			  for ( int idev = 1; idev <= nMdev; idev++ )
-			  {
-			  	// Is this syntax for split sex?
-			    for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
-			  	{
-            delta(i) = m_dev(idev);
-            for ( h = 1; h <= nsex; h++ )
-	          {
-              M(h)(i)  = mfexp(m_dev(idev));
-            }
-          }
-			  }
-			  break;                        
-      // Case for specific years
+				for ( int idev = 1; idev <= nMdev; idev++ )
+				{
+					// Is this syntax for split sex?
+					for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
+					{
+						delta(i) = m_dev(idev);
+						for ( h = 1; h <= nsex; h++ )
+						{
+							M(h)(i)  = mfexp(m_dev(idev));
+						}
+					}
+				}
+			break;
+			// Case for specific years
 			case 5: // time blocks
-			  for ( int idev = 1; idev <= nMdev; idev++ )
-			  {
-  				delta(m_nodeyear(idev)) = m_dev(idev);
-			  }
-			  for ( int h = 1; h <= nsex; h++ )
-			  {
-			  	for ( int i = syr+1; i <= nyr; i++ )
-			  	{
-	          M(h)(i)  = M(h)(syr) * mfexp(delta(i)); // Deltas are devs from base value (not a walk)                                                   
-			  	}
-			  }
-			  break;                        
+				for ( int idev = 1; idev <= nMdev; idev++ )
+				{
+  					delta(m_nodeyear(idev)) = m_dev(idev);
+				}
+				for ( int h = 1; h <= nsex; h++ )
+				{
+			 		for ( int i = syr+1; i <= nyr; i++ )
+					{
+						M(h)(i)  = M(h)(syr) * mfexp(delta(i)); // Deltas are devs from base value (not a walk)
+					}
+				}
+			break;                        
 		}
-
 		// Update M by year.
-		if (m_type < 4)                                                    //add by Jie Zheng
+		if (m_type < 4) //add by Jie Zheng
 		{
 			for ( int h = 1; h <= nsex; h++ )
 			{
 				for ( int i = syr+1; i <= nyr; i++ )
 				{
-	        M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
+					M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
 				}
 			}
 		}
@@ -1864,9 +1895,7 @@ FUNCTION update_population_numbers_at_length
 	if ( bInitializeUnfished )
 	{
 		recruits(syr+1,nyr) = mfexp(logR0);
-	}
-	else
-	{
+	} else {
 		recruits(syr+1,nyr) = mfexp(logRbar);	
 	}
 
@@ -2064,9 +2093,8 @@ FUNCTION calc_predicted_catch
 				tmp_ft = ft(k)(h)(i);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
 				pre_catch(kk,j) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0-mfexp(-Z(h)(i))), Z(h)(i));
-			}
-			else // sexes combibed
-			{
+			} else {
+				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
 				{
 					nal.initialize();
@@ -2162,9 +2190,8 @@ FUNCTION calc_predicted_catch_out
 				tmp_ft = ft(k)(h)(i);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
 				pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i))),Z(h)(i));
-			}
-			else // sexes combibed
-			{
+			} else {
+				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
 				{
 					nal.initialize();
@@ -2240,15 +2267,11 @@ FUNCTION calc_relative_abundance
 					for ( int o = 1; o <= nshell; o++ )
 					{
 						ig   = pntr_hmo(h,m,o);
-						nal +=  (unit==1)?
-								elem_prod(d3_N(ig)(i),mean_wt(h)):
-								d3_N(ig)(i);
+						nal += ( unit == 1 ) ? elem_prod(d3_N(ig)(i),mean_wt(h)) : d3_N(ig)(i);
 					}
 				}
 				V(j) = nal * sel;
-			}
-			else
-			{
+			} else {
 				for ( h = 1; h <= nsex; h++ )
 				{
 					sel = mfexp(log_slx_capture(g)(h)(i));
@@ -2257,9 +2280,7 @@ FUNCTION calc_relative_abundance
 						for ( int o = 1; o <= nshell; o++ )
 						{
 							ig   = pntr_hmo(h,m,o);
-							nal +=  (unit==1)?
-									elem_prod(d3_N(ig)(i),mean_wt(h)):
-									d3_N(ig)(i);
+							nal += ( unit == 1 ) ? elem_prod(d3_N(ig)(i),mean_wt(h)) : d3_N(ig)(i);
 						}
 					}
 					V(j) += nal * sel;
@@ -2267,11 +2288,20 @@ FUNCTION calc_relative_abundance
 			}
 			// cout<<"SurveySel "<<sel<<endl;
 		} // nSurveyRows(k)
-		dvar_vector zt = log(obs_cpue(k)) - log(V);
-		dvariable zbar = mean(zt);
-		res_cpue(k)    = zt - zbar;
-		survey_q(k)    = mfexp(zbar);
-		pre_cpue(k)    = survey_q(k) * V;
+		switch ( q_anal(k) )
+		{
+			case 0: // q as a parameter
+				pre_cpue(k) = survey_q(k) * V;
+				res_cpue(k) = log(obs_cpue(k)) - log(pre_cpue(k));
+			break;
+			case 1:	// analytic q
+				dvar_vector zt = log(obs_cpue(k)) - log(V);
+				dvariable zbar = mean(zt);
+				res_cpue(k)    = zt - zbar;
+				survey_q(k)    = mfexp(zbar);
+				pre_cpue(k)    = survey_q(k) * V;
+			break;
+		}
 	}
 
 
@@ -2547,17 +2577,18 @@ FUNCTION calculate_prior_densities
 	iprior = ntheta + nGrwth + 1;
 	for ( int i = 1; i <= nSurveys; i++ )
 	{
-		itype = int(prior_qtype(i));
-		switch ( itype )
-		{
-			case 0: // Analytical soln, no prior (uniform, uniformative)
-				priorDensity(iprior) = dunif(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
-			break;
-			case 1: // Prior on analytical soln, log-normal
-				priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
-				// cout << "q, density " << survey_q(i) << " " << priorDensity(iprior) << endl;
-			break;
-		}
+		//itype = int(prior_qtype(i));
+		priorDensity(iprior) = get_prior_pdf(prior_qtype(i), survey_q(i), prior_p1(i), prior_p2(i));
+		//switch ( itype )
+		//{
+		//	case 0: // Analytical soln, no prior (uniform, uniformative)
+		//		//priorDensity(iprior) = dunif(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
+		//	break;
+		//	case 1: // Prior on analytical soln, log-normal
+		//		//priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
+		//		// cout << "q, density " << survey_q(i) << " " << priorDensity(iprior) << endl;
+		//	break;
+		//}
 		if ( last_phase() )
 		{
 			priorDensity(iprior) = priorDensity(iprior) ;
@@ -3043,7 +3074,7 @@ REPORT_SECTION
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
 	REPORT(dMoltInc);
-	if( bUseEmpiricalGrowth )
+	if ( bUseEmpiricalGrowth )
 	{
 		dvector pMoltInc = dMoltInc;
 		REPORT(pMoltInc);
@@ -3059,11 +3090,11 @@ REPORT_SECTION
 	d3_array tG(1,nsex,1,nclass,1,nclass);
 	d3_array tS(1,nsex,1,nclass,1,nclass);
 
-	for( int h = 1; h <= nsex; h++ )
+	for ( int h = 1; h <= nsex; h++ )
 	{
 		tG(h)=trans(value(growth_transition(h)));
 		tS(h)=trans(value(P(h) * growth_transition(h)));
-		for( int l = 1; l <= nclass; ++l )
+		for ( int l = 1; l <= nclass; ++l )
 		{
 			tS(h)(l,l) += value(1.0-P(h)(l,l));
 		}
@@ -3225,29 +3256,28 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	 * @brief calculate effective sample size 
 	 * @details Calculate the effective sample size 
 	 *
-	 *  ARGS:
 	 *  @param observed proportions
 	 *  @param predicted proportions
-	 */
+	**/
 FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
-  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
-  double vtmp;
-  vtmp = value(norm2(rtmp)/size_count(rtmp));
-  return 1./vtmp;
+	dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
+	double vtmp;
+	vtmp = value(norm2(rtmp)/size_count(rtmp));
+	return 1./vtmp;
 
 RUNTIME_SECTION
-  maximum_function_evaluations 500,   800,   1500,  25000, 25000
-  convergence_criteria         1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4
+    maximum_function_evaluations 500,   800,   1500,  25000, 25000
+    convergence_criteria         1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4
 
 GLOBALS_SECTION
 	/**
 	 * @file gmacs.cpp
-	 * @authors Steve Martell and Jim Ianelli
+	 * @authors Steve Martell, Jim Ianelli, Darcy Webber
 	 */
 	#include <admodel.h>
 	#include <time.h>
-  adstring like_names;
-  adstring prior_names;
+	adstring like_names;
+	adstring prior_names;
 	//#include "./test/comm.h"
 	//#include <contrib.h>
 	#if defined __APPLE__ || defined __linux
@@ -3275,9 +3305,9 @@ GLOBALS_SECTION
 	 * \def COUT(object)
 	 * Prints object to screen during runtime.
 	 * cout <<setw(6) << setprecision(3) << setfixed() << x << endl;
-	 */
-	 #undef COUT
-	 #define COUT(object) cout << #object "\n" << setw(6) \
+	**/
+	#undef COUT
+	#define COUT(object) cout << #object "\n" << setw(6) \
 	 << setprecision(3) << setfixed() << object << endl;
 
 	#undef MAXIT
@@ -3289,45 +3319,45 @@ GLOBALS_SECTION
 	\def MCout(object)
 	Prints name and value of \a object on echoinput %ofstream file.
 	*/
-	 #undef MCout
-	 #define MCout(object) mcout << #object << " " << object << endl;
+	#undef MCout
+	#define MCout(object) mcout << #object << " " << object << endl;
 
 	/**
 	\def ECHO(object)
 	Prints name and value of \a object on echoinput %ofstream file.
 	*/
-	 #undef ECHO
-	 #define ECHO(object) echoinput << #object << "\n" << object << endl;
+	#undef ECHO
+	#define ECHO(object) echoinput << #object << "\n" << object << endl;
 
-  /**
+	/**
 	\def WriteFileName(object)
 	Prints name and value of \a object on control %ofstream file.
 	*/
-	 #undef WriteFileName
-	 #define WriteFileName(object) ECHO(object); gmacs_files << "# " << #object << "\n" << object << endl;
+	#undef WriteFileName
+	#define WriteFileName(object) ECHO(object); gmacs_files << "# " << #object << "\n" << object << endl;
 
-  /**
+	/**
 	\def WriteCtl(object)
 	Prints name and value of \a object on control %ofstream file.
 	*/
-	 #undef WriteCtl
-	 #define WriteCtl(object) ECHO(object); gmacs_ctl << "# " << #object << "\n" << object << endl;
+	#undef WriteCtl
+	#define WriteCtl(object) ECHO(object); gmacs_ctl << "# " << #object << "\n" << object << endl;
 
-  /**
+	/**
 	\def WRITEDAT(object)
 	Prints name and value of \a object on data %ofstream file.
 	*/
-	 #undef WRITEDAT
-	 #define WRITEDAT(object) ECHO(object); gmacs_data << "# " << #object << "\n" << object << endl;
+	#undef WRITEDAT
+	#define WRITEDAT(object) ECHO(object); gmacs_data << "# " << #object << "\n" << object << endl;
 
-	 // Open output files using ofstream
-	 // This one for easy reading all input to R
-	 ofstream mcout("mcout.rep");
-	 ofstream echoinput("checkfile.rep");
-	 // These ones for compatibility with ADMB (# comment included)
-	 ofstream gmacs_files("gmacs_files_in.dat");
-	 ofstream  gmacs_data("gmacs_in.dat");
-	 ofstream   gmacs_ctl("gmacs_in.ctl");
+	// Open output files using ofstream
+	// This one for easy reading all input to R
+	ofstream mcout("mcout.rep");
+	ofstream echoinput("checkfile.rep");
+	// These ones for compatibility with ADMB (# comment included)
+	ofstream gmacs_files("gmacs_files_in.dat");
+	ofstream  gmacs_data("gmacs_in.dat");
+	ofstream   gmacs_ctl("gmacs_in.ctl");
 
 
 TOP_OF_MAIN_SECTION
