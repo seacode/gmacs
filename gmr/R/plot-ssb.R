@@ -8,7 +8,7 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-.get_ssb_df <- function(M)
+.get_dynB0 <- function(M)
 {
     n <- length(M)
     mdf <- NULL
@@ -19,7 +19,7 @@
                          par = A$fit$names,
 	                     log_ssb = A$fit$est,
                          log_sd = A$fit$std)
-        df <- subset(df, par == "sd_log_ssb")
+        df <- subset(df, par == "sd_log_dyn_Bzero")
         df$year <- A$mod_yrs
         df$ssb <- exp(df$log_ssb)
         df$lb <- exp(df$log_ssb - 1.96*df$log_sd)

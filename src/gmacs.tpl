@@ -1200,9 +1200,10 @@ PARAMETER_SECTION
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
-	//sdreport_vector sd_fbar(1,nfleet);
+	sdreport_vector sd_fbar(syr,nyr);
 	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector      sd_log_ssb(syr,nyr);
+	sdreport_vector      sd_log_dyn_Bzero(syr,nyr);
 	friend_class population_model;
 
 
@@ -1289,13 +1290,16 @@ FUNCTION write_eval
 	**/
 FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
-	sd_log_ssb = log(calc_ssb());
-	//for(int k = 1; k <= nfleet; k++ )
-	//{
-	//	sd_fbar(k) = mean(ft(k));
-	//	
-	//}
-	
+	sd_log_ssb      = log(calc_ssb());
+	// F(1,nsex,syr,nyr,1,nclass);             ///> Fishing mortality
+	for(int i = syr; i <= nyr; i++ )
+		sd_fbar(i) = mean(F(1,i));
+
+	reset_Z_to_M();     
+	calc_initial_numbers_at_length();      
+	update_population_numbers_at_length(); 
+	sd_log_dyn_Bzero    = log(calc_ssb());
+	calc_total_mortality();     
 
 	/**
 	 * @brief Initialize model parameters
@@ -1697,7 +1701,26 @@ FUNCTION calc_total_mortality
 		}
 		//COUT(F(h));
 	}
-
+	/**
+	 * @brief Calculate total instantaneous mortality rate and survival rate for dynamic Bzero
+	 * @details \f$ S = exp(-Z) \f$
+	 * @return NULL
+	**/
+FUNCTION reset_Z_to_M
+	int h;
+	Z.initialize();
+	S.initialize();
+	for ( h = 1; h <= nsex; h++ )
+	{
+		Z(h) = M(h) ;
+		for ( int i = syr; i <= nyr; i++ )
+		{
+			for ( int l = 1; l <= nclass; l++ )
+			{
+				S(h)(i)(l,l) = mfexp(-Z(h)(i)(l));
+			}
+		}
+	}
 
 	/**
 	 * \brief Calculate the probability of moulting vs carapace width.
@@ -2957,15 +2980,42 @@ REPORT_SECTION
 	REPORT(d3_pre_size_comps);
 	REPORT(d3_obs_size_comps);
   dmatrix effN(1,nSizeComps,1,nSizeCompRows);
+  dmatrix effN2(1,nSizeComps,1,nSizeCompRows);
+  dmatrix pre_mn_size(1,nSizeComps,1,nSizeCompRows);
+  dmatrix obs_mn_size(1,nSizeComps,1,nSizeCompRows);
+  dmatrix  lb_mn_size(1,nSizeComps,1,nSizeCompRows);
+  dmatrix  ub_mn_size(1,nSizeComps,1,nSizeCompRows);
+  /*
+                 << " "<<mn_length(olc_ind(k,i))
+                 << " "<<mn_length(elc_ind(k,i))
+                 << " "<<sda_tmp
+                 << " "<<mn_length(olc_ind(k,i)) - sda_tmp *2. / sqrt(n_sample_ind_length(k,i))
+                 << " "<<mn_length(olc_ind(k,i)) + sda_tmp *2. / sqrt(n_sample_ind_length(k,i))
+                 <<endl;
+      }
+    }
+  }
+  */
   // Compute effective N's
 	for ( int kk = 1; kk <= nSizeComps; kk++ )
 	{
 		for ( int ii = 1; ii <= nSizeCompRows(kk); ii++ )
 		{
-			effN(kk,ii) = Eff_N(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
+			double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii) );
+			effN(kk,ii)        = Eff_N(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
+			effN2(kk,ii)       = Eff_N2(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
+			pre_mn_size(kk,ii) = mn_length(d3_pre_size_comps(kk,ii));
+			obs_mn_size(kk,ii) = mn_length(d3_obs_size_comps(kk,ii));
+			lb_mn_size(kk,ii)  = obs_mn_size(kk,ii) - sdl_tmp *2. / sqrt(size_comp_sample_size(kk,ii));
+			ub_mn_size(kk,ii)  = obs_mn_size(kk,ii) + sdl_tmp *2. / sqrt(size_comp_sample_size(kk,ii));
 		}
 	}
 	REPORT(effN);
+	REPORT(effN2);
+	REPORT(pre_mn_size);
+	REPORT(obs_mn_size);
+	REPORT(lb_mn_size);
+	REPORT(ub_mn_size);
 	for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 	{
 		for ( int ii = 1; ii <= nSizeCompRows_in(kk); ii++ )
@@ -3002,6 +3052,8 @@ REPORT_SECTION
 	{
 		int refyear = nyr-1;
 		calc_spr_reference_points(refyear,spr_fleet);
+		// Projections would be called here...
+
 		//calc_ofl(refyear,spr_fspr);
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
@@ -3123,7 +3175,6 @@ REPORT_SECTION
 		REPORT(size_transition_F);
 	}
 
-
 	/**
 	 * @brief Calculate mature male biomass (MMB)
 	 * @details Calculation of the mature male biomass is based on the
@@ -3241,6 +3292,7 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_P,_A);
 		ptrSPR = &c_spr;
 	}
+	// This class needs a setter for season
 	spr_fspr = ptrSPR->get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
 	spr_bspr = ptrSPR->get_bspr();
 	spr_ssbo = ptrSPR->get_ssbo();
@@ -3258,12 +3310,97 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	 *
 	 *  @param observed proportions
 	 *  @param predicted proportions
+<<<<<<< HEAD
 	**/
 FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
 	dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
 	double vtmp;
 	vtmp = value(norm2(rtmp)/size_count(rtmp));
 	return 1./vtmp;
+=======
+	 */
+FUNCTION double mn_length(const dvector& pobs)
+  double mobs = (pobs*mid_points);
+  return mobs;
+
+	/**
+	 * @brief calculate effective sample size 
+	 * @details Calculate the effective sample size 
+	 *
+	 *  ARGS:
+	 *  @param observed proportions
+	 *  @param predicted proportions
+	 */
+FUNCTION double mn_length(const dvar_vector& pobs)
+  double mobs = value(pobs*mid_points);
+  return mobs;
+
+	/**
+	 * @brief calculate effective sample size 
+	 * @details Calculate the effective sample size 
+	 *
+	 *  ARGS:
+	 *  @param observed proportions
+	 *  @param predicted proportions
+	 */
+FUNCTION double Sd_length(const dvector& pobs)
+  double mobs = (pobs*mid_points);
+  double stmp = sqrt((elem_prod(mid_points,mid_points)*pobs) - mobs*mobs);
+  return stmp;
+
+	/**
+	 * @brief calculate effective sample size 
+	 * @details Calculate the effective sample size 
+	 *
+	 *  ARGS:
+	 *  @param observed proportions
+	 *  @param predicted proportions
+	 */
+FUNCTION double Eff_N_adj(const double, const dvar_vector& pobs, const dvar_vector& phat)
+  int lb1 = pobs.indexmin();
+  int ub1 = pobs.indexmax();
+  dvector av = mid_points;
+  double mobs = value(pobs*av);
+  double mhat = value(phat*av );
+  double rtmp = mobs-mhat;
+  double stmp = value(sqrt(elem_prod(av,av)*pobs - mobs*mobs));
+  return square(stmp)/square(rtmp);
+
+
+	/**
+	 * @brief calculate effective sample size 
+	 * @details Calculate the effective sample size 
+	 *
+	 *  ARGS:
+	 *  @param observed proportions
+	 *  @param predicted proportions
+	 */
+FUNCTION double Eff_N2(const dvector& pobs, const dvar_vector& phat)
+  int lb1 = pobs.indexmin();
+  int ub1 = pobs.indexmax();
+  dvector av = mid_points;
+  double mobs =      (pobs*av);
+  double mhat = value(phat*av );
+  double rtmp = mobs-mhat;
+  double stmp = (sqrt(elem_prod(av,av)*pobs - mobs*mobs));
+  return square(stmp)/square(rtmp);
+
+
+	/**
+	 * @brief calculate effective sample size 
+	 * @details Calculate the effective sample size 
+	 *
+	 *  ARGS:
+	 *  @param observed proportions
+	 *  @param predicted proportions
+	 */
+FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
+  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
+  double vtmp;
+  vtmp = value(norm2(rtmp)/size_count(rtmp));
+  return 1./vtmp;
+  
+>>>>>>> develop
 
 RUNTIME_SECTION
     maximum_function_evaluations 500,   800,   1500,  25000, 25000
