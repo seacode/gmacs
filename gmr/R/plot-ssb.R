@@ -17,7 +17,7 @@
         A <- M[[i]]
         df <- data.frame(Model = names(M)[i],
                          par = A$fit$names,
-	                     log_ssb = A$fit$est,
+	                 log_ssb = A$fit$est,
                          log_sd = A$fit$std)
         df <- subset(df, par == "sd_log_dyn_Bzero")
         df$year <- A$mod_yrs
