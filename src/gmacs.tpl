@@ -1260,6 +1260,7 @@ FUNCTION calc_sdreport
 	calc_initial_numbers_at_length();      
 	update_population_numbers_at_length(); 
 	sd_log_dyn_Bzero    = log(calc_ssb());
+	sd_log_dyn_Bzero    = sd_log_ssb     ;
 	calc_total_mortality();     
 
 	/**
@@ -2578,7 +2579,7 @@ FUNCTION calculate_prior_densities
 			break;
 			case 1: // Prior on analytical soln, log-normal
 				priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
-				// cout << "q, density " << survey_q(i) << " " << priorDensity(iprior) << endl;
+				// cout << "q, density "<<survey_q(i) <<" "<<priorDensity(iprior)<<endl;
 			break;
 		}
 		if ( last_phase() )
