@@ -1,12 +1,12 @@
 # ----------------------------------------------------------------------------- #
-# OneSex
+# SMBKC file
 # ----------------------------------------------------------------------------- #
 #require(devtools)
 #devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
 #setwd()
 
-#.MODELDIR = c("/Users/Jim/_mymods/seacode/gmacs/examples/smbbc/")
+.MODELDIR = c("/Users/Jim/_mymods/seacode/gmacs/examples/smbkc/")
 .MODELDIR = c("")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
@@ -20,7 +20,7 @@ require(gmr)
 
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- "OneSex"
+names(M) <- "SMBKC"
 
 ww <- 6
 hh <- 5
@@ -61,7 +61,8 @@ dev.off()
 plot_natural_mortality(M, plt_knots = FALSE, knots = c(1976, 1980, 1985, 1994))
 ggsave(paste0(.FIGS, "M_t.png"), width = ww, height = hh)
 dev.off()
-
+M[[1]]
+plot_dynB0(M,ylim=c(0,30000))
 plot_ssb(M)
 ggsave(paste0(.FIGS, "ssb.png"), width = ww, height = hh)
 dev.off()

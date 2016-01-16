@@ -110,7 +110,6 @@ spr::spr(const double& _r,
 spr::~spr()
 {}
 
-
 /**
  * @brief equilibrium vector of numbers at length
  * @details Solve for the equilibrium numbers at length for a single shell condition.
@@ -227,12 +226,8 @@ double spr::get_fspr(const int& ifleet,
 			{
 				fratio(k) = F(h)(k)/F(h)(ifleet);
 			}
-
 			dmatrix sel = _sel(h);
 			dmatrix ret = _ret(h);
-			
-			
-			
 			
 			Z = m_M(h);
 			for( k = 1; k <= m_nfleet; k++ )

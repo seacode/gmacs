@@ -4,7 +4,7 @@
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @return plot of fishing mortality (F)
-#' @author SJD Martell, DN Webber
+#' @author JN Ianelli, SJD Martell, DN Webber
 #' @export
 #' 
 plot_fishing_mortality <- function(M)
@@ -26,4 +26,13 @@ plot_fishing_mortality <- function(M)
         edev <- odf$log_est[idev]
         sdev <- odf$log_std[idev]
     }
+        p <- ggplot(data=mdf[[1]])
+        p <- p + geom_point(aes(factor(year), variable, col = factor(sign(resd)), size = abs(resd)), alpha = 0.6)
+        p <- p + scale_size_area(max_size = 10)
+        p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
+        p <- p + scale_x_discrete(breaks=pretty(mdf[[1]]$mod_yrs))
+        p <- p + scale_y_discrete(breaks=pretty(mdf[[1]]$mid_points))
+        p <- p + facet_wrap(~model) + .THEME
+        p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+
 }
