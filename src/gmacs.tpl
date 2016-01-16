@@ -3388,21 +3388,6 @@ FUNCTION double Eff_N2(const dvector& pobs, const dvar_vector& phat)
   return square(stmp)/square(rtmp);
 
 
-	/**
-	 * @brief calculate effective sample size 
-	 * @details Calculate the effective sample size 
-	 *
-	 *  ARGS:
-	 *  @param observed proportions
-	 *  @param predicted proportions
-	 */
-FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
-  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
-  double vtmp;
-  vtmp = value(norm2(rtmp)/size_count(rtmp));
-  return 1./vtmp;
-
-
 RUNTIME_SECTION
     maximum_function_evaluations 500,   800,   1500,  25000, 25000
     convergence_criteria         1.e-2, 1.e-2, 1.e-3, 1.e-4, 1.e-4
