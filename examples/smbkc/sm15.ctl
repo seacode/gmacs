@@ -55,12 +55,12 @@
 ## gear  par   sel                                             phz    start  end        ##
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 # Gear-1
-   1     1     1   0    0.2   0.01  0.99    0       0      1    4     1978   2008
-   1     2     2   0    0.5   0.01  0.99    0       0      1    4     1978   2008
-   1     3     3   0    0.9   0.01  0.99    0       0      1    4     1978   2008
+   1     1     1   0    0.2   0.1  0.5    0       0      1    4     1978   2008
+   1     2     2   0    0.5   0.2  0.7    0       0      1    4     1978   2008
+   1     3     3   0    0.9   0.5  0.99    0       0      1    4     1978   2008
    1     1     1   0    0.2   0.1  0.5    0       0      1    4     2009   2015
-   1     2     2   0    0.5   0.1  0.99    0       0      1    4     2009   2015
-   1     3     3   0    0.9   0.1  0.99    0       0      1    4     2009   2015
+   1     2     2   0    0.5   0.2  0.7    0       0      1    4     2009   2015
+   1     3     3   0    0.9   0.5  0.99    0       0      1    4     2009   2015
 # Gear-2
    2     4     1   0    40   10.0   200    0      10    200    -2     1978   2015
    2     5     2   0    60   10.0   200    0      10    200    -2     1978   2015
@@ -69,12 +69,12 @@
    3     7     2   0    60   10.0   200    0      10    200    -3     1978   2015
 # Gear-4
    4     8     1   0    0.2     0.1  0.5    0       0      1    4     1978   2015
-   4     9     2   0    0.5     0.1  0.99    0       0      1    4     1978   2015
-   4     10    3   0    0.9     0.1  0.99    0       0      1    4     1978   2015
+   4     9     2   0    0.5     0.2  0.7    0       0      1    4     1978   2015
+   4     10    3   0    0.9     0.5  0.99    0       0      1    4     1978   2015
 # Gear-5
    5     11    1   0    0.2     0.1  0.5    0       0      1    4     1978   2015
-   5     12    2   0    0.5     0.1  0.99    0       0      1    4     1978   2015
-   5     13    3   0    0.9     0.1  0.99    0       0      1    4     1978   2015
+   5     12    2   0    0.5     0.2  0.7    0       0      1    4     1978   2015
+   5     13    3   0    0.9     0.5  0.99    0       0      1    4     1978   2015
 ## Retained
 # Gear-1
   -1     14    1   0   120   100   200    0      1    900   -1     1978   2015
@@ -94,13 +94,16 @@
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
+##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
+##     and p2 are ignored). ival must be > 0                                            ##
+## LEGEND                                                                               ##
+##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi)
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
-## TYPE    Mean_q    SD_q    LAMBDA
-   0       0.01      2.0     1      # NMFS
-   0       0.01      2.0     1      # ADF&G
+## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
+   1.0     0.0001   2.0   -4    0       0.0001   2.0   0           1       # NMFS
+   0.003   0.0001   1.0    4    0       0.0001   2.0   0           1       # ADF&G
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -108,11 +111,11 @@
 ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
 ##     and p2 are ignored). ival must be > 0                                            ##
 ## LEGEND                                                                               ##
-##     prior type: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma          ##
+##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival        lb        ub        phz   prior     p1      p2
    0.0001      0.0       10.0      -4    4         1.0     100   # NMFS
-   0.001       0.0001    10.0       4    4         1.0     100   # ADF&G
+   0.0001      0.0       10.0      -4    4         1.0     100   # ADF&G
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -139,12 +142,12 @@
 ##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  0   0   0  # Type of likelihood
-#  1   1   1  # Type of likelihood
+  1   1   1  # Type of likelihood
 #  2   2   2  # Type of likelihood
-  5   5   5   # Type of likelihood
+#  5   5   5   # Type of likelihood
   0   0   0   # Auto tail compression (pmin)
   1   1   1   # Initial value for effective sample size multiplier
-  4   4   4   # Phz for estimating effective sample size (if appl.)
+ -4  -4  -4   # Phz for estimating effective sample size (if appl.)
   1   2   3   # Composition aggregator
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -158,27 +161,27 @@
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
 ##      4 = Time blocks
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  0
+  3
 ## Phase of estimation
   2
 ## STDEV in m_dev for Random walk
-  0.01
+  0.3
 ## Number of nodes for cubic spline or number of step-changes for option 3
-  1
+  2
 ## Year position of the knots (vector must be equal to the number of nodes)
-  1978
+  1999 2000
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## OTHER CONTROLS
   2       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-  0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
-  1978    # First year for average recruitment for Bspr calculation.
-  2015    # Last year for average recruitment for Bspr calculation.
-  0.35    # Target SPR ratio for Bmsy proxy.
-  1       # Gear index for SPR calculations (i.e., directed fishery).
-  1       # Lambda (proportion of mature male biomass for SPR reference points.)
-  1       # Use empirical molt increment data (0=FALSE, 1=TRUE)
+  1       # INITIALIZE MODEL AT UNFISHED RECRUITS (0 = FALSE, 1 = TRUE)
+  1978    # First year for average recruitment for Bspr calculation
+  2015    # Last year for average recruitment for Bspr calculation
+  0.35    # Target SPR ratio for Bmsy proxy
+  1       # Gear index for SPR calculations (i.e., directed fishery)
+  1       # Lambda (proportion of mature male biomass for SPR reference points)
+  1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE)
   0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
 ## EOF
 9999
