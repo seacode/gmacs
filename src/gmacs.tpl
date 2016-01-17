@@ -1204,8 +1204,8 @@ PARAMETER_SECTION
 
 	sdreport_vector sd_fbar(syr,nyr);
 	sdreport_vector sd_log_recruits(syr,nyr);
-	sdreport_vector sd_log_ssb(syr,nyr);
-	sdreport_vector sd_log_dyn_Bzero(syr,nyr);
+	sdreport_vector      sd_log_ssb(syr,nyr);
+	sdreport_vector      sd_log_dyn_Bzero(syr+1,nyr);
 	friend_class population_model;
 
 
@@ -1302,8 +1302,8 @@ FUNCTION calc_sdreport
 	reset_Z_to_M();     
 	calc_initial_numbers_at_length();      
 	update_population_numbers_at_length(); 
-	sd_log_dyn_Bzero    = log(calc_ssb());
-	sd_log_dyn_Bzero    = sd_log_ssb     ;
+	sd_log_dyn_Bzero    = log(calc_ssb())(syr+1,nyr);
+	sd_log_dyn_Bzero    = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero))     ;
 	calc_total_mortality();     
 
 	/**

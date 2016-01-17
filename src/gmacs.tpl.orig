@@ -118,16 +118,16 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	init_int syr;      ///> initial year
-	init_int nyr;      ///> terminal year
-	init_number jstep; ///> time step (years)
-	init_int nfleet;   ///> number of gears
-	init_int nsex;     ///> number of sexes
-	init_int nshell;   ///> number of shell conditions
-	init_int nmature;  ///> number of maturity types
-	init_int nclass;   ///> number of size-classes
+	init_int syr;     ///> initial year
+	init_int nyr;     ///> terminal year
+	init_int nseason; ///> time step (years)
+	init_int nfleet;  ///> number of gears
+	init_int nsex;    ///> number of sexes
+	init_int nshell;  ///> number of shell conditions
+	init_int nmature; ///> number of maturity types
+	init_int nclass;  ///> number of size-classes
 	LOC_CALCS
-		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(jstep);
+		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
 	END_CALCS
 	int n_grp;     ///> number of sex/newshell/oldshell groups
@@ -1163,6 +1163,8 @@ PARAMETER_SECTION
 	vector res_recruit(syr,nyr); ///> vector of estimated recruits
 	vector          xi(syr,nyr); ///> vector of residuals for SRR
 
+
+
 	matrix pre_catch(1,nCatchDF,1,nCatchRows); ///> predicted catch (Baranov eq)
 	matrix res_catch(1,nCatchDF,1,nCatchRows); ///> catch residuals in log-space
 	matrix pre_catch_out(1,nCatchDF,syr,nyr-1);
@@ -1202,8 +1204,13 @@ PARAMETER_SECTION
 
 	sdreport_vector sd_fbar(syr,nyr);
 	sdreport_vector sd_log_recruits(syr,nyr);
+<<<<<<< HEAD
+	sdreport_vector sd_log_ssb(syr,nyr);
+	sdreport_vector sd_log_dyn_Bzero(syr,nyr);
+=======
 	sdreport_vector      sd_log_ssb(syr,nyr);
-	sdreport_vector      sd_log_dyn_Bzero(syr,nyr);
+	sdreport_vector      sd_log_dyn_Bzero(syr+1,nyr);
+>>>>>>> 6f036fbcad5b6e5e8e6e83f3bfc51c7886766bf0
 	friend_class population_model;
 
 
@@ -1292,14 +1299,16 @@ FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
 	sd_log_ssb      = log(calc_ssb());
 	// F(1,nsex,syr,nyr,1,nclass);             ///> Fishing mortality
-	for(int i = syr; i <= nyr; i++ )
+	for ( int i = syr; i <= nyr; i++ )
+	{
 		sd_fbar(i) = mean(F(1,i));
+	}
 
 	reset_Z_to_M();     
 	calc_initial_numbers_at_length();      
 	update_population_numbers_at_length(); 
-	sd_log_dyn_Bzero    = log(calc_ssb());
-	sd_log_dyn_Bzero    = sd_log_ssb     ;
+	sd_log_dyn_Bzero    = log(calc_ssb())(syr+1,nyr);
+	sd_log_dyn_Bzero    = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero))     ;
 	calc_total_mortality();     
 
 	/**
@@ -1664,8 +1673,9 @@ FUNCTION calc_natural_mortality
 				}
 			break;                        
 		}
+
 		// Update M by year.
-		if (m_type < 4) //add by Jie Zheng
+		if ( m_type < 4 ) //add by Jie Zheng
 		{
 			for ( int h = 1; h <= nsex; h++ )
 			{
@@ -1899,11 +1909,7 @@ FUNCTION calc_initial_numbers_at_length
 	/**
 	 * @brief Update numbers-at-length
 	 * @author Team
-	 * @details Numbers at length are propagated each year for each sex based on the
-	 * size transition matrix and a vector of size-specifc survival rates. The columns
-	 * of the size-transition matrix are multiplied by the size-specific survival rate
-	 * (a scalar). New recruits are added based on the estimated average recruitment and
-	 * annual deviate, multiplied by a vector of size-proportions (rec_sdd).
+	 * @details Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a scalar). New recruits are added based on the estimated average recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).
 	**/
 FUNCTION update_population_numbers_at_length
 	int h,i,ig,o,m;
@@ -1916,6 +1922,7 @@ FUNCTION update_population_numbers_at_length
 	dvar_matrix t1(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
+
 	if ( bInitializeUnfished )
 	{
 		recruits(syr+1,nyr) = mfexp(logR0);
@@ -1925,6 +1932,11 @@ FUNCTION update_population_numbers_at_length
 
 	for ( i = syr; i <= nyr; i++ )
 	{
+		//for ( int j = 1; j <= nseason; j++ )
+		{
+			// do stuff
+		}
+
 		if ( i > syr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
@@ -2601,7 +2613,6 @@ FUNCTION calculate_prior_densities
 	iprior = ntheta + nGrwth + 1;
 	for ( int i = 1; i <= nSurveys; i++ )
 	{
-<<<<<<< HEAD
 		//itype = int(prior_qtype(i));
 		priorDensity(iprior) = get_prior_pdf(prior_qtype(i), survey_q(i), prior_p1(i), prior_p2(i));
 		//switch ( itype )
@@ -2614,19 +2625,6 @@ FUNCTION calculate_prior_densities
 		//		// cout << "q, density " << survey_q(i) << " " << priorDensity(iprior) << endl;
 		//	break;
 		//}
-=======
-		itype = int(prior_qtype(i));
-		switch ( itype )
-		{
-			case 0: // Analytical soln, no prior (uniform, uniformative)
-				priorDensity(iprior) = dunif(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
-			break;
-			case 1: // Prior on analytical soln, log-normal
-				priorDensity(iprior) = dnorm(log(survey_q(i)), log(prior_qbar(i)), prior_qsd(i));
-				// cout << "q, density "<<survey_q(i) <<" "<<priorDensity(iprior)<<endl;
-			break;
-		}
->>>>>>> develop
 		if ( last_phase() )
 		{
 			priorDensity(iprior) = priorDensity(iprior) ;
@@ -3325,15 +3323,13 @@ FUNCTION void calc_spr_reference_points(const int iyr,const int ifleet)
 	 *
 	 *  @param observed proportions
 	 *  @param predicted proportions
-<<<<<<< HEAD
 	**/
 FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
 	dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
 	double vtmp;
 	vtmp = value(norm2(rtmp)/size_count(rtmp));
 	return 1./vtmp;
-=======
-	 */
+
 FUNCTION double mn_length(const dvector& pobs)
   double mobs = (pobs*mid_points);
   return mobs;
@@ -3400,22 +3396,6 @@ FUNCTION double Eff_N2(const dvector& pobs, const dvar_vector& phat)
   double stmp = (sqrt(elem_prod(av,av)*pobs - mobs*mobs));
   return square(stmp)/square(rtmp);
 
-
-	/**
-	 * @brief calculate effective sample size 
-	 * @details Calculate the effective sample size 
-	 *
-	 *  ARGS:
-	 *  @param observed proportions
-	 *  @param predicted proportions
-	 */
-FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
-  dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
-  double vtmp;
-  vtmp = value(norm2(rtmp)/size_count(rtmp));
-  return 1./vtmp;
-  
->>>>>>> develop
 
 RUNTIME_SECTION
     maximum_function_evaluations 500,   800,   1500,  25000, 25000
