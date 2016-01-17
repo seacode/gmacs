@@ -118,16 +118,16 @@ DATA_SECTION
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
-	init_int syr;      ///> initial year
-	init_int nyr;      ///> terminal year
-	init_number jstep; ///> time step (years)
-	init_int nfleet;   ///> number of gears
-	init_int nsex;     ///> number of sexes
-	init_int nshell;   ///> number of shell conditions
-	init_int nmature;  ///> number of maturity types
-	init_int nclass;   ///> number of size-classes
+	init_int syr;     ///> initial year
+	init_int nyr;     ///> terminal year
+	init_int nseason; ///> time step (years)
+	init_int nfleet;  ///> number of gears
+	init_int nsex;    ///> number of sexes
+	init_int nshell;  ///> number of shell conditions
+	init_int nmature; ///> number of maturity types
+	init_int nclass;  ///> number of size-classes
 	LOC_CALCS
-		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(jstep);
+		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
 	END_CALCS
 	int n_grp;     ///> number of sex/newshell/oldshell groups
@@ -1204,8 +1204,8 @@ PARAMETER_SECTION
 
 	sdreport_vector sd_fbar(syr,nyr);
 	sdreport_vector sd_log_recruits(syr,nyr);
-	sdreport_vector      sd_log_ssb(syr,nyr);
-	sdreport_vector      sd_log_dyn_Bzero(syr,nyr);
+	sdreport_vector sd_log_ssb(syr,nyr);
+	sdreport_vector sd_log_dyn_Bzero(syr,nyr);
 	friend_class population_model;
 
 
@@ -1294,8 +1294,10 @@ FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
 	sd_log_ssb      = log(calc_ssb());
 	// F(1,nsex,syr,nyr,1,nclass);             ///> Fishing mortality
-	for(int i = syr; i <= nyr; i++ )
+	for ( int i = syr; i <= nyr; i++ )
+	{
 		sd_fbar(i) = mean(F(1,i));
+	}
 
 	reset_Z_to_M();     
 	calc_initial_numbers_at_length();      
@@ -1668,7 +1670,7 @@ FUNCTION calc_natural_mortality
 		}
 
 		// Update M by year.
-		if (m_type < 4) //add by Jie Zheng
+		if ( m_type < 4 ) //add by Jie Zheng
 		{
 			for ( int h = 1; h <= nsex; h++ )
 			{
@@ -1902,11 +1904,7 @@ FUNCTION calc_initial_numbers_at_length
 	/**
 	 * @brief Update numbers-at-length
 	 * @author Team
-	 * @details Numbers at length are propagated each year for each sex based on the
-	 * size transition matrix and a vector of size-specifc survival rates. The columns
-	 * of the size-transition matrix are multiplied by the size-specific survival rate
-	 * (a scalar). New recruits are added based on the estimated average recruitment and
-	 * annual deviate, multiplied by a vector of size-proportions (rec_sdd).
+	 * @details Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a scalar). New recruits are added based on the estimated average recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).
 	**/
 FUNCTION update_population_numbers_at_length
 	int h,i,ig,o,m;
@@ -1919,6 +1917,7 @@ FUNCTION update_population_numbers_at_length
 	dvar_matrix t1(1,nclass,1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
+
 	if ( bInitializeUnfished )
 	{
 		recruits(syr+1,nyr) = mfexp(logR0);
@@ -1928,6 +1927,11 @@ FUNCTION update_population_numbers_at_length
 
 	for ( i = syr; i <= nyr; i++ )
 	{
+		//for ( int j = 1; j <= nseason; j++ )
+		{
+			// do stuff
+		}
+
 		if ( i > syr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
