@@ -1688,8 +1688,7 @@ FUNCTION calc_natural_mortality
 	 * @details \f$ S = exp(-Z) \f$
 	 * @return NULL
 	 *
-	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used.
-	 * Due to F.
+	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.
 	**/
 FUNCTION calc_total_mortality
 	int h;
@@ -1707,6 +1706,8 @@ FUNCTION calc_total_mortality
 		}
 		//COUT(F(h));
 	}
+
+
 	/**
 	 * @brief Calculate total instantaneous mortality rate and survival rate for dynamic Bzero
 	 * @details \f$ S = exp(-Z) \f$
@@ -1727,6 +1728,7 @@ FUNCTION reset_Z_to_M
 			}
 		}
 	}
+
 
 	/**
 	 * \brief Calculate the probability of moulting vs carapace width.
@@ -1946,7 +1948,7 @@ FUNCTION update_population_numbers_at_length
 
 			if ( o == 1 ) // newshell
 			{
-				A  = growth_transition(h) * S(h)(i);
+				A = growth_transition(h) * S(h)(i);
 				x = d3_N(ig)(i);
 				d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
 			}
@@ -1970,7 +1972,7 @@ FUNCTION update_population_numbers_at_length
 			}
 		}
 	}
-	if ( verbose  == 1 ) COUT(d3_N(1)+d3_N(2));
+	if ( verbose == 1 ) COUT(d3_N(1)+d3_N(2));
 
 
 	/**
