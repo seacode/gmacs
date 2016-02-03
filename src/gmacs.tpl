@@ -229,12 +229,10 @@ DATA_SECTION
 			obs_catch(k)  = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
 		}
 		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
+		ECHO(obs_catch); ECHO(catch_cv);
 	END_CALCS
-	//!! ECHO(obs_catch); ECHO(catch_cv);
 
-	// From the catch series determine the number of fishing mortality
-	// rate parameters that need to be estimated.  Note that  there is
-	// a number of combinations which require an F to be estimated.
+	// From the catch series determine the number of fishing mortality rate parameters that need to be estimated.  Note that  there is a number of combinations which require an F to be estimated.
 	ivector nFparams(1,nfleet); // The number of deviations required for each fleet
 	ivector nYparams(1,nfleet); // The number of deviations for female Fs
 	ivector foff_phz(1,nfleet);
@@ -377,8 +375,7 @@ DATA_SECTION
 		ybar.initialize();
 		xx.initialize();
 
-		// come up with mle estimates for alpha and beta
-		// for the linear growth increment model.
+		// MLE estimates for alpha and beta for the linear growth increment model.
 		if ( nGrowthObs )
 		{
 			for ( int i = 1; i <= nGrowthObs; i++ )
@@ -1310,9 +1307,7 @@ FUNCTION calc_sdreport
 	 * @brief Initialize model parameters
 	 * @details Set global variable equal to the estimated parameter vectors.
 	 *
-	 * SM:  Note if using empirical growth increment data, then alpha and beta
-     * Growth parameters should not be estimated. Need to warn the user
-     * if the following condition is true:
+	 * SM:  Note if using empirical growth increment data, then alpha and beta growth parameters should not be estimated. Need to warn the user if the following condition is true:
      * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
 	**/
 FUNCTION initialize_model_parameters
@@ -1359,8 +1354,7 @@ FUNCTION initialize_model_parameters
 	 * Only the parameters for capture probability and retention probability are estimated.
 	 * The discard probability is calculated from these two probabilities.
 	 *
-	 * Maintain the possibility of estimating selectivity independently for
-	 * each sex; assumes there are data to estimate female selex.
+	 * Maintain the possibility of estimating selectivity independently for each sex; assumes there are data to estimate female selex.
 	 *
 	 * Psuedocode:
 	 *  -# Loop over each gear:
@@ -1440,19 +1434,11 @@ FUNCTION calc_selectivities
      *
      * dmr is the discard mortality rate
 	 *
-	 * In the event that there is effort data and catch data, then it's possible
-	 * to estimate a catchability coefficient and predict the catch for the
-	 * period of missing catch/discard data.  Best option for this would be
-	 * to use F = q*E, where q = F/E.  Then in the objective function, minimize
-	 * the variance in the estimates of q, and use the mean q to predict catch.
-	 * Or minimize the first difference and assume a random walk in q.
+	 * In the event that there is effort data and catch data, then it's possible to estimate a catchability coefficient and predict the catch for the period of missing catch/discard data.  Best option for this would be to use F = q*E, where q = F/E.  Then in the objective function, minimize the variance in the estimates of q, and use the mean q to predict catch. Or minimize the first difference and assume a random walk in q.
 	 *
-	 * Note that this function calculates the fishing mortality rate including
-	 * deaths due to discards.  Where xi is the discard mortality rate.
+	 * Note that this function calculates the fishing mortality rate including deaths due to discards. Where xi is the discard mortality rate.
 	 *
-	 * Note also that Jie estimates F for retained fishery, f for male discards and
-	 * f for female discards.  Not recommended to have separate F's for retained and
-	 * discard fisheries, but might be ok to have sex-specific F's.
+	 * Note also that Jie estimates F for retained fishery, f for male discards and f for female discards. Not recommended to have separate F's for retained and discard fisheries, but might be ok to have sex-specific F's.
 	**/
 FUNCTION calc_fishing_mortality
 	int h,i,k,ik,yk;
@@ -1547,17 +1533,9 @@ FUNCTION calc_growth_increments
 	/**
 	 * \brief Calclate the size transtion matrix.
 	 * \Authors Team
-	 * \details Calculates the size transition matrix for each sex based on
-	 * growth increments, which is a linear function of the size interval, and
-	 * the scale parameter for the gamma distribution.  This function does the
-	 * proper integration from the lower to upper size bin, where the mode of
-	 * the growth increment is scaled by the scale parameter.
+	 * \details Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution.  This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.
 	 *
-	 * This function loops over sex, then loops over the rows of the size
-	 * transition matrix for each sex.  The probability of transitioning from
-	 * size l to size ll is based on the vector molt_increment and the
-	 * scale parameter. In all there are three parameters that define the size
-	 * transition matrix (alpha, beta, scale) for each sex.
+	 * This function loops over sex, then loops over the rows of the size transition matrix for each sex.  The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.
    	 *
   	 * Issue 112 details some of evolution of code development here
 	**/
