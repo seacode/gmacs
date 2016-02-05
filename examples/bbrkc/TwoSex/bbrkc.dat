@@ -41,6 +41,8 @@
 # Proportion  mature  by  sex
 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1
 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+# Proportion of the total natural mortality to be applied each season
+0.625 0.375
 # Fishing fleet names (delimited  with  : no  spaces  in  names)
 Pot_Fishery:Trawl_Bycatch
 # Survey  names (delimited  with  : no  spaces  in  names)
