@@ -1183,8 +1183,8 @@ PARAMETER_SECTION
 	4darray Z(1,nsex,syr,nyr,1,nseason,1,nclass);          ///> Total mortality
 	5darray S(1,nsex,syr,nyr,1,nseason,1,nclass,1,nclass); ///> Surival Rate (S=exp(-Z))
 
-	//4darray d4_N(1,n_grp,syr,nyr+1,1,nseason,1,nclass);       ///> Numbers-at-sex/mature/shell/length.
-	3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);       ///> Numbers-at-sex/mature/shell/length.
+	4darray d4_N(1,n_grp,syr,nyr+1,1,nseason,1,nclass);       ///> Numbers-at-sex/mature/shell/year/season/length.
+	//3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);       ///> Numbers-at-sex/mature/shell/length.
 	4darray ft(1,nfleet,1,nsex,syr,nyr,1,nseason);            ///> Fishing mortality by gear
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
 	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass); ///> Old shell crabs-at-length.
@@ -1825,7 +1825,6 @@ FUNCTION calc_recruitment_size_distribution
 	**/
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
-	//N.initialize();
 	d3_newShell.initialize();
 	d3_oldShell.initialize();
 
@@ -1836,7 +1835,7 @@ FUNCTION calc_initial_numbers_at_length
 
 	// Analytical equilibrium soln.
 	int ig;
-	d3_N.initialize();
+	d4_N.initialize();
 	dmatrix Id = identity_matrix(1,nclass);
 	dvar_vector  x(1,nclass);
 	dvar_vector  y(1,nclass);
@@ -1865,7 +1864,7 @@ FUNCTION calc_initial_numbers_at_length
 		{
 			calc_equilibrium(x,A,_S,rt);
 			ig            = pntr_hmo(h,1,1);
-			d3_N(ig)(syr) = elem_prod(x , mfexp(rec_ini));
+			d4_N(ig)(syr)(1) = elem_prod(x , mfexp(rec_ini));
 		}
 	  	if ( verbose == 1 ) cout << "in init length 2" << endl;
 	  	if ( verbose == 1 ) COUT(P(h));
@@ -1877,15 +1876,15 @@ FUNCTION calc_initial_numbers_at_length
 		{
 			calc_equilibrium(x,y,A,_S,P(h),rt);
 			ig              = pntr_hmo(h,1,1);
-			d3_N(ig)(syr)   = elem_prod(x , mfexp(rec_ini));;
-			d3_N(ig+1)(syr) = elem_prod(y , mfexp(rec_ini));;
+			d4_N(ig)(syr)(1)   = elem_prod(x , mfexp(rec_ini));;
+			d4_N(ig+1)(syr)(1) = elem_prod(y , mfexp(rec_ini));;
 		}
 	  	if ( verbose == 1 ) cout << "in init length 3" << endl;
 
 		// Insert terminal molt case here.
 
 	}
-	if ( verbose == 1 ) COUT(d3_N(1)(syr));
+	if ( verbose == 1 ) COUT(d4_N(1)(syr)(1));
 	// cout<<"End of calc_initial_numbers_at_length"<<endl;
 	
 
@@ -1938,25 +1937,32 @@ FUNCTION update_population_numbers_at_length
 
 					//cout << d3_N(ig)(i) << endl;
 
-					// Mortality
 					//switch ( proc_order(k) )
 					//{
-					//	case 0: // Recruitment
+					//	case 0: // Mortality
+					//		x = x * S(h)(i)(j);
+					//	break;
+					//	case 1: // Recruitment
 					//		x += rt;
 					//	break;
-					//	case 1: // Molting and growth
+					//	case 2: // Molting and growth
 					//		x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
 					//	break;
 					//}
 
-					if (j == 1) x = d3_N(ig)(i);
+					x = d4_N(ig)(i)(j);
 					// Mortality
 					x = x * S(h)(i)(j);
 					// Molting and growth
 					if (j == 2) x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
 					// Recruitment
 					if (j == 2) x += rt;
-					if (j == 2) d3_N(ig)(i+1) = x;
+					if (j == nseason)
+					{
+						d4_N(ig)(i+1)(1) = x;
+					} else {
+						d4_N(ig)(i)(j+1) = x;
+					}
 				}
 				if ( o == 2 ) // oldshell
 				{
@@ -1971,20 +1977,20 @@ FUNCTION update_population_numbers_at_length
 					//d3_N(ig)(i+1) = (x+d3_N(ig-1)(i)) * t1;
 				
 					// add oldshell non-terminal molts to newshell
-					if (j == 1) y = d3_N(ig)(i);
+					if (j == 1) y = d4_N(ig)(i)(j);
 					// Mortality
 					y = y * S(h)(i)(j);
 					// Molting and growth
 					if (j == 2) y = elem_prod(y,diagonal(P(h))) * growth_transition(h);
-					if (j == 2) d3_N(ig-1)(i+1) += y;
+					if (j == 2) d4_N(ig-1)(i+1)(j) += y;
 
 					// oldshell
-					if (j == 1) z = d3_N(ig)(i) + d3_N(ig-1)(i);
+					if (j == 1) z = d4_N(ig)(i)(j) + d4_N(ig-1)(i)(j);
 					// Mortality
 					z = z * S(h)(i)(j);
 					// Molting
 					if (j == 2) z = z * (Id - P(h));
-					if (j == 2) d3_N(ig)(i+1) = z;
+					if (j == 2) d4_N(ig)(i+1)(j) = z;
 				}
 				if ( o == 1 && m == 2 ) // terminal molt to new shell.
 				{
@@ -2126,7 +2132,7 @@ FUNCTION calc_predicted_catch
 							for ( int o = 1; o <= nshell; o++ )
 							{
 								ig = pntr_hmo(h,m,o);
-								nal += d3_N(ig)(i);
+								nal += d4_N(ig)(i)(j);
 							}
 						}
 					break;
@@ -2137,7 +2143,7 @@ FUNCTION calc_predicted_catch
 							for ( int o = 1; o <= nshell; o++ )
 							{
 								ig = pntr_hmo(h,m,o);
-								nal += d3_N(ig)(i);
+								nal += d4_N(ig)(i)(j);
 							}
 						}
 					break;
@@ -2158,7 +2164,7 @@ FUNCTION calc_predicted_catch
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								ig = pntr_hmo(h,m,1); // indexes new shell.
-								nal += d3_N(ig)(i);
+								nal += d4_N(ig)(i)(j);
 							}
 						break;
 						case 2: // discarded catch
@@ -2168,7 +2174,7 @@ FUNCTION calc_predicted_catch
 								for ( int o = 1; o <= nshell; o++ )
 								{
 									ig = pntr_hmo(h,m,o);
-									nal += d3_N(ig)(i);
+									nal += d4_N(ig)(i)(j);
 								}
 							}
 						break;
@@ -2223,7 +2229,7 @@ FUNCTION calc_predicted_catch_out
 							for ( int o = 1; o <= nshell; o++ )
 							{
 								ig = pntr_hmo(h,m,o);
-								nal += d3_N(ig)(i)(j);
+								nal += d4_N(ig)(i)(j);
 							}
 						}
 					break;
@@ -2234,7 +2240,7 @@ FUNCTION calc_predicted_catch_out
 							for ( int o = 1; o <= nshell; o++ )
 							{
 								ig = pntr_hmo(h,m,o);
-								nal += d3_N(ig)(i);
+								nal += d4_N(ig)(i)(j);
 							}
 						}
 					break;
@@ -2255,7 +2261,7 @@ FUNCTION calc_predicted_catch_out
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								ig = pntr_hmo(h,m,1); // indexes new shell.
-								nal += d3_N(ig)(i);
+								nal += d4_N(ig)(i)(j);
 							}
 						break;
 						case 2: // discarded catch
@@ -2265,7 +2271,7 @@ FUNCTION calc_predicted_catch_out
 								for ( int o = 1; o <= nshell; o++ )
 								{
 									ig = pntr_hmo(h,m,o);
-									nal += d3_N(ig)(i);
+									nal += d4_N(ig)(i)(j);
 								}
 							}
 						break;
@@ -2303,13 +2309,14 @@ FUNCTION calc_relative_abundance
 	{
 		dvar_vector V(1,nSurveyRows(k));
 		V.initialize();
-		for ( j = 1; j <= nSurveyRows(k); j++ )
+		for ( int jj = 1; jj <= nSurveyRows(k); jj++ )
 		{
 			nal.initialize();
-			i = dSurveyData(k)(j)(1);       // year index
-			g = dSurveyData(k)(j)(3);       // gear index
-			h = dSurveyData(k)(j)(4);       //  sex index
-			unit = dSurveyData(k)(j)(7);    // units 1==biomass 2==Numbers
+			i = dSurveyData(k)(jj)(1);       // year index
+			j = dSurveyData(k)(jj)(2);       // season index
+			g = dSurveyData(k)(jj)(3);       // gear index
+			h = dSurveyData(k)(jj)(4);       //  sex index
+			unit = dSurveyData(k)(jj)(7);    // units 1==biomass 2==Numbers
 
 			if ( h )
 			{
@@ -2319,10 +2326,10 @@ FUNCTION calc_relative_abundance
 					for ( int o = 1; o <= nshell; o++ )
 					{
 						ig   = pntr_hmo(h,m,o);
-						nal += ( unit == 1 ) ? elem_prod(d3_N(ig)(i),mean_wt(h)) : d3_N(ig)(i);
+						nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)) : d4_N(ig)(i)(j);
 					}
 				}
-				V(j) = nal * sel;
+				V(jj) = nal * sel;
 			} else {
 				for ( h = 1; h <= nsex; h++ )
 				{
@@ -2332,10 +2339,10 @@ FUNCTION calc_relative_abundance
 						for ( int o = 1; o <= nshell; o++ )
 						{
 							ig   = pntr_hmo(h,m,o);
-							nal += ( unit == 1 ) ? elem_prod(d3_N(ig)(i),mean_wt(h)) : d3_N(ig)(i);
+							nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)) : d4_N(ig)(i)(j);
 						}
 					}
-					V(j) += nal * sel;
+					V(jj) += nal * sel;
 				}
 			}
 			// cout<<"SurveySel "<<sel<<endl;
@@ -2432,8 +2439,8 @@ FUNCTION calc_predicted_composition
 					for ( int o = 1; o <= nshell; o++ )
 					{
 						ig = pntr_hmo(h,m,o);
-						if ( shell == 0 ) nal += d3_N(ig)(i);
-						if ( shell == o ) nal += d3_N(ig)(i);
+						if ( shell == 0 ) nal += d4_N(ig)(i)(j);
+						if ( shell == o ) nal += d4_N(ig)(i)(j);
 					}
 				}
 				dvar_vector tmp = nal;
@@ -2463,8 +2470,8 @@ FUNCTION calc_predicted_composition
 						for ( int o = 1; o <= nshell; o++ )
 						{
 							ig = pntr_hmo(h,m,o);
-							if ( shell == 0 ) nal += d3_N(ig)(i);
-							if ( shell == o ) nal += d3_N(ig)(i);
+							if ( shell == 0 ) nal += d4_N(ig)(i)(j);
+							if ( shell == o ) nal += d4_N(ig)(i)(j);
 						}
 					}
 					dvar_vector tmp = nal;
@@ -3067,7 +3074,7 @@ REPORT_SECTION
 	REPORT(rec_dev);
 	REPORT(recruits);
 	REPORT(xi);
-	REPORT(d3_N);
+	REPORT(d4_N);
 	REPORT(M);
 	REPORT(Z);
 	REPORT(mean_wt);
@@ -3127,25 +3134,28 @@ REPORT_SECTION
 	N_males_old.initialize();
 	for ( int i = syr; i <= nyr+1; i++ )
 	{
-	  for ( int j = 1; j <= nclass; j++ )
-	  {
-	    for ( int k = 1; k <= n_grp; k++ )
-	    {	
-	    	if ( isex(k) == 1 )
-	    	{
-	    		N_males(i,j) += d3_N(k,i,j);
-				if ( ishell(k) == 2 )
-				{
-		    		N_males_old(i,j) += d3_N(k,i,j);
-				}
-				if ( imature(k) == 1 )
-				{
-		    		N_mm(i,j) += d3_N(k,i,j);
-				}
+		for ( int j = 1; j <= nseason; j++ )
+	  	{
+			for ( int l = 1; l <= nclass; l++ )
+		  	{
+	    		for ( int k = 1; k <= n_grp; k++ )
+	    		{	
+	    			if ( isex(k) == 1 )
+	    			{
+	    				N_males(i,l) += d4_N(k,i,j,l);
+						if ( ishell(k) == 2 )
+						{
+		   	 				N_males_old(i,l) += d4_N(k,i,j,l);
+						}
+						if ( imature(k) == 1 )
+						{
+		   	 				N_mm(i,l) += d4_N(k,i,j,l);
+						}
+	    			}
+	    			N_len(i,l) += d4_N(k,i,j,l);
+	    		}
 	    	}
-	    	N_len(i,j) += d3_N(k,i,j);
-	    }
-	  }
+	  	}
 	}
 	
 	REPORT(N_len);
@@ -3230,7 +3240,7 @@ FUNCTION dvar_vector calc_ssb()
 			m = imature(ig);
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-			ssb(i) += lam * d3_N(ig)(i) * elem_prod(mean_wt(h), maturity(h));
+			ssb(i) += lam * d4_N(ig)(i)(1) * elem_prod(mean_wt(h), maturity(h)); // QUICK FIX, JUST SET SSB TO N IN FIRST YEAR
 		}
 	}
 	return(ssb);
@@ -3282,7 +3292,7 @@ FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const 
 			_M(h)(l,l) = value(M(h)(iyr)(l));
 		}
 		//todo fix me.
-		_N(h) = value(d3_N(1)(iyr));
+		_N(h) = value(d4_N(1)(iyr)(1));
 		_wa(h) = elem_prod(mean_wt(h), maturity(h));
 	}
 	
