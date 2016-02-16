@@ -20,6 +20,9 @@
 1     # Number of shell condition types
 1     # Number of maturity types
 3     # Number of size-classes in the model
+3     # Season recruitment occurs
+3     # Season molting and growth occurs
+2     # Season to calculate SSB
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)
 90  105  120  135
 # weight-at-length input method (1 = allometry w_l = a*l^b, 2 = vector by sex)

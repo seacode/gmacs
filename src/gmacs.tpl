@@ -126,6 +126,11 @@ DATA_SECTION
 	init_int nshell;  ///> number of shell conditions
 	init_int nmature; ///> number of maturity types
 	init_int nclass;  ///> number of size-classes
+
+	init_int season_recruitment; ///> Season that recruitment occurs (end of year before growth)
+	init_int season_growth;      ///> Season that growth occurs (end of year after recruitment)
+	init_int season_ssb;         ///> Season to calculate SSB (end of year)
+
 	LOC_CALCS
 		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
@@ -1895,8 +1900,6 @@ FUNCTION calc_initial_numbers_at_length
 	**/
 FUNCTION update_population_numbers_at_length
 	int h,i,ig,o,m;
-	int season_growth = 3;
-	int season_recruitment = 3;
 
 	dmatrix Id = identity_matrix(1,nclass);
 	dvar_vector rt(1,nclass);
@@ -3239,7 +3242,6 @@ REPORT_SECTION
 FUNCTION dvar_vector calc_ssb()
 	int ig,m,o;
 	int h = 1; // males
-	int season_ssb = 2;
 	dvar_vector ssb(syr,nyr);
 	ssb.initialize();
 
