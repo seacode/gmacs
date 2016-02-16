@@ -388,8 +388,7 @@ namespace gsm {
 	 * @brief Parametric selectivity function
 	 * @details One age or size-specific selectivity parameter for each age/size class.
 	 * 
-	 * Note that the same can be accomplished using the SelectivityCoefficients class
-	 * but Athol wanted to have this function in CSTAR
+	 * Note that the same can be accomplished using the SelectivityCoefficients class but Athol wanted to have this function in CSTAR
 	 * 
 	 * @tparam T vector of parameters (initial values)
 	**/

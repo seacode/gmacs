@@ -1895,6 +1895,8 @@ FUNCTION calc_initial_numbers_at_length
 	**/
 FUNCTION update_population_numbers_at_length
 	int h,i,ig,o,m;
+	int season_growth = 3;
+	int season_recruitment = 3;
 
 	dmatrix Id = identity_matrix(1,nclass);
 	dvar_vector rt(1,nclass);
@@ -1953,10 +1955,10 @@ FUNCTION update_population_numbers_at_length
 					x = d4_N(ig)(i)(j);
 					// Mortality
 					x = x * S(h)(i)(j);
-					// Molting and growth
-					if (j == 2) x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
 					// Recruitment
-					if (j == 2) x += rt;
+					if (j == season_recruitment) x += rt;
+					// Molting and growth
+					if (j == season_growth) x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
 					if (j == nseason)
 					{
 						d4_N(ig)(i+1)(1) = x;
@@ -1977,20 +1979,34 @@ FUNCTION update_population_numbers_at_length
 					//d3_N(ig)(i+1) = (x+d3_N(ig-1)(i)) * t1;
 				
 					// add oldshell non-terminal molts to newshell
-					if (j == 1) y = d4_N(ig)(i)(j);
+					x = d4_N(ig)(i)(j);
 					// Mortality
-					y = y * S(h)(i)(j);
+					x = x * S(h)(i)(j);
 					// Molting and growth
-					if (j == 2) y = elem_prod(y,diagonal(P(h))) * growth_transition(h);
-					if (j == 2) d4_N(ig-1)(i+1)(j) += y;
+					if (j == season_growth) x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
+					if (j == nseason && j == season_growth)
+					{
+						d4_N(ig-1)(i+1)(1) = x;
+					} else if (j != nseason && j == season_growth) {
+						d4_N(ig-1)(i)(j+1) = x;
+					} else if (j == nseason && j != season_growth) {
+						d4_N(ig)(i+1)(j) = x;
+					} else {
+						d4_N(ig)(i)(j+1) = x;						
+					}
 
 					// oldshell
-					if (j == 1) z = d4_N(ig)(i)(j) + d4_N(ig-1)(i)(j);
+					y = d4_N(ig)(i)(j) + d4_N(ig-1)(i)(j);
 					// Mortality
-					z = z * S(h)(i)(j);
+					y = y * S(h)(i)(j);
 					// Molting
-					if (j == 2) z = z * (Id - P(h));
-					if (j == 2) d4_N(ig)(i+1)(j) = z;
+					if (j == 3) y = y * (Id - P(h));
+					if (j == nseason)
+					{
+						d4_N(ig-1)(i+1)(1) = y;
+					} else {
+						d4_N(ig-1)(i)(j+1) = y;
+					}
 				}
 				if ( o == 1 && m == 2 ) // terminal molt to new shell.
 				{
@@ -2010,7 +2026,7 @@ FUNCTION update_population_numbers_at_length
 	 *
 	 * NOTES:
 	 * if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
-	 */
+	**/
 FUNCTION calc_stock_recruitment_relationship
 	dvariable so, bb;
 	dvariable ro = mfexp(logR0);
@@ -2288,17 +2304,14 @@ FUNCTION calc_predicted_catch_out
 
 	/**
 	 * @brief Calculate predicted relative abundance and residuals
-	 * @author Steve Martell
+	 * @author Steve Martell, Darcy Webber
 	 *
-	 * @details This function uses the conditional mle for q to scale
-	 * the population to the relative abundance index.  Assumed errors in
-	 * relative abundance are lognormal.  Currently assumes that the CPUE
-	 * index is made up of both retained and discarded crabs.
+	 * @details This function uses the conditional mle for q to scale the population to the relative abundance index. Assumed errors in relative abundance are lognormal.  Currently assumes that the CPUE index is made up of both retained and discarded crabs.
 	 *
 	 * Question regarding use of shell condition in the relative abundance index.
 	 * Currenlty there is no shell condition information in the CPUE data, should
 	 * there be? Similarly, there is no mature immature information, should there be?
-	 */
+	**/
 FUNCTION calc_relative_abundance
 	int g,h,i,j,k,ig;
 	int unit;
@@ -2315,7 +2328,7 @@ FUNCTION calc_relative_abundance
 			i = dSurveyData(k)(jj)(1);       // year index
 			j = dSurveyData(k)(jj)(2);       // season index
 			g = dSurveyData(k)(jj)(3);       // gear index
-			h = dSurveyData(k)(jj)(4);       //  sex index
+			h = dSurveyData(k)(jj)(4);       // sex index
 			unit = dSurveyData(k)(jj)(7);    // units 1==biomass 2==Numbers
 
 			if ( h )
@@ -2345,7 +2358,6 @@ FUNCTION calc_relative_abundance
 					V(jj) += nal * sel;
 				}
 			}
-			// cout<<"SurveySel "<<sel<<endl;
 		} // nSurveyRows(k)
 		switch ( q_anal(k) )
 		{
@@ -3217,17 +3229,17 @@ REPORT_SECTION
 
 	/**
 	 * @brief Calculate mature male biomass (MMB)
-	 * @details Calculation of the mature male biomass is based on the
-	 * numbers-at-length summed over each shell condition.
+	 * @details Calculation of the mature male biomass is based on the numbers-at-length summed over each shell condition.
 	 *
-	 * TODO correct for timing of when the MMB is calculated
-	 * Add female component if lamnda < 1
+	 * TODO
+	 * Add female component if lamda < 1
 	 *
 	 * @return dvar_vector ssb (model mature biomass).
 	**/
 FUNCTION dvar_vector calc_ssb()
 	int ig,m,o;
 	int h = 1; // males
+	int season_ssb = 2;
 	dvar_vector ssb(syr,nyr);
 	ssb.initialize();
 
@@ -3240,7 +3252,7 @@ FUNCTION dvar_vector calc_ssb()
 			m = imature(ig);
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-			ssb(i) += lam * d4_N(ig)(i)(1) * elem_prod(mean_wt(h), maturity(h)); // QUICK FIX, JUST SET SSB TO N IN FIRST YEAR
+			ssb(i) += lam * d4_N(ig)(i)(season_ssb) * elem_prod(mean_wt(h), maturity(h)); // QUICK FIX
 		}
 	}
 	return(ssb);
