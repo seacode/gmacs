@@ -276,6 +276,7 @@ DATA_SECTION
 				}
 			}
 		}
+		ECHO(nFparams); ECHO(nYparams); ECHO(fhit); ECHO(yhit); ECHO(dmr);
 		// Create the dCatchData_out object for output and plotting in R, this object simply fills in the years that don't have data with zero catch
 		dCatchData_out.initialize();
 		obs_catch_out.initialize();
@@ -1489,10 +1490,13 @@ FUNCTION calc_fishing_mortality
 				{
 					if ( fhit(i,j,k) )
 					{
+						// Jim notes that this next line results in walking out of an array at log_fdev(k,ik++) 
 						log_ftmp = log_fbar(k) + log_fdev(k,ik++);
+						// Jim for checking error...
+						cout << log_fbar(k)<<" "<<k<<" "<<log_fdev(k,ik)<<" "<<ik<<endl;
 						if ( yhit(i,j,k) )
 						{
-							log_ftmp += (h-1) * (log_foff(k) + log_fdov(k,yk++));
+							log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
 						}
 						ft(k)(h)(i)(j) = mfexp(log_ftmp);
 						xi  = dmr(i,k);                                      // Discard mortality rate
