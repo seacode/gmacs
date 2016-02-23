@@ -100,3 +100,38 @@ plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
     }
     print(p + .THEME)
 }
+
+
+
+
+.get_F_df <- function(M)
+{
+    n <- length(M)
+    mdf <- NULL
+    for ( i in 1:n )
+    {
+        A <- M[[i]]
+        nyear <- length(M[[i]]$mod_yrs)
+        nseason <- length(M[[i]]$m_prop)
+        nclass <- length(M[[i]]$mid_points)
+        df <- data.frame(Model = names(M)[i], A$F)
+        colnames(df) <- c("model", M[[i]]$mid_points)
+        df$year <- rep(M[[i]]$mod_yrs, each = nseason)
+        df$season <- rep(1:nseason, nyear)
+        df <- tidyr::gather(df, "mid_point", "F", 2:(nclass+1))
+        mdf <- rbind(mdf, df)
+    }
+    mdf$year <- as.integer(mdf$year)
+    return(mdf)
+}
+
+ggplot(mdf) + geom_line(aes(year, F, group = 1)) + facet_grid(mid_point ~ season, scales = "free_y")
+
+
+        plot(A$F[seq(2,114,3),1], type = "l")
+        plot(A$F[seq(2,114,3),2], type = "l", col = 2)
+        plot(A$F[seq(2,114,3),3], type = "l", col = 3)
+
+        plot(A$F[seq(2,114,3),1], type = "l", ylim = c(0,2))
+        lines(A$F[seq(2,114,3),2], col = 2)
+        lines(A$F[seq(2,114,3),3], col = 3)

@@ -4,8 +4,8 @@
 \alias{plot_catch}
 \title{Plot observed and predicted catch values}
 \usage{
-plot_catch(M, plot_res = FALSE, xlab = "Year", ylab = "Catch",
-  mlab = "Model")
+plot_catch(M, plot_res = FALSE, scales = "free_y", xlab = "Year",
+  ylab = "Catch", mlab = "Model")
 }
 \arguments{
 \item{M}{list object created by read_admb function}

@@ -371,8 +371,8 @@ namespace gsm {
 	  	dvar_vector selex(1,x2);
 	  	for ( int i = 1; i <= x2; i++ )
 	  	{
-	  		//selex(i) = 1.0 / (1.0 + mfexp(selparms(i)));
-	  		selex(i) = mfexp(selparms(i)) / (1.0 + mfexp(selparms(i)));
+	  		selex(i) = 1.0 / (1.0 + mfexp(-selparms(i)));
+	  		//selex(i) = mfexp(selparms(i)) / (1.0 + mfexp(selparms(i)));
 	  	}
 	  	//dvariable temp = selex(x2);
 	  	dvariable temp = max(selex);

@@ -465,7 +465,7 @@ DATA_SECTION
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
 	int nslx;             // number of selectivities (gears x blocks selectivity + gears * blocks retained)
-	int nSelex;           // number of selectivity parameters in total
+	int nslx_pars;        // number of selectivity parameters in total
 	int nslx_rows_in;     // number of selectivity rows
 	int nslx_cols_in;     // number of selectivity columns
 	!! nslx_cols_in = 13; // number of columns in the control file to be read in
@@ -552,17 +552,13 @@ DATA_SECTION
 	ivector slx_gear(1,nslx); // index the gear type
 	ivector slx_type(1,nslx); // the type of selectivity function
 	ivector slx_isex(1,nslx); // 0 = males and females, 1 = males only, 2 = females only
-	vector  slx_lb(1,nslx);   // lower bound
-	vector  slx_ub(1,nslx);   // uppder bound
-	ivector slx_phzm(1,nslx); // phase/mirror
 	ivector slx_styr(1,nslx); // period start year
 	ivector slx_edyr(1,nslx); // period end year
 	ivector slx_cols(1,nslx);
 	ivector slx_npar(1,nslx);
 
 	LOC_CALCS
-		// Work out the type of each selectivity and place in the ivector
-		// slx_type
+		// Work out the type of each selectivity and place in the ivector slx_type
 		int kk = 1;
 		for ( int k = 1; k <= nfleet; k++ )
 		{
@@ -631,26 +627,21 @@ DATA_SECTION
 			{
 				slx_control(k,i) = slx_control_in(kk,i);
 			}
-			slx_gear(k) =     slx_control_in(kk,1);
-			slx_isex(k) =     slx_control_in(kk,4);
-			if ( slx_type(k) == 0 || slx_type(k) == 1 )
-			{
-				slx_lb(k) = log(slx_control_in(kk,6) / (1 - slx_control_in(kk,6)));
-				slx_ub(k) = log(slx_control_in(kk,7) / (1 - slx_control_in(kk,7)));
-			} else {
-				slx_lb(k) = log(slx_control_in(kk,6));
-				slx_ub(k) = log(slx_control_in(kk,7));
-			}
-			slx_phzm(k) =     slx_control_in(kk,11);
-			slx_styr(k) =     slx_control_in(kk,12);
-			slx_edyr(k) =     slx_control_in(kk,13);		
+			slx_gear(k) = slx_control_in(kk,1);
+			slx_isex(k) = slx_control_in(kk,4);
+			slx_styr(k) = slx_control_in(kk,12);
+			slx_edyr(k) = slx_control_in(kk,13);
 		}
-		nSelex = sum(slx_cols);
+		nslx_pars = sum(slx_cols);
 	END_CALCS
 
 	// Load the parameters into their own ragged matrix
 	matrix slx_par(1,nslx,1,slx_npar);
 	3darray slx_priors(1,nslx,1,slx_cols,1,3);
+	vector  slx_lb(1,nslx_pars);   // lower bound
+	vector  slx_ub(1,nslx_pars);   // uppder bound
+	ivector slx_phzm(1,nslx_pars); // phase/mirror
+
 	LOC_CALCS
 		for ( int k = 1; k <= nslx; k++ )
 		{
@@ -669,6 +660,16 @@ DATA_SECTION
 					slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
 					slx_priors(k,j,3) = slx_control_in(jj,10); // p2
 				}
+
+				if ( slx_type(k) == 0 || slx_type(k) == 1 )
+				{
+					slx_lb(jj) = log(slx_control_in(jj,6) / (1 - slx_control_in(jj,6)));
+					slx_ub(jj) = log(slx_control_in(jj,7) / (1 - slx_control_in(jj,7)));
+				} else {
+					slx_lb(jj) = log(slx_control_in(jj,6));
+					slx_ub(jj) = log(slx_control_in(jj,7));
+				}
+				slx_phzm(jj) = slx_control_in(jj,11);
 			}
 			//if ( slx_type(k) == 1 )
 			//{
@@ -1017,7 +1018,7 @@ DATA_SECTION
 
 	init_int eof_ctl;
 	!! WriteCtl(eof_ctl);
-	!! if( eof_ctl!=9999 ){cout << "Error reading control file" << endl; exit(1);}
+	!! if ( eof_ctl!=9999 ){cout << "Error reading control file" << endl; exit(1);}
 	!! cout << "end of control section" << endl;
 
 	LOC_CALCS
@@ -1096,9 +1097,10 @@ PARAMETER_SECTION
 	// init_bounded_vector molt_cv(1,nsex,0,1,1);
 
 	// Selectivity parameters
-	init_bounded_vector_vector log_slx_pars(1,nslx,1,slx_npar,slx_lb,slx_ub,slx_phzm);
+	init_bounded_number_vector log_slx_pars(1,nslx_pars,slx_lb,slx_ub,slx_phzm);
 
 	LOC_CALCS
+		int j = 1;
 		for ( int k = 1; k <= nslx; k++ )
 		{
 			// Logit transform if using parametric or coefficients selectivity type, otherwise just log transform
@@ -1106,12 +1108,14 @@ PARAMETER_SECTION
 			{
 				for ( int i = 1; i <= slx_npar(k); i++ )
 				{
-					log_slx_pars(k,i) = log(slx_par(k,i) / (1 - slx_par(k,i)));
+					log_slx_pars(j) = log(slx_par(k,i) / (1 - slx_par(k,i)));
+					j++;
 				}
 			} else {
 				for ( int i = 1; i <= slx_npar(k); i++ )
 				{
-					log_slx_pars(k,i) = log(slx_par(k,i));
+					log_slx_pars(j) = log(slx_par(k,i));
+					j++;
 				}
 			}
 			//COUT(exp(log_slx_pars(k)));
@@ -1143,7 +1147,7 @@ PARAMETER_SECTION
 
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,6);
-	vector priorDensity(1,ntheta+nGrwth+nSurveys+nSurveys+nSelex);
+	vector priorDensity(1,ntheta+nGrwth+nSurveys+nSurveys+nslx_pars);
 
 	objective_function_value objfun;
 
@@ -1291,6 +1295,7 @@ PROCEDURE_SECTION
 FUNCTION write_eval
   MCout(theta);
 
+
 	/**
 	 * @brief calculate sdreport variables in final phase
 	**/
@@ -1303,12 +1308,13 @@ FUNCTION calc_sdreport
 		sd_fbar(i) = mean(F(1,i));
 	}
 
-	reset_Z_to_M();     
-	calc_initial_numbers_at_length();      
-	update_population_numbers_at_length(); 
-	sd_log_dyn_Bzero    = log(calc_ssb())(syr+1,nyr);
-	sd_log_dyn_Bzero    = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero))     ;
-	calc_total_mortality();     
+	reset_Z_to_M();
+	calc_initial_numbers_at_length();
+	update_population_numbers_at_length();
+	sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
+	sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
+	calc_total_mortality();
+
 
 	/**
 	 * @brief Initialize model parameters
@@ -1378,36 +1384,51 @@ FUNCTION calc_selectivities
 	log_slx_capture.initialize();
 	log_slx_discard.initialize();
 	log_slx_retaind.initialize();
+	dvar_vector temp_slx(1,3);
 
+	int j = 1;
 	for ( k = 1; k <= nslx; k++ )
 	{
 		class gsm::Selex<dvar_vector> *pSLX;
 		switch ( slx_type(k) )
 		{
 			case 0: // parametric
-				//pv = elem_div(mfexp(log_slx_pars(k)), 1 + mfexp(log_slx_pars(k)));
-				pv = log_slx_pars(k);
+				//pv = elem_div(mfexp(log_slx_pars(k)), 1 + mfexp(log_slx_pars(k)));				
+				for (i = 1; i <= 3; i++)
+				{
+					temp_slx(i) = log_slx_pars(j);
+					j++;
+				}
+				//pv = log_slx_pars(j); // NEEDS FIXING
+				pv = temp_slx;
 				pSLX = new class gsm::ParameterPerClass<dvar_vector>(pv);
 			break;
 			case 1: // coefficients
 				//pv = elem_div(mfexp(log_slx_pars(k)), 1 + mfexp(log_slx_pars(k)));
-				pv = log_slx_pars(k);
+				pv = log_slx_pars(j);
 				pSLX = new class gsm::SelectivityCoefficients<dvar_vector>(pv);
 			break;
 			case 2: // logistic
-				p1 = mfexp(log_slx_pars(k,1));
-				p2 = mfexp(log_slx_pars(k,2));
+				p1 = mfexp(log_slx_pars(j));
+				j++;
+				p2 = mfexp(log_slx_pars(j));
+				j++;
 				pSLX = new class gsm::LogisticCurve<dvar_vector,dvariable>(p1,p2);
 			break;
 			case 3: // logistic95
-				p1 = mfexp(log_slx_pars(k,1));
-				p2 = mfexp(log_slx_pars(k,2));
+				p1 = mfexp(log_slx_pars(j));
+				j++;
+				p2 = mfexp(log_slx_pars(j));
+				j++;
 				pSLX = new class gsm::LogisticCurve95<dvar_vector,dvariable>(p1,p2);
 			break;
 			case 4: // double normal
-				p1 = mfexp(log_slx_pars(k,1));
-				p2 = mfexp(log_slx_pars(k,2));
-				p3 = mfexp(log_slx_pars(k,3));
+				p1 = mfexp(log_slx_pars(j));
+				j++;
+				p2 = mfexp(log_slx_pars(j));
+				j++;
+				p3 = mfexp(log_slx_pars(j));
+				j++;
 				//pSLX = new class gsm::DoubleNormal<dvar_vector,dvariable>(p1,p2,p3);
 			break;
 		}
@@ -2690,26 +2711,28 @@ FUNCTION calculate_prior_densities
 		iprior++;
 	}
 	// Selctivity parameter priors
+	int j = 1;
 	for ( int k = 1; k <= nslx; k++ )
 	{
-		for ( int j = 1; j <= slx_cols(k); j++ )
+		for ( int i = 1; i <= slx_cols(k); i++ )
 		{
-			if ( active(log_slx_pars(k)) )
+			if ( active(log_slx_pars(j)) )
 			{
-				itype = int(slx_priors(k,j,1));
-				p1 = slx_priors(k,j,2);
-				p2 = slx_priors(k,j,3);
+				itype = int(slx_priors(k,i,1));
+				p1 = slx_priors(k,i,2);
+				p2 = slx_priors(k,i,3);
 				if ( slx_type(k) == 0 || slx_type(k) == 1 )
 				{
-					x = mfexp(log_slx_pars(k,j)) / (1 + mfexp(log_slx_pars(k,j)));
+					x = mfexp(log_slx_pars(j)) / (1 + mfexp(log_slx_pars(j)));
 				} else {
-					x = mfexp(log_slx_pars(k,j));
+					x = mfexp(log_slx_pars(j));
 				}
 				// Above is a change of variable so an adjustment is required - DOUBLE CHECK THIS
 				//priorDensity(iprior) = get_prior_pdf(itype, x, p1, p2) + log_slx_pars(k,j);
 				priorDensity(iprior) = get_prior_pdf(itype, x, p1, p2);
 				if ( verbose == 2 ) cout << " Prior no, val, dens " << iprior << " " << x << " " << priorDensity(iprior) << endl;
 			}
+			j++;
 			iprior++;
 		}
 	}
@@ -2889,7 +2912,7 @@ FUNCTION calc_objective_function
 		cout << "priortheta  " << priorDensity(1, ntheta) << endl;;
 		cout << "priorGrowth " << priorDensity(1 + ntheta, ntheta+nGrwth) << endl;;
 		cout << "priorSrvQ   " << priorDensity(1 + ntheta + nGrwth, ntheta + nGrwth + nSurveys) << endl;
-		cout << "priorselex  " << priorDensity(1 + ntheta + nGrwth + nSurveys, ntheta + nGrwth + nSurveys + nSelex) << endl;
+		cout << "priorselex  " << priorDensity(1 + ntheta + nGrwth + nSurveys, ntheta + nGrwth + nSurveys + nslx_pars) << endl;
 	}
 
 
@@ -2990,6 +3013,7 @@ REPORT_SECTION
 	REPORT(name_read_srv);
 	REPORT(mod_yrs);
 	REPORT(mid_points);
+	REPORT(m_prop);
 	REPORT(nloglike);
 	REPORT(nlogPenalty);
 	REPORT(priorDensity);
@@ -3030,13 +3054,13 @@ REPORT_SECTION
 	REPORT(F);
 	REPORT(d3_pre_size_comps);
 	REPORT(d3_obs_size_comps);
-  dmatrix effN(1,nSizeComps,1,nSizeCompRows);
-  dmatrix effN2(1,nSizeComps,1,nSizeCompRows);
-  dmatrix pre_mn_size(1,nSizeComps,1,nSizeCompRows);
-  dmatrix obs_mn_size(1,nSizeComps,1,nSizeCompRows);
-  dmatrix  lb_mn_size(1,nSizeComps,1,nSizeCompRows);
-  dmatrix  ub_mn_size(1,nSizeComps,1,nSizeCompRows);
-  /*
+	dmatrix effN(1,nSizeComps,1,nSizeCompRows);
+	dmatrix effN2(1,nSizeComps,1,nSizeCompRows);
+	dmatrix pre_mn_size(1,nSizeComps,1,nSizeCompRows);
+	dmatrix obs_mn_size(1,nSizeComps,1,nSizeCompRows);
+	dmatrix  lb_mn_size(1,nSizeComps,1,nSizeCompRows);
+	dmatrix  ub_mn_size(1,nSizeComps,1,nSizeCompRows);
+	/*
                  << " "<<mn_length(olc_ind(k,i))
                  << " "<<mn_length(elc_ind(k,i))
                  << " "<<sda_tmp
@@ -3045,9 +3069,9 @@ REPORT_SECTION
                  <<endl;
       }
     }
-  }
-  */
-  // Compute effective N's
+	}
+	*/
+	// Compute effective N's
 	for ( int kk = 1; kk <= nSizeComps; kk++ )
 	{
 		for ( int ii = 1; ii <= nSizeCompRows(kk); ii++ )
@@ -3217,9 +3241,7 @@ REPORT_SECTION
 	{
 		size_transition_M(i,i) += value(1.-P(1,i,i));
 	}
-
 	REPORT(size_transition_M);
-	
 	if ( nsex == 2 )
 	{
 	  	size_transition_F = value(P(2) * growth_transition(2));
@@ -3229,6 +3251,7 @@ REPORT_SECTION
 		}
 		REPORT(size_transition_F);
 	}
+
 
 	/**
 	 * @brief Calculate mature male biomass (MMB)
@@ -3382,7 +3405,7 @@ FUNCTION double mn_length(const dvector& pobs)
 	 *  ARGS:
 	 *  @param observed proportions
 	 *  @param predicted proportions
-	 */
+	**/
 FUNCTION double mn_length(const dvar_vector& pobs)
   double mobs = value(pobs*mid_points);
   return mobs;
@@ -3394,7 +3417,7 @@ FUNCTION double mn_length(const dvar_vector& pobs)
 	 *  ARGS:
 	 *  @param observed proportions
 	 *  @param predicted proportions
-	 */
+	**/
 FUNCTION double Sd_length(const dvector& pobs)
   double mobs = (pobs*mid_points);
   double stmp = sqrt((elem_prod(mid_points,mid_points)*pobs) - mobs*mobs);
@@ -3407,7 +3430,7 @@ FUNCTION double Sd_length(const dvector& pobs)
 	 *  ARGS:
 	 *  @param observed proportions
 	 *  @param predicted proportions
-	 */
+	**/
 FUNCTION double Eff_N_adj(const double, const dvar_vector& pobs, const dvar_vector& phat)
   int lb1 = pobs.indexmin();
   int ub1 = pobs.indexmax();
@@ -3426,7 +3449,7 @@ FUNCTION double Eff_N_adj(const double, const dvar_vector& pobs, const dvar_vect
 	 *  ARGS:
 	 *  @param observed proportions
 	 *  @param predicted proportions
-	 */
+	**/
 FUNCTION double Eff_N2(const dvector& pobs, const dvar_vector& phat)
   int lb1 = pobs.indexmin();
   int ub1 = pobs.indexmax();
@@ -3446,7 +3469,7 @@ GLOBALS_SECTION
 	/**
 	 * @file gmacs.cpp
 	 * @authors Steve Martell, Jim Ianelli, Darcy Webber
-	 */
+	**/
 	#include <admodel.h>
 	#include <time.h>
 	adstring like_names;

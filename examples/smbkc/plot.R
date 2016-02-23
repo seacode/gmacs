@@ -46,6 +46,12 @@ plot_catch(M)
 ggsave(paste0(.FIGS, "catch.png"), width = ww*1.2, height = hh*1.2)
 dev.off()
 
+plot_catch(M, scales = "fixed")
+ggsave(paste0(.FIGS, "catch_fixed_y.png"), width = ww*1.2, height = hh*1.2)
+dev.off()
+
+plot_fishing_mortality(M)
+
 plot_cpue(M, ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue.png"), width = ww*2.5, height = hh)
 dev.off()
