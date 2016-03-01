@@ -18,9 +18,13 @@ require(gmr)
 .SEAS     = c("Annual")
 .FIGS     = c("figure/")
 
-fn       <- paste0(.MODELDIR, "gmacs")
-M        <- lapply(fn, read_admb)
+fn <- paste0(.MODELDIR, "gmacs")
+M <- lapply(fn, read_admb)
 names(M) <- "SMBKC"
+
+#fn       <- rep(paste0(.MODELDIR, "gmacs"), 2)
+#M        <- lapply(fn, read_admb)
+#names(M) <- c("SMBKC","Zheng")
 
 ww <- 6
 hh <- 5
@@ -64,7 +68,7 @@ plot_cpue(M, "NMFS Trawl", ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue_NMFS.png"), width = ww*2.5, height = hh)
 dev.off()
 
-plot_natural_mortality(M, plt_knots = FALSE, knots = c(1976, 1980, 1985, 1994))
+plot_natural_mortality(M, plt_knots = TRUE, knots = 1999)
 ggsave(paste0(.FIGS, "M_t.png"), width = ww, height = hh)
 dev.off()
 
@@ -79,7 +83,7 @@ plot_recruitment(M)
 ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
 dev.off()
 
-plot_selectivity(M)
+plot_selectivity(M, ncol = 5)
 ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 

@@ -11,13 +11,12 @@
     mdf <- NULL
     for (i in 1:n)
     {
-        A      <- M[[i]]
-        nrow   <- dim(A$M)[1]
-        nsex   <- nrow / length(A$mod_yrs)
-        A$sex  <- rep(1, length = nrow/nsex)
+        A <- M[[i]]
+        nrow <- dim(A$M)[1]
+        nsex <- nrow / length(A$mod_yrs)
+        A$sex <- rep(1, length = nrow/nsex)
         if (nsex > 1) A$sex <- c(A$sex,rep(2,length=nrow/nsex))
-        df <- data.frame(Model=names(M)[i],(cbind(as.numeric(A$mod_yrs), 
-                         .SEX[A$sex+1], as.numeric(M[[i]]$M[,1])) ),stringsAsFactors=FALSE)
+        df <- data.frame(Model=names(M)[i],(cbind(as.numeric(A$mod_yrs), .SEX[A$sex+1], as.numeric(M[[i]]$M[,1])) ),stringsAsFactors=FALSE)
         colnames(df) <- c("Model", "Year", "Sex", "M")
         df$M <- as.numeric(df$M)
         df$Year <- as.numeric(df$Year)
@@ -65,7 +64,6 @@ plot_natural_mortality <- function(M, plt_knots = TRUE, knots = c(1976, 1980, 19
         p <- p + geom_point(data = mdf, aes(x = Year, y = Knot, colour = Model)) +
             labs(col = "Knot")
     }
-    p <- p + expand_limits(y = 0) + labs(x = "\nYear", y = "Natural mortality\n")
+    p <- p + expand_limits(y = 0) + labs(x = "\nYear", y = "Natural mortality (M)\n")
     print(p + .THEME)
 }
-

@@ -104,7 +104,7 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (thousands of
 #' @author DN Webber
 #' @export
 #' 
-plot_recruitment_size <- function(M, xlab = "Size", ylab = "Density")
+plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Density")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -116,7 +116,7 @@ plot_recruitment_size <- function(M, xlab = "Size", ylab = "Density")
     } else {
         p <- p + geom_line(aes(col = Model))
     }
-    if(!.OVERLAY) p <- p + facet_wrap(~Model)
+    if (!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)
 }
 
@@ -129,7 +129,7 @@ plot_recruitment_size <- function(M, xlab = "Size", ylab = "Density")
 #' @author Cole Monnahan Kelli Johnson
 #' @export
 #' 
-plot_models_recruitment <- function(data, modnames=NULL )
+plot_models_recruitment <- function(data, modnames = NULL)
 {
   if (is.null(modnames))
     modnames = paste("Model ",1:length(data))

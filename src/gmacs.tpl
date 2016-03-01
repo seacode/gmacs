@@ -1749,11 +1749,7 @@ FUNCTION reset_Z_to_M
 
 	/**
 	 * \brief Calculate the probability of moulting vs carapace width.
-	 * \details Note that the parameters molt_mu and molt cv can only be
-	 * estimated in cases where there is new shell and old shell data.
-	 *
-	 * Note that the diagonal of the P matrix != 0, otherwise the matrix
-	 * is singular in inv(P).
+	 * \details Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data. Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).
 	**/
 FUNCTION calc_molting_probability
 	int l,h;
