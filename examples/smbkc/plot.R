@@ -60,12 +60,24 @@ plot_cpue(M, ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue.png"), width = ww*2.5, height = hh)
 dev.off()
 
+plot_cpue(M, ShowEstErr = TRUE, logy = TRUE)
+ggsave(paste0(.FIGS, "cpue_log.png"), width = ww*2.5, height = hh)
+dev.off()
+
 plot_cpue(M, "ADFG Pot", ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue_BSFRF.png"), width = ww, height = hh)
 dev.off()
 
+plot_cpue(M, "ADFG Pot", ShowEstErr = TRUE, logy = TRUE)
+ggsave(paste0(.FIGS, "cpue_log_BSFRF.png"), width = ww, height = hh)
+dev.off()
+
 plot_cpue(M, "NMFS Trawl", ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue_NMFS.png"), width = ww*2.5, height = hh)
+dev.off()
+
+plot_cpue(M, "NMFS Trawl", ShowEstErr = TRUE, logy = TRUE)
+ggsave(paste0(.FIGS, "cpue_log_NMFS.png"), width = ww*2.5, height = hh)
 dev.off()
 
 plot_natural_mortality(M, plt_knots = TRUE, knots = 1999)
@@ -84,7 +96,7 @@ ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
 dev.off()
 
 plot_selectivity(M, ncol = 5)
-ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*1.5)
+ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh)
 dev.off()
 
 #plot_growth_transition(M)

@@ -5,7 +5,7 @@
 \title{Plot cpue or other indices}
 \usage{
 plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex",
-  ShowEstErr = FALSE)
+  ShowEstErr = FALSE, logy = FALSE)
 }
 \arguments{
 \item{M}{list object created by read_admb function}
@@ -19,6 +19,8 @@ plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex",
 \item{slab}{the sex label for the plot that appears above the key}
 
 \item{ShowEstErr}{Shows errorbars from estimated CVs as well}
+
+\item{logy}{Plot the CPUE in log-space}
 }
 \value{
 plot of all observed and predicted incices

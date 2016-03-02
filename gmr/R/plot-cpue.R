@@ -7,15 +7,15 @@
 #' 
 .get_cpue_df <- function(M)
 {
-	n   <- length(M)
-	mdf <- NULL
-	for (i in 1:n)
-	{
-		A        <- M[[i]]
-		df       <- data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData))
-		colnames(df) <- c("Model","year","seas","fleet","sex","cpue","cv","units")
-		df$sex   <- .SEX[df$sex+1]
-		df$fleet <- .FLEET[df$fleet]
+    n   <- length(M)
+    mdf <- NULL
+    for (i in 1:n)
+    {
+        A        <- M[[i]]
+        df       <- data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData))
+        colnames(df) <- c("Model","year","seas","fleet","sex","cpue","cv","units")
+        df$sex   <- .SEX[df$sex+1]
+        df$fleet <- .FLEET[df$fleet]
         sd       <- sqrt(log(1 + df$cv^2))
         df$lb    <- exp(log(df$cpue) - 1.96*sd)
         df$ub    <- exp(log(df$cpue) + 1.96*sd)
@@ -28,8 +28,8 @@
         df$pred  <- na.exclude(as.vector(t(A$pre_cpue)))
         df$resd  <- na.exclude(as.vector(t(A$res_cpue)))
         mdf      <- rbind(mdf, df)
-	}
-	return(mdf)
+    }
+    return(mdf)
 }
 
 
@@ -40,19 +40,31 @@
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @param ShowEstErr Shows errorbars from estimated CVs as well
+#' @param logy Plot the CPUE in log-space
 #' @param slab the sex label for the plot that appears above the key
 #' @return plot of all observed and predicted incices
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex", ShowEstErr = FALSE)
+plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex", ShowEstErr = FALSE, logy = FALSE)
 {
-    xlab <- paste0("\n", xlab)
-    ylab <- paste0(ylab, "\n")
-    
     mdf <- .get_cpue_df(M)
     if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
     
+    if (logy)
+    {
+        mdf$cpue <- log(mdf$cpue)
+        mdf$lb <- log(mdf$lb)
+        mdf$ub <- log(mdf$ub)
+        mdf$lbe <- log(mdf$lbe)
+        mdf$ube <- log(mdf$ube)
+        mdf$pred <- log(mdf$pred)
+        ylab <- paste0("log(", ylab, ")")
+    }
+
+    xlab <- paste0("\n", xlab)
+    ylab <- paste0(ylab, "\n")
+
     p  <- ggplot(mdf, aes(year, cpue))
     p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black")
     
@@ -74,7 +86,12 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
         } else {
             p  <- p + geom_line(data = mdf, aes(year, pred, color = Model))
         }
-        p  <- p + facet_wrap(~fleet + sex, scales = "free_y")
+        if (length(unique(mdf$sex)) == 1)
+        {
+            p  <- p + facet_wrap(~fleet, scales = "free_y")
+        } else {
+            p  <- p + facet_wrap(~fleet + sex, scales = "free_y")
+        }
     } else {
         p  <- p + geom_line(data = mdf, aes(year, pred))
         p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")

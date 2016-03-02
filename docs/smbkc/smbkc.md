@@ -21,9 +21,9 @@ bibliography: Gmacs.bib
 
 1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
 
-2. **Catches**: Peak historical harvest was 4288 t in 1983/84. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 t, less than half the 529.3 t TAC. Following three more years of modest harvests supported by a fishery CPUE of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 t, but the fishery performance was relatively poor with the retained catch of 140 t.
+2. **Catches**: Peak historical harvest was 9.454 million pounds (4,288 t) in 1983/84. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 0.461 million pounds (209 t), less than half the 1.167 million pound (529.3 t) TAC. Following three more years of modest harvests supported by a fishery CPUE of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 0.655 million pounds (300 t), but the fishery performance was relatively poor with the retained catch of 0.309 million pounds (140 t).
 
-3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 t (CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 5652 t (CV = 0.33) in 2012 and to 2202 t (CV = 0.22) in 2013 before going back up to 5472 t (CV = 0.44) in 2014 and 5134 t (CV = 0.76).
+3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 20.98 million pounds (9,516 t; CV == 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 12.46 million pounds (5,652 t; CV = 0.33) in 2012 and to 4.459 million pounds (2,202 t; CV = 0.22) in 2013 before going back up to 12.06 million pounds (5,472 t; CV = 0.44) in 2014 and 11.32 million pounds (5,134 t; CV = 0.76).
 
 4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm CL size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue with the 2014 survey with an estimate of 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of them came from one tow with a great deal of uncertainty.
 
@@ -48,7 +48,7 @@ Spatial trawl survey and bottom temperatures from 1978 to 2015 are used in this 
 
 ## Changes in Assessment Methodology
 
-This assessment employs the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011. During the assessment in May 2015 and this assessment, many combinations of molting probability and trawl survey selectivities were evaluated to address the residual bias problems in the previous model. We also considered bottom temperature data and spatial abundance density in station R-24 in the assessment in May 2015. In September 2015, twenty scenarios were investigated. The detailed changes to the model parameters are described in details in E (Analytic Approach).
+This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011. During the assessment in May 2015 and this assessment, many combinations of molting probability and trawl survey selectivities were evaluated to address the residual bias problems in the previous model. We also considered bottom temperature data and spatial abundance density in station R-24 in the assessment in May 2015. In September 2015, twenty scenarios were investigated. The detailed changes to the model parameters are described in details in E (Analytic Approach).
 
 ## Changes in Assessment Results
 
@@ -56,6 +56,10 @@ Changes in assessment results depend on model scenarios. Many model scenarios in
 
 
 # B. Responses to SSC and CPT Comments
+
+## CPT and SSC Comments on Assessments in General
+
+## CPT and SSC Comments Specific to SMBKC Stock Assessment
 
 
 # C. Introduction
@@ -93,7 +97,15 @@ Data used in this assessment have been updated to include the most recently avai
 
 
 ```
-## Error in A$run_name: $ operator is invalid for atomic vectors
+## [1] "../../examples/smbkc/gmacs.rep"
+```
+
+![Data extent for the gmacs model configuration.\label{fig:data_extent}](figure/data_extent-1.png) 
+
+```
+##  [1] 1975 1980 1980 1980 1980 1980 1985 1985 1985 1985 1985 1990 1990 1990
+## [15] 1990 1990 1995 1995 1995 1995 1995 2000 2000 2000 2000 2000 2005 2005
+## [29] 2005 2005 2005 2010 2010 2010 2010 2010 2015 2015 2015 2015
 ```
 
 ## Major Data Sources
@@ -237,13 +249,13 @@ Figure 4. Catches of 181 male blue king crab measuring at least 90 mm CL from th
 
 Figure 5. NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.
 
-![Estimated stage-1 (upper panel) and stage-2 (lower panel) trawl-survey selectivities for different scenarios. Estimated selectivity at size, sex and fishery in the OneSex, TwoSex and Zheng models. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the NMFS trawl survey, and the BSFRF survey.\label{fig:selectivity}](figure/selectivity-1.png) 
+![Estimated stage-1 and stage-2 selectivities for different scenarios (the stage-3 selectivities are fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey.\label{fig:selectivity}](figure/selectivity-1.png) 
 
 ![Estimated molting probabilities for stage-1 crab for different scenarios.\label{fig:molt_prob}](figure/molt_prob-1.png) 
 
-![Comparisons of area-swept estimates of total male survey biomasses and model predictions for 2015 model estimates under 18 scenarios. The error bars are plus and minus 2 standard deviations. Model fits to sex-specific NMFS trawl survey biomass (tons) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png) 
+![Comparisons of area-swept estimates of total male survey biomass and model predictions for 2016 model estimates under 18 scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png) 
 
-![Comparisons of total male pot survey CPUEs and model predictions for 2015 model estimates under 9 scenarios without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations of scenario 10. Comparisons of area-swept estimates of total male survey biomasses and model predictions for 2015 model estimates under 18 scenarios. The error bars are plus and minus 2 standard deviations. Model fits to sex-specific NMFS trawl survey biomass (tons) from 1975 to 2014. The error bars represent plus and minus 2 standard deviations.\label{fig:pot_survey_cpue}](figure/pot_survey_cpue-1.png) 
+![Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates under 9 scenarios without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations of scenario 10. Comparisons of area-swept estimates of total male survey biomasses and model predictions for 2015 model estimates under 18 scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:pot_survey_cpue}](figure/pot_survey_cpue-1.png) 
 
 Figure 11b. Comparisons of total male pot survey CPUEs and model predictions for 2015 model estimates under 7 scenarios with additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations of scenario 9.
 
@@ -253,7 +265,7 @@ Figure 12(8). Standardized residuals for total trawl survey biomass for scenario
 
 Figure 13(3). Bubble plots of residuals of stage compositions for scenario 3 for St. Mathew Island blue king crab. Empty circles indicate negative residuals, filled circles indicate positive residuals, and differences in bubble size indicate relative differences in the magnitude of residuals. Upper, middle, and lower plots are trawl survey, pot survey, and observer data.
 
-![Comparison of observed and model predicted retained catch and bycatches with scenario 10. Observed and predicted catch (tons) by gear type for the two Gmacs models. The OneSex model includes catch data from 1953 to 2013. The TwoSex model includes catch data from 1975 to 2013.\label{fig:fit_to_catch}](figure/fit_to_catch-1.png) 
+![Comparison of observed and model predicted retained catch and bycatches with scenario 10.\label{fig:fit_to_catch}](figure/fit_to_catch-1.png) 
 
 ![Estimated recruitment time series during 1979-2015 with 18 scenarios. Estimated recruitment time series ($R_t$) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.\label{fig:recruitment}](figure/recruitment-1.png) 
 

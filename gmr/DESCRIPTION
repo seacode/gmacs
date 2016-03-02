@@ -1,7 +1,7 @@
 Package: gmr
 Title: Plotting and analysis tools for the Gmacs stock assessment framework
 Version: 1.00
-Date: 2016-02-29
+Date: 2016-03-03
     text-based ADMB output files and creating visual plots of both input data
     and fitted model results.
 Authors@R: c(person("Darcy", "Webber", role = c("aut", "cre"),
