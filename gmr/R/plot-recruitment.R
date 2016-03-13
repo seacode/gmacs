@@ -11,10 +11,10 @@
 {
     n <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
         A  <- M[[i]]
-        if(is.null(A$fit$logDetHess))
+        if (is.null(A$fit$logDetHess))
         {
             stop("Appears that the Hessian was not positive definite\n
                   thus estimates of recruitment do not exist.\n
@@ -26,7 +26,6 @@
                          log_sd  = A$fit$std)
         df <- subset(df, par == "sd_log_recruits")
         df$year    <- A$mod_yrs
-        #df$log_rec <- exp(df$log_rec)
         df$lb      <- exp(df$log_rec - 1.96*df$log_sd)
         df$ub      <- exp(df$log_rec + 1.96*df$log_sd)
         mdf <- rbind(mdf, df)
@@ -74,7 +73,7 @@
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (thousands of individuals)")
+plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (number of individuals)")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")

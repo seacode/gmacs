@@ -5,7 +5,7 @@
 \title{Plot predicted recruitment and approximate asymptotic error-bars}
 \usage{
 plot_recruitment(M, xlab = "Year",
-  ylab = "Recruitment (thousands of individuals)")
+  ylab = "Recruitment (number of individuals)")
 }
 \arguments{
 \item{M}{list object created by read_admb function}

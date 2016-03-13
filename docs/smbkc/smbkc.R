@@ -24,7 +24,7 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-.MODELDIR = c("../../examples/smbkc/", "../../examples/smbkc/", "../../examples/smbkc/")
+.MODELDIR = c("../../examples/smbkc/", "../../examples/smbkc/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -37,15 +37,33 @@ options(xtable.comment = FALSE)
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("SMBKC0", "SMBKC1", "SMBKC2")
+names(M) <- c("Zheng", "Gmacs")
 
-# Read in Jie's file
-j_ssb  <- read.table("jieOutput/jie_mmb.rep", header = TRUE)
-j_surv1 <- read.table("jieOutput/jie_survb.rep", header = TRUE)
-j_len  <- read.table("jieOutput/jie_len_sched.rep", header = TRUE)
-j_ltr  <- read.table("jieOutput/jie_lentrans.rep", header = FALSE)
-j_surv <- read.table("jieOutput/survey-bio.csv", header = TRUE, skip = 1, sep = ",")
-jj <- 3 # The position in the list that Jies model outputs sit
+jj <- 1 # The position in the list that Jies model outputs sit
+
+# Add numbers at length data
+nmult <- 1e+04
+M[[jj]]$N_len[,1] <- nmult * c(NA,3.78235,4.84166,4.21852,1.7556,1.8762,1.01266,0.866184,1.2789,1.89578,1.86503,1.65332,2.64882,1.71918,2.46729,2.71706,2.96956,1.74463,1.84754,2.15061,1.30642,0.852401,0.45627,0.479496,0.479076,0.215485,0.453805,0.293347,0.656367,0.970389,0.716526,1.25167,1.12962,1.05771,0.896425,0.58185,0.681566,0.61932,0.496048)
+M[[jj]]$N_len[,2] <- nmult * c(NA,2.41947,2.94323,3.80508,3.73373,2.21668,1.76026,1.1071,0.837916,0.998129,1.41795,1.53813,1.45469,2.00878,1.64349,1.93093,2.17626,2.39386,1.75195,1.61891,1.74673,1.28364,0.41512,0.405329,0.415779,0.418944,0.265868,0.353951,0.289723,0.480511,0.727161,0.646712,0.946953,0.967554,0.919677,0.802819,0.586163,0.594288,0.557095)
+M[[jj]]$N_len[,3] <- nmult * c(NA,1.67834,2.20341,3.26581,4.60382,4.7799,3.40968,2.0207,1.49864,1.28226,1.37185,1.6461,1.88861,2.08216,2.38952,2.16295,2.26905,2.39884,2.43188,2.31067,2.14367,1.79981,0.691298,0.785188,0.858978,0.925671,0.98279,0.953565,0.973699,0.958382,1.04024,1.20501,1.32928,1.48274,1.43165,1.23077,1.06162,1.18039,1.21812)
+
+# Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
+ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
+M[[jj]]$ssb <- 0.000453592 * 1e+6 * c(10.0578,13.8772,20.9465,21.4302,15.587,9.63072,6.76121,6.23052,6.27224,7.52934,8.45448,9.71117,10.6995,9.98854,10.338,11.2326,11.0988,10.8259,9.92555,8.59999,4.23953,3.57858,3.9142,4.21781,4.47775,4.34261,4.43547,4.36487,4.74001,5.49302,6.05754,6.66583,6.21993,5.41045,4.64299,5.37923,5.47191,5.90738)
+M[[jj]]$fit$est[ii] <- log(0.000453592 * 1e+6 * c(10.0578,13.8772,20.9465,21.4302,15.587,9.63072,6.76121,6.23052,6.27224,7.52934,8.45448,9.71117,10.6995,9.98854,10.338,11.2326,11.0988,10.8259,9.92555,8.59999,4.23953,3.57858,3.9142,4.21781,4.47775,4.34261,4.43547,4.36487,4.74001,5.49302,6.05754,6.66583,6.21993,5.41045,4.64299,5.37923,5.47191,5.90738))
+M[[jj]]$fit$std[ii] <- NA
+
+# Add natural mortality data
+M[[jj]]$M[22,] <- 0.937813
+
+# Add recruitment data - It looks like Jie has recorded this as millions of individuals
+ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
+M[[jj]]$fit$est[ii] <- log(1e+6 * c(NA,4.22369,3.4114,1.05153,1.58853,0.709932,0.705147,1.1393,1.68745,1.55298,1.34618,2.37665,1.28166,2.18467,2.31576,2.5257,1.26052,1.56477,1.84916,0.95593,0.642419,0.391891,0.403301,0.398974,0.135469,0.417821,0.217583,0.607371,0.860754,0.554587,1.13471,0.920731,0.870296,0.722566,0.435444,0.586532,0.505472,0.393023))
+M[[jj]]$fit$std[ii] <- NA
+#M[[jj]]$fit$est[ii] <- c(log(j_ssb$R*1000), NA)
+#M[[jj]]$fit$std[ii] <- c(rep(0, length(j_ssb$R)), NA)
+plot_recruitment(M)
+
 
 # Add selectivity data
 # year, sex, fleet, vec
@@ -114,15 +132,6 @@ ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 4)
 #names(j_len)
 #M[[jj]]$slx_retained
 
-# Add MMB data
-ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
-#M[[jj]]$fit$est[ii] <- c(log(j_ssb$mmb*1000), NA)
-#M[[jj]]$fit$std[ii] <- c(sqrt(log((j_ssb$mmb_sd/j_ssb$mmb)^2+1)), NA)
-
-# Add natural mortality data
-#M[[jj]]$M <- matrix(c(j_ssb$M,NA,NA,j_ssb$M,NA,NA), nrow = 84, ncol = 20)
-#M[[jj]]$M <- matrix(c(j_ssb$M, j_ssb$M), nrow = 80, ncol = 20)
-
 # Add size-weight data
 #M[[jj]]$mid_points <- j_len$Size
 #M[[jj]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
@@ -136,11 +145,6 @@ ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
 #ii <- which(M[[jj]]$mod_yrs == 1975) + 1
 #M[[jj]]$N_len[ii,] <- (j_len$N1975_female + j_len$N1975_male_n + j_len$N1976_male_o)/1000
 
-# Add recruitment data
-ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-#M[[jj]]$fit$est[ii] <- c(log(j_ssb$R*1000), NA)
-#M[[jj]]$fit$std[ii] <- c(rep(0, length(j_ssb$R)), NA)
-
 # Add growth transition data
 #M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
 #M[[jj]]$growth_transition <- rbind(j_ltr)
@@ -148,9 +152,9 @@ ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
 
 # Add size transition data
 m <- diag(20)
-diag(m) <- j_len$MP_1987
-m <- as.matrix(j_ltr) %*% m
-diag(m) <- diag(m)+(1-j_len$MP_1987)
+#diag(m) <- j_len$MP_1987
+#m <- as.matrix(j_ltr) %*% m
+#diag(m) <- diag(m)+(1-j_len$MP_1987)
 #M[[jj]]$size_transition_M <- m
 #M[[jj]]$size_transition_F <- m
 #M[[jj]]$size_transition_F <- NULL
@@ -395,8 +399,6 @@ plot_ssb(M)
 ```
 
 Figure 17. Retrospective plot of model-estimated mature male biomass for 2015 model scenario 10 (top panel) on Feb. 15 and scenario 10-4 (bottom panel) at time of survey with terminal years 2007-2015. Estimates are based on all available data up to and including terminal-year trawl and pot surveys.
-
-
 
 ```{r sc_pot_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\\label{fig:sc_pot_m}"}
 plot_size_comps(A, 1)

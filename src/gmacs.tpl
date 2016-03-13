@@ -1302,7 +1302,7 @@ FUNCTION write_eval
 	**/
 FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
-	sd_log_ssb      = log(calc_ssb());
+	sd_log_ssb = log(calc_ssb());
 	// F(1,nsex,syr,nyr,1,nclass);             ///> Fishing mortality
 	for ( int i = syr; i <= nyr; i++ )
 	{
@@ -2097,7 +2097,7 @@ FUNCTION calc_stock_recruitment_relationship
 	so = reck * ro / bo;
 	bb = (reck - 1.0) / bo;
 
-	dvar_vector ssb  = calc_ssb().shift(syr+1);
+	dvar_vector ssb = calc_ssb().shift(syr+1);
 	dvar_vector rhat = elem_div(so * ssb , 1.0 + bb* ssb);
 	
 	// residuals
@@ -3277,7 +3277,7 @@ FUNCTION dvar_vector calc_ssb()
 			m = imature(ig);
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-			ssb(i) += lam * d4_N(ig)(i)(season_ssb) * elem_prod(mean_wt(h), maturity(h)); // QUICK FIX
+			ssb(i) += lam * d4_N(ig)(i)(season_ssb) * elem_prod(mean_wt(h), maturity(h));
 		}
 	}
 	return(ssb);
