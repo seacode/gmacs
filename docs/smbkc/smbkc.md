@@ -184,7 +184,7 @@ We thank the Crab Plan Team, Joel Webb and Shareef Siddeek for reviewing the ear
 
 \newpage
 
-Table 1. The 1978/79 – 2014/15 directed St. Matthew Island blue king crab pot fishery. Source: Fitch et al. 2012; ADF&G Dutch Harbor staff, pers. comm.
+Table 1. The 1978/79 - 2014/15 directed St. Matthew Island blue king crab pot fishery. Source: Fitch et al. 2012; ADF&G Dutch Harbor staff, pers. comm.
 
 Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 6 crab) and of mature male biomass (10 6 lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R.Foy, NMFS. The “+” refers to plus group.
 
@@ -196,44 +196,44 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
   \hline
 Year & N1 & N2 & N3 & MMB \\ 
   \hline
-1978 & 603.46 & 4765.24 & 1885.25 & 4562.14 \\ 
-  1979 & 927.42 & 7364.05 & 2882.40 & 6294.59 \\ 
-  1980 & 585.24 & 4941.82 & 3940.67 & 9501.16 \\ 
-  1981 & 513.21 & 4231.08 & 2981.79 & 9720.57 \\ 
-  1982 & 351.93 & 2958.41 & 2448.59 & 7070.14 \\ 
-  1983 & 177.65 & 1549.03 & 1718.98 & 4368.42 \\ 
-  1984 & 104.42 & 897.69 & 964.60 & 3066.83 \\ 
-  1985 & 146.96 & 1176.58 & 606.78 & 2826.11 \\ 
-  1986 & 169.04 & 1363.06 & 694.32 & 2845.04 \\ 
-  1987 & 208.23 & 1673.24 & 810.68 & 3415.25 \\ 
-  1988 & 505.13 & 3948.49 & 1139.61 & 3834.88 \\ 
-  1989 & 380.88 & 3159.11 & 2099.65 & 4404.91 \\ 
-  1990 & 351.08 & 2879.42 & 1864.58 & 4853.21 \\ 
-  1991 & 424.03 & 3414.39 & 1755.53 & 4530.72 \\ 
-  1992 & 438.85 & 3563.05 & 1983.11 & 4689.23 \\ 
-  1993 & 421.44 & 3440.94 & 2067.47 & 5095.02 \\ 
-  1994 & 303.18 & 2534.79 & 1954.33 & 5034.33 \\ 
-  1995 & 480.57 & 3820.36 & 1651.21 & 4910.54 \\ 
-  1996 & 493.06 & 4002.14 & 2178.79 & 4502.15 \\ 
-  1997 & 186.58 & 1687.44 & 2143.46 & 3900.89 \\ 
-  1998 & 105.06 & 911.92 & 1081.33 & 1923.02 \\ 
-  1999 & 284.91 & 2226.32 & 723.71 & 1623.22 \\ 
-  2000 & 147.94 & 1273.91 & 1154.43 & 1775.45 \\ 
-  2001 & 76.94 & 670.40 & 753.68 & 1913.16 \\ 
-  2002 & 88.36 & 716.25 & 444.69 & 2031.07 \\ 
-  2003 & 35.45 & 317.65 & 392.07 & 1969.77 \\ 
-  2004 & 194.18 & 1495.82 & 306.86 & 2011.89 \\ 
-  2005 & 225.33 & 1812.07 & 827.63 & 1979.87 \\ 
-  2006 & 228.01 & 1853.85 & 1035.80 & 2150.03 \\ 
-  2007 & 280.85 & 2257.82 & 1113.23 & 2491.59 \\ 
-  2008 & 334.26 & 2690.68 & 1331.55 & 2747.65 \\ 
-  2009 & 285.87 & 2352.60 & 1519.89 & 3023.57 \\ 
-  2010 & 268.40 & 2197.05 & 1386.96 & 2821.31 \\ 
-  2011 & 232.57 & 1914.52 & 1280.11 & 2454.14 \\ 
-  2012 & 136.24 & 1163.95 & 1085.01 & 2106.02 \\ 
-  2013 & 104.55 & 872.62 & 713.20 & 2439.98 \\ 
-  2014 & 52.95 & 461.10 & 506.17 & 2482.01 \\ 
-  2015 & 232.92 & 1799.65 & 407.70 & 2679.54 \\ 
+1978 & 572.90 & 4583.65 & 2243.17 & 4562.14 \\ 
+  1979 & 654.62 & 5460.22 & 3950.71 & 6294.59 \\ 
+  1980 & 391.13 & 3438.79 & 3835.98 & 9501.16 \\ 
+  1981 & 435.90 & 3661.79 & 3106.71 & 9720.57 \\ 
+  1982 & 294.03 & 2556.54 & 2718.65 & 7070.14 \\ 
+  1983 & 146.12 & 1318.39 & 1813.54 & 4368.42 \\ 
+  1984 & 92.68 & 816.77 & 1037.08 & 3066.83 \\ 
+  1985 & 97.19 & 819.69 & 737.52 & 2826.11 \\ 
+  1986 & 121.42 & 1010.91 & 763.52 & 2845.04 \\ 
+  1987 & 148.89 & 1239.99 & 919.81 & 3415.25 \\ 
+  1988 & 365.29 & 2961.98 & 1616.64 & 3834.88 \\ 
+  1989 & 280.20 & 2401.83 & 2192.30 & 4404.91 \\ 
+  1990 & 262.86 & 2229.26 & 1992.64 & 4853.21 \\ 
+  1991 & 330.51 & 2751.69 & 2075.84 & 4530.72 \\ 
+  1992 & 355.58 & 2983.15 & 2369.89 & 4689.23 \\ 
+  1993 & 298.87 & 2550.78 & 2352.82 & 5095.02 \\ 
+  1994 & 252.81 & 2159.61 & 2048.46 & 5034.33 \\ 
+  1995 & 409.06 & 3366.97 & 2265.63 & 4910.54 \\ 
+  1996 & 416.50 & 3503.41 & 2812.81 & 4502.15 \\ 
+  1997 & 173.70 & 1597.00 & 2291.06 & 3900.89 \\ 
+  1998 & 68.78 & 646.38 & 1152.48 & 1923.02 \\ 
+  1999 & 197.68 & 1601.88 & 955.67 & 1623.22 \\ 
+  2000 & 150.18 & 1288.23 & 1192.69 & 1775.45 \\ 
+  2001 & 58.29 & 543.28 & 848.89 & 1913.16 \\ 
+  2002 & 70.11 & 588.38 & 526.82 & 2031.07 \\ 
+  2003 & 31.98 & 290.37 & 399.47 & 1969.77 \\ 
+  2004 & 109.24 & 880.68 & 467.05 & 2011.89 \\ 
+  2005 & 149.03 & 1232.60 & 826.44 & 1979.87 \\ 
+  2006 & 206.06 & 1705.35 & 1173.41 & 2150.03 \\ 
+  2007 & 182.29 & 1548.36 & 1351.30 & 2491.59 \\ 
+  2008 & 246.34 & 2043.65 & 1482.61 & 2747.65 \\ 
+  2009 & 239.17 & 2019.00 & 1685.22 & 3023.57 \\ 
+  2010 & 216.65 & 1839.85 & 1642.00 & 2821.31 \\ 
+  2011 & 187.60 & 1599.09 & 1484.17 & 2454.14 \\ 
+  2012 & 117.03 & 1026.77 & 1173.99 & 2106.02 \\ 
+  2013 & 93.56 & 804.66 & 833.06 & 2439.98 \\ 
+  2014 & 56.56 & 498.31 & 596.02 & 2482.01 \\ 
+  2015 & 149.53 & 1211.98 & 687.49 & 2679.54 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -321,6 +321,96 @@ hypothesized transition matrix $\boldsymbol{G}$ has the simple structure
 with $\pi_{jk}$ equal to the proportion of stage-j crab that molt and grow into stage k from any one year to the next. The vector $N newt+1 = [ N new 1 , t+1 , 0 ,0 ] T$ registers the number $N new1, t+1$ of new crab, or "recruits", entering the model at the start of year $t+1$, all of which are assumed to go into stage 1. Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality.) The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
 
 $$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
+
+where the diagonal matrices 
+
+\begin{equation}
+  \boldsymbol{S}^\text{df} = \left[ \begin{array}{ccc}
+    s_1^\text{df} & 0 & 0 \\
+    0 & s_2^\text{df} & 0 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+and
+
+\begin{equation}
+  \boldsymbol{H}^\text{df} = \left[ \begin{array}{ccc}
+    h^\text{df} & 0 & 0 \\
+    0 & h^\text{df} & 0 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard handling mortality $h^\text{df}$ in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as Feb 15 (0.63 yr) pulse effects in terms of the respective fishing mortalities $F_t^\text{gt}$ and $F_t^\text{gf}$ by
+
+
+## 3. Model Data
+
+Data inputs used in model estimation are listed in Table 1. All quantities relate to male SMBKC $\le$ 90mm CL.
+
+
+## 4. Model Parameters
+
+Estimated parameters with scenarios 8 and 10 are listed in Table 2 and include an estimated parameter for natural mortality in 1998/99 assuming of an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
+
+In any year with no directed fishery, and hence zero retained catch, $F_t^\text{df}$ is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, $F_t^\text{gf}$ and $F_t^\text{gt}$ are imputed to be the geometric means of the estimates from years for which there are data. Table 3 lists additional externally determined parameters used in model computations.
+
+For scenarios 0 and 1, the stage-transition matrix is
+
+\begin{equation}
+  \left[ \begin{array}{ccc}
+    0.2 & 0.7 & 0.1 \\
+    0 & 0.4 & 0.6 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+which includes molting probabilities. For scenarios 3-11, the growth matrix with molting crab is
+
+\begin{equation}
+  \left[ \begin{array}{ccc}
+    0.11 & 0.83 & 0.06 \\
+    0 & 0.11 & 0.89 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well. For scenarios 0 and 1, stage-transition matrix
+
+Both surveys are assigned a nominal date of July 1, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, Feb 15, which is also the reference date for calculation of federal management biomass quantities.
+
+\begin{table}[ht]
+\centering
+\caption{Model estimated parameters for scenarios 0 and 4.} 
+\label{tab:est_pars}
+\begin{tabular}{lr}
+  \hline
+Parameter & Estimate \\ 
+  \hline
+R0 & 2363.50 \\ 
+  Rbar & 2965.50 \\ 
+  ralpha & 71.97 \\ 
+  rbeta & 5.45 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+
+## 5. Model Objective Function and Weighting Scheme
+
+The objective function consists of a sum of eight "negative loglikelihood" terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four "penalty" terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries. See Table 4, where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes $n_t$ (observed number of male SMBKC $\le$ 90 mm CL) and estimated coefficients of variation $\widehat{cv}_t$ were used to develop appropriate variances for stage-proportion and abundance-index components. The weights $\lambda_j$ appearing in the objective function component expressions in Table 4 play the role of "tuning" parameters in the modeling procedure.
+
+Table 4. Loglikelihood and penalty components of base-model objective function. The $\lambda_k$ are weights, described in text; the neff t are effective sample sizes, also described in text. All summations are with respect to years over each data series.
+
+| Component | Distribution | Form |
+|-----------|--------------|------|
+| Legal retained-catch biomass | Lognormal | $-0.5 \sum \left( \log (c_t/C_t)^2 / \log (1+cv^2_c) \right)$ |
+| Dis. Pot bycatch biomass | Lognormal | |
+
+
+
+## 6. Estimation
+
+The model was implemented using the software AD Model Builder (Fournier et al. 2012), with parameter estimation by minimization of the model objective function using automatic differentiation. Parameter estimates and standard deviations provided in this document are AD Model Builder reported values assuming maximum likelihood theory asymptotics.
+
 
 \newpage
 

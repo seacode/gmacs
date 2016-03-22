@@ -58,11 +58,21 @@ M[[jj]]$M[22,] <- 0.937813
 
 # Add recruitment data - It looks like Jie has recorded this as millions of individuals
 ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-M[[jj]]$fit$est[ii] <- log(1e+6 * c(NA,4.22369,3.4114,1.05153,1.58853,0.709932,0.705147,1.1393,1.68745,1.55298,1.34618,2.37665,1.28166,2.18467,2.31576,2.5257,1.26052,1.56477,1.84916,0.95593,0.642419,0.391891,0.403301,0.398974,0.135469,0.417821,0.217583,0.607371,0.860754,0.554587,1.13471,0.920731,0.870296,0.722566,0.435444,0.586532,0.505472,0.393023))
+M[[jj]]$fit$est[ii] <- log(1e+3 * c(NA,4.22369,3.4114,1.05153,1.58853,0.709932,0.705147,1.1393,1.68745,1.55298,1.34618,2.37665,1.28166,2.18467,2.31576,2.5257,1.26052,1.56477,1.84916,0.95593,0.642419,0.391891,0.403301,0.398974,0.135469,0.417821,0.217583,0.607371,0.860754,0.554587,1.13471,0.920731,0.870296,0.722566,0.435444,0.586532,0.505472,0.393023))
 M[[jj]]$fit$std[ii] <- NA
 #M[[jj]]$fit$est[ii] <- c(log(j_ssb$R*1000), NA)
 #M[[jj]]$fit$std[ii] <- c(rep(0, length(j_ssb$R)), NA)
 plot_recruitment(M)
+
+# Add estimated trawl survey biomass (million of lbs)
+M[[jj]]$pre_cpue[1,] <- 1e+03 * 0.453592 * c(16.9107,20.3464,27.3302,29.7194,27.6591,20.8337,11.9956,10.3426,9.8731,11.2107,12.1871,14.5983,15.1584,16.8995,16.6574,18.4302,17.7172,16.9087,16.198,15.4322,11.7999,4.41029,4.81213,5.15032,5.15653,5.29834,5.20702,5.53472,6.25679,6.90932,8.00088,8.98708,9.28411,8.88151,7.41716,6.63175,6.99459,7.02906)
+M[[jj]]$pre_cpue[2,1:8] <- c(17.2843,12.0422,5.28179,5.22433,7.22742,10.1542,6.85929,7.14304)
+
+#Estimated pot survey length compositions
+M[[jj]]$d3_pre_size_comps_out[53:60,] <- t(matrix(c(0.147886,0.0979305,0.125489,0.0776841,0.137161,0.144113,0.137471,0.0960776,0.291162,0.306197,0.226123,0.194615,0.289009,0.273711,0.245472,0.224032,0.560952,0.595872,0.648388,0.727701,0.57383,0.582176,0.617057,0.679891), nrow = 3, byrow = TRUE))
+M[[jj]]$d3_pre_size_comps_out[15:52,] <- t(matrix(c(0.389466,0.393592,0.290957,0.125601,0.153106,0.116868,0.157769,0.270281,0.361676,0.314393,0.262176,0.350587,0.223486,0.293695,0.312116,0.313866,0.199677,0.231037,0.271211,0.186399,0.158282,0.218432,0.213903,0.202283,0.0974652,0.195338,0.130912,0.257895,0.312885,0.216089,0.313673,0.252375,0.226645,0.205558,0.162655,0.218646,0.19071,0.158486,0.346918,0.333177,0.365452,0.371972,0.251893,0.282883,0.2808,0.246592,0.265166,0.332849,0.339648,0.268111,0.363629,0.272423,0.308875,0.320304,0.381522,0.305075,0.284293,0.347045,0.331919,0.276737,0.25179,0.244465,0.263869,0.159361,0.219958,0.158518,0.215745,0.305372,0.225683,0.294607,0.288704,0.293667,0.312516,0.261849,0.254832,0.247853,0.263616,0.273231,0.343592,0.502426,0.595,0.600248,0.561432,0.483127,0.373158,0.352759,0.398177,0.381302,0.412884,0.433882,0.379009,0.365831,0.418801,0.463888,0.444496,0.466556,0.509799,0.50483,0.534306,0.553251,0.638666,0.645301,0.64913,0.583587,0.47137,0.478539,0.460644,0.453019,0.484651,0.500775,0.52483,0.519505,0.554458,0.593661), nrow = 3, byrow = TRUE))
+
+
 
 
 # Add selectivity data
@@ -135,10 +145,6 @@ ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 4)
 # Add size-weight data
 #M[[jj]]$mid_points <- j_len$Size
 #M[[jj]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
-
-# Add cpue data
-#M[[jj]]$pre_cpue[1,] <- j_surv1$pred
-#M[[jj]]$pre_cpue[1,] <- c(j_surv$Males*1000,NA, j_surv$Females*1000,NA)
 
 # Add numbers data
 #M[[jj]]$N_len[41,] <- (j_len$N2014_female + j_len$N2014_male_n + j_len$N2014_male_o)/1000
@@ -336,7 +342,7 @@ We thank the Crab Plan Team, Joel Webb and Shareef Siddeek for reviewing the ear
 
 \newpage
 
-Table 1. The 1978/79 – 2014/15 directed St. Matthew Island blue king crab pot fishery. Source: Fitch et al. 2012; ADF&G Dutch Harbor staff, pers. comm.
+Table 1. The 1978/79 - 2014/15 directed St. Matthew Island blue king crab pot fishery. Source: Fitch et al. 2012; ADF&G Dutch Harbor staff, pers. comm.
 
 Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 6 crab) and of mature male biomass (10 6 lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R.Foy, NMFS. The “+” refers to plus group.
 
@@ -471,6 +477,91 @@ hypothesized transition matrix $\boldsymbol{G}$ has the simple structure
 with $\pi_{jk}$ equal to the proportion of stage-j crab that molt and grow into stage k from any one year to the next. The vector $N newt+1 = [ N new 1 , t+1 , 0 ,0 ] T$ registers the number $N new1, t+1$ of new crab, or "recruits", entering the model at the start of year $t+1$, all of which are assumed to go into stage 1. Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality.) The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
 
 $$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
+
+where the diagonal matrices 
+
+\begin{equation}
+  \boldsymbol{S}^\text{df} = \left[ \begin{array}{ccc}
+    s_1^\text{df} & 0 & 0 \\
+    0 & s_2^\text{df} & 0 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+and
+
+\begin{equation}
+  \boldsymbol{H}^\text{df} = \left[ \begin{array}{ccc}
+    h^\text{df} & 0 & 0 \\
+    0 & h^\text{df} & 0 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard handling mortality $h^\text{df}$ in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as Feb 15 (0.63 yr) pulse effects in terms of the respective fishing mortalities $F_t^\text{gt}$ and $F_t^\text{gf}$ by
+
+
+## 3. Model Data
+
+Data inputs used in model estimation are listed in Table 1. All quantities relate to male SMBKC $\le$ 90mm CL.
+
+
+## 4. Model Parameters
+
+Estimated parameters with scenarios 8 and 10 are listed in Table 2 and include an estimated parameter for natural mortality in 1998/99 assuming of an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
+
+In any year with no directed fishery, and hence zero retained catch, $F_t^\text{df}$ is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, $F_t^\text{gf}$ and $F_t^\text{gt}$ are imputed to be the geometric means of the estimates from years for which there are data. Table 3 lists additional externally determined parameters used in model computations.
+
+For scenarios 0 and 1, the stage-transition matrix is
+
+\begin{equation}
+  \left[ \begin{array}{ccc}
+    0.2 & 0.7 & 0.1 \\
+    0 & 0.4 & 0.6 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+which includes molting probabilities. For scenarios 3-11, the growth matrix with molting crab is
+
+\begin{equation}
+  \left[ \begin{array}{ccc}
+    0.11 & 0.83 & 0.06 \\
+    0 & 0.11 & 0.89 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well. For scenarios 0 and 1, stage-transition matrix
+
+Both surveys are assigned a nominal date of July 1, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, Feb 15, which is also the reference date for calculation of federal management biomass quantities.
+
+```{r est_pars, results = "asis"}
+i <- 1:4
+Parameter <- M[[2]]$fit$names[i]
+Parameter <- c("R0","Rbar","ralpha","rbeta")
+Estimate <- M[[2]]$fit$est[i]
+Estimate[1:2] <- exp(Estimate[1:2])
+df <- data.frame(Parameter = Parameter, Estimate = Estimate)
+tab <- xtable(df, caption = "Model estimated parameters for scenarios 0 and 4.", label = "tab:est_pars")
+print(tab, caption.placement = "top", include.rownames = FALSE)
+```
+
+
+
+## 5. Model Objective Function and Weighting Scheme
+
+The objective function consists of a sum of eight "negative loglikelihood" terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four "penalty" terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries. See Table 4, where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes $n_t$ (observed number of male SMBKC $\le$ 90 mm CL) and estimated coefficients of variation $\widehat{cv}_t$ were used to develop appropriate variances for stage-proportion and abundance-index components. The weights $\lambda_j$ appearing in the objective function component expressions in Table 4 play the role of "tuning" parameters in the modeling procedure.
+
+Table 4. Loglikelihood and penalty components of base-model objective function. The $\lambda_k$ are weights, described in text; the neff t are effective sample sizes, also described in text. All summations are with respect to years over each data series.
+
+| Component | Distribution | Form |
+|-----------|--------------|------|
+| Legal retained-catch biomass | Lognormal | $-0.5 \sum \left( \log (c_t/C_t)^2 / \log (1+cv^2_c) \right)$ |
+| Dis. Pot bycatch biomass | Lognormal | |
+
+
+
+## 6. Estimation
+
+The model was implemented using the software AD Model Builder (Fournier et al. 2012), with parameter estimation by minimization of the model objective function using automatic differentiation. Parameter estimates and standard deviations provided in this document are AD Model Builder reported values assuming maximum likelihood theory asymptotics.
+
 
 \newpage
 
