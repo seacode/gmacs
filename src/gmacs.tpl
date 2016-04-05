@@ -398,14 +398,13 @@ DATA_SECTION
 			for ( h = 1; h <= nsex; h++ )
 			{
 				xybar(h) /= nh(h);
-				xbar(h)  /= nh(h);
-				ybar(h)  /= nh(h);
-				xx(h)    /= nh(h);
-
+				xbar(h) /= nh(h);
+				ybar(h) /= nh(h);
+				xx(h) /= nh(h);
 				double slp = (xybar(h) - xbar(h)*ybar(h)) / (xx(h) - square(xbar(h)));
 				double alp = ybar(h) - slp*xbar(h);
 				mle_alpha(h) = alp;
-				mle_beta(h)  = -slp;
+				mle_beta(h) = -slp;
 			}
 		}
 		WRITEDAT(nGrowthObs); WRITEDAT(dGrowthData);
@@ -662,14 +661,14 @@ DATA_SECTION
 					slx_priors(k,j,3) = slx_control_in(jj,10); // p2
 				}
 
-				if ( slx_type(k) == 0 || slx_type(k) == 1 )
-				{
-					slx_lb(jj) = log(slx_control_in(jj,6) / (1 - slx_control_in(jj,6)));
-					slx_ub(jj) = log(slx_control_in(jj,7) / (1 - slx_control_in(jj,7)));
-				} else {
+				//if ( slx_type(k) == 0 || slx_type(k) == 1 )
+				//{
+				//	slx_lb(jj) = log(slx_control_in(jj,6) / (1 - slx_control_in(jj,6)));
+				//	slx_ub(jj) = log(slx_control_in(jj,7) / (1 - slx_control_in(jj,7)));
+				//} else {
 					slx_lb(jj) = log(slx_control_in(jj,6));
 					slx_ub(jj) = log(slx_control_in(jj,7));
-				}
+				//}
 				slx_phzm(jj) = slx_control_in(jj,11);
 			}
 			//if ( slx_type(k) == 1 )
@@ -1015,11 +1014,16 @@ DATA_SECTION
 		bUseEmpiricalGrowth = int(model_controls(9));
 		nSRR_flag           = int(model_controls(10));
 		WriteCtl(model_controls);
+		if ( bInitializeUnfished == 1 && theta_phz(3) > 0 )
+		{
+			cout << "Error: cannot initialize unfished and estimate the logR1 parameter" << endl; 
+			exit(1);
+		}
 	END_CALCS
 
 	init_int eof_ctl;
 	!! WriteCtl(eof_ctl);
-	!! if ( eof_ctl!=9999 ){cout << "Error reading control file" << endl; exit(1);}
+	!! if ( eof_ctl != 9999 ){cout << "Error reading control file" << endl; exit(1);}
 	!! cout << "end of control section" << endl;
 
 	LOC_CALCS
@@ -1105,20 +1109,20 @@ PARAMETER_SECTION
 		for ( int k = 1; k <= nslx; k++ )
 		{
 			// Logit transform if using parametric or coefficients selectivity type, otherwise just log transform
-			if ( slx_type(k) == 0 || slx_type(k) == 1 )
-			{
-				for ( int i = 1; i <= slx_npar(k); i++ )
-				{
-					log_slx_pars(j) = log(slx_par(k,i) / (1 - slx_par(k,i)));
-					j++;
-				}
-			} else {
+			//if ( slx_type(k) == 0 || slx_type(k) == 1 )
+			//{
+			//	for ( int i = 1; i <= slx_npar(k); i++ )
+			//	{
+			//		log_slx_pars(j) = log(slx_par(k,i) / (1 - slx_par(k,i)));
+			//		j++;
+			//	}
+			//} else {
 				for ( int i = 1; i <= slx_npar(k); i++ )
 				{
 					log_slx_pars(j) = log(slx_par(k,i));
 					j++;
 				}
-			}
+			//}
 			//COUT(exp(log_slx_pars(k)));
 			//COUT(log_slx_pars(k));
 		}

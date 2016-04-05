@@ -131,7 +131,11 @@ Concerns about the pre-2011 assessment model led to CPT and SSC recommendations 
 
 ## Assessment Methodology
 
-The current SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. A detailed description of the base model and its implementation in the software AD Model Builder (Fournier et al. 2012) is presented in Appendix A.
+The current SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. 
+
+Each model year is split into four seasons.
+
+A detailed description of the base model and its implementation in the software AD Model Builder (Fournier et al. 2012) is presented in Appendix A.
 
 ## Model Selection and Evaluation
 
@@ -196,44 +200,44 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
   \hline
 Year & N1 & N2 & N3 & MMB \\ 
   \hline
-1978 & 572.90 & 4583.65 & 2243.17 & 4562.14 \\ 
-  1979 & 654.62 & 5460.22 & 3950.71 & 6294.59 \\ 
-  1980 & 391.13 & 3438.79 & 3835.98 & 9501.16 \\ 
-  1981 & 435.90 & 3661.79 & 3106.71 & 9720.57 \\ 
-  1982 & 294.03 & 2556.54 & 2718.65 & 7070.14 \\ 
-  1983 & 146.12 & 1318.39 & 1813.54 & 4368.42 \\ 
-  1984 & 92.68 & 816.77 & 1037.08 & 3066.83 \\ 
-  1985 & 97.19 & 819.69 & 737.52 & 2826.11 \\ 
-  1986 & 121.42 & 1010.91 & 763.52 & 2845.04 \\ 
-  1987 & 148.89 & 1239.99 & 919.81 & 3415.25 \\ 
-  1988 & 365.29 & 2961.98 & 1616.64 & 3834.88 \\ 
-  1989 & 280.20 & 2401.83 & 2192.30 & 4404.91 \\ 
-  1990 & 262.86 & 2229.26 & 1992.64 & 4853.21 \\ 
-  1991 & 330.51 & 2751.69 & 2075.84 & 4530.72 \\ 
-  1992 & 355.58 & 2983.15 & 2369.89 & 4689.23 \\ 
-  1993 & 298.87 & 2550.78 & 2352.82 & 5095.02 \\ 
-  1994 & 252.81 & 2159.61 & 2048.46 & 5034.33 \\ 
-  1995 & 409.06 & 3366.97 & 2265.63 & 4910.54 \\ 
-  1996 & 416.50 & 3503.41 & 2812.81 & 4502.15 \\ 
-  1997 & 173.70 & 1597.00 & 2291.06 & 3900.89 \\ 
-  1998 & 68.78 & 646.38 & 1152.48 & 1923.02 \\ 
-  1999 & 197.68 & 1601.88 & 955.67 & 1623.22 \\ 
-  2000 & 150.18 & 1288.23 & 1192.69 & 1775.45 \\ 
-  2001 & 58.29 & 543.28 & 848.89 & 1913.16 \\ 
-  2002 & 70.11 & 588.38 & 526.82 & 2031.07 \\ 
-  2003 & 31.98 & 290.37 & 399.47 & 1969.77 \\ 
-  2004 & 109.24 & 880.68 & 467.05 & 2011.89 \\ 
-  2005 & 149.03 & 1232.60 & 826.44 & 1979.87 \\ 
-  2006 & 206.06 & 1705.35 & 1173.41 & 2150.03 \\ 
-  2007 & 182.29 & 1548.36 & 1351.30 & 2491.59 \\ 
-  2008 & 246.34 & 2043.65 & 1482.61 & 2747.65 \\ 
-  2009 & 239.17 & 2019.00 & 1685.22 & 3023.57 \\ 
-  2010 & 216.65 & 1839.85 & 1642.00 & 2821.31 \\ 
-  2011 & 187.60 & 1599.09 & 1484.17 & 2454.14 \\ 
-  2012 & 117.03 & 1026.77 & 1173.99 & 2106.02 \\ 
-  2013 & 93.56 & 804.66 & 833.06 & 2439.98 \\ 
-  2014 & 56.56 & 498.31 & 596.02 & 2482.01 \\ 
-  2015 & 149.53 & 1211.98 & 687.49 & 2679.54 \\ 
+1978 & 768.94 & 6079.60 & 2357.75 & 4562.14 \\ 
+  1979 & 775.07 & 6460.28 & 4553.25 & 6294.59 \\ 
+  1980 & 484.35 & 4211.45 & 4371.98 & 9501.16 \\ 
+  1981 & 461.47 & 3885.96 & 3357.11 & 9720.57 \\ 
+  1982 & 318.02 & 2742.04 & 2770.43 & 7070.14 \\ 
+  1983 & 168.17 & 1495.11 & 1885.89 & 4368.42 \\ 
+  1984 & 108.29 & 945.13 & 1114.85 & 3066.83 \\ 
+  1985 & 112.90 & 945.15 & 791.54 & 2826.11 \\ 
+  1986 & 142.17 & 1174.08 & 812.30 & 2845.04 \\ 
+  1987 & 178.32 & 1471.79 & 989.97 & 3415.25 \\ 
+  1988 & 420.62 & 3386.87 & 1668.53 & 3834.88 \\ 
+  1989 & 328.29 & 2789.39 & 2358.00 & 4404.91 \\ 
+  1990 & 308.82 & 2598.44 & 2158.47 & 4853.21 \\ 
+  1991 & 389.00 & 3213.26 & 2227.02 & 4530.72 \\ 
+  1992 & 408.52 & 3406.02 & 2535.92 & 4689.23 \\ 
+  1993 & 381.19 & 3204.79 & 2598.25 & 5095.02 \\ 
+  1994 & 268.50 & 2310.07 & 2275.86 & 5034.33 \\ 
+  1995 & 475.98 & 3875.03 & 2312.62 & 4910.54 \\ 
+  1996 & 514.57 & 4278.74 & 3055.95 & 4502.15 \\ 
+  1997 & 197.17 & 1822.13 & 2630.25 & 3900.89 \\ 
+  1998 & 84.47 & 741.88 & 941.05 & 1923.02 \\ 
+  1999 & 265.25 & 2123.78 & 1016.62 & 1623.22 \\ 
+  2000 & 155.60 & 1355.94 & 1364.52 & 1775.45 \\ 
+  2001 & 68.35 & 623.45 & 899.66 & 1913.16 \\ 
+  2002 & 91.72 & 758.42 & 581.97 & 2031.07 \\ 
+  2003 & 32.46 & 303.51 & 466.03 & 1969.77 \\ 
+  2004 & 127.85 & 1020.18 & 469.21 & 2011.89 \\ 
+  2005 & 205.01 & 1670.47 & 937.95 & 1979.87 \\ 
+  2006 & 217.96 & 1814.28 & 1301.16 & 2150.03 \\ 
+  2007 & 275.81 & 2276.34 & 1536.63 & 2491.59 \\ 
+  2008 & 321.08 & 2660.69 & 1860.36 & 2747.65 \\ 
+  2009 & 265.82 & 2253.52 & 1943.58 & 3023.57 \\ 
+  2010 & 257.13 & 2159.03 & 1765.54 & 2821.31 \\ 
+  2011 & 219.71 & 1860.00 & 1620.13 & 2454.14 \\ 
+  2012 & 133.44 & 1165.61 & 1286.88 & 2106.02 \\ 
+  2013 & 100.37 & 861.56 & 879.53 & 2439.98 \\ 
+  2014 & 56.52 & 498.57 & 601.74 & 2482.01 \\ 
+  2015 & 170.33 & 1365.23 & 661.84 & 2679.54 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -384,10 +388,10 @@ Both surveys are assigned a nominal date of July 1, the start of the crab year. 
   \hline
 Parameter & Estimate \\ 
   \hline
-R0 & 2363.50 \\ 
-  Rbar & 2965.50 \\ 
-  ralpha & 71.97 \\ 
-  rbeta & 5.45 \\ 
+R0 & 2523.24 \\ 
+  Rbar & 3165.61 \\ 
+  ralpha & 72.11 \\ 
+  rbeta & 4.17 \\ 
    \hline
 \end{tabular}
 \end{table}

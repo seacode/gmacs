@@ -72,75 +72,27 @@ M[[jj]]$pre_cpue[2,1:8] <- c(17.2843,12.0422,5.28179,5.22433,7.22742,10.1542,6.8
 M[[jj]]$d3_pre_size_comps_out[53:60,] <- t(matrix(c(0.147886,0.0979305,0.125489,0.0776841,0.137161,0.144113,0.137471,0.0960776,0.291162,0.306197,0.226123,0.194615,0.289009,0.273711,0.245472,0.224032,0.560952,0.595872,0.648388,0.727701,0.57383,0.582176,0.617057,0.679891), nrow = 3, byrow = TRUE))
 M[[jj]]$d3_pre_size_comps_out[15:52,] <- t(matrix(c(0.389466,0.393592,0.290957,0.125601,0.153106,0.116868,0.157769,0.270281,0.361676,0.314393,0.262176,0.350587,0.223486,0.293695,0.312116,0.313866,0.199677,0.231037,0.271211,0.186399,0.158282,0.218432,0.213903,0.202283,0.0974652,0.195338,0.130912,0.257895,0.312885,0.216089,0.313673,0.252375,0.226645,0.205558,0.162655,0.218646,0.19071,0.158486,0.346918,0.333177,0.365452,0.371972,0.251893,0.282883,0.2808,0.246592,0.265166,0.332849,0.339648,0.268111,0.363629,0.272423,0.308875,0.320304,0.381522,0.305075,0.284293,0.347045,0.331919,0.276737,0.25179,0.244465,0.263869,0.159361,0.219958,0.158518,0.215745,0.305372,0.225683,0.294607,0.288704,0.293667,0.312516,0.261849,0.254832,0.247853,0.263616,0.273231,0.343592,0.502426,0.595,0.600248,0.561432,0.483127,0.373158,0.352759,0.398177,0.381302,0.412884,0.433882,0.379009,0.365831,0.418801,0.463888,0.444496,0.466556,0.509799,0.50483,0.534306,0.553251,0.638666,0.645301,0.64913,0.583587,0.47137,0.478539,0.460644,0.453019,0.484651,0.500775,0.52483,0.519505,0.554458,0.593661), nrow = 3, byrow = TRUE))
 
-
-
-
 # Add selectivity data
 # year, sex, fleet, vec
-ind <- which(M[[jj]]$slx_capture[,2] %in% 1 & M[[jj]]$slx_capture[,3] %in% 1)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Pot_Male
-#	M[[jj]]$slx_retaind[i,4:23] <- NA
-#}
-ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 1)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Pot_Fem
-#	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Pot_Fem))
-#}
-ind <- which(M[[jj]]$slx_capture[,2] %in% 1 & M[[jj]]$slx_capture[,3] %in% 2)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Trawl_Male
-#	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Trawl_Male))
-#}
-ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 2)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Trawl_Fem
-#	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Trawl_Fem))
-#}
+ind <- which(M[[jj]]$slx_capture[,3] %in% 1)
+for (i in ind)
+{
+    M[[jj]]$slx_capture[i,4:6] <- c(0.416198,0.657528,1) # Directed pot fisheries
+}
+ind <- which(M[[jj]]$slx_capture[,3] %in% 4)
+for (i in ind)
+{
+    M[[jj]]$slx_capture[i,4:6] <- c(0.347014,0.720493,1) # Trawl survey
+}
+ind <- which(M[[jj]]$slx_capture[,3] %in% 5)
+for (i in ind)
+{
+    M[[jj]]$slx_capture[i,4:6] <- c(0.655565,0.912882,1) # ADFG pot survey
+}
+plot_selectivity(M, ncol = 5)
 
-# NMFS trawl survey selectivities
-ind <- which(M[[jj]]$slx_capture[,2] %in% 1 & M[[jj]]$slx_capture[,3] %in% 3)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Male2
-#	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Surv_Male))
-#}
-#M[[jj]]$slx_capture[ind[1],4:23] <- j_len$Sel_Surv_Male
-ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 3)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_Surv_Fem2
-#	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_Surv_Fem))
-#}
-#M[[jj]]$slx_capture[ind[1],4:23] <- j_len$Sel_Surv_Fem
 
-# BSFRF selectivities
-ind <- which(M[[jj]]$slx_capture[,2] %in% 1 & M[[jj]]$slx_capture[,3] %in% 4)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_BSFRF_Male
-#	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_BSFRF_Male))
-#}
-ind <- which(M[[jj]]$slx_capture[,2] %in% 2 & M[[jj]]$slx_capture[,3] %in% 4)
-#for (i in ind)
-#{
-#	M[[jj]]$slx_capture[i,4:23] <- j_len$Sel_BSFRF_Fem
-#	M[[jj]]$slx_retaind[i,4:23] <- rep(0, length(j_len$Sel_BSFRF_Fem))
-#}
 
-#C <- M#; C[[1]] <- NULL
-#plot_selectivity(C, ncol = 4)
-#head(M[[jj]]$slx_capture)
-#tail(M[[jj]]$slx_capture)
-#dim(M[[jj]]$slx_capture)
-#dim(M[[jj]]$slx_retaind)
-#dim(j_len)
-#names(j_len)
-#M[[jj]]$slx_retained
 
 # Add size-weight data
 #M[[jj]]$mid_points <- j_len$Size
@@ -289,7 +241,11 @@ Concerns about the pre-2011 assessment model led to CPT and SSC recommendations 
 
 ## Assessment Methodology
 
-The current SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. A detailed description of the base model and its implementation in the software AD Model Builder (Fournier et al. 2012) is presented in Appendix A.
+The current SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. 
+
+Each model year is split into four seasons.
+
+A detailed description of the base model and its implementation in the software AD Model Builder (Fournier et al. 2012) is presented in Appendix A.
 
 ## Model Selection and Evaluation
 
@@ -442,7 +398,8 @@ plot_size_transition(M, xlab = "Carapace length (mm)", female = TRUE)
 ```
 
 ```{r init_N, fig.cap = "Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.\\label{fig:init_N}"}
-plot_numbers(M, c("1953","1975","2014"))
+#plot_numbers(M, c("1977","1980","1990","2000","2010","2015"))
+plot_numbers(M)
 ```
 
 ```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Periods begin at 1976, 1980, 1985 and 1994.\\label{fig:M_t}"}
