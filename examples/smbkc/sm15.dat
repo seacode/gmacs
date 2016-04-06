@@ -23,63 +23,65 @@
 4     # Season recruitment occurs
 4     # Season molting and growth occurs
 3     # Season to calculate SSB
-# size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)
+# size_breaks (a vector giving the break points between size intervals with dimension nclass+1)
 90  105  120  135
 # weight-at-length input method (1 = allometry w_l = a*l^b, 2 = vector by sex)
 2
-# weight-at-length  allometry w_l = a*l^b
+# weight-at-length allometry w_l = a*l^b
 4.03E-07
-##  b (male,  female)
+# b (male, female)
 3.141334
-## Males
- 0.748 1.166 1.932
-# (lbs) 1.65 2.57  4.26
-# Male  mature  weight-at-length  (weight * proportion  mature)
-0 1.166 1.932
-# Proportion  mature  by  sex
+# Male weight-at-length
+# 1.65 2.57 4.26 (lbs)
+# 0.7484274 1.165732 1.932303 (kgs)
+ 0.000748 0.001165732 0.001932303 # (tonnes)
+# Male mature weight-at-length (weight * proportion  mature)
+#0 1.166 1.932
+ 0 0.001165732 0.001932303
+# Proportion mature by sex
 0 1 1
 # Proportion of the total natural mortality to be applied each season (must add to 1)
 0.0 0.440 0.185 0.375
-# Fishing fleet names (delimited  with  : no  spaces  in  names)
+# Fishing fleet names (delimited with : no spaces in names)
 Pot_Fishery:Trawl_Bycatch:Fixed_bycatch
-# Survey  names (delimited  with  : no  spaces  in  names)
+# Survey names (delimited with : no spaces in names)
 NMFS_Trawl:ADFG_Pot
 # Number  of  catch data  frames
 4
 # Number  of  rows  in  each  data  frame
 26  14  24  24
 ##  CATCH DATA
-##  Type  of  catch:  1 = retained, 2 = discard
-##  Units of  catch:  1 = biomass,  2 = numbers
-##  for SMBKC Units are in  1000 crab  for landed  & 1000 kg for discards.
-##  Male  Retained
+##  Type of catch: 1 = retained, 2 = discard
+##  Units of catch: 1 = biomass, 2 = numbers
+##  for SMBKC Units are in number of crab for landed & 1000 kg for discards.
+##  Male Retained
 ##  year  seas  fleet sex obs     cv    type  units mult  effort  discard_mortality
-    1978  2 1 1 436.126  0.03  1 2 1 0 0
-    1979  2 1 1 52.966   0.03  1 2 1 0 0
-    1980  2 1 1 33.162   0.03  1 2 1 0 0
-    1981  2 1 1 1045.619 0.03  1 2 1 0 0
-    1982  2 1 1 1935.886 0.03  1 2 1 0 0
-    1983  2 1 1 1931.99  0.03  1 2 1 0 0
-    1984  2 1 1 841.017  0.03  1 2 1 0 0
-    1985  2 1 1 436.021  0.03  1 2 1 0 0
-    1986  2 1 1 219.548  0.03  1 2 1 0 0
-    1987  2 1 1 227.447  0.03  1 2 1 0 0
-    1988  2 1 1 280.401  0.03  1 2 1 0 0
-    1989  2 1 1 247.641  0.03  1 2 1 0 0
-    1990  2 1 1 391.405  0.03  1 2 1 0 0
-    1991  2 1 1 726.519  0.03  1 2 1 0 0
-    1992  2 1 1 545.222  0.03  1 2 1 0 0
-    1993  2 1 1 630.353  0.03  1 2 1 0 0
-    1994  2 1 1 827.015  0.03  1 2 1 0 0
-    1995  2 1 1 666.905  0.03  1 2 1 0 0
-    1996  2 1 1 660.665  0.03  1 2 1 0 0
-    1997  2 1 1 939.822  0.03  1 2 1 0 0
-    1998  2 1 1 635.37   0.03  1 2 1 0 0
-    2009  2 1 1 103.376  0.03  1 2 1 0 0
-    2010  2 1 1 298.669  0.03  1 2 1 0 0
-    2011  2 1 1 437.862  0.03  1 2 1 0 0
-    2012  2 1 1 379.386  0.03  1 2 1 0 0
-    2014  2 1 1 69.109   0.03  1 2 1 0 0
+    1978  2 1 1 436126  0.03  1 2 1 0 0
+    1979  2 1 1 52966   0.03  1 2 1 0 0
+    1980  2 1 1 33162   0.03  1 2 1 0 0
+    1981  2 1 1 1045619 0.03  1 2 1 0 0
+    1982  2 1 1 1935886 0.03  1 2 1 0 0
+    1983  2 1 1 193199  0.03  1 2 1 0 0
+    1984  2 1 1 841017  0.03  1 2 1 0 0
+    1985  2 1 1 436021  0.03  1 2 1 0 0
+    1986  2 1 1 219548  0.03  1 2 1 0 0
+    1987  2 1 1 227447  0.03  1 2 1 0 0
+    1988  2 1 1 280401  0.03  1 2 1 0 0
+    1989  2 1 1 247641  0.03  1 2 1 0 0
+    1990  2 1 1 391405  0.03  1 2 1 0 0
+    1991  2 1 1 726519  0.03  1 2 1 0 0
+    1992  2 1 1 545222  0.03  1 2 1 0 0
+    1993  2 1 1 630353  0.03  1 2 1 0 0
+    1994  2 1 1 827015  0.03  1 2 1 0 0
+    1995  2 1 1 666905  0.03  1 2 1 0 0
+    1996  2 1 1 660665  0.03  1 2 1 0 0
+    1997  2 1 1 939822  0.03  1 2 1 0 0
+    1998  2 1 1 635370  0.03  1 2 1 0 0
+    2009  2 1 1 103376  0.03  1 2 1 0 0
+    2010  2 1 1 298669  0.03  1 2 1 0 0
+    2011  2 1 1 437862  0.03  1 2 1 0 0
+    2012  2 1 1 379386  0.03  1 2 1 0 0
+    2014  2 1 1 69109   0.03  1 2 1 0 0
 ##  Male  discards  Pot fishery
   1990  2 1 1  254.979  0.60  2 1 1 0 0.2
   1991  2 1 1  531.448  0.60  2 1 1 0 0.2
@@ -146,13 +148,13 @@ NMFS_Trawl:ADFG_Pot
   2013  2 3 1 0.272    1.310 2 1 1 0 0.5
   2014  2 3 1 0.136    1.310 2 1 1 0 0.5
 ##  RELATIVE  ABUNDANCE DATA
-##  Units of  Abundance:  1 = biomass,  2 = numbers
+##  Units of abundance: 1 = biomass, 2 = numbers
 ##  for SMBKC Units are in  crabs for Abundance.
 ##  Number  of  relative  abundance indicies
 2
 ##  Number  of  rows  in  each  index
 38 8
-# Survey  data  (abundance  indices,  units are mt for trawl survey and crab/potlift for pot survey)
+# Survey data (abundance indices, units are mt for trawl survey and crab/potlift for pot survey)
 # Year, Seas, Fleet,  Sex,  Abundance,  CV     units
   1978  1     4       1     6832.824  0.394  1
   1979  1     4       1     7989.887  0.463  1

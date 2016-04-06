@@ -73,20 +73,20 @@
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (number of individuals)")
+plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of individuals)")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     mdf <- .get_recruitment_df(M)
     if (length(M) == 1)
     {
-        p <- ggplot(mdf, aes(x = year, y = exp(log_rec))) +
+        p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06)) +
             geom_bar(stat = "identity", alpha = 0.4, position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec), ymax = ub, ymin = lb), position = position_dodge(width = 0.9))
+            geom_pointrange(aes(year, exp(log_rec)/1e+06, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     } else {
-        p <- ggplot(mdf, aes(x = year, y = exp(log_rec), col = Model, group = Model)) +
+        p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06, col = Model, group = Model)) +
             geom_bar(stat = "identity", alpha = 0.4, aes(fill = Model), position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec), col = Model, ymax = ub, ymin = lb), position = position_dodge(width = 0.9))
+            geom_pointrange(aes(year, exp(log_rec)/1e+06, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     }
     p <- p + labs(x = xlab, y = ylab)
     if(!.OVERLAY) p <- p + facet_wrap(~Model)

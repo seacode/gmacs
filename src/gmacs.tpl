@@ -1198,7 +1198,6 @@ PARAMETER_SECTION
 	5darray S(1,nsex,syr,nyr,1,nseason,1,nclass,1,nclass); ///> Surival Rate (S=exp(-Z))
 
 	4darray d4_N(1,n_grp,syr,nyr+1,1,nseason,1,nclass);       ///> Numbers-at-sex/mature/shell/year/season/length.
-	//3darray d3_N(1,n_grp,syr,nyr+1,1,nclass);       ///> Numbers-at-sex/mature/shell/length.
 	4darray ft(1,nfleet,1,nsex,syr,nyr,1,nseason);            ///> Fishing mortality by gear
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
 	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass); ///> Old shell crabs-at-length.
@@ -1795,8 +1794,7 @@ FUNCTION calc_recruitment_size_distribution
 	/**
 	 * @brief initialiaze populations numbers-at-length in syr
 	 * @author Steve Martell
-	 * @details This function initializes the populations numbers-at-length
-	 * in the initial year of the model.
+	 * @details This function initializes the populations numbers-at-length in the initial year of the model.
 	 *
 	 * Psuedocode: See note from Dave Fournier.
 	 *
@@ -1860,8 +1858,8 @@ FUNCTION calc_initial_numbers_at_length
 
 	// Initial recrutment.
 	log_initial_recruits = (bInitializeUnfished) ? logR0 : logRini;
-	recruits(syr)        = mfexp(log_initial_recruits);
-	dvar_vector rt       = 1.0/nsex * recruits(syr) * rec_sdd;
+	recruits(syr) = mfexp(log_initial_recruits);
+	dvar_vector rt = 1.0/nsex * recruits(syr) * rec_sdd;
 
 	// Analytical equilibrium soln.
 	int ig;
@@ -1893,8 +1891,9 @@ FUNCTION calc_initial_numbers_at_length
 		if ( nshell == 1 && nmature == 1 )
 		{
 			calc_equilibrium(x,A,_S,rt);
-			ig            = pntr_hmo(h,1,1);
-			d4_N(ig)(syr)(1) = elem_prod(x , mfexp(rec_ini));
+			ig = pntr_hmo(h,1,1);
+			//d4_N(ig)(syr)(1) = x;
+			d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
 		}
 	  	if ( verbose == 1 ) cout << "in init length 2" << endl;
 	  	if ( verbose == 1 ) COUT(P(h));
@@ -1905,14 +1904,12 @@ FUNCTION calc_initial_numbers_at_length
 		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,A,_S,P(h),rt);
-			ig              = pntr_hmo(h,1,1);
-			d4_N(ig)(syr)(1)   = elem_prod(x , mfexp(rec_ini));;
-			d4_N(ig+1)(syr)(1) = elem_prod(y , mfexp(rec_ini));;
+			ig = pntr_hmo(h,1,1);
+			d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+			d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
 		}
 	  	if ( verbose == 1 ) cout << "in init length 3" << endl;
-
 		// Insert terminal molt case here.
-
 	}
 	if ( verbose == 1 ) COUT(d4_N(1)(syr)(1));
 	// cout<<"End of calc_initial_numbers_at_length"<<endl;
@@ -2332,13 +2329,11 @@ FUNCTION calc_predicted_catch_out
 
 	/**
 	 * @brief Calculate predicted relative abundance and residuals
-	 * @author Steve Martell, Darcy Webber
+	 * @author Steve Martell, D'Arcy Webber
 	 *
 	 * @details This function uses the conditional mle for q to scale the population to the relative abundance index. Assumed errors in relative abundance are lognormal.  Currently assumes that the CPUE index is made up of both retained and discarded crabs.
 	 *
-	 * Question regarding use of shell condition in the relative abundance index.
-	 * Currenlty there is no shell condition information in the CPUE data, should
-	 * there be? Similarly, there is no mature immature information, should there be?
+	 * Question regarding use of shell condition in the relative abundance index. Currenlty there is no shell condition information in the CPUE data, should there be? Similarly, there is no mature immature information, should there be?
 	**/
 FUNCTION calc_relative_abundance
 	int g,h,i,j,k,ig;
@@ -2357,7 +2352,7 @@ FUNCTION calc_relative_abundance
 			j = dSurveyData(k)(jj)(2);       // season index
 			g = dSurveyData(k)(jj)(3);       // gear index
 			h = dSurveyData(k)(jj)(4);       // sex index
-			unit = dSurveyData(k)(jj)(7);    // units 1==biomass 2==Numbers
+			unit = dSurveyData(k)(jj)(7);    // units 1 = biomass 2 = numbers
 
 			if ( h )
 			{
@@ -2366,7 +2361,7 @@ FUNCTION calc_relative_abundance
 				{
 					for ( int o = 1; o <= nshell; o++ )
 					{
-						ig   = pntr_hmo(h,m,o);
+						ig = pntr_hmo(h,m,o);
 						nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)) : d4_N(ig)(i)(j);
 					}
 				}
@@ -2379,7 +2374,7 @@ FUNCTION calc_relative_abundance
 					{
 						for ( int o = 1; o <= nshell; o++ )
 						{
-							ig   = pntr_hmo(h,m,o);
+							ig = pntr_hmo(h,m,o);
 							nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)) : d4_N(ig)(i)(j);
 						}
 					}
@@ -2439,7 +2434,6 @@ FUNCTION calc_relative_abundance
 	 *  Call function to get the appropriate numbers-at-length.
 	 *
 	 *  TODO:
-	 *  [x] Check to ensure new shell old shell is working.
 	 *  [ ] Add maturity component for data sets with mature old and mature new.
 	**/
 FUNCTION calc_predicted_composition
@@ -3177,29 +3171,26 @@ REPORT_SECTION
 	N_males_old.initialize();
 	for ( int i = syr; i <= nyr+1; i++ )
 	{
-		for ( int j = 1; j <= nseason; j++ )
+		for ( int l = 1; l <= nclass; l++ )
 	  	{
-			for ( int l = 1; l <= nclass; l++ )
-		  	{
-	    		for ( int k = 1; k <= n_grp; k++ )
-	    		{	
-	    			if ( isex(k) == 1 )
-	    			{
-	    				N_males(i,l) += d4_N(k,i,j,l);
-						if ( ishell(k) == 2 )
-						{
-		   	 				N_males_old(i,l) += d4_N(k,i,j,l);
-						}
-						if ( imature(k) == 1 )
-						{
-		   	 				N_mm(i,l) += d4_N(k,i,j,l);
-						}
-	    			}
-	    			N_len(i,l) += d4_N(k,i,j,l);
-	    		}
-	    	}
-	  	}
-	}
+    		for ( int k = 1; k <= n_grp; k++ )
+    		{	
+    			if ( isex(k) == 1 )
+    			{
+    				N_males(i,l) += d4_N(k,i,season_ssb,l);
+					if ( ishell(k) == 2 )
+					{
+	   	 				N_males_old(i,l) += d4_N(k,i,season_ssb,l);
+					}
+					if ( imature(k) == 1 )
+					{
+	   	 				N_mm(i,l) += d4_N(k,i,season_ssb,l);
+					}
+    			}
+    			N_len(i,l) += d4_N(k,i,season_ssb,l);
+    		}
+    	}
+  	}
 	
 	REPORT(N_len);
 	REPORT(N_mm);
@@ -3224,7 +3215,6 @@ REPORT_SECTION
 	REPORT(growth_transition);
 	d3_array tG(1,nsex,1,nclass,1,nclass);
 	d3_array tS(1,nsex,1,nclass,1,nclass);
-
 	for ( int h = 1; h <= nsex; h++ )
 	{
 		tG(h)=trans(value(growth_transition(h)));
@@ -3313,10 +3303,10 @@ FUNCTION dvar_vector calc_ssb()
 	 *  nshell = 1,
 	 *  nshell = 2 && nmaturity = 1,
 	 *  nshell = 2 && nmaturity = 2.
-	 */
+	**/
 FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const int ifleet)
 	// Average recruitment
-	spr_rbar =  mean(value(recruits(spr_syr,spr_nyr)));
+	spr_rbar = mean(value(recruits(spr_syr,spr_nyr)));
 
 	double   _r = spr_rbar;
 	dvector _rx = value(rec_sdd);
