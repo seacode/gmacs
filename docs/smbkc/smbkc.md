@@ -44,11 +44,9 @@ There are no new changes in management of the fishery.
 
 All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015 (new time series), updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&G pot survey data in 2015.
 
-Spatial trawl survey and bottom temperatures from 1978 to 2015 are used in this assessment as well.
-
 ## Changes in Assessment Methodology
 
-This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011. During the assessment in May 2015 and this assessment, many combinations of molting probability and trawl survey selectivities were evaluated to address the residual bias problems in the previous model. We also considered bottom temperature data and spatial abundance density in station R-24 in the assessment in May 2015. In September 2015, twenty scenarios were investigated. The detailed changes to the model parameters are described in details in E (Analytic Approach).
+This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011. During the assessment in May 2015 and this assessment, many combinations of molting probability and trawl survey selectivities were evaluated to address the residual bias problems in the previous model. In September 2015, twenty scenarios were investigated. The detailed changes to the model parameters are described in details in E (Analytic Approach).
 
 ## Changes in Assessment Results
 
@@ -78,7 +76,7 @@ The Alaska Department of Fish and Game (ADF&G) Gene Conservation Laboratory divi
 
 ## Life History
 
-Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodid such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong, 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40–49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
+Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodid such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong, 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
 
 ## Management History
 
@@ -95,18 +93,7 @@ Though historical observer data are limited due to very limited samplings, bycat
 
 Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use an updated trawl-survey time series provided by R. Foy in August 2015 (new time series), as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The new and old time series of trawl survey area-swept estimates were compared in May 2015 and only the new time series was used in this assessment. The data extent and availability is shown in Figure \ref{fig:data_extent}).
 
-
-```
-## [1] "../../examples/smbkc/gmacs.rep"
-```
-
 ![Data extent for the gmacs model configuration.\label{fig:data_extent}](figure/data_extent-1.png) 
-
-```
-##  [1] 1975 1980 1980 1980 1980 1980 1985 1985 1985 1985 1985 1990 1990 1990
-## [15] 1990 1990 1995 1995 1995 1995 1995 2000 2000 2000 2000 2000 2005 2005
-## [29] 2005 2005 2005 2010 2010 2010 2010 2010 2015 2015 2015 2015
-```
 
 ## Major Data Sources
 
@@ -192,55 +179,7 @@ Table 1. The 1978/79 - 2014/15 directed St. Matthew Island blue king crab pot fi
 
 Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 6 crab) and of mature male biomass (10 6 lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R.Foy, NMFS. The “+” refers to plus group.
 
-\begin{table}[ht]
-\centering
-\caption{Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on Feb. 15 for scenario 1. All abundances are at time of survey.} 
-\label{tab:pop_abundance}
-\begin{tabular}{rrrrr}
-  \hline
-Year & N1 & N2 & N3 & MMB \\ 
-  \hline
-1978 & 582454.70 & 4666238.67 & 2333096.41 & 4562.14 \\ 
-  1979 & 633266.18 & 5317769.94 & 4102392.78 & 6294.59 \\ 
-  1980 & 375558.24 & 3318259.66 & 3845701.02 & 9501.16 \\ 
-  1981 & 413501.47 & 3490836.78 & 3104512.51 & 9720.57 \\ 
-  1982 & 254704.63 & 2243071.36 & 2603482.64 & 7070.14 \\ 
-  1983 & 141070.68 & 1262588.06 & 1688465.60 & 4368.42 \\ 
-  1984 & 91836.16 & 809254.43 & 1017158.74 & 3066.83 \\ 
-  1985 & 93669.95 & 794481.89 & 746269.11 & 2826.11 \\ 
-  1986 & 117693.45 & 983802.41 & 774927.43 & 2845.04 \\ 
-  1987 & 144884.64 & 1211417.23 & 937022.27 & 3415.25 \\ 
-  1988 & 348791.43 & 2841908.51 & 1656701.83 & 3834.88 \\ 
-  1989 & 271079.75 & 2330723.63 & 2191057.23 & 4404.91 \\ 
-  1990 & 255746.78 & 2176803.93 & 2008927.78 & 4853.21 \\ 
-  1991 & 320575.48 & 2680546.43 & 2113072.87 & 4530.72 \\ 
-  1992 & 347858.52 & 2929025.21 & 2414259.91 & 4689.23 \\ 
-  1993 & 292390.95 & 2505529.17 & 2392399.38 & 5095.02 \\ 
-  1994 & 258233.73 & 2207745.39 & 2114791.93 & 5034.33 \\ 
-  1995 & 397029.76 & 3288429.01 & 2366701.37 & 4910.54 \\ 
-  1996 & 422218.79 & 3557287.61 & 2917808.50 & 4502.15 \\ 
-  1997 & 196408.94 & 1785363.34 & 2433222.54 & 3900.89 \\ 
-  1998 & 66920.83 & 601764.70 & 855068.30 & 1923.02 \\ 
-  1999 & 196296.46 & 1594394.94 & 943696.24 & 1623.22 \\ 
-  2000 & 158480.44 & 1358277.64 & 1249967.76 & 1775.45 \\ 
-  2001 & 57898.37 & 546302.82 & 896874.10 & 1913.16 \\ 
-  2002 & 70623.78 & 595008.78 & 554266.39 & 2031.07 \\ 
-  2003 & 33068.65 & 300342.85 & 416373.74 & 1969.77 \\ 
-  2004 & 103685.55 & 841052.25 & 486635.60 & 2011.89 \\ 
-  2005 & 146880.36 & 1217962.24 & 845474.57 & 1979.87 \\ 
-  2006 & 215728.09 & 1787842.18 & 1252571.80 & 2150.03 \\ 
-  2007 & 201137.11 & 1708857.57 & 1497624.75 & 2491.59 \\ 
-  2008 & 252433.66 & 2110419.03 & 1650555.84 & 2747.65 \\ 
-  2009 & 247983.72 & 2100895.39 & 1822280.94 & 3023.57 \\ 
-  2010 & 216675.72 & 1852278.12 & 1748872.06 & 2821.31 \\ 
-  2011 & 177074.13 & 1522508.61 & 1519693.16 & 2454.14 \\ 
-  2012 & 123360.20 & 1075646.14 & 1194405.71 & 2106.02 \\ 
-  2013 & 86845.46 & 757548.15 & 859218.42 & 2439.98 \\ 
-  2014 & 58313.70 & 510943.22 & 599063.66 & 2482.01 \\ 
-  2015 & 147592.91 & 1202539.93 & 727651.48 & 2679.54 \\ 
-   \hline
-\end{tabular}
-\end{table}
+
 
 
 Figure 1. Distribution of blue king crab *Paralithodes platypus* in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters. Shown in blue.

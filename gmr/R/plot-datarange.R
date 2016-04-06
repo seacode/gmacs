@@ -5,16 +5,16 @@
 #' @author Ian Taylor, Huihua Lee, Jim Ianelli, D'Arcy N. Webber
 #' @export
 #' 
-plot_datarange <-function(M)
+plot_datarange <- function(M, verbose = FALSE)
 {
-    n  <- length(M)
-    mdf<- NULL
-    for(i in 1:n)
+    n <- length(M)
+    mdf <- NULL
+    for (i in 1:n)
     {
         A <- M[[i]]
         #repfile   <- paste(deparse(substitute(M)),".rep",sep="")
         repfile   <- A$run_name
-        print(repfile)
+        if (verbose) print(repfile)
         narepfile <- strsplit(scan(repfile,what="character",flush=TRUE,blank.lines.skip=FALSE,quiet=TRUE)[1:4],':')
     
         startyr       <- A$mod_yrs[1]
@@ -80,7 +80,7 @@ plot_datarange <-function(M)
         fleets <- sort(unique(typetable$fleet))
     }
     
-    plotdata <-  function()
+    plotdata <- function()
     {
         margins=c(5.1,2.1,4.1,8.1)  
         par(mar=margins) # multi-panel plot
@@ -134,5 +134,5 @@ plot_datarange <-function(M)
         axis(1,at=xticks)        
     }
     pdatarange <- plotdata()
-    return(pdatarange)
+    if (verbose) return(pdatarange)
 }
