@@ -299,7 +299,7 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
 A <- M[[1]]
 df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
 tab <- xtable(df, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on Feb. 15 for scenario 1. All abundances are at time of survey.", label = "tab:pop_abundance")
-#print(tab, caption.placement = "top", include.rownames = FALSE)
+print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
 
@@ -359,15 +359,15 @@ Figure 17. Retrospective plot of model-estimated mature male biomass for 2015 mo
 plot_size_comps(A, 1)
 ```
 
-```{r sc_pot_discarded_m, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery.\\label{fig:sc_pot_discarded_m}"}
+```{r sc_pot_discarded_m, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey.\\label{fig:sc_pot_discarded_m}"}
 plot_size_comps(A, 2)
 ```
 
-```{r sc_pot_discarded_f, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery.\\label{fig:sc_pot_discarded_f}"}
+```{r sc_pot_discarded_f, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey.\\label{fig:sc_pot_discarded_f}"}
 plot_size_comps(A, 3)
 ```
 
-```{r length_weight, fig.cap = "Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs so lines all overlap).\\label{fig:length-weight}"}
+```{r length_weight, fig.cap = "Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs).\\label{fig:length-weight}"}
 .OVERLAY <- FALSE
 plot_length_weight(M, xlab = "Carapace width (mm)", ylab = "Weight (kg)")
 .OVERLAY <- TRUE
@@ -386,7 +386,7 @@ plot_growth_inc(A)
 plot_growth_transition(M, xlab = "Carapace length (mm)")
 ```
 
-```{r size_trans, fig.cap = "Size transitions.\\label{fig:size_trans}"}
+```{r size_trans, fig.cap = "Size transitions (i.e. the combination of the growth matrix and molting probabilities).\\label{fig:size_trans}"}
 plot_size_transition(M, xlab = "Carapace length (mm)", female = TRUE)
 ```
 

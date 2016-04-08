@@ -89,7 +89,7 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
             geom_pointrange(aes(year, exp(log_rec)/1e+06, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     }
     p <- p + labs(x = xlab, y = ylab)
-    if(!.OVERLAY) p <- p + facet_wrap(~Model)
+    if (!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)
 }
 
@@ -108,7 +108,9 @@ plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     mdf <- .get_recruitment_size_df(M)
-    p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) + labs(x = xlab, y = ylab)
+    p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) +
+        expand_limits(y = c(0,1)) +
+        labs(x = xlab, y = ylab)
     if (length(M) == 1)
     {
         p <- p + geom_line()

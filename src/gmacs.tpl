@@ -1324,7 +1324,7 @@ FUNCTION calc_sdreport
 	 * @brief Initialize model parameters
 	 * @details Set global variable equal to the estimated parameter vectors.
 	 *
-	 * SM:  Note if using empirical growth increment data, then alpha and beta growth parameters should not be estimated. Need to warn the user if the following condition is true:
+	 * SM: Note if using empirical growth increment data, then alpha and beta growth parameters should not be estimated. Need to warn the user if the following condition is true:
      * if( bUseEmpiricalGrowth && ( acitve(alpha) || active(beta) ) )
 	**/
 FUNCTION initialize_model_parameters
@@ -1775,8 +1775,6 @@ FUNCTION calc_molting_probability
 	 * @brief calculate size distribution for new recuits.
 	 * @details Based on the gamma distribution, calculates the probability of a new recruit being in size-interval size.
 	 *
-	 * TODO: fix the scale on cumd_gamma distribution so beta rbeta is estimable.
-	 *
 	 * @param ra is the mean of the distribution.
 	 * @param rbeta scales the variance of the distribution
 	**/
@@ -1848,8 +1846,7 @@ FUNCTION calc_recruitment_size_distribution
 	 *  then n = C^(-1) r                           (4)
 	 *  –––-—————————————————————————————————————————————————————————————————————————----
 	 *
-	 *  April 28, 2015.  There is no case here for initializing the model at unfished
-	 *  equilibrium conditions.  Need to fix this for SRA purposes.  SJDM.
+	 *  April 28, 2015.  There is no case here for initializing the model at unfished equilibrium conditions.  Need to fix this for SRA purposes.  SJDM.
 	**/
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
@@ -1893,6 +1890,7 @@ FUNCTION calc_initial_numbers_at_length
 			calc_equilibrium(x,A,_S,rt);
 			ig = pntr_hmo(h,1,1);
 			//d4_N(ig)(syr)(1) = x;
+			//d4_N(ig)(syr)(1) = mfexp(logR0) * mfexp(rec_ini);
 			d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
 		}
 	  	if ( verbose == 1 ) cout << "in init length 2" << endl;

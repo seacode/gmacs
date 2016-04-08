@@ -179,7 +179,55 @@ Table 1. The 1978/79 - 2014/15 directed St. Matthew Island blue king crab pot fi
 
 Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 6 crab) and of mature male biomass (10 6 lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R.Foy, NMFS. The “+” refers to plus group.
 
-
+\begin{table}[ht]
+\centering
+\caption{Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on Feb. 15 for scenario 1. All abundances are at time of survey.} 
+\label{tab:pop_abundance}
+\begin{tabular}{rrrrr}
+  \hline
+Year & N1 & N2 & N3 & MMB \\ 
+  \hline
+1978 & 613738.45 & 4843452.69 & 1885395.88 & 4562.14 \\ 
+  1979 & 905706.25 & 7204450.56 & 2903446.59 & 6294.59 \\ 
+  1980 & 569902.16 & 4814601.50 & 3864695.06 & 9501.16 \\ 
+  1981 & 483982.52 & 4000529.07 & 2898763.96 & 9720.57 \\ 
+  1982 & 306813.12 & 2600252.75 & 2310064.92 & 7070.14 \\ 
+  1983 & 178988.77 & 1534969.94 & 1545446.70 & 4368.42 \\ 
+  1984 & 104320.61 & 895949.06 & 935494.38 & 3066.83 \\ 
+  1985 & 144794.29 & 1160002.54 & 600878.36 & 2826.11 \\ 
+  1986 & 168332.96 & 1356589.40 & 685889.61 & 2845.04 \\ 
+  1987 & 209184.29 & 1680062.02 & 807316.91 & 3415.25 \\ 
+  1988 & 540755.38 & 4219442.98 & 1163552.34 & 3834.88 \\ 
+  1989 & 394356.72 & 3279741.12 & 2228960.25 & 4404.91 \\ 
+  1990 & 356953.88 & 2932172.86 & 1937744.65 & 4853.21 \\ 
+  1991 & 432288.36 & 3480634.47 & 1793133.16 & 4530.72 \\ 
+  1992 & 445549.38 & 3618434.58 & 2020964.22 & 4689.23 \\ 
+  1993 & 428020.78 & 3494673.76 & 2100549.73 & 5095.02 \\ 
+  1994 & 307973.21 & 2574824.63 & 1984988.53 & 5034.33 \\ 
+  1995 & 491752.74 & 3907942.57 & 1679420.41 & 4910.54 \\ 
+  1996 & 502238.83 & 4077771.10 & 2226189.00 & 4502.15 \\ 
+  1997 & 192326.50 & 1736224.53 & 2186120.62 & 3900.89 \\ 
+  1998 & 104720.42 & 889873.89 & 905812.78 & 1923.02 \\ 
+  1999 & 290053.43 & 2262487.14 & 681610.96 & 1623.22 \\ 
+  2000 & 150648.84 & 1296928.13 & 1166251.72 & 1775.45 \\ 
+  2001 & 75672.29 & 662323.64 & 764509.39 & 1913.16 \\ 
+  2002 & 89197.48 & 722066.89 & 443105.04 & 2031.07 \\ 
+  2003 & 35748.64 & 320291.50 & 394576.45 & 1969.77 \\ 
+  2004 & 190952.43 & 1471504.70 & 306402.21 & 2011.89 \\ 
+  2005 & 228130.14 & 1831684.17 & 818664.00 & 1979.87 \\ 
+  2006 & 237013.23 & 1923507.98 & 1048564.37 & 2150.03 \\ 
+  2007 & 406340.45 & 3215358.80 & 1220687.19 & 2491.59 \\ 
+  2008 & 369911.13 & 3026187.68 & 1784351.87 & 2747.65 \\ 
+  2009 & 302227.56 & 2499495.39 & 1735680.59 & 3023.57 \\ 
+  2010 & 263216.63 & 2167657.56 & 1476335.87 & 2821.31 \\ 
+  2011 & 198452.85 & 1653473.46 & 1258595.04 & 2454.14 \\ 
+  2012 & 147640.72 & 1232879.74 & 975289.21 & 2106.02 \\ 
+  2013 & 82747.10 & 711703.55 & 715638.53 & 2439.98 \\ 
+  2014 & 48938.99 & 419741.29 & 433972.16 & 2482.01 \\ 
+  2015 & 201194.59 & 1555999.34 & 361085.89 & 2679.54 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 
 Figure 1. Distribution of blue king crab *Paralithodes platypus* in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters. Shown in blue.
@@ -218,11 +266,11 @@ Figure 17. Retrospective plot of model-estimated mature male biomass for 2015 mo
 
 ![Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\label{fig:sc_pot_m}](figure/sc_pot_m-1.png) 
 
-![Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery.\label{fig:sc_pot_discarded_m}](figure/sc_pot_discarded_m-1.png) 
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey.\label{fig:sc_pot_discarded_m}](figure/sc_pot_discarded_m-1.png) 
 
-![Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery.\label{fig:sc_pot_discarded_f}](figure/sc_pot_discarded_f-1.png) 
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey.\label{fig:sc_pot_discarded_f}](figure/sc_pot_discarded_f-1.png) 
 
-![Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs so lines all overlap).\label{fig:length-weight}](figure/length_weight-1.png) 
+![Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs).\label{fig:length-weight}](figure/length_weight-1.png) 
 
 ![Distribution of carapace width (mm) at recruitment.\label{fig:init_rec}](figure/init_rec-1.png) 
 
@@ -230,7 +278,7 @@ Figure 17. Retrospective plot of model-estimated mature male biomass for 2015 mo
 
 ![Growth transitions.\label{fig:growth_trans}](figure/growth_trans-1.png) 
 
-![Size transitions.\label{fig:size_trans}](figure/size_trans-1.png) 
+![Size transitions (i.e. the combination of the growth matrix and molting probabilities).\label{fig:size_trans}](figure/size_trans-1.png) 
 
 ![Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.\label{fig:init_N}](figure/init_N-1.png) 
 
@@ -327,10 +375,10 @@ Both surveys are assigned a nominal date of July 1, the start of the crab year. 
   \hline
 Parameter & Estimate \\ 
   \hline
-R0 & 2470670.18 \\ 
-  Rbar & 3100270.74 \\ 
-  ralpha & 71.92 \\ 
-  rbeta & 6.32 \\ 
+R0 & 2053384.57 \\ 
+  Rbar & 2576648.29 \\ 
+  ralpha & -1.24 \\ 
+  rbeta & -11.85 \\ 
    \hline
 \end{tabular}
 \end{table}

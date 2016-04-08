@@ -21,27 +21,21 @@
  * @brief Calculate equilibrium vector n given A, S and r
  * @authors Steve Martell and Dave Fournier
  *
- * @details Solving a matrix equation for the equilibrium number
- * of crabs in length interval.
+ * @details Solving a matrix equation for the equilibrium number of crabs in length interval.
  * 
  * @param[out] n vector of numbers at length
  * @param[in] A size transition matrix
  * @param[in] S diagonal matrix of length specific survival rates
  * @param[in] r vector of new recruits at length.
 **/
-void calc_equilibrium(dvar_vector& n,
-                      const dvar_matrix& A,
-                      const dvar_matrix& S,
-                      const dvar_vector r)
+void calc_equilibrium(dvar_vector& n, const dvar_matrix& A, const dvar_matrix& S, const dvar_vector r)
 {
 	int nclass = n.indexmax();
 	dmatrix Id = identity_matrix(1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
-
 	At = trans(A*S);
-	n  = -solve(At-Id,r);
+	n = -solve(At-Id,r);
 }
-
 
 
 /**
@@ -93,12 +87,7 @@ void calc_equilibrium(dvar_vector& n,
  * Note that \f$C\f$ must be invertable to solve for the equilibrium solution for \f$n\f$.
  * So the diagonal elements of \f$P\f$ and \f$S\f$ must be positive non-zero numbers.
 **/
-void calc_equilibrium(dvar_vector& n,
-                      dvar_vector& o,
-                      const dvar_matrix& A,
-                      const dvar_matrix& S,
-                      const dvar_matrix& P,
-                      const dvar_vector& r)
+void calc_equilibrium(dvar_vector& n, dvar_vector& o, const dvar_matrix& A, const dvar_matrix& S, const dvar_matrix& P, const dvar_vector& r)
 {
 	int nclass = n.indexmax();
 	dmatrix Id = identity_matrix(1,nclass);
@@ -110,9 +99,9 @@ void calc_equilibrium(dvar_vector& n,
 	C = P * S * A;
 	D = trans(Id - C - (Id-P)*S*B*C);
 
+	n = solve(D,r);     // newshell
+	o = n*((Id-P)*S*B); // oldshell
+
 	// COUT(A);
 	//COUT(inv(D)*r);
-
-	n = solve(D,r);			// newshell
-	o = n*((Id-P)*S*B);		// oldshell
 }	
