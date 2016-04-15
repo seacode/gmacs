@@ -104,7 +104,7 @@ for (i in ind)
 #M[[jj]]$tG <- rbind(j_ltr, j_ltr)
 
 # Add size transition data
-m <- diag(20)
+#m <- diag(20)
 #diag(m) <- j_len$MP_1987
 #m <- as.matrix(j_ltr) %*% m
 #diag(m) <- diag(m)+(1-j_len$MP_1987)
@@ -116,9 +116,8 @@ m <- diag(20)
 # Add molting probability data
 #M[[jj]]$molt_probability <- rbind(j_len$MP_1987, rep(1, length(j_len$MP_1987)))
 
-# Add recruitment size distribution data
-#M[[jj]]$mid_points <- j_len$Size
-#M[[jj]]$rec_sdd <- j_len$Male_R_sd #j_len$Female_R_sd
+# Add recruitment size distribution data - in Jies model all recruit to first size class, in gmacs almost all to first size class (i.e. 0.9945 0.0055 0.0000).
+M[[jj]]$rec_sdd <- c(1,0,0)
 
 # The .rep files for each of the Gmacs models. Used for making tables of the likelihood components
 like <- list()
