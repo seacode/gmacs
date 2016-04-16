@@ -4,7 +4,8 @@
 \alias{plot_molt_prob}
 \title{Plot molting probability relationship}
 \usage{
-plot_molt_prob(M, xlab = "Length", ylab = "Probability")
+plot_molt_prob(M, xlab = "Mid-point of size class (mm)",
+  ylab = "Probability of molting")
 }
 \arguments{
 \item{M}{list object created by read_admb function}

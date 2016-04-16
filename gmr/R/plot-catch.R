@@ -9,7 +9,7 @@
 {
     n <- length(M)
     mdf <- NULL
-    for( i in 1:n )
+    for ( i in 1:n )
     {
         A <- M[[i]]
         df <- data.frame(Model = names(M)[i], A$dCatchData_out)
@@ -25,7 +25,7 @@
         df$lb        <- exp(log(df$obs)-1.96*df$sd)
         df$ub        <- exp(log(df$obs)+1.96*df$sd)
         mdf <- rbind(mdf, df)
-        if (!all(df$observed == df$obs))
+        if ( !all(df$observed == df$obs) )
         {
             stop("Error: observed catch data is buggered.")
         }
@@ -49,13 +49,15 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_catch <- function(M , plot_res = FALSE,
+plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
                        xlab = "Year", ylab = "Catch", mlab = "Model")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
 
     mdf <- .get_catch_df(M)
+    mdf$units[mdf$units == 1] <- "Units: biomass"
+    mdf$units[mdf$units == 2] <- "Units: numbers"
     
     #if (plot_res)
     #{
@@ -74,20 +76,32 @@ plot_catch <- function(M , plot_res = FALSE,
         geom_linerange(aes(year, observed, ymax = ub, ymin = lb, position = "dodge"), size = 0.2, alpha = 0.5, col = "black") +
         labs(x = xlab, y = ylab)
     
-    if(.OVERLAY)
+    if (.OVERLAY)
     {
-        if (length(M) == 1)
+        if (length(M) == 1 && length(unique(mdf$sex)) == 1)
         {
-            p <- p + facet_wrap(~sex + fleet + type, scales = "free_y")	+
-                geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4)
+            p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4)
+            if (scales %in% "fixed")
+            {
+                p <- p + facet_grid(units ~ fleet + type, scales = "free_y")
+            } else {
+                p <- p + facet_wrap(~fleet + type + units, scales = scales)
+            }
+        } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
+            p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
+                facet_wrap(~fleet + type + units, scales = scales) +
+                labs(col = mlab)
+        } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
+            p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4) +
+                facet_wrap(~sex + fleet + type + units, scales = scales)
         } else {
-            p <- p + facet_wrap(~sex + fleet + type, scales = "free_y")	+
-                geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
+            p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
+                facet_wrap(~sex + fleet + type + units, scales = scales) +
                 labs(col = mlab)
         }
     } else {
-        p <- p + facet_wrap(~model + sex + fleet + type, scales = "free_y") +
-            geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4)
+        p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4)
+        p <- p + facet_wrap(~model + sex + fleet + type, scales = scales)
     }
     print(p + .THEME)
 }

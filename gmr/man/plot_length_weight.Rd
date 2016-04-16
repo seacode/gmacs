@@ -4,7 +4,8 @@
 \alias{plot_length_weight}
 \title{Plot length-weight relationship}
 \usage{
-plot_length_weight(M, xlab = "Size", ylab = "Weight")
+plot_length_weight(M, xlab = "Mid-point of size class (mm)",
+  ylab = "Weight (tonnes)")
 }
 \arguments{
 \item{M}{list object created by read_admb function}

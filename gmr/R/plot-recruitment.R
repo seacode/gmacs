@@ -11,10 +11,10 @@
 {
     n <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for (i in 1:n)
     {
         A  <- M[[i]]
-        if(is.null(A$fit$logDetHess))
+        if (is.null(A$fit$logDetHess))
         {
             stop("Appears that the Hessian was not positive definite\n
                   thus estimates of recruitment do not exist.\n
@@ -25,10 +25,9 @@
                          log_rec = A$fit$est,
                          log_sd  = A$fit$std)
         df <- subset(df, par == "sd_log_recruits")
-        df$year    <- A$mod_yrs
-        #df$log_rec <- exp(df$log_rec)
-        df$lb      <- exp(df$log_rec - 1.96*df$log_sd)
-        df$ub      <- exp(df$log_rec + 1.96*df$log_sd)
+        df$year <- A$mod_yrs
+        df$lb <- exp(df$log_rec - 1.96*df$log_sd)
+        df$ub <- exp(df$log_rec + 1.96*df$log_sd)
         mdf <- rbind(mdf, df)
     }
     return(mdf)
@@ -74,23 +73,23 @@
 #' @author SJD Martell, DN Webber
 #' @export
 #' 
-plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (thousands of individuals)")
+plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of individuals)")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     mdf <- .get_recruitment_df(M)
     if (length(M) == 1)
     {
-        p <- ggplot(mdf, aes(x = year, y = exp(log_rec))) +
+        p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06)) +
             geom_bar(stat = "identity", alpha = 0.4, position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec), ymax = ub, ymin = lb), position = position_dodge(width = 0.9))
+            geom_pointrange(aes(year, exp(log_rec)/1e+06, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     } else {
-        p <- ggplot(mdf, aes(x = year, y = exp(log_rec), col = Model, group = Model)) +
+        p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06, col = Model, group = Model)) +
             geom_bar(stat = "identity", alpha = 0.4, aes(fill = Model), position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec), col = Model, ymax = ub, ymin = lb), position = position_dodge(width = 0.9))
+            geom_pointrange(aes(year, exp(log_rec)/1e+06, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     }
     p <- p + labs(x = xlab, y = ylab)
-    if(!.OVERLAY) p <- p + facet_wrap(~Model)
+    if (!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)
 }
 
@@ -104,19 +103,21 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (thousands of
 #' @author DN Webber
 #' @export
 #' 
-plot_recruitment_size <- function(M, xlab = "Size", ylab = "Density")
+plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Proportion")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     mdf <- .get_recruitment_size_df(M)
-    p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) + labs(x = xlab, y = ylab)
+    p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) +
+        expand_limits(y = c(0,1)) +
+        labs(x = xlab, y = ylab)
     if (length(M) == 1)
     {
-        p <- p + geom_line()
+        p <- p + geom_line() + geom_point()
     } else {
-        p <- p + geom_line(aes(col = Model))
+        p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
     }
-    if(!.OVERLAY) p <- p + facet_wrap(~Model)
+    if (!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)
 }
 
@@ -129,7 +130,7 @@ plot_recruitment_size <- function(M, xlab = "Size", ylab = "Density")
 #' @author Cole Monnahan Kelli Johnson
 #' @export
 #' 
-plot_models_recruitment <- function(data, modnames=NULL )
+plot_models_recruitment <- function(data, modnames = NULL)
 {
   if (is.null(modnames))
     modnames = paste("Model ",1:length(data))

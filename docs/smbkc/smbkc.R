@@ -1,0 +1,517 @@
+---
+title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
+author: "The Gmacs development team"
+date: "May 2015"
+output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  html_document:
+    theme: flatly
+    toc: yes
+  word_document: default
+bibliography: Gmacs.bib
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r, load_packages, include=FALSE}
+library(gmr)
+library(xtable)
+options(xtable.comment = FALSE)
+
+# The model specs
+.MODELDIR = c("../../examples/smbkc/", "../../examples/smbkc/")
+.THEME    = theme_bw(base_size = 12, base_family = "")
+.OVERLAY  = TRUE
+.SEX      = c("Aggregate","Male")
+.FLEET    = c("Pot","Trawl bycatch","Fixed bycatch","NMFS Trawl","ADFG Pot")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
+.SHELL    = c("Aggregate")
+.MATURITY = c("Aggregate")
+.SEAS     = c("Annual")
+
+# Read report file and create gmacs report object (a list):
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb)
+names(M) <- c("Zheng", "Gmacs")
+
+jj <- 1 # The position in the list that Jies model outputs sit
+
+# Add numbers at length data
+nmult <- 1e+06
+M[[jj]]$N_len[,1] <- nmult * c(3.78235,4.84166,4.21852,1.7556,1.8762,1.01266,0.866184,1.2789,1.89578,1.86503,1.65332,2.64882,1.71918,2.46729,2.71706,2.96956,1.74463,1.84754,2.15061,1.30642,0.852401,0.45627,0.479496,0.479076,0.215485,0.453805,0.293347,0.656367,0.970389,0.716526,1.25167,1.12962,1.05771,0.896425,0.58185,0.681566,0.61932,0.496048,NA)
+M[[jj]]$N_len[,2] <- nmult * c(2.41947,2.94323,3.80508,3.73373,2.21668,1.76026,1.1071,0.837916,0.998129,1.41795,1.53813,1.45469,2.00878,1.64349,1.93093,2.17626,2.39386,1.75195,1.61891,1.74673,1.28364,0.41512,0.405329,0.415779,0.418944,0.265868,0.353951,0.289723,0.480511,0.727161,0.646712,0.946953,0.967554,0.919677,0.802819,0.586163,0.594288,0.557095,NA)
+M[[jj]]$N_len[,3] <- nmult * c(1.67834,2.20341,3.26581,4.60382,4.7799,3.40968,2.0207,1.49864,1.28226,1.37185,1.6461,1.88861,2.08216,2.38952,2.16295,2.26905,2.39884,2.43188,2.31067,2.14367,1.79981,0.691298,0.785188,0.858978,0.925671,0.98279,0.953565,0.973699,0.958382,1.04024,1.20501,1.32928,1.48274,1.43165,1.23077,1.06162,1.18039,1.21812,NA)
+
+# Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
+ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
+M[[jj]]$ssb <- 0.000453592 * 1e+6 * c(10.0578,13.8772,20.9465,21.4302,15.587,9.63072,6.76121,6.23052,6.27224,7.52934,8.45448,9.71117,10.6995,9.98854,10.338,11.2326,11.0988,10.8259,9.92555,8.59999,4.23953,3.57858,3.9142,4.21781,4.47775,4.34261,4.43547,4.36487,4.74001,5.49302,6.05754,6.66583,6.21993,5.41045,4.64299,5.37923,5.47191,5.90738)
+M[[jj]]$fit$est[ii] <- log(0.000453592 * 1e+6 * c(10.0578,13.8772,20.9465,21.4302,15.587,9.63072,6.76121,6.23052,6.27224,7.52934,8.45448,9.71117,10.6995,9.98854,10.338,11.2326,11.0988,10.8259,9.92555,8.59999,4.23953,3.57858,3.9142,4.21781,4.47775,4.34261,4.43547,4.36487,4.74001,5.49302,6.05754,6.66583,6.21993,5.41045,4.64299,5.37923,5.47191,5.90738))
+M[[jj]]$fit$std[ii] <- NA
+
+# Add natural mortality data
+ii <- which(M[[jj]]$mod_yrs == 1999)
+M[[jj]]$M[ii,] <- 0.937813
+M[[jj]]$M[21,] <- M[[jj]]$M[1,]
+
+# Add recruitment data - It looks like Jie has recorded this as millions of individuals
+ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
+M[[jj]]$fit$est[ii] <- log(1e+6 * c(NA,4.22369,3.4114,1.05153,1.58853,0.709932,0.705147,1.1393,1.68745,1.55298,1.34618,2.37665,1.28166,2.18467,2.31576,2.5257,1.26052,1.56477,1.84916,0.95593,0.642419,0.391891,0.403301,0.398974,0.135469,0.417821,0.217583,0.607371,0.860754,0.554587,1.13471,0.920731,0.870296,0.722566,0.435444,0.586532,0.505472,0.393023))
+M[[jj]]$fit$std[ii] <- NA
+
+# Add estimated trawl survey biomass (million of lbs)
+M[[jj]]$pre_cpue[1,] <- 1e+03 * 0.453592 * c(16.9107,20.3464,27.3302,29.7194,27.6591,20.8337,11.9956,10.3426,9.8731,11.2107,12.1871,14.5983,15.1584,16.8995,16.6574,18.4302,17.7172,16.9087,16.198,15.4322,11.7999,4.41029,4.81213,5.15032,5.15653,5.29834,5.20702,5.53472,6.25679,6.90932,8.00088,8.98708,9.28411,8.88151,7.41716,6.63175,6.99459,7.02906)
+M[[jj]]$pre_cpue[2,1:8] <- c(17.2843,12.0422,5.28179,5.22433,7.22742,10.1542,6.85929,7.14304)
+
+#Estimated pot survey length compositions
+M[[jj]]$d3_pre_size_comps_out[53:60,] <- t(matrix(c(0.147886,0.0979305,0.125489,0.0776841,0.137161,0.144113,0.137471,0.0960776,0.291162,0.306197,0.226123,0.194615,0.289009,0.273711,0.245472,0.224032,0.560952,0.595872,0.648388,0.727701,0.57383,0.582176,0.617057,0.679891), nrow = 3, byrow = TRUE))
+M[[jj]]$d3_pre_size_comps_out[15:52,] <- t(matrix(c(0.389466,0.393592,0.290957,0.125601,0.153106,0.116868,0.157769,0.270281,0.361676,0.314393,0.262176,0.350587,0.223486,0.293695,0.312116,0.313866,0.199677,0.231037,0.271211,0.186399,0.158282,0.218432,0.213903,0.202283,0.0974652,0.195338,0.130912,0.257895,0.312885,0.216089,0.313673,0.252375,0.226645,0.205558,0.162655,0.218646,0.19071,0.158486,0.346918,0.333177,0.365452,0.371972,0.251893,0.282883,0.2808,0.246592,0.265166,0.332849,0.339648,0.268111,0.363629,0.272423,0.308875,0.320304,0.381522,0.305075,0.284293,0.347045,0.331919,0.276737,0.25179,0.244465,0.263869,0.159361,0.219958,0.158518,0.215745,0.305372,0.225683,0.294607,0.288704,0.293667,0.312516,0.261849,0.254832,0.247853,0.263616,0.273231,0.343592,0.502426,0.595,0.600248,0.561432,0.483127,0.373158,0.352759,0.398177,0.381302,0.412884,0.433882,0.379009,0.365831,0.418801,0.463888,0.444496,0.466556,0.509799,0.50483,0.534306,0.553251,0.638666,0.645301,0.64913,0.583587,0.47137,0.478539,0.460644,0.453019,0.484651,0.500775,0.52483,0.519505,0.554458,0.593661), nrow = 3, byrow = TRUE))
+
+# Add selectivity data
+# year, sex, fleet, vec
+ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[1:31]
+for (i in ind)
+{
+    M[[jj]]$slx_capture[i,4:6] <- c(0.416198,0.657528,1) # Directed pot fisheries
+}
+ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[32:38]
+for (i in ind)
+{
+    M[[jj]]$slx_capture[i,4:6] <- c(0.326889,0.806548,1) # Directed pot fisheries
+}
+ind <- which(M[[jj]]$slx_capture[,3] %in% 4)
+for (i in ind)
+{
+    M[[jj]]$slx_capture[i,4:6] <- c(0.655565,0.912882,1) # ADFG pot survey
+}
+ind <- which(M[[jj]]$slx_capture[,3] %in% 5)
+for (i in ind)
+{
+    M[[jj]]$slx_capture[i,4:6] <- c(0.347014,0.720493,1) # Trawl survey
+}
+
+# Add size-weight data
+#M[[jj]]$mid_points <- j_len$Size
+#M[[jj]]$mean_wt <- rbind(j_len$MaleWt, j_len$FemaleWt)
+
+# Add growth transition data
+#M[[jj]]$growth_transition <- rbind(j_ltr, j_ltr)
+#M[[jj]]$growth_transition <- rbind(j_ltr)
+#M[[jj]]$tG <- rbind(j_ltr, j_ltr)
+
+# Add size transition data
+#m <- diag(20)
+#diag(m) <- j_len$MP_1987
+#m <- as.matrix(j_ltr) %*% m
+#diag(m) <- diag(m)+(1-j_len$MP_1987)
+#M[[jj]]$size_transition_M <- m
+#M[[jj]]$size_transition_F <- m
+#M[[jj]]$size_transition_F <- NULL
+#M[[jj]]$tS <- rbind(m, m)
+
+# Add molting probability data
+#M[[jj]]$molt_probability <- rbind(j_len$MP_1987, rep(1, length(j_len$MP_1987)))
+
+# Add recruitment size distribution data - in Jies model all recruit to first size class, in gmacs almost all to first size class (i.e. 0.9945 0.0055 0.0000).
+M[[jj]]$rec_sdd <- c(1,0,0)
+
+# The .rep files for each of the Gmacs models. Used for making tables of the likelihood components
+like <- list()
+like[[1]] <- readLines("../../examples/bbrkc/OneSex/gmacs.rep")
+like[[2]] <- readLines("../../examples/bbrkc/TwoSex/gmacs.rep")
+```
+
+# Executive Summary
+
+1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
+
+2. **Catches**: Peak historical harvest was 9.454 million pounds (4,288 t) in 1983/84. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 0.461 million pounds (209 t), less than half the 1.167 million pound (529.3 t) TAC. Following three more years of modest harvests supported by a fishery CPUE of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 0.655 million pounds (300 t), but the fishery performance was relatively poor with the retained catch of 0.309 million pounds (140 t).
+
+3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 20.98 million pounds (9,516 t; CV == 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 12.46 million pounds (5,652 t; CV = 0.33) in 2012 and to 4.459 million pounds (2,202 t; CV = 0.22) in 2013 before going back up to 12.06 million pounds (5,472 t; CV = 0.44) in 2014 and 11.32 million pounds (5,134 t; CV = 0.76).
+
+4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm CL size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue with the 2014 survey with an estimate of 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of them came from one tow with a great deal of uncertainty.
+
+5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider.
+
+The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
+
+6. **Basis for the OFL**: Estimated Feb 15 mature-male biomass ($MMB_\text{mating}$) is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_{MSY}$ proxy is obtained by averaging estimated $MMB_\text{mating}$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference time period.
+
+
+# A. Summary of Major Changes
+
+## Changes in Management of the Fishery
+
+There are no new changes in management of the fishery.
+
+## Changes to the Input Data
+
+All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015 (new time series), updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&G pot survey data in 2015.
+
+## Changes in Assessment Methodology
+
+This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011. During the assessment in May 2015 and this assessment, many combinations of molting probability and trawl survey selectivities were evaluated to address the residual bias problems in the previous model. In September 2015, twenty scenarios were investigated. The detailed changes to the model parameters are described in details in E (Analytic Approach).
+
+## Changes in Assessment Results
+
+Changes in assessment results depend on model scenarios. Many model scenarios in this assessment have satisfactorily addressed the problems of biased residual patterns on ????.
+
+
+# B. Responses to SSC and CPT Comments
+
+## CPT and SSC Comments on Assessments in General
+
+## CPT and SSC Comments Specific to SMBKC Stock Assessment
+
+
+# C. Introduction
+
+## Scientific Name
+
+The blue king crab is a lithodid crab, *Paralithodes platypus* (Brant 1850).
+
+## Distribution
+
+Blue king crab are sporadically distributed throughout the North Pacific Ocean from Hokkaido, Japan, to southeastern Alaska (Figure 1). In the eastern Bering Sea small populations are distributed around St. Matthew Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2 (Figure 2), which is the Northern District of the Bering Sea king crab registration area and includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).
+
+## Stock Structure
+
+The Alaska Department of Fish and Game (ADF&G) Gene Conservation Laboratory division has detected regional population differences between blue king crab collected from St. Matthew Island and the Pribilof Islands^[NOAA grant Bering Sea Crab Research II, NA16FN2621, 1997.]. NMFS tag-return data from studies on blue king crab in the Pribilof Islands and St. Matthew Island support the idea that legal-sized males do not migrate between the two areas (Otto and Cummiskey 1990). St. Matthew Island blue king crab tend to be smaller than their Pribilof conspecifics, and the two stocks are managed separately.
+
+## Life History
+
+Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodid such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong, 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
+
+## Management History
+
+The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 1.202 million pounds in 1977, and harvests peaked in 1983 when 164 vessels landed 9.454 million pounds (Fitch et al. 2012; Table 1). The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock- size threshold (MSST) of 11.0 million pounds as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table 2). In Nov 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.
+
+NMFS declared the stock rebuilt on Sept 21, 2009, and the fishery was reopened after a 10-year closure on Oct 15, 2009 with a TAC of 1.167 million pounds, closing again by regulation on Feb 1, 2010. Seven participating vessels landed a catch of 460,859 pounds with a reported effort of 10,697 pot lifts and an estimated CPUE of 9.9 retained number of crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&G to close the fishery again for the 2013/14 season. Due to abundance above thresholds, the fishery was reopen for the 2014/15 season with a low TAC 0.655 million pounds.
+
+Though historical observer data are limited due to very limited samplings, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes twice or more as high as the catch of legal crab (Moore et al. 2000; ADF&G Crab Observer Database). Pot-lift sampling by ADF&G crab observers (Gaeuman 2013; ADF&G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table 3), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality. On the other hand, these same data suggest a significant reduction in the bycatch of females, which may be attributable to the later timing of the contemporary fishery^[D. Pengilly, ADF&G, pers. comm.]. Some bycatch of discarded blue king crab has also been observed historically in the eastern Bering Sea snow crab fishery, but in recent years it has generally been negligible, and observers recorded no bycatch of blue king crab in sampled pot lifts during 2013/14. The St. Matthew Island golden king crab fishery, the third commercial crab fishery to have taken place in the area, typically occurred in areas with depths exceeding blue king crab distribution. NMFS observer data suggest that variable but mostly limited SMBKC bycatch has also occurred in the eastern Bering Sea groundfish fisheries (Table 5).
+
+
+# D. Data
+
+## Summary of New Information
+
+Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use an updated trawl-survey time series provided by R. Foy in August 2015 (new time series), as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The new and old time series of trawl survey area-swept estimates were compared in May 2015 and only the new time series was used in this assessment. The data extent and availability is shown in Figure \ref{fig:data_extent}).
+
+```{r data_extent, fig.cap = "Data extent for the gmacs model configuration.\\label{fig:data_extent}"}
+#A <- M[[2]]
+#names(A) <- "SMBKC"
+fn <- paste0(.MODELDIR[1], "gmacs")
+A <- lapply(fn, read_admb)
+names(A) <- c("SMBKC")
+plot_datarange(A)
+```
+
+## Major Data Sources
+
+Major data sources used in this assessment are annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15; Table 1); results from the annual NMFS eastern Bering Sea trawl survey (1978-2015; Table 2); results from the triennial ADF&G SMBKC pot survey (every third year during 1995-2013) and 2015 pot survey (Table 4); size-frequency information from ADF&G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15; Table3); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2014/15; Table 5). Figure 3 maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure 4). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure 5). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&G statistical area was not used.
+
+## Other Data Sources
+
+The alternative model configuration developed for this assessment makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the base-model configuration used for the 2012 and 2013 assessments.
+
+## Major Excluded Data Sources
+
+Groundfish bycatch size-frequency data available for selected years, though used in the model-based assessment in place prior to 2011, play no direct role in this analysis. This is because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90-mm+ CL male blue king crab from reporting areas 521 and 524.
+
+
+# E. Analytic Approach
+
+## History of Modeling Approaches for this Stock
+
+A four-stage catch-survey-analysis (CSA) assessment model was used before 2011 to estimate abundance and biomass and prescribe fishery quotas for the SMBKC stock (2010 SAFE; Zheng et al. 1997). The four-stage CSA is similar to a full length-based analysis, the major difference being coarser length groups, which are more suited to a small stock with consistently low survey catches. In this approach, the abundance of male crab with a CL of 90 mm or above is modeled in terms of four crab stages: stage 1: 90-104 mm CL; stage 2: 105-119 mm CL; stage 3: newshell 120-133 mm CL; and stage 4: oldshell $\ge$ 120 mm CL and newshell $\ge$ 134 mm CL. Motivation for these stage definitions comes from the fact that for management of the SMBKC stock, male crab measuring at least 105 mm CL are considered mature, whereas 120 mm CL is considered a proxy for the legal size of 5.5 in carapace width, including spines. Additional motivation for these stage definitions derives from an estimated average growth increment of about 14 mm per molt for SMBKC (Otto and Cummiskey 1990).
+
+Concerns about the pre-2011 assessment model led to CPT and SSC recommendations that included development of an alternative model with provisional assessment based on survey biomass or some other index of abundance. An alternative 3-stage model was proposed to the CPT in May 2011 but was requested to proceed with a survey-based approach for the Fall 2011 assessment. In May 2012 the CPT approved a slightly revised and better documented version of the alternative model for assessment.
+
+## Assessment Methodology
+
+The current SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. 
+
+Each model year is split into four seasons.
+
+A detailed description of the base model and its implementation in the software AD Model Builder (Fournier et al. 2012) is presented in Appendix A.
+
+## Model Selection and Evaluation
+
+In May 2015, eight model scenarios were considered. In this (September 2015) assessment, twenty scenarios are examined:
+
+## Results
+
+Additional results are presented for model scenarios 3, 8, 10, 11, and 10-4, as these scenarios represent different approaches. We recommend scenario 10-4 to be used for the overfishing determination in 2015, based on the fit of the data, plausibility of parameter estimates, and quality of area-swept abundance estimates.
+
+
+# F. Calculation of the OFL and ABC
+
+The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality $F_{OFL}$. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of $B_{MSY}$ and $F_{MSY}$, along with two additional parameters $\alpha$ and $\beta$, $F_{OFL}$ is determined by the control rule
+
+$$\text{a) } F_{OFL} = F_{MSY}, \quad \text{when } B/B_{MSY} > 1$$
+
+$$\text{b) } F_{OFL} = F_{MSY} \frac{\left( B/B_{MSY} - \alpha \right)}{(1 - \alpha)}, \quad \text{when } \beta < B/B_{MSY} \le 1$$
+
+$$\text{c) } F_{OFL} < F_{MSY} \text{ with directed fishery } F = 0, \quad \text{when } B/B_{MSY} \le \beta$$
+
+where $B$ is quantified as mature-male biomass $MMB_\text{mating}$, at mating with time of mating assigned a nominal date of Feb 15. Note that as $B$ itself is a function of the fishing mortality $F_{OFL}$ , in case b) numerical approximation of $F_{OFL}$ is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with $F_{OFL}$ taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
+
+The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2015, to define a $B_{MSY}$ proxy in terms of average estimated MMB mating and to put $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 yr-1 in setting the $F_{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_{OFL}$, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10. Figures 23 and 24 illustrate respectively the MMB and OFL probabilities in 2015 for scenarios 10 and 10-4 using the mcmc appproach. ABC is 80% of the OFL.
+
+OFL, ABC, retained catch and bycatches for 2015 are summarized for scenarios 10 and 10-4 below:
+
+
+# G. Rebuilding Analysis
+
+This stock is not currently subject to a rebuilding plan.
+
+
+# H. Data Gaps and Research Priorities
+
+  1. Growth increments and molting probabilities as a function of size.
+  2. Trawl survey catchability and selectivities.
+  3. Temporal changes in spatial distributions near the island.
+  4. Natural mortality.
+
+
+# I. Projections and Future Outlook
+
+With the decline of estimated population biomass during recent years, outlook for this stock is not promising. If the decline continues, the stock will fall to depleted status soon.
+
+
+# J. Acknowledgements
+
+We thank the Crab Plan Team, Joel Webb and Shareef Siddeek for reviewing the earlier draft of this manuscript. Some materials in the report are from the SAFE report prepared by Bill Gaeuman in 2014.
+
+
+\newpage
+
+Table 1. The 1978/79 - 2014/15 directed St. Matthew Island blue king crab pot fishery. Source: Fitch et al. 2012; ADF&G Dutch Harbor staff, pers. comm.
+
+Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 6 crab) and of mature male biomass (10 6 lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R.Foy, NMFS. The “+” refers to plus group.
+
+```{r pop_abundance, results = "asis"}
+A <- M[[1]]
+df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
+tab <- xtable(df, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on Feb. 15 for scenario 1. All abundances are at time of survey.", label = "tab:pop_abundance")
+print(tab, caption.placement = "top", include.rownames = FALSE)
+```
+
+
+Figure 1. Distribution of blue king crab *Paralithodes platypus* in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters. Shown in blue.
+
+Figure 2. King crab Registration Area Q (Bering Sea).
+
+Figure 3. Trawl and pot-survey stations used in the SMBKC stock assessment.
+
+Figure 4. Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&G pot-survey data used in the assessment.
+
+Figure 5. NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.
+
+```{r selectivity, fig.cap = "Estimated stage-1 and stage-2 selectivities for different scenarios (the stage-3 selectivities are fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey.\\label{fig:selectivity}"}
+plot_selectivity(M, ncol = 5)
+```
+
+```{r molt_prob, fig.cap = "Estimated molting probabilities for stage-1 crab for different scenarios.\\label{fig:molt_prob}"}
+plot_molt_prob(M, xlab = "Carapace length (mm)")
+```
+
+```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass and model predictions for 2016 model estimates under 18 scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
+plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
+```
+
+```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates under 9 scenarios without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations of scenario 10. Comparisons of area-swept estimates of total male survey biomasses and model predictions for 2015 model estimates under 18 scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
+plot_cpue(M, "ADFG Pot", ylab = "Pot survey CPUE (crab/potlift)")
+```
+
+Figure 11b. Comparisons of total male pot survey CPUEs and model predictions for 2015 model estimates under 7 scenarios with additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations of scenario 9.
+
+Figure 12(3). Standardized residuals for total trawl survey biomass for scenario 3.
+
+Figure 12(8). Standardized residuals for total trawl survey biomass for scenario 8.
+
+Figure 13(3). Bubble plots of residuals of stage compositions for scenario 3 for St. Mathew Island blue king crab. Empty circles indicate negative residuals, filled circles indicate positive residuals, and differences in bubble size indicate relative differences in the magnitude of residuals. Upper, middle, and lower plots are trawl survey, pot survey, and observer data.
+
+```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches with scenario 10.\\label{fig:fit_to_catch}"}
+A <- M; A[[3]] <- NULL
+plot_catch(A)
+```
+
+```{r recruitment, fig.cap = "Estimated recruitment time series during 1979-2015 with 18 scenarios. Estimated recruitment time series ($R_t$) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.\\label{fig:recruitment}"}
+plot_recruitment(M)
+```
+
+```{r mature_male_biomass, fig.cap = "Estimated mature male biomass time series on Feb. 15 during 1978-2015 with 18 scenarios. Mature male biomass (MMB) predicted in the two versions of the Gmacs model (OneSex and TwoSex) and the Zheng model.\\label{fig:mmb}"}
+#A <- M; A[[1]] <- NULL
+#mval <- 3.2e5
+#plot_ssb(M, ylim = c(0, mval))
+plot_ssb(M)
+```
+
+Figure 17. Retrospective plot of model-estimated mature male biomass for 2015 model scenario 10 (top panel) on Feb. 15 and scenario 10-4 (bottom panel) at time of survey with terminal years 2007-2015. Estimates are based on all available data up to and including terminal-year trawl and pot surveys.
+
+```{r sc_pot_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\\label{fig:sc_pot_m}"}
+plot_size_comps(A, 1)
+```
+
+```{r sc_pot_discarded_m, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey.\\label{fig:sc_pot_discarded_m}"}
+plot_size_comps(A, 2)
+```
+
+```{r sc_pot_discarded_f, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey.\\label{fig:sc_pot_discarded_f}"}
+plot_size_comps(A, 3)
+```
+
+```{r length_weight, fig.cap = "Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs).\\label{fig:length-weight}"}
+.OVERLAY <- FALSE
+plot_length_weight(M, xlab = "Carapace width (mm)", ylab = "Weight (kg)")
+.OVERLAY <- TRUE
+```
+
+```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
+plot_recruitment_size(M, xlab = "Carapace width (mm)")
+```
+
+```{r growth_inc, fig.cap = "Growth increment (mm) each molt by sex in the OneSex and TwoSex models.\\label{fig:growth_inc}"}
+plot_growth_inc(A)
+#plot_growth_inc(M)
+```
+
+```{r growth_trans, fig.cap = "Growth transitions.\\label{fig:growth_trans}"}
+plot_growth_transition(M, xlab = "Carapace length (mm)")
+```
+
+```{r size_trans, fig.cap = "Size transitions (i.e. the combination of the growth matrix and molting probabilities).\\label{fig:size_trans}"}
+plot_size_transition(M, xlab = "Carapace length (mm)", female = TRUE)
+```
+
+```{r init_N, fig.cap = "Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.\\label{fig:init_N}"}
+#plot_numbers(M, c("1977","1980","1990","2000","2010","2015"))
+plot_numbers(M)
+```
+
+```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Periods begin at 1976, 1980, 1985 and 1994.\\label{fig:M_t}"}
+plot_natural_mortality(M, knots = NULL)
+```
+
+
+\newpage
+
+# Appendix A: SMBKC Model Description
+
+## 1. Introduction
+
+The model accounts only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (male size classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the base-model configuration.
+
+## 2. Model Population Dynamics
+
+Within the model framework, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of July 1. With boldface letters indicating vector quantities, let $\boldsymbol{N}_t = \left[ N_{1,t}, N_{2,t}, N_{3,t} \right]^\top$ designate the vector of stage abundances at the start of year $t$. Then the basic population dynamics underlying model construction are described by the linear equation
+
+$$\boldsymbol{N}_{t+1} = \boldsymbol{G} e^{-M_t} \boldsymbol{N}_t + \boldsymbol{N}^\text{new}_{t+1}$$
+
+where the scalar factor $e^{-M_t}$ accounts for the effect of year-t natural mortality $M_t$ and the
+hypothesized transition matrix $\boldsymbol{G}$ has the simple structure
+
+\begin{equation}
+  \boldsymbol{G} = \left[ \begin{array}{ccc}
+    1 - \pi_{12} & \pi_{12} & 0 \\
+    0 & 1 - \pi_{23} & \pi_{23} \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+with $\pi_{jk}$ equal to the proportion of stage-j crab that molt and grow into stage k from any one year to the next. The vector $N newt+1 = [ N new 1 , t+1 , 0 ,0 ] T$ registers the number $N new1, t+1$ of new crab, or "recruits", entering the model at the start of year $t+1$, all of which are assumed to go into stage 1. Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality.) The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
+
+$$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
+
+where the diagonal matrices 
+
+\begin{equation}
+  \boldsymbol{S}^\text{df} = \left[ \begin{array}{ccc}
+    s_1^\text{df} & 0 & 0 \\
+    0 & s_2^\text{df} & 0 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+and
+
+\begin{equation}
+  \boldsymbol{H}^\text{df} = \left[ \begin{array}{ccc}
+    h^\text{df} & 0 & 0 \\
+    0 & h^\text{df} & 0 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard handling mortality $h^\text{df}$ in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as Feb 15 (0.63 yr) pulse effects in terms of the respective fishing mortalities $F_t^\text{gt}$ and $F_t^\text{gf}$ by
+
+
+## 3. Model Data
+
+Data inputs used in model estimation are listed in Table 1. All quantities relate to male SMBKC $\le$ 90mm CL.
+
+
+## 4. Model Parameters
+
+Estimated parameters with scenarios 8 and 10 are listed in Table 2 and include an estimated parameter for natural mortality in 1998/99 assuming of an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
+
+In any year with no directed fishery, and hence zero retained catch, $F_t^\text{df}$ is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, $F_t^\text{gf}$ and $F_t^\text{gt}$ are imputed to be the geometric means of the estimates from years for which there are data. Table 3 lists additional externally determined parameters used in model computations.
+
+For scenarios 0 and 1, the stage-transition matrix is
+
+\begin{equation}
+  \left[ \begin{array}{ccc}
+    0.2 & 0.7 & 0.1 \\
+    0 & 0.4 & 0.6 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+which includes molting probabilities. For scenarios 3-11, the growth matrix with molting crab is
+
+\begin{equation}
+  \left[ \begin{array}{ccc}
+    0.11 & 0.83 & 0.06 \\
+    0 & 0.11 & 0.89 \\
+    0 & 0 & 1 \end{array} \right]
+\end{equation}
+
+The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well. For scenarios 0 and 1, stage-transition matrix
+
+Both surveys are assigned a nominal date of July 1, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, Feb 15, which is also the reference date for calculation of federal management biomass quantities.
+
+```{r est_pars, results = "asis"}
+i <- 1:4
+Parameter <- M[[2]]$fit$names[i]
+Parameter <- c("R0","Rbar","ralpha","rbeta")
+Estimate <- M[[2]]$fit$est[i]
+Estimate[1:2] <- exp(Estimate[1:2])
+df <- data.frame(Parameter = Parameter, Estimate = Estimate)
+tab <- xtable(df, caption = "Model estimated parameters for scenarios 0 and 4.", label = "tab:est_pars")
+print(tab, caption.placement = "top", include.rownames = FALSE)
+```
+
+
+
+## 5. Model Objective Function and Weighting Scheme
+
+The objective function consists of a sum of eight "negative loglikelihood" terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four "penalty" terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries. See Table 4, where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes $n_t$ (observed number of male SMBKC $\le$ 90 mm CL) and estimated coefficients of variation $\widehat{cv}_t$ were used to develop appropriate variances for stage-proportion and abundance-index components. The weights $\lambda_j$ appearing in the objective function component expressions in Table 4 play the role of "tuning" parameters in the modeling procedure.
+
+Table 4. Loglikelihood and penalty components of base-model objective function. The $\lambda_k$ are weights, described in text; the neff t are effective sample sizes, also described in text. All summations are with respect to years over each data series.
+
+| Component | Distribution | Form |
+|-----------|--------------|------|
+| Legal retained-catch biomass | Lognormal | $-0.5 \sum \left( \log (c_t/C_t)^2 / \log (1+cv^2_c) \right)$ |
+| Dis. Pot bycatch biomass | Lognormal | |
+
+
+
+## 6. Estimation
+
+The model was implemented using the software AD Model Builder (Fournier et al. 2012), with parameter estimation by minimization of the model objective function using automatic differentiation. Parameter estimates and standard deviations provided in this document are AD Model Builder reported values assuming maximum likelihood theory asymptotics.
+
+
+\newpage
+
+# K. References

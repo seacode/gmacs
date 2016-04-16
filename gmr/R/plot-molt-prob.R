@@ -40,19 +40,25 @@
 #' @author D'Arcy N. Webber
 #' @export
 #' 
-plot_molt_prob <- function(M, xlab = "Length", ylab = "Probability")
+plot_molt_prob <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Probability of molting")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     
     mdf <- .get_molt_prob_df(M)
     
-    p <- ggplot(mdf, aes(x = Length, y = MP)) + labs(x = xlab, y = ylab)
-    if (length(M) == 1)
+    p <- ggplot(mdf, aes(x = Length, y = MP)) +
+        expand_limits(y = c(0,1)) +
+        labs(x = xlab, y = ylab)
+    if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
     {
+        p <- p + geom_line() + geom_point()
+    } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
+        p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
+    } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
         p <- p + geom_line(aes(linetype = Sex))
     } else {
-        p <- p + geom_line(aes(linetype = Sex, col = Model))
+        p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
     }
     print(p + .THEME)
 }

@@ -42,7 +42,7 @@ plot_growth_inc <- function(M, xlab = "Pre-molt size (mm)", ylab = "Molting incr
     
     mdf <- .get_gi_df(M)
     
-    p <- ggplot(mdf) + labs(x = xlab, y = ylab, col = slab)
+    p <- ggplot(mdf) + expand_limits(y = 0) + labs(x = xlab, y = ylab, col = slab)
     p <- p + geom_point(aes(x = size, y = obs, colour = sex))
     p <- p + geom_line(aes(x = size, y = pred, colour = sex))
     if (!length(M) == 1)

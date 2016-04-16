@@ -13,17 +13,11 @@
     for (i in 1:n)
     {
         A <- M[[i]]
-        df <- data.frame(Model = names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8], A$d3_obs_size_comps_out))
-        pf <- data.frame(Model = names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8], A$d3_pre_size_comps_out))
-        rf <- data.frame(Model = names(M)[i],
-                         cbind(A$d3_SizeComps[,1:8], A$d3_res_size_comps_out))
+        df <- data.frame(Model = names(M)[i], cbind(A$d3_SizeComps[,1:8], A$d3_obs_size_comps_out))
+        pf <- data.frame(Model = names(M)[i], cbind(A$d3_SizeComps[,1:8], A$d3_pre_size_comps_out))
+        rf <- data.frame(Model = names(M)[i], cbind(A$d3_SizeComps[,1:8], A$d3_res_size_comps_out))
         
-        colnames(df) <- tolower(c("Model",
-                                  "Year", "Seas", "Fleet", "Sex",
-                                  "Type", "Shell", "Maturity", "Nsamp",
-                                  as.character(A$mid_points)))
+        colnames(df) <- tolower(c("Model", "Year", "Seas", "Fleet", "Sex", "Type", "Shell", "Maturity", "Nsamp", as.character(A$mid_points)))
         colnames(pf) <- colnames(rf) <- colnames(df)
         
         df$fleet    <- pf$fleet    <- rf$fleet    <- .FLEET[df$fleet]
@@ -112,17 +106,19 @@
 #' @author SJD Martell, Jim Ianelli, D'Arcy N. Webber
 #' @export
 #'
-plot_size_comps <- function(M, which_plots = "all", xlab = "Size (mm)", ylab = "Proportion",
-                            slab = "Sex", mlab = "Model", tlab = "Fleet",res=FALSE)
+plot_size_comps <- function(M, which_plots = "all", xlab = "Mid-point of size-class (mm)", ylab = "Proportion",
+                            slab = "Sex", mlab = "Model", tlab = "Fleet", res = FALSE)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
 
     mdf <- .get_sizeComps_df(M)
     ix <- pretty(1:length(M[[1]]$mid_points))
+    
+    p <- ggplot(data = mdf[[1]])
+    
     if (res)
     {
-        p <- ggplot(data=mdf[[1]])
         p <- p + geom_point(aes(factor(year), variable, col = factor(sign(resd)), size = abs(resd)), alpha = 0.6)
         p <- p + scale_size_area(max_size = 10)
         p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
@@ -130,24 +126,42 @@ plot_size_comps <- function(M, which_plots = "all", xlab = "Size (mm)", ylab = "
         p <- p + scale_y_discrete(breaks=pretty(mdf[[1]]$mid_points))
         p <- p + facet_wrap(~model) + .THEME
         p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
-
-    }
-    else
-    {
-        p <- ggplot(data = mdf[[1]])
+    } else {
         p <- p + geom_bar(aes(variable, value), stat = "identity", position = "dodge", alpha = 0.5, fill = "grey")
-        p <- p + geom_line(aes(as.numeric(variable), pred, col = model), alpha = 0.85)
+        if (length(unique(do.call(rbind.data.frame, mdf)$model)) == 1)
+        {
+            p <- p + geom_line(aes(as.numeric(variable), pred), alpha = 0.85)
+        } else {
+            p <- p + geom_line(aes(as.numeric(variable), pred, col = model), alpha = 0.85)
+        }
         p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
         p <- p + labs(x = xlab, y = ylab, col = mlab, fill = slab, linetype = tlab)
         p <- p + ggtitle("title")
         p <- p + facet_wrap(~year) + .THEME
-        #p <- p + facet_grid(irow~icol,labeller=label_both) + .THEME
         p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+        p <- p + geom_text(aes(label = paste0("N = ", nsamp)), x = -Inf, y = Inf, hjust = -0.2, vjust = 1.5)
     }
     
     fun <- function(x, p)
     {
-        p$labels$title <- paste("Gear =", unique(x$fleet), ", Sex =", unique(x$sex))
+        if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) == 1)
+        {
+            p$labels$title <- ""
+        } else if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) != 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) == 1) {
+            p$labels$title <- paste("Gear =", unique(x$fleet))
+        } else if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) != 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) == 1) {
+            p$labels$title <- paste("Sex =", unique(x$sex))
+        } else if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) != 1) {
+            p$labels$title <- paste("Season =", unique(x$seas))
+        } else if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) != 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) != 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) == 1) {
+            p$labels$title <- paste("Gear =", unique(x$fleet), ", Sex =", unique(x$sex))
+        } else if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) != 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) != 1) {
+            p$labels$title <- paste("Gear =", unique(x$fleet), ", Season =", unique(x$seas))
+        } else if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) != 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) != 1) {
+            p$labels$title <- paste("Sex =", unique(x$sex), ", Season =", unique(x$seas))
+        } else {
+            p$labels$title <- paste("Gear =", unique(x$fleet), ", Sex =", unique(x$sex), ", Season =", unique(x$seas))
+        }
         p %+% x
     }
     

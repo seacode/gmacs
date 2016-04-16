@@ -4,7 +4,7 @@
 \alias{plot_datarange}
 \title{Plot data range by fleet and year}
 \usage{
-plot_datarange(M)
+plot_datarange(M, verbose = FALSE)
 }
 \arguments{
 \item{M}{a list of lists object created by the read_admb function}

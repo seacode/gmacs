@@ -304,9 +304,11 @@ namespace gsm {
 		T y(x1,x2);
 		for ( int i = x1; i < y2; i++ )
 		{
-			y(i) = exp(sel_coeffs(i)) / (1.0 + exp(sel_coeffs(i)));
+			//y(i) = exp(sel_coeffs(i)) / (1.0 + exp(sel_coeffs(i)));
+			y(i) = mfexp(sel_coeffs(i));
 		}
-		y(y2,x2) = exp(sel_coeffs(y2)) / (1.0 + exp(sel_coeffs(y2)));
+		//y(y2,x2) = exp(sel_coeffs(y2)) / (1.0 + exp(sel_coeffs(y2)));
+		y(y2,x2) = mfexp(sel_coeffs(y2));
 		return y;
 	}
 
@@ -371,12 +373,13 @@ namespace gsm {
 	  	dvar_vector selex(1,x2);
 	  	for ( int i = 1; i <= x2; i++ )
 	  	{
-	  		//selex(i) = 1.0 / (1.0 + mfexp(selparms(i)));
-	  		selex(i) = mfexp(selparms(i)) / (1.0 + mfexp(selparms(i)));
+	  		//selex(i) = 1.0 / (1.0 + mfexp(-selparms(i)));
+	  		//selex(i) = mfexp(selparms(i)) / (1.0 + mfexp(selparms(i)));
+	  		selex(i) = mfexp(selparms(i));
 	  	}
 	  	//dvariable temp = selex(x2);
 	  	dvariable temp = max(selex);
-	  	selex /= temp;
+	  	//selex /= temp;
 	  	return selex;
 	}
 
@@ -388,8 +391,7 @@ namespace gsm {
 	 * @brief Parametric selectivity function
 	 * @details One age or size-specific selectivity parameter for each age/size class.
 	 * 
-	 * Note that the same can be accomplished using the SelectivityCoefficients class
-	 * but Athol wanted to have this function in CSTAR
+	 * Note that the same can be accomplished using the SelectivityCoefficients class but Athol wanted to have this function in CSTAR
 	 * 
 	 * @tparam T vector of parameters (initial values)
 	**/
