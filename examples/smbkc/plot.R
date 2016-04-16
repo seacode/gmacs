@@ -51,7 +51,7 @@ ggsave(paste0(.FIGS, "catch.png"), width = ww*1.2, height = hh*1.2)
 dev.off()
 
 plot_catch(M, scales = "fixed")
-ggsave(paste0(.FIGS, "catch_fixed_y.png"), width = ww*1.2, height = hh*1.2)
+ggsave(paste0(.FIGS, "catch_fixed_y.png"), width = ww*2, height = hh*1.2)
 dev.off()
 
 #plot_fishing_mortality(M)
@@ -138,4 +138,16 @@ dev.off()
 
 plot_size_comps(M, 3)
 ggsave(paste0(.FIGS, "lf_3.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 1, res = TRUE)
+ggsave(paste0(.FIGS, "lf_res_1.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 2, res = TRUE)
+ggsave(paste0(.FIGS, "lf_res_2.png"), width = ww*2, height = hh*1.5)
+dev.off()
+
+plot_size_comps(M, 3, res = TRUE)
+ggsave(paste0(.FIGS, "lf_res_3.png"), width = ww*2, height = hh*1.5)
 dev.off()

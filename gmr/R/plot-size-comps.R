@@ -109,7 +109,6 @@
 plot_size_comps <- function(M, which_plots = "all", xlab = "Mid-point of size-class (mm)", ylab = "Proportion",
                             slab = "Sex", mlab = "Model", tlab = "Fleet", res = FALSE)
 {
-    xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
 
     mdf <- .get_sizeComps_df(M)
@@ -119,14 +118,19 @@ plot_size_comps <- function(M, which_plots = "all", xlab = "Mid-point of size-cl
     
     if (res)
     {
+        xlab <- paste0(xlab, "\n")
         p <- p + geom_point(aes(factor(year), variable, col = factor(sign(resd)), size = abs(resd)), alpha = 0.6)
         p <- p + scale_size_area(max_size = 10)
-        p <- p + labs(x="Year",y="Length",col="Sign",size="Residual")
-        p <- p + scale_x_discrete(breaks=pretty(mdf[[1]]$mod_yrs))
-        p <- p + scale_y_discrete(breaks=pretty(mdf[[1]]$mid_points))
-        p <- p + facet_wrap(~model) + .THEME
-        p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+        p <- p + labs(x = "\nYear", y = xlab, col = "Sign", size = "Residual")
+        #p <- p + scale_x_discrete(breaks = pretty(mdf[[1]]$mod_yrs))
+        #p <- p + scale_y_discrete(breaks = pretty(mdf[[1]]$mid_points))
+        if (length(unique(do.call(rbind.data.frame, mdf)$model)) != 1)
+        {
+            p <- p + facet_wrap(~model)
+        }
+        p <- p + .THEME + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
     } else {
+        xlab <- paste0("\n", xlab)
         p <- p + geom_bar(aes(variable, value), stat = "identity", position = "dodge", alpha = 0.5, fill = "grey")
         if (length(unique(do.call(rbind.data.frame, mdf)$model)) == 1)
         {
