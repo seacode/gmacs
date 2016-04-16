@@ -125,7 +125,11 @@ plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
     return(mdf)
 }
 
-#ggplot(mdf) + geom_line(aes(year, F, group = 1)) + facet_grid(mid_point ~ season, scales = "free_y")
+#.get_F_df(M)
+
+#ggplot(filter(mdf, season != 2)) +
+#    geom_line(aes(year, F, group = 1)) +
+#    facet_grid(mid_point ~ season, scales = "free_y")
 
 
 #        plot(A$F[seq(2,114,3),1], type = "l")

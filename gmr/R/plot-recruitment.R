@@ -25,9 +25,9 @@
                          log_rec = A$fit$est,
                          log_sd  = A$fit$std)
         df <- subset(df, par == "sd_log_recruits")
-        df$year    <- A$mod_yrs
-        df$lb      <- exp(df$log_rec - 1.96*df$log_sd)
-        df$ub      <- exp(df$log_rec + 1.96*df$log_sd)
+        df$year <- A$mod_yrs
+        df$lb <- exp(df$log_rec - 1.96*df$log_sd)
+        df$ub <- exp(df$log_rec + 1.96*df$log_sd)
         mdf <- rbind(mdf, df)
     }
     return(mdf)
@@ -103,7 +103,7 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
 #' @author DN Webber
 #' @export
 #' 
-plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Density")
+plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Proportion")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -113,9 +113,9 @@ plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab
         labs(x = xlab, y = ylab)
     if (length(M) == 1)
     {
-        p <- p + geom_line()
+        p <- p + geom_line() + geom_point()
     } else {
-        p <- p + geom_line(aes(col = Model))
+        p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
     }
     if (!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)

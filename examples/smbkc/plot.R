@@ -15,7 +15,7 @@ require(gmr)
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate")
 .MATURITY = c("Aggregate")
-.SEAS     = c("Annual")
+.SEAS     = c("1","2","3","4")
 .FIGS     = c("figure/")
 
 fn <- paste0(.MODELDIR, "gmacs")
@@ -54,7 +54,8 @@ plot_catch(M, scales = "fixed")
 ggsave(paste0(.FIGS, "catch_fixed_y.png"), width = ww*1.2, height = hh*1.2)
 dev.off()
 
-plot_fishing_mortality(M)
+#plot_fishing_mortality(M)
+#plot_F(M)
 
 plot_cpue(M, ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue.png"), width = ww*2.5, height = hh)
@@ -102,39 +103,39 @@ dev.off()
 #plot_growth_transition(M)
 #ggsave(paste0(.FIGS, "growth_transition.png"), width = ww*1.5, height = hh*1.5)
 #dev.off()
- 
+
 plot_molt_prob(M)
 ggsave(paste0(.FIGS, "molt_prob.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
- 
+
 plot_size_transition(M)
 ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
- 
+
 plot_growth_inc(M)
 ggsave(paste0(.FIGS, "gi.png"), width = ww, height = hh)
 dev.off()
- 
+
 plot_length_weight(M)
 ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
 dev.off()
- 
+
 plot_numbers(M)
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*2, height = hh*1.5)
 dev.off()
- 
+
 # plot_numbers(M, subsetby = c("1975","2014"))
 # ggsave(paste0(.FIGS, "numbers.png"), width = ww*1.2, height = hh)
 # dev.off()
- 
+
 plot_size_comps(M, 1)
 ggsave(paste0(.FIGS, "lf_1.png"), width = ww*2, height = hh*1.5)
 dev.off()
- 
+
 plot_size_comps(M, 2)
 ggsave(paste0(.FIGS, "lf_2.png"), width = ww*2, height = hh*1.5)
 dev.off()
- 
+
 plot_size_comps(M, 3)
 ggsave(paste0(.FIGS, "lf_3.png"), width = ww*2, height = hh*1.5)
 dev.off()

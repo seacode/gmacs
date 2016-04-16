@@ -5,7 +5,7 @@
 \title{Plot recruitment size distribution}
 \usage{
 plot_recruitment_size(M, xlab = "Mid-point of size class (mm)",
-  ylab = "Density")
+  ylab = "Proportion")
 }
 \arguments{
 \item{M}{list object created by read_admb function}

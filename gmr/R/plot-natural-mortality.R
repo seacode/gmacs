@@ -12,21 +12,18 @@
     for (i in 1:n)
     {
         A <- M[[i]]
-        nrow <- dim(A$M)[1]
+        nrow <- nrow(A$M)
         nsex <- nrow / length(A$mod_yrs)
-        A$sex <- rep(1, length = nrow/nsex)
-        if (nsex > 1) A$sex <- c(A$sex,rep(2,length=nrow/nsex))
-        df <- data.frame(Model=names(M)[i],(cbind(as.numeric(A$mod_yrs), .SEX[A$sex+1], as.numeric(M[[i]]$M[,1])) ),stringsAsFactors=FALSE)
+        A$sex <- rep(1, length = nrow / nsex)
+        if (nsex > 1) A$sex <- c(A$sex, rep(2, length = nrow / nsex))
+        df <- data.frame(Model=names(M)[i], (cbind(as.numeric(A$mod_yrs), .SEX[A$sex+1], as.numeric(M[[i]]$M[,1])) ), stringsAsFactors = FALSE)
         colnames(df) <- c("Model", "Year", "Sex", "M")
         df$M <- as.numeric(df$M)
         df$Year <- as.numeric(df$Year)
         if (nsex == 2)
         {
             ss <- split(df, df$Sex)
-            if (all(ss[[1]]$M == ss[[2]]$M))
-            {
-                df$Sex <- "Male"
-            }
+            if (all(ss[[1]]$M == ss[[2]]$M)) df$Sex <- "Male"
         }
         mdf <- rbind(mdf, df)
     }

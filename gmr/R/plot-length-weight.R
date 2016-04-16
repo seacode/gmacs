@@ -40,7 +40,7 @@
 #' @author DN Webber
 #' @export
 #' 
-plot_length_weight <- function(M, xlab = "Size", ylab = "Weight")
+plot_length_weight <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Weight (tonnes)")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")

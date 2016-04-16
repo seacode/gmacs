@@ -70,8 +70,12 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
     
     if (ShowEstErr)
     {
-        if (length(M) == 1)
+        if (length(M) == 1 && length(unique(mdf$sex)) == 1)
         {
+            p  <- p + geom_pointrange(aes(year, cpue, ymax = ube, ymin = lbe), color = "red", shape = 1, linetype = "dotted", position = position_dodge(width = 1))
+        } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
+            p  <- p + geom_pointrange(aes(year, cpue, ymax = ube, ymin = lbe, col = Model), shape = 1, linetype = "dotted", position = position_dodge(width = 1))
+        } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
             p  <- p + geom_pointrange(aes(year, cpue, ymax = ube, ymin = lbe, col = sex), shape = 1, linetype = "dotted", position = position_dodge(width = 1))
         } else {
             p  <- p + geom_pointrange(aes(year, cpue, ymax = ube, ymin = lbe, col = Model), shape = 1, linetype = "dotted", position = position_dodge(width = 1))
@@ -80,17 +84,19 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
     
     if (.OVERLAY)
     {
-        if (length(M) == 1)
+        if (length(M) == 1 && length(unique(mdf$sex)) == 1)
         {
-            p  <- p + geom_line(data = mdf, aes(year, pred, color = sex)) + labs(col = slab)
+            p <- p + geom_line(data = mdf, aes(year, pred)) +
+                facet_wrap(~fleet, scales = "free_y")
+        } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
+            p <- p + geom_line(data = mdf, aes(year, pred, color = Model)) +
+                facet_wrap(~fleet, scales = "free_y")
+        } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
+            p <- p + geom_line(data = mdf, aes(year, pred, color = sex)) + labs(col = slab) +
+                facet_wrap(~fleet + sex, scales = "free_y")
         } else {
-            p  <- p + geom_line(data = mdf, aes(year, pred, color = Model))
-        }
-        if (length(unique(mdf$sex)) == 1)
-        {
-            p  <- p + facet_wrap(~fleet, scales = "free_y")
-        } else {
-            p  <- p + facet_wrap(~fleet + sex, scales = "free_y")
+            p <- p + geom_line(data = mdf, aes(year, pred, color = Model)) +
+                facet_wrap(~fleet + sex, scales = "free_y")
         }
     } else {
         p  <- p + geom_line(data = mdf, aes(year, pred))

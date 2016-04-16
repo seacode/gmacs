@@ -4,9 +4,9 @@
 \alias{plot_size_comps}
 \title{Plot fits to size composition data}
 \usage{
-plot_size_comps(M, which_plots = "all", xlab = "Size (mm)",
-  ylab = "Proportion", slab = "Sex", mlab = "Model", tlab = "Fleet",
-  res = FALSE)
+plot_size_comps(M, which_plots = "all",
+  xlab = "Mid-point of size-class (mm)", ylab = "Proportion",
+  slab = "Sex", mlab = "Model", tlab = "Fleet", res = FALSE)
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}

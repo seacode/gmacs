@@ -80,8 +80,13 @@ plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
     {
         if (length(M) == 1 && length(unique(mdf$sex)) == 1)
         {
-            p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4) +
-                facet_wrap(~fleet + type + units, scales = scales)
+            p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4)
+            if (scales %in% "fixed")
+            {
+                p <- p + facet_grid(units ~ fleet + type, scales = "free_y")
+            } else {
+                p <- p + facet_wrap(~fleet + type + units, scales = scales)
+            }
         } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
             p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
                 facet_wrap(~fleet + type + units, scales = scales) +
