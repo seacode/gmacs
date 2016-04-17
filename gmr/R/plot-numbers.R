@@ -2,7 +2,7 @@
 #' 
 #' @param M list object(s) created by read_admb function
 #' @return dataframe of numbers at length
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #' 
 .get_numbers_df <- function(M)
@@ -26,15 +26,15 @@
 #'
 #' @param M list object created by read_admb function
 #' @param subsetby a selection of the years to restrict plotting of
-#' @return plot of recruitment size distribution
-#' @author DN Webber
+#' @return plot of numbers of individuals in each size-class each year in the model
+#' @author D'Arcy N. Webber
 #' @export
 #' 
 plot_numbers <- function(M, subsetby = "")
 {
     mdf <- .get_numbers_df(M)
     if (all(subsetby != "")) mdf <- mdf[mdf$Year %in% subsetby,]
-    p <- ggplot(mdf, aes(x = mp, y = N)) + labs(x = "\nMid-point of size class (mm)", y = "Number of inidividuals\n")
+    p <- ggplot(mdf, aes(x = mp, y = N)) + labs(x = "\nMid-point of size-class (mm)", y = "Number of inidividuals\n")
     if (length(M) == 1)
     {
         p <- p + geom_line()

@@ -1471,6 +1471,8 @@ FUNCTION calc_selectivities
 	 * Note that this function calculates the fishing mortality rate including deaths due to discards. Where xi is the discard mortality rate.
 	 *
 	 * Note also that Jie estimates F for retained fishery, f for male discards and f for female discards. Not recommended to have separate F's for retained and discard fisheries, but might be ok to have sex-specific F's.
+	 *
+	 *@param F is the fishing mortality with dimension (1,nsex,syr,nyr,1,nseason,1,nclass)
 	**/
 FUNCTION calc_fishing_mortality
 	int h,i,j,k,ik,yk;
@@ -1520,6 +1522,13 @@ FUNCTION calc_fishing_mortality
 			}
 		}
 	}
+	//cout << "log_fbar" << endl;
+	//cout << log_fbar << endl;
+	//cout << "log_fdev" << endl;
+	//cout << log_fdev << endl;
+	//cout << "F" << endl;
+	//cout << F << endl;
+	//exit(1);
 
 
 	/**
@@ -1528,6 +1537,7 @@ FUNCTION calc_fishing_mortality
 	 *
 	 * @param vSizes is a vector of doubles of size data from which to compute predicted values
 	 * @param iSex is an integer vector indexing sex (1 = male, 2 = female)
+	 *
 	 * @return dvar_vector of predicted growth increments
 	**/
 FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector iSex)
@@ -1554,8 +1564,13 @@ FUNCTION dvar_vector calc_growth_increments(const dvector vSizes, const ivector 
 	/**
 	 * @brief Molt increment as a linear function of pre-molt size.
 	 *
-	 * TODO
-	 * Option for empirical molt increments.
+	 * TODO: Option for empirical molt increments.
+	 *
+	 * @param alpha
+	 * @param beta
+	 * @param mid_points
+	 *
+	 * @return molt_increment
 	**/
 FUNCTION calc_growth_increments
 	int h,l;
@@ -1578,7 +1593,6 @@ FUNCTION calc_growth_increments
   	 * Issue 112 details some of evolution of code development here
 	**/
 FUNCTION calc_growth_transition
-	//cout << "Start of calc_growth_transition" << endl;
 	int h,l,ll;
 	
 	dvariable dMeanSizeAfterMolt;
@@ -1612,10 +1626,10 @@ FUNCTION calc_growth_transition
 	/**
 	 * @brief Calculate natural mortality array
 	 * @details Natural mortality (M) is a 3d array for sex, year and size.
-	 * @return NULL
 	 *
-	 * todo:
-	 *      - Size-dependent mortality
+	 * todo: Size-dependent mortality
+	 *
+	 * @return NULL
 	**/
 FUNCTION calc_natural_mortality
 	int h;
@@ -1702,9 +1716,10 @@ FUNCTION calc_natural_mortality
 	/**
 	 * @brief Calculate total instantaneous mortality rate and survival rate
 	 * @details \f$ S = exp(-Z) \f$
-	 * @return NULL
 	 *
 	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.
+	 *
+	 * @return NULL
 	**/
 FUNCTION calc_total_mortality
 	Z.initialize();
@@ -1729,6 +1744,7 @@ FUNCTION calc_total_mortality
 	/**
 	 * @brief Calculate total instantaneous mortality rate and survival rate for dynamic Bzero
 	 * @details \f$ S = exp(-Z) \f$
+	 *
 	 * @return NULL
 	**/
 FUNCTION reset_Z_to_M
@@ -1753,6 +1769,9 @@ FUNCTION reset_Z_to_M
 	/**
 	 * \brief Calculate the probability of moulting vs carapace width.
 	 * \details Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data. Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).
+	 *
+	 * @param molt_mu is the mean of the distribution
+	 * @param molt_cv scales the variance of the distribution
 	**/
 FUNCTION calc_molting_probability
 	int l,h;
@@ -1763,7 +1782,7 @@ FUNCTION calc_molting_probability
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu * molt_cv(h);
-		molt_probability(h) = 1.0 - ((1.0-2.*tiny)*plogis(mid_points,mu,sd) + tiny);
+		molt_probability(h) = 1.0 - ((1.0-2.0*tiny)*plogis(mid_points,mu,sd) + tiny);
 		for ( l = 1; l <= nclass; l++ )
 		{
 			P(h)(l,l) = molt_probability(h)(l);
@@ -1775,15 +1794,16 @@ FUNCTION calc_molting_probability
 	 * @brief calculate size distribution for new recuits.
 	 * @details Based on the gamma distribution, calculates the probability of a new recruit being in size-interval size.
 	 *
-	 * @param ra is the mean of the distribution.
+	 * @param ra is the mean of the distribution
 	 * @param rbeta scales the variance of the distribution
+	 * @return rec_sdd the recruitment size distribution vector
 	**/
 FUNCTION calc_recruitment_size_distribution
 	dvariable ralpha = ra / rbeta;
 	dvar_vector x(1,nclass+1);
 	for ( int l = 1; l <= nclass+1; l++ )
 	{
-		x(l) = cumd_gamma(size_breaks(l)/rbeta,ralpha);
+		x(l) = cumd_gamma(size_breaks(l)/rbeta, ralpha);
 	}
 	rec_sdd = first_difference(x);
 	rec_sdd /= sum(rec_sdd); // Standardize so each row sums to 1.0
@@ -1917,6 +1937,11 @@ FUNCTION calc_initial_numbers_at_length
 	 * @brief Update numbers-at-length
 	 * @author Team
 	 * @details Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a scalar). New recruits are added based on the estimated average recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).
+	 *
+	 * @param d4_N is the numbers in each group (sex/maturity/shell), year, season and length. It has dimension (1,n_grp,syr,nyr+1,1,nseason,1,nclass)
+	 * @param recruits is the vector of average recruits each year. It has dimension (syr,nyr)
+	 * @param rec_dev is an init_bounded_dev_vector of recruitment deviation parameters. It has dimension (syr+1,nyr,-7.0,7.0,rdv_phz)
+	 * @param rec_sdd is the vector of recruitment size proportions. It has dimension (1,nclass)
 	**/
 FUNCTION update_population_numbers_at_length
 	int h,i,ig,o,m;
@@ -1960,28 +1985,48 @@ FUNCTION update_population_numbers_at_length
 					//x = d3_N(ig)(i);
 					//d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
 
-					//cout << d3_N(ig)(i) << endl;
-
-					//switch ( proc_order(k) )
-					//{
-					//	case 0: // Mortality
-					//		x = x * S(h)(i)(j);
-					//	break;
-					//	case 1: // Recruitment
-					//		x += rt;
-					//	break;
-					//	case 2: // Molting and growth
-					//		x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
-					//	break;
-					//}
-
 					x = d4_N(ig)(i)(j);
-					// Mortality
+					// Mortality (natural and fishing)
 					x = x * S(h)(i)(j);
 					// Recruitment
 					if (j == season_recruitment) x += rt;
 					// Molting and growth
-					if (j == season_growth) x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
+					if (j == season_growth) 
+					{
+						//cout << "i=" << i << ", j=" << j << endl;
+
+						//cout << "x" << endl;
+						//cout << x << endl;
+						//cout << "sum(x): " << sum(x) << endl;
+
+						growth_transition(h)(1,1) = 0.2;
+						growth_transition(h)(1,2) = 0.7;
+						growth_transition(h)(1,3) = 0.1;
+						growth_transition(h)(2,2) = 0.4;
+						growth_transition(h)(2,3) = 0.6;
+
+						//growth_transition(h)(1,1) = 0.11;
+						//growth_transition(h)(1,2) = 0.83;
+						//growth_transition(h)(1,3) = 0.06;
+						//growth_transition(h)(2,2) = 0.11;
+						//growth_transition(h)(2,3) = 0.89;
+
+						//x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
+						x = x * growth_transition(h);
+
+						//cout << "S(h)(i)(j)" << endl;
+						//cout << S(h)(i)(j) << endl;
+						//cout << "P(h)" << endl;
+						//cout << P(h) << endl;
+						//cout << "growth_transition(h)" << endl;
+						//cout << growth_transition(h) << endl;
+						//cout << "P(h) * growth_transition(h)" << endl;
+						//cout << P(h) * growth_transition(h) << endl;
+
+						//cout << "x" << endl;
+						//cout << x << endl;
+						//cout << "sum(x): " << sum(x) << endl;
+					}
 					if (j == nseason)
 					{
 						d4_N(ig)(i+1)(1) = x;
@@ -1989,6 +2034,7 @@ FUNCTION update_population_numbers_at_length
 						d4_N(ig)(i)(j+1) = x;
 					}
 				}
+
 				if ( o == 2 ) // oldshell
 				{
 					//x  = d3_N(ig)(i);
@@ -2039,6 +2085,7 @@ FUNCTION update_population_numbers_at_length
 				}
 			}
 		}
+		//if (i == syr+2) exit(1);
 	}
 	//if ( verbose == 1 ) COUT(d3_N(1)+d3_N(2));
 
@@ -3188,12 +3235,12 @@ REPORT_SECTION
     			N_len(i,l) += d4_N(k,i,season_ssb,l);
     		}
     	}
-  	}
-	
+  	}	
 	REPORT(N_len);
 	REPORT(N_mm);
 	REPORT(N_males);
 	REPORT(N_males_old);
+
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);

@@ -100,16 +100,16 @@ plot_selectivity(M, ncol = 5)
 ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh)
 dev.off()
 
-#plot_growth_transition(M)
-#ggsave(paste0(.FIGS, "growth_transition.png"), width = ww*1.5, height = hh*1.5)
-#dev.off()
-
-plot_molt_prob(M)
-ggsave(paste0(.FIGS, "molt_prob.png"), width = ww*1.5, height = hh*1.5)
+plot_growth_transition(M)
+ggsave(paste0(.FIGS, "transition_growth.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
 plot_size_transition(M)
-ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
+ggsave(paste0(.FIGS, "transition_size.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+
+plot_molt_prob(M)
+ggsave(paste0(.FIGS, "molt_prob.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
 plot_growth_inc(M)
