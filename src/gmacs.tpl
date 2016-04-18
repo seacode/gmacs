@@ -1607,7 +1607,7 @@ FUNCTION calc_growth_transition
 		sbi = size_breaks / gscale(h);
 		for ( l = 1; l <= nclass; l++ )
 		{
-			dMeanSizeAfterMolt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);      //change size_breaks to mid_points by Jie Zheng
+			dMeanSizeAfterMolt = (mid_points(l) + molt_increment(h)(l)) / gscale(h); //change size_breaks to mid_points by Jie Zheng
 			psi.initialize();
 			for ( ll = l; ll <= nclass+1; ll++ )
 			{
@@ -1988,8 +1988,6 @@ FUNCTION update_population_numbers_at_length
 					x = d4_N(ig)(i)(j);
 					// Mortality (natural and fishing)
 					x = x * S(h)(i)(j);
-					// Recruitment
-					if (j == season_recruitment) x += rt;
 					// Molting and growth
 					if (j == season_growth) 
 					{
@@ -2027,6 +2025,8 @@ FUNCTION update_population_numbers_at_length
 						//cout << x << endl;
 						//cout << "sum(x): " << sum(x) << endl;
 					}
+					// Recruitment
+					if (j == season_recruitment) x += rt;
 					if (j == nseason)
 					{
 						d4_N(ig)(i+1)(1) = x;
