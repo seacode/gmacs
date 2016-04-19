@@ -1312,12 +1312,12 @@ FUNCTION calc_sdreport
 		sd_fbar(i) = mean(F(1,i));
 	}
 
-	reset_Z_to_M();
-	calc_initial_numbers_at_length();
-	update_population_numbers_at_length();
-	sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
-	sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
-	calc_total_mortality();
+	//reset_Z_to_M();
+	//calc_initial_numbers_at_length();
+	//update_population_numbers_at_length();
+	//sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
+	//sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
+	//calc_total_mortality();
 
 
 	/**
@@ -1912,6 +1912,9 @@ FUNCTION calc_initial_numbers_at_length
 			//d4_N(ig)(syr)(1) = x;
 			//d4_N(ig)(syr)(1) = mfexp(logR0) * mfexp(rec_ini);
 			d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+			//d4_N(ig)(syr)(1)(1) = 3782350; // HARD CODED VALUES JIE HAS IN HIS SMBKC MODEL
+			//d4_N(ig)(syr)(1)(2) = 2419470;
+			//d4_N(ig)(syr)(1)(3) = 1678340;
 		}
 	  	if ( verbose == 1 ) cout << "in init length 2" << endl;
 	  	if ( verbose == 1 ) COUT(P(h));
@@ -1989,7 +1992,7 @@ FUNCTION update_population_numbers_at_length
 					// Mortality (natural and fishing)
 					x = x * S(h)(i)(j);
 					// Molting and growth
-					if (j == season_growth) 
+					if (j == season_growth)
 					{
 						//cout << "i=" << i << ", j=" << j << endl;
 
@@ -2206,33 +2209,23 @@ FUNCTION calc_predicted_catch
 			{
 				nal.initialize();
 				sel = log_slx_capture(k)(h)(i);
-				switch( type )
+				switch ( type )
 				{
 					case 1: // retained catch
-						// Question here about what the retained catch is.
-						// Should probably include shell condition here as well.
-						// Now assuming both old and new shell are retained.
+						// Question here about what the retained catch is. Should probably include shell condition here as well. Now assuming both old and new shell are retained.
 						sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
-						for ( int m = 1; m <= nmature; m++ )
-						{
-							for ( int o = 1; o <= nshell; o++ )
-							{
-								ig = pntr_hmo(h,m,o);
-								nal += d4_N(ig)(i)(j);
-							}
-						}
 					break;
 					case 2: // discarded catch
 						sel = elem_prod(mfexp(sel), 1.0-mfexp(log_slx_retaind(k)(h)(i)));
-						for ( int m = 1; m <= nmature; m++ )
-						{
-							for ( int o = 1; o <= nshell; o++ )
-							{
-								ig = pntr_hmo(h,m,o);
-								nal += d4_N(ig)(i)(j);
-							}
-						}
 					break;
+				}
+				for ( int m = 1; m <= nmature; m++ )
+				{
+					for ( int o = 1; o <= nshell; o++ )
+					{
+						ig = pntr_hmo(h,m,o);
+						nal += d4_N(ig)(i)(j);
+					}
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
@@ -2303,37 +2296,27 @@ FUNCTION calc_predicted_catch_out
 			{
 				nal.initialize();
 				sel = log_slx_capture(k)(h)(i);
-				switch( type )
+				switch ( type )
 				{
 					case 1: // retained catch
-						// Question here about what the retained catch is.
-						// Should probably include shell condition here as well.
-						// Now assuming both old and new shell are retained.
-						sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
-						for ( int m = 1; m <= nmature; m++ )
-						{
-							for ( int o = 1; o <= nshell; o++ )
-							{
-								ig = pntr_hmo(h,m,o);
-								nal += d4_N(ig)(i)(j);
-							}
-						}
+						// Question here about what the retained catch is. Should probably include shell condition here as well. Now assuming both old and new shell are retained.
+						sel = mfexp(sel + log_slx_retaind(k)(h)(i));
 					break;
 					case 2: // discarded catch
-						sel = elem_prod(mfexp(sel), 1.0-mfexp(log_slx_retaind(k)(h)(i)));
-						for ( int m = 1; m <= nmature; m++ )
-						{
-							for ( int o = 1; o <= nshell; o++ )
-							{
-								ig = pntr_hmo(h,m,o);
-								nal += d4_N(ig)(i)(j);
-							}
-						}
+						sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
 					break;
+				}
+				for ( int m = 1; m <= nmature; m++ )
+				{
+					for ( int o = 1; o <= nshell; o++ )
+					{
+						ig = pntr_hmo(h,m,o);
+						nal += d4_N(ig)(i)(j);
+					}
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
-				pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
+				pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -2364,7 +2347,7 @@ FUNCTION calc_predicted_catch_out
 					}
 					tmp_ft = ft(k)(h)(i)(j);
 					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)) : nal;
-					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
+					pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
 				}
 			}
 		}
@@ -3064,10 +3047,10 @@ REPORT_SECTION
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
-	REPORT(dCatchData_out);
 	REPORT(obs_catch_out);
 	REPORT(pre_catch_out);
 	REPORT(res_catch_out);
+	REPORT(dCatchData_out);
 	REPORT(dSurveyData);
 	for ( int k = 1; k <= nSurveys; k++ )
 	{

@@ -4,7 +4,7 @@
 \alias{plot_growth_transition}
 \title{Plot growth transition}
 \usage{
-plot_growth_transition(M, xlab = "Size-class (mm)",
+plot_growth_transition(M, xlab = "Mid-point of size-class (mm)",
   ylab = "P(size transition | molt)", slab = "Sex")
 }
 \arguments{

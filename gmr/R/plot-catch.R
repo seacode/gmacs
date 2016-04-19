@@ -17,7 +17,7 @@
         df$observed  <- na.omit(as.vector(t(A$obs_catch_out)))
         df$predicted <- na.omit(as.vector(t(A$pre_catch_out)))
         #df$residuals <- na.omit(as.vector(t(A$res_catch_out)))
-        df$residuals <- (as.vector(t(A$res_catch_out)))
+        df$residuals <- as.vector(t(A$res_catch_out))
         df$sex       <- .SEX[df$sex+1]
         df$fleet     <- .FLEET[df$fleet]
         df$type      <- .TYPE[df$type+1]

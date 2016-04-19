@@ -12,12 +12,12 @@ plot_numbers(M, subsetby = "")
 \item{subsetby}{a selection of the years to restrict plotting of}
 }
 \value{
-plot of recruitment size distribution
+plot of numbers of individuals in each size-class each year in the model
 }
 \description{
 Plot numbers at length
 }
 \author{
-DN Webber
+D'Arcy N. Webber
 }
 

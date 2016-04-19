@@ -105,7 +105,7 @@ ggsave(paste0(.FIGS, "transition_growth.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
 plot_size_transition(M)
-ggsave(paste0(.FIGS, "transition_size.png"), width = ww*1.5, height = hh*1.5)
+ggsave(paste0(.FIGS, "transition_size.png"), width = ww, height = hh)
 dev.off()
 
 plot_molt_prob(M)
