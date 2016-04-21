@@ -1462,17 +1462,18 @@ FUNCTION calc_selectivities
 
 	/**
 	 * @brief Calculate fishing mortality rates for each fleet.
-	 * @details For each fleet estimate scaler log_fbar and deviates (f_devs).
+	 * @details For each fleet estimate scaler log_fbar and deviates (f_devs). This function calculates the fishing mortality rate including deaths due to discards. Where xi is the discard mortality rate.
      *
-     * dmr is the discard mortality rate
-	 *
 	 * In the event that there is effort data and catch data, then it's possible to estimate a catchability coefficient and predict the catch for the period of missing catch/discard data.  Best option for this would be to use F = q*E, where q = F/E.  Then in the objective function, minimize the variance in the estimates of q, and use the mean q to predict catch. Or minimize the first difference and assume a random walk in q.
-	 *
-	 * Note that this function calculates the fishing mortality rate including deaths due to discards. Where xi is the discard mortality rate.
 	 *
 	 * Note also that Jie estimates F for retained fishery, f for male discards and f for female discards. Not recommended to have separate F's for retained and discard fisheries, but might be ok to have sex-specific F's.
 	 *
-	 *@param F is the fishing mortality with dimension (1,nsex,syr,nyr,1,nseason,1,nclass)
+	 * @param log_fbar are the mean fishing mortality of males parameters with dimension (1,nfleet,f_phz)
+	 * @param log_fdev are the male fdevs parameters with dimension (1,nfleet,1,nFparams,f_phz)
+	 * @param log_foff are the offset to the male fishing mortality parameters with dimension (1,nfleet,foff_phz)
+	 * @param log_fdov are the female fdev offset parameters with dimension (1,nfleet,1,nYparams,foff_phz)
+	 * @param dmr is the discard mortality rate
+	 * @param F is the fishing mortality with dimension (1,nsex,syr,nyr,1,nseason,1,nclass)
 	**/
 FUNCTION calc_fishing_mortality
 	int h,i,j,k,ik,yk;
@@ -2095,7 +2096,7 @@ FUNCTION update_population_numbers_at_length
 
 	/**
 	 * @brief Calculate stock recruitment relationship.
-	 * @details  Assuming a Beverton-Holt relationship between the mature biomass (user defined) and the annual recruits. Note that we derive so and bb in R = so * MB / (1 + bb * Mb) from Ro and steepness (leading parameters defined in theta).
+	 * @details  Assuming a Beverton-Holt relationship between the mature biomass (user defined) and the annual recruits. Note that we derive so and bb in R = so MB / (1 + bb * Mb) from Ro and steepness (leading parameters defined in theta).
 	 *
 	 * NOTES:
 	 * if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
@@ -2216,7 +2217,7 @@ FUNCTION calc_predicted_catch
 						sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
 					break;
 					case 2: // discarded catch
-						sel = elem_prod(mfexp(sel), 1.0-mfexp(log_slx_retaind(k)(h)(i)));
+						sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
 					break;
 				}
 				for ( int m = 1; m <= nmature; m++ )
@@ -2229,7 +2230,21 @@ FUNCTION calc_predicted_catch
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
-				pre_catch(kk,jj) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0-mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				pre_catch(kk,jj) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				if (kk == 4 && jj == 17)
+				{
+					//cout << "obs_catch(kk)= " << obs_catch(kk,jj) << endl;
+					//cout << "pre_catch(kk)= " << pre_catch(kk,jj) << endl;
+					//cout << "obs_catch(kk,jj)= " << obs_catch(kk,jj) << endl;
+					//cout << "pre_catch(kk,jj)= " << pre_catch(kk,jj) << endl;
+					//cout << "nal= " << nal << endl;
+					//cout << "Z(h)(i)(j)= " << Z(h)(i)(j) << endl;
+					//cout << "ft(k)(h)= " << ft(k)(h) << endl;
+					//cout << "exp(log_fbar)= " << exp(log_fbar) << ", exp(log_fbar(k))= " << exp(log_fbar(k)) << endl;
+					//cout << "exp(log_fdev(k))= " << exp(log_fdev(k)) << endl;
+					//cout << "i= " << i << ", j= " << j << endl;
+					//if (pre_catch(kk,jj) > 1000.0) exit(1);
+				}
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -3033,10 +3048,15 @@ FUNCTION simulation_model
 REPORT_SECTION
 	save_gradients(gradients);
 	calc_predicted_catch_out();
-	dvector mod_yrs(syr,nyr);
-	mod_yrs.fill_seqadd(syr,1);	
 	REPORT(name_read_flt);
 	REPORT(name_read_srv);
+	REPORT(nfleet);
+	REPORT(nsex);
+	REPORT(syr);
+	REPORT(nseason);
+	REPORT(nyr);
+	dvector mod_yrs(syr,nyr);
+	mod_yrs.fill_seqadd(syr,1);	
 	REPORT(mod_yrs);
 	REPORT(mid_points);
 	REPORT(m_prop);
@@ -3077,7 +3097,10 @@ REPORT_SECTION
 	REPORT(log_slx_retaind);
 	REPORT(log_slx_discard);
 	
+	REPORT(log_fbar);
+	REPORT(ft);
 	REPORT(F);
+
 	REPORT(d3_pre_size_comps);
 	REPORT(d3_obs_size_comps);
 	dmatrix effN(1,nSizeComps,1,nSizeCompRows);
@@ -3132,12 +3155,11 @@ REPORT_SECTION
 	REPORT(d3_pre_size_comps_out);
 	REPORT(d3_res_size_comps_out);
 
-	REPORT(ft);
-	REPORT(rec_sdd);
-	
+	REPORT(rec_sdd);	
 	REPORT(rec_ini);
 	REPORT(rec_dev);
 	REPORT(recruits);
+
 	REPORT(xi);
 	REPORT(d4_N);
 	REPORT(M);
