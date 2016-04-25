@@ -1,7 +1,7 @@
 ---
 title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
 author: "The Gmacs development team"
-date: "May 2015"
+date: "May 2016"
 output:
   pdf_document:
     highlight: zenburn
@@ -27,9 +27,7 @@ bibliography: Gmacs.bib
 
 4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm CL size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue with the 2014 survey with an estimate of 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of them came from one tow with a great deal of uncertainty.
 
-5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider.
-
-The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
+5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
 
 6. **Basis for the OFL**: Estimated Feb 15 mature-male biomass ($MMB_\text{mating}$) is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_{MSY}$ proxy is obtained by averaging estimated $MMB_\text{mating}$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference time period.
 
@@ -50,7 +48,7 @@ This assessment is done using Gmacs. The model is based upon the 3-stage length-
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenarios. Many model scenarios in this assessment have satisfactorily addressed the problems of biased residual patterns on ????.
+Changes in assessment results depend on model scenarios.
 
 
 # B. Responses to SSC and CPT Comments
@@ -69,6 +67,10 @@ The blue king crab is a lithodid crab, *Paralithodes platypus* (Brant 1850).
 ## Distribution
 
 Blue king crab are sporadically distributed throughout the North Pacific Ocean from Hokkaido, Japan, to southeastern Alaska (Figure 1). In the eastern Bering Sea small populations are distributed around St. Matthew Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2 (Figure 2), which is the Northern District of the Bering Sea king crab registration area and includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).
+
+![Distribution of blue king crab *Paralithodes platypus* in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters. Shown in blue.](figure/Fig1.png)
+
+![King crab Registration Area Q (Bering Sea).](figure/Fig2.png)
 
 ## Stock Structure
 
@@ -98,6 +100,8 @@ Data used in this assessment have been updated to include the most recently avai
 ## Major Data Sources
 
 Major data sources used in this assessment are annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15; Table 1); results from the annual NMFS eastern Bering Sea trawl survey (1978-2015; Table 2); results from the triennial ADF&G SMBKC pot survey (every third year during 1995-2013) and 2015 pot survey (Table 4); size-frequency information from ADF&G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15; Table3); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2014/15; Table 5). Figure 3 maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure 4). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure 5). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&G statistical area was not used.
+
+![Trawl and pot-survey stations used in the SMBKC stock assessment.](figure/Fig3.png)
 
 ## Other Data Sources
 
@@ -187,58 +191,57 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
   \hline
 Year & N1 & N2 & N3 & MMB \\ 
   \hline
-1978 & 1361315.05 & 2242739.18 & 1485052.79 & 4562.14 \\ 
-  1979 & 3214919.65 & 1561834.33 & 2432114.20 & 6294.59 \\ 
-  1980 & 1270758.37 & 2405619.50 & 3053936.63 & 9501.16 \\ 
-  1981 & 1012430.99 & 1551030.37 & 2960357.76 & 9720.57 \\ 
-  1982 & 751795.02 & 1113162.28 & 1673403.70 & 7070.14 \\ 
-  1983 & 695778.22 & 814627.98 & 1850684.81 & 4368.42 \\ 
-  1984 & 933625.71 & 683452.55 & 1284662.92 & 3066.83 \\ 
-  1985 & 1217589.93 & 780079.14 & 1115375.49 & 2826.11 \\ 
-  1986 & 1274137.86 & 978460.79 & 1233894.14 & 2845.04 \\ 
-  1987 & 1208424.68 & 1077383.37 & 1430278.47 & 3415.25 \\ 
-  1988 & 2467264.21 & 1079055.63 & 1592774.71 & 3834.88 \\ 
-  1989 & 1641481.68 & 1809900.90 & 1862831.91 & 4404.91 \\ 
-  1990 & 1765589.54 & 1572675.27 & 2261826.71 & 4853.21 \\ 
-  1991 & 1858293.64 & 1565674.12 & 2195994.89 & 4530.72 \\ 
-  1992 & 2120371.21 & 1618950.89 & 2299990.53 & 4689.23 \\ 
-  1993 & 1664632.51 & 1787546.28 & 2362098.48 & 5095.02 \\ 
-  1994 & 1800684.03 & 1578795.52 & 2291871.69 & 5034.33 \\ 
-  1995 & 1646480.74 & 1587583.18 & 2281393.14 & 4910.54 \\ 
-  1996 & 1056064.50 & 1497354.98 & 2268269.05 & 4502.15 \\ 
-  1997 & 751234.86 & 1120803.89 & 1921997.44 & 3900.89 \\ 
-  1998 & 419035.78 & 338458.14 & 651987.05 & 1923.02 \\ 
-  1999 & 459435.74 & 360122.31 & 748943.40 & 1623.22 \\ 
-  2000 & 403742.42 & 390761.88 & 844425.03 & 1775.45 \\ 
-  2001 & 201874.96 & 367297.43 & 934704.71 & 1913.16 \\ 
-  2002 & 339602.02 & 242365.11 & 981326.32 & 2031.07 \\ 
-  2003 & 281776.46 & 280620.16 & 968923.73 & 1969.77 \\ 
-  2004 & 492559.19 & 260938.42 & 973321.47 & 2011.89 \\ 
-  2005 & 843247.50 & 379354.55 & 984782.67 & 1979.87 \\ 
-  2006 & 513856.86 & 621193.82 & 1081957.37 & 2150.03 \\ 
-  2007 & 1031405.98 & 478139.70 & 1170951.96 & 2491.59 \\ 
-  2008 & 1012688.75 & 766667.21 & 1302468.17 & 2747.65 \\ 
-  2009 & 988131.52 & 851835.83 & 1463977.22 & 3023.57 \\ 
-  2010 & 954318.14 & 865589.56 & 1466689.58 & 2821.31 \\ 
-  2011 & 634476.28 & 849665.51 & 1350656.29 & 2454.14 \\ 
-  2012 & 792616.41 & 658523.27 & 1271703.48 & 2106.02 \\ 
-  2013 & 754996.33 & 686855.71 & 1458336.22 & 2439.98 \\ 
-  2014 & 620563.92 & 673649.19 & 1565112.67 & 2482.01 \\ 
-  2015 & 1032590.70 & 593064.80 & 1696733.30 & 2679.54 \\ 
+1978 & 1385175.63 & 3023938.52 & 2551342.22 & 4562.14 \\ 
+  1979 & 2135420.09 & 1830778.89 & 3716228.64 & 6294.59 \\ 
+  1980 & 1068466.79 & 1864183.23 & 4171126.28 & 9501.16 \\ 
+  1981 & 975183.56 & 1251902.99 & 3596972.35 & 9720.57 \\ 
+  1982 & 731244.62 & 991460.63 & 2025180.48 & 7070.14 \\ 
+  1983 & 680790.99 & 761892.14 & 2081600.19 & 4368.42 \\ 
+  1984 & 914765.32 & 656993.77 & 1446827.61 & 3066.83 \\ 
+  1985 & 1193560.65 & 760102.68 & 1235501.77 & 2826.11 \\ 
+  1986 & 1254777.03 & 957654.89 & 1322108.10 & 2845.04 \\ 
+  1987 & 1181558.35 & 1058983.41 & 1491843.09 & 3415.25 \\ 
+  1988 & 2446351.85 & 1057110.55 & 1632666.96 & 3834.88 \\ 
+  1989 & 1614715.60 & 1790213.69 & 1883377.59 & 4404.91 \\ 
+  1990 & 1745433.21 & 1550362.14 & 2266827.54 & 4853.21 \\ 
+  1991 & 1830138.34 & 1546303.42 & 2187268.20 & 4530.72 \\ 
+  1992 & 2086050.87 & 1595855.88 & 2280652.92 & 4689.23 \\ 
+  1993 & 1620772.48 & 1759553.10 & 2331530.15 & 5095.02 \\ 
+  1994 & 1753552.49 & 1543577.59 & 2248703.95 & 5034.33 \\ 
+  1995 & 1589636.03 & 1547987.72 & 2223933.02 & 4910.54 \\ 
+  1996 & 999194.09 & 1450625.98 & 2195846.65 & 4502.15 \\ 
+  1997 & 718437.80 & 1071809.24 & 1833703.02 & 3900.89 \\ 
+  1998 & 537928.13 & 431312.85 & 831668.75 & 1923.02 \\ 
+  1999 & 645620.10 & 461582.82 & 955490.54 & 1623.22 \\ 
+  2000 & 715195.27 & 535076.76 & 1083347.28 & 1775.45 \\ 
+  2001 & 491435.20 & 598922.95 & 1232616.35 & 1913.16 \\ 
+  2002 & 328950.79 & 147615.76 & 410311.16 & 2031.07 \\ 
+  2003 & 216740.87 & 242268.73 & 443655.69 & 1969.77 \\ 
+  2004 & 589959.16 & 210679.52 & 509934.24 & 2011.89 \\ 
+  2005 & 782306.31 & 419052.14 & 580689.14 & 1979.87 \\ 
+  2006 & 614270.81 & 599261.97 & 759322.38 & 2150.03 \\ 
+  2007 & 979107.87 & 526184.67 & 918726.20 & 2491.59 \\ 
+  2008 & 954087.16 & 751758.54 & 1111521.58 & 2747.65 \\ 
+  2009 & 918831.85 & 812190.46 & 1292479.57 & 3023.57 \\ 
+  2010 & 856910.43 & 811282.94 & 1298673.80 & 2821.31 \\ 
+  2011 & 560183.34 & 774238.46 & 1176311.47 & 2454.14 \\ 
+  2012 & 697191.56 & 589416.92 & 1083041.66 & 2106.02 \\ 
+  2013 & 655497.19 & 607507.82 & 1258148.81 & 2439.98 \\ 
+  2014 & 539282.21 & 588603.15 & 1349858.23 & 2482.01 \\ 
+  2015 & 847856.65 & 516175.66 & 1467526.61 & 2679.54 \\ 
    \hline
 \end{tabular}
 \end{table}
 
+![Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&G pot-survey data used in the assessment.](figure/Fig4.png)
 
-Figure 1. Distribution of blue king crab *Paralithodes platypus* in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters. Shown in blue.
+![NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.](figure/Fig5.png)
 
-Figure 2. King crab Registration Area Q (Bering Sea).
+![ADF&G 1998 pot survey catch of male blue king crab $\ge$ 90 mm CL for the 10 standard (Stratum 1) stations fished during 17–19 August 1998 within NMFS trawl survey station R-24.  Size (area) of circle is proportional to catch (largest = 43 crab). Black circles denote catch at a station was greater than the average catch for the 10 stations (10 crab); white circles denote catch at a station was less than the average catch for the 10 stations. Red circle is the centroid ("center of gravity") of distribution computed from the 10 stations. Red X is midpoint of the NMFS trawl survey tow performed in R-24 on 20 July 1998.](figure/Fig6a.png)
 
-Figure 3. Trawl and pot-survey stations used in the SMBKC stock assessment.
+![ADF&G 2013 pot survey catch of male blue king crab $\ge$ 90 mm CL for the 10 standard (Stratum 1) stations fished during 21–25 September 2013 within NMFS trawl survey station R-24.  Size (area) of circle is proportional to catch (largest = 76 crab). Black circles denote catch at a station was greater than the average catch for the 10 stations (17 crab); white circles denote catch at a station was less than the average catch for the 10 stations. Red circle is the centroid ("center of gravity") of distribution computed from the 10 stations. Red X is midpoint of the NMFS trawl survey tow performed in R-24 on 12 July 2013.](figure/Fig6b.png)
 
-Figure 4. Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&G pot-survey data used in the assessment.
-
-Figure 5. NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.
+![ADF&G 2013 pot survey catch of male blue king crab $\ge$ 90 mm CL for the 20 special (Stratum 2) stations fished during 20–25 September 2013 within NMFS trawl survey station R-24.  Size (area) of circle is proportional to catch (largest = 63 crab). Black circles denote catch at a station was greater than the average catch for the 20 stations (17 crab); white circles denote catch at a station was less than the average catch for the 20 stations. Red circle is the centroid ("center of gravity") of distribution computed from the 20 stations. Red X is midpoint of the NMFS trawl survey tow performed in R-24 on 12 July 2013.](figure/Fig6c.png)
 
 ![Estimated stage-1 and stage-2 selectivities for different scenarios (the stage-3 selectivities are fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey.\label{fig:selectivity}](figure/selectivity-1.png) 
 
@@ -375,10 +378,10 @@ Both surveys are assigned a nominal date of July 1, the start of the crab year. 
   \hline
 Parameter & Estimate \\ 
   \hline
-R0 & 750879.15 \\ 
-  Rbar & 942225.59 \\ 
-  ralpha & -1.41 \\ 
-  rbeta & -11.73 \\ 
+R0 & 757667.57 \\ 
+  Rbar & 950743.89 \\ 
+  ralpha & -1.46 \\ 
+  rbeta & -11.28 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -406,3 +409,20 @@ The model was implemented using the software AD Model Builder (Fournier et al. 2
 \newpage
 
 # K. References
+
+Brant 1850
+Otto and Cummiskey 1990
+NPFMC 1998
+Somerton and MacIntosh (1983)
+Paul et al. (1991)
+Jensen and Armstrong, 1989
+Donaldson and Byersdorfer 2005
+Otto and Cummiskey (1990)
+Pengilly and Schmidt 1995
+Fitch et al. 2012
+Otto 1990
+NPFMC 1999
+Zheng and Kruse (2002)
+NPFMC 2000
+Moore et al. 2000
+Gaeuman 2013

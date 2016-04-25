@@ -67,7 +67,6 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
 
     p  <- ggplot(mdf, aes(year, cpue))
     p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black")
-    
     if (ShowEstErr)
     {
         if (length(M) == 1 && length(unique(mdf$sex)) == 1)
@@ -102,6 +101,7 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
         p  <- p + geom_line(data = mdf, aes(year, pred))
         p  <- p + facet_wrap(~fleet + sex + Model, scales = "free_y")
     }
+
     p  <- p + labs(x = xlab, y = ylab)
     print(p + .THEME)
 }
@@ -117,22 +117,35 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_cpue_res <- function(M, xlab = "Year", ylab = "Residual (Observed - Predicted)", slab = "Sex")
+plot_cpue_res <- function(M, subsetby = "", xlab = "Year", ylab = "Residual", slab = "Sex")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     
     mdf <- .get_cpue_df(M)
+    if (subsetby != "") mdf <- subset(mdf, fleet == subsetby)
     
-    p  <- ggplot(mdf, aes(year, resd))
-    if(.OVERLAY)
+    p  <- ggplot(data = mdf, aes(year, resd)) +
+        geom_hline(aes(yintercept = 0))
+    if (length(M) == 1 && length(unique(mdf$sex)) == 1)
     {
-        p  <- p + geom_bar(aes(fill = factor(Model)), stat = "identity", position = "dodge")
-        p  <- p + facet_wrap(~ sex + fleet)		
+        p <- p + geom_point(data = mdf, aes(year, resd)) +
+            geom_segment(aes(x = year, xend = year, y = 0, yend = resd)) +
+            facet_wrap(~fleet, scales = "free_y")
+    } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
+        p <- p + geom_point(data = mdf, aes(year, resd, color = Model)) +
+            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = Model)) +
+            facet_wrap(~fleet, scales = "free_y")
+    } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
+        p <- p + geom_point(data = mdf, aes(year, resd, color = sex)) + labs(col = slab) +
+            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = sex)) +
+            facet_wrap(~fleet + sex, scales = "free_y")
     } else {
-        p  <- p + geom_bar(aes(fill = factor(sex)), stat = "identity", position = "dodge")
-        p  <- p + facet_wrap(~Model + sex + fleet)		
+        p <- p + geom_point(data = mdf, aes(year, resd, color = Model)) +
+            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = Model)) +
+            facet_wrap(~fleet + sex, scales = "free_y")
     }
+
     p  <- p + labs(x = xlab, y = ylab, fill = slab)
     print(p + .THEME)
 }

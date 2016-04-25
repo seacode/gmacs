@@ -1,7 +1,7 @@
 ---
 title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
 author: "The Gmacs development team"
-date: "May 2015"
+date: "May 2016"
 output:
   pdf_document:
     highlight: zenburn
@@ -135,9 +135,7 @@ like[[2]] <- readLines("../../examples/bbrkc/TwoSex/gmacs.rep")
 
 4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm CL size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue with the 2014 survey with an estimate of 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of them came from one tow with a great deal of uncertainty.
 
-5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider.
-
-The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
+5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
 
 6. **Basis for the OFL**: Estimated Feb 15 mature-male biomass ($MMB_\text{mating}$) is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_{MSY}$ proxy is obtained by averaging estimated $MMB_\text{mating}$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference time period.
 
@@ -158,7 +156,7 @@ This assessment is done using Gmacs. The model is based upon the 3-stage length-
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenarios. Many model scenarios in this assessment have satisfactorily addressed the problems of biased residual patterns on ????.
+Changes in assessment results depend on model scenarios.
 
 
 # B. Responses to SSC and CPT Comments
@@ -177,6 +175,10 @@ The blue king crab is a lithodid crab, *Paralithodes platypus* (Brant 1850).
 ## Distribution
 
 Blue king crab are sporadically distributed throughout the North Pacific Ocean from Hokkaido, Japan, to southeastern Alaska (Figure 1). In the eastern Bering Sea small populations are distributed around St. Matthew Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2 (Figure 2), which is the Northern District of the Bering Sea king crab registration area and includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).
+
+![Distribution of blue king crab *Paralithodes platypus* in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters. Shown in blue.](figure/Fig1.png)
+
+![King crab Registration Area Q (Bering Sea).](figure/Fig2.png)
 
 ## Stock Structure
 
@@ -213,6 +215,8 @@ plot_datarange(A)
 ## Major Data Sources
 
 Major data sources used in this assessment are annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15; Table 1); results from the annual NMFS eastern Bering Sea trawl survey (1978-2015; Table 2); results from the triennial ADF&G SMBKC pot survey (every third year during 1995-2013) and 2015 pot survey (Table 4); size-frequency information from ADF&G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15; Table3); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2014/15; Table 5). Figure 3 maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure 4). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure 5). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&G statistical area was not used.
+
+![Trawl and pot-survey stations used in the SMBKC stock assessment.](figure/Fig3.png)
 
 ## Other Data Sources
 
@@ -301,16 +305,15 @@ tab <- xtable(df, caption = "Population abundances (N) by crab stage in millions
 print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
+![Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&G pot-survey data used in the assessment.](figure/Fig4.png)
 
-Figure 1. Distribution of blue king crab *Paralithodes platypus* in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters. Shown in blue.
+![NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.](figure/Fig5.png)
 
-Figure 2. King crab Registration Area Q (Bering Sea).
+![ADF&G 1998 pot survey catch of male blue king crab $\ge$ 90 mm CL for the 10 standard (Stratum 1) stations fished during 17–19 August 1998 within NMFS trawl survey station R-24.  Size (area) of circle is proportional to catch (largest = 43 crab). Black circles denote catch at a station was greater than the average catch for the 10 stations (10 crab); white circles denote catch at a station was less than the average catch for the 10 stations. Red circle is the centroid ("center of gravity") of distribution computed from the 10 stations. Red X is midpoint of the NMFS trawl survey tow performed in R-24 on 20 July 1998.](figure/Fig6a.png)
 
-Figure 3. Trawl and pot-survey stations used in the SMBKC stock assessment.
+![ADF&G 2013 pot survey catch of male blue king crab $\ge$ 90 mm CL for the 10 standard (Stratum 1) stations fished during 21–25 September 2013 within NMFS trawl survey station R-24.  Size (area) of circle is proportional to catch (largest = 76 crab). Black circles denote catch at a station was greater than the average catch for the 10 stations (17 crab); white circles denote catch at a station was less than the average catch for the 10 stations. Red circle is the centroid ("center of gravity") of distribution computed from the 10 stations. Red X is midpoint of the NMFS trawl survey tow performed in R-24 on 12 July 2013.](figure/Fig6b.png)
 
-Figure 4. Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&G pot-survey data used in the assessment.
-
-Figure 5. NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.
+![ADF&G 2013 pot survey catch of male blue king crab $\ge$ 90 mm CL for the 20 special (Stratum 2) stations fished during 20–25 September 2013 within NMFS trawl survey station R-24.  Size (area) of circle is proportional to catch (largest = 63 crab). Black circles denote catch at a station was greater than the average catch for the 20 stations (17 crab); white circles denote catch at a station was less than the average catch for the 20 stations. Red circle is the centroid ("center of gravity") of distribution computed from the 20 stations. Red X is midpoint of the NMFS trawl survey tow performed in R-24 on 12 July 2013.](figure/Fig6c.png)
 
 ```{r selectivity, fig.cap = "Estimated stage-1 and stage-2 selectivities for different scenarios (the stage-3 selectivities are fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey.\\label{fig:selectivity}"}
 plot_selectivity(M, ncol = 5)
@@ -515,3 +518,20 @@ The model was implemented using the software AD Model Builder (Fournier et al. 2
 \newpage
 
 # K. References
+
+Brant 1850
+Otto and Cummiskey 1990
+NPFMC 1998
+Somerton and MacIntosh (1983)
+Paul et al. (1991)
+Jensen and Armstrong, 1989
+Donaldson and Byersdorfer 2005
+Otto and Cummiskey (1990)
+Pengilly and Schmidt 1995
+Fitch et al. 2012
+Otto 1990
+NPFMC 1999
+Zheng and Kruse (2002)
+NPFMC 2000
+Moore et al. 2000
+Gaeuman 2013

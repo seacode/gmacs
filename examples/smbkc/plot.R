@@ -59,6 +59,10 @@ plot_F(M)
 ggsave(paste0(.FIGS, "fishing_mortality.png"), width = ww*2, height = hh*1.2)
 dev.off()
 
+plot_cpue_res(M)
+ggsave(paste0(.FIGS, "cpue_res.png"), width = ww*2.5, height = hh)
+dev.off()
+
 plot_cpue(M, ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue.png"), width = ww*2.5, height = hh)
 dev.off()
