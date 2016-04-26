@@ -395,7 +395,7 @@ plot_size_transition(M, xlab = "Carapace length (mm)", female = TRUE)
 plot_numbers(M)
 ```
 
-```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Periods begin at 1976, 1980, 1985 and 1994.\\label{fig:M_t}"}
+```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Specified pulse period occurs in 1998. \\label{fig:M_t}"}
 plot_natural_mortality(M, knots = NULL)
 ```
 
