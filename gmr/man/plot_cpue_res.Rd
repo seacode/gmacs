@@ -4,7 +4,7 @@
 \alias{plot_cpue_res}
 \title{Plot residuals of cpue or other indices}
 \usage{
-plot_cpue_res(M, xlab = "Year", ylab = "Residual (Observed - Predicted)",
+plot_cpue_res(M, subsetby = "", xlab = "Year", ylab = "Residual",
   slab = "Sex")
 }
 \arguments{

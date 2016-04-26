@@ -108,9 +108,7 @@ for (i in ind)
 #diag(m) <- j_len$MP_1987
 #m <- as.matrix(j_ltr) %*% m
 #diag(m) <- diag(m)+(1-j_len$MP_1987)
-#M[[jj]]$size_transition_M <- m
-#M[[jj]]$size_transition_F <- m
-#M[[jj]]$size_transition_F <- NULL
+M[[jj]]$size_transition_M <- matrix(c(0.2,0.7,0.1,0,0.4,0.6,0,0,1), nrow = 3, ncol = 3, byrow = TRUE)
 #M[[jj]]$tS <- rbind(m, m)
 
 # Add molting probability data
