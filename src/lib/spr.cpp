@@ -1,7 +1,7 @@
 /**
- * \file spr.cpp
- * \author Steve Martell
- */
+ * @file spr.cpp
+ * @author Steve Martell
+**/
 
 #include <admodel.h>
 #if defined __APPLE__ || defined __linux
@@ -13,15 +13,15 @@
 
 
 /**
- * \brief constructor for SPR class
- * \details Constructor for SRR class
+ * @brief constructor for SPR class
+ * @details Constructor for SRR class
  * 
- * \param _r equilibrium recruitment
- * \param _lambda fraction of females that contribute to the Spawning potential ratio
- * \param _rx size distribution of new recruits
- * \param _M natural mortality at size by sex
- * \param _wa weight-at-length interval
- * \param _A size-transition matrix
+ * @param _r equilibrium recruitment
+ * @param _lambda fraction of females that contribute to the Spawning potential ratio
+ * @param _rx size distribution of new recruits
+ * @param _M natural mortality at size by sex
+ * @param _wa weight-at-length interval
+ * @param _A size-transition matrix
 **/
 spr::spr(const double& _r, 
          const double& _lambda,
@@ -82,7 +82,7 @@ spr::spr(const double& _r,
 	dmatrix S(1,m_nclass,1,m_nclass);
 	S.initialize();
 
-	cout<<"inside Constructor"<<endl;
+	cout << "inside Constructor" << endl;
 	
 	// get unfished mature male biomass per recruit.
 	m_ssb0 = 0.0;
@@ -116,19 +116,16 @@ spr::~spr()
  * 
  * @param S diagonal matrix of survival rates at length
  * @param sex index for which sex
- * 
  * @return vector of numbers at length.
- */
+**/
 dvector spr::calc_equilibrium(const dmatrix& S, const int& sex)
 {
-
 	int h = sex;
 	dmatrix Id = identity_matrix(1,m_nclass);
 	// use copy constructor for At.
 	dmatrix At(1,m_nclass,1,m_nclass);
 	At.initialize();
 	At = trans(m_A(h)*S);
-	
 	
 	dvector r = m_rbar/m_nsex * m_rx;
 	dvector x = -solve(At-Id,r);
@@ -147,7 +144,7 @@ dvector spr::calc_equilibrium(const dmatrix& S, const int& sex)
  * @param S diagonal matrix of survival at length
  * @param P diagonal matrix of molting probability at length
  * @param r vector of new shell recruits
- */
+**/
 void spr::calc_equilibrium(dvector& n,
                       	   dvector& o,
                       	   const dmatrix& A,
@@ -169,14 +166,12 @@ void spr::calc_equilibrium(dvector& n,
 
 	n = solve(D,r);			// newshell
 	o = n*((Id-P)*S*B);		// oldshell
-	
 }
 
 
 /**
  * @brief Calculate f_spr reference point.
- * @details Uses bisection method to determine the fishing mortality rate that will reduce
- * the spawning potential ratio to the spr_target.
+ * @details Uses bisection method to determine the fishing mortality rate that will reduce the spawning potential ratio to the spr_target.
  * 
  * @param ifleet [description]
  * @param spr_target [description]
@@ -184,7 +179,7 @@ void spr::calc_equilibrium(dvector& n,
  * @param _sel [description]
  * @param _ret [description]
  * @return [description]
- */
+**/
 double spr::get_fspr(const int& ifleet, 
                      const double& spr_target, 
                      const dmatrix& _fhk,
@@ -215,7 +210,6 @@ double spr::get_fspr(const int& ifleet,
 	S.initialize();
 	dmatrix Id=identity_matrix(1,m_nclass);
 	
-
 	do
 	{
 		m_ssb = 0;
@@ -245,7 +239,6 @@ double spr::get_fspr(const int& ifleet,
 				S(l,l) = exp(-diagonal(Z)(l));
 			}
 
-
 			if(m_nshell == 1)
 			{
 				dvector x = calc_equilibrium(S,h);
@@ -263,8 +256,6 @@ double spr::get_fspr(const int& ifleet,
 				h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
 				m_ssb += lam * (n+o) * m_wa(h);
 			}
-
-		
 		}	
 		// spawning potential ratio
 		m_spr = m_ssb/m_ssb0;
@@ -303,7 +294,7 @@ double spr::get_fspr(const int& ifleet,
  * @param limit Depletion level where Fofl = 0
  * @param ssb projected spawning stock biomass
  * @return [description]
- */
+**/
 double spr::get_fofl(const double& alpha, const double& limit, const double& ssb)
 {
 	double depletion = ssb/m_bspr;
@@ -312,28 +303,24 @@ double spr::get_fofl(const double& alpha, const double& limit, const double& ssb
 	{
 		m_fofl = m_fspr;
 	}
-
 	if( limit < depletion && depletion <= 1.0 )
 	{
 		m_fofl = m_fspr * (depletion - alpha)/(1.0-alpha);
 	}
-
-
 	return m_fofl;
 }
 
 
 /**
  * @brief Calculate OFL
- * @details Calculates the OFL based on harvest control rule
- * and estimate of Fspr%
+ * @details Calculates the OFL based on harvest control rule and estimate of Fspr%
  * 
  * @param N [description]
  * @return [description]
- */
+**/
 double spr::get_cofl(const dmatrix& N)
 {
-	cout<<"Get OFL"<<endl;
+	cout << "Get OFL" << endl;
 	double ctmp = 0;
 	// double dmr  = 0.8;
 	double ftmp;
@@ -346,27 +333,12 @@ double spr::get_cofl(const dmatrix& N)
 
 			dvector vul = elem_prod(m_sel(h)(k),m_ret(h)(k)+(1.0-m_ret(h)(k))*m_dmr(k));
 
-			dvector   f = ftmp * vul;
-			dvector   z = diagonal(m_M(h)) + f;
-			dvector   o = 1.0-exp(-z);
+			dvector f = ftmp * vul;
+			dvector z = diagonal(m_M(h)) + f;
+			dvector o = 1.0-exp(-z);
 			ctmp += elem_prod(N(h),m_wa(h)) * elem_div(elem_prod(f,o),z);
 		}
 	}
 	m_cofl = ctmp;
 	return(m_cofl);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

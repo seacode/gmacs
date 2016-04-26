@@ -27,7 +27,26 @@ bibliography: Gmacs.bib
 
 4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm CL size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue with the 2014 survey with an estimate of 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of them came from one tow with a great deal of uncertainty.
 
-5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
+5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider.
+
+\begin{table}[ht]
+\centering
+\caption{Status and catch specifications (1,000 t) (scenario 1).} 
+\label{tab:status}
+\begin{tabular}{lrrrrrrr}
+  \hline
+Year & MSST & Biomass (MMB mating) & TAC & Retained catch & Total male catch & OFL & ABC \\ 
+  \hline
+2011/12 & 1.50 & 5.03 & 1.15 & 0.85 & 0.95 & 1.70 & 1.54 \\ 
+  2012/13 & 1.80 & 2.85 & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
+  2013/14 & 1.50 & 3.01 & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
+  2014/15 & 1.86 & 2.48 & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
+  2015/16 &  & 2.45 &  &  &  & 0.28 & 0.22 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
 
 6. **Basis for the OFL**: Estimated Feb 15 mature-male biomass ($MMB_\text{mating}$) is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_{MSY}$ proxy is obtained by averaging estimated $MMB_\text{mating}$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference time period.
 
@@ -172,6 +191,56 @@ With the decline of estimated population biomass during recent years, outlook fo
 
 We thank the Crab Plan Team, Joel Webb and Shareef Siddeek for reviewing the earlier draft of this manuscript. Some materials in the report are from the SAFE report prepared by Bill Gaeuman in 2014.
 
+# K. References
+
+Alaska Department of Fish and Game (ADF&G). 2013. Crab observer training and deployment manual. Alaska Department of Fish and Game Shellfish Observer Program, Dutch Harbor. Unpublished.
+
+Collie, J.S., A.K. Delong, and G.H. Kruse. 2005. Three-stage catch-survey analysis applied to blue king crabs. Pages 683-714 [In] Fisheries assessment and management in data-limited situations. University of Alaska Fairbanks, Alaska Sea Grant Report 05-02, Fairbanks.
+
+Daly, B., R. Foy, and C. Armistead. 2014. The 2013 eastern Bering Sea continental shelf bottom trawl survey: results for commercial crab species. NOAA Technical Memorandum, NMFS-AFSC.
+
+Donaldson, W.E., and S.C. Byersdorfer. 2005. Biological field techniques for lithodid crabs. University of Alaska Fairbanks, Alaska Sea Grant Report 05-03, Fairbanks.
+
+Fitch, H., M. Deiman, J. Shaishnikoff, and K. Herring. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Bering Sea, 2010/11. Pages 75-1776 [In] Fitch, H., M. Schwenzfeier, B. Baechler, T. Hartill, M. Salmon, M. Deiman, E.
+
+Evans, E. Henry, L. Wald, J. Shaishnikoff, K. Herring, and J. Wilson. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Aleutian Islands, Bering Sea and the Westward Region’s Shellfish Observer Program, 2010/11. Alaska Department of Fish and Game, Fishery Management Report No. 12-22, Anchorage.
+
+Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: using automatic differentiation for statistical inference of highly parameterized complex nonlinear models. Optim. Methods Softw. 27:233-249.
+
+Francis, R.I.C.C. 2011. Data weighting in statistical fisheries stock assessment models. Can. J. Fish. Aquat. Sci. 68: 1124-1138.
+
+Gaeuman, W.B. 2013. Summary of the 2012/13 mandatory crab observer program database for the Bering Sea/Aleutian Islands commercial crab fisheries. Alaska Department of Fish and Game, Fishery Data Series No. 13-54, Anchorage. Gish, R.K., V.A. Vanek, and D. Pengilly. 2012. Results of the 2010 triennial St. Matthew Island blue king crab pot survey and 2010/11 tagging study. Alaska Department of Fish and Game, Fishery Management Report No. 12-24, Anchorage.
+
+Jensen, G.C. and D.A. Armstrong. 1989. Biennial reproductive cycle of blue king crab, Paralithodes platypus, at the Pribilof Islands, Alaska and comparison to a congener, P. camtschatica. Can. J. Fish. Aquat. Sci. 46: 932-940.
+
+Moore, H., L.C. Byrne, and D. Connolly. 2000. Alaska Department of Fish and Game summary of the 1998 mandatory shellfish observer program database. Alaska Dept. Fish and Game, Commercial Fisheries Division, Reg. Inf. Rep. 4J00-21, Kodiak.
+
+North Pacific Fishery Management Council (NPFMC). 1998. Fishery Management Plan for Bering Sea/Aleutian Islands king and Tanner crabs. North Pacific Fishery Management Council, Anchorage.
+
+North Pacific Fishery Management Council (NPFMC). 1999. Environmental assessment/regulatory impact review/initial regulatory flexibility analysis for Amendment 11 to the Fishery Management Plan for Bering Sea/Aleutian Islands king and Tanner crabs. North Pacific Fishery Management Council, Anchorage.
+
+North Pacific Fishery Management Council (NPFMC). 2000. Environmental assessment/regulatoryimpact review/initial regulatory flexibility analysis for proposed Amendment 15 to the Fishery Management Plan for king and Tanner crab fisheries in the Bering Sea/Aleutian Islands and regulatory amendment to the Fishery Management Plan for the groundfish fishery of the Bering Sea and Aleutian Islands area: A rebuilding plan for the St. Matthew blue king crab stock. North Pacific Fishery Management Council, Anchorage. Draft report.
+
+North Pacific Fishery Management Council (NPFMC). 2007. Public Review Draft: Environmental assessment for proposed Amendment 24 to the Fishery Management Plan for Bering Sea and Aleutian Islands king and Tanner crabs to revise overfishing definitions. 14 November 2007. North Pacific Fishery Management Council, Anchorage.
+
+Otto, R.S. 1990. An overview of eastern Bering Sea king and Tanner crab fisheries. Pages 9-26 [In] Proceedings of the international symposium on king and Tanner crabs. University of Alaska Fairbanks, Alaska Sea Grant Program Report 90-4, Fairbanks.
+
+Otto, R.S., and P.A. Cummiskey. 1990. Growth of adult male blue king crab (Paralithodes platypus). Pages 245-258 [In] Proceedings of the international symposium on king and Tanner crabs. University of Alaska Fairbanks, Alaska Sea Grant Report 90-4, Fairbanks.
+
+Paul, J.M., A. J. Paul, R.S. Otto, and R.A. MacIntosh. 1991. Spermatophore presence in relation to carapace length for eastern Bering Sea blue king crab (Paralithodes platypus, Brandt, 1850) and red king crab (P. Camtschaticus, Tilesius, 1815). J. Shellfish Res. 10: 157-163.
+
+Pengilly, D. and D. Schmidt. 1995. Harvest Strategy for Kodiak and Bristol Bay Red king Crab and St. Matthew Island and Pribilof Blue King Crab. Alaska Department of Fish and Game, Commercial Fisheries Management and Development Division, Special Publication Number 7, Juneau.
+
+Schirripa, M.J., C.P. Goodyear, and R.M. Methot. 2009. Testing different methods of incorporating climate data into the assessment of US West Coast sablefish. ICES Journal of Marine Science, 66: 1605–1613. Somerton, D.A., and R.A. MacIntosh. 1983. The size at sexual maturity of blue king crab, Paralithodes platypus, in Alaska. Fishery Bulletin 81: 621-828.
+
+Wilderbuer, T., D. G. Nichol, and J. Ianelli. 2013. Assessment of the yellowfin sole stock in the Bering Sea and Aleutian Islands. Pages 619-708 in 2013 North Pacific Groundfish Stock Assessment and Fishery Evaluation Reports for 2014. North Pacific Fishery Management Council, Anchorage.
+
+Zheng, J. 2005. A review of natural mortality estimation for crab stocks: data-limited for every stock? Pages 595-612 [In] Fisheries Assessment and Management in Data-Limited Situations. University of Alaska Fairbanks, Alaska Sea Grant Program Report 05-02, Fairbanks.
+
+Zheng, J., and G.H. Kruse. 2002. Assessment and management of crab stocks under uncertainty of massive die-offs and rapid changes in survey catchability. Pages 367-384 [In] A.J. Paul,E.G. Dawe, R. Elner, G.S. Jamieson, G.H. Kruse, R.S. Otto, B. Sainte-Marie, T.C. Shirley, and D. Woodby (eds.). Crabs in Cold Water Regions: Biology, Management, and Economics. University of Alaska Fairbanks, Alaska Sea Grant Report 02-01, Fairbanks.
+
+Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analysis to blue king crab stocks near Pribilof and St. Matthew Islands. Alaska Fish. Res. Bull. 4:62-74.
+
 
 \newpage
 
@@ -187,44 +256,44 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
   \hline
 Year & N1 & N2 & N3 & MMB \\ 
   \hline
-1978 & 3466429.21 & 1397966.94 & 1098665.56 & 4562.14 \\ 
-  1979 & 2887126.99 & 2506656.82 & 1861850.24 & 6294.59 \\ 
-  1980 & 1215214.03 & 2529627.74 & 3023745.78 & 9501.16 \\ 
-  1981 & 997968.99 & 1559947.97 & 2992065.45 & 9720.57 \\ 
-  1982 & 749415.08 & 1107688.79 & 1700682.75 & 7070.14 \\ 
-  1983 & 695651.34 & 811409.66 & 1870507.75 & 4368.42 \\ 
-  1984 & 933111.88 & 682301.66 & 1299281.96 & 3066.83 \\ 
-  1985 & 1216292.12 & 779388.11 & 1126911.18 & 2826.11 \\ 
-  1986 & 1273265.00 & 977467.76 & 1243062.22 & 2845.04 \\ 
-  1987 & 1207759.72 & 1076538.63 & 1437355.75 & 3415.25 \\ 
-  1988 & 2462904.10 & 1078361.23 & 1598195.99 & 3834.88 \\ 
-  1989 & 1639919.27 & 1807115.07 & 1866641.22 & 4404.91 \\ 
-  1990 & 1763700.11 & 1570822.18 & 2263466.28 & 4853.21 \\ 
-  1991 & 1855598.14 & 1563933.30 & 2196237.59 & 4530.72 \\ 
-  1992 & 2115872.06 & 1616767.28 & 2299074.41 & 4689.23 \\ 
-  1993 & 1660813.14 & 1784169.07 & 2359844.70 & 5095.02 \\ 
-  1994 & 1795747.80 & 1575410.25 & 2287948.00 & 5034.33 \\ 
-  1995 & 1640357.26 & 1583536.33 & 2276008.70 & 4910.54 \\ 
-  1996 & 1050670.34 & 1492398.28 & 2261231.42 & 4502.15 \\ 
-  1997 & 747528.65 & 1115978.23 & 1913183.20 & 3900.89 \\ 
-  1998 & 415725.79 & 336315.03 & 646677.07 & 1923.02 \\ 
-  1999 & 454873.58 & 357446.59 & 743153.23 & 1623.22 \\ 
-  2000 & 398240.42 & 387174.14 & 837866.63 & 1775.45 \\ 
-  2001 & 198831.21 & 362870.63 & 926970.07 & 1913.16 \\ 
-  2002 & 331199.54 & 239064.29 & 972398.34 & 2031.07 \\ 
-  2003 & 276794.63 & 274589.53 & 959120.85 & 1969.77 \\ 
-  2004 & 475486.63 & 255920.80 & 961694.66 & 2011.89 \\ 
-  2005 & 816340.60 & 367563.07 & 971129.99 & 1979.87 \\ 
-  2006 & 492167.51 & 601446.70 & 1062416.20 & 2150.03 \\ 
-  2007 & 1024353.93 & 487709.96 & 1214233.83 & 2491.59 \\ 
-  2008 & 1016803.44 & 765806.81 & 1342846.92 & 2747.65 \\ 
-  2009 & 996035.41 & 854033.30 & 1497569.52 & 3023.57 \\ 
-  2010 & 967461.71 & 871054.45 & 1496344.83 & 2821.31 \\ 
-  2011 & 643051.32 & 859213.40 & 1378962.97 & 2454.14 \\ 
-  2012 & 804436.55 & 666786.55 & 1300648.97 & 2106.02 \\ 
-  2013 & 767741.21 & 696587.71 & 1487642.03 & 2439.98 \\ 
-  2014 & 629752.45 & 684391.77 & 1595524.35 & 2482.01 \\ 
-  2015 & 1042044.48 & 602070.37 & 1728286.54 & 2679.54 \\ 
+1978 & 2769748.04 & 3031623.76 & 2551068.49 & 4562.14 \\ 
+  1979 & 1265473.98 & 2636778.35 & 3835498.75 & 6294.59 \\ 
+  1980 & 1003619.86 & 1625271.90 & 4602020.24 & 9501.16 \\ 
+  1981 & 974199.67 & 1134237.48 & 3829524.98 & 9720.57 \\ 
+  1982 & 724029.77 & 951557.84 & 2152710.32 & 7070.14 \\ 
+  1983 & 672722.90 & 744305.20 & 2167460.17 & 4368.42 \\ 
+  1984 & 906293.51 & 646365.15 & 1508096.98 & 3066.83 \\ 
+  1985 & 1182816.42 & 751548.60 & 1280488.02 & 2826.11 \\ 
+  1986 & 1246246.89 & 948478.56 & 1354465.40 & 2845.04 \\ 
+  1987 & 1168248.21 & 1050865.01 & 1513535.76 & 3415.25 \\ 
+  1988 & 2441493.88 & 1046601.96 & 1645587.95 & 3834.88 \\ 
+  1989 & 1602658.39 & 1783800.32 & 1888491.35 & 4404.91 \\ 
+  1990 & 1737540.20 & 1541137.43 & 2266868.62 & 4853.21 \\ 
+  1991 & 1819671.32 & 1538553.06 & 2182038.08 & 4530.72 \\ 
+  1992 & 2075604.37 & 1587096.06 & 2271550.74 & 4689.23 \\ 
+  1993 & 1604338.44 & 1750436.61 & 2318708.31 & 5095.02 \\ 
+  1994 & 1738224.31 & 1530852.92 & 2232135.13 & 5034.33 \\ 
+  1995 & 1573675.41 & 1534699.37 & 2202568.35 & 4910.54 \\ 
+  1996 & 973976.65 & 1436728.83 & 2170138.19 & 4502.15 \\ 
+  1997 & 685124.68 & 1052259.54 & 1803448.50 & 3900.89 \\ 
+  1998 & 387640.20 & 329052.84 & 628565.24 & 1923.02 \\ 
+  1999 & 432096.01 & 338501.16 & 722038.23 & 1623.22 \\ 
+  2000 & 375903.77 & 367423.66 & 808832.63 & 1775.45 \\ 
+  2001 & 181642.21 & 343138.12 & 890954.62 & 1913.16 \\ 
+  2002 & 311206.64 & 222328.43 & 930990.04 & 2031.07 \\ 
+  2003 & 258754.76 & 257229.36 & 914475.73 & 1969.77 \\ 
+  2004 & 448674.64 & 239441.45 & 914196.67 & 2011.89 \\ 
+  2005 & 781782.00 & 346213.82 & 920957.92 & 1979.87 \\ 
+  2006 & 457239.49 & 573942.48 & 1006924.83 & 2150.03 \\ 
+  2007 & 980169.27 & 457926.67 & 1151130.64 & 2491.59 \\ 
+  2008 & 961829.56 & 729753.76 & 1271523.87 & 2747.65 \\ 
+  2009 & 934029.54 & 809550.27 & 1415338.52 & 3023.57 \\ 
+  2010 & 894635.81 & 819589.97 & 1400174.78 & 2821.31 \\ 
+  2011 & 579445.08 & 799151.24 & 1266832.84 & 2454.14 \\ 
+  2012 & 728732.04 & 609166.35 & 1171747.94 & 2106.02 \\ 
+  2013 & 687913.78 & 632699.59 & 1344774.43 & 2439.98 \\ 
+  2014 & 555496.10 & 616033.82 & 1437507.00 & 2482.01 \\ 
+  2015 & 767622.41 & 534360.17 & 1555838.53 & 2679.54 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -374,10 +443,10 @@ Both surveys are assigned a nominal date of July 1, the start of the crab year. 
   \hline
 Parameter & Estimate \\ 
   \hline
-R0 & 771429.06 \\ 
-  Rbar & 930986.45 \\ 
-  ralpha & -1.36 \\ 
-  rbeta & -11.74 \\ 
+R0 & 702921.15 \\ 
+  Rbar & 855122.49 \\ 
+  ralpha & -1.50 \\ 
+  rbeta & -11.69 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -405,20 +474,3 @@ The model was implemented using the software AD Model Builder (Fournier et al. 2
 \newpage
 
 # K. References
-
-Brant 1850
-Otto and Cummiskey 1990
-NPFMC 1998
-Somerton and MacIntosh (1983)
-Paul et al. (1991)
-Jensen and Armstrong, 1989
-Donaldson and Byersdorfer 2005
-Otto and Cummiskey (1990)
-Pengilly and Schmidt 1995
-Fitch et al. 2012
-Otto 1990
-NPFMC 1999
-Zheng and Kruse (2002)
-NPFMC 2000
-Moore et al. 2000
-Gaeuman 2013

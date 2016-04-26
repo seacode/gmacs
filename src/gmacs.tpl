@@ -1818,27 +1818,16 @@ FUNCTION calc_recruitment_size_distribution
 	 *
 	 * Psuedocode: See note from Dave Fournier.
 	 *
-	 * For the initial numbers-at-lengt a vector of deviates is estimated,
-	 * one for each size class, and have the option to initialize
-	 * the model at unfished equilibrium, or some other steady state condition.
+	 * For the initial numbers-at-length a vector of deviates is estimated, one for each size class, and have the option to initialize the model at unfished equilibrium, or some other steady state condition.
 	 *
-	 *  Dec 11, 2014. Martell & Ianelli at snowgoose.  We had a discussion regarding
-	 *  how to deal with the joint probability of molting and growing to a new size
-	 *  interval for a given length, and the probability of not molting.  We settled
-	 *  on using the size-tranistion matrix to represent this joint probability, where
-	 *  the diagonal of the matrix to represent the probability of surviving and
-	 *  molting to a new size interval. The upper diagonal of the size-transition matrix
-	 *  represent the probability of growing to size interval j' given size interval j.
+	 *  Dec 11, 2014. Martell & Ianelli at snowgoose.  We had a discussion regarding how to deal with the joint probability of molting and growing to a new size
+	 *  interval for a given length, and the probability of not molting.  We settled on using the size-tranistion matrix to represent this joint probability, where the diagonal of the matrix to represent the probability of surviving and molting to a new size interval. The upper diagonal of the size-transition matrix represent the probability of growing to size interval j' given size interval j.
 	 *
-	 *  Oldshell crabs are then the column vector of 1-molt_probabiltiy times the
-	 *  numbers-at-length, and the Newshell crabs is the column vector of molt_probability
-	 *  times the number-at-length.
+	 *  Oldshell crabs are then the column vector of 1-molt_probabiltiy times the numbers-at-length, and the Newshell crabs is the column vector of molt_probability times the number-at-length.
 	 *
-	 *  Jan 1, 2015.  Changed how the equilibrium calculation is done.  Use a numerical
-	 *  approach to solve the newshell oldshell initial abundance.
+	 *  Jan 1, 2015.  Changed how the equilibrium calculation is done. Use a numerical approach to solve the newshell oldshell initial abundance.
 	 *
-	 *  Jan 3, 2015.  Working with John Levitt on analytical solution instead of the
-	 *  numerical approach.  Think we have a soln.
+	 *  Jan 3, 2015.  Working with John Levitt on analytical solution instead of the numerical approach.  Think we have a soln.
 	 *
 	 *  Notation:
 	 *      n = vector of newshell crabs
@@ -1852,35 +1841,39 @@ FUNCTION calc_recruitment_size_distribution
 	 *  The following equations represent the dynamics of newshell and oldshell crabs.
 	 *      n = nSPA + oSPA + r                     (1)
 	 *      o = oS(I-P)A + nS(I-P)A                 (2)
-	 *  Objective is to solve the above equations for n and o repsectively.  Starting
-	 *  with o:
+	 *  Objective is to solve the above equations for n and o repsectively. Starting with o:
 	 *      o = n(I-P)S[I-(I-P)S]^(-1)              (3)
 	 *  next substitute (3) into (1) and solve for n
 	 *      n = nPSA + n(I-P)S[I-(I-P)S]^(-1)PSA + r
-	 *
 	 *  let B = [I-(I-P)S]^(-1)
-	 *
 	 *      n - nPSA - n(I-P)SBPSA = r
 	 *      n(I - PSA - (I-P)SBPSA) = r
-	 *
 	 *  let C = (I - PSA - (I-P)SBPSA)
-	 *
 	 *  then n = C^(-1) r                           (4)
-	 *  –––-—————————————————————————————————————————————————————————————————————————----
 	 *
-	 *  April 28, 2015.  There is no case here for initializing the model at unfished equilibrium conditions.  Need to fix this for SRA purposes.  SJDM.
+	 *  April 28, 2015. There is no case here for initializing the model at unfished equilibrium conditions. Need to fix this for SRA purposes. SJDM.
+	 *
+	 * @param bInitializeUnfished
+	 * @param logR0
+	 * @param logRini
+	 * @param rec_sdd is the vector of recruitment size proportions. It has dimension (1,nclass)
+	 * @param rec_ini
+	 * @param M
+	 * @param S
+	 * @param d4_N is the numbers in each group (sex/maturity/shell), year, season and length. It has dimension (1,n_grp,syr,nyr+1,1,nseason,1,nclass)
+
 	**/
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
 	d3_newShell.initialize();
 	d3_oldShell.initialize();
 
-	// Initial recrutment.
+	// Initial recrutment
 	log_initial_recruits = (bInitializeUnfished) ? logR0 : logRini;
 	recruits(syr) = mfexp(log_initial_recruits);
 	dvar_vector rt = 1.0/nsex * recruits(syr) * rec_sdd;
 
-	// Analytical equilibrium soln.
+	// Analytical equilibrium soln
 	int ig;
 	d4_N.initialize();
 	dmatrix Id = identity_matrix(1,nclass);
@@ -3335,33 +3328,30 @@ FUNCTION dvar_vector calc_ssb()
 	 * @details Calculate the SPR-ratio for a given value of F.
 	 *
 	 * Psuedocode:
-	 *  -# calculate average recruitment over reference period.
-	 *  -# compute the ratio of F's based on reference year (nyr)
-	 *  -# calculate fishing mortality vector.
-	 *  -# calculate equibrium total mortality vector.
-	 *  -# calculate growth/survival transition matrix.
+	 * - calculate average recruitment over reference period.
+	 * - compute the ratio of F's based on reference year (nyr)
+	 * - calculate fishing mortality vector.
+	 * - calculate equibrium total mortality vector.
+	 * - calculate growth/survival transition matrix.
 	 *
-	 *  ARGS:
-	 *  @param iyr Reference year for selectivity and fishing mortality ratios
-	 *  @param ifleet index for gear to compute SPR values, other fleets with const F
+	 * Got response from andre, “The convention is to fix F for all non-directed fisheries to a recent average and to solve for the F for the directed fishery so that you achieve B35%.” but I think he meant F35.
 	 *
-	 *  got response from andre, “The convention is to fix F for all
-	 *  non-directed fisheries to a recent average and to solve for
-	 *  the F for the directed fishery so that you achieve B35%.” but
-	 *  I think he meant F35
+	 * Use bisection method to find SPR_target.
 	 *
-	 *  Use bisection method to find SPR_target.
+	 * Three possible states
+	 * nshell = 1,
+	 * nshell = 2 && nmaturity = 1,
+	 * nshell = 2 && nmaturity = 2.
 	 *
-	 *  Three possible states
-	 *  nshell = 1,
-	 *  nshell = 2 && nmaturity = 1,
-	 *  nshell = 2 && nmaturity = 2.
+	 * @param iyr Reference year for selectivity and fishing mortality ratios
+	 * @param ifleet index for gear to compute SPR values, other fleets with const F
+	 * @return void
 	**/
 FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const int ifleet)
 	// Average recruitment
 	spr_rbar = mean(value(recruits(spr_syr,spr_nyr)));
 
-	double   _r = spr_rbar;
+	double _r = spr_rbar;
 	dvector _rx = value(rec_sdd);
 	d3_array _M(1,nsex,1,nclass,1,nclass);
 	_M.initialize();
@@ -3380,7 +3370,7 @@ FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const 
 		_wa(h) = elem_prod(mean_wt(h), maturity(h));
 	}
 	
-	dmatrix  _fhk(1,nsex,1,nfleet);
+	dmatrix _fhk(1,nsex,1,nfleet);
 	d3_array _sel(1,nsex,1,nfleet,1,nclass);
 	d3_array _ret(1,nsex,1,nfleet,1,nclass);
 	for ( int h = 1; h <= nsex; h++ )
@@ -3428,12 +3418,13 @@ FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const 
 	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,ssb(nyr));
 	spr_cofl = ptrSPR->get_cofl(_N);
 
+
 	/**
 	 * @brief calculate effective sample size 
 	 * @details Calculate the effective sample size 
 	 *
-	 *  @param observed proportions
-	 *  @param predicted proportions
+	 * @param observed proportions
+	 * @param predicted proportions
 	**/
 FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
 	dvar_vector rtmp = elem_div((pobs-phat),sqrt(elem_prod(phat,(1-phat))));
@@ -3449,9 +3440,8 @@ FUNCTION double mn_length(const dvector& pobs)
 	 * @brief calculate effective sample size 
 	 * @details Calculate the effective sample size 
 	 *
-	 *  ARGS:
-	 *  @param observed proportions
-	 *  @param predicted proportions
+	 * @param observed proportions
+	 * @param predicted proportions
 	**/
 FUNCTION double mn_length(const dvar_vector& pobs)
   double mobs = value(pobs*mid_points);
@@ -3461,9 +3451,8 @@ FUNCTION double mn_length(const dvar_vector& pobs)
 	 * @brief calculate effective sample size 
 	 * @details Calculate the effective sample size 
 	 *
-	 *  ARGS:
-	 *  @param observed proportions
-	 *  @param predicted proportions
+	 * @param observed proportions
+	 * @param predicted proportions
 	**/
 FUNCTION double Sd_length(const dvector& pobs)
   double mobs = (pobs*mid_points);
@@ -3474,9 +3463,8 @@ FUNCTION double Sd_length(const dvector& pobs)
 	 * @brief calculate effective sample size 
 	 * @details Calculate the effective sample size 
 	 *
-	 *  ARGS:
-	 *  @param observed proportions
-	 *  @param predicted proportions
+	 * @param observed proportions
+	 * @param predicted proportions
 	**/
 FUNCTION double Eff_N_adj(const double, const dvar_vector& pobs, const dvar_vector& phat)
   int lb1 = pobs.indexmin();
@@ -3493,9 +3481,8 @@ FUNCTION double Eff_N_adj(const double, const dvar_vector& pobs, const dvar_vect
 	 * @brief calculate effective sample size 
 	 * @details Calculate the effective sample size 
 	 *
-	 *  ARGS:
-	 *  @param observed proportions
-	 *  @param predicted proportions
+	 * @param observed proportions
+	 * @param predicted proportions
 	**/
 FUNCTION double Eff_N2(const dvector& pobs, const dvar_vector& phat)
   int lb1 = pobs.indexmin();
