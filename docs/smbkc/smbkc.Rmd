@@ -1,6 +1,6 @@
 ---
 title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
-author: "The Gmacs development team"
+author: "Darcy Weber, Jie Zheng, James Ianelli"
 date: "May 2016"
 output:
   pdf_document:
@@ -37,7 +37,7 @@ options(xtable.comment = FALSE)
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("Zheng", "Gmacs")
+names(M) <- c("2015 Model", "Gmacs")
 
 jj <- 1 # The position in the list that Jies model outputs sit
 
@@ -149,12 +149,10 @@ There are no new changes in management of the fishery.
 All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015 (new time series), updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&G pot survey data in 2015.
 
 ## Changes in Assessment Methodology
-
 This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011. During the assessment in May 2015 and this assessment, many combinations of molting probability and trawl survey selectivities were evaluated to address the residual bias problems in the previous model. In September 2015, twenty scenarios were investigated. The detailed changes to the model parameters are described in details in E (Analytic Approach).
 
 ## Changes in Assessment Results
-
-Changes in assessment results depend on model scenarios.
+Changes in assessment results depend on model scenarios. 
 
 
 # B. Responses to SSC and CPT Comments
@@ -179,11 +177,9 @@ Blue king crab are sporadically distributed throughout the North Pacific Ocean f
 ![King crab Registration Area Q (Bering Sea).](figure/Fig2.png)
 
 ## Stock Structure
-
 The Alaska Department of Fish and Game (ADF&G) Gene Conservation Laboratory division has detected regional population differences between blue king crab collected from St. Matthew Island and the Pribilof Islands^[NOAA grant Bering Sea Crab Research II, NA16FN2621, 1997.]. NMFS tag-return data from studies on blue king crab in the Pribilof Islands and St. Matthew Island support the idea that legal-sized males do not migrate between the two areas (Otto and Cummiskey 1990). St. Matthew Island blue king crab tend to be smaller than their Pribilof conspecifics, and the two stocks are managed separately.
 
 ## Life History
-
 Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodid such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong, 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
 
 ## Management History

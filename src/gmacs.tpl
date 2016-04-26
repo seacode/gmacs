@@ -831,8 +831,8 @@ DATA_SECTION
 	ivector nvn_phz(1,nSizeComps);
 
 	LOC_CALCS
-		WriteCtl(nAgeCompType); 
-		WriteCtl(bTailCompression); 
+		WriteCtl(nAgeCompType_in); 
+		WriteCtl(bTailCompression_in); 
 		WriteCtl(nvn_ival_in); 
 		WriteCtl(nvn_phz_in);
 		WriteCtl(iCompAggregator);
@@ -1136,7 +1136,8 @@ PARAMETER_SECTION
 
 	// Recruitment deviation parameters
 	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	// init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -1213,7 +1214,7 @@ PARAMETER_SECTION
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
-	sdreport_vector sd_fbar(syr,nyr);
+	sdreport_vector sd_fbar(syr,nyr-1);
 	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector sd_log_ssb(syr,nyr);
 	sdreport_vector sd_log_dyn_Bzero(syr+1,nyr);
@@ -1307,7 +1308,7 @@ FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
 	sd_log_ssb = log(calc_ssb());
 	// F(1,nsex,syr,nyr,1,nclass);             ///> Fishing mortality
-	for ( int i = syr; i <= nyr; i++ )
+	for ( int i = syr; i <= nyr-1; i++ )
 	{
 		sd_fbar(i) = mean(F(1,i));
 	}
@@ -1969,7 +1970,7 @@ FUNCTION update_population_numbers_at_length
 
 	for ( i = syr; i <= nyr; i++ )
 	{
-		if ( i > syr )
+		// if ( i > syr )
 		{
 			recruits(i) *= mfexp(rec_dev(i));
 		}
@@ -2913,7 +2914,9 @@ FUNCTION calc_objective_function
 	dvariable ln_fbar;
 	for ( int k = 1; k <= nfleet; k++ )
 	{
-		fbar = mean(ft(k)(1));
+	 // Jim made penalty apply only to season 2 for Fbar ft(1,nfleet,1,nsex,syr,nyr,1,nseason);            ///> Fishing mortality by gear
+		fbar = mean( trans(ft(k,1))(2) );
+		// fbar = mean(ft(k,1) );
 		if ( pen_fbar(k) > 0  && fbar != 0 )
 		{
 			ln_fbar = log(fbar);

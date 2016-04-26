@@ -1,6 +1,6 @@
 ---
 title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
-author: "The Gmacs development team"
+author: "Darcy Weber, Jie Zheng, James Ianelli"
 date: "May 2016"
 output:
   pdf_document:
@@ -43,12 +43,10 @@ There are no new changes in management of the fishery.
 All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015 (new time series), updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&G pot survey data in 2015.
 
 ## Changes in Assessment Methodology
-
 This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011. During the assessment in May 2015 and this assessment, many combinations of molting probability and trawl survey selectivities were evaluated to address the residual bias problems in the previous model. In September 2015, twenty scenarios were investigated. The detailed changes to the model parameters are described in details in E (Analytic Approach).
 
 ## Changes in Assessment Results
-
-Changes in assessment results depend on model scenarios.
+Changes in assessment results depend on model scenarios. 
 
 
 # B. Responses to SSC and CPT Comments
@@ -73,11 +71,9 @@ Blue king crab are sporadically distributed throughout the North Pacific Ocean f
 ![King crab Registration Area Q (Bering Sea).](figure/Fig2.png)
 
 ## Stock Structure
-
 The Alaska Department of Fish and Game (ADF&G) Gene Conservation Laboratory division has detected regional population differences between blue king crab collected from St. Matthew Island and the Pribilof Islands^[NOAA grant Bering Sea Crab Research II, NA16FN2621, 1997.]. NMFS tag-return data from studies on blue king crab in the Pribilof Islands and St. Matthew Island support the idea that legal-sized males do not migrate between the two areas (Otto and Cummiskey 1990). St. Matthew Island blue king crab tend to be smaller than their Pribilof conspecifics, and the two stocks are managed separately.
 
 ## Life History
-
 Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodid such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong, 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
 
 ## Management History
@@ -191,44 +187,44 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
   \hline
 Year & N1 & N2 & N3 & MMB \\ 
   \hline
-1978 & 1198028.34 & 1675216.38 & 1102526.71 & 4562.14 \\ 
-  1979 & 3795459.21 & 1280122.07 & 1814565.57 & 6294.59 \\ 
-  1980 & 1488472.00 & 2651602.17 & 2445431.44 & 9501.16 \\ 
-  1981 & 1068794.96 & 1760553.66 & 2599174.61 & 9720.57 \\ 
-  1982 & 785880.19 & 1216150.89 & 1497265.97 & 7070.14 \\ 
-  1983 & 724232.35 & 869088.31 & 1758112.74 & 4368.42 \\ 
-  1984 & 963972.83 & 718416.56 & 1237882.34 & 3066.83 \\ 
-  1985 & 1242248.46 & 809609.07 & 1096395.28 & 2826.11 \\ 
-  1986 & 1300755.66 & 1002867.99 & 1234889.24 & 2845.04 \\ 
-  1987 & 1249533.06 & 1101303.95 & 1445535.35 & 3415.25 \\ 
-  1988 & 2462632.57 & 1111019.12 & 1620874.31 & 3834.88 \\ 
-  1989 & 1679009.03 & 1818084.41 & 1901879.75 & 4404.91 \\ 
-  1990 & 1795590.43 & 1597484.15 & 2301537.67 & 4853.21 \\ 
-  1991 & 1896384.35 & 1591686.39 & 2243659.17 & 4530.72 \\ 
-  1992 & 2160399.14 & 1650100.70 & 2355767.58 & 4689.23 \\ 
-  1993 & 1733784.58 & 1821705.91 & 2427350.24 & 5095.02 \\ 
-  1994 & 1869291.51 & 1630959.16 & 2368797.25 & 5034.33 \\ 
-  1995 & 1725273.80 & 1645499.81 & 2377062.30 & 4910.54 \\ 
-  1996 & 1151111.71 & 1563230.34 & 2383362.98 & 4502.15 \\ 
-  1997 & 833092.72 & 1198755.02 & 2058166.03 & 3900.89 \\ 
-  1998 & 461397.98 & 350783.33 & 679086.13 & 1923.02 \\ 
-  1999 & 496471.61 & 389171.38 & 781295.07 & 1623.22 \\ 
-  2000 & 445950.22 & 422321.81 & 889099.20 & 1775.45 \\ 
-  2001 & 236328.56 & 402670.37 & 991362.56 & 1913.16 \\ 
-  2002 & 391676.33 & 274580.66 & 1049257.86 & 2031.07 \\ 
-  2003 & 321389.41 & 321993.05 & 1046163.02 & 1969.77 \\ 
-  2004 & 590561.37 & 298428.00 & 1061880.88 & 2011.89 \\ 
-  2005 & 970391.22 & 449792.83 & 1085728.98 & 1979.87 \\ 
-  2006 & 592737.50 & 639308.22 & 1076653.45 & 2150.03 \\ 
-  2007 & 1086738.08 & 527129.58 & 1181833.96 & 2491.59 \\ 
-  2008 & 1077882.22 & 815674.11 & 1340736.44 & 2747.65 \\ 
-  2009 & 1058460.31 & 906638.73 & 1526049.67 & 3023.57 \\ 
-  2010 & 1033004.88 & 925375.53 & 1552153.96 & 2821.31 \\ 
-  2011 & 708686.77 & 915986.36 & 1458864.51 & 2454.14 \\ 
-  2012 & 877352.64 & 724473.48 & 1401581.85 & 2106.02 \\ 
-  2013 & 846160.79 & 758861.90 & 1606949.31 & 2439.98 \\ 
-  2014 & 712947.52 & 751438.07 & 1732956.26 & 2482.01 \\ 
-  2015 & 1602273.67 & 676146.85 & 1883629.43 & 2679.54 \\ 
+1978 & 3466429.21 & 1397966.94 & 1098665.56 & 4562.14 \\ 
+  1979 & 2887126.99 & 2506656.82 & 1861850.24 & 6294.59 \\ 
+  1980 & 1215214.03 & 2529627.74 & 3023745.78 & 9501.16 \\ 
+  1981 & 997968.99 & 1559947.97 & 2992065.45 & 9720.57 \\ 
+  1982 & 749415.08 & 1107688.79 & 1700682.75 & 7070.14 \\ 
+  1983 & 695651.34 & 811409.66 & 1870507.75 & 4368.42 \\ 
+  1984 & 933111.88 & 682301.66 & 1299281.96 & 3066.83 \\ 
+  1985 & 1216292.12 & 779388.11 & 1126911.18 & 2826.11 \\ 
+  1986 & 1273265.00 & 977467.76 & 1243062.22 & 2845.04 \\ 
+  1987 & 1207759.72 & 1076538.63 & 1437355.75 & 3415.25 \\ 
+  1988 & 2462904.10 & 1078361.23 & 1598195.99 & 3834.88 \\ 
+  1989 & 1639919.27 & 1807115.07 & 1866641.22 & 4404.91 \\ 
+  1990 & 1763700.11 & 1570822.18 & 2263466.28 & 4853.21 \\ 
+  1991 & 1855598.14 & 1563933.30 & 2196237.59 & 4530.72 \\ 
+  1992 & 2115872.06 & 1616767.28 & 2299074.41 & 4689.23 \\ 
+  1993 & 1660813.14 & 1784169.07 & 2359844.70 & 5095.02 \\ 
+  1994 & 1795747.80 & 1575410.25 & 2287948.00 & 5034.33 \\ 
+  1995 & 1640357.26 & 1583536.33 & 2276008.70 & 4910.54 \\ 
+  1996 & 1050670.34 & 1492398.28 & 2261231.42 & 4502.15 \\ 
+  1997 & 747528.65 & 1115978.23 & 1913183.20 & 3900.89 \\ 
+  1998 & 415725.79 & 336315.03 & 646677.07 & 1923.02 \\ 
+  1999 & 454873.58 & 357446.59 & 743153.23 & 1623.22 \\ 
+  2000 & 398240.42 & 387174.14 & 837866.63 & 1775.45 \\ 
+  2001 & 198831.21 & 362870.63 & 926970.07 & 1913.16 \\ 
+  2002 & 331199.54 & 239064.29 & 972398.34 & 2031.07 \\ 
+  2003 & 276794.63 & 274589.53 & 959120.85 & 1969.77 \\ 
+  2004 & 475486.63 & 255920.80 & 961694.66 & 2011.89 \\ 
+  2005 & 816340.60 & 367563.07 & 971129.99 & 1979.87 \\ 
+  2006 & 492167.51 & 601446.70 & 1062416.20 & 2150.03 \\ 
+  2007 & 1024353.93 & 487709.96 & 1214233.83 & 2491.59 \\ 
+  2008 & 1016803.44 & 765806.81 & 1342846.92 & 2747.65 \\ 
+  2009 & 996035.41 & 854033.30 & 1497569.52 & 3023.57 \\ 
+  2010 & 967461.71 & 871054.45 & 1496344.83 & 2821.31 \\ 
+  2011 & 643051.32 & 859213.40 & 1378962.97 & 2454.14 \\ 
+  2012 & 804436.55 & 666786.55 & 1300648.97 & 2106.02 \\ 
+  2013 & 767741.21 & 696587.71 & 1487642.03 & 2439.98 \\ 
+  2014 & 629752.45 & 684391.77 & 1595524.35 & 2482.01 \\ 
+  2015 & 1042044.48 & 602070.37 & 1728286.54 & 2679.54 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -285,7 +281,7 @@ Figure 17. Retrospective plot of model-estimated mature male biomass for 2015 mo
 
 ![Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.\label{fig:init_N}](figure/init_N-1.png) 
 
-![Time-varying natural mortality ($M_t$). Periods begin at 1976, 1980, 1985 and 1994.\label{fig:M_t}](figure/natural_mortality-1.png) 
+![Time-varying natural mortality ($M_t$). Specified pulse period occurs in 1998. \label{fig:M_t}](figure/natural_mortality-1.png) 
 
 
 \newpage
@@ -378,10 +374,10 @@ Both surveys are assigned a nominal date of July 1, the start of the crab year. 
   \hline
 Parameter & Estimate \\ 
   \hline
-R0 & 823237.49 \\ 
-  Rbar & 1033022.99 \\ 
-  ralpha & -1.35 \\ 
-  rbeta & -11.58 \\ 
+R0 & 771429.06 \\ 
+  Rbar & 930986.45 \\ 
+  ralpha & -1.36 \\ 
+  rbeta & -11.74 \\ 
    \hline
 \end{tabular}
 \end{table}
