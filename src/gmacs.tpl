@@ -1853,15 +1853,14 @@ FUNCTION calc_recruitment_size_distribution
 	 *
 	 *  April 28, 2015. There is no case here for initializing the model at unfished equilibrium conditions. Need to fix this for SRA purposes. SJDM.
 	 *
-	 * @param bInitializeUnfished
+	 * @param bInitializeUnfished is a boolian specifying if the model is to be initialized at unfished recruits or not (0 = FALSE, 1 = TRUE)
 	 * @param logR0
 	 * @param logRini
 	 * @param rec_sdd is the vector of recruitment size proportions. It has dimension (1,nclass)
-	 * @param rec_ini
-	 * @param M
-	 * @param S
+	 * @param rec_ini is the vector of initial size deviations. It has dimension (1,nclass)
+	 * @param M is a 3D array of the natural mortality. It has dimension (1,nsex,syr,nyr,1,nclass)
+	 * @param S is a 5D array of the survival rate (where S=exp(-Z)). It has dimension (1,nsex,syr,nyr,1,nseason,1,nclass,1,nclass)
 	 * @param d4_N is the numbers in each group (sex/maturity/shell), year, season and length. It has dimension (1,n_grp,syr,nyr+1,1,nseason,1,nclass)
-
 	**/
 FUNCTION calc_initial_numbers_at_length
 	dvariable log_initial_recruits;
@@ -1885,6 +1884,12 @@ FUNCTION calc_initial_numbers_at_length
 
 	for ( int h = 1; h <= nsex; h++ )
 	{
+						growth_transition(h)(1,1) = 0.2;
+						growth_transition(h)(1,2) = 0.7;
+						growth_transition(h)(1,3) = 0.1;
+						growth_transition(h)(2,2) = 0.4;
+						growth_transition(h)(2,3) = 0.6;
+						
 		A = growth_transition(h);
 		if ( bInitializeUnfished )
 		{
@@ -1995,11 +2000,6 @@ FUNCTION update_population_numbers_at_length
 						//cout << x << endl;
 						//cout << "sum(x): " << sum(x) << endl;
 
-						growth_transition(h)(1,1) = 0.2;
-						growth_transition(h)(1,2) = 0.7;
-						growth_transition(h)(1,3) = 0.1;
-						growth_transition(h)(2,2) = 0.4;
-						growth_transition(h)(2,3) = 0.6;
 
 						//growth_transition(h)(1,1) = 0.11;
 						//growth_transition(h)(1,2) = 0.83;
