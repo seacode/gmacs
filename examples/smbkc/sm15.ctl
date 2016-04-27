@@ -165,7 +165,7 @@
 ## Phase of estimation
   2
 ## STDEV in m_dev for Random walk
-  0.8
+  0.55
 ## Number of nodes for cubic spline or number of step-changes for option 3
   2
 ## Year position of the knots (vector must be equal to the number of nodes)

@@ -1079,6 +1079,9 @@ PARAMETER_SECTION
 	// rho       = theta(9)
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
+ 	init_bounded_number logN1o(5.0,15.0,1);			
+ 	init_bounded_number logN2o(5.0,15.0,1);
+ 	init_bounded_number logN3o(5.0,15.0,1);
 
 	// Growth and molting probability parameters Sex-specific
 	// alpha    = Grwth(1);
@@ -1915,6 +1918,9 @@ FUNCTION calc_initial_numbers_at_length
 			//d4_N(ig)(syr)(1)(1) = 3782350; // HARD CODED VALUES JIE HAS IN HIS SMBKC MODEL
 			//d4_N(ig)(syr)(1)(2) = 2419470;
 			//d4_N(ig)(syr)(1)(3) = 1678340;
+			d4_N(ig)(syr)(1)(1) = mfexp(logN1o);
+			d4_N(ig)(syr)(1)(2) = mfexp(logN2o);
+			d4_N(ig)(syr)(1)(3) = mfexp(logN3o);
 		}
 	  	if ( verbose == 1 ) cout << "in init length 2" << endl;
 	  	if ( verbose == 1 ) COUT(P(h));
