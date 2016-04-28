@@ -25,7 +25,7 @@
 3     # Season to calculate SSB
 # size_breaks (a vector giving the break points between size intervals with dimension nclass+1)
 90  105  120  135
-# weight-at-length input method (1 = allometry w_l = a*l^b, 2 = vector by sex)
+# weight-at-length input method (1 = allometry i.e. w_l = a*l^b, 2 = vector by sex)
 2
 # weight-at-length allometry w_l = a*l^b
 4.03E-07

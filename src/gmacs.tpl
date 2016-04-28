@@ -202,7 +202,14 @@ DATA_SECTION
 	init_vector fecundity(1,nclass);
 	init_matrix maturity(1,nsex,1,nclass);
 	init_vector m_prop(1,nseason);
-	!! WRITEDAT(fecundity); WRITEDAT(maturity);
+	LOC_CALCS
+		if ( sum(m_prop) != 1.0 )
+		{
+			cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1!" << endl;
+			exit(1);
+		}
+		WRITEDAT(fecundity); WRITEDAT(maturity);
+	END_CALCS
 
 	// |-------------|
 	// | FLEET NAMES |
@@ -831,9 +838,9 @@ DATA_SECTION
 	ivector nvn_phz(1,nSizeComps);
 
 	LOC_CALCS
-		WriteCtl(nAgeCompType_in); 
-		WriteCtl(bTailCompression_in); 
-		WriteCtl(nvn_ival_in); 
+		WriteCtl(nAgeCompType_in);
+		WriteCtl(bTailCompression_in);
+		WriteCtl(nvn_ival_in);
 		WriteCtl(nvn_phz_in);
 		WriteCtl(iCompAggregator);
 		nSizeCompCols.initialize();
