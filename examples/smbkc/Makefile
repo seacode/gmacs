@@ -13,7 +13,7 @@ else
     RM=rm -rf
 endif
 
-all: run
+all: both
 
 $(EXEC): $(DIST)$(EXEC).tpl
 	ln -sf $(DIST)$(EXEC) $@
@@ -23,13 +23,16 @@ $(DIST)$(EXEC).tpl:
 
 run: $(EXEC)
 	./$(EXEC) $(ARGS)
+
+plot:
+	R CMD BATCH plot.R
+
+both: $(EXEC)
+	./$(EXEC) $(ARGS)
 	R CMD BATCH plot.R
 
 sim: $(EXEC)
 	./$(EXEC) -ainp gmacs.par -sim 123
-
-plot:
-	R CMD BATCH plot.R
 
 clean:
 	@$(RM) -f $(EXEC)

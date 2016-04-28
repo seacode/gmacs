@@ -13,12 +13,11 @@
   14.3        -7         30        2       0    -7       30          # logR0
   10.0       -7         20        -1       1   -10.0     20.0        # logRini
   10.0        -7         20        1       0    -7       30          # logRbar
-  95.0      30         310        -2       1    72.5    7.25         # Recruitment Expected Value
-  0.15       0.1         7        -4       0    0.1     9.0          # Recruitment scale (variance component)
+  95.0      30         310        -2       1    72.5    7.25         # Recruitment size distribution expected value
+  0.15       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
  -0.40       -10      0.75        -4       0  -10.0    0.75          # ln(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation
-
 ## GROWTH PARAM CONTROLS                                                                ##
 ## nGrwth
 ##                                                                                      ##
@@ -26,9 +25,9 @@
 # ival        lb        ub         phz  prior     p1      p2         # parameter         #
   14.1      10.0      30.0         -3       0    0.0   999.0         # alpha males or combined
    0.0001    0.0       0.01        -3       0    0.0   999.0         # beta males or combined
-   0.26130   0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
- 115.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined
-   0.0621    0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
+   0.45      0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
+ 121.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined
+   0.060     0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
@@ -158,14 +157,15 @@
 ##      0 = constant natural mortality
 ##      1 = Random walk (deviates constrained by variance in M)
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
-##      3 = Blocked changes (deviates constrained by variance AT specific knots)
+##      3 = Blocked changes (deviates constrained by variance at specific knots)
 ##      4 = Time blocks
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3
 ## Phase of estimation
   2
 ## STDEV in m_dev for Random walk
-  0.55
+#  0.55
+  10.0
 ## Number of nodes for cubic spline or number of step-changes for option 3
   2
 ## Year position of the knots (vector must be equal to the number of nodes)

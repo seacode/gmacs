@@ -5,7 +5,7 @@
 \title{Plot growth transition}
 \usage{
 plot_growth_transition(M, xlab = "Mid-point of size-class (mm)",
-  ylab = "P(size transition | molt)", slab = "Sex")
+  ylab = "P(growth transition)", slab = "Sex")
 }
 \arguments{
 \item{M}{a list of object(s) created by read_admb function}

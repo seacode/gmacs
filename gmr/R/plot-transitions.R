@@ -10,7 +10,7 @@
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_growth_transition <- function(M, xlab = "Mid-point of size-class (mm)", ylab = "P(size transition | molt)", slab = "Sex")
+plot_growth_transition <- function(M, xlab = "Mid-point of size-class (mm)", ylab = "P(growth transition)", slab = "Sex")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -29,26 +29,25 @@ plot_growth_transition <- function(M, xlab = "Mid-point of size-class (mm)", yla
         df <- data.frame(Model = names(M)[i], mp = x, sex = s, G)
         mdf <- rbind(mdf, df)
     }
-    
     mdf <- melt(mdf, id.var = c("Model", "sex", "mp"))
-    mdf$variable <- as.character(mdf$variable)
-    mdf$variable <- as.factor(gsub("X", "", mdf$variable))
-    mdf$variable <- factor(mdf$variable, levels = sort(as.numeric(levels(mdf$variable))))
+    mdf$variable <- gsub("X", "", as.character(mdf$variable))
+    mdf$variable <- as.numeric(mdf$variable)
     mdf$sex <- factor(mdf$sex, levels = sort(levels(mdf$sex)))
+    mdf$mp <- factor(mdf$mp)
 
     if (length(unique(mdf$sex)) == 1 && length(unique(mdf$Model)) == 1)
     {
-        p <- ggplot(mdf, aes(x = mp, y = value))
+        p <- ggplot(mdf, aes(x = variable, y = value))
     } else if (length(unique(mdf$sex)) != 1 && length(unique(mdf$Model)) == 1) {
-        p <- ggplot(mdf, aes(x = mp, y = value, linetype = factor(sex)))
+        p <- ggplot(mdf, aes(x = variable, y = value, linetype = factor(sex)))
     } else if (length(unique(mdf$sex)) == 1 && length(unique(mdf$Model)) != 1) {
-        p <- ggplot(mdf, aes(x = mp, y = value, col = Model))
+        p <- ggplot(mdf, aes(x = variable, y = value, col = Model))
     } else {
-        p <- ggplot(mdf, aes(x = mp, y = value, col = Model, linetype = factor(sex)))
+        p <- ggplot(mdf, aes(x = variable, y = value, col = Model, linetype = factor(sex)))
     }
     p <- p + geom_line()
     p <- p + labs(x = xlab, y = ylab, linetype = slab)
-    p <- p + facet_wrap(~variable)
+    p <- p + facet_wrap(~mp)
     #if(!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)
 }
@@ -63,13 +62,12 @@ plot_growth_transition <- function(M, xlab = "Mid-point of size-class (mm)", yla
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @param slab the sex label for the plot that appears above the key
-#' @param females logical indicating if the females are to be plotted or not
 #' @return plot of size transition matrix
 #' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
-plot_size_transition <- function(M, xlab = "Mid-point of size-class (mm)", ylab = "P(size transition | molt)",
-                                 slab = "Sex", females = FALSE)
+plot_size_transition <- function(M, xlab = "Mid-point of size-class after transition (mm)", ylab = "P(growth transition | molt)",
+                                 slab = "Sex")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -80,35 +78,32 @@ plot_size_transition <- function(M, xlab = "Mid-point of size-class (mm)", ylab 
     {
         x <- M[[i]]$mid_points
         G <- M[[i]]$size_transition_M
-        if (females) G <- rbind(G, M[[i]]$size_transition_F)
-        #G <- M[[i]]$tS
-        #G <- M[[i]]$growth_matrix
+        if (!is.null(M[[i]]$size_transition_F)) G <- rbind(G, M[[i]]$size_transition_F)
         h <- dim(G)[1] / dim(G)[2]
         colnames(G) <- paste(x)
-        #s <- .SEX[as.vector(sapply(1:h, rep, 20)) + 1]
         s <- .SEX[as.vector(sapply(1:h, rep, length(x))) + 1]
         df <- data.frame(Model = names(M)[i], mp = x, sex = s, G)
         mdf <- rbind(mdf, df)
     }
     mdf <- melt(mdf, id.var = c("Model", "sex", "mp"))
-    mdf$variable <- as.character(mdf$variable)
-    mdf$variable <- as.factor(gsub("X", "", mdf$variable))
-    mdf$variable <- factor(mdf$variable, levels = sort(as.numeric(levels(mdf$variable))))
+    mdf$variable <- gsub("X", "", as.character(mdf$variable))
+    mdf$variable <- as.numeric(mdf$variable)
     mdf$sex <- factor(mdf$sex, levels = sort(levels(mdf$sex)))
+    mdf$mp <- factor(mdf$mp)
 
     if (length(unique(mdf$sex)) == 1 && length(unique(mdf$Model)) == 1)
     {
-        p <- ggplot(mdf, aes(x = mp, y = value))
+        p <- ggplot(data = mdf, aes(x = variable, y = value))
     } else if (length(unique(mdf$sex)) != 1 && length(unique(mdf$Model)) == 1) {
-        p <- ggplot(mdf, aes(x = mp, y = value, linetype = factor(sex)))
+        p <- ggplot(data = mdf, aes(x = variable, y = value, linetype = factor(sex)))
     } else if (length(unique(mdf$sex)) == 1 && length(unique(mdf$Model)) != 1) {
-        p <- ggplot(mdf, aes(x = mp, y = value, col = Model))
+        p <- ggplot(data = mdf, aes(x = variable, y = value, col = Model))
     } else {
-        p <- ggplot(mdf, aes(x = mp, y = value, col = Model, linetype = factor(sex)))
+        p <- ggplot(data = mdf, aes(x = variable, y = value, col = Model, linetype = factor(sex)))
     }
     p <- p + geom_line()
     p <- p + labs(x = xlab, y = ylab, linetype = slab)
-    p <- p + facet_wrap(~variable)
+    p <- p + facet_wrap(~mp)
     #if(!.OVERLAY) p <- p + facet_wrap(~Model)
     print(p + .THEME)
 }

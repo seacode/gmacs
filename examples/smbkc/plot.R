@@ -107,7 +107,7 @@ ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh)
 dev.off()
 
 plot_growth_transition(M)
-ggsave(paste0(.FIGS, "transition_growth.png"), width = ww*1.5, height = hh*1.5)
+ggsave(paste0(.FIGS, "transition_growth.png"), width = ww, height = hh)
 dev.off()
 
 plot_size_transition(M)

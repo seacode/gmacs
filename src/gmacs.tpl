@@ -1195,7 +1195,8 @@ PARAMETER_SECTION
 	matrix molt_probability(1,nsex,1,nclass); ///> probability of molting
 	3darray P(1,nsex,1,nclass,1,nclass);      //> Diagonal matrix of molt probabilities
 
-	3darray growth_transition(1,nsex,1,nclass,1,nclass);
+	3darray growth_transition(1,nsex,1,nclass,1,nclass);   ///> The growth transition matrix
+	3darray size_transition(1,nsex,1,nclass,1,nclass);     ///> The size transition matrix (molting probability * growth transition)
 	3darray M(1,nsex,syr,nyr,1,nclass);                    ///> Natural mortality
 	4darray F(1,nsex,syr,nyr,1,nseason,1,nclass);          ///> Fishing mortality
 	4darray Z(1,nsex,syr,nyr,1,nseason,1,nclass);          ///> Total mortality
@@ -1589,13 +1590,16 @@ FUNCTION calc_growth_increments
 
 
 	/**
-	 * \brief Calclate the size transtion matrix.
+	 * \brief Calclate the growth and size transtion matrix
 	 * \Authors Team
 	 * \details Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution.  This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.
 	 *
 	 * This function loops over sex, then loops over the rows of the size transition matrix for each sex.  The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.
    	 *
   	 * Issue 112 details some of evolution of code development here
+  	 *
+  	 * @param gscale
+  	 * @param P a 3D array of molting probabilities with dimension (1,nsex,1,nclass,1,nclass)
 	**/
 FUNCTION calc_growth_transition
 	int h,l,ll;
@@ -1604,7 +1608,6 @@ FUNCTION calc_growth_transition
 	dvar_vector psi(1,nclass+1);
 	dvar_vector sbi(1,nclass+1);
 	dvar_matrix At(1,nclass,1,nclass);
-	growth_transition.initialize();
 
 	for ( h = 1; h <= nsex; h++ )
 	{
@@ -1612,8 +1615,7 @@ FUNCTION calc_growth_transition
 		sbi = size_breaks / gscale(h);
 		for ( l = 1; l <= nclass; l++ )
 		{
-			dMeanSizeAfterMolt = (mid_points(l) + molt_increment(h)(l)) / gscale(h); //change size_breaks to mid_points by Jie Zheng
-			psi.initialize();
+			dMeanSizeAfterMolt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
 			for ( ll = l; ll <= nclass+1; ll++ )
 			{
 				if ( ll <= nclass+1 )
@@ -1625,6 +1627,11 @@ FUNCTION calc_growth_transition
 			At(l)(l,nclass) = At(l)(l,nclass) / sum(At(l));
 		}
 		growth_transition(h) = At;
+		size_transition(h) = P(h) * growth_transition(h);
+		for ( int l = 1; l <= nclass; l++ )
+		{
+			size_transition(h,l,l) += value(1.0 - P(h,l,l));
+		}
 	}
 
 
@@ -1644,17 +1651,14 @@ FUNCTION calc_natural_mortality
 		M(h) = M0;
 	}
 
-	// Add random walk to natural mortality rate.
-	// if ( active( m_dev ) )
+	// Add random walk to natural mortality rate
+	if ( active(m_dev) )
 	{
 		dvar_vector delta(syr+1,nyr);
 		delta.initialize();
 		switch( m_type )
 		{
-			// would this line ever occur if m_dev active?
-			case 0: // constant natural mortality
-				delta = 0;
-		  	break;
+			// case 0 not here as this is not evaluated if m_dev is not active
 			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
 			break;
@@ -1683,7 +1687,7 @@ FUNCTION calc_natural_mortality
 						delta(i) = m_dev(idev);
 						for ( h = 1; h <= nsex; h++ )
 						{
-							M(h)(i)  = mfexp(m_dev(idev));
+							M(h)(i) = mfexp(m_dev(idev));
 						}
 					}
 				}
@@ -1698,14 +1702,13 @@ FUNCTION calc_natural_mortality
 				{
 			 		for ( int i = syr+1; i <= nyr; i++ )
 					{
-						M(h)(i)  = M(h)(syr) * mfexp(delta(i)); // Deltas are devs from base value (not a walk)
+						M(h)(i) = M(h)(syr) * mfexp(delta(i)); // Deltas are devs from base value (not a walk)
 					}
 				}
 			break;                        
 		}
-
 		// Update M by year.
-		if ( m_type < 4 ) //add by Jie Zheng
+		if ( m_type < 4 )
 		{
 			for ( int h = 1; h <= nsex; h++ )
 			{
@@ -1724,6 +1727,7 @@ FUNCTION calc_natural_mortality
 	 *
 	 * ISSUE, for some reason the diagonal of S goes to NAN if linear growth model is used. Due to F.
 	 *
+	 * @param m_prop is a vector specifying the proportion of natural mortality (M) to be applied each season
 	 * @return NULL
 	**/
 FUNCTION calc_total_mortality
@@ -1750,6 +1754,7 @@ FUNCTION calc_total_mortality
 	 * @brief Calculate total instantaneous mortality rate and survival rate for dynamic Bzero
 	 * @details \f$ S = exp(-Z) \f$
 	 *
+	 * @param m_prop is a vector specifying the proportion of natural mortality (M) to be applied each season
 	 * @return NULL
 	**/
 FUNCTION reset_Z_to_M
@@ -1772,8 +1777,8 @@ FUNCTION reset_Z_to_M
 
 
 	/**
-	 * \brief Calculate the probability of moulting vs carapace width.
-	 * \details Note that the parameters molt_mu and molt cv can only be estimated in cases where there is new shell and old shell data. Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).
+	 * \brief Calculate the probability of moulting by carapace width.
+	 * \details Note that the parameters molt_mu and molt_cv can only be estimated in cases where there is new shell and old shell data. Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).
 	 *
 	 * @param molt_mu is the mean of the distribution
 	 * @param molt_cv scales the variance of the distribution
@@ -1887,13 +1892,7 @@ FUNCTION calc_initial_numbers_at_length
 
 	for ( int h = 1; h <= nsex; h++ )
 	{
-						growth_transition(h)(1,1) = 0.2;
-						growth_transition(h)(1,2) = 0.7;
-						growth_transition(h)(1,3) = 0.1;
-						growth_transition(h)(2,2) = 0.4;
-						growth_transition(h)(2,3) = 0.6;
-						
-		A = growth_transition(h);
+		A = growth_transition(h); // I THINK THIS OUGHT TO BE size_transition
 		if ( bInitializeUnfished )
 		{
 			// Unfished conditions
@@ -2014,7 +2013,7 @@ FUNCTION update_population_numbers_at_length
 						//growth_transition(h)(2,3) = 0.89;
 
 						//x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
-						x = x * growth_transition(h);
+						x = x * size_transition(h);
 
 						//cout << "S(h)(i)(j)" << endl;
 						//cout << S(h)(i)(j) << endl;
@@ -2056,6 +2055,7 @@ FUNCTION update_population_numbers_at_length
 					// Mortality
 					x = x * S(h)(i)(j);
 					// Molting and growth
+					// THIS IS ALL WRONG NOW, DOES NOT INFLUENCE SMBKC
 					if (j == season_growth) x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
 					if (j == nseason && j == season_growth)
 					{
@@ -3257,7 +3257,7 @@ REPORT_SECTION
 		dvector pMoltInc = dMoltInc;
 		REPORT(pMoltInc);
 	} else {
-		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize,iMoltIncSex);
+		dvar_vector pMoltInc = calc_growth_increments(dPreMoltSize, iMoltIncSex);
 		REPORT(pMoltInc);
 	}
 	REPORT(survey_q);
@@ -3265,36 +3265,24 @@ REPORT_SECTION
 	// Growth and size transition.
 	REPORT(P);
 	REPORT(growth_transition);
+	// I don't know why this transposed stuff is here, could be depreciated but should check gmr first
 	d3_array tG(1,nsex,1,nclass,1,nclass);
 	d3_array tS(1,nsex,1,nclass,1,nclass);
 	for ( int h = 1; h <= nsex; h++ )
 	{
-		tG(h)=trans(value(growth_transition(h)));
-		tS(h)=trans(value(P(h) * growth_transition(h)));
-		for ( int l = 1; l <= nclass; ++l )
-		{
-			tS(h)(l,l) += value(1.0-P(h)(l,l));
-		}
+		tG(h) = trans(value(growth_transition(h)));
+		tS(h) = trans(value(size_transition(h)));
 	}
 	REPORT(tG);
 	REPORT(tS);
 	dmatrix size_transition_M(1,nclass,1,nclass);
 	dmatrix size_transition_F(1,nclass,1,nclass);
-
 	// For Jim's r-script.
-	size_transition_M = value(P(1) * growth_transition(1));
-	for ( int i = 1; i <= nclass; i++ )
-	{
-		size_transition_M(i,i) += value(1.-P(1,i,i));
-	}
+	size_transition_M = value(size_transition(1));
 	REPORT(size_transition_M);
 	if ( nsex == 2 )
 	{
-	  	size_transition_F = value(P(2) * growth_transition(2));
-  		for ( int i = 1; i <= nclass; i++ )
-		{
-			size_transition_M(i,i) += value(1.0 - P(2,i,i));
-		}
+	  	size_transition_F = value(size_transition(2));
 		REPORT(size_transition_F);
 	}
 
@@ -3303,8 +3291,7 @@ REPORT_SECTION
 	 * @brief Calculate mature male biomass (MMB)
 	 * @details Calculation of the mature male biomass is based on the numbers-at-length summed over each shell condition.
 	 *
-	 * TODO
-	 * Add female component if lamda < 1
+	 * TODO: Add female component if lamda < 1
 	 *
 	 * @return dvar_vector ssb (model mature biomass).
 	**/

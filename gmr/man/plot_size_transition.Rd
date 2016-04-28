@@ -4,8 +4,9 @@
 \alias{plot_size_transition}
 \title{Plot size transition}
 \usage{
-plot_size_transition(M, xlab = "Mid-point of size-class (mm)",
-  ylab = "P(size transition | molt)", slab = "Sex", females = FALSE)
+plot_size_transition(M,
+  xlab = "Mid-point of size-class after transition (mm)",
+  ylab = "P(growth transition | molt)", slab = "Sex")
 }
 \arguments{
 \item{M}{list of object(s) created by read_admb function}
@@ -15,8 +16,6 @@ plot_size_transition(M, xlab = "Mid-point of size-class (mm)",
 \item{ylab}{the y-axis label for the plot}
 
 \item{slab}{the sex label for the plot that appears above the key}
-
-\item{females}{logical indicating if the females are to be plotted or not}
 }
 \value{
 plot of size transition matrix
