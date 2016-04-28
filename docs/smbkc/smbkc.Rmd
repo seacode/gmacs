@@ -384,7 +384,8 @@ plot_selectivity(M, ncol = 5)
 ```
 
 ```{r molt_prob, fig.cap = "Estimated molting probabilities for stage-1 crab for different scenarios.\\label{fig:molt_prob}"}
-plot_molt_prob(M, xlab = "Carapace length (mm)")
+A <- M; A[[jj]] <- NULL
+plot_molt_prob(A, xlab = "Carapace length (mm)")
 ```
 
 ```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass and model predictions for 2016 model estimates under 18 scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
@@ -404,8 +405,8 @@ Figure 12(8). Standardized residuals for total trawl survey biomass for scenario
 Figure 13(3). Bubble plots of residuals of stage compositions for scenario 3 for St. Mathew Island blue king crab. Empty circles indicate negative residuals, filled circles indicate positive residuals, and differences in bubble size indicate relative differences in the magnitude of residuals. Upper, middle, and lower plots are trawl survey, pot survey, and observer data.
 
 ```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches with scenario 10.\\label{fig:fit_to_catch}"}
-A <- M; A[[3]] <- NULL
-plot_catch(A)
+#A <- M; A[[jj]] <- NULL
+plot_catch(M)
 ```
 
 ```{r recruitment, fig.cap = "Estimated recruitment time series during 1979-2015 with 18 scenarios. Estimated recruitment time series ($R_t$) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.\\label{fig:recruitment}"}
@@ -422,15 +423,15 @@ plot_ssb(M)
 Figure 17. Retrospective plot of model-estimated mature male biomass for 2015 model scenario 10 (top panel) on Feb. 15 and scenario 10-4 (bottom panel) at time of survey with terminal years 2007-2015. Estimates are based on all available data up to and including terminal-year trawl and pot surveys.
 
 ```{r sc_pot_m, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\\label{fig:sc_pot_m}"}
-plot_size_comps(A, 1)
+plot_size_comps(M, 1)
 ```
 
 ```{r sc_pot_discarded_m, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey.\\label{fig:sc_pot_discarded_m}"}
-plot_size_comps(A, 2)
+plot_size_comps(M, 2)
 ```
 
 ```{r sc_pot_discarded_f, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey.\\label{fig:sc_pot_discarded_f}"}
-plot_size_comps(A, 3)
+plot_size_comps(M, 3)
 ```
 
 ```{r length_weight, fig.cap = "Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs).\\label{fig:length-weight}"}
@@ -444,16 +445,17 @@ plot_recruitment_size(M, xlab = "Carapace width (mm)")
 ```
 
 ```{r growth_inc, fig.cap = "Growth increment (mm) each molt by sex in the OneSex and TwoSex models.\\label{fig:growth_inc}"}
+A <- M; A[[jj]] <- NULL
 plot_growth_inc(A)
-#plot_growth_inc(M)
 ```
 
 ```{r growth_trans, fig.cap = "Growth transitions.\\label{fig:growth_trans}"}
-plot_growth_transition(M, xlab = "Carapace length (mm)")
+A <- M; A[[jj]] <- NULL
+plot_growth_transition(A, xlab = "Carapace length (mm)")
 ```
 
 ```{r size_trans, fig.cap = "Size transitions (i.e. the combination of the growth matrix and molting probabilities).\\label{fig:size_trans}"}
-plot_size_transition(M, xlab = "Carapace length (mm)", female = TRUE)
+plot_size_transition(M, xlab = "Carapace length after transition (mm)")
 ```
 
 ```{r init_N, fig.cap = "Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.\\label{fig:init_N}"}
