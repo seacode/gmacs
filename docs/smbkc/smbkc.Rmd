@@ -1,6 +1,6 @@
 ---
 title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
-author: "Darcy Weber, Jie Zheng, James Ianelli"
+author: "Darcy Webber, Jie Zheng, James Ianelli"
 date: "May 2016"
 output:
   pdf_document:
@@ -54,7 +54,7 @@ M[[jj]]$fit$est[ii] <- log(0.000453592 * 1e+6 * c(10.0578,13.8772,20.9465,21.430
 M[[jj]]$fit$std[ii] <- NA
 
 # Add natural mortality data
-ii <- which(M[[jj]]$mod_yrs == 1999)
+ii <- which(M[[jj]]$mod_yrs == 1998)
 M[[jj]]$M[ii,] <- 0.937813
 M[[jj]]$M[21,] <- M[[jj]]$M[1,]
 
@@ -155,7 +155,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 
 The stock was above MSST in 2014/15 and is hence not overfished. Overfishing did not occur.
 
-6. **Basis for the OFL**: Estimated Feb 15 mature-male biomass ($MMB_\text{mating}$) is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_{MSY}$ proxy is obtained by averaging estimated $MMB_\text{mating}$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference time period.
+6. **Basis for the OFL**: Estimated Feb 15 mature-male biomass ($MMB_\text{mating}$) is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_{MSY}$ proxy is obtained by averaging estimated $MMB_\text{mating}$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.
 
 
 # A. Summary of Major Changes
@@ -217,7 +217,7 @@ Though historical observer data are limited due to very limited samplings, bycat
 
 Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use an updated trawl-survey time series provided by R. Foy in August 2015 (new time series), as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The new and old time series of trawl survey area-swept estimates were compared in May 2015 and only the new time series was used in this assessment. The data extent and availability is shown in Figure \ref{fig:data_extent}).
 
-```{r data_extent, fig.cap = "Data extent for the gmacs model configuration.\\label{fig:data_extent}"}
+```{r data_extent, fig.cap = "Data extent for the SMBKC assessment.\\label{fig:data_extent}"}
 #A <- M[[2]]
 #names(A) <- "SMBKC"
 fn <- paste0(.MODELDIR[1], "gmacs")
@@ -233,10 +233,10 @@ Major data sources used in this assessment are annual directed-fishery retained-
 ![Trawl and pot-survey stations used in the SMBKC stock assessment.](figure/Fig3.png)
 
 ## Other Data Sources
+As with the most recent model configuration developed for this assessment, this version
+ makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the base-model configuration used for the 2012 and 2013 assessments.
 
-The alternative model configuration developed for this assessment makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the base-model configuration used for the 2012 and 2013 assessments.
-
-## Major Excluded Data Sources
+## Excluded Data Sources
 
 Groundfish bycatch size-frequency data available for selected years, though used in the model-based assessment in place prior to 2011, play no direct role in this analysis. This is because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90-mm+ CL male blue king crab from reporting areas 521 and 524.
 
@@ -244,31 +244,26 @@ Groundfish bycatch size-frequency data available for selected years, though used
 # E. Analytic Approach
 
 ## History of Modeling Approaches for this Stock
-
 A four-stage catch-survey-analysis (CSA) assessment model was used before 2011 to estimate abundance and biomass and prescribe fishery quotas for the SMBKC stock (2010 SAFE; Zheng et al. 1997). The four-stage CSA is similar to a full length-based analysis, the major difference being coarser length groups, which are more suited to a small stock with consistently low survey catches. In this approach, the abundance of male crab with a CL of 90 mm or above is modeled in terms of four crab stages: stage 1: 90-104 mm CL; stage 2: 105-119 mm CL; stage 3: newshell 120-133 mm CL; and stage 4: oldshell $\ge$ 120 mm CL and newshell $\ge$ 134 mm CL. Motivation for these stage definitions comes from the fact that for management of the SMBKC stock, male crab measuring at least 105 mm CL are considered mature, whereas 120 mm CL is considered a proxy for the legal size of 5.5 in carapace width, including spines. Additional motivation for these stage definitions derives from an estimated average growth increment of about 14 mm per molt for SMBKC (Otto and Cummiskey 1990).
 
 Concerns about the pre-2011 assessment model led to CPT and SSC recommendations that included development of an alternative model with provisional assessment based on survey biomass or some other index of abundance. An alternative 3-stage model was proposed to the CPT in May 2011 but was requested to proceed with a survey-based approach for the Fall 2011 assessment. In May 2012 the CPT approved a slightly revised and better documented version of the alternative model for assessment.
 
 ## Assessment Methodology
-
-The current SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. 
+The 2015 SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. 
 
 Each model year is split into four seasons.
 
 A detailed description of the base model and its implementation in the software AD Model Builder (Fournier et al. 2012) is presented in Appendix A.
 
 ## Model Selection and Evaluation
-
-In May 2015, eight model scenarios were considered. In this (September 2015) assessment, twenty scenarios are examined:
+In May 2015, eight model scenarios were considered followed by 20 scenarios examined in September 2015.
+In this presentation results from the selected model in September was used for contrast with the current
+implementation.
 
 ## Results
-
-Additional results are presented for model scenarios 3, 8, 10, 11, and 10-4, as these scenarios represent different approaches. We recommend scenario 10-4 to be used for the overfishing determination in 2015, based on the fit of the data, plausibility of parameter estimates, and quality of area-swept abundance estimates.
-
+Preliminary results for the gmacs configuration is provided here with comparisons shown in Fig XX.
 
 # F. Calculation of the OFL and ABC
-
-The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality $F_{OFL}$. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of $B_{MSY}$ and $F_{MSY}$, along with two additional parameters $\alpha$ and $\beta$, $F_{OFL}$ is determined by the control rule
 
 $$\text{a) } F_{OFL} = F_{MSY}, \quad \text{when } B/B_{MSY} > 1$$
 
@@ -365,8 +360,8 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
 ```{r pop_abundance, results = "asis"}
 A <- M[[1]]
 df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
-tab <- xtable(df, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on Feb. 15 for scenario 1. All abundances are at time of survey.", label = "tab:pop_abundance")
-print(tab, caption.placement = "top", include.rownames = FALSE)
+tab <- xtable(df, digits=0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on Feb. 15 for scenario 1. All abundances are at time of survey.", label = "tab:pop_abundance")
+print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
 ```
 
 ![Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&G pot-survey data used in the assessment.](figure/Fig4.png)
@@ -396,9 +391,12 @@ plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 plot_cpue(M, "ADFG Pot", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
+```{r bts_resid, fig.cap = " Standardized residuals for total trawl survey biomass for Gmacs configuration. \\label{fig:bts_resid}"}
+plot_cpue(M, "ADFG Pot", ylab = "Pot survey CPUE (crab/potlift)")
+```
+
 Figure 11b. Comparisons of total male pot survey CPUEs and model predictions for 2015 model estimates under 7 scenarios with additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations of scenario 9.
 
-Figure 12(3). Standardized residuals for total trawl survey biomass for scenario 3.
 
 Figure 12(8). Standardized residuals for total trawl survey biomass for scenario 8.
 
