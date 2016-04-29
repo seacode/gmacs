@@ -1072,8 +1072,9 @@ INITIALIZATION_SECTION
 	survey_q     q_ival;
 	log_add_cv   log_add_cv_ival;
 
+
 PARAMETER_SECTION
-	
+	!! cout << "*** Parameter section ***" << endl;
 	// Leading parameters
 	// M         = theta(1)
 	// ln(Ro)    = theta(2)
@@ -1084,11 +1085,9 @@ PARAMETER_SECTION
 	// logSigmaR = theta(7)
 	// steepness = theta(8)
 	// rho       = theta(9)
+	// logN0     = theta(10)
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
- 	init_bounded_number logN1o(5.0,15.0,1);			
- 	init_bounded_number logN2o(5.0,15.0,1);
- 	init_bounded_number logN3o(5.0,15.0,1);
 
 	// Growth and molting probability parameters Sex-specific
 	// alpha    = Grwth(1);
@@ -1169,20 +1168,21 @@ PARAMETER_SECTION
 
 	number fpen;
 	number M0;              ///> natural mortality rate
-	number logR0;           ///> logarithm of unfished recruits.
+	number logR0;           ///> logarithm of unfished recruits
 	number logRbar;         ///> logarithm of average recruits(syr+1,nyr)
-	number logRini;         ///> logarithm of initial recruitment(syr).
+	number logRini;         ///> logarithm of initial recruitment(syr)
 	number ra;              ///> Expected value of recruitment distribution
 	number rbeta;           ///> rate parameter for recruitment distribution
-	number logSigmaR;       ///> standard deviation of recruitment deviations.
+	number logSigmaR;       ///> standard deviation of recruitment deviations
 	number steepness;       ///> steepness of the SRR
-	number rho;             ///> autocorrelation coefficient in recruitment.
+	number rho;             ///> autocorrelation coefficient in recruitment
+	vector logN0(1,nclass); ///> initial numbers at length
 
-	vector   alpha(1,nsex); ///> intercept for linear growth increment model.
-	vector    beta(1,nsex); ///> slope for the linear growth increment model.
-	vector  gscale(1,nsex); ///> scale parameter for the gamma distribution.
-	vector molt_mu(1,nsex); ///> 50% probability of molting at length each year.
-	vector molt_cv(1,nsex); ///> CV in molting probabilility.
+	vector   alpha(1,nsex); ///> intercept for linear growth increment model
+	vector    beta(1,nsex); ///> slope for the linear growth increment model
+	vector  gscale(1,nsex); ///> scale parameter for the gamma distribution
+	vector molt_mu(1,nsex); ///> 50% probability of molting at length each year
+	vector molt_cv(1,nsex); ///> CV in molting probabilility
 
 	vector rec_sdd(1,nclass); ///> recruitment size_density_distribution
 
@@ -1350,6 +1350,14 @@ FUNCTION initialize_model_parameters
 	logSigmaR = theta(7);
 	steepness = theta(8);
 	rho       = theta(9);
+
+	if ( bInitializeUnfished == 2 )
+	{
+		for ( int l = 1; l <= nclass; l++ )
+		{
+			logN0(l) = theta(9+l);
+		}
+	}
 
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// Get Growth & Molting parameters
@@ -1868,7 +1876,7 @@ FUNCTION calc_recruitment_size_distribution
 	 *
 	 *  April 28, 2015. There is no case here for initializing the model at unfished equilibrium conditions. Need to fix this for SRA purposes. SJDM.
 	 *
-	 * @param bInitializeUnfished is a boolian specifying if the model is to be initialized at unfished recruits or not (0 = FALSE, 1 = TRUE)
+	 * @param bInitializeUnfished
 	 * @param logR0
 	 * @param logRini
 	 * @param rec_sdd is the vector of recruitment size proportions. It has dimension (1,nclass)
@@ -1882,8 +1890,19 @@ FUNCTION calc_initial_numbers_at_length
 	d3_newShell.initialize();
 	d3_oldShell.initialize();
 
-	// Initial recrutment
-	log_initial_recruits = (bInitializeUnfished) ? logR0 : logRini;
+	// Initial recruitment
+	switch( bInitializeUnfished )
+	{
+		case 0: // Unfished conditions
+			log_initial_recruits = logR0;
+		break;
+		case 1: // Steady-state fished conditions
+			log_initial_recruits = logRini;
+		break;
+		case 2: // Free parameters
+			log_initial_recruits = logRini;
+		break;
+	}
 	recruits(syr) = mfexp(log_initial_recruits);
 	dvar_vector rt = 1.0/nsex * recruits(syr) * rec_sdd;
 
@@ -1899,50 +1918,73 @@ FUNCTION calc_initial_numbers_at_length
 
 	for ( int h = 1; h <= nsex; h++ )
 	{
-		A = growth_transition(h); // I THINK THIS OUGHT TO BE size_transition
-		if ( bInitializeUnfished )
+		A = growth_transition(h); // 2016-04-29 I THINK THIS OUGHT TO BE size_transition
+		switch( bInitializeUnfished )
 		{
-			// Unfished conditions
-			for ( int i = 1; i <= nclass; i++ )
-			{
-				_S(i,i) = mfexp(-M(h)(syr)(i));
-			}
-		} else {
-			// Steady-state fished conditions
-			_S = S(h)(syr)(1);
+			case 0: // Unfished conditions
+				for ( int i = 1; i <= nclass; i++ )
+				{
+					_S(i,i) = mfexp(-M(h)(syr)(i));
+				}
+				// Single shell condition
+				if ( nshell == 1 && nmature == 1 )
+				{
+					calc_equilibrium(x,A,_S,rt);
+					ig = pntr_hmo(h,1,1);
+					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+				}
+				// Continuous molt (newshell/oldshell)
+				if ( nshell == 2 && nmature == 1 )
+				{
+					calc_equilibrium(x,y,A,_S,P(h),rt);
+					ig = pntr_hmo(h,1,1);
+					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+					d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
+				}
+				// Insert terminal molt case here.
+			break;
+			case 1: // Steady-state fished conditions
+				_S = S(h)(syr)(1);
+				// Single shell condition
+				if ( nshell == 1 && nmature == 1 )
+				{
+					calc_equilibrium(x,A,_S,rt);
+					ig = pntr_hmo(h,1,1);
+					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+				}
+				// Continuous molt (newshell/oldshell)
+				if ( nshell == 2 && nmature == 1 )
+				{
+					calc_equilibrium(x,y,A,_S,P(h),rt);
+					ig = pntr_hmo(h,1,1);
+					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+					d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
+				}
+				// Insert terminal molt case here.
+			break;
+			case 2: // Free parameters
+				// Single shell condition
+				if ( nshell == 1 && nmature == 1 )
+				{
+					ig = pntr_hmo(h,1,1);
+					//d4_N(ig)(syr)(1)(1) = 3782350; // HARD CODED VALUES JIE HAS IN HIS SMBKC MODEL
+					//d4_N(ig)(syr)(1)(2) = 2419470;
+					//d4_N(ig)(syr)(1)(3) = 1678340;
+					d4_N(ig)(syr)(1) = mfexp(logN0);
+				}
+				// Continuous molt (newshell/oldshell)
+				if ( nshell == 2 && nmature == 1 )
+				{
+					ig = pntr_hmo(h,1,1);
+					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+					d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
+				}
+				// Insert terminal molt case here.
+			break;
 		}
-	  	if ( verbose == 1 ) cout << "in init length 1" << endl;
-
-		// Single shell condition
-		if ( nshell == 1 && nmature == 1 )
-		{
-			calc_equilibrium(x,A,_S,rt);
-			ig = pntr_hmo(h,1,1);
-			//d4_N(ig)(syr)(1) = x;
-			//d4_N(ig)(syr)(1) = mfexp(logR0) * mfexp(rec_ini);
-			d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
-			//d4_N(ig)(syr)(1)(1) = 3782350; // HARD CODED VALUES JIE HAS IN HIS SMBKC MODEL
-			//d4_N(ig)(syr)(1)(2) = 2419470;
-			//d4_N(ig)(syr)(1)(3) = 1678340;
-			d4_N(ig)(syr)(1)(1) = mfexp(logN1o);
-			d4_N(ig)(syr)(1)(2) = mfexp(logN2o);
-			d4_N(ig)(syr)(1)(3) = mfexp(logN3o);
-		}
-	  	if ( verbose == 1 ) cout << "in init length 2" << endl;
 	  	if ( verbose == 1 ) COUT(P(h));
 	  	if ( verbose == 1 ) COUT(x);
 	  	if ( verbose == 1 ) COUT(y);
-
-		// Continuous molt (newshell/oldshell)
-		if ( nshell == 2 && nmature == 1 )
-		{
-			calc_equilibrium(x,y,A,_S,P(h),rt);
-			ig = pntr_hmo(h,1,1);
-			d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
-			d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
-		}
-	  	if ( verbose == 1 ) cout << "in init length 3" << endl;
-		// Insert terminal molt case here.
 	}
 	if ( verbose == 1 ) COUT(d4_N(1)(syr)(1));
 	// cout<<"End of calc_initial_numbers_at_length"<<endl;
@@ -3272,19 +3314,20 @@ REPORT_SECTION
 	// Growth and size transition.
 	REPORT(P);
 	REPORT(growth_transition);
-	// I don't know why this transposed stuff is here, could be depreciated but should check gmr first
-	d3_array tG(1,nsex,1,nclass,1,nclass);
-	d3_array tS(1,nsex,1,nclass,1,nclass);
-	for ( int h = 1; h <= nsex; h++ )
-	{
-		tG(h) = trans(value(growth_transition(h)));
-		tS(h) = trans(value(size_transition(h)));
-	}
-	REPORT(tG);
-	REPORT(tS);
+	REPORT(size_transition);
+	// 2016-04-28 I don't know why this transposed stuff is here, could be depreciated but should check gmr first. 2016-04-29 it seems to be depreciated.
+	//d3_array tG(1,nsex,1,nclass,1,nclass);
+	//d3_array tS(1,nsex,1,nclass,1,nclass);
+	//for ( int h = 1; h <= nsex; h++ )
+	//{
+	//	tG(h) = trans(value(growth_transition(h)));
+	//	tS(h) = trans(value(size_transition(h)));
+	//}
+	//REPORT(tG);
+	//REPORT(tS);
+	// 2016-04-29 I may be able to depreciate the size_transition stuff below too and just use the one above
 	dmatrix size_transition_M(1,nclass,1,nclass);
 	dmatrix size_transition_F(1,nclass,1,nclass);
-	// For Jim's r-script.
 	size_transition_M = value(size_transition(1));
 	REPORT(size_transition_M);
 	if ( nsex == 2 )

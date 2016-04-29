@@ -2,7 +2,7 @@
 #'
 #' @param M List object created by read_admb function
 #' @return dataframe of the length-weight relationship used in the model
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #'
 .get_length_weight_df <- function(M)
@@ -37,7 +37,7 @@
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @return plot of the length-weight relationship
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #' 
 plot_length_weight <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Weight (tonnes)")
@@ -46,6 +46,7 @@ plot_length_weight <- function(M, xlab = "Mid-point of size class (mm)", ylab = 
     ylab <- paste0(ylab, "\n")
     mdf <- .get_length_weight_df(M)
     p <- ggplot(mdf, aes(x = Length, y = Weight)) +
+        expand_limits(y = 0) +
         labs(x = xlab, y = ylab)
     if (length(M) == 1)
     {

@@ -7,20 +7,21 @@
 #                  3 -> beta
 #                  4 -> gamma
 # ntheta
-  9
+  12
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
   0.18      0.01         1        -4       2   0.18    0.02          # M
-  14.3        -7         30        2       0    -7       30          # logR0
-  10.0       -7         20        -1       1   -10.0     20.0        # logRini
-  10.0        -7         20        1       0    -7       30          # logRbar
-  95.0      30         310        -2       1    72.5    7.25         # Recruitment size distribution expected value
+  14.3      -7.0        30         2       0    -7       30          # logR0
+  10.0      -7.0        20        -1       1   -10.0     20.0        # logRini
+  10.0      -7.0        20         1       0    -7       30          # logRbar
+  95.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value
   0.15       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
- -0.40       -10      0.75        -4       0  -10.0    0.75          # ln(sigma_R)
+ -0.40     -10.0      0.75        -4       0  -10.0    0.75          # ln(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation
+ 14.0       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 14.0       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 14.0       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
 ## GROWTH PARAM CONTROLS                                                                ##
-## nGrwth
-##                                                                                      ##
 ## Two lines for each parameter if split sex, one line if not                           ##
 # ival        lb        ub         phz  prior     p1      p2         # parameter         #
   14.1      10.0      30.0         -3       0    0.0   999.0         # alpha males or combined
@@ -175,13 +176,13 @@
 ## OTHER CONTROLS
   2       # Estimated rec_dev phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-  1       # INITIALIZE MODEL AT UNFISHED RECRUITS (0 = FALSE, 1 = TRUE)
+  2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
   1978    # First year for average recruitment for Bspr calculation
   2015    # Last year for average recruitment for Bspr calculation
   0.35    # Target SPR ratio for Bmsy proxy
-  1       # Gear index for SPR calculations (i.e., directed fishery)
+  1       # Gear index for SPR calculations (i.e. directed fishery)
   1       # Lambda (proportion of mature male biomass for SPR reference points)
   1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE)
-  0       # Stock-Recruit-Relationship (0 = none, 1 = Beverton-Holt)
+  0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt)
 ## EOF
 9999

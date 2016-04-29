@@ -21,6 +21,6 @@ plot of the length-weight relationship
 Plot length-weight relationship
 }
 \author{
-DN Webber
+D'Arcy N. Webber
 }
 
