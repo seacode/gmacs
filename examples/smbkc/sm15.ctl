@@ -13,8 +13,8 @@
   14.3      -7.0        30         2       0    -7       30          # logR0
   10.0      -7.0        20        -1       1   -10.0     20.0        # logRini
   10.0      -7.0        20         1       0    -7       30          # logRbar
-  95.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value
-  0.15       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
+  80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value
+  0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
  -0.40     -10.0      0.75        -4       0  -10.0    0.75          # ln(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation
