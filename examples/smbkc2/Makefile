@@ -16,5 +16,3 @@ endif
 
 all: ${JOBS} ; echo "$@ success" ${JOBS} 
 ${JOBS}: job%: ; cd $* ; make ${ARGS} ; cd ..;
-
-
