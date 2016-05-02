@@ -44,20 +44,38 @@ plot_length_weight <- function(M, xlab = "Mid-point of size class (mm)", ylab = 
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
+    
     mdf <- .get_length_weight_df(M)
+    
     p <- ggplot(mdf, aes(x = Length, y = Weight)) +
         expand_limits(y = 0) +
         labs(x = xlab, y = ylab)
-    if (length(M) == 1)
+    
+    #if (length(M) == 1)
+    #{
+    #    p <- p + geom_line(aes(linetype = Sex)) +
+    #        geom_point(aes(linetype = Sex, col = Model))
+    #} else {
+    #    if (.OVERLAY)
+    #    {
+    #        p <- p + geom_line(aes(linetype = Sex, col = Model)) +
+    #            geom_point(aes(linetype = Sex, col = Model))
+    #    } else {
+    #        p <- p + geom_line(aes(col = Model)) +
+    #            geom_point(aes(linetype = Sex, col = Model)) +
+    #            facet_wrap(~Sex)
+    #    }
+    #}
+    
+    if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
     {
+        p <- p + geom_line() + geom_point()
+    } else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
+        p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
+    } else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
         p <- p + geom_line(aes(linetype = Sex))
     } else {
-        if (.OVERLAY)
-        {
-            p <- p + geom_line(aes(linetype = Sex, col = Model))
-        } else {
-            p <- p + geom_line(aes(col = Model)) + facet_wrap(~Sex)
-        }
+        p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
     }
     print(p + .THEME)
 }

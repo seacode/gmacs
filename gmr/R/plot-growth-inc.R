@@ -13,11 +13,11 @@
     {
         A <- M[[i]]
         df <- data.frame(Model = names(M)[i],
-                         sex   = A$iMoltIncSex,
+                         Sex   = A$iMoltIncSex,
                          obs   = A$pMoltInc,
                          pred  = A$dMoltInc,
                          size  = A$dPreMoltSize)
-        df$sex <- .SEX[df$sex + 1]
+        df$Sex <- .SEX[df$Sex + 1]
         mdf <- rbind(mdf, df)
     }
     return(mdf)
@@ -42,12 +42,29 @@ plot_growth_inc <- function(M, xlab = "Pre-molt size (mm)", ylab = "Molting incr
     
     mdf <- .get_gi_df(M)
     
-    p <- ggplot(mdf) + expand_limits(y = 0) + labs(x = xlab, y = ylab, col = slab)
-    p <- p + geom_point(aes(x = size, y = obs, colour = sex))
-    p <- p + geom_line(aes(x = size, y = pred, colour = sex))
-    if (!length(M) == 1)
+    p <- ggplot(mdf) +
+        expand_limits(y = 0) +
+        labs(x = xlab, y = ylab, col = slab)
+    
+    #p <- p + geom_point(aes(x = size, y = obs, colour = sex))
+    #p <- p + geom_line(aes(x = size, y = pred, colour = sex))
+    #if (!length(M) == 1)
+    #{
+    #    p <- p + facet_wrap(~Model)
+    #}
+    
+    if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
     {
-        p <- p + facet_wrap(~Model)
+        p <- p + geom_line(aes(x = size, y = obs)) +
+            geom_point(aes(x = size, y = obs))
+    } else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
+        p <- p + geom_line(aes(x = size, y = obs, col = Model)) +
+            geom_point(aes(x = size, y = obs, col = Model))
+    } else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
+        p <- p + geom_line(aes(x = size, y = obs, linetype = Sex))
+    } else {
+        p <- p + geom_line(aes(x = size, y = obs, linetype = Sex, col = Model)) +
+            geom_point(aes(x = size, y = obs, col = Model))
     }
     return(p + .THEME)
 }
