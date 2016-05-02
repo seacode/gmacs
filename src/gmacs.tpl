@@ -2962,7 +2962,7 @@ FUNCTION calc_objective_function
 	dvariable ln_fbar;
 	for ( int k = 1; k <= nfleet; k++ )
 	{
-	 // Jim made penalty apply only to season 2 for Fbar ft(1,nfleet,1,nsex,syr,nyr,1,nseason);            ///> Fishing mortality by gear
+		// Jim made penalty apply only to season 2 for Fbar ft(1,nfleet,1,nsex,syr,nyr,1,nseason);            ///> Fishing mortality by gear
 		fbar = mean( trans(ft(k,1))(2) );
 		// fbar = mean(ft(k,1) );
 		if ( pen_fbar(k) > 0  && fbar != 0 )
@@ -3158,8 +3158,8 @@ REPORT_SECTION
 	dmatrix effN2(1,nSizeComps,1,nSizeCompRows);
 	dmatrix pre_mn_size(1,nSizeComps,1,nSizeCompRows);
 	dmatrix obs_mn_size(1,nSizeComps,1,nSizeCompRows);
-	dmatrix  lb_mn_size(1,nSizeComps,1,nSizeCompRows);
-	dmatrix  ub_mn_size(1,nSizeComps,1,nSizeCompRows);
+	dmatrix lb_mn_size(1,nSizeComps,1,nSizeCompRows);
+	dmatrix ub_mn_size(1,nSizeComps,1,nSizeCompRows);
 	/*
                  << " "<<mn_length(olc_ind(k,i))
                  << " "<<mn_length(elc_ind(k,i))
@@ -3427,7 +3427,7 @@ FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const 
 	}
 
 	// Discard Mortality rates
-	dvector  _dmr(1,nfleet);
+	dvector _dmr(1,nfleet);
 	_dmr.initialize();
 	for ( int k = 1; k <= nfleet; k++ )
 	{
@@ -3531,7 +3531,7 @@ FUNCTION double Eff_N2(const dvector& pobs, const dvar_vector& phat)
   int lb1 = pobs.indexmin();
   int ub1 = pobs.indexmax();
   dvector av = mid_points;
-  double mobs =      (pobs*av);
+  double mobs = (pobs*av);
   double mhat = value(phat*av );
   double rtmp = mobs-mhat;
   double stmp = (sqrt(elem_prod(av,av)*pobs - mobs*mobs));
@@ -3545,7 +3545,7 @@ RUNTIME_SECTION
 GLOBALS_SECTION
 	/**
 	 * @file gmacs.cpp
-	 * @authors Steve Martell, Jim Ianelli, Darcy Webber
+	 * @authors Steve Martell, Jim Ianelli, D'Arcy Webber
 	**/
 	#include <admodel.h>
 	#include <time.h>
@@ -3629,8 +3629,8 @@ GLOBALS_SECTION
 	ofstream echoinput("checkfile.rep");
 	// These ones for compatibility with ADMB (# comment included)
 	ofstream gmacs_files("gmacs_files_in.dat");
-	ofstream  gmacs_data("gmacs_in.dat");
-	ofstream   gmacs_ctl("gmacs_in.ctl");
+	ofstream gmacs_data("gmacs_in.dat");
+	ofstream gmacs_ctl("gmacs_in.ctl");
 
 
 TOP_OF_MAIN_SECTION

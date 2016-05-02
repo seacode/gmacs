@@ -379,7 +379,7 @@ i <- c(grep("theta", x$names), grep("survey_q", x$names), grep("log_fbar", x$nam
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","$q_\\text{pot survey}$","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
+Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the Gmacs base model.", label = "tab:est_pars_base", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -387,12 +387,12 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r est_pars_selex, results = "asis"}
 x <- M[[3]]$fit
-i <- c(grep("theta", x$names), grep("survey_q", x$names), grep("log_fbar", x$names), grep("log_slx_pars", x$names))
+i <- c(grep("m_dev", x$names)[1], grep("theta", x$names), grep("survey_q", x$names), grep("log_fbar", x$names), grep("log_slx_pars", x$names))
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","$q_\\text{pot survey}$","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
-               "Stage-1 $S_{1978-2008}$","Stage-2 $S_{1978-2008}$","Stage-1 $S_{2009-2015}$","Stage-2 $S_{2009-2015}$","Stage-1 $sel5$","Stage-1 $sel6$","Stage-1 $sel7$","Stage-1 $sel8$")
+Parameter <- c("Natural mortality  $M$ deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the Gmacs model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})

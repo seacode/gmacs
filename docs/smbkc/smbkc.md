@@ -278,7 +278,7 @@ $\log (R_0)$ & 13.5960000 & 0.0519520 \\
   $\log (N_1)$ & 14.6210000 & 0.1684500 \\ 
   $\log (N_2)$ & 14.1760000 & 0.1899200 \\ 
   $\log (N_3)$ & 13.8250000 & 0.2055600 \\ 
-  $q_\text{pot survey}$ & 0.0000043 & 0.0000003 \\ 
+  ADF\&G pot survey catchability ($q$) & 0.0000043 & 0.0000003 \\ 
   $\bar{F}_\text{pot}$ & -1.3747000 & 0.0536940 \\ 
   $\bar{F}_\text{trawl bycatch}$ & -11.6890000 & 0.0833040 \\ 
   $\bar{F}_\text{fixed bycatch}$ & -9.5781000 & 0.0835810 \\ 
@@ -294,23 +294,24 @@ $\log (R_0)$ & 13.5960000 & 0.0519520 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-$\log (R_0)$ & 13.5320000 & 0.0538760 \\ 
+Natural mortality  $M$ deviation in 1998 & 1.5947000 & 0.1354000 \\ 
+  $\log (R_0)$ & 13.5320000 & 0.0538760 \\ 
   $\log (\bar{R})$ & 13.6250000 & 0.1238100 \\ 
   $\log (N_1)$ & 14.7360000 & 0.1699300 \\ 
   $\log (N_2)$ & 14.3040000 & 0.2017300 \\ 
   $\log (N_3)$ & 14.2290000 & 0.2084800 \\ 
-  $q_\text{pot survey}$ & 0.0000040 & 0.0000003 \\ 
+  ADF\&G pot survey catchability ($q$) & 0.0000040 & 0.0000003 \\ 
   $\log(\bar{F}_\text{pot})$ & -1.4963000 & 0.0563790 \\ 
   $\log(\bar{F}_\text{trawl bycatch})$ & -11.6930000 & 0.0828660 \\ 
   $\log(\bar{F}_\text{fixed bycatch})$ & -9.5847000 & 0.0830210 \\ 
-  Stage-1 $S_{1978-2008}$ & -0.7176300 & 0.1759200 \\ 
-  Stage-2 $S_{1978-2008}$ & -0.3821800 & 0.1269500 \\ 
-  Stage-1 $S_{2009-2015}$ & -0.7424500 & 0.1879900 \\ 
-  Stage-2 $S_{2009-2015}$ & 0.1526600 & 0.0955460 \\ 
-  Stage-1 $sel5$ & -0.1540100 & 0.0714200 \\ 
-  Stage-1 $sel6$ & 0.1827200 & 0.0587180 \\ 
-  Stage-1 $sel7$ & -0.8813900 & 0.1383800 \\ 
-  Stage-1 $sel8$ & -0.0695420 & 0.0819370 \\ 
+  Stage-1 directed pot selectivity 1978-2008 & -0.7176300 & 0.1759200 \\ 
+  Stage-2 directed pot selectivity 1978-2008 & -0.3821800 & 0.1269500 \\ 
+  Stage-1 directed pot selectivity 2009-2015 & -0.7424500 & 0.1879900 \\ 
+  Stage-2 directed pot selectivity 2009-2015 & 0.1526600 & 0.0955460 \\ 
+  Stage-1 NMFS trawl selectivity & -0.1540100 & 0.0714200 \\ 
+  Stage-2 NMFS trawl selectivity & 0.1827200 & 0.0587180 \\ 
+  Stage-1 ADF\&G pot selectivity & -0.8813900 & 0.1383800 \\ 
+  Stage-2 ADF\&G pot selectivity & -0.0695420 & 0.0819370 \\ 
    \hline
 \end{tabular}
 \end{table}
