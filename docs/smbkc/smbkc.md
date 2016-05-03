@@ -267,7 +267,7 @@ $$\text{c) } F_{OFL} < F_{MSY} \text{ with directed fishery } F = 0, \quad \text
 
 where $B$ is quantified as mature-male biomass $MMB_\text{mating}$, at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_{OFL}$, in case b) numerical approximation of $F_{OFL}$ is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with $F_{OFL}$ taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
-The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2015, to define a $B_{MSY}$ proxy in terms of average estimated $MMB_\text{mating}$ and to put $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_{OFL}$, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. Figures 23XX and 24XX illustrate respectively the MMB and OFL probabilities in 2015 for scenarios 10 and 10-4 using the mcmc appproach. ABC is 80% of the OFL.
+The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2015, to define a $B_{MSY}$ proxy in terms of average estimated $MMB_\text{mating}$ and to put $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_{OFL}$, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. ABC is 80% of the OFL.
 
 OFL, ABC, retained catch and bycatches for 2015 are summarized for scenarios 10 and 10-4 below:
 
@@ -411,23 +411,23 @@ Natural mortality ($M$) deviation in 1998 & 1.5947000 & 0.1354000 \\
   \hline
 Component & Gmacs base & Gmacs selex & Gmacs CV & Gmacs M \\ 
   \hline
-Pot Retained Catch & -66.34 & -66.87 & 4664.25 & -65.91 \\ 
-  Pot Discarded Catch & 8.86 & 3.89 & 195.63 & 7.43 \\ 
-  Trawl bycatch Discarded Catch & -6.61 & -6.61 & 461.31 & -6.61 \\ 
-  Fixed bycatch Discarded Catch & -6.55 & -6.59 & 1186.11 & -6.55 \\ 
-  NMFS Trawl Survey & 24.60 & 26.48 & 4017.70 & 37.14 \\ 
-  ADF\&G Pot Survey CPUE & 68.94 & 57.18 & 3876.99 & 71.38 \\ 
-  Directed Pot LF & -11.41 & -11.86 & 72.49 & -10.53 \\ 
-  NMFS Trawl LF & 19.74 & 12.70 & 232.53 & 26.50 \\ 
-  ADF\&G Pot LF & -1.30 & -4.98 & 50.70 & 4.23 \\ 
-  Recruitment deviations & 38.02 & 38.64 & 637.40 & 41.90 \\ 
-  F penalty & 9.53 & 9.53 & 9.44 & 9.51 \\ 
-  M penalty & 6.48 & 6.47 & 6.53 & 0.00 \\ 
-  Prior & 16.43 & 21.97 & 11.87 & 16.43 \\ 
-  Total & 100.39 & 79.94 & 15422.95 & 124.94 \\ 
-  Total estimated parameters & 276.00 & 284.00 & 278.00 & 274.00 \\ 
-  MMB2015 & 3294.92 & 2612.73 & 30.79 & 2578.45 \\ 
-  Fofl & 0.37 & 0.36 & 0.00 & 0.37 \\ 
+Pot Retained Catch & -66.34 & -66.87 & -67.07 & -65.91 \\ 
+  Pot Discarded Catch & 8.86 & 3.89 & 4.13 & 7.43 \\ 
+  Trawl bycatch Discarded Catch & -6.61 & -6.61 & -6.61 & -6.61 \\ 
+  Fixed bycatch Discarded Catch & -6.55 & -6.59 & -6.60 & -6.55 \\ 
+  NMFS Trawl Survey & 24.60 & 26.48 & 24.82 & 37.14 \\ 
+  ADF\&G Pot Survey CPUE & 68.94 & 57.18 & 9.36 & 71.38 \\ 
+  Directed Pot LF & -11.41 & -11.86 & -12.01 & -10.53 \\ 
+  NMFS Trawl LF & 19.74 & 12.70 & 0.73 & 26.50 \\ 
+  ADF\&G Pot LF & -1.30 & -4.98 & -7.80 & 4.23 \\ 
+  Recruitment deviations & 38.02 & 38.64 & 36.17 & 41.90 \\ 
+  F penalty & 9.53 & 9.53 & 9.53 & 9.51 \\ 
+  M penalty & 6.48 & 6.47 & 6.48 & 0.00 \\ 
+  Prior & 16.43 & 21.97 & 34.22 & 16.43 \\ 
+  Total & 100.39 & 79.94 & 25.35 & 124.94 \\ 
+  Total estimated parameters & 276.00 & 284.00 & 285.00 & 274.00 \\ 
+  MMB2015 & 3294.92 & 2612.73 & 4088.82 & 2578.45 \\ 
+  Fofl & 0.37 & 0.36 & 0.37 & 0.37 \\ 
    \hline
 \end{tabular}
 \end{table}
