@@ -1,5 +1,4 @@
 #========================================================================================================
-#========================================================================================================
 # Gmacs Main  Data  File  Version 1.1:  BBRKC Example
 # GEAR_INDEX   DESCRIPTION
 #    1        : Pot fishery retained catch.
@@ -7,18 +6,23 @@
 #    2        : Trawl bycatch
 #    3        : Trawl survey
 
+
+
 # Fisheries:  1 Pot Fishery,  2 Pot Discard,  3 Trawl by-catch, 4 BSFRF
 # Surveys:    3 NMFS  Trawl Survey, 4 BSFRF Survey
 #========================================================================================================
 
 1975  # Start year
 2015  # End year
-1     # Time-step (years)
+2     # Number of seasons
 4     # Number  of  distinct  data  groups  (among fishing fleets and surveys)
 2     # Number  of  sexes
 2     # Number  of  shell condition types
 1     # Number  of  maturity  types
 20    # Number  of  size-classes  in  the model
+2     # Season recruitment occurs
+2     # Season molting and growth occurs
+2     # Season to calculate SSB
 ##
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)
 65  70  75  80  85  90  95  100 105 110 115 120 125 130 135 140 145 150 155 160 165
@@ -42,7 +46,7 @@
 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1
 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 # Proportion of the total natural mortality to be applied each season
-0.625 0.375
+0.5 0.5
 # Fishing fleet names (delimited  with  : no  spaces  in  names)
 Pot_Fishery:Trawl_Bycatch
 # Survey  names (delimited  with  : no  spaces  in  names)
@@ -616,11 +620,11 @@ NMFS_Trawl:BSFRF
 ##  Note  SM  used  loewss  regression  for males BBRKC data
 ##  and cubic spine to  interpolate 3 sets  of  female  BBRKC data
 # MidPoint Sex Increment CV
-  67.5     2   14.766667 0.2
+  67.5  2 14.766667 0.2
   72.5  2 13.333333 0.2
   77.5  2 11.866667 0.2
   82.5  2 10.233333 0.2
-  87.5  2 9 0.2
+  87.5  2 9         0.2
   92.5  2 7.866667  0.2
   97.5  2 7.066667  0.2
   102.5 2 6.433333  0.2
@@ -635,7 +639,7 @@ NMFS_Trawl:BSFRF
   147.5 2 2.033333  0.2
   152.5 2 1.533333  0.2
   157.5 2 1.033333  0.2
-  162.5 2 0.6 0.2
+  162.5 2 0.6       0.2
   67.5  1 16.510674 0.2
   72.5  1 16.454438 0.2
   77.5  1 16.398615 0.2

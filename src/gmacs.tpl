@@ -1288,10 +1288,8 @@ PROCEDURE_SECTION
 	if ( verbose == 1 ) cout << "Ok after observation models ..." << endl;
 
 	// objective function ...
-	calculate_prior_densities();
-	if ( verbose == 1 ) cout << "Ok after priors ..." << endl;
-	calc_objective_function();
-	if ( verbose == 1 ) cout << "Ok after objective function ..." << endl;
+	calculate_prior_densities(); if ( verbose == 1 ) cout << "Ok after priors ..." << endl;
+	calc_objective_function();   if ( verbose == 1 ) cout << "Ok after objective function ..." << endl;
 
 	// sd_report variables
 	if ( last_phase() )
@@ -1381,7 +1379,7 @@ FUNCTION initialize_model_parameters
 		alpha = mle_alpha;
 		beta  = mle_beta;
 	}
-	
+
 
 	/**
 	 * @brief Calculate selectivies for each gear.
@@ -2038,47 +2036,19 @@ FUNCTION update_population_numbers_at_length
 
 				if ( o == 1 ) // newshell
 				{
-					//A = growth_transition(h) * S(h)(i);
-					//x = d3_N(ig)(i);
-					//d3_N(ig)(i+1) = elem_prod(x,diagonal(P(h))) * A + rt;
-
 					x = d4_N(ig)(i)(j);
 					// Mortality (natural and fishing)
 					x = x * S(h)(i)(j);
 					// Molting and growth
 					if (j == season_growth)
 					{
-						//cout << "i=" << i << ", j=" << j << endl;
-
-						//cout << "x" << endl;
-						//cout << x << endl;
-						//cout << "sum(x): " << sum(x) << endl;
-
-
-						//growth_transition(h)(1,1) = 0.11;
-						//growth_transition(h)(1,2) = 0.83;
-						//growth_transition(h)(1,3) = 0.06;
-						//growth_transition(h)(2,2) = 0.11;
-						//growth_transition(h)(2,3) = 0.89;
-
-						//x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
 						x = x * size_transition(h);
-
-						//cout << "S(h)(i)(j)" << endl;
-						//cout << S(h)(i)(j) << endl;
-						//cout << "P(h)" << endl;
-						//cout << P(h) << endl;
-						//cout << "growth_transition(h)" << endl;
-						//cout << growth_transition(h) << endl;
-						//cout << "P(h) * growth_transition(h)" << endl;
-						//cout << P(h) * growth_transition(h) << endl;
-
-						//cout << "x" << endl;
-						//cout << x << endl;
-						//cout << "sum(x): " << sum(x) << endl;
 					}
 					// Recruitment
-					if (j == season_recruitment) x += rt;
+					if (j == season_recruitment)
+					{
+						x += rt;
+					}
 					if (j == nseason)
 					{
 						d4_N(ig)(i+1)(1) = x;
@@ -2101,28 +2071,36 @@ FUNCTION update_population_numbers_at_length
 				
 					// add oldshell non-terminal molts to newshell
 					x = d4_N(ig)(i)(j);
-					// Mortality
+					// Mortality (natural and fishing)
 					x = x * S(h)(i)(j);
 					// Molting and growth
-					// THIS IS ALL WRONG NOW, DOES NOT INFLUENCE SMBKC
-					if (j == season_growth) x = elem_prod(x,diagonal(P(h))) * growth_transition(h);
-					if (j == nseason && j == season_growth)
+					if (j == season_growth)
 					{
-						d4_N(ig-1)(i+1)(1) = x;
-					} else if (j != nseason && j == season_growth) {
-						d4_N(ig-1)(i)(j+1) = x;
-					} else if (j == nseason && j != season_growth) {
-						d4_N(ig)(i+1)(j) = x;
-					} else {
-						d4_N(ig)(i)(j+1) = x;						
+						x = x * size_transition(h);
 					}
+
+					//if (j == nseason && j == season_growth)
+					//{
+					//	d4_N(ig-1)(i+1)(1) = x;
+					//} else if (j != nseason && j == season_growth) {
+					//	d4_N(ig-1)(i)(j+1) = x;
+					//} else if (j == nseason && j != season_growth) {
+					//	d4_N(ig)(i+1)(j) = x;
+					//} else {
+					//	d4_N(ig)(i)(j+1) = x;						
+					//}
 
 					// oldshell
 					y = d4_N(ig)(i)(j) + d4_N(ig-1)(i)(j);
 					// Mortality
 					y = y * S(h)(i)(j);
-					// Molting
-					if (j == 3) y = y * (Id - P(h));
+					// Molting and growth
+					if (j == season_growth)
+					{
+						y = y * size_transition(h);
+					}
+					//if (j == 3) y = y * (Id - P(h));
+					// MOLTING NOT DONE FOR BBRKC
 					if (j == nseason)
 					{
 						d4_N(ig-1)(i+1)(1) = y;
@@ -3221,6 +3199,7 @@ REPORT_SECTION
 
 	dvector ssb = value(calc_ssb());
 	REPORT(ssb);
+	cout << "WTF" << endl;
 
 	if ( last_phase() )
 	{
@@ -3262,6 +3241,7 @@ REPORT_SECTION
 		REPORT(size_comp_sample_size);
 	}
 	// Print total numbers at length
+	cout << "WTF" << endl;
 	dvar_matrix N_len(syr,nyr+1,1,nclass);
 	dvar_matrix N_mm(syr,nyr+1,1,nclass);
 	dvar_matrix N_males(syr,nyr+1,1,nclass);
@@ -3297,6 +3277,7 @@ REPORT_SECTION
 	REPORT(N_males);
 	REPORT(N_males_old);
 
+	cout << "WTF" << endl;
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
@@ -3335,6 +3316,7 @@ REPORT_SECTION
 	  	size_transition_F = value(size_transition(2));
 		REPORT(size_transition_F);
 	}
+	cout << "WTF" << endl;
 
 
 	/**
