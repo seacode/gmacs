@@ -259,11 +259,14 @@ g. Comparison of alternative model scenarios.
 
 The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality $F_{OFL}$. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of $B_{MSY}$ and $F_{MSY}$, along with two additional parameters $\alpha$ and $\beta$, $F_{OFL}$ is determined by the control rule
 
-$$\text{a) } F_{OFL} = F_{MSY}, \quad \text{when } B/B_{MSY} > 1$$
-
-$$\text{b) } F_{OFL} = F_{MSY} \frac{\left( B/B_{MSY} - \alpha \right)}{(1 - \alpha)}, \quad \text{when } \beta < B/B_{MSY} \le 1$$
-
-$$\text{c) } F_{OFL} < F_{MSY} \text{ with directed fishery } F = 0, \quad \text{when } B/B_{MSY} \le \beta$$
+\begin{align}
+    F_{OFL} &= 
+    \begin{cases}
+        F_{MSY}, &\text{ when } B/B_{MSY} > 1\\
+        F_{MSY} \frac{\left( B/B_{MSY} - \alpha \right)}{(1 - \alpha)}, &\text{ when } \beta < B/B_{MSY} \le 1
+    \end{cases}\\
+    F_{OFL} &< F_{MSY} \text{ with directed fishery } F = 0, \text{ when } B/B_{MSY} \le \beta \notag
+\end{align}
 
 where $B$ is quantified as mature-male biomass $MMB_\text{mating}$, at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_{OFL}$, in case b) numerical approximation of $F_{OFL}$ is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with $F_{OFL}$ taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
@@ -353,7 +356,7 @@ Table 2aXX. NMFS EBS trawl-survey area-swept estimates of male crab abundance (1
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations for the Gmacs base model.} 
+\caption{Model parameter estimates and standard deviations for the {\bf Gmacs base} model.} 
 \label{tab:est_pars_base}
 \begin{tabular}{lrr}
   \hline
@@ -375,7 +378,7 @@ Natural mortality ($M$) deviation in 1998 & 1.8054000 & 0.1074600 \\
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations for the Gmacs model that estimates stage-1 and stage-2 selectivity.} 
+\caption{Model parameter estimates and standard deviations for the {\bf Gmacs selex} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_selex}
 \begin{tabular}{lrr}
   \hline
@@ -405,7 +408,7 @@ Natural mortality ($M$) deviation in 1998 & 1.5947000 & 0.1354000 \\
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations for the Gmacs base model.} 
+\caption{Comparisons of negative log-likelihood values and management measures for the four Gmacs model scenarios. Biomass and OFL are in tonnes.} 
 \label{tab:likelihood_components}
 \begin{tabular}{lrrrr}
   \hline
@@ -555,23 +558,38 @@ Year & N1 & N2 & N3 & MMB \\
 
 ## 1. Introduction
 
-The Gmacs model accounts only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (male size classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the base-model configuration.
+The Gmacs model has been specified to account only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (size-classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the Gmacs base model configuration.
 
 ## 2. Model Population Dynamics
 
-Within the model framework, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of July 1. With boldface letters indicating vector quantities, let $\boldsymbol{N}_t = \left[ N_{1,t}, N_{2,t}, N_{3,t} \right]^\top$ designate the vector of stage abundances at the start of year $t$. Then the basic population dynamics underlying model construction are described by the linear equation
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
+\begin{equation}
+    \boldsymbol{n}_{t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{3,t,y} \right]^\top.
+\end{equation}
+Using boldface uppercase letters to indicate a matrix, we describe the size transition matrix $\boldsymbol{G}_t$ during season $t$ as
+\begin{equation}
+  \boldsymbol{G}_t = \left[ \begin{array}{ccc}
+    1 - \pi_{12} - \pi_{13} & \pi_{12} & \pi_{13} \\
+    0 & 1 - \pi_{23} & \pi_{23} \\
+    0 & 0 & 1 \end{array} \right].
+\end{equation}
+Similarly, the survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
+\begin{equation}
+  \boldsymbol{S}^\text{df} = \left[ \begin{array}{ccc}
+    s_1^\text{df} & 0 & 0 \\
+    0 & s_2^\text{df} & 0 \\
+    0 & 0 & 1 \end{array} \right],
+\end{equation}
+where xx represents the combination of natural mortality (M) and fishing mortality (F). Recruitment of each stage to the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$ and may be defined using an inverse logistic curve.
 
-$$\boldsymbol{N}_{t+1} = \boldsymbol{G} e^{-M_t} \boldsymbol{N}_t + \boldsymbol{N}^\text{new}_{t+1}$$
+The basic population dynamics underlying Gmacs can thus be described as
+\begin{align}
+    \boldsymbol{n}_{t+1,y} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, \text{ if } t<T \notag\\
+    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, \text{ if } t=T
+\end{align}
 
 where the scalar factor $e^{-M_t}$ accounts for the effect of year-t natural mortality $M_t$ and the
-hypothesized transition matrix $\boldsymbol{G}$ has the simple structure
-
-\begin{equation}
-  \boldsymbol{G} = \left[ \begin{array}{ccc}
-    1 - \pi_{12} & \pi_{12} & 0 \\
-    0 & 1 - \pi_{23} & \pi_{23} \\
-    0 & 0 & 1 \end{array} \right]
-\end{equation}
+hypothesized 
 
 with $\pi_{jk}$ equal to the proportion of stage-j crab that molt and grow into stage k from any one year to the next. The vector $N newt+1 = [ N new 1 , t+1 , 0 ,0 ] T$ registers the number $N new1, t+1$ of new crab, or "recruits", entering the model at the start of year $t+1$, all of which are assumed to go into stage 1. Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality.) The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
 
@@ -579,12 +597,6 @@ $$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
 
 where the diagonal matrices 
 
-\begin{equation}
-  \boldsymbol{S}^\text{df} = \left[ \begin{array}{ccc}
-    s_1^\text{df} & 0 & 0 \\
-    0 & s_2^\text{df} & 0 \\
-    0 & 0 & 1 \end{array} \right]
-\end{equation}
 
 and
 
