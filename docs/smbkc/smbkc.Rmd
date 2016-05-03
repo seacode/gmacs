@@ -1,7 +1,7 @@
 ---
 title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
 author: "D'Arcy Webber, Jie Zheng, James Ianelli"
-institute: "Affiliation"
+institute: "Quantifish, ADF&G, NOAA"
 date: "May 2016"
 output:
   pdf_document:
@@ -190,12 +190,18 @@ Also, selecitivitiy is fixed to match the previous model.
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenarios. 
+Changes in assessment results depend on model scenarios. One of the Gmacs scenarios (Gmacs selex) provides a resonbly good match to the 2015 model assessment.
 
 
 # B. Responses to SSC and CPT Comments
 
 ## CPT and SSC Comments on Assessments in General
+
+Spring 2016 CPT
+
+Comment: *comments*
+
+Response:
 
 ## CPT and SSC Comments Specific to SMBKC Stock Assessment
 
@@ -249,8 +255,7 @@ Major data sources used in this assessment are annual directed-fishery retained-
 
 ## Other Data Sources
 
-As with the most recent model configuration developed for this assessment, this version
- makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the base-model configuration used for the 2012 and 2013 assessments.
+As with the most recent model configuration developed for this assessment, this version makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the base-model configuration used for the 2012 and 2013 assessments.
 
 ## Excluded Data Sources
 
@@ -266,6 +271,7 @@ A four-stage catch-survey-analysis (CSA) assessment model was used before 2011 t
 Concerns about the pre-2011 assessment model led to CPT and SSC recommendations that included development of an alternative model with provisional assessment based on survey biomass or some other index of abundance. An alternative 3-stage model was proposed to the CPT in May 2011 but was requested to proceed with a survey-based approach for the Fall 2011 assessment. In May 2012 the CPT approved a slightly revised and better documented version of the alternative model for assessment.
 
 ## Assessment Methodology
+
 The 2015 SMBKC stock assessment model, first used in Fall 2012, is a variant of the previous four-stage SMBKC CSA model (2010 SAFE; Zheng et al. 1997) and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considers only male crab at least 90 mm in CL, but it combines stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by carapace length measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model. 
 
 Each model year is split into four seasons.
@@ -274,10 +280,55 @@ A detailed description of the base model and its implementation in the software 
 
 ## Model Selection and Evaluation
 
-In May 2015, eight model scenarios were considered followed by 20 scenarios examined in September 2015. In this presentation results from the selected model in September was used for contrast with the current implementation.
+Four model scenarios were considered. In this document results from these models and the 2015 model are compared.
+
+1. **2015 Model**: model output from 2015 provided by Jie.
+
+2. **Gmacs base**: tries to match as closely as possible the 2015 Model.
+
+3. **Gmacs selex**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab.
+
+4. **Gmacs CV**: Additional CV is estimated for the ADF&G pot survey.
+
+5. **Gmacs M**: Natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years.
 
 ## Results
-Preliminary results for the gmacs configuration is provided here with comparisons shown in Fig XX.
+
+Preliminary results for the Gmacs configuration are provided here with comparisons to the 2015 model.
+
+a. Effective sample sizes.
+
+Observed and estimated effective sample sizes are compared in Table XX.
+
+b. Tables of estimates.
+
+Model parameter estimates are summarized in Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_selex}. Negative log likelihood values and management measures for the four Gmacs scenarios are compared in Table \ref{tab:likelihood_components}. Estimated abundances by stage and mature male biomasses are listed in Table XX for four scenarios.
+
+Generally, scenarios with different molting probabilities or survey selectivities for two periods fit the data better. Scenarios with additional CV for the pot survey CPUE fit the trawl survey data better and result in higher abundance and biomass estimates in most recent years. Like the results in May 2015, large differences exist for estimated molting probabilities or survey selectivities during the two periods. Plausible biological reasons have not yet been found to explain large differences in molting probabilities. Estimated trawl survey selectivities > 1.0 for both stages 1 and 2 during 2000-2015 are also troublesome, but might be possible due to changes in crab spatial distributions, based on the examination on pot survey data presented by Doug Pengilly to the CPT in May 2015. Differences of estimated trawl survey selectivities between two periods decrease with scenarios 10-4, 10-3, 10-2, and 10-0. The high estimated trawl survey selectivities imply that the catchability of trawl surveys during recent years is greater than the assumed value of 1.0.
+
+c. Graphs of estimates.
+
+Estimated (and fixed) selectivities are compared in Figure \ref{fig:selectivity} and molting probabilities are shown in Figure \ref{fig:molt_prob}. The various model fits to total male ($>$ 89 mm CL) trawl survey biomass are compared in Figure \ref{fig:trawl_survey_biomass}, and the fits to pot survey CPUE are compared in Figure \ref{fig:pot_survey_cpue}. Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figure \ref{fig:bts_resid}. Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and \ref{fig:sc_trawl_discarded} for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot_res}, \ref{fig:sc_pot_discarded_res}, and \ref{fig:sc_trawl_discarded_res} for the Gmacs base model. Fits to retained catch biomass and bycatch death biomass are shown for all scenarios in Figure \ref{fig:fit_to_catch}. Estimated recruitment and mature male biomass are compared in Figures \ref{fig:recruitment} and \ref{fig:mmb}, respectively.
+
+Estimated trawl survey selectivities and molting probabilities are generally confounded. For example, the estimated lower molting probabilities after 1999 are associated with lower trawl survey selectivity estimates for scenario 8, and the assumed higher molting probabilities result in higher estimated trawl survey selectivities for scenario 10 (Figures XX and XX; Table XX). To reduce the confounding, molting probabilities are fixed at the values estimated from tagging data during the same period for scenarios 9, 10, and 11.
+
+d. Graphic evaluation of the fit to the data.
+
+Model estimated relative survey biomasses depend on scenarios. Scenarios T, 0, 00, and 1 have relatively high biomass in the early period and during recent years (Figure XX). Scenarios 2 and 3 with constant molting probabilities and trawl survey selectivities over time and with an additional CV for the pot survey CPUE result in much higher biomass estimates in recent years; the trend of the biomass estimates also differ from other scenarios (Figure XX). Estimated pot survey CPUEs are also dependent on scenarios, and the difference among scenarios are very similar to the relative survey biomasses (Figure XX).
+
+There are strong temporal patterns for residuals of total trawl survey biomass and stage composition data for scenarios T, 0, 00, 1, 2, and 3 (showing only scenario 3), and no apparent residual patterns occur for other scenarios with two levels of trawl selectivities or molting probabilities over time (Figures XX and XX). The stage compositions for observer data were not fit very well before 2000 for all scenarios, because the data are low quality and effective sample size is assumed small accordingly. The absolute values of standardized residuals of survey biomass are relatively smaller for scenarios 10-4, 10-3, 10-2, and 10-0 than those for scenario 10 (Figure XX). All scenarios fit well to retained catch biomass and fits to bycatch biomass are generally well. All fits are not shown in this document, but as an example scenario 10 fits are shown in Figure XX.
+
+Estimated recruitments to the model vary greatly over time (Figure XX). Estimated recruitments during recent years are generally low except for scenarios 2 and 3. Estimated mature male biomasses on 15 February also fluctuate strongly over time; the high biomass estimates in recent years for scenarios 2 and 3 show an opposite trend from the other scenarios (Figure XX).
+
+e. Retrospective and historic analyses.
+
+Gmacs does can not do retrospective analysis yet.
+
+f. Uncertainty and sensitivity analyses.
+
+Estimated standard deviations of parameters are summarized in Table 9 for six scenarios. Probabilities for mature male biomass and OFL in 2015 are illustrated in the section “F. Calculation of the OFL”
+
+g. Comparison of alternative model scenarios.
 
 # F. Calculation of the OFL and ABC
 
@@ -374,12 +425,15 @@ Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 
 
 ```{r est_pars_base, results = "asis"}
 x <- M[[2]]$fit
-i <- c(grep("theta", x$names), grep("survey_q", x$names), grep("log_fbar", x$names))
+i <- c(grep("m_dev", x$names)[1],
+       grep("theta", x$names),
+       grep("survey_q", x$names),
+       grep("log_fbar", x$names))
 #i <- grep("rec_dev", x$names)
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
+Parameter <- c("Natural mortality ($M$) deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the Gmacs base model.", label = "tab:est_pars_base", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -387,15 +441,57 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r est_pars_selex, results = "asis"}
 x <- M[[3]]$fit
-i <- c(grep("m_dev", x$names)[1], grep("theta", x$names), grep("survey_q", x$names), grep("log_fbar", x$names), grep("log_slx_pars", x$names))
+i <- c(grep("m_dev", x$names)[1],
+       grep("theta", x$names),
+       grep("survey_q", x$names),
+       grep("log_fbar", x$names),
+       grep("log_slx_pars", x$names))
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("Natural mortality  $M$ deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+Parameter <- c("Natural mortality ($M$) deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
                "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the Gmacs model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+```
+
+```{r likelihood_components, results = "asis"}
+df <- NULL
+for (ii in 2:5)
+{
+    x <- M[[ii]]
+    # Catch
+    ll_catch <- x$nloglike[1,]
+    dc <- .get_catch_df(Mbase)
+    names(ll_catch) <- unique(paste0(dc$fleet, " ", dc$type, " Catch"))
+    # Abundance indices
+    ll_cpue <- x$nloglike[2,1:2]
+    names(ll_cpue) <- c("NMFS Trawl Survey","ADF&G Pot Survey CPUE")
+    # Size compositions
+    ll_lf <- x$nloglike[3,1:3]
+    names(ll_lf) <- c("Directed Pot LF","NMFS Trawl LF","ADF&G Pot LF")
+    # Recruitment deviations
+    ll_rec <- sum(x$nloglike[4,], na.rm = TRUE)
+    names(ll_rec) <- "Recruitment deviations"
+    # Penalties
+    F_pen <- x$nlogPenalty[2]; names(F_pen) <- "F penalty"
+    M_pen <- x$nlogPenalty[3]; names(M_pen) <- "M penalty"
+    # Priors
+    prior <- sum(x$priorDensity); names(prior) <- "Prior"
+    v <- c(ll_catch, ll_cpue, ll_lf, ll_rec, F_pen, M_pen, prior)
+    sv <- sum(v); names(sv) <- "Total"
+    npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
+    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("MMB", x$mod_yrs[length(x$mod_yrs)])
+    fofl <- x$spr_fofl; names(fofl) <- "Fofl"
+    v <- c(v, sv, npar, mmb, fofl)
+    df <- cbind(df, v)
+}
+df <- data.frame(rownames(df), df, row.names = NULL)
+names(df) <- c("Component","Gmacs base","Gmacs selex","Gmacs CV","Gmacs M")
+
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the Gmacs base model.", label = "tab:likelihood_components")
+print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
 ```{r pop_abundance, results = "asis"}

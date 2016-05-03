@@ -25,9 +25,12 @@
 <p>Also see Figure .</p>
 <p>Also, selecitivitiy is fixed to match the previous model.</p>
 <h2 id="changes-in-assessment-results">Changes in Assessment Results</h2>
-<p>Changes in assessment results depend on model scenarios.</p>
+<p>Changes in assessment results depend on model scenarios. One of the Gmacs scenarios (Gmacs selex) provides a resonbly good match to the 2015 model assessment.</p>
 <h1 id="b.-responses-to-ssc-and-cpt-comments">B. Responses to SSC and CPT Comments</h1>
 <h2 id="cpt-and-ssc-comments-on-assessments-in-general">CPT and SSC Comments on Assessments in General</h2>
+<p>Spring 2016 CPT</p>
+<p>Comment: <em>comments</em></p>
+<p>Response:</p>
 <h2 id="cpt-and-ssc-comments-specific-to-smbkc-stock-assessment">CPT and SSC Comments Specific to SMBKC Stock Assessment</h2>
 <h1 id="c.-introduction">C. Introduction</h1>
 <h2 id="scientific-name">Scientific Name</h2>
@@ -72,9 +75,47 @@
 <p>Each model year is split into four seasons.</p>
 <p>A detailed description of the base model and its implementation in the software AD Model Builder (Fournier et al. 2012) is presented in Appendix A.</p>
 <h2 id="model-selection-and-evaluation">Model Selection and Evaluation</h2>
-<p>In May 2015, eight model scenarios were considered followed by 20 scenarios examined in September 2015. In this presentation results from the selected model in September was used for contrast with the current implementation.</p>
+<p>Four model scenarios were considered. In this document results from these models and the 2015 model are compared.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>2015 Model</strong>: model output from 2015 provided by Jie.</p></li>
+<li><p><strong>Gmacs base</strong>: tries to match as closely as possible the 2015 Model.</p></li>
+<li><p><strong>Gmacs selex</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab.</p></li>
+<li><p><strong>Gmacs CV</strong>: Additional CV is estimated for the ADF&amp;G pot survey.</p></li>
+<li><p><strong>Gmacs M</strong>: Natural mortality (<span class="math"><em>M</em></span>) is fixed at 0.18 <span class="math"><em>y</em><em>r</em><sup> − 1</sup></span> during all years.</p></li>
+</ol>
 <h2 id="results">Results</h2>
-<p>Preliminary results for the gmacs configuration is provided here with comparisons shown in Fig XX.</p>
+<p>Preliminary results for the Gmacs configuration are provided here with comparisons to the 2015 model.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Effective sample sizes.</li>
+</ol>
+<p>Observed and estimated effective sample sizes are compared in Table XX.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Tables of estimates.</li>
+</ol>
+<p>Model parameter estimates are summarized in Tables , . Negative log likelihood values and management measures for the four Gmacs scenarios are compared in Table . Estimated abundances by stage and mature male biomasses are listed in Table XX for four scenarios.</p>
+<p>Generally, scenarios with different molting probabilities or survey selectivities for two periods fit the data better. Scenarios with additional CV for the pot survey CPUE fit the trawl survey data better and result in higher abundance and biomass estimates in most recent years. Like the results in May 2015, large differences exist for estimated molting probabilities or survey selectivities during the two periods. Plausible biological reasons have not yet been found to explain large differences in molting probabilities. Estimated trawl survey selectivities &gt; 1.0 for both stages 1 and 2 during 2000-2015 are also troublesome, but might be possible due to changes in crab spatial distributions, based on the examination on pot survey data presented by Doug Pengilly to the CPT in May 2015. Differences of estimated trawl survey selectivities between two periods decrease with scenarios 10-4, 10-3, 10-2, and 10-0. The high estimated trawl survey selectivities imply that the catchability of trawl surveys during recent years is greater than the assumed value of 1.0.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Graphs of estimates.</li>
+</ol>
+<p>Estimated (and fixed) selectivities are compared in Figure  and molting probabilities are shown in Figure . The various model fits to total male (<span class="math"> &gt; </span> 89 mm CL) trawl survey biomass are compared in Figure , and the fits to pot survey CPUE are compared in Figure . Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figure . Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the Gmacs base model. Fits to retained catch biomass and bycatch death biomass are shown for all scenarios in Figure . Estimated recruitment and mature male biomass are compared in Figures  and , respectively.</p>
+<p>Estimated trawl survey selectivities and molting probabilities are generally confounded. For example, the estimated lower molting probabilities after 1999 are associated with lower trawl survey selectivity estimates for scenario 8, and the assumed higher molting probabilities result in higher estimated trawl survey selectivities for scenario 10 (Figures XX and XX; Table XX). To reduce the confounding, molting probabilities are fixed at the values estimated from tagging data during the same period for scenarios 9, 10, and 11.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Graphic evaluation of the fit to the data.</li>
+</ol>
+<p>Model estimated relative survey biomasses depend on scenarios. Scenarios T, 0, 00, and 1 have relatively high biomass in the early period and during recent years (Figure XX). Scenarios 2 and 3 with constant molting probabilities and trawl survey selectivities over time and with an additional CV for the pot survey CPUE result in much higher biomass estimates in recent years; the trend of the biomass estimates also differ from other scenarios (Figure XX). Estimated pot survey CPUEs are also dependent on scenarios, and the difference among scenarios are very similar to the relative survey biomasses (Figure XX).</p>
+<p>There are strong temporal patterns for residuals of total trawl survey biomass and stage composition data for scenarios T, 0, 00, 1, 2, and 3 (showing only scenario 3), and no apparent residual patterns occur for other scenarios with two levels of trawl selectivities or molting probabilities over time (Figures XX and XX). The stage compositions for observer data were not fit very well before 2000 for all scenarios, because the data are low quality and effective sample size is assumed small accordingly. The absolute values of standardized residuals of survey biomass are relatively smaller for scenarios 10-4, 10-3, 10-2, and 10-0 than those for scenario 10 (Figure XX). All scenarios fit well to retained catch biomass and fits to bycatch biomass are generally well. All fits are not shown in this document, but as an example scenario 10 fits are shown in Figure XX.</p>
+<p>Estimated recruitments to the model vary greatly over time (Figure XX). Estimated recruitments during recent years are generally low except for scenarios 2 and 3. Estimated mature male biomasses on 15 February also fluctuate strongly over time; the high biomass estimates in recent years for scenarios 2 and 3 show an opposite trend from the other scenarios (Figure XX).</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Retrospective and historic analyses.</li>
+</ol>
+<p>Gmacs does can not do retrospective analysis yet.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Uncertainty and sensitivity analyses.</li>
+</ol>
+<p>Estimated standard deviations of parameters are summarized in Table 9 for six scenarios. Probabilities for mature male biomass and OFL in 2015 are illustrated in the section “F. Calculation of the OFL”</p>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Comparison of alternative model scenarios.</li>
+</ol>
 <h1 id="f.-calculation-of-the-ofl-and-abc">F. Calculation of the OFL and ABC</h1>
 <p><br /><span class="math">a) <em>F</em><sub><em>O</em><em>F</em><em>L</em></sub> = <em>F</em><sub><em>M</em><em>S</em><em>Y</em></sub>,  when <em>B</em> / <em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub> &gt; 1</span><br /></p>
 <p><br /><span class="math">$$\text{b) } F_{OFL} = F_{MSY} \frac{\left( B/B_{MSY} - \alpha \right)}{(1 - \alpha)}, \quad \text{when } \beta &lt; B/B_{MSY} \le 1$$</span><br /></p>
@@ -123,6 +164,7 @@
 <p></p>
 <p>Table 1. The 1978/79 - 2014/15 directed St. Matthew Island blue king crab pot fishery. Source: Fitch et al. 2012; ADF&amp;G Dutch Harbor staff, pers. comm.</p>
 <p>Table 2a. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 6 crab) and of mature male biomass (10 6 lbs). Total number of captured male crab <span class="math"> ≥ </span> 90 mm CL is also given. Source: R.Foy, NMFS. The “+” refers to plus group.</p>
+
 
 
 
