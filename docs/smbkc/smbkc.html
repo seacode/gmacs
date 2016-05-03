@@ -172,6 +172,10 @@
 
 
 
+
+
+
+
 <p></p>
 <div class="figure">
 <img src="figure/Fig4.png" alt="Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&amp;G pot-survey data used in the assessment." /><p class="caption">Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&amp;G pot-survey data used in the assessment.</p>
@@ -270,16 +274,14 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
 
 Using boldface uppercase letters to indicate a matrix, we describe the size transition matrix <span class="math">$\boldsymbol{G}_t$</span> during season <span class="math"><em>t</em></span> as
 
-Similarly, the survival matrix <span class="math">$\boldsymbol{S}_{t,y}$</span> during season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> is
+with <span class="math"><em>π</em><sub><em>j</em><em>k</em></sub></span> equal to the proportion of stage-<span class="math"><em>j</em></span> crab that molt and grow into stage-<span class="math"><em>k</em></span> within a season or year. Similarly, the survival matrix <span class="math">$\boldsymbol{S}_{t,y}$</span> during season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> is
 
-<p>where xx represents the combination of natural mortality (M) and fishing mortality (F). Recruitment of each stage to the model each season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> is represented as the vector <span class="math">$\boldsymbol{r}_{t,y}$</span> and may be defined using an inverse logistic curve.</p>
-The basic population dynamics underlying Gmacs can thus be described as
+where <span class="math"><em>Z</em><sub><em>l</em>, <em>t</em>, <em>y</em></sub></span> represents the combination of natural mortality <span class="math"><em>M</em><sub><em>t</em>, <em>y</em></sub></span> and fishing mortality <span class="math"><em>F</em><sub><em>t</em>, <em>y</em></sub></span> during season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span>. The number of new crab, or recruits, of each stage entering the model each season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> is represented as the vector <span class="math">$\boldsymbol{r}_{t,y}$</span> and may be defined using an inverse logistic curve
 
-<p>where the scalar factor <span class="math"><em>e</em><sup> − <em>M</em><sub><em>t</em></sub></sup></span> accounts for the effect of year-t natural mortality <span class="math"><em>M</em><sub><em>t</em></sub></span> and the hypothesized</p>
-<p>with <span class="math"><em>π</em><sub><em>j</em><em>k</em></sub></span> equal to the proportion of stage-j crab that molt and grow into stage k from any one year to the next. The vector <span class="math"><em>N</em><em>n</em><em>e</em><em>w</em><em>t</em> + 1 = [<em>N</em><em>n</em><em>e</em><em>w</em>1, <em>t</em> + 1, 0, 0]<em>T</em></span> registers the number <span class="math"><em>N</em><em>n</em><em>e</em><em>w</em>1, <em>t</em> + 1</span> of new crab, or &quot;recruits&quot;, entering the model at the start of year <span class="math"><em>t</em> + 1</span>, all of which are assumed to go into stage 1. Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality.) The directed fishery is modeled as a mid-season pulse occurring at time <span class="math"><em>π</em><sub><em>t</em></sub></span> with full-selection fishing mortality <span class="math"><em>F</em><sub><em>t</em></sub></span> relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as</p>
-<p><br /><span class="math"><em>R</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup> = <em>H</em><sup><em>d</em><em>f</em></sup><em>S</em><sup><em>d</em><em>f</em></sup>(1 − <em>e</em><sup><em>F</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup></sup>)<em>e</em><sup> − <em>τ</em><sub><em>t</em></sub><em>M</em></sup><em>N</em><sub><em>t</em></sub></span><br /></p>
-<p>where the diagonal matrices</p>
-<p>and</p>
+In this formulation of the model, all recruits are assumed to be to stage-1. The basic population dynamics underlying Gmacs can thus be described as
+
+<p>Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is modeled as a mid-season pulse occurring at time <span class="math"><em>π</em><sub><em>t</em></sub></span> with full-selection fishing mortality <span class="math"><em>F</em><sub><em>t</em></sub></span> relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as</p>
+<br /><span class="math"><em>R</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup> = <em>H</em><sup><em>d</em><em>f</em></sup><em>S</em><sup><em>d</em><em>f</em></sup>(1 − <em>e</em><sup><em>F</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup></sup>)<em>e</em><sup> − <em>τ</em><sub><em>t</em></sub><em>M</em></sup><em>N</em><sub><em>t</em></sub></span><br /> where the diagonal matrices
 
 <p>account for stage selectivities <span class="math"><em>s</em><sub>1</sub><sup>df</sup></span> and <span class="math"><em>s</em><sub>2</sub><sup>df</sup></span> and discard handling mortality <span class="math"><em>h</em><sup>df</sup></span> in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as Feb 15 (0.63 yr) pulse effects in terms of the respective fishing mortalities <span class="math"><em>F</em><sub><em>t</em></sub><sup>gt</sup></span> and <span class="math"><em>F</em><sub><em>t</em></sub><sup>gf</sup></span> by</p>
 <h2 id="model-data">3. Model Data</h2>
@@ -287,10 +289,9 @@ The basic population dynamics underlying Gmacs can thus be described as
 <h2 id="model-parameters">4. Model Parameters</h2>
 <p>Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include an estimated parameter for natural mortality (<span class="math"><em>M</em></span>) in 1998/99 assuming of an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 <span class="math">yr<sup> − 1</sup></span>.</p>
 <p>In any year with no directed fishery, and hence zero retained catch, <span class="math"><em>F</em><sub><em>t</em></sub><sup>df</sup></span> is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, <span class="math"><em>F</em><sub><em>t</em></sub><sup>gf</sup></span> and <span class="math"><em>F</em><sub><em>t</em></sub><sup>gt</sup></span> are imputed to be the geometric means of the estimates from years for which there are data. Table 3XX lists additional externally determined parameters used in model computations.</p>
-<p>For scenarios 0 and 1, the stage-transition matrix is</p>
+In all scenarios, the stage-transition matrix is
 
-<p>which includes molting probabilities. For scenarios 3-11, the growth matrix with molting crab is</p>
-
+<p>which includes molting probabilities.</p>
 <p>The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well. For scenarios 0 and 1, stage-transition matrix</p>
 <p>Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, Feb 15, which is also the reference date for calculation of federal management biomass quantities.</p>
 

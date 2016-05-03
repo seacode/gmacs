@@ -487,6 +487,41 @@ tab <- xtable(df, caption = "Model parameter estimates and standard deviations f
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
+```{r est_pars_cv, results = "asis"}
+x <- M[[4]]$fit
+i <- c(grep("m_dev", x$names)[1],
+       grep("theta", x$names),
+       grep("survey_q", x$names),
+       grep("log_add_cv", x$names),
+       grep("log_fbar", x$names),
+       grep("log_slx_pars", x$names))
+Parameter <- x$names[i]
+Estimate <- x$est[i]
+SD <- x$std[i]
+Parameter <- c("Natural mortality ($M$) deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+               "ADF\\&G pot survey catchability ($q$)","logAddCV","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
+df <- data.frame(Parameter, Estimate, SD)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs CV} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_cv", digits = 7)
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+```
+
+```{r est_pars_M, results = "asis"}
+x <- M[[5]]$fit
+i <- c(grep("theta", x$names),
+       grep("survey_q", x$names),
+       grep("log_fbar", x$names),
+       grep("log_slx_pars", x$names))
+Parameter <- x$names[i]
+Estimate <- x$est[i]
+SD <- x$std[i]
+Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
+df <- data.frame(Parameter, Estimate, SD)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 7)
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+```
+
 ```{r likelihood_components, results = "asis"}
 df <- NULL
 for (ii in 2:5)
@@ -525,10 +560,24 @@ tab <- xtable(df, caption = "Comparisons of negative log-likelihood values and m
 print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
-```{r pop_abundance, results = "asis"}
+```{r pop_abundance_2015, results = "asis"}
 A <- M[[1]]
 df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance")
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_2015")
+print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
+```
+
+```{r pop_abundance_base, results = "asis"}
+A <- M[[2]]
+df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_base")
+print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
+```
+
+```{r pop_abundance_selex, results = "asis"}
+A <- M[[3]]
+df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_selex")
 print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
 ```
 
@@ -678,42 +727,35 @@ Using boldface uppercase letters to indicate a matrix, we describe the size tran
   \boldsymbol{G}_t = \left[ \begin{array}{ccc}
     1 - \pi_{12} - \pi_{13} & \pi_{12} & \pi_{13} \\
     0 & 1 - \pi_{23} & \pi_{23} \\
-    0 & 0 & 1 \end{array} \right].
-\end{equation}
-Similarly, the survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
-\begin{equation}
-  \boldsymbol{S}^\text{df} = \left[ \begin{array}{ccc}
-    s_1^\text{df} & 0 & 0 \\
-    0 & s_2^\text{df} & 0 \\
     0 & 0 & 1 \end{array} \right],
 \end{equation}
-where xx represents the combination of natural mortality (M) and fishing mortality (F). Recruitment of each stage to the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$ and may be defined using an inverse logistic curve.
-
-The basic population dynamics underlying Gmacs can thus be described as
+with $\pi_{jk}$ equal to the proportion of stage-$j$ crab that molt and grow into stage-$k$ within a season or year. Similarly, the survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
+\begin{equation}
+  \boldsymbol{S} = \left[ \begin{array}{ccc}
+    1-e^{-Z_{1,t,y}} & 0 & 0 \\
+    0 & 1-e^{-Z_{2,t,y}} & 0 \\
+    0 & 0 & 1-e^{-Z_{3,t,y}} \end{array} \right],
+\end{equation}
+where $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$. The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$ and may be defined using an inverse logistic curve
+\begin{equation}
+    \boldsymbol{r}_{t,y} = ...
+\end{equation}
+In this formulation of the model, all recruits are assumed to be to stage-1. The basic population dynamics underlying Gmacs can thus be described as
 \begin{align}
     \boldsymbol{n}_{t+1,y} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, \text{ if } t<T \notag\\
     \boldsymbol{n}_{t,y+1} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, \text{ if } t=T
 \end{align}
 
-where the scalar factor $e^{-M_t}$ accounts for the effect of year-t natural mortality $M_t$ and the
-hypothesized 
-
-with $\pi_{jk}$ equal to the proportion of stage-j crab that molt and grow into stage k from any one year to the next. The vector $N newt+1 = [ N new 1 , t+1 , 0 ,0 ] T$ registers the number $N new1, t+1$ of new crab, or "recruits", entering the model at the start of year $t+1$, all of which are assumed to go into stage 1. Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality.) The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
+Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
 
 $$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
-
-where the diagonal matrices 
-
-
-and
-
+where the diagonal matrices
 \begin{equation}
   \boldsymbol{H}^\text{df} = \left[ \begin{array}{ccc}
     h^\text{df} & 0 & 0 \\
     0 & h^\text{df} & 0 \\
     0 & 0 & 1 \end{array} \right]
 \end{equation}
-
 account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard handling mortality $h^\text{df}$ in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as Feb 15 (0.63 yr) pulse effects in terms of the respective fishing mortalities $F_t^\text{gt}$ and $F_t^\text{gf}$ by
 
 ## 3. Model Data
@@ -726,36 +768,36 @@ Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include
 
 In any year with no directed fishery, and hence zero retained catch, $F_t^\text{df}$ is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, $F_t^\text{gf}$ and $F_t^\text{gt}$ are imputed to be the geometric means of the estimates from years for which there are data. Table 3XX lists additional externally determined parameters used in model computations.
 
-For scenarios 0 and 1, the stage-transition matrix is
-
+In all scenarios, the stage-transition matrix is
 \begin{equation}
   \left[ \begin{array}{ccc}
     0.2 & 0.7 & 0.1 \\
     0 & 0.4 & 0.6 \\
     0 & 0 & 1 \end{array} \right]
 \end{equation}
-
-which includes molting probabilities. For scenarios 3-11, the growth matrix with molting crab is
-
-\begin{equation}
-  \left[ \begin{array}{ccc}
-    0.11 & 0.83 & 0.06 \\
-    0 & 0.11 & 0.89 \\
-    0 & 0 & 1 \end{array} \right]
-\end{equation}
+which includes molting probabilities.
 
 The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well. For scenarios 0 and 1, stage-transition matrix
 
 Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, Feb 15, which is also the reference date for calculation of federal management biomass quantities.
 
 ```{r limits_pars, results = "asis"}
-i <- 1:6
-Parameter <- M[[2]]$fit$names[i]
-Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","$q_{pot}$")
-Estimate <- M[[2]]$fit$est[i]
-df <- data.frame(Parameter, Estimate, Estimate, Estimate, Estimate, Estimate, Estimate, Estimate)
-names(df) <- c("Parameter","LB","UB","Initial value","Prior type","p1","p2","Phaze")
-tab <- xtable(df, caption = "Model bounds.", label = "tab:bounds_pars")
+Parameter <- c("$Mdev_{1998}$", "$\\log (R_0)$","$\\log (\\bar{R})$",
+               "$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+               "$q_{pot}$",
+               "Add CV ADFG pot",
+               "Stage-1 1978-2008","Stage-2 1978-2008","Stage-1 2009-2015","Stage-2 2009-2015",
+               "Stage-1 NMFS","Stage-2 NMFS","Stage-1 ADFG","Stage-2 ADFG")
+ival <- c(0,14.3,10,14,14,14,3.98689,0.0001,0.416198,0.657528,0.326889,0.806548,0.655565,0.912882,0.347014,0.720493)
+LB <- c(0,-7,-7,5,5,5,0,0.00001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001)
+UB <- c(NA,30,20,15,15,15,5,10,2,2,2,2,2,2,2,2)
+prior <- c("Random walk","Uniform","Uniform","Uniform","Uniform","Uniform","Uniform","Gamma","Uniform","Uniform","Uniform","Uniform","Uniform","Uniform","Uniform","Uniform")
+p1 <- c(0,-7,-7,5,5,5,0,1,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001)
+p2 <- c(10,30,20,15,15,15,5,100,2,2,2,2,2,2,2,2)
+phz <- c(2,2,1,1,1,1,4,4,4,4,4,4,4,4,4,4)
+df <- data.frame(Parameter, LB, ival, UB, prior, p1, p2, phz)
+names(df) <- c("Parameter","LB","Initial value","UB","Prior type","Prior par1","Prior par2","Phase")
+tab <- xtable(df, caption = "Model bounds, initial values, priors and estimation phase.", label = "tab:bounds_pars", digits = c(1,0,0,1,0,0,0,0,0))
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
