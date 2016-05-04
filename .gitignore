@@ -25,6 +25,7 @@ src/tailcompression.obj
 *.snm
 *.vrb
 *.tex.bak
+*.bak
 auto/
 
 # R files

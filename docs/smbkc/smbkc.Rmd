@@ -183,11 +183,11 @@ In Gmacs the size transition matrix is a combination of the growth matrix and th
     0 & 0 & 1 \end{array} \right]
 \end{equation}
 
-Also see Figure \ref{fig:size_trans}. Further details of the Gmacs model and cofiguration used are provided in Appendix A (SMBKC Model Description).
+Also see Figure \ref{fig:size_trans}. Further details of the Gmacs model and configuration used are provided in Appendix A (SMBKC Model Description).
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenario. The Gmacs base model scenario attepmts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
+Changes in assessment results depend on model scenario. The Gmacs base model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
 
 
 # B. Responses to SSC and CPT Comments
@@ -613,7 +613,7 @@ knitr::include_graphics("figure/Fig7b.png")
 plot_selectivity(M, ncol = 5)
 ```
 
-```{r molt_prob, fig.cap = "Molting probabilities by stage used in each of the Gmacs model scenarios. The 2015 model did not use a molting probabilty curve directly (the size transition matrix was specified instead).\\label{fig:molt_prob}"}
+```{r molt_prob, fig.cap = "Molting probabilities by stage used in each of the Gmacs model scenarios. The 2015 model did not use a molting probability curve directly (the size transition matrix was specified instead).\\label{fig:molt_prob}"}
 plot_molt_prob(Mbase, xlab = "Carapace width (mm)")
 ```
 
@@ -698,8 +698,7 @@ A <- M; A[[5]] <- NULL; A[[4]] <- NULL; A[[3]] <- NULL
 plot_size_transition(A, xlab = "Carapace width after transition (mm)")
 ```
 
-```{r init_N, fig.cap = "Numbers at length in 1953, 1975 and 2014 in each of the models. The first year of the OneSex model is 1953. The first year of the Zheng and TwoSex models in 1975.\\label{fig:init_N}"}
-#plot_numbers(M, c("1977","1980","1990","2000","2010","2015"))
+```{r init_N, fig.cap = "Numbers by stage each year (15 February) in each of the models including the 2015 model.\\label{fig:init_N}", fig.height = 15}
 plot_numbers(M)
 ```
 
@@ -806,9 +805,9 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ## 5. Model Objective Function and Weighting Scheme
 
-The objective function consists of a sum of eight "negative loglikelihood" terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four "penalty" terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries. See Table \ref{tab:stage_cpue}, where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes $n_t$ (observed number of male SMBKC $\le$ 90 mm CL) and estimated coefficients of variation $\widehat{cv}_t$ were used to develop appropriate variances for stage-proportion and abundance-index components. The weights $\lambda_j$ appearing in the objective function component expressions in Table \ref{tab:stage_cpue} play the role of "tuning" parameters in the modeling procedure.
+The objective function consists of a sum of eight "negative log-likelihood" terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four "penalty" terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries. See Table \ref{tab:stage_cpue}, where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes $n_t$ (observed number of male SMBKC $\le$ 90 mm CL) and estimated coefficients of variation $\widehat{cv}_t$ were used to develop appropriate variances for stage-proportion and abundance-index components. The weights $\lambda_j$ appearing in the objective function component expressions in Table \ref{tab:stage_cpue} play the role of "tuning" parameters in the modeling procedure.
 
-Table 4XX. Loglikelihood and penalty components of base-model objective function. The $\lambda_k$ are weights, described in text; the neff t are effective sample sizes, also described in text. All summations are with respect to years over each data series.
+Table 4XX. Log-likelihood and penalty components of base-model objective function. The $\lambda_k$ are weights, described in text; the neff t are effective sample sizes, also described in text. All summations are with respect to years over each data series.
 
 | Component | Distribution | Form |
 |-----------|--------------|------|
