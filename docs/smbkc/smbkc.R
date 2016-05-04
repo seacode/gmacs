@@ -664,7 +664,7 @@ plot_size_comps(Mbase, 3, res = TRUE)
 
 \newpage\clearpage
 
-```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.\\label{fig:fit_to_catch}"}
+```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.\\label{fig:fit_to_catch}", fig.height = 12}
 A <- M; A[[jj]] <- NULL
 plot_catch(A)
 ```
