@@ -15,18 +15,14 @@
 <h2 id="changes-in-management-of-the-fishery">Changes in Management of the Fishery</h2>
 <p>There are no new changes in management of the fishery.</p>
 <h2 id="changes-to-the-input-data">Changes to the Input Data</h2>
-<p>All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015 (new time series), updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&amp;G pot survey data in 2015.</p>
+<p>All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015, updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&amp;G pot survey data in 2015.</p>
 <h2 id="changes-in-assessment-methodology">Changes in Assessment Methodology</h2>
-<p>This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011.</p>
-<p>There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within each season. Despite this structural difference in the model, the differences between these two methods is likely to be small.</p>
-<p>Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied each season. For example, in this assessment four seasons are defined and the proportion of natural mortality that is applied each season is 0.000, 0.440, 0.185, and 0.375 in the final season. In Gmacs the proportion of natural mortality that is applied each season is fixed (i.e. it does not change each year). The previous model allowed the proportion of natural mortality to change each year (i.e. in the second season it ranged from 0.05 to 0.18 before the year 2000 and was 0.44 after 2000).</p>
-<p>Finally, in Gmacs the size transition matrix is a combination of the growth matrix and the molting probability. The growth matrix is derived from empirical molt increment data and the molting probability for each size class in the model is derived from an inverse logistic curve. Put simply, we cannot specify the size transition matrix directly, thus getting our size transition matrix to match that used in the previous model exactly was not possible. However, it is close:</p>
+<p>This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within any number of discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. For example, in this assessment four seasons are defined and the proportion of natural mortality that is applied each season is 0, 0.44, 0.185, and 0.375 in the final season. In Gmacs the proportion of natural mortality that is applied each season is fixed (i.e. it can not change from year to year). The previous model allowed the proportion of natural mortality to change each year (i.e. during the second season natural mortality ranged from 0.05 to 0.18 before the year 2000 and was constant at 0.44 after 2000).</p>
+<p>In Gmacs the size transition matrix is a combination of the growth matrix and the molting probability. The growth matrix is derived from empirical molt increment data and the molting probability for each size class in the model is derived from an inverse logistic curve. Put simply, Gmacs does not allow the user to specify the size transition matrix directly, thus getting our size transition matrix to match that used in the previous model exactly was not possible. However, it is close:</p>
 
-<p>Also see Figure .</p>
-<p>Also, selecitivitiy is fixed to match the previous model.</p>
-<p>Further details of the Gmacs model and cofiguration used are provided in Appendix A (SMBKC Model Description).</p>
+<p>Also see Figure . Further details of the Gmacs model and cofiguration used are provided in Appendix A (SMBKC Model Description).</p>
 <h2 id="changes-in-assessment-results">Changes in Assessment Results</h2>
-<p>Changes in assessment results depend on model scenario. One of the Gmacs scenarios (Gmacs selex) provides a resonbly good match to the 2015 model assessment.</p>
+<p>Changes in assessment results depend on model scenario. The Gmacs base model scenario attepmts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.</p>
 <h1 id="b.-responses-to-ssc-and-cpt-comments">B. Responses to SSC and CPT Comments</h1>
 <h2 id="cpt-and-ssc-comments-on-assessments-in-general">CPT and SSC Comments on Assessments in General</h2>
 <p>Spring 2016 CPT</p>
@@ -236,7 +232,7 @@
 </div>
 <p></p>
 <div class="figure">
-<img src="figure/fit_to_catch-1.png" alt="Comparison of observed and model predicted retained catch and bycatches with scenario 10." /><p class="caption">Comparison of observed and model predicted retained catch and bycatches with scenario 10.</p>
+<img src="figure/fit_to_catch-1.png" alt="Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels." /><p class="caption">Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.</p>
 </div>
 <div class="figure">
 <img src="figure/recruitment-1.png" alt="Estimated recruitment time series during 1979-2015 with 18 scenarios. Estimated recruitment time series (R_t) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only." /><p class="caption">Estimated recruitment time series during 1979-2015 with 18 scenarios. Estimated recruitment time series (<span class="math"><em>R</em><sub><em>t</em></sub></span>) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.</p>
@@ -701,7 +697,7 @@ In all scenarios, the stage-transition matrix is
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>1983/84 refers to a fishing year from 1 July 1983 to 30 June 1984.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p>NOAA grant Bering Sea Crab Research II, NA16FN2621, 1997.<a href="#fnref2">↩</a></p></li>
 <li id="fn3"><p>D. Pengilly, ADF&amp;G, pers. comm.<a href="#fnref3">↩</a></p></li>
 </ol>

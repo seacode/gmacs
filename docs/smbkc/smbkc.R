@@ -129,7 +129,7 @@ names(Mbase) <- c("SMBKC")
 
 1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
 
-2. **Catches**: Peak historical harvest was 9.454 million pounds (4288 tonnes) in 1983/84^[1983/84 refers to a fishing year from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 0.461 million pounds (209 tonnes), less than half the 1.167 million pound (529.3 tonnes) TAC. Following three more years of modest harvests supported by a fishery CPUE of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 0.655 million pounds (300 tonnes), but the fishery performance was relatively poor with the retained catch of 0.309 million pounds (140 tonnes).
+2. **Catches**: Peak historical harvest was 9.454 million pounds (4288 tonnes) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 0.461 million pounds (209 tonnes), less than half the 1.167 million pound (529.3 tonnes) TAC. Following three more years of modest harvests supported by a fishery CPUE of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 0.655 million pounds (300 tonnes), but the fishery performance was relatively poor with the retained catch of 0.309 million pounds (140 tonnes).
 
 3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 20.98 million pounds (9516 tonnes; CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 12.46 million pounds (5652 tonnes; CV = 0.33) in 2012 and to 4.459 million pounds (2202 tonnes; CV = 0.22) in 2013 before going back up to 12.06 million pounds (5472 tonnes; CV = 0.44) in 2014 and 11.32 million pounds (5134 tonnes; CV = 0.76).
 
@@ -168,17 +168,13 @@ There are no new changes in management of the fishery.
 
 ## Changes to the Input Data
 
-All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015 (new time series), updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&G pot survey data in 2015.
+All time series used in the assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015, updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&G pot survey data in 2015.
 
 ## Changes in Assessment Methodology
 
-This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. The model was developed to replace a similar 4-stage model used prior to 2011.
+This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within any number of discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. For example, in this assessment four seasons are defined and the proportion of natural mortality that is applied each season is 0, 0.44, 0.185, and 0.375 in the final season. In Gmacs the proportion of natural mortality that is applied each season is fixed (i.e. it can not change from year to year). The previous model allowed the proportion of natural mortality to change each year (i.e. during the second season natural mortality ranged from 0.05 to 0.18 before the year 2000 and was constant at 0.44 after 2000).
 
-There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within each season. Despite this structural difference in the model, the differences between these two methods is likely to be small.
-
-Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied each season. For example, in this assessment four seasons are defined and the proportion of natural mortality that is applied each season is 0.000, 0.440, 0.185, and 0.375 in the final season. In Gmacs the proportion of natural mortality that is applied each season is fixed (i.e. it does not change each year). The previous model allowed the proportion of natural mortality to change each year (i.e. in the second season it ranged from 0.05 to 0.18 before the year 2000 and was 0.44 after 2000).
-
-Finally, in Gmacs the size transition matrix is a combination of the growth matrix and the molting probability. The growth matrix is derived from empirical molt increment data and the molting probability for each size class in the model is derived from an inverse logistic curve. Put simply, we cannot specify the size transition matrix directly, thus getting our size transition matrix to match that used in the previous model exactly was not possible. However, it is close:
+In Gmacs the size transition matrix is a combination of the growth matrix and the molting probability. The growth matrix is derived from empirical molt increment data and the molting probability for each size class in the model is derived from an inverse logistic curve. Put simply, Gmacs does not allow the user to specify the size transition matrix directly, thus getting our size transition matrix to match that used in the previous model exactly was not possible. However, it is close:
 
 \begin{equation}
   \left[ \begin{array}{ccc}
@@ -187,15 +183,11 @@ Finally, in Gmacs the size transition matrix is a combination of the growth matr
     0 & 0 & 1 \end{array} \right]
 \end{equation}
 
-Also see Figure \ref{fig:size_trans}.
-
-Also, selecitivitiy is fixed to match the previous model.
-
-Further details of the Gmacs model and cofiguration used are provided in Appendix A (SMBKC Model Description).
+Also see Figure \ref{fig:size_trans}. Further details of the Gmacs model and cofiguration used are provided in Appendix A (SMBKC Model Description).
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenario. One of the Gmacs scenarios (Gmacs selex) provides a resonbly good match to the 2015 model assessment.
+Changes in assessment results depend on model scenario. The Gmacs base model scenario attepmts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
 
 
 # B. Responses to SSC and CPT Comments
@@ -563,21 +555,21 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 ```{r pop_abundance_2015, results = "asis"}
 A <- M[[1]]
 df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_2015")
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab and mature male biomass (MMB) at survey in tonnes on 15 February for the 2015 model. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_2015")
 print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
 ```
 
 ```{r pop_abundance_base, results = "asis"}
 A <- M[[2]]
 df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_base")
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for the Gmacs base model. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_base")
 print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
 ```
 
 ```{r pop_abundance_selex, results = "asis"}
 A <- M[[3]]
 df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in millions of crab, mature male biomasses at survey (MMB) in millions of pounds on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_selex")
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for scenario 1. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_selex")
 print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
 ```
 
@@ -664,7 +656,7 @@ plot_size_comps(Mbase, 3, res = TRUE)
 
 \newpage\clearpage
 
-```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches with scenario 10.\\label{fig:fit_to_catch}"}
+```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.\\label{fig:fit_to_catch}"}
 A <- M; A[[jj]] <- NULL
 plot_catch(A)
 ```
@@ -704,7 +696,7 @@ plot_numbers(M)
 ```
 
 ```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998 (i.e. $M_{1998}$). \\label{fig:M_t}"}
-plot_natural_mortality(M, knots = NULL)
+plot_natural_mortality(M, knots = NULL, slab = "Model")
 ```
 
 

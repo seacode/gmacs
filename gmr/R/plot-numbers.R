@@ -13,7 +13,7 @@
     {
         A  <- M[[i]]
         df <- data.frame(Model = names(M)[i], mp = A$mid_points, t(A$N_len))
-        names(df) <- c("Model", "mp", A$mod_yrs, max(A$mod_yrs)+1)
+        names(df) <- c("Model", "mp", A$mod_yrs, max(A$mod_yrs))
         df <- melt(df, id.vars = c("Model", "mp"))
         names(df) <- c("Model", "mp", "Year", "N")
         mdf <- rbind(mdf, df)
