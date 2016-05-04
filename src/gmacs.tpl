@@ -3199,7 +3199,6 @@ REPORT_SECTION
 
 	dvector ssb = value(calc_ssb());
 	REPORT(ssb);
-	cout << "WTF" << endl;
 
 	if ( last_phase() )
 	{
@@ -3241,7 +3240,6 @@ REPORT_SECTION
 		REPORT(size_comp_sample_size);
 	}
 	// Print total numbers at length
-	cout << "WTF" << endl;
 	dvar_matrix N_len(syr,nyr+1,1,nclass);
 	dvar_matrix N_mm(syr,nyr+1,1,nclass);
 	dvar_matrix N_males(syr,nyr+1,1,nclass);
@@ -3277,7 +3275,6 @@ REPORT_SECTION
 	REPORT(N_males);
 	REPORT(N_males_old);
 
-	cout << "WTF" << endl;
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
 	REPORT(iMoltIncSex);
@@ -3316,7 +3313,6 @@ REPORT_SECTION
 	  	size_transition_F = value(size_transition(2));
 		REPORT(size_transition_F);
 	}
-	cout << "WTF" << endl;
 
 
 	/**
