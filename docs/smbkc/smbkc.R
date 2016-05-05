@@ -116,9 +116,9 @@ M[[jj]]$size_transition_M <- matrix(c(0.2,0.7,0.1,0,0.4,0.6,0,0,1), nrow = 3, nc
 M[[jj]]$rec_sdd <- c(1,0,0)
 
 # The .rep files for each of the Gmacs models. Used for making tables of the likelihood components
-like <- list()
-like[[1]] <- readLines("../../examples/bbrkc/OneSex/gmacs.rep")
-like[[2]] <- readLines("../../examples/bbrkc/TwoSex/gmacs.rep")
+#like <- list()
+#like[[1]] <- readLines("../../examples/bbrkc/OneSex/gmacs.rep")
+#like[[2]] <- readLines("../../examples/bbrkc/TwoSex/gmacs.rep")
 
 fn <- paste0(.MODELDIR[2], "gmacs")
 Mbase <- lapply(fn, read_admb)
@@ -147,12 +147,10 @@ df <- data.frame(c("2011/12","2012/13","2013/14","2014/15","2015/16"),
                  c(1.7, 1.02, 0.56, 0.43, 0.28),
                  c(1.54, 0.92, 0.45, 0.34, 0.22))
 names(df) <- c("Year","MSST","Biomass (MMB)","TAC","Retained catch","Total male catch","OFL","ABC")
-
 #M[[2]]$spr_fspr
 #M[[2]]$spr_fofl
-
 tab <- xtable(df, caption = "Status and catch specifications (1000 tonnes) (scenario 1). MSST is minimum stock-size threshold, MMB is mature male biomass, TAC is total allowable catch, OFL is over fishing limit, ABC is the annual b catch.", label = "tab:status")
-print(tab, caption.placement = "top", include.rownames = FALSE)
+#print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
 The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.
@@ -358,7 +356,6 @@ In summary, we recommend scenario 10-4 be used for overfishing/overfished determ
 # F. Calculation of the OFL and ABC
 
 The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality $F_\mathit{OFL}$. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of $B_\mathit{MSY}$ and $F_\mathit{MSY}$, along with two additional parameters $\alpha$ and $\beta$, $F_\mathit{OFL}$ is determined by the control rule
-
 \begin{align}
     F_\mathit{OFL} &= 
     \begin{cases}
@@ -367,7 +364,6 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
     \end{cases}\\
     F_\mathit{OFL} &< F_\mathit{MSY} \text{ with directed fishery } F = 0, \text{ when } B/B_\mathit{MSY} \le \beta \notag
 \end{align}
-
 where $B$ is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_\mathit{OFL}$, in case b) numerical approximation of $F_\mathit{OFL}$ is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with $F_\mathit{OFL}$ taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
 The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$syr`-`r M[[2]]$nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to put $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. ABC is 80% of the OFL.
@@ -464,7 +460,7 @@ i <- c(grep("m_dev", x$names)[1],
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("Natural mortality ($M$) deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -480,10 +476,10 @@ i <- c(grep("m_dev", x$names)[1],
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("Natural mortality ($M$) deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
                "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs selex} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 7)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs selex} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -498,11 +494,11 @@ i <- c(grep("m_dev", x$names)[1],
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("Natural mortality ($M$) deviation in 1998","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
                "ADF\\&G pot survey catchability ($q$)","logAddCV","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
                "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs CV} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_cv", digits = 7)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs CV} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_cv", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -519,7 +515,7 @@ Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2
                "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
                "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 7)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -527,7 +523,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)",
                "$\\log(\\bar{F}_\\text{pot})$")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 7)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -571,7 +567,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 
 ```{r pop_abundance_2015, results = "asis"}
 A <- M[[1]]
-df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
+df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$N_len[1:38,1], N2 = A$N_len[1:38,2], N3 = A$N_len[1:38,3], MMB = A$ssb)
 tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab and mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf 2015 model}. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_2015")
 print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
 ```
@@ -658,7 +654,7 @@ A <- M; A[[jj]] <- NULL
 plot_catch(A)
 ```
 
-```{r recruitment, fig.cap = "Estimated recruitment time series during 1979-2015 with 18 scenarios. Estimated recruitment time series ($R_t$) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.\\label{fig:recruitment}"}
+```{r recruitment, fig.cap = "Estimated recruitment time series during 1979-2015 in each of the scenarios.\\label{fig:recruitment}"}
 plot_recruitment(M)
 ```
 
@@ -674,7 +670,7 @@ plot_length_weight(Mbase, xlab = "Carapace width (mm)", ylab = "Weight (kg)")
 plot_recruitment_size(M, xlab = "Carapace width (mm)")
 ```
 
-```{r growth_inc, fig.cap = "Growth increment (mm) each molt by sex in the OneSex and TwoSex models.\\label{fig:growth_inc}"}
+```{r growth_inc, fig.cap = "Growth increment (mm) each molt.\\label{fig:growth_inc}"}
 plot_growth_inc(Mbase)
 ```
 

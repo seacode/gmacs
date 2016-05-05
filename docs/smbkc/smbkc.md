@@ -33,22 +33,7 @@ bibliography: Gmacs.bib
 
 5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider.
 
-\begin{table}[ht]
-\centering
-\caption{Status and catch specifications (1000 tonnes) (scenario 1). MSST is minimum stock-size threshold, MMB is mature male biomass, TAC is total allowable catch, OFL is over fishing limit, ABC is the annual b catch.} 
-\label{tab:status}
-\begin{tabular}{lrrrrrrr}
-  \hline
-Year & MSST & Biomass (MMB) & TAC & Retained catch & Total male catch & OFL & ABC \\ 
-  \hline
-2011/12 & 1.50 & 5.03 & 1.15 & 0.85 & 0.95 & 1.70 & 1.54 \\ 
-  2012/13 & 1.80 & 2.85 & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
-  2013/14 & 1.50 & 3.01 & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
-  2014/15 & 1.86 & 2.48 & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 &  & 2.45 &  &  &  & 0.28 & 0.22 \\ 
-   \hline
-\end{tabular}
-\end{table}
+
 
 The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.
 
@@ -258,7 +243,6 @@ In summary, we recommend scenario 10-4 be used for overfishing/overfished determ
 # F. Calculation of the OFL and ABC
 
 The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality $F_\mathit{OFL}$. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of $B_\mathit{MSY}$ and $F_\mathit{MSY}$, along with two additional parameters $\alpha$ and $\beta$, $F_\mathit{OFL}$ is determined by the control rule
-
 \begin{align}
     F_\mathit{OFL} &= 
     \begin{cases}
@@ -267,7 +251,6 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
     \end{cases}\\
     F_\mathit{OFL} &< F_\mathit{MSY} \text{ with directed fishery } F = 0, \text{ when } B/B_\mathit{MSY} \le \beta \notag
 \end{align}
-
 where $B$ is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_\mathit{OFL}$, in case b) numerical approximation of $F_\mathit{OFL}$ is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with $F_\mathit{OFL}$ taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
 The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2015, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to put $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. ABC is 80% of the OFL.
@@ -362,7 +345,7 @@ Table 2aXX. NMFS EBS trawl-survey area-swept estimates of male crab abundance (1
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality ($M$) deviation in 1998 & 1.8054000 & 0.1074600 \\ 
+Natural mortality ($M$) deviation in 1998/99 & 1.8054000 & 0.1074600 \\ 
   $\log (R_0)$ & 13.5960000 & 0.0519520 \\ 
   $\log (\bar{R})$ & 13.6910000 & 0.1229600 \\ 
   $\log (N_1)$ & 14.6210000 & 0.1684500 \\ 
@@ -378,13 +361,13 @@ Natural mortality ($M$) deviation in 1998 & 1.8054000 & 0.1074600 \\
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations for the {\bf Gmacs selex} model that estimates stage-1 and stage-2 selectivity.} 
+\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs selex} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_selex}
 \begin{tabular}{lrr}
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality ($M$) deviation in 1998 & 1.5947000 & 0.1354000 \\ 
+Natural mortality ($M$) deviation in 1998/99 & 1.5947000 & 0.1354000 \\ 
   $\log (R_0)$ & 13.5320000 & 0.0538760 \\ 
   $\log (\bar{R})$ & 13.6250000 & 0.1238100 \\ 
   $\log (N_1)$ & 14.7360000 & 0.1699300 \\ 
@@ -408,13 +391,13 @@ Natural mortality ($M$) deviation in 1998 & 1.5947000 & 0.1354000 \\
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations for the {\bf Gmacs CV} model that estimates stage-1 and stage-2 selectivity.} 
+\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs CV} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_cv}
 \begin{tabular}{lrr}
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality ($M$) deviation in 1998 & 1.8464000 & 0.1718500 \\ 
+Natural mortality ($M$) deviation in 1998/99 & 1.8464000 & 0.1718500 \\ 
   $\log (R_0)$ & 13.6500000 & 0.0598450 \\ 
   $\log (\bar{R})$ & 13.7430000 & 0.1265400 \\ 
   $\log (N_1)$ & 14.7180000 & 0.1695900 \\ 
@@ -439,7 +422,7 @@ Natural mortality ($M$) deviation in 1998 & 1.8464000 & 0.1718500 \\
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations for the {\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.} 
+\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_M}
 \begin{tabular}{lrr}
   \hline
@@ -473,7 +456,7 @@ $\log (R_0)$ & 13.3650000 & 0.0523920 \\
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations for the {\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.} 
+\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_M}
 \begin{tabular}{lrr}
   \hline
@@ -537,44 +520,44 @@ Pot Retained Catch & -66.34 & -66.87 & -67.07 & -66.63 \\
   \hline
 Year & N1 & N2 & N3 & MMB \\ 
   \hline
-1978 & 3255149 & 1745630 & 1402666 & 4562 \\ 
-  1979 & 2644323 & 2426526 & 2316986 & 6295 \\ 
-  1980 & 1126235 & 2304998 & 3382846 & 9501 \\ 
-  1981 & 992395 & 1402492 & 3189705 & 9721 \\ 
-  1982 & 738746 & 1027667 & 1793731 & 7070 \\ 
-  1983 & 686101 & 759715 & 1919257 & 4368 \\ 
-  1984 & 904924 & 641076 & 1323143 & 3067 \\ 
-  1985 & 1195419 & 726109 & 1136628 & 2826 \\ 
-  1986 & 1247549 & 919252 & 1239376 & 2845 \\ 
-  1987 & 1177020 & 1012785 & 1420834 & 3415 \\ 
-  1988 & 2478039 & 1003699 & 1567211 & 3835 \\ 
-  1989 & 1624299 & 1739571 & 1837592 & 4405 \\ 
-  1990 & 1753294 & 1498261 & 2229010 & 4853 \\ 
-  1991 & 1844115 & 1490948 & 2156035 & 4531 \\ 
-  1992 & 2110962 & 1540151 & 2254818 & 4689 \\ 
-  1993 & 1667104 & 1708314 & 2314273 & 5095 \\ 
-  1994 & 1774896 & 1512107 & 2237756 & 5034 \\ 
-  1995 & 1643871 & 1508342 & 2226850 & 4911 \\ 
-  1996 & 1051184 & 1432808 & 2207393 & 4502 \\ 
-  1997 & 726449 & 1071149 & 1855845 & 3901 \\ 
-  1998 & 411807 & 307249 & 602573 & 1923 \\ 
-  1999 & 447247 & 335454 & 697335 & 1623 \\ 
-  2000 & 380578 & 365047 & 794366 & 1775 \\ 
-  2001 & 185139 & 336910 & 883787 & 1913 \\ 
-  2002 & 315210 & 216591 & 925447 & 2031 \\ 
-  2003 & 260489 & 250556 & 911773 & 1970 \\ 
-  2004 & 453670 & 230839 & 912654 & 2012 \\ 
-  2005 & 792862 & 334026 & 921958 & 1980 \\ 
-  2006 & 462221 & 560227 & 1013160 & 2150 \\ 
-  2007 & 983955 & 441893 & 1157051 & 2492 \\ 
-  2008 & 984234 & 704348 & 1281965 & 2748 \\ 
-  2009 & 953135 & 791217 & 1427153 & 3024 \\ 
-  2010 & 922034 & 802140 & 1416114 & 2821 \\ 
-  2011 & 605101 & 789025 & 1286841 & 2454 \\ 
-  2012 & 755064 & 604702 & 1194961 & 2106 \\ 
-  2013 & 718195 & 628941 & 1375098 & 2440 \\ 
-  2014 & 571248 & 616058 & 1474058 & 2482 \\ 
-  2015 & 798892 & 528358 & 1596489 & 2680 \\ 
+1978 & 3782350 & 2419470 & 1678340 & 4562 \\ 
+  1979 & 4841660 & 2943230 & 2203410 & 6295 \\ 
+  1980 & 4218520 & 3805080 & 3265810 & 9501 \\ 
+  1981 & 1755600 & 3733730 & 4603820 & 9721 \\ 
+  1982 & 1876200 & 2216680 & 4779900 & 7070 \\ 
+  1983 & 1012660 & 1760260 & 3409680 & 4368 \\ 
+  1984 & 866184 & 1107100 & 2020700 & 3067 \\ 
+  1985 & 1278900 & 837916 & 1498640 & 2826 \\ 
+  1986 & 1895780 & 998129 & 1282260 & 2845 \\ 
+  1987 & 1865030 & 1417950 & 1371850 & 3415 \\ 
+  1988 & 1653320 & 1538130 & 1646100 & 3835 \\ 
+  1989 & 2648820 & 1454690 & 1888610 & 4405 \\ 
+  1990 & 1719180 & 2008780 & 2082160 & 4853 \\ 
+  1991 & 2467290 & 1643490 & 2389520 & 4531 \\ 
+  1992 & 2717060 & 1930930 & 2162950 & 4689 \\ 
+  1993 & 2969560 & 2176260 & 2269050 & 5095 \\ 
+  1994 & 1744630 & 2393860 & 2398840 & 5034 \\ 
+  1995 & 1847540 & 1751950 & 2431880 & 4911 \\ 
+  1996 & 2150610 & 1618910 & 2310670 & 4502 \\ 
+  1997 & 1306420 & 1746730 & 2143670 & 3901 \\ 
+  1998 & 852401 & 1283640 & 1799810 & 1923 \\ 
+  1999 & 456270 & 415120 & 691298 & 1623 \\ 
+  2000 & 479496 & 405329 & 785188 & 1775 \\ 
+  2001 & 479076 & 415779 & 858978 & 1913 \\ 
+  2002 & 215485 & 418944 & 925671 & 2031 \\ 
+  2003 & 453805 & 265868 & 982790 & 1970 \\ 
+  2004 & 293347 & 353951 & 953565 & 2012 \\ 
+  2005 & 656367 & 289723 & 973699 & 1980 \\ 
+  2006 & 970389 & 480511 & 958382 & 2150 \\ 
+  2007 & 716526 & 727161 & 1040240 & 2492 \\ 
+  2008 & 1251670 & 646712 & 1205010 & 2748 \\ 
+  2009 & 1129620 & 946953 & 1329280 & 3024 \\ 
+  2010 & 1057710 & 967554 & 1482740 & 2821 \\ 
+  2011 & 896425 & 919677 & 1431650 & 2454 \\ 
+  2012 & 581850 & 802819 & 1230770 & 2106 \\ 
+  2013 & 681566 & 586163 & 1061620 & 2440 \\ 
+  2014 & 619320 & 594288 & 1180390 & 2482 \\ 
+  2015 & 496048 & 557095 & 1218120 & 2680 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -717,7 +700,7 @@ Year & N1 & N2 & N3 & MMB \\
 
 ![Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.\label{fig:fit_to_catch}](figure/fit_to_catch-1.png)
 
-![Estimated recruitment time series during 1979-2015 with 18 scenarios. Estimated recruitment time series ($R_t$) in the OneSex, TwoSex and BBRKC models. Note that recruitment in the OneSex model represents recruitment of males only.\label{fig:recruitment}](figure/recruitment-1.png)
+![Estimated recruitment time series during 1979-2015 in each of the scenarios.\label{fig:recruitment}](figure/recruitment-1.png)
 
 ![Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios.\label{fig:mmb}](figure/mature_male_biomass-1.png)
 
@@ -725,7 +708,7 @@ Year & N1 & N2 & N3 & MMB \\
 
 ![Distribution of carapace width (mm) at recruitment.\label{fig:init_rec}](figure/init_rec-1.png)
 
-![Growth increment (mm) each molt by sex in the OneSex and TwoSex models.\label{fig:growth_inc}](figure/growth_inc-1.png)
+![Growth increment (mm) each molt.\label{fig:growth_inc}](figure/growth_inc-1.png)
 
 ![Probability of growth transition by stage. Each of the panels represent the stage before growth. The x-axes represent the stage after a growth (ignoring the probability of molting).\label{fig:growth_trans}](figure/growth_trans-1.png)
 
