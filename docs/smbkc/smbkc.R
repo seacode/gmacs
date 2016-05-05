@@ -446,10 +446,6 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analys
 
 \newpage\clearpage
 
-Table 1XX. The 1978/79 - 2014/15 directed St. Matthew Island blue king crab pot fishery. Source: Fitch et al. 2012; ADF&G Dutch Harbor staff, pers. comm.
-
-Table 2aXX. NMFS EBS trawl-survey area-swept estimates of male crab abundance (10 6 crab) and of mature male biomass (10 6 lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R.Foy, NMFS. The “+” refers to plus group.
-
 ```{r est_pars_base, results = "asis"}
 x <- M[[2]]$fit
 i <- c(grep("m_dev", x$names)[1],
@@ -522,9 +518,9 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 ```{r fixed_pars, results = "asis"}
 Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)",
                "$\\log(\\bar{F}_\\text{pot})$")
-df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 7)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+#df <- data.frame(Parameter, Estimate, SD)
+#tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 7)
+#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 ```{r likelihood_components, results = "asis"}
@@ -567,23 +563,26 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 
 ```{r pop_abundance_2015, results = "asis"}
 A <- M[[1]]
-df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$N_len[1:38,1], N2 = A$N_len[1:38,2], N3 = A$N_len[1:38,3], MMB = A$ssb)
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab and mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf 2015 model}. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_2015")
-print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
+df <- data.frame(as.integer(A$mod_yrs), A$N_len[1:38,1], A$N_len[1:38,2], A$N_len[1:38,3], A$ssb)
+names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab and mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf 2015 model}. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_2015")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 ```{r pop_abundance_base, results = "asis"}
 A <- M[[2]]
-df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf Gmacs base} model. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_base")
-print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
+df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(5,156,4),1], A$d4_N[seq(5,156,4),2], A$d4_N[seq(5,156,4),3], A$ssb)
+names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf Gmacs base} model. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_base")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 ```{r pop_abundance_selex, results = "asis"}
 A <- M[[3]]
-df <- data.frame(Year = as.integer(A$mod_yrs), N1 = A$d4_N[seq(5,156,4),1], N2 = A$d4_N[seq(5,156,4),2], N3 = A$d4_N[seq(5,156,4),3], MMB = A$ssb)
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for {\\bf Gmacs selex} model. All abundances are at time of survey (season 1).", label = "tab:pop_abundance_selex")
-print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = list(big.mark = c("",",",",",",","," )) )
+df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(5,156,4),1], A$d4_N[seq(5,156,4),2], A$d4_N[seq(5,156,4),3], A$ssb)
+names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
+tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for {\\bf Gmacs selex} model. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_selex")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 \newpage\clearpage
@@ -594,17 +593,17 @@ print(tab, caption.placement = "top", include.rownames = FALSE ,format.args = li
 
 \newpage\clearpage
 
-```{r selectivity, fig.cap = "Estimated stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.\\label{fig:selectivity}", fig.height = 15}
+```{r selectivity, fig.cap = "Estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.\\label{fig:selectivity}", fig.height = 15}
 plot_selectivity(M, ncol = 5)
 ```
 
-```{r molt_prob, fig.cap = "Molting probabilities by stage used in each of the Gmacs model scenarios. The 2015 model did not use a molting probability curve directly (the size transition matrix was specified instead).\\label{fig:molt_prob}"}
+```{r molt_prob, fig.cap = "Molting probabilities by stage used in all of the Gmacs model scenarios.\\label{fig:molt_prob}"}
 plot_molt_prob(Mbase, xlab = "Carapace width (mm)")
 ```
 
 \newpage\clearpage
 
-```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 and 2016 Gmacs model. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
+```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 ```
 
@@ -612,37 +611,37 @@ plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
-```{r bts_resid, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for Gmacs configuration. \\label{fig:bts_resid}"}
+```{r bts_resid, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. \\label{fig:bts_resid}"}
 A <- M; A[[jj]] <- NULL
 plot_cpue_res(A)
 ```
 
 \newpage\clearpage
 
-```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery.\\label{fig:sc_pot}"}
+```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_pot}"}
 plot_size_comps(M, 1)
 ```
 
-```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey.\\label{fig:sc_pot_discarded}"}
+```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded}"}
 plot_size_comps(M, 2)
 ```
 
-```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey.\\label{fig:sc_trawl_discarded}"}
+```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_discarded}"}
 plot_size_comps(M, 3)
 ```
 
-```{r sc_pot_res, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC).\\label{fig:sc_pot_res}"}
+```{r sc_pot_res, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_pot_res}"}
 #A <- M; A[[jj]] <- NULL
 #plot_size_comps(A, 1, res = TRUE)
 plot_size_comps(Mbase, 1, res = TRUE)
 ```
 
-```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC).\\label{fig:sc_pot_discarded_res}"}
+```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_pot_discarded_res}"}
 #plot_size_comps(A, 2, res = TRUE)
 plot_size_comps(Mbase, 2, res = TRUE)
 ```
 
-```{r sc_trawl_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC).\\label{fig:sc_trawl_discarded_res}"}
+```{r sc_trawl_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_trawl_discarded_res}"}
 #plot_size_comps(A, 3, res = TRUE)
 plot_size_comps(Mbase, 3, res = TRUE)
 ```
@@ -662,8 +661,8 @@ plot_recruitment(M)
 plot_ssb(M, ylab = "Mature male biomass (tonnes) on 15 February")
 ```
 
-```{r length_weight, fig.cap = "Relationship between carapace width (mm) and weight (kg) by sex in each of the models (provided as a vector of weights at length to Gmacs).\\label{fig:length-weight}"}
-plot_length_weight(Mbase, xlab = "Carapace width (mm)", ylab = "Weight (kg)")
+```{r length_weight, fig.cap = "Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs).\\label{fig:length-weight}"}
+plot_length_weight(Mbase, xlab = "Carapace width (mm)", ylab = "Weight (tonnes)")
 ```
 
 ```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
@@ -687,7 +686,7 @@ plot_size_transition(A, xlab = "Carapace width after transition (mm)")
 plot_numbers(M)
 ```
 
-```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998 (i.e. $M_{1998}$). \\label{fig:M_t}"}
+```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998/99 (i.e. $M_{1998}$). \\label{fig:M_t}"}
 plot_natural_mortality(M, knots = NULL, slab = "Model")
 ```
 
