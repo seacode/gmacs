@@ -139,7 +139,7 @@ Though historical observer data are limited due to very limited sampling, bycatc
 
 ## Summary of New Information
 
-Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2015 (new time series), as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data extent and availability used in each of the Gmacs models is shown in Figure \ref{fig:data_extent}).
+Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2015, as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data extent and availability used in each of the Gmacs models is shown in Figure \ref{fig:data_extent}).
 
 ![Data extent for the SMBKC assessment.\label{fig:data_extent}](figure/data_extent-1.png)
 
@@ -466,6 +466,40 @@ $\log (R_0)$ & 13.3650000 & 0.0523920 \\
 \end{tabular}
 \end{table}
 
+
+```
+## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 7, 17
+```
+
+\begin{table}[ht]
+\centering
+\caption{Model parameter estimates and standard deviations for the {\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.} 
+\label{tab:est_pars_M}
+\begin{tabular}{lrr}
+  \hline
+Parameter & Estimate & SD \\ 
+  \hline
+$\log (R_0)$ & 13.3650000 & 0.0523920 \\ 
+  $\log (\bar{R})$ & 13.4580000 & 0.1231200 \\ 
+  $\log (N_1)$ & 14.7670000 & 0.1699600 \\ 
+  $\log (N_2)$ & 14.3540000 & 0.2027600 \\ 
+  $\log (N_3)$ & 14.3890000 & 0.2024100 \\ 
+  ADF\&G pot survey catchability ($q$) & 0.0000047 & 0.0000003 \\ 
+  $\log(\bar{F}_\text{pot})$ & -1.4553000 & 0.0574300 \\ 
+  $\log(\bar{F}_\text{trawl bycatch})$ & -11.6130000 & 0.0811320 \\ 
+  $\log(\bar{F}_\text{fixed bycatch})$ & -9.5048000 & 0.0812590 \\ 
+  Stage-1 directed pot selectivity 1978-2008 & -0.5798400 & 0.1835900 \\ 
+  Stage-2 directed pot selectivity 1978-2008 & -0.3456700 & 0.1280600 \\ 
+  Stage-1 directed pot selectivity 2009-2015 & -0.7206600 & 0.1889300 \\ 
+  Stage-2 directed pot selectivity 2009-2015 & 0.1360500 & 0.0951510 \\ 
+  Stage-1 NMFS trawl selectivity & -0.0350400 & 0.0702790 \\ 
+  Stage-2 NMFS trawl selectivity & 0.2851200 & 0.0629400 \\ 
+  Stage-1 ADF\&G pot selectivity & -0.8312000 & 0.1428100 \\ 
+  Stage-2 ADF\&G pot selectivity & 0.0187320 & 0.0817210 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
 \begin{table}[ht]
 \centering
 \caption{Comparisons of negative log-likelihood values and management measures for the four Gmacs model scenarios. Biomass and OFL are in tonnes.} 
@@ -718,28 +752,28 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
 \begin{equation}
     \boldsymbol{n}_{t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{3,t,y} \right]^\top.
 \end{equation}
-Using boldface uppercase letters to indicate a matrix, we describe the size transition matrix $\boldsymbol{G}_t$ during season $t$ as
+Using boldface uppercase letters to indicate a matrix, we describe the size transition matrix $\boldsymbol{G}$ as
 \begin{equation}
-  \boldsymbol{G}_t = \left[ \begin{array}{ccc}
+  \boldsymbol{G} = \left[ \begin{array}{ccc}
     1 - \pi_{12} - \pi_{13} & \pi_{12} & \pi_{13} \\
     0 & 1 - \pi_{23} & \pi_{23} \\
     0 & 0 & 1 \end{array} \right],
 \end{equation}
 with $\pi_{jk}$ equal to the proportion of stage-$j$ crab that molt and grow into stage-$k$ within a season or year. Similarly, the survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
 \begin{equation}
-  \boldsymbol{S} = \left[ \begin{array}{ccc}
+  \boldsymbol{S}_{t,y} = \left[ \begin{array}{ccc}
     1-e^{-Z_{1,t,y}} & 0 & 0 \\
     0 & 1-e^{-Z_{2,t,y}} & 0 \\
     0 & 0 & 1-e^{-Z_{3,t,y}} \end{array} \right],
 \end{equation}
-where $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$. The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$ and may be defined using an inverse logistic curve
+where $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$. The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only, thus
 \begin{equation}
-    \boldsymbol{r}_{t,y} = ...
+    \boldsymbol{r}_{t,y} = \left[ \bar{R}, 0, 0 \right]^\top.
 \end{equation}
 In this formulation of the model, all recruits are assumed to be to stage-1. The basic population dynamics underlying Gmacs can thus be described as
 \begin{align}
-    \boldsymbol{n}_{t+1,y} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, \text{ if } t<T \notag\\
-    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, \text{ if } t=T
+    \boldsymbol{n}_{t+1,y} &= \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y}, &\text{ if } t<4 \notag\\
+    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=4
 \end{align}
 
 Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
@@ -760,7 +794,7 @@ Data inputs used in model estimation are listed in Table 1XX. All quantities rel
 
 ## 4. Model Parameters
 
-Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include an estimated parameter for natural mortality ($M$) in 1998/99 assuming of an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
+Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include an estimated parameter for natural mortality ($M$) in 1998/99 assuming an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
 
 In any year with no directed fishery, and hence zero retained catch, $F_t^\text{df}$ is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, $F_t^\text{gf}$ and $F_t^\text{gt}$ are imputed to be the geometric means of the estimates from years for which there are data. Table 3XX lists additional externally determined parameters used in model computations.
 
@@ -775,7 +809,7 @@ which includes molting probabilities.
 
 The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well. For scenarios 0 and 1, stage-transition matrix
 
-Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, Feb 15, which is also the reference date for calculation of federal management biomass quantities.
+Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, February 15, which is also the reference date for calculation of federal management biomass quantities.
 
 \begin{table}[ht]
 \centering
