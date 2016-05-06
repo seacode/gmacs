@@ -126,7 +126,7 @@ Though historical observer data are limited due to very limited sampling, bycatc
 
 Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2015, as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data extent and availability used in each of the Gmacs models is shown in Figure \ref{fig:data_extent}).
 
-![Data extent for the SMBKC assessment.\label{fig:data_extent}](figure/data_extent-1.png)
+![Data extent for the SMBKC assessment.\label{fig:data_extent}](figure/data_extent-1.png) 
 
 ## Major Data Sources
 
@@ -424,23 +424,23 @@ Natural mortality ($M$) deviation in 1998/99 & 1.8464000 & 0.1718500 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-$\log (R_0)$ & 13.3650000 & 0.0523920 \\ 
-  $\log (\bar{R})$ & 13.4580000 & 0.1231200 \\ 
-  $\log (N_1)$ & 14.7670000 & 0.1699600 \\ 
-  $\log (N_2)$ & 14.3540000 & 0.2027600 \\ 
-  $\log (N_3)$ & 14.3890000 & 0.2024100 \\ 
+$\log (R_0)$ & 13.2740000 & 0.0682660 \\ 
+  $\log (\bar{R})$ & 13.3680000 & 0.1304700 \\ 
+  $\log (N_1)$ & 14.7460000 & 0.1706600 \\ 
+  $\log (N_2)$ & 14.3880000 & 0.2010700 \\ 
+  $\log (N_3)$ & 14.4670000 & 0.1973100 \\ 
   ADF\&G pot survey catchability ($q$) & 0.0000047 & 0.0000003 \\ 
-  $\log(\bar{F}_\text{pot})$ & -1.4553000 & 0.0574300 \\ 
-  $\log(\bar{F}_\text{trawl bycatch})$ & -11.6130000 & 0.0811320 \\ 
-  $\log(\bar{F}_\text{fixed bycatch})$ & -9.5048000 & 0.0812590 \\ 
-  Stage-1 directed pot selectivity 1978-2008 & -0.5798400 & 0.1835900 \\ 
-  Stage-2 directed pot selectivity 1978-2008 & -0.3456700 & 0.1280600 \\ 
-  Stage-1 directed pot selectivity 2009-2015 & -0.7206600 & 0.1889300 \\ 
-  Stage-2 directed pot selectivity 2009-2015 & 0.1360500 & 0.0951510 \\ 
-  Stage-1 NMFS trawl selectivity & -0.0350400 & 0.0702790 \\ 
-  Stage-2 NMFS trawl selectivity & 0.2851200 & 0.0629400 \\ 
-  Stage-1 ADF\&G pot selectivity & -0.8312000 & 0.1428100 \\ 
-  Stage-2 ADF\&G pot selectivity & 0.0187320 & 0.0817210 \\ 
+  $\log(\bar{F}_\text{pot})$ & -1.4101000 & 0.0618060 \\ 
+  $\log(\bar{F}_\text{trawl bycatch})$ & -11.6070000 & 0.0806940 \\ 
+  $\log(\bar{F}_\text{fixed bycatch})$ & -9.4992000 & 0.0807880 \\ 
+  Stage-1 directed pot selectivity 1978-2008 & -0.4531400 & 0.1858900 \\ 
+  Stage-2 directed pot selectivity 1978-2008 & -0.3789100 & 0.1328600 \\ 
+  Stage-1 directed pot selectivity 2009-2015 & -0.7070100 & 0.1882400 \\ 
+  Stage-2 directed pot selectivity 2009-2015 & 0.1402800 & 0.0944640 \\ 
+  Stage-1 NMFS trawl selectivity & 0.0773880 & 0.0841730 \\ 
+  Stage-2 NMFS trawl selectivity & 0.3353700 & 0.0591010 \\ 
+  Stage-1 ADF\&G pot selectivity & -0.8216400 & 0.1398700 \\ 
+  Stage-2 ADF\&G pot selectivity & 0.0382260 & 0.0816860 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -455,23 +455,23 @@ $\log (R_0)$ & 13.3650000 & 0.0523920 \\
   \hline
 Component & Gmacs base & Gmacs selex & Gmacs CV & Gmacs M \\ 
   \hline
-Pot Retained Catch & -66.34 & -66.87 & -67.07 & -66.63 \\ 
-  Pot Discarded Catch & 8.86 & 3.89 & 4.13 & 4.15 \\ 
+Pot Retained Catch & -66.34 & -66.87 & -67.07 & -66.68 \\ 
+  Pot Discarded Catch & 8.86 & 3.89 & 4.13 & 6.80 \\ 
   Trawl bycatch Discarded Catch & -6.61 & -6.61 & -6.61 & -6.61 \\ 
   Fixed bycatch Discarded Catch & -6.55 & -6.59 & -6.60 & -6.60 \\ 
-  NMFS Trawl Survey & 24.60 & 26.48 & 24.82 & 34.06 \\ 
-  ADF\&G Pot Survey CPUE & 68.94 & 57.18 & 9.36 & 60.89 \\ 
-  Directed Pot LF & -11.41 & -11.86 & -12.01 & -11.60 \\ 
-  NMFS Trawl LF & 19.74 & 12.70 & 0.73 & 14.03 \\ 
-  ADF\&G Pot LF & -1.30 & -4.98 & -7.80 & -3.89 \\ 
-  Recruitment deviations & 38.02 & 38.64 & 36.17 & 42.13 \\ 
+  NMFS Trawl Survey & 24.60 & 26.48 & 24.82 & 29.86 \\ 
+  ADF\&G Pot Survey CPUE & 68.94 & 57.18 & 9.36 & 59.47 \\ 
+  Directed Pot LF & -11.41 & -11.86 & -12.01 & -10.38 \\ 
+  NMFS Trawl LF & 19.74 & 12.70 & 0.73 & 15.63 \\ 
+  ADF\&G Pot LF & -1.30 & -4.98 & -7.80 & -4.34 \\ 
+  Recruitment deviations & 38.02 & 38.64 & 36.17 & 43.20 \\ 
   F penalty & 9.53 & 9.53 & 9.53 & 9.52 \\ 
   M penalty & 6.48 & 6.47 & 6.48 & 0.00 \\ 
   Prior & 16.43 & 21.97 & 34.22 & 21.97 \\ 
-  Total & 100.39 & 79.94 & 25.35 & 91.44 \\ 
+  Total & 100.39 & 79.94 & 25.35 & 91.85 \\ 
   Total estimated parameters & 276.00 & 284.00 & 285.00 & 282.00 \\ 
-  MMB2015 & 3294.92 & 2612.73 & 4088.82 & 2122.75 \\ 
-  Fofl & 0.37 & 0.36 & 0.37 & 0.32 \\ 
+  MMB2015 & 3294.92 & 2612.73 & 4088.82 & 2006.78 \\ 
+  Fofl & 0.37 & 0.36 & 0.37 & 0.31 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -634,53 +634,53 @@ Year & $N_1$ & $N_2$ & $N_3$ & MMB \\
 
 \newpage\clearpage
 
-![Estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.\label{fig:selectivity}](figure/selectivity-1.png)
+![Estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.\label{fig:selectivity}](figure/selectivity-1.png) 
 
-![Molting probabilities by stage used in all of the Gmacs model scenarios.\label{fig:molt_prob}](figure/molt_prob-1.png)
-
-\newpage\clearpage
-
-![Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png)
-
-![Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.\label{fig:pot_survey_cpue}](figure/pot_survey_cpue-1.png)
-
-![Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. \label{fig:bts_resid}](figure/bts_resid-1.png)
+![Molting probabilities by stage used in all of the Gmacs model scenarios.\label{fig:molt_prob}](figure/molt_prob-1.png) 
 
 \newpage\clearpage
 
-![Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_pot}](figure/sc_pot-1.png)
+![Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png) 
 
-![Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_pot_discarded}](figure/sc_pot_discarded-1.png)
+![Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.\label{fig:pot_survey_cpue}](figure/pot_survey_cpue-1.png) 
 
-![Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_trawl_discarded}](figure/sc_trawl_discarded-1.png)
-
-![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_res}](figure/sc_pot_res-1.png)
-
-![Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_discarded_res}](figure/sc_pot_discarded_res-1.png)
-
-![Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_trawl_discarded_res}](figure/sc_trawl_discarded_res-1.png)
+![Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. \label{fig:bts_resid}](figure/bts_resid-1.png) 
 
 \newpage\clearpage
 
-![Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.\label{fig:fit_to_catch}](figure/fit_to_catch-1.png)
+![Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_pot}](figure/sc_pot-1.png) 
 
-![Estimated recruitment time series during 1979-2015 in each of the scenarios.\label{fig:recruitment}](figure/recruitment-1.png)
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_pot_discarded}](figure/sc_pot_discarded-1.png) 
 
-![Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios.\label{fig:mmb}](figure/mature_male_biomass-1.png)
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_trawl_discarded}](figure/sc_trawl_discarded-1.png) 
 
-![Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs).\label{fig:length-weight}](figure/length_weight-1.png)
+![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_res}](figure/sc_pot_res-1.png) 
 
-![Distribution of carapace width (mm) at recruitment.\label{fig:init_rec}](figure/init_rec-1.png)
+![Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_discarded_res}](figure/sc_pot_discarded_res-1.png) 
 
-![Growth increment (mm) each molt.\label{fig:growth_inc}](figure/growth_inc-1.png)
+![Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_trawl_discarded_res}](figure/sc_trawl_discarded_res-1.png) 
 
-![Probability of growth transition by stage. Each of the panels represent the stage before growth. The x-axes represent the stage after a growth (ignoring the probability of molting).\label{fig:growth_trans}](figure/growth_trans-1.png)
+\newpage\clearpage
 
-![Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition.\label{fig:size_trans}](figure/size_trans-1.png)
+![Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.\label{fig:fit_to_catch}](figure/fit_to_catch-1.png) 
 
-![Numbers by stage each year (15 February) in each of the models including the 2015 model.\label{fig:init_N}](figure/init_N-1.png)
+![Estimated recruitment time series during 1979-2015 in each of the scenarios.\label{fig:recruitment}](figure/recruitment-1.png) 
 
-![Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998/99 (i.e. $M_{1998}$). \label{fig:M_t}](figure/natural_mortality-1.png)
+![Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios.\label{fig:mmb}](figure/mature_male_biomass-1.png) 
+
+![Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs).\label{fig:length-weight}](figure/length_weight-1.png) 
+
+![Distribution of carapace width (mm) at recruitment.\label{fig:init_rec}](figure/init_rec-1.png) 
+
+![Growth increment (mm) each molt.\label{fig:growth_inc}](figure/growth_inc-1.png) 
+
+![Probability of growth transition by stage. Each of the panels represent the stage before growth. The x-axes represent the stage after a growth (ignoring the probability of molting).\label{fig:growth_trans}](figure/growth_trans-1.png) 
+
+![Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition.\label{fig:size_trans}](figure/size_trans-1.png) 
+
+![Numbers by stage each year (15 February) in each of the models including the 2015 model.\label{fig:init_N}](figure/init_N-1.png) 
+
+![Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998/99 (i.e. $M_{1998}$). \label{fig:M_t}](figure/natural_mortality-1.png) 
 
 
 \newpage\clearpage
