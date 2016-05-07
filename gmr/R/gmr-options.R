@@ -2,7 +2,7 @@
 #'
 #' see http://www.cookbook-r.com/Graphs/Colors_%28ggplot2%29/
 #' 
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #' 
 .cbPalette1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -12,7 +12,7 @@
 #'
 #' see http://www.cookbook-r.com/Graphs/Colors_%28ggplot2%29/
 #'
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #' 
 .cbPalette2 <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -26,7 +26,7 @@
 #' @param plot_resolution png resolution
 #' @param plot_size a vector of length 2 containing the width and height of plot (mm)
 #' @param plot_cols the colour palette used for plotting (recommend the colour-blind palette cbPalette1 or cdPalette2)
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' @export
 #' 
 .gmr_options <- list(plot_type = "png", plot_resolution = 400,

@@ -29,6 +29,8 @@ names(M) <- "SMBKC"
 ww <- 6
 hh <- 5
 
+table_ref_points(M)
+
 png(paste0(.FIGS, "data.png"), width = ww*2, height = ww, units = "in", res = 300)
 plot_datarange(M)
 dev.off()

@@ -1,9 +1,8 @@
 #' On load hook
 #'
-#' This is a load hook that is called by R when the package is loaded. This
-#' should not be exported
+#' This is a load hook that is called by R when the package is loaded. This should not be exported
 #' 
-#' @author DN Webber
+#' @author D'Arcy N. Webber
 #' 
 .onLoad <- function(libname, pkgname)
 {
