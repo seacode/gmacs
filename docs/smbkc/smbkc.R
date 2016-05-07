@@ -155,7 +155,7 @@ tab <- xtable(df, caption = "Status and catch specifications (1000 tonnes) (scen
 
 The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.
 
-6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated $MMB$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.
+6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.
 
 
 # A. Summary of Major Changes
@@ -445,7 +445,7 @@ Estimate <- x$est[i]
 SD <- x$std[i]
 Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 7)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -598,6 +598,10 @@ plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
+```{r pot_survey_cpue_CV, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue_CV}"}
+plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
+```
+
 ```{r bts_resid, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. \\label{fig:bts_resid}"}
 A <- M; A[[jj]] <- NULL
 plot_cpue_res(A)
@@ -688,7 +692,7 @@ The Gmacs model has been specified to account only for male crab at least 90 mm 
 
 ## 2. Model Population Dynamics
 
-Each model year is split into four seasons.
+Each model year is split into four seasons. MMB is measured 15 February. To accomodate this, four seasons were defined.
 
 Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}

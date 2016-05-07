@@ -155,7 +155,7 @@ tab <- xtable(df, caption = "Status and catch specifications (1000 tonnes) (scen
 
 The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.
 
-6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated $MMB$ over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.
+6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.
 
 
 # A. Summary of Major Changes
@@ -326,13 +326,11 @@ d. Graphic evaluation of the fit to the data.
 
 Model estimated relative survey biomasses are different in each of the scenarios. The Gmacs base model has a comparatively low biomass in the early years compared with the other scenarios, including the 2015 model (Figure \ref{fig:trawl_survey_biomass}). The Gmacs CV scenario that includes additional CV for the pot survey CPUE results in much higher biomass estimates in recent years (Figure \ref{fig:trawl_survey_biomass}). Estimated pot survey CPUEs are also dependent on scenarios, and the difference among scenarios are very similar to the relative survey biomasses (Figure \ref{fig:pot_survey_cpue}).
 
-There are strong temporal patterns for residuals of total trawl survey biomass and stage composition data for scenarios T, 0, 00, 1, 2, and 3 (showing only scenario 3), and no apparent residual patterns occur for other scenarios with two levels of trawl selectivities or molting probabilities over time (Figures XX and XX). The stage compositions for observer data were not fit very well before 2000 for all scenarios, because the data are low quality and effective sample size is assumed small accordingly. The absolute values of standardized residuals of survey biomass are relatively small for scenarios 10-4, 10-3, 10-2, and 10-0 than those for scenario 10 (Figure XX). All scenarios fit well to retained catch biomass and fits to bycatch biomass are generally good.
 
 Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomasses on 15 February also fluctuates strongly over time; the high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure \ref{fig:mmb}).
 
 e. Retrospective and historic analyses.
-
-Gmacs can not do retrospective analysis yet.
+Gmacs retrospective analyses under development.
 
 f. Uncertainty and sensitivity analyses.
 
@@ -340,18 +338,7 @@ Estimated standard deviations of parameters for the four Gmacs scenarios are sum
 
 g. Comparison of alternative model scenarios.
 
-Among the 20 scenarios, scenario T was used in 2014 and scenarios 0, 00, and 1 have some corrections and some modifications to scenario T. The results among scenarios T, 0, 00 and 1 do not have large differences, and strong temporal residual patterns occur for both survey biomass and stage composition data. Scenarios 2 and 3 are similar, and with an additional CV for the pot survey CPUE, these two scenarios result in not only strong temporal residual patterns but also an opposite trend of biomass relative to the pot survey CPUE during recent years. Scenarios 4 - 7 have either different molting probabilities or trawl survey selectivities for two periods, thus solving the problems of temporal residual patterns. However, with an additional CV for the pot survey CPUE, scenarios 4-7 also down weight the pot survey data and result in biomass estimates quite different from the pot survey CPUE during recent years. With the poor performance of the commercial fishery during 2014/15 season and the trawl survey issue in station R-24 in 2015, the low pot survey CPUE in 2015 seems to be more reasonable than the high abundance estimated by the trawl survey in 2015. Scenario 9 has the same problem with scenarios 4 - 7, but with different pot survey selectivities for two periods, it fits the pot survey data better than scenarios 4 - 7.
-
-Considering all the problems for scenarios T - 7 and 9 above, we would consider only the remaining scenarios for overfishing/overfished determination. With two different molting probabilities for two periods and without an additional CV for the pot survey CPUE, Scenario 8 has no temporal residual pattern issue and fits the data reasonable well. If we think that change in molting probability between two periods is real, then our choice will be scenario 8. However, it seems easier to explain the change in survey selectivities than molting probability over time and scenario 10 fits the data better than scenario 8 (Table 10XX). Therefore, scenario 10 is a better choice than scenario 8. Scenario 11 shows the annual change in trawl survey selectivities over time and fits the data well. Considering there are 35 more estimated parameters with scenario 11 than with scenario 10, statistically, scenario 10 fits the data better than scenario 11 (Table 10XX).
-
-We also used the Gmacs CV scenario to show the impact of estimating an additional CV parameter for the pot survey CPUE. The reduction of trawl survey CPUE in station R-24 results in lower biomass estimates during recent years with scenarios 9-4 and 9-0 than with scenario 9 (Figures 21XX and 22XX).
-
-Among scenarios 10-4, 10-3, 10-2 and 10-0, completely throwing out the data in R-24 provides an interesting comparison but seems not a valid option. Therefore, we will eliminate scenario 10-0 for consideration for overfishing/overfished determination. Choice among scenarios 10-4, 10-3, and 10-2 depends on high density area definition in station R-24. Based on Table 7, it seems more reasonable to define 40% of pot survey stations as high density area rather than 20% or 30%. So, we select scenario 10-4 as an option to compare with scenario 10. Estimates of biomass and OFL are almost the same between these two scenarios, primarily due to the pot survey data in 2015 and change in trawl survey biomass CV estimates between them. Without the pot survey in 2015, the difference exists as shown in the retrospective analysis (Figures 17 and 18). The fit to data other than the trawl survey data is slightly better with scenario 10-4 than with scenario 10 (Table 10). Estimated trawl survey selectivities during 2000-2015 are lower for scenario 10-4 than scenario 10 (Figures 8XX and 9XX; Table 9XX). Although both scenario 10 and 10-4 are a good choice for using for overfishing/overfished determination, we would prefer scenario 10-4 over scenario 10, based on the reasons above.
-
-The remaining question is what causes the trawl survey selectivities greater than 1 when selecting scenario 10 or scenario 10-4. Since we assume trawl survey catchability to be 1, the trawl survey selectivities are a combination of the catchability and selectivities. If the catchability is greater than 1, then selectivities can be less than 1. Trawl survey catchability was estimated to be greater than 1 in the past for this stock (Collie et al. 2005). During our past modeling experience with this stock, the catchability would be greater than 1 if estimated in the model like Collie et al. (2005). The spatial distribution of blue king crab around the island and the systematic design of survey stations may be the reason for catchability greater than 1. The area-swept estimate of abundance in station R-24 is an example for abundance overestimation. Much more field work may be needed to completely answer this question.
-
-In summary, we recommend scenario 10-4 be used for overfishing/overfished determination for this stock in 2015. The CPT selected scenario 1 in September 2015.
-
+Discussion to come
 
 # F. Calculation of the OFL and ABC
 
@@ -458,7 +445,7 @@ Estimate <- x$est[i]
 SD <- x$std[i]
 Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 7)
+tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -611,6 +598,10 @@ plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
+```{r pot_survey_cpue_CV, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue_CV}"}
+plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
+```
+
 ```{r bts_resid, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. \\label{fig:bts_resid}"}
 A <- M; A[[jj]] <- NULL
 plot_cpue_res(A)
@@ -618,15 +609,15 @@ plot_cpue_res(A)
 
 \newpage\clearpage
 
-```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_pot}"}
+```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of SMBKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_pot}"}
 plot_size_comps(M, 1)
 ```
 
-```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded}"}
+```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male SMBKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded}"}
 plot_size_comps(M, 2)
 ```
 
-```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_discarded}"}
+```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_discarded}"}
 plot_size_comps(M, 3)
 ```
 
@@ -701,7 +692,7 @@ The Gmacs model has been specified to account only for male crab at least 90 mm 
 
 ## 2. Model Population Dynamics
 
-Each model year is split into four seasons.
+Each model year is split into four seasons. MMB is measured 15 February. To accomodate this, four seasons were defined.
 
 Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}
