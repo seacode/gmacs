@@ -99,7 +99,7 @@
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
-   0.843136  0.001   2      4    1  0.843136     0.01   0           1       # NMFS trawl
+   0.843136  0.001   2     -4    1  0.843136     0.01   0           1       # NMFS trawl
    1.0       0.001   5      4    0  0.001         5     0           1       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
