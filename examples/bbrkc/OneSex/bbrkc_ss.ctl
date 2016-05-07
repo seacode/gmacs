@@ -10,8 +10,8 @@
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
   0.18      0.01         1         -4       2   0.18    0.02         # M
-  10.0       -10        20         -2       1   10.1    30.1         # logR0
-  10.0       -10        20          2       1   10.0    35.0         # logR1      
+  10.0       -10        20          2       1   10.1    30.1         # logR0
+  10.0       -10        20         -2       1   10.0    35.0         # logR1      
   10.0       -10        20          1       1   10.0    35.0         # logRbar      
   72.0        55       100         -2       1   72.5    7.25         # Recruitment Expected Value
   0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
@@ -61,16 +61,16 @@
    1     1     1   0    129    1    200    0      1     200   -1     1975   2014
    1     2     2   0    156    1    200    0      1     200   -1     1975   2014
 # Gear-2
-   2     3     1   0    090    10   200    0      10    200    2     1975   2014
+   2     3     1   0    090    10   200    0      10    200   -2     1975   2014
    2     4     2   0    180    10   200    0      10    200   -2     1975   2014
 # Gear-3
-   3     5     1   0    136   60    200    0       1    200    3     1975   1981
-   3     6     2   0    182   60    200    0       1    200    4     1975   1981
-   3     7     1   0     95   60    200    0       1    200    3     1982   2014
-   3     8     2   0    140   60    200    0       1    200    4     1982   2014
+   3     5     1   0    136   60    200    0       1    200   -3     1975   1981
+   3     6     2   0    182   60    200    0       1    200   -4     1975   1981
+   3     7     1   0     95   60    200    0       1    200   -3     1982   2014
+   3     8     2   0    140   60    200    0       1    200   -4     1982   2014
 # Gear-4
-   4     9     1   0     80    1    200    0       1    200   -4     1975   2014
-   4     10    2   0     90    1    200    0       1    200   -4     1975   2014
+   4     9     1   0     80    1    200    0       1    200    4     1975   2014
+   4     10    2   0     90    1    200    0       1    200    4     1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
 ## gear  par   sel                                             phz    start  end        ##
@@ -91,14 +91,18 @@
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## PRIORS FOR CATCHABILITY
-##  TYPE: 0 = UNIFORM, 1 = NORMAL (log-space), 2 = time-varying (nyi)
-##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
+##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
+##     and p2 are ignored). ival must be > 0                                            ##
+## LEGEND                                                                               ##
+##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
+##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
-## NMFS  BSFRF
-## TYPE     Mean_q    SD_q      LAMBDA
-     1      0.843136  0.01       1
-     1      1.000     0.03       1
+## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
+   0.843136  0.001   2      4    1  0.843136     0.01   0           1       # NMFS trawl
+   1.0       0.001   5      4    0  0.001         5     0           1       # BSFRF
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ADDITIONAL CV FOR SURVEYS/INDICES
 ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ##
@@ -151,7 +155,7 @@
 ##      5 = Blocked changes (deviates constrained by variance AT specific knots relative to base)
   3
 ## Phase of estimation
- -3
+  3
 ## STDEV in m_dev for Random walk
    0.80
 ## Number of nodes for cubic spline or number of step-changes for option 3
@@ -164,7 +168,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
    3       # Estimated rec_dev phase
    0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-   0       # INITIALIZE MODEL AT UNFISHED RECRUITS (0=FALSE, 1=TRUE)
+   1       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
    1984    # First year for average recruitment for Bspr calculation.
    2014    # Last year for average recruitment for Bspr calculation.
    0.35    # Target SPR ratio for Bmsy proxy.

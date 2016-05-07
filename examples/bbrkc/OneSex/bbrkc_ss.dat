@@ -14,12 +14,15 @@
 
 1975  # Start year
 2014  # End year
-1     # Time-step (years)
+4     # Number of seasons
 4     # Number  of  distinct  data  groups  (among fishing fleets and surveys)                                                                                                                                       
 1     # Number  of  sexes
 2     # Number  of  shell condition types
 1     # Number  of  maturity  types
 20    # Number  of  size-classes  in  the model
+2     # Season recruitment occurs
+1     # Season molting and growth occurs
+2     # Season to calculate SSB
 ##
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)                                                         
 65  70  75  80  85  90  95  100 105 110 115 120 125 130 135 140 145 150 155 160 165
@@ -28,13 +31,15 @@
 # weight-at-length  allometry w_l = a*l^b
 4.03E-07  
 ##  b (male,  female)
-3.141334 
+3.141334
 ## Males
 0.224781 0.281351 0.346923 0.422209 0.507927 0.604802 0.713564 0.83495 0.9697 1.11856 1.28229 1.46163 1.65736 1.87023 2.10101 2.35048 2.61942 2.90861 3.21882 3.9059
 # Male  mature  weight-at-length  (weight * proportion  mature)
 0 0 0 0 0 0 0 0 0 0 0 1.432 1.625 1.835 2.063 2.31  2.576 2.862 3.169 3.7
 # Proportion  mature  by  sex
 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1
+# Proportion of the total natural mortality to be applied each season (must add to 1)
+0.5  0.5  0.0  0.0
 # Fishing fleet names (delimited  with  : no  spaces  in  names)
 Pot_Fishery:Trawl_Bycatch
 # Survey  names (delimited  with  : no  spaces  in  names)
