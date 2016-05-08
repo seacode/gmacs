@@ -1994,6 +1994,9 @@ FUNCTION calc_initial_numbers_at_length
 	 * @author Team
 	 * @details Numbers at length are propagated each year for each sex based on the size transition matrix and a vector of size-specifc survival rates. The columns of the size-transition matrix are multiplied by the size-specific survival rate (a scalar). New recruits are added based on the estimated average recruitment and annual deviate, multiplied by a vector of size-proportions (rec_sdd).
 	 *
+	 * @param bInitializeUnfished
+	 * @param logR0
+	 * @param logRbar
 	 * @param d4_N is the numbers in each group (sex/maturity/shell), year, season and length. It has dimension (1,n_grp,syr,nyr+1,1,nseason,1,nclass)
 	 * @param recruits is the vector of average recruits each year. It has dimension (syr,nyr)
 	 * @param rec_dev is an init_bounded_dev_vector of recruitment deviation parameters. It has dimension (syr+1,nyr,-7.0,7.0,rdv_phz)
@@ -2012,7 +2015,7 @@ FUNCTION update_population_numbers_at_length
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
 
-	if ( bInitializeUnfished )
+	if ( bInitializeUnfished == 0 )
 	{
 		recruits(syr+1,nyr) = mfexp(logR0);
 	} else {
@@ -2163,7 +2166,6 @@ FUNCTION update_population_numbers_at_length
 		}
 		//if (i == syr+2) exit(1);
 	}
-	//if ( verbose == 1 ) COUT(d3_N(1)+d3_N(2));
 
 
 	/**
@@ -3361,6 +3363,122 @@ REPORT_SECTION
 	}
 
 
+FUNCTION dvar_matrix get_equilibrium()
+	int h,i,ig,o,m;
+	int ninit = 100;
+
+	dvariable rec;
+	dvariable rt;
+
+	d4_array d4_N_init(1,n_grp,1,ninit,1,nseason,1,nclass);
+	d4_N_init.initialize();
+	dvar_matrix equilibrium_numbers(1,n_grp,1,nclass);
+
+	dmatrix Id = identity_matrix(1,nclass);
+	dvar_vector  x(1,nclass);
+	dvar_vector  y(1,nclass);
+	dvar_vector  z(1,nclass);
+	
+	dvar_matrix t1(1,nclass,1,nclass);
+	dvar_matrix  A(1,nclass,1,nclass);
+	dvar_matrix At(1,nclass,1,nclass);
+
+	if ( bInitializeUnfished == 0 )
+	{
+		rec = mfexp(logR0);
+	} else {
+		rec = mfexp(logRbar);
+	}
+	rt = (1.0/nsex * rec) * rec_sdd;
+
+	for ( i = 1; i <= ninit; i++ )
+	{
+		for ( int j = 1; j <= nseason; j++ )
+		{
+			for ( ig = 1; ig <= n_grp; ig++ )
+			{
+				h = isex(ig);
+				m = imature(ig);
+				o = ishell(ig);
+
+				if ( nshell == 1 )
+				{
+					x = d4_N_init(ig)(i)(j);
+					// Mortality (natural and fishing)
+					x = x * S(h)(1)(j);
+					// Molting and growth
+					if (j == season_growth)
+					{
+						x = x * size_transition(h);
+					}
+					// Recruitment
+					if (j == season_recruitment)
+					{
+						x += rt;
+					}
+					if (j == nseason)
+					{
+						d4_N_init(ig)(i+1)(1) = x;
+					} else {
+						d4_N_init(ig)(i)(j+1) = x;
+					}
+				} else {
+					if ( o == 1 ) // newshell
+					{
+						x = d4_N_init(ig)(i)(j);
+						// Mortality (natural and fishing)
+						x = x * S(h)(1)(j);
+						// Molting and growth
+						if (j == season_growth)
+						{
+							y = elem_prod(x,1-diagonal(P(h))); // did not molt, become oldshell
+							x = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
+						}
+						// Recruitment
+						if (j == season_recruitment)
+						{
+							x += rt;
+						}
+						if (j == nseason)
+						{
+							d4_N_init(ig)(i+1)(1) = x;
+						} else {
+							d4_N_init(ig)(i)(j+1) = x;
+						}
+					}
+					if ( o == 2 ) // oldshell
+					{
+						// add oldshell non-terminal molts to newshell
+						x = d4_N_init(ig)(i)(j);
+						// Mortality (natural and fishing)
+						x = x * S(h)(i)(j);
+						// Molting and growth
+						z.initialize();
+						if (j == season_growth)
+						{
+							z = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
+							x = elem_prod(x,1-diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
+						}
+						if (j == nseason)
+						{
+							d4_N_init(ig-1)(i+1)(1) += z;
+							d4_N_init(ig)(i+1)(1) = x;
+						} else {
+							d4_N_init(ig-1)(i)(j+1) += z;
+							d4_N_init(ig)(i)(j+1) = x;
+						}
+					}
+				}
+			}
+		}
+	}
+	for ( ig = 1; ig <= n_grp; ig++ )
+	{
+		equilibrium_numbers(ig) = d4_N_init(ig)(1)(1);
+	}
+	return(equilibrium_numbers);
+
+
 	/**
 	 * @brief Calculate mature male biomass (MMB)
 	 * @details Calculation of the mature male biomass is based on the numbers-at-length summed over each shell condition.
@@ -3433,7 +3551,7 @@ FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const 
 			_M(h)(l,l) = value(M(h)(iyr)(l));
 		}
 		//todo fix me.
-		_N(h) = value(d4_N(1)(iyr)(1));
+		_N(h) = value(d4_N(1)(iyr)(season_ssb));
 		_wa(h) = elem_prod(mean_wt(h), maturity(h));
 	}
 	

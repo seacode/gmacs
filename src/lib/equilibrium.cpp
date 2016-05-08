@@ -52,8 +52,7 @@ void calc_equilibrium(dvar_vector& n, const dvar_matrix& A, const dvar_matrix& S
  * @param[in] r vector of new recruits at length.
  * 
  * @details 
- * Jan 3, 2015.  Working with John Levitt on analytical solution instead of the 
- * numerical approach.  Think we have a soln.
+ * Jan 3, 2015. Working with John Levitt on analytical solution instead of the numerical approach. Think we have a soln.
  * 	
  * Notation: \n
  * \f$n\f$ = vector of newshell crabs \n
@@ -64,7 +63,6 @@ void calc_equilibrium(dvar_vector& n, const dvar_matrix& A, const dvar_matrix& S
  * \f$r\f$ = vector of new recruits (newshell) \n
  * \f$I\f$ = identity matrix. \n
  *
- * 	
  * The following equations represent the dynamics of newshell \a n and oldshell crabs.
  * 		\f{align*}{
  * 		 n &= nSPA + oSPA + r	\\		
@@ -84,8 +82,7 @@ void calc_equilibrium(dvar_vector& n, const dvar_matrix& A, const dvar_matrix& S
  * 		\mbox{let} \quad C& = (I - PSA - (I-P)S \beta PSA),    \\
  * 		n &= (C)^{-1} (r)
  * 		\f}
- * Note that \f$C\f$ must be invertable to solve for the equilibrium solution for \f$n\f$.
- * So the diagonal elements of \f$P\f$ and \f$S\f$ must be positive non-zero numbers.
+ * Note that \f$C\f$ must be invertable to solve for the equilibrium solution for \f$n\f$. So the diagonal elements of \f$P\f$ and \f$S\f$ must be positive non-zero numbers.
 **/
 void calc_equilibrium(dvar_vector& n, dvar_vector& o, const dvar_matrix& A, const dvar_matrix& S, const dvar_matrix& P, const dvar_vector& r)
 {

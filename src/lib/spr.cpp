@@ -17,7 +17,7 @@
  * @details Constructor for SRR class
  * 
  * @param _r equilibrium recruitment
- * @param _lambda fraction of females that contribute to the Spawning potential ratio
+ * @param _lambda fraction of females that contribute to the spawning potential ratio
  * @param _rx size distribution of new recruits
  * @param _M natural mortality at size by sex
  * @param _wa weight-at-length interval
@@ -96,8 +96,6 @@ spr::spr(const double& _r,
 		dmatrix A = m_A(h);
 		dvector r = m_rbar/m_nsex * m_rx;
 
-		
-
 		calc_equilibrium(n,o,A,S,P,r);
 		double lam;
 		h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
@@ -109,6 +107,7 @@ spr::spr(const double& _r,
 
 spr::~spr()
 {}
+
 
 /**
  * @brief equilibrium vector of numbers at length
@@ -164,8 +163,8 @@ void spr::calc_equilibrium(dvector& n,
 	C = P * S * A;
 	D = trans(Id - C - (Id-P)*S*B*C);
 
-	n = solve(D,r);			// newshell
-	o = n*((Id-P)*S*B);		// oldshell
+	n = solve(D,r);     // newshell
+	o = n*((Id-P)*S*B); // oldshell
 }
 
 
@@ -208,7 +207,7 @@ double spr::get_fspr(const int& ifleet,
 	dmatrix Z(1,m_nclass,1,m_nclass);
 	Z.initialize();
 	S.initialize();
-	dmatrix Id=identity_matrix(1,m_nclass);
+	dmatrix Id = identity_matrix(1,m_nclass);
 	
 	do
 	{
