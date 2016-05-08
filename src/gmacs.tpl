@@ -1986,6 +1986,14 @@ FUNCTION calc_initial_numbers_at_length
 		if ( verbose == 1 ) COUT(y);
 	}
 	if ( verbose == 1 ) COUT(d4_N(1)(syr)(1));
+
+					//	calc_equilibrium(x,A,_S,rt);
+					//ig = pntr_hmo(1,1,1);
+					//d4_N(1)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+					//cout << d4_N(1)(syr)(1) << endl;
+					//cout << get_brute_equilibrium() << endl;
+					//exit(1);
+
 	// cout<<"End of calc_initial_numbers_at_length"<<endl;
 	
 
@@ -3363,33 +3371,26 @@ REPORT_SECTION
 	}
 
 
-FUNCTION dvar_matrix get_equilibrium()
+FUNCTION dvar_matrix get_brute_equilibrium()
 	int h,i,ig,o,m;
 	int ninit = 100;
 
-	dvariable rec;
-	dvariable rt;
+	dvector rtt;
 
 	d4_array d4_N_init(1,n_grp,1,ninit,1,nseason,1,nclass);
 	d4_N_init.initialize();
 	dvar_matrix equilibrium_numbers(1,n_grp,1,nclass);
 
-	dmatrix Id = identity_matrix(1,nclass);
-	dvar_vector  x(1,nclass);
-	dvar_vector  y(1,nclass);
-	dvar_vector  z(1,nclass);
+	dvector  x(1,nclass);
+	dvector  y(1,nclass);
+	dvector  z(1,nclass);
 	
-	dvar_matrix t1(1,nclass,1,nclass);
-	dvar_matrix  A(1,nclass,1,nclass);
-	dvar_matrix At(1,nclass,1,nclass);
-
 	if ( bInitializeUnfished == 0 )
 	{
-		rec = mfexp(logR0);
+		rtt = value((1.0/nsex * mfexp(logR0)) * rec_sdd);
 	} else {
-		rec = mfexp(logRbar);
+		rtt = value((1.0/nsex * mfexp(logRbar)) * rec_sdd);
 	}
-	rt = (1.0/nsex * rec) * rec_sdd;
 
 	for ( i = 1; i <= ninit; i++ )
 	{
@@ -3405,16 +3406,16 @@ FUNCTION dvar_matrix get_equilibrium()
 				{
 					x = d4_N_init(ig)(i)(j);
 					// Mortality (natural and fishing)
-					x = x * S(h)(1)(j);
+					x = value(x * S(h)(1)(j));
 					// Molting and growth
 					if (j == season_growth)
 					{
-						x = x * size_transition(h);
+						x = value(x * size_transition(h));
 					}
 					// Recruitment
 					if (j == season_recruitment)
 					{
-						x += rt;
+						x += rtt;
 					}
 					if (j == nseason)
 					{
@@ -3427,17 +3428,17 @@ FUNCTION dvar_matrix get_equilibrium()
 					{
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = x * S(h)(1)(j);
+						x = value(x * S(h)(1)(j));
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = elem_prod(x,1-diagonal(P(h))); // did not molt, become oldshell
-							x = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
+							y = value(elem_prod(x,1-diagonal(P(h)))); // did not molt, become oldshell
+							x = value(elem_prod(x,diagonal(P(h))) * growth_transition(h)); // molted and grew, stay newshell
 						}
 						// Recruitment
 						if (j == season_recruitment)
 						{
-							x += rt;
+							x += rtt;
 						}
 						if (j == nseason)
 						{
@@ -3451,13 +3452,13 @@ FUNCTION dvar_matrix get_equilibrium()
 						// add oldshell non-terminal molts to newshell
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = x * S(h)(i)(j);
+						x = value(x * S(h)(1)(j));
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
 						{
-							z = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
-							x = elem_prod(x,1-diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
+							z = value(elem_prod(x,diagonal(P(h))) * growth_transition(h)); // molted and grew, become newshell
+							x = value(elem_prod(x,1-diagonal(P(h))) + y); // did not molt, remain oldshell and add the newshell that become oldshell
 						}
 						if (j == nseason)
 						{
