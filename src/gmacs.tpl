@@ -3322,9 +3322,8 @@ REPORT_SECTION
 	REPORT(N_mm);
 	REPORT(N_males);
 	REPORT(N_males_old);
-	cout << get_brute_equilibrium() << endl;
-	cout << d4_N(1)(syr)(1) << endl;
-	exit(1);
+	cout << "brute: " << get_brute_equilibrium() << endl;
+	cout << "free:  " << d4_N(1)(syr)(1) << endl;
 
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
