@@ -1986,14 +1986,6 @@ FUNCTION calc_initial_numbers_at_length
 		if ( verbose == 1 ) COUT(y);
 	}
 	if ( verbose == 1 ) COUT(d4_N(1)(syr)(1));
-
-					//	calc_equilibrium(x,A,_S,rt);
-					//ig = pntr_hmo(1,1,1);
-					//d4_N(1)(syr)(1) = elem_prod(x, mfexp(rec_ini));
-					//cout << d4_N(1)(syr)(1) << endl;
-					//cout << get_brute_equilibrium() << endl;
-					//exit(1);
-
 	// cout<<"End of calc_initial_numbers_at_length"<<endl;
 	
 
@@ -3330,6 +3322,9 @@ REPORT_SECTION
 	REPORT(N_mm);
 	REPORT(N_males);
 	REPORT(N_males_old);
+	cout << get_brute_equilibrium() << endl;
+	cout << d4_N(1)(syr)(1) << endl;
+	exit(1);
 
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
@@ -3392,7 +3387,7 @@ FUNCTION dvar_matrix get_brute_equilibrium()
 		rtt = value((1.0/nsex * mfexp(logRbar)) * rec_sdd);
 	}
 
-	for ( i = 1; i <= ninit; i++ )
+	for ( i = 1; i < ninit; i++ )
 	{
 		for ( int j = 1; j <= nseason; j++ )
 		{
@@ -3406,7 +3401,7 @@ FUNCTION dvar_matrix get_brute_equilibrium()
 				{
 					x = d4_N_init(ig)(i)(j);
 					// Mortality (natural and fishing)
-					x = value(x * S(h)(1)(j));
+					x = value(x * S(h)(syr)(j));
 					// Molting and growth
 					if (j == season_growth)
 					{
@@ -3428,7 +3423,7 @@ FUNCTION dvar_matrix get_brute_equilibrium()
 					{
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = value(x * S(h)(1)(j));
+						x = value(x * S(h)(syr)(j));
 						// Molting and growth
 						if (j == season_growth)
 						{
@@ -3452,7 +3447,7 @@ FUNCTION dvar_matrix get_brute_equilibrium()
 						// add oldshell non-terminal molts to newshell
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = value(x * S(h)(1)(j));
+						x = value(x * S(h)(syr)(j));
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
@@ -3475,7 +3470,7 @@ FUNCTION dvar_matrix get_brute_equilibrium()
 	}
 	for ( ig = 1; ig <= n_grp; ig++ )
 	{
-		equilibrium_numbers(ig) = d4_N_init(ig)(1)(1);
+		equilibrium_numbers(ig) = d4_N_init(ig)(ninit)(1);
 	}
 	return(equilibrium_numbers);
 
