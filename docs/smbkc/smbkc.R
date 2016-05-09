@@ -342,6 +342,7 @@ Model estimated relative survey biomasses are different in each of the scenarios
 Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomasses on 15 February also fluctuates strongly over time; the high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure \ref{fig:mmb}).
 
 e. Retrospective and historic analyses.
+
 Gmacs retrospective analyses under development.
 
 f. Uncertainty and sensitivity analyses.
@@ -600,11 +601,11 @@ plot_selectivity(M, ncol = 5)
 plot_molt_prob(Mbase, xlab = "Carapace width (mm)")
 ```
 
-\newpage\clearpage
-
 ```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 ```
+
+\newpage\clearpage
 
 ```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")

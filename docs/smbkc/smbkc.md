@@ -225,6 +225,7 @@ Model estimated relative survey biomasses are different in each of the scenarios
 Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomasses on 15 February also fluctuates strongly over time; the high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure \ref{fig:mmb}).
 
 e. Retrospective and historic analyses.
+
 Gmacs retrospective analyses under development.
 
 f. Uncertainty and sensitivity analyses.
@@ -633,9 +634,9 @@ Year & $N_1$ & $N_2$ & $N_3$ & MMB \\
 
 ![Molting probabilities by stage used in all of the Gmacs model scenarios.\label{fig:molt_prob}](figure/molt_prob-1.png)
 
-\newpage\clearpage
-
 ![Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png)
+
+\newpage\clearpage
 
 ![Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations.\label{fig:pot_survey_cpue}](figure/pot_survey_cpue-1.png)
 
@@ -650,6 +651,8 @@ Year & $N_1$ & $N_2$ & $N_3$ & MMB \\
 ![Observed and model estimated size-frequencies of discarded male SMBKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_pot_discarded}](figure/sc_pot_discarded-1.png)
 
 ![Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_trawl_discarded}](figure/sc_trawl_discarded-1.png)
+
+\newpage\clearpage
 
 ![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_res}](figure/sc_pot_res-1.png)
 
