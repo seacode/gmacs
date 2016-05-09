@@ -1909,7 +1909,7 @@ FUNCTION calc_initial_numbers_at_length
 	int ig;
 	d4_N.initialize();
 	dmatrix Id = identity_matrix(1,nclass);
-	dvar_vector  x(1,nclass);
+	dvar_matrix  x(1,nclass);
 	dvar_vector  y(1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix _S(1,nclass,1,nclass);
@@ -1917,10 +1917,11 @@ FUNCTION calc_initial_numbers_at_length
 
 	for ( int h = 1; h <= nsex; h++ )
 	{
-		A = growth_transition(h); // 2016-04-29 I THINK THIS OUGHT TO BE size_transition
+		A = growth_transition(h); // 2016-04-29 I THINK THIS OUGHT TO BE size_transition??
 		switch( bInitializeUnfished )
 		{
 			case 0: // Unfished conditions
+				cout << "The unfished conditions options is broke!" << endl; exit(1);
 				for ( int i = 1; i <= nclass; i++ )
 				{
 					_S(i,i) = mfexp(-M(h)(syr)(i));
@@ -1928,40 +1929,54 @@ FUNCTION calc_initial_numbers_at_length
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{
-					calc_equilibrium(x,A,_S,rt);
+					//calc_equilibrium(x,A,_S,rt);
 					ig = pntr_hmo(h,1,1);
-					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+					x = calc_brute_equilibrium();
+					d4_N(1)(syr)(1) = x(1);
+					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
 				}
 				// Continuous molt (newshell/oldshell)
 				if ( nshell == 2 && nmature == 1 )
 				{
-					calc_equilibrium(x,y,A,_S,P(h),rt);
-					ig = pntr_hmo(h,1,1);
-					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
-					d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
+					//calc_equilibrium(x,y,A,_S,P(h),rt);
+					//ig = pntr_hmo(h,1,1);
+					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+					//d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
 				}
 				// Insert terminal molt case here.
 			break;
 			case 1: // Steady-state fished conditions
+				cout << "The steady-state fished conditions options is broke!" << endl; exit(1);
 				_S = S(h)(syr)(1);
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{
-					calc_equilibrium(x,A,_S,rt);
-					ig = pntr_hmo(h,1,1);
-					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+					//calc_equilibrium(x,A,_S,rt);
+					//ig = pntr_hmo(h,1,1);
+					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
 				}
 				// Continuous molt (newshell/oldshell)
 				if ( nshell == 2 && nmature == 1 )
 				{
-					calc_equilibrium(x,y,A,_S,P(h),rt);
-					ig = pntr_hmo(h,1,1);
-					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
-					d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
+					//calc_equilibrium(x,y,A,_S,P(h),rt);
+					//ig = pntr_hmo(h,1,1);
+					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+					//d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
 				}
 				// Insert terminal molt case here.
 			break;
 			case 2: // Free parameters
+				//calc_equilibrium(x,A,_S,rt);
+				//ig = pntr_hmo(h,1,1);
+				//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+				//cout << "Unfished: " << d4_N(ig)(syr)(1) << endl;
+
+				//_S = S(h)(syr)(1);
+				//calc_equilibrium(x,A,_S,rt);
+				//ig = pntr_hmo(h,1,1);
+				//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+				//cout << "Fished: " << d4_N(ig)(syr)(1) << endl;
+
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{
@@ -1971,12 +1986,14 @@ FUNCTION calc_initial_numbers_at_length
 					//d4_N(ig)(syr)(1)(3) = 1678340;
 					d4_N(ig)(syr)(1) = mfexp(logN0);
 				}
+				//cout << "Free: " << d4_N(ig)(syr)(1) << endl;
+				//cout << "Brute: " << calc_brute_equilibrium() << endl;
 				// Continuous molt (newshell/oldshell)
 				if ( nshell == 2 && nmature == 1 )
 				{
-					ig = pntr_hmo(h,1,1);
-					d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
-					d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
+					//ig = pntr_hmo(h,1,1);
+					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+					//d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
 				}
 				// Insert terminal molt case here.
 			break;
@@ -3292,6 +3309,8 @@ REPORT_SECTION
 	dvar_matrix N_mm(syr,nyr+1,1,nclass);
 	dvar_matrix N_males(syr,nyr+1,1,nclass);
 	dvar_matrix N_males_old(syr,nyr+1,1,nclass);
+	dvar_matrix N_initial(1,n_grp,1,nclass);
+	dvar_matrix N_brute(1,n_grp,1,nclass);
 	N_len.initialize();
 	N_males.initialize();
 	N_mm.initialize();
@@ -3318,12 +3337,17 @@ REPORT_SECTION
 			}
 		}
 	}
+	for ( int k = 1; k <= n_grp; k++ )
+	{
+		N_initial(k) = d4_N(k)(syr)(1);
+	}
+	N_brute = calc_brute_equilibrium();
 	REPORT(N_len);
 	REPORT(N_mm);
 	REPORT(N_males);
 	REPORT(N_males_old);
-	cout << "brute: " << get_brute_equilibrium() << endl;
-	cout << "free:  " << d4_N(1)(syr)(1) << endl;
+	REPORT(N_initial);
+	REPORT(N_brute);
 
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
@@ -3365,7 +3389,7 @@ REPORT_SECTION
 	}
 
 
-FUNCTION dvar_matrix get_brute_equilibrium()
+FUNCTION dvar_matrix calc_brute_equilibrium()
 	int h,i,ig,o,m;
 	int ninit = 100;
 

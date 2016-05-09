@@ -123,6 +123,10 @@ M[[jj]]$rec_sdd <- c(1,0,0)
 fn <- paste0(.MODELDIR[2], "gmacs")
 Mbase <- lapply(fn, read_admb)
 names(Mbase) <- c("SMBKC")
+
+fn <- paste0(.MODELDIR[3], "gmacs")
+Mselex <- lapply(fn, read_admb)
+names(Mselex) <- c("SMBKC")
 ```
 
 # Executive Summary
@@ -273,7 +277,7 @@ As with the most recent model configuration developed for this assessment, this 
 
 ## Excluded Data Sources
 
-Groundfish bycatch size-frequency data are available for selected years. These data were used in model-based assessments prior to 2011. However, they have since been excluded because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90-mm+ CL male blue king crab from reporting areas 521 and 524.
+Groundfish bycatch size-frequency data are available for selected years. These data were used in model-based assessments prior to 2011. However, they have since been excluded because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90 mm+ CL male blue king crab from reporting areas 521 and 524.
 
 
 # E. Analytic Approach
@@ -303,6 +307,14 @@ Four different Gmacs model scenarios were considered. In this document results f
 4. **Gmacs CV**: additional CV is estimated for the ADF&G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab.
 
 5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab.
+
+| Scenario | Selectivity estimated | Additional CV | Estimate $M_{1998}$ |
+|-|-|-|-|
+| Gmacs base | No | No | Yes |
+| Gmacs selex | Yes | No | Yes |
+| Gmacs CV | Yes | Yes | Yes |
+| Gmacs M | Yes | No | No |
+
 
 ## Results
 
@@ -536,7 +548,7 @@ for (ii in 2:5)
     v <- c(ll_catch, ll_cpue, ll_lf, ll_rec, F_pen, M_pen, prior)
     sv <- sum(v); names(sv) <- "Total"
     npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
-    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("MMB", x$mod_yrs[length(x$mod_yrs)])
+    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$MMB_", x$mod_yrs[length(x$mod_yrs)], "$")
     fofl <- x$spr_fofl; names(fofl) <- "Fofl"
     v <- c(v, sv, npar, mmb, fofl)
     df <- cbind(df, v)
@@ -580,7 +592,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 \newpage\clearpage
 
-```{r selectivity, fig.cap = "Estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.\\label{fig:selectivity}", fig.height = 15}
+```{r selectivity, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.\\label{fig:selectivity}", fig.height = 15}
 plot_selectivity(M, ncol = 5)
 ```
 
@@ -590,15 +602,15 @@ plot_molt_prob(Mbase, xlab = "Carapace width (mm)")
 
 \newpage\clearpage
 
-```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
+```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 ```
 
-```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
+```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
-```{r pot_survey_cpue_CV, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue_CV}"}
+```{r pot_survey_cpue_CV, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue_CV}"}
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
 ```
 
@@ -621,20 +633,30 @@ plot_size_comps(M, 2)
 plot_size_comps(M, 3)
 ```
 
+\newpage\clearpage
+
 ```{r sc_pot_res, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_pot_res}"}
-#A <- M; A[[jj]] <- NULL
-#plot_size_comps(A, 1, res = TRUE)
 plot_size_comps(Mbase, 1, res = TRUE)
 ```
 
+```{r sc_pot_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\\label{fig:sc_pot_res_selex}"}
+plot_size_comps(Mselex, 1, res = TRUE)
+```
+
 ```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_pot_discarded_res}"}
-#plot_size_comps(A, 2, res = TRUE)
 plot_size_comps(Mbase, 2, res = TRUE)
 ```
 
+```{r sc_pot_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\\label{fig:sc_pot_discarded_res_selex}"}
+plot_size_comps(Mselex, 2, res = TRUE)
+```
+
 ```{r sc_trawl_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_trawl_discarded_res}"}
-#plot_size_comps(A, 3, res = TRUE)
 plot_size_comps(Mbase, 3, res = TRUE)
+```
+
+```{r sc_trawl_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\\label{fig:sc_trawl_discarded_res_selex}"}
+plot_size_comps(Mselex, 3, res = TRUE)
 ```
 
 \newpage\clearpage
@@ -714,12 +736,12 @@ with $\pi_{jk}$ equal to the proportion of stage-$j$ crab that molt and grow int
 \end{equation}
 where $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$. The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only, thus
 \begin{equation}
-    \boldsymbol{r}_{t,y} = \left[ \bar{R}, 0, 0 \right]^\top.
+    \boldsymbol{r}_{t,y} = \left[ \bar{R}, 0, 0 \right]^\top,
 \end{equation}
-In this formulation of the model, all recruits are assumed to be to stage-1. The basic population dynamics underlying Gmacs can thus be described as
+where $\bar{R}$ is the average annual recruitment. The basic population dynamics underlying Gmacs can thus be described as
 \begin{align}
     \boldsymbol{n}_{t+1,y} &= \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y}, &\text{ if } t<4 \notag\\
-    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G}_t \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=4
+    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=4
 \end{align}
 
 Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as

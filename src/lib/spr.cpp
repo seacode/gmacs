@@ -1,6 +1,6 @@
 /**
  * @file spr.cpp
- * @author Steve Martell
+ * @author Steve Martell, D'Arcy N. Webber
 **/
 
 #include <admodel.h>
@@ -55,7 +55,6 @@ spr::spr(const double& _r,
 
 /**
  * @brief constructor for SPR class
- *
  * @details Constructor for SRR class
  * 
  * @param _r equilibrium recruitment
@@ -212,10 +211,10 @@ double spr::get_fspr(const int& ifleet,
 	do
 	{
 		m_ssb = 0;
-		for( h = 1; h <= m_nsex; h++ )
+		for ( h = 1; h <= m_nsex; h++ )
 		{
 			F(h)(ifleet) = fc;
-			for( k = 1; k <= m_nfleet; k++ )
+			for ( k = 1; k <= m_nfleet; k++ )
 			{
 				fratio(k) = F(h)(k)/F(h)(ifleet);
 			}
@@ -223,7 +222,7 @@ double spr::get_fspr(const int& ifleet,
 			dmatrix ret = _ret(h);
 			
 			Z = m_M(h);
-			for( k = 1; k <= m_nfleet; k++ )
+			for ( k = 1; k <= m_nfleet; k++ )
 			{
 				dvector vul = elem_prod(sel(k),ret(k)+(1.0-ret(k))*m_dmr(k));
 				for (int l = 1; l <= m_nclass; ++l)
@@ -238,7 +237,7 @@ double spr::get_fspr(const int& ifleet,
 				S(l,l) = exp(-diagonal(Z)(l));
 			}
 
-			if(m_nshell == 1)
+			if (m_nshell == 1)
 			{
 				dvector x = calc_equilibrium(S,h);
 				
@@ -247,7 +246,7 @@ double spr::get_fspr(const int& ifleet,
 				m_ssb += lam * x * m_wa(h);
 			}
 			
-			if(m_nshell == 2)
+			if (m_nshell == 2)
 			{
 				dvector r = m_rbar/m_nsex * m_rx;
 				calc_equilibrium(n,o,m_A(h),S,m_P(h),r);
@@ -261,11 +260,11 @@ double spr::get_fspr(const int& ifleet,
 		
 		// test for convergence
 		double t1 = m_spr - spr_target;
-		if( t1==0 || 0.5*(fb-fa) < TOL )
+		if ( t1==0 || 0.5*(fb-fa) < TOL )
 		{
 			m_fspr = fc;
 			m_bspr = m_ssb;
-			cout<<"SPR calculations have converged. :)"<<endl;
+			cout << "SPR calculations have converged. :)" << endl;
 			break;
 		}
 
@@ -273,9 +272,7 @@ double spr::get_fspr(const int& ifleet,
 		if(t1 > 0)
 		{
 			fa = fc;
-		}
-		else
-		{
+		} else {
 			fb = fc;
 		}
 		cout<<"iter = "<<iter<<"\tfc = "<<fc<<"\t(spr-spr_target)="<<m_spr<<" - "<<spr_target<<" "<<t1<<endl;
@@ -298,13 +295,13 @@ double spr::get_fofl(const double& alpha, const double& limit, const double& ssb
 {
 	double depletion = ssb/m_bspr;
 	m_fofl = 0;
-	if( depletion > 1.0 )
+	if ( depletion > 1.0 )
 	{
 		m_fofl = m_fspr;
 	}
-	if( limit < depletion && depletion <= 1.0 )
+	if ( limit < depletion && depletion <= 1.0 )
 	{
-		m_fofl = m_fspr * (depletion - alpha)/(1.0-alpha);
+		m_fofl = m_fspr * (depletion - alpha)/(1.0 - alpha);
 	}
 	return m_fofl;
 }
@@ -323,15 +320,13 @@ double spr::get_cofl(const dmatrix& N)
 	double ctmp = 0;
 	// double dmr  = 0.8;
 	double ftmp;
-	for(int h = 1; h <= m_nsex; h++ )
+	for ( int h = 1; h <= m_nsex; h++ )
 	{
-		for(int k = 1; k <= m_nfleet; k++ )
+		for ( int k = 1; k <= m_nfleet; k++ )
 		{	
 			ftmp = m_fref(h)(k);
-			if(k == m_ifleet) ftmp = m_fofl;
-
+			if (k == m_ifleet) ftmp = m_fofl;
 			dvector vul = elem_prod(m_sel(h)(k),m_ret(h)(k)+(1.0-m_ret(h)(k))*m_dmr(k));
-
 			dvector f = ftmp * vul;
 			dvector z = diagonal(m_M(h)) + f;
 			dvector o = 1.0-exp(-z);

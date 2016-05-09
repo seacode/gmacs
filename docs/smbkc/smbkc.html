@@ -65,7 +65,7 @@
 <h2 id="other-data-sources">Other Data Sources</h2>
 <p>As with the most recent model configuration developed for this assessment, this version makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the Gmacs model configuration used for this assessment.</p>
 <h2 id="excluded-data-sources">Excluded Data Sources</h2>
-<p>Groundfish bycatch size-frequency data are available for selected years. These data were used in model-based assessments prior to 2011. However, they have since been excluded because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90-mm+ CL male blue king crab from reporting areas 521 and 524.</p>
+<p>Groundfish bycatch size-frequency data are available for selected years. These data were used in model-based assessments prior to 2011. However, they have since been excluded because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90 mm+ CL male blue king crab from reporting areas 521 and 524.</p>
 <h1 id="e.-analytic-approach">E. Analytic Approach</h1>
 <h2 id="history-of-modeling-approaches-for-this-stock">History of Modeling Approaches for this Stock</h2>
 <p>A four-stage catch-survey-analysis (CSA) assessment model was used before 2011 to estimate abundance and biomass and prescribe fishery quotas for the SMBKC stock (2010 SAFE; Zheng et al. 1997). The four-stage CSA is similar to a full length-based analysis, the major difference being coarser length groups, which are more suited to a small stock with consistently low survey catches. In this approach, the abundance of male crab with a CL of 90 mm or above is modeled in terms of four crab stages: stage 1: 90-104 mm CL; stage 2: 105-119 mm CL; stage 3: newshell 120-133 mm CL; and stage 4: oldshell <span class="math"> ≥ </span> 120 mm CL and newshell <span class="math"> ≥ </span> 134 mm CL. Motivation for these stage definitions comes from the fact that for management of the SMBKC stock, male crab measuring at least 105 mm CL are considered mature, whereas 120 mm CL is considered a proxy for the legal size of 5.5 in carapace width, including spines. Additional motivation for these stage definitions comes from an estimated average growth increment of about 14 mm per molt for SMBKC (Otto and Cummiskey 1990).</p>
@@ -82,6 +82,42 @@
 <li><p><strong>Gmacs CV</strong>: additional CV is estimated for the ADF&amp;G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab.</p></li>
 <li><p><strong>Gmacs M</strong>: natural mortality (<span class="math"><em>M</em></span>) is fixed at 0.18 <span class="math"><em>y</em><em>r</em><sup> − 1</sup></span> during all years as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab.</p></li>
 </ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Scenario</th>
+<th align="left">Selectivity estimated</th>
+<th align="left">Additional CV</th>
+<th align="left">Estimate <span class="math"><em>M</em><sub>1998</sub></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Gmacs base</td>
+<td align="left">No</td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+</tr>
+<tr class="even">
+<td align="left">Gmacs selex</td>
+<td align="left">Yes</td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+</tr>
+<tr class="odd">
+<td align="left">Gmacs CV</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+</tr>
+<tr class="even">
+<td align="left">Gmacs M</td>
+<td align="left">Yes</td>
+<td align="left">No</td>
+<td align="left">No</td>
+</tr>
+</tbody>
+</table>
 <h2 id="results">Results</h2>
 <p>Preliminary results for the Gmacs configuration are provided here with comparisons to the 2015 model.</p>
 <ol style="list-style-type: lower-alpha">
@@ -173,20 +209,20 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 </div>
 <p></p>
 <div class="figure">
-<img src="figure/selectivity-1.png" alt="Estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&amp;G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015." /><p class="caption">Estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&amp;G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.</p>
+<img src="figure/selectivity-1.png" alt="Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&amp;G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015." /><p class="caption">Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&amp;G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.</p>
 </div>
 <div class="figure">
 <img src="figure/molt_prob-1.png" alt="Molting probabilities by stage used in all of the Gmacs model scenarios." /><p class="caption">Molting probabilities by stage used in all of the Gmacs model scenarios.</p>
 </div>
 <p></p>
 <div class="figure">
-<img src="figure/trawl_survey_biomass-1.png" alt="Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
+<img src="figure/trawl_survey_biomass-1.png" alt="Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
 </div>
 <div class="figure">
-<img src="figure/pot_survey_cpue-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.</p>
+<img src="figure/pot_survey_cpue-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations.</p>
 </div>
 <div class="figure">
-<img src="figure/pot_survey_cpue_CV-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of total male pot survey CPUEs and model predictions for 2016 model estimates without additional CV for the pot survey CPUE. The error bars are plus and minus 2 standard deviations.</p>
+<img src="figure/pot_survey_cpue_CV-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations.</p>
 </div>
 <div class="figure">
 <img src="figure/bts_resid-1.png" alt="Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. " /><p class="caption">Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. </p>
@@ -205,10 +241,19 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <img src="figure/sc_pot_res-1.png" alt="Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs base model." /><p class="caption">Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs base</strong> model.</p>
 </div>
 <div class="figure">
+<img src="figure/sc_pot_res_selex-1.png" alt="Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs selex model." /><p class="caption">Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs selex</strong> model.</p>
+</div>
+<div class="figure">
 <img src="figure/sc_pot_discarded_res-1.png" alt="Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs base model." /><p class="caption">Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs base</strong> model.</p>
 </div>
 <div class="figure">
+<img src="figure/sc_pot_discarded_res_selex-1.png" alt="Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs selex model." /><p class="caption">Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs selex</strong> model.</p>
+</div>
+<div class="figure">
 <img src="figure/sc_trawl_discarded_res-1.png" alt="Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs base model." /><p class="caption">Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs base</strong> model.</p>
+</div>
+<div class="figure">
+<img src="figure/sc_trawl_discarded_res_selex-1.png" alt="Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs selex model." /><p class="caption">Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs selex</strong> model.</p>
 </div>
 <p></p>
 <div class="figure">
@@ -255,7 +300,7 @@ with <span class="math"><em>π</em><sub><em>j</em><em>k</em></sub></span> equal 
 
 where <span class="math"><em>Z</em><sub><em>l</em>, <em>t</em>, <em>y</em></sub></span> represents the combination of natural mortality <span class="math"><em>M</em><sub><em>t</em>, <em>y</em></sub></span> and fishing mortality <span class="math"><em>F</em><sub><em>t</em>, <em>y</em></sub></span> during season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span>. The number of new crab, or recruits, of each stage entering the model each season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> is represented as the vector <span class="math">$\boldsymbol{r}_{t,y}$</span>. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only, thus
 
-In this formulation of the model, all recruits are assumed to be to stage-1. The basic population dynamics underlying Gmacs can thus be described as
+where <span class="math"><em>R̄</em></span> is the average annual recruitment. The basic population dynamics underlying Gmacs can thus be described as
 
 <p>Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is modeled as a mid-season pulse occurring at time <span class="math"><em>π</em><sub><em>t</em></sub></span> with full-selection fishing mortality <span class="math"><em>F</em><sub><em>t</em></sub></span> relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as</p>
 <br /><span class="math"><em>R</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup> = <em>H</em><sup><em>d</em><em>f</em></sup><em>S</em><sup><em>d</em><em>f</em></sup>(1 − <em>e</em><sup><em>F</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup></sup>)<em>e</em><sup> − <em>τ</em><sub><em>t</em></sub><em>M</em></sup><em>N</em><sub><em>t</em></sub></span><br /> where the diagonal matrices
