@@ -515,6 +515,34 @@ tab <- xtable(df, caption = "Model parameter estimates and standard deviations (
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
+```{r est_pars_all, results = "asis"}
+Parameter <- NULL
+Estimate <- NULL
+Model <- NULL
+Mname <- c("Gmacs base","Gmacs selex","Gmacs CV","Gmacs M")
+for (ii in 2:5)
+{
+    x <- M[[ii]]$fit
+    i <- c(grep("m_dev", x$names)[1],
+           grep("theta", x$names),
+           grep("survey_q", x$names),
+           grep("log_add_cv", x$names),
+           grep("log_fbar", x$names),
+           grep("log_slx_pars", x$names))
+    Parameter <- c(Parameter, x$names[i])
+    Estimate <- c(Estimate, x$est[i])
+    Model <- c(Model, rep(Mname[ii-1], length(i)))
+}
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+               "ADF\\&G pot survey catchability ($q$)","logAddCV","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
+Parameter <- c(Parameter[c(1:7,9:11)],Parameter[c(1:7,9:19)],Parameter,Parameter[c(1:7,9:19)])
+df <- data.frame(Model, Parameter, Estimate)
+df <- tidyr::spread(df, Model, Estimate)
+tab <- xtable(df, caption = "Comparisons of model parameter estimates for the four Gmacs model scenarios.", label = "tab:est_pars_all", digits = 3)
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
+```
+
 ```{r fixed_pars, results = "asis"}
 Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)",
                "$\\log(\\bar{F}_\\text{pot})$")
@@ -745,8 +773,7 @@ where $\bar{R}$ is the average annual recruitment. The basic population dynamics
     \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=4
 \end{align}
 
-Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
-
+Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is not modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
 $$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
 where the diagonal matrices
 \begin{equation}
@@ -755,7 +782,7 @@ where the diagonal matrices
     0 & h^\text{df} & 0 \\
     0 & 0 & 1 \end{array} \right]
 \end{equation}
-account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard handling mortality $h^\text{df}$ in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as Feb 15 (0.63 yr) pulse effects in terms of the respective fishing mortalities $F_t^\text{gt}$ and $F_t^\text{gf}$ by
+account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard handling mortality $h^\text{df}$ in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as 15 February (0.63 yr) pulse effects in terms of the respective fishing mortalities $F_t^\text{gt}$ and $F_t^\text{gf}$ by
 
 ## 3. Model Data
 
@@ -797,7 +824,7 @@ phz <- c(2,2,1,1,1,1,4,4,4,4,4,4,4,4,4,4)
 df <- data.frame(Parameter, LB, ival, UB, prior, p1, p2, phz)
 names(df) <- c("Parameter","LB","Initial value","UB","Prior type","Prior par1","Prior par2","Phase")
 tab <- xtable(df, caption = "Model bounds, initial values, priors and estimation phase.", label = "tab:bounds_pars", digits = c(1,0,0,1,0,0,0,0,0))
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
 ```
 
 

@@ -441,6 +441,37 @@ $\log (R_0)$ & 13.3650000 & 0.0523920 \\
 \end{tabular}
 \end{table}
 
+\begin{table}[ht]
+\centering
+\caption{Comparisons of model parameter estimates for the four Gmacs model scenarios.} 
+\label{tab:est_pars_all}
+\begin{tabular}{lrrrr}
+  \hline
+Parameter & Gmacs base & Gmacs CV & Gmacs M & Gmacs selex \\ 
+  \hline
+ADF\&G pot survey catchability ($q$) & 0.000 & 0.000 & 0.000 & 0.000 \\ 
+  logAddCV & - & -1.781 & - & - \\ 
+  $\log(\bar{F}_\text{fixed bycatch})$ & -9.578 & -9.617 & -9.505 & -9.585 \\ 
+  $\log(\bar{F}_\text{pot})$ & -1.375 & -1.520 & -1.455 & -1.496 \\ 
+  $\log(\bar{F}_\text{trawl bycatch})$ & -11.689 & -11.725 & -11.613 & -11.693 \\ 
+  $\log (\bar{R})$ & 13.691 & 13.743 & 13.458 & 13.625 \\ 
+  $\log (N_1)$ & 14.621 & 14.718 & 14.767 & 14.736 \\ 
+  $\log (N_2)$ & 14.176 & 14.270 & 14.354 & 14.304 \\ 
+  $\log (N_3)$ & 13.825 & 14.157 & 14.389 & 14.229 \\ 
+  $\log (R_0)$ & 13.596 & 13.650 & 13.365 & 13.532 \\ 
+  Natural mortality ($M$) deviation in 1998/99 & 1.805 & 1.846 & - & 1.595 \\ 
+  Stage-1 ADF\&G pot selectivity & - & -1.071 & -0.831 & -0.881 \\ 
+  Stage-1 directed pot selectivity 1978-2008 & - & -0.720 & -0.580 & -0.718 \\ 
+  Stage-1 directed pot selectivity 2009-2015 & - & -0.964 & -0.721 & -0.742 \\ 
+  Stage-1 NMFS trawl selectivity & - & -0.213 & -0.035 & -0.154 \\ 
+  Stage-2 ADF\&G pot selectivity & - & -0.162 & 0.019 & -0.070 \\ 
+  Stage-2 directed pot selectivity 1978-2008 & - & -0.386 & -0.346 & -0.382 \\ 
+  Stage-2 directed pot selectivity 2009-2015 & - & 0.034 & 0.136 & 0.153 \\ 
+  Stage-2 NMFS trawl selectivity & - & 0.142 & 0.285 & 0.183 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
 
 
 \begin{table}[ht]
@@ -772,7 +803,7 @@ Both surveys are assigned a nominal date of 1 July, the start of the crab year. 
   \hline
 Parameter & LB & Initial value & UB & Prior type & Prior par1 & Prior par2 & Phase \\ 
   \hline
-$Mdev_{1998}$ & 0 & 0.0 &  & Random walk & 0 & 10 & 2 \\ 
+$Mdev_{1998}$ & 0 & 0.0 & - & Random walk & 0 & 10 & 2 \\ 
   $\log (R_0)$ & -7 & 14.3 & 30 & Uniform & -7 & 30 & 2 \\ 
   $\log (\bar{R})$ & -7 & 10.0 & 20 & Uniform & -7 & 20 & 1 \\ 
   $\log (N_1)$ & 5 & 14.0 & 15 & Uniform & 5 & 15 & 1 \\ 

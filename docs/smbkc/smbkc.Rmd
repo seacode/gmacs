@@ -515,6 +515,34 @@ tab <- xtable(df, caption = "Model parameter estimates and standard deviations (
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
+```{r est_pars_all, results = "asis"}
+Parameter <- NULL
+Estimate <- NULL
+Model <- NULL
+Mname <- c("Gmacs base","Gmacs selex","Gmacs CV","Gmacs M")
+for (ii in 2:5)
+{
+    x <- M[[ii]]$fit
+    i <- c(grep("m_dev", x$names)[1],
+           grep("theta", x$names),
+           grep("survey_q", x$names),
+           grep("log_add_cv", x$names),
+           grep("log_fbar", x$names),
+           grep("log_slx_pars", x$names))
+    Parameter <- c(Parameter, x$names[i])
+    Estimate <- c(Estimate, x$est[i])
+    Model <- c(Model, rep(Mname[ii-1], length(i)))
+}
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+               "ADF\\&G pot survey catchability ($q$)","logAddCV","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
+Parameter <- c(Parameter[c(1:7,9:11)],Parameter[c(1:7,9:19)],Parameter,Parameter[c(1:7,9:19)])
+df <- data.frame(Model, Parameter, Estimate)
+df <- tidyr::spread(df, Model, Estimate)
+tab <- xtable(df, caption = "Comparisons of model parameter estimates for the four Gmacs model scenarios.", label = "tab:est_pars_all", digits = 3)
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
+```
+
 ```{r fixed_pars, results = "asis"}
 Parameter <- c("$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)",
                "$\\log(\\bar{F}_\\text{pot})$")
@@ -797,7 +825,7 @@ phz <- c(2,2,1,1,1,1,4,4,4,4,4,4,4,4,4,4)
 df <- data.frame(Parameter, LB, ival, UB, prior, p1, p2, phz)
 names(df) <- c("Parameter","LB","Initial value","UB","Prior type","Prior par1","Prior par2","Phase")
 tab <- xtable(df, caption = "Model bounds, initial values, priors and estimation phase.", label = "tab:bounds_pars", digits = c(1,0,0,1,0,0,0,0,0))
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
 ```
 
 
