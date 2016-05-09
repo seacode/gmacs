@@ -1,11 +1,3 @@
-#=========================================================================================================
-#
-#  gmr Script for Gmacs: Example for BBRKC Demonstration Model
-#  Authors: Steve Martell, Jim Ianelli, Athol Whitten
-#  Info: https://github.com/seacode/gmr
-#
-#=========================================================================================================
-
 # LIBRARIES
 library(ggplot2)
 library(reshape2)
@@ -14,8 +6,6 @@ library(gmr)
 
 # GLOBAL CONSTS
 .OVERLAY  = TRUE
-#.PWD      = "/Users/stevenmartell1/Documents/CURRENT PROJECTS/GMACS/Rsrc/R4GMACS"
-#.PWD      = "/Users/jim/_mymods/seacode/gmacs/Rsrc/R4GMACS"
 #.PWD      = "/Users/jim/_mymods/seacode/gmacs/Rsrc/R"
 #.LIB      = "./"
 #.RFILES   = list.files(.LIB,pattern="\\.[Rr]$")
@@ -51,4 +41,3 @@ plot_gmr(M, target_dir = .MODELDIR)
   plot_growth_inc(M)
   plot_growth_inc(M[[1]])
  #shiny_gmacs(gmrep)
-#=========================================================================================================
