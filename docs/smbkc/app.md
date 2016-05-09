@@ -1,363 +1,23 @@
-<h1 id="executive-summary">Executive Summary</h1>
-<ol style="list-style-type: decimal">
-<li><p><strong>Stock</strong>: Blue king crab, <em>Paralithodes platypus</em>, Saint Matthew Island (SMBKC), Alaska.</p></li>
-<li><p><strong>Catches</strong>: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonnes (1.167 million pounds) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).</p></li>
-<li><p><strong>Stock biomass</strong>: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 tonnes (20.98 million pounds; CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 5652 tonnes (12.46 million pounds; CV = 0.33) in 2012 and to 2202 tonnes (4.459 million pounds; CV = 0.22) in 2013 before going back up to 5472 tonnes (12.06 million pounds; CV = 0.44) in 2014 and 5134 tonnes (11.32 million pounds; CV = 0.76).</p></li>
-<li><p><strong>Recruitment</strong>: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm CL size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate is 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty.</p></li>
-<li><p><strong>Management performance</strong>: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider.</p></li>
-</ol>
-<p>The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.</p>
-<ol start="6" style="list-style-type: decimal">
-<li><strong>Basis for the OFL</strong>: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The <span class="math"><em>B</em><sub><em>MSY</em></sub></span> proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.</li>
-</ol>
-<h1 id="a.-summary-of-major-changes">A. Summary of Major Changes</h1>
-<h2 id="changes-in-management-of-the-fishery">Changes in Management of the Fishery</h2>
-<p>There are no new changes in management of the fishery.</p>
-<h2 id="changes-to-the-input-data">Changes to the Input Data</h2>
-<p>All of the time series used in this assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015, updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&amp;G pot survey data in 2015.</p>
-<h2 id="changes-in-assessment-methodology">Changes in Assessment Methodology</h2>
-<p>This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within any number of discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. For example, in this assessment four seasons are defined and the proportion of natural mortality that is applied each season is 0, 0.44, 0.185, and 0.375 in the final season. In Gmacs the proportion of natural mortality that is applied each season is fixed (i.e. it can not change from year to year). The previous model allowed the proportion of natural mortality to change seasonally each year (i.e. during the second season natural mortality ranged from 0.05 to 0.18 before the year 2000 and was constant at 0.44 after 2000).</p>
-<p>In Gmacs the size transition matrix is a combination of the growth matrix and the molting probability. The growth matrix is derived from empirical molt increment data and the molting probability for each size class in the model is derived from an inverse logistic curve. Put simply, Gmacs does not allow the user to specify the size transition matrix directly, thus getting our size transition matrix to match that used in the previous model exactly was not possible. However, it is close:</p>
+---
+title: "Appendix to Gmacs SMBKC Stock Assessment"
+output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  html_document:
+    theme: flatly
+    toc: yes
+  word_document: default
+bibliography: 
+---
 
-<p>Also see Figure . Further details of the Gmacs model and configuration used are provided in Appendix A (SMBKC Model Description).</p>
-<h2 id="changes-in-assessment-results">Changes in Assessment Results</h2>
-<p>Changes in assessment results depend on model scenario. The Gmacs base model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.</p>
-<h1 id="b.-responses-to-ssc-and-cpt-comments">B. Responses to SSC and CPT Comments</h1>
-<h2 id="cpt-and-ssc-comments-on-assessments-in-general">CPT and SSC Comments on Assessments in General</h2>
-<p>Spring 2016 CPT</p>
-<p>Comment: <em>comments</em></p>
-<p>Response:</p>
-<h2 id="cpt-and-ssc-comments-specific-to-smbkc-stock-assessment">CPT and SSC Comments Specific to SMBKC Stock Assessment</h2>
-<p>Spring 2016 CPT</p>
-<p>Comment: <em>comments</em></p>
-<p>Response:</p>
-<h1 id="c.-introduction">C. Introduction</h1>
-<h2 id="scientific-name">Scientific Name</h2>
-<p>The blue king crab is a lithodid crab, <em>Paralithodes platypus</em> (Brant 1850).</p>
-<h2 id="distribution">Distribution</h2>
-<p>Blue king crab are sporadically distributed throughout the North Pacific Ocean from Hokkaido, Japan, to southeastern Alaska (Figure ). In the eastern Bering Sea small populations are distributed around St. Matthew Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2 (Figure ), which is the Northern District of the Bering Sea king crab registration area and includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).</p>
-<div class="figure">
-<img src="figure/Fig1.png" alt="Distribution of blue king crab (Paralithodes platypus) in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters (shown in blue)." /><p class="caption">Distribution of blue king crab (<em>Paralithodes platypus</em>) in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters (shown in blue).</p>
-</div>
-<div class="figure">
-<img src="figure/Fig2.png" alt="King crab Registration Area Q (Bering Sea)." /><p class="caption">King crab Registration Area Q (Bering Sea).</p>
-</div>
-<h2 id="stock-structure">Stock Structure</h2>
-<p>The Alaska Department of Fish and Game (ADF&amp;G) Gene Conservation Laboratory division has detected regional population differences between blue king crab collected from St. Matthew Island and the Pribilof Islands<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>. NMFS tag-return data from studies on blue king crab in the Pribilof Islands and St. Matthew Island support the idea that legal-sized males do not migrate between the two areas (Otto and Cummiskey 1990). St. Matthew Island blue king crab tend to be smaller than their Pribilof conspecifics, and the two stocks are managed separately.</p>
-<h2 id="life-history">Life History</h2>
-<p>Like the red king crab, <em>Paralithodes camtshaticus</em>, the blue king crab is considered a shallow water species by comparison with other lithodids such as golden king crab, <em>Lithodes aequispinus</em>, and the scarlet king crab, <em>Lithodes couesi</em> (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70 m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.</p>
-<h2 id="management-history">Management History</h2>
-<p>The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 545 tonnes (1.202 million pounds) in 1977, and harvests peaked in 1983 when 164 vessels landed 4288 tonnes (9.454 million pounds) (Fitch et al. 2012; Table 1XX). The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock-size threshold (MSST) of 4990 tonnes (11.0 million pounds) as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table XX2a). In November 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.</p>
-<p>NMFS declared the stock rebuilt on 21 September 2009, and the fishery was reopened after a 10-year closure on 15 October 2009 with a TAC of 529 tonnes (1.167 million pounds), closing again by regulation on 1 February 2010. Seven participating vessels landed a catch of 209 tonnes (460859 pounds) with a reported effort of 10697 pot lifts and an estimated CPUE of 9.9 retained individual crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&amp;G to close the fishery again for the 2013/14 season. Due to abundance an above thresholds, the fishery was reopened for the 2014/15 season with a low TAC of 297 tonnes (0.655 million pounds) and in 2015/16 the TAC was further reduced to 186 tonnes (0.411 million pounds).</p>
-<p>Though historical observer data are limited due to very limited sampling, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes more than twice as high as the catch of legal crab (Moore et al. 2000; ADF&amp;G Crab Observer Database). Pot-lift sampling by ADF&amp;G crab observers (Gaeuman 2013; ADF&amp;G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table 3XX), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (88 tonnes or 0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality. On the other hand, these same data suggest a significant reduction in the bycatch of females, which may be attributable to the later timing of the contemporary fishery and the more offshore distribution of fishery effort since reopening in 2009/10<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>. Some bycatch of discarded blue king crab has also been observed historically in the eastern Bering Sea snow crab fishery, but in recent years it has generally been negligible, and observers recorded no bycatch of blue king crab in sampled pot lifts during 2013/14. The St. Matthew Island golden king crab fishery, the third commercial crab fishery to have taken place in the area, typically occurred in areas with depths exceeding blue king crab distribution. NMFS observer data suggest that variable but mostly limited SMBKC bycatch has also occurred in the eastern Bering Sea groundfish fisheries (Table 5XX).</p>
-<h1 id="d.-data">D. Data</h1>
-<h2 id="summary-of-new-information">Summary of New Information</h2>
-<p>Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2015, as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data extent and availability used in each of the Gmacs models is shown in Figure ).</p>
-<div class="figure">
-<img src="figure/data_extent-1.png" alt="Data extent for the SMBKC assessment." /><p class="caption">Data extent for the SMBKC assessment.</p>
-</div>
-<h2 id="major-data-sources">Major Data Sources</h2>
-<p>Major data sources used in this assessment include annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15; Table 1XX); results from the annual NMFS eastern Bering Sea trawl survey (1978-2015; Table 2XX); results from the triennial ADF&amp;G SMBKC pot survey (every third year during 1995-2013) and 2015 pot survey (Table ); size-frequency information from ADF&amp;G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15; Table XX3); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2014/15; Table XX5). Figure  maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&amp;G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure ). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&amp;G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure ). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&amp;G statistical area was not used.</p>
-<div class="figure">
-<img src="figure/Fig3.png" alt="Trawl and pot-survey stations used in the SMBKC stock assessment." /><p class="caption">Trawl and pot-survey stations used in the SMBKC stock assessment.</p>
-</div>
+\newpage\clearpage
 
-<h2 id="other-data-sources">Other Data Sources</h2>
-<p>As with the most recent model configuration developed for this assessment, this version makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the Gmacs model configuration used for this assessment.</p>
-<h2 id="excluded-data-sources">Excluded Data Sources</h2>
-<p>Groundfish bycatch size-frequency data are available for selected years. These data were used in model-based assessments prior to 2011. However, they have since been excluded because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90 mm+ CL male blue king crab from reporting areas 521 and 524.</p>
-<h1 id="e.-analytic-approach">E. Analytic Approach</h1>
-<h2 id="history-of-modeling-approaches-for-this-stock">History of Modeling Approaches for this Stock</h2>
-<p>A four-stage catch-survey-analysis (CSA) assessment model was used before 2011 to estimate abundance and biomass and prescribe fishery quotas for the SMBKC stock (2010 SAFE; Zheng et al. 1997). The four-stage CSA is similar to a full length-based analysis, the major difference being coarser length groups, which are more suited to a small stock with consistently low survey catches. In this approach, the abundance of male crab with a CL of 90 mm or above is modeled in terms of four crab stages: stage 1: 90-104 mm CL; stage 2: 105-119 mm CL; stage 3: newshell 120-133 mm CL; and stage 4: oldshell <span class="math"> ≥ </span> 120 mm CL and newshell <span class="math"> ≥ </span> 134 mm CL. Motivation for these stage definitions comes from the fact that for management of the SMBKC stock, male crab measuring at least 105 mm CL are considered mature, whereas 120 mm CL is considered a proxy for the legal size of 5.5 in carapace width, including spines. Additional motivation for these stage definitions comes from an estimated average growth increment of about 14 mm per molt for SMBKC (Otto and Cummiskey 1990).</p>
-<p>Concerns about the pre-2011 assessment model led to the CPT and SSC recommendations that included development of an alternative model with provisional assessment based on survey biomass or some other index of abundance. An alternative 3-stage model was proposed to the CPT in May 2011 but was requested to proceed with a survey-based approach for the Fall 2011 assessment. In May 2012 the CPT approved a slightly revised and better documented version of the alternative model for assessment.</p>
-<p>The 2015 SMBKC stock assessment model, first used in Fall 2012, was a variant of the previous four-stage SMBKC CSA model and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considered only male crab at least 90 mm in CL, but it combined stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model.</p>
-<h2 id="assessment-methodology">Assessment Methodology</h2>
-<p>The 2016 SMBKC assessment model makes use of the modeling framework Gmacs. The aim when developing this model was to provide a fit to the data that best matched the 2015 SMBKC stock assessment model. A detailed description of the Gmacs model and its implementation is presented in Appendix A.</p>
-<h2 id="model-selection-and-evaluation">Model Selection and Evaluation</h2>
-<p>Four different Gmacs model scenarios were considered. In this document results from these models and the 2015 model are compared.</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>2015 Model</strong>: model output from 2015 provided by Jie.</p></li>
-<li><p><strong>Gmacs base</strong>: tries to match as closely as possible the 2015 Model.</p></li>
-<li><p><strong>Gmacs selex</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab.</p></li>
-<li><p><strong>Gmacs CV</strong>: additional CV is estimated for the ADF&amp;G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab.</p></li>
-<li><p><strong>Gmacs M</strong>: natural mortality (<span class="math"><em>M</em></span>) is fixed at 0.18 <span class="math"><em>y</em><em>r</em><sup> − 1</sup></span> during all years as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab.</p></li>
-</ol>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Scenario</th>
-<th align="left">Selectivity estimated</th>
-<th align="left">Additional CV</th>
-<th align="left">Estimate <span class="math"><em>M</em><sub>1998</sub></span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Gmacs base</td>
-<td align="left">No</td>
-<td align="left">No</td>
-<td align="left">Yes</td>
-</tr>
-<tr class="even">
-<td align="left">Gmacs selex</td>
-<td align="left">Yes</td>
-<td align="left">No</td>
-<td align="left">Yes</td>
-</tr>
-<tr class="odd">
-<td align="left">Gmacs CV</td>
-<td align="left">Yes</td>
-<td align="left">Yes</td>
-<td align="left">Yes</td>
-</tr>
-<tr class="even">
-<td align="left">Gmacs M</td>
-<td align="left">Yes</td>
-<td align="left">No</td>
-<td align="left">No</td>
-</tr>
-</tbody>
-</table>
-<h2 id="results">Results</h2>
-<p>Preliminary results for the Gmacs configuration are provided here with comparisons to the 2015 model.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Effective sample sizes.</li>
-</ol>
-<p>Observed and estimated effective sample sizes are compared in Table XX.</p>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Tables of estimates.</li>
-</ol>
-<p>Model parameter estimates are summarized in Tables , , , and . Negative log likelihood values and management measures for the four Gmacs scenarios are compared in Table . Estimated abundances by stage and mature male biomasses for three of the scenarios are listed in Tables , , and .</p>
-<p>The scenarios that estimated stage-1 and stage-2 selectivities fit the data better. The scenario with additional CV for the pot survey CPUE fit the trawl survey data better and resulted in higher abundance and biomass estimates in the most recent years. Estimated directed pot and trawl survey selectivities &gt; 1.0 for stage-2 crab are troublesome.</p>
-<ol start="3" style="list-style-type: lower-alpha">
-<li>Graphs of estimates.</li>
-</ol>
-<p>Estimated (and fixed) selectivities are compared in Figure  and molting probabilities are shown in Figure . The various model fits to total male (<span class="math"> &gt; </span> 89 mm CL) trawl survey biomass are compared in Figure , and the fits to pot survey CPUE are compared in Figure . Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figure . Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the Gmacs base model. Fits to retained catch biomass and bycatch death biomass are shown for all Gmacs scenarios in Figure . Estimated recruitment and mature male biomass are compared in Figures  and , respectively.</p>
-<ol start="4" style="list-style-type: lower-alpha">
-<li>Graphic evaluation of the fit to the data.</li>
-</ol>
-<p>Model estimated relative survey biomasses are different in each of the scenarios. The Gmacs base model has a comparatively low biomass in the early years compared with the other scenarios, including the 2015 model (Figure ). The Gmacs CV scenario that includes additional CV for the pot survey CPUE results in much higher biomass estimates in recent years (Figure ). Estimated pot survey CPUEs are also dependent on scenarios, and the difference among scenarios are very similar to the relative survey biomasses (Figure ).</p>
-<p>Estimated recruitment to the model is variable over time (Figure ). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomass on 15 February also fluctuates strongly over time. The high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure ).</p>
-<ol start="5" style="list-style-type: lower-alpha">
-<li>Retrospective and historic analyses.</li>
-</ol>
-<p>Gmacs retrospective analyses under development.</p>
-<ol start="6" style="list-style-type: lower-alpha">
-<li>Uncertainty and sensitivity analyses.</li>
-</ol>
-<p>Estimated standard deviations of parameters for the four Gmacs scenarios are summarized in Tables , , , and . Probabilities for mature male biomass and OFL in 2015 are illustrated in section “F. Calculation of the OFL”.</p>
-<ol start="7" style="list-style-type: lower-alpha">
-<li>Comparison of alternative model scenarios.</li>
-</ol>
-<p>Discussion to come.</p>
-<h1 id="f.-calculation-of-the-ofl-and-abc">F. Calculation of the OFL and ABC</h1>
-The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality <span class="math"><em>F</em><sub><em>OFL</em></sub></span>. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of <span class="math"><em>B</em><sub><em>MSY</em></sub></span> and <span class="math"><em>F</em><sub><em>MSY</em></sub></span>, along with two additional parameters <span class="math"><em>α</em></span> and <span class="math"><em>β</em></span>, <span class="math"><em>F</em><sub><em>OFL</em></sub></span> is determined by the control rule
-
-<p>where <span class="math"><em>B</em></span> is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as <span class="math"><em>B</em></span> itself is a function of the fishing mortality <span class="math"><em>F</em><sub><em>OFL</em></sub></span>, in case b) numerical approximation of <span class="math"><em>F</em><sub><em>OFL</em></sub></span> is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with <span class="math"><em>F</em><sub><em>OFL</em></sub></span> taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.</p>
-<p>The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2015, to define a <span class="math"><em>B</em><sub><em>MSY</em></sub></span> proxy in terms of average estimated MMB and to put <span class="math"><em>γ</em></span> = 1.0 with assumed stock natural mortality <span class="math"><em>M</em></span> = 0.18 <span class="math">yr<sup> − 1</sup></span> in setting the <span class="math"><em>F</em><sub><em>MSY</em></sub></span> proxy value <span class="math"><em>γ</em><em>M</em></span>. The parameters <span class="math"><em>α</em></span> and <span class="math"><em>β</em></span> are assigned their default values <span class="math"><em>α</em></span> = 0.10 and <span class="math"><em>β</em></span> = 0.25. The <span class="math"><em>F</em><sub><em>OFL</em></sub></span>, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. ABC is 80% of the OFL.</p>
-<p>OFL, ABC, retained catch and bycatches for 2015 are summarized for scenarios 10 and 10-4 below:</p>
-<h1 id="g.-rebuilding-analysis">G. Rebuilding Analysis</h1>
-<p>This stock is not currently subject to a rebuilding plan.</p>
-<h1 id="h.-data-gaps-and-research-priorities">H. Data Gaps and Research Priorities</h1>
-<ol style="list-style-type: decimal">
-<li>Growth increments and molting probabilities as a function of size.</li>
-<li>Trawl survey catchability and selectivities.</li>
-<li>Temporal changes in spatial distributions near the island.</li>
-<li>Natural mortality.</li>
-</ol>
-<h1 id="i.-projections-and-future-outlook">I. Projections and Future Outlook</h1>
-<p>With the decline of estimated population biomass during recent years, outlook for this stock is not promising. If the decline continues, the stock will fall to depleted status soon.</p>
-<h1 id="j.-acknowledgements">J. Acknowledgements</h1>
-<p>We thank the Crab Plan Team, Doug Pengilly for reviewing the earlier draft of this manuscript. Some materials in the report are from the SAFE report prepared by Bill Gaeuman in 2014.</p>
-<h1 id="k.-references">K. References</h1>
-<p>Alaska Department of Fish and Game (ADF&amp;G). 2013. Crab observer training and deployment manual. Alaska Department of Fish and Game Shellfish Observer Program, Dutch Harbor. Unpublished.</p>
-<p>Collie, J.S., A.K. Delong, and G.H. Kruse. 2005. Three-stage catch-survey analysis applied to blue king crabs. Pages 683-714 [In] Fisheries assessment and management in data-limited situations. University of Alaska Fairbanks, Alaska Sea Grant Report 05-02, Fairbanks.</p>
-<p>Daly, B., R. Foy, and C. Armistead. 2014. The 2013 eastern Bering Sea continental shelf bottom trawl survey: results for commercial crab species. NOAA Technical Memorandum, NMFS-AFSC.</p>
-<p>Donaldson, W.E., and S.C. Byersdorfer. 2005. Biological field techniques for lithodid crabs. University of Alaska Fairbanks, Alaska Sea Grant Report 05-03, Fairbanks.</p>
-<p>Fitch, H., M. Deiman, J. Shaishnikoff, and K. Herring. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Bering Sea, 2010/11. Pages 75-1776 [In] Fitch, H., M. Schwenzfeier, B. Baechler, T. Hartill, M. Salmon, M. Deiman, E.</p>
-<p>Evans, E. Henry, L. Wald, J. Shaishnikoff, K. Herring, and J. Wilson. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Aleutian Islands, Bering Sea and the Westward Region’s Shellfish Observer Program, 2010/11. Alaska Department of Fish and Game, Fishery Management Report No. 12-22, Anchorage.</p>
-<p>Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: using automatic differentiation for statistical inference of highly parameterized complex nonlinear models. Optim. Methods Softw. 27:233-249.</p>
-<p>Francis, R.I.C.C. 2011. Data weighting in statistical fisheries stock assessment models. Can. J. Fish. Aquat. Sci. 68: 1124-1138.</p>
-<p>Gaeuman, W.B. 2013. Summary of the 2012/13 mandatory crab observer program database for the Bering Sea/Aleutian Islands commercial crab fisheries. Alaska Department of Fish and Game, Fishery Data Series No. 13-54, Anchorage. Gish, R.K., V.A. Vanek, and D. Pengilly. 2012. Results of the 2010 triennial St. Matthew Island blue king crab pot survey and 2010/11 tagging study. Alaska Department of Fish and Game, Fishery Management Report No. 12-24, Anchorage.</p>
-<p>Jensen, G.C. and D.A. Armstrong. 1989. Biennial reproductive cycle of blue king crab, Paralithodes platypus, at the Pribilof Islands, Alaska and comparison to a congener, P. camtschatica. Can. J. Fish. Aquat. Sci. 46: 932-940.</p>
-<p>Moore, H., L.C. Byrne, and D. Connolly. 2000. Alaska Department of Fish and Game summary of the 1998 mandatory shellfish observer program database. Alaska Dept. Fish and Game, Commercial Fisheries Division, Reg. Inf. Rep. 4J00-21, Kodiak.</p>
-<p>North Pacific Fishery Management Council (NPFMC). 1998. Fishery Management Plan for Bering Sea/Aleutian Islands king and Tanner crabs. North Pacific Fishery Management Council, Anchorage.</p>
-<p>North Pacific Fishery Management Council (NPFMC). 1999. Environmental assessment/regulatory impact review/initial regulatory flexibility analysis for Amendment 11 to the Fishery Management Plan for Bering Sea/Aleutian Islands king and Tanner crabs. North Pacific Fishery Management Council, Anchorage.</p>
-<p>North Pacific Fishery Management Council (NPFMC). 2000. Environmental assessment/regulatoryimpact review/initial regulatory flexibility analysis for proposed Amendment 15 to the Fishery Management Plan for king and Tanner crab fisheries in the Bering Sea/Aleutian Islands and regulatory amendment to the Fishery Management Plan for the groundfish fishery of the Bering Sea and Aleutian Islands area: A rebuilding plan for the St. Matthew blue king crab stock. North Pacific Fishery Management Council, Anchorage. Draft report.</p>
-<p>North Pacific Fishery Management Council (NPFMC). 2007. Public Review Draft: Environmental assessment for proposed Amendment 24 to the Fishery Management Plan for Bering Sea and Aleutian Islands king and Tanner crabs to revise overfishing definitions. 14 November 2007. North Pacific Fishery Management Council, Anchorage.</p>
-<p>Otto, R.S. 1990. An overview of eastern Bering Sea king and Tanner crab fisheries. Pages 9-26 [In] Proceedings of the international symposium on king and Tanner crabs. University of Alaska Fairbanks, Alaska Sea Grant Program Report 90-4, Fairbanks.</p>
-<p>Otto, R.S., and P.A. Cummiskey. 1990. Growth of adult male blue king crab (Paralithodes platypus). Pages 245-258 [In] Proceedings of the international symposium on king and Tanner crabs. University of Alaska Fairbanks, Alaska Sea Grant Report 90-4, Fairbanks.</p>
-<p>Paul, J.M., A. J. Paul, R.S. Otto, and R.A. MacIntosh. 1991. Spermatophore presence in relation to carapace length for eastern Bering Sea blue king crab (Paralithodes platypus, Brandt, 1850) and red king crab (P. Camtschaticus, Tilesius, 1815). J. Shellfish Res. 10: 157-163.</p>
-<p>Pengilly, D. and D. Schmidt. 1995. Harvest Strategy for Kodiak and Bristol Bay Red king Crab and St. Matthew Island and Pribilof Blue King Crab. Alaska Department of Fish and Game, Commercial Fisheries Management and Development Division, Special Publication Number 7, Juneau.</p>
-<p>Schirripa, M.J., C.P. Goodyear, and R.M. Methot. 2009. Testing different methods of incorporating climate data into the assessment of US West Coast sablefish. ICES Journal of Marine Science, 66: 1605–1613. Somerton, D.A., and R.A. MacIntosh. 1983. The size at sexual maturity of blue king crab, Paralithodes platypus, in Alaska. Fishery Bulletin 81: 621-828.</p>
-<p>Wilderbuer, T., D. G. Nichol, and J. Ianelli. 2013. Assessment of the yellowfin sole stock in the Bering Sea and Aleutian Islands. Pages 619-708 in 2013 North Pacific Groundfish Stock Assessment and Fishery Evaluation Reports for 2014. North Pacific Fishery Management Council, Anchorage.</p>
-<p>Zheng, J. 2005. A review of natural mortality estimation for crab stocks: data-limited for every stock? Pages 595-612 [In] Fisheries Assessment and Management in Data-Limited Situations. University of Alaska Fairbanks, Alaska Sea Grant Program Report 05-02, Fairbanks.</p>
-<p>Zheng, J., and G.H. Kruse. 2002. Assessment and management of crab stocks under uncertainty of massive die-offs and rapid changes in survey catchability. Pages 367-384 [In] A.J. Paul,E.G. Dawe, R. Elner, G.S. Jamieson, G.H. Kruse, R.S. Otto, B. Sainte-Marie, T.C. Shirley, and D. Woodby (eds.). Crabs in Cold Water Regions: Biology, Management, and Economics. University of Alaska Fairbanks, Alaska Sea Grant Report 02-01, Fairbanks.</p>
-<p>Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analysis to blue king crab stocks near Pribilof and St. Matthew Islands. Alaska Fish. Res. Bull. 4:62-74.</p>
-<p></p>
+## The base model data file:
 
 
-
-
-
-
-
-
-
-<p></p>
-<div class="figure">
-<img src="figure/Fig4.png" alt="Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&amp;G pot-survey data used in the assessment." /><p class="caption">Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&amp;G pot-survey data used in the assessment.</p>
-</div>
-<div class="figure">
-<img src="figure/Fig5.png" alt="NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521." /><p class="caption">NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.</p>
-</div>
-<p></p>
-<div class="figure">
-<img src="figure/selectivity-1.png" alt="Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&amp;G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015." /><p class="caption">Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&amp;G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2015.</p>
-</div>
-<div class="figure">
-<img src="figure/molt_prob-1.png" alt="Molting probabilities by stage used in all of the Gmacs model scenarios." /><p class="caption">Molting probabilities by stage used in all of the Gmacs model scenarios.</p>
-</div>
-<div class="figure">
-<img src="figure/trawl_survey_biomass-1.png" alt="Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
-</div>
-<p></p>
-<div class="figure">
-<img src="figure/pot_survey_cpue-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations.</p>
-</div>
-<div class="figure">
-<img src="figure/pot_survey_cpue_CV-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations." /><p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations.</p>
-</div>
-<div class="figure">
-<img src="figure/bts_resid-1.png" alt="Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. " /><p class="caption">Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. </p>
-</div>
-<p></p>
-<div class="figure">
-<img src="figure/sc_pot-1.png" alt="Observed and model estimated size-frequencies of SMBKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios." /><p class="caption">Observed and model estimated size-frequencies of SMBKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_pot_discarded-1.png" alt="Observed and model estimated size-frequencies of discarded male SMBKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios." /><p class="caption">Observed and model estimated size-frequencies of discarded male SMBKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_trawl_discarded-1.png" alt="Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&amp;G pot survey for the 2015 model and each of the Gmacs model scenarios." /><p class="caption">Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&amp;G pot survey for the 2015 model and each of the Gmacs model scenarios.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_pot_res-1.png" alt="Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs base model." /><p class="caption">Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs base</strong> model.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_pot_res_selex-1.png" alt="Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs selex model." /><p class="caption">Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs selex</strong> model.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_pot_discarded_res-1.png" alt="Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs base model." /><p class="caption">Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs base</strong> model.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_pot_discarded_res_selex-1.png" alt="Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs selex model." /><p class="caption">Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs selex</strong> model.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_trawl_discarded_res-1.png" alt="Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs base model." /><p class="caption">Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs base</strong> model.</p>
-</div>
-<div class="figure">
-<img src="figure/sc_trawl_discarded_res_selex-1.png" alt="Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs selex model." /><p class="caption">Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs selex</strong> model.</p>
-</div>
-<p></p>
-<div class="figure">
-<img src="figure/fit_to_catch-1.png" alt="Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels." /><p class="caption">Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.</p>
-</div>
-<div class="figure">
-<img src="figure/recruitment-1.png" alt="Estimated recruitment time series during 1979-2015 in each of the scenarios." /><p class="caption">Estimated recruitment time series during 1979-2015 in each of the scenarios.</p>
-</div>
-<div class="figure">
-<img src="figure/mature_male_biomass-1.png" alt="Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios." /><p class="caption">Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios.</p>
-</div>
-<div class="figure">
-<img src="figure/length_weight-1.png" alt="Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs)." /><p class="caption">Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs).</p>
-</div>
-<div class="figure">
-<img src="figure/init_rec-1.png" alt="Distribution of carapace width (mm) at recruitment." /><p class="caption">Distribution of carapace width (mm) at recruitment.</p>
-</div>
-<div class="figure">
-<img src="figure/growth_inc-1.png" alt="Growth increment (mm) each molt." /><p class="caption">Growth increment (mm) each molt.</p>
-</div>
-<div class="figure">
-<img src="figure/growth_trans-1.png" alt="Probability of growth transition by stage. Each of the panels represent the stage before growth. The x-axes represent the stage after a growth (ignoring the probability of molting)." /><p class="caption">Probability of growth transition by stage. Each of the panels represent the stage before growth. The x-axes represent the stage after a growth (ignoring the probability of molting).</p>
-</div>
-<div class="figure">
-<img src="figure/size_trans-1.png" alt="Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition." /><p class="caption">Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition.</p>
-</div>
-<div class="figure">
-<img src="figure/init_N-1.png" alt="Numbers by stage each year (15 February) in each of the models including the 2015 model." /><p class="caption">Numbers by stage each year (15 February) in each of the models including the 2015 model.</p>
-</div>
-<div class="figure">
-<img src="figure/natural_mortality-1.png" alt="Time-varying natural mortality (M_t). Estimated pulse period occurs in 1998/99 (i.e. M_{1998}). " /><p class="caption">Time-varying natural mortality (<span class="math"><em>M</em><sub><em>t</em></sub></span>). Estimated pulse period occurs in 1998/99 (i.e. <span class="math"><em>M</em><sub>1998</sub></span>). </p>
-</div>
-<p></p>
-<h1 id="appendix-a-smbkc-model-description">Appendix A: SMBKC Model Description</h1>
-<h2 id="introduction">1. Introduction</h2>
-<p>The Gmacs model has been specified to account only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (size-classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the Gmacs base model configuration.</p>
-<h2 id="model-population-dynamics">2. Model Population Dynamics</h2>
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. MMB is measured 15 February. To accomodate this, each model year is split into four seasons:
-
-With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> as
-
-Using boldface uppercase letters to indicate a matrix, we describe the size transition matrix <span class="math">$\boldsymbol{G}$</span> as
-
-with <span class="math"><em>π</em><sub><em>j</em><em>k</em></sub></span> equal to the proportion of stage-<span class="math"><em>j</em></span> crab that molt and grow into stage-<span class="math"><em>k</em></span> within a season or year. Similarly, the survival matrix <span class="math">$\boldsymbol{S}_{t,y}$</span> during season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> is
-
-where <span class="math"><em>Z</em><sub><em>l</em>, <em>t</em>, <em>y</em></sub></span> represents the combination of natural mortality <span class="math"><em>M</em><sub><em>t</em>, <em>y</em></sub></span> and fishing mortality <span class="math"><em>F</em><sub><em>t</em>, <em>y</em></sub></span> during season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span>. The number of new crab, or recruits, of each stage entering the model each season <span class="math"><em>t</em></span> and year <span class="math"><em>y</em></span> is represented as the vector <span class="math">$\boldsymbol{r}_{t,y}$</span>. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only, thus
-
-where <span class="math"><em>R̄</em></span> is the average annual recruitment. The basic population dynamics underlying Gmacs can thus be described as
-
-The natural mortality
-
-<p>where <span class="math"><em>M̄</em><sub><em>t</em></sub> = 0, 0. 44</span> and</p>
-The fishing mortality by year <span class="math"><em>y</em></span> and season <span class="math"><em>t</em></span> is denoted <span class="math"><em>F</em><sub><em>t</em>, <em>y</em></sub></span> and calculated as
-
-<p>where <span class="math"><em>F</em><sub><em>t</em>, <em>y</em></sub><sup>df</sup></span> is the fishing mortality associated with the directed fishery, <span class="math"><em>F</em><sub><em>t</em>, <em>y</em></sub><sup>tb</sup></span> is the fishing mortality associated with the trawl bycatch fishery, <span class="math"><em>F</em><sub><em>t</em>, <em>y</em></sub><sup>fb</sup></span> is the fishing mortality associated with the fixed bycatch fishery.</p>
-Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is not modeled as a mid-season pulse occurring at time <span class="math"><em>π</em><sub><em>t</em></sub></span> with full-selection fishing mortality <span class="math"><em>F</em><sub><em>t</em></sub></span> relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as <br /><span class="math"><em>R</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup> = <em>H</em><sup><em>d</em><em>f</em></sup><em>S</em><sup><em>d</em><em>f</em></sup>(1 − <em>e</em><sup><em>F</em><sub><em>t</em></sub><sup><em>d</em><em>f</em></sup></sup>)<em>e</em><sup> − <em>τ</em><sub><em>t</em></sub><em>M</em></sup><em>N</em><sub><em>t</em></sub></span><br /> where the diagonal matrices
-
-<p>account for stage selectivities <span class="math"><em>s</em><sub>1</sub><sup>df</sup></span> and <span class="math"><em>s</em><sub>2</sub><sup>df</sup></span> and discard handling mortality <span class="math"><em>h</em><sup>df</sup></span> in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as 15 February (0.63 yr) pulse effects in terms of the respective fishing mortalities <span class="math"><em>F</em><sub><em>t</em></sub><sup>gt</sup></span> and <span class="math"><em>F</em><sub><em>t</em></sub><sup>gf</sup></span> by</p>
-<h2 id="model-data">3. Model Data</h2>
-<p>Data inputs used in model estimation are listed in Table 1XX. All quantities relate to male SMBKC <span class="math"> ≤ </span> 90mm CL.</p>
-<p><span class="math"><em>y</em> = {<em>c</em><em>a</em><em>t</em><em>c</em><em>h</em>, <em>c</em><em>p</em><em>u</em><em>e</em>, <em>l</em><em>f</em><em>s</em>}</span></p>
-<h2 id="model-parameters">4. Model Parameters</h2>
-<p><span class="math">$\theta = \{ R_0, \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, Mdev, sel \}$</span></p>
-<p>Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include an estimated parameter for natural mortality (<span class="math"><em>M</em></span>) in 1998/99 assuming an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 <span class="math">yr<sup> − 1</sup></span>.</p>
-<p>In any year with no directed fishery, and hence zero retained catch, <span class="math"><em>F</em><sub><em>t</em></sub><sup>df</sup></span> is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, <span class="math"><em>F</em><sub><em>t</em></sub><sup>gf</sup></span> and <span class="math"><em>F</em><sub><em>t</em></sub><sup>gt</sup></span> are imputed to be the geometric means of the estimates from years for which there are data. Table 3XX lists additional externally determined parameters used in model computations.</p>
-In all scenarios, the stage-transition matrix is
-
-<p>which includes molting probabilities.</p>
-<p>The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well.</p>
-<p>Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is not treated as a season midpoint pulse. Groundfish bycatch is likewise not modeled as a pulse effect, occurring at the nominal time of mating, 15 February, which is also the reference date for calculation of federal management biomass quantities.</p>
-
-<h2 id="model-objective-function-and-weighting-scheme">5. Model Objective Function and Weighting Scheme</h2>
-<p>The objective function consists of a sum of eight &quot;negative log-likelihood&quot; terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four &quot;penalty&quot; terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries. See Table , where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes <span class="math"><em>n</em><sub><em>t</em></sub></span> (observed number of male SMBKC <span class="math"> ≤ </span> 90 mm CL) and estimated coefficients of variation <span class="math">$\widehat{cv}_t$</span> were used to develop appropriate variances for stage-proportion and abundance-index components. The weights <span class="math"><em>λ</em><sub><em>j</em></sub></span> appearing in the objective function component expressions in Table  play the role of &quot;tuning&quot; parameters in the modeling procedure.</p>
-<p>Table 4XX. Log-likelihood and penalty components of base-model objective function. The <span class="math"><em>λ</em><sub><em>k</em></sub></span> are weights, described in text; the neff t are effective sample sizes, also described in text. All summations are with respect to years over each data series.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Component</th>
-<th align="left">Distribution</th>
-<th align="left">Form</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Legal retained-catch biomass</td>
-<td align="left">Lognormal</td>
-<td align="left"><span class="math"> − 0. 5∑ (log(<em>c</em><sub><em>t</em></sub> / <em>C</em><sub><em>t</em></sub>)<sup>2</sup> / log(1 + <em>c</em><em>v</em><sub><em>c</em></sub><sup>2</sup>))</span></td>
-</tr>
-<tr class="even">
-<td align="left">Dis. Pot bycatch biomass</td>
-<td align="left">Lognormal</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<h2 id="estimation">6. Estimation</h2>
-<p>The model was implemented using the software AD Model Builder (Fournier et al. 2012), with parameter estimation by minimization of the model objective function using automatic differentiation. Parameter estimates and standard deviations provided in this document are AD Model Builder reported values assuming maximum likelihood theory asymptotics.</p>
-<p></p>
-<h2 id="the-base-model-data-file">The base model data file:</h2>
-<pre><code>## #======================================================================================================== 
+```
+## #======================================================================================================== 
 ## # Gmacs Main  Data  File  Version 1.1:  SM15 example 
 ## # GEAR_INDEX   DESCRIPTION 
 ## #    1        : Pot fishery retained catch. 
@@ -412,7 +72,7 @@ In all scenarios, the stage-transition matrix is
 ## ##  CATCH DATA 
 ## ##  Type of catch: 1 = retained, 2 = discard 
 ## ##  Units of catch: 1 = biomass, 2 = numbers 
-## ##  for SMBKC Units are in number of crab for landed &amp; 1000 kg for discards. 
+## ##  for SMBKC Units are in number of crab for landed & 1000 kg for discards. 
 ## ##  Male Retained 
 ## ##  year  seas  fleet sex obs     cv    type  units mult  effort  discard_mortality 
 ##     1978  2 1 1 436126  0.03  1 2 1 0 0 
@@ -650,16 +310,21 @@ In all scenarios, the stage-transition matrix is
 ## #  112.5  1 14.1 0.2197 
 ## #  127.5  1 14.4 0.2197 
 ## ##  eof 
-## 9999</code></pre>
-<h2 id="the-base-model-control-file">The base model control file:</h2>
-<pre><code>## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
+## 9999
+```
+
+## The base model control file:
+
+
+```
+## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
 ## # Controls for leading parameter vector theta 
 ## # LEGEND FOR PRIOR: 
-## #                  0 -&gt; uniform 
-## #                  1 -&gt; normal 
-## #                  2 -&gt; lognormal 
-## #                  3 -&gt; beta 
-## #                  4 -&gt; gamma 
+## #                  0 -> uniform 
+## #                  1 -> normal 
+## #                  2 -> lognormal 
+## #                  3 -> beta 
+## #                  4 -> gamma 
 ## # ntheta 
 ##   12 
 ## # ival        lb        ub        phz   prior     p1      p2         # parameter         # 
@@ -705,7 +370,7 @@ In all scenarios, the stage-transition matrix is
 ##    1         1        1         1        1         # Retention periods 
 ##    0         0        0         0        0         # sex specific retention 
 ##    3         2        2         2        2         # male retention type 
-##    1         0        0         0        0         # male retention flag (0 -&gt; no, 1 -&gt; yes) 
+##    1         0        0         0        0         # male retention flag (0 -> no, 1 -> yes) 
 ## ## gear  par   sel                                             phz    start  end        ## 
 ## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
 ## # Gear-1 
@@ -749,7 +414,7 @@ In all scenarios, the stage-transition matrix is
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## PRIORS FOR CATCHABILITY 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -757,19 +422,19 @@ In all scenarios, the stage-transition matrix is
 ## ## SURVEYS/INDICES ONLY 
 ## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
 ##    1.0     0        2     -4    0       0        9.0   0           1       # NMFS trawl 
-##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&amp;G pot 
+##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&G pot 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ## 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ival        lb        ub        phz   prior     p1      p2 
 ##    0.0001      0.00001   10.0      -4    4         1.0     100   # NMFS 
-##    0.0001      0.00001   10.0      -4    4         1.0     100   # ADF&amp;G 
+##    0.0001      0.00001   10.0      -4    4         1.0     100   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -780,7 +445,7 @@ In all scenarios, the stage-transition matrix is
 ##    0.001     0.05     4.050      1   # Trawl 
 ##    0.001     0.05     4.020      1   # Fixed 
 ##    0.00      2.00     20.00     -1   # NMFS 
-##    0.00      2.00     20.00     -1   # ADF&amp;G 
+##    0.00      2.00     20.00     -1   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ——————————————————————————————————————————————————————————————————————————————————— ## 
@@ -811,7 +476,7 @@ In all scenarios, the stage-transition matrix is
 ## ## TYPE:  
 ## ##      0 = constant natural mortality 
 ## ##      1 = Random walk (deviates constrained by variance in M) 
-## ##      2 = Cubic Spline (deviates constrained by nodes &amp; node-placement) 
+## ##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
 ## ##      3 = Blocked changes (deviates constrained by variance at specific knots) 
 ## ##      4 = Time blocks 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -839,17 +504,23 @@ In all scenarios, the stage-transition matrix is
 ##   1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE) 
 ##   0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt) 
 ## ## EOF 
-## 9999</code></pre>
-<p></p>
-<h2 id="the-selex-model-control-file">The selex model control file:</h2>
-<pre><code>## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
+## 9999
+```
+
+\newpage\clearpage
+
+## The selex model control file:
+
+
+```
+## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
 ## # Controls for leading parameter vector theta 
 ## # LEGEND FOR PRIOR: 
-## #                  0 -&gt; uniform 
-## #                  1 -&gt; normal 
-## #                  2 -&gt; lognormal 
-## #                  3 -&gt; beta 
-## #                  4 -&gt; gamma 
+## #                  0 -> uniform 
+## #                  1 -> normal 
+## #                  2 -> lognormal 
+## #                  3 -> beta 
+## #                  4 -> gamma 
 ## # ntheta 
 ##   12 
 ## # ival        lb        ub        phz   prior     p1      p2         # parameter         # 
@@ -895,7 +566,7 @@ In all scenarios, the stage-transition matrix is
 ##    1         1        1         1        1         # Retention periods 
 ##    0         0        0         0        0         # sex specific retention 
 ##    3         2        2         2        2         # male retention type 
-##    1         0        0         0        0         # male retention flag (0 -&gt; no, 1 -&gt; yes) 
+##    1         0        0         0        0         # male retention flag (0 -> no, 1 -> yes) 
 ## ## gear  par   sel                                             phz    start  end        ## 
 ## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
 ## # Gear-1 
@@ -939,7 +610,7 @@ In all scenarios, the stage-transition matrix is
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## PRIORS FOR CATCHABILITY 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -947,19 +618,19 @@ In all scenarios, the stage-transition matrix is
 ## ## SURVEYS/INDICES ONLY 
 ## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
 ##    1.0     0        2     -4    0       0        9.0   0           1       # NMFS trawl 
-##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&amp;G pot 
+##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&G pot 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ## 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ival        lb        ub        phz   prior     p1      p2 
 ##    0.0001      0.00001   10.0      -4    4         1.0     100   # NMFS 
-##    0.0001      0.00001   10.0      -4    4         1.0     100   # ADF&amp;G 
+##    0.0001      0.00001   10.0      -4    4         1.0     100   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -970,7 +641,7 @@ In all scenarios, the stage-transition matrix is
 ##    0.001     0.05     4.050      1   # Trawl 
 ##    0.001     0.05     4.020      1   # Fixed 
 ##    0.00      2.00     20.00     -1   # NMFS 
-##    0.00      2.00     20.00     -1   # ADF&amp;G 
+##    0.00      2.00     20.00     -1   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ——————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1001,7 +672,7 @@ In all scenarios, the stage-transition matrix is
 ## ## TYPE:  
 ## ##      0 = constant natural mortality 
 ## ##      1 = Random walk (deviates constrained by variance in M) 
-## ##      2 = Cubic Spline (deviates constrained by nodes &amp; node-placement) 
+## ##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
 ## ##      3 = Blocked changes (deviates constrained by variance at specific knots) 
 ## ##      4 = Time blocks 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1029,17 +700,23 @@ In all scenarios, the stage-transition matrix is
 ##   1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE) 
 ##   0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt) 
 ## ## EOF 
-## 9999</code></pre>
-<p></p>
-<h2 id="the-add-cv-model-control-file">The add CV model control file:</h2>
-<pre><code>## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
+## 9999
+```
+
+\newpage\clearpage
+
+## The add CV model control file:
+
+
+```
+## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
 ## # Controls for leading parameter vector theta 
 ## # LEGEND FOR PRIOR: 
-## #                  0 -&gt; uniform 
-## #                  1 -&gt; normal 
-## #                  2 -&gt; lognormal 
-## #                  3 -&gt; beta 
-## #                  4 -&gt; gamma 
+## #                  0 -> uniform 
+## #                  1 -> normal 
+## #                  2 -> lognormal 
+## #                  3 -> beta 
+## #                  4 -> gamma 
 ## # ntheta 
 ##   12 
 ## # ival        lb        ub        phz   prior     p1      p2         # parameter         # 
@@ -1085,7 +762,7 @@ In all scenarios, the stage-transition matrix is
 ##    1         1        1         1        1         # Retention periods 
 ##    0         0        0         0        0         # sex specific retention 
 ##    3         2        2         2        2         # male retention type 
-##    1         0        0         0        0         # male retention flag (0 -&gt; no, 1 -&gt; yes) 
+##    1         0        0         0        0         # male retention flag (0 -> no, 1 -> yes) 
 ## ## gear  par   sel                                             phz    start  end        ## 
 ## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
 ## # Gear-1 
@@ -1129,7 +806,7 @@ In all scenarios, the stage-transition matrix is
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## PRIORS FOR CATCHABILITY 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1137,19 +814,19 @@ In all scenarios, the stage-transition matrix is
 ## ## SURVEYS/INDICES ONLY 
 ## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
 ##    1.0     0        2     -4    0       0        9.0   0           1       # NMFS trawl 
-##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&amp;G pot 
+##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&G pot 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ## 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ival        lb        ub        phz   prior     p1      p2 
 ##    0.0001      0.00001   10.0      -4    4         1.0     100   # NMFS 
-##    0.0001      0.00001   10.0       4    4         1.0     100   # ADF&amp;G 
+##    0.0001      0.00001   10.0       4    4         1.0     100   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1160,7 +837,7 @@ In all scenarios, the stage-transition matrix is
 ##    0.001     0.05     4.050      1   # Trawl 
 ##    0.001     0.05     4.020      1   # Fixed 
 ##    0.00      2.00     20.00     -1   # NMFS 
-##    0.00      2.00     20.00     -1   # ADF&amp;G 
+##    0.00      2.00     20.00     -1   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ——————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1191,7 +868,7 @@ In all scenarios, the stage-transition matrix is
 ## ## TYPE:  
 ## ##      0 = constant natural mortality 
 ## ##      1 = Random walk (deviates constrained by variance in M) 
-## ##      2 = Cubic Spline (deviates constrained by nodes &amp; node-placement) 
+## ##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
 ## ##      3 = Blocked changes (deviates constrained by variance at specific knots) 
 ## ##      4 = Time blocks 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1219,17 +896,23 @@ In all scenarios, the stage-transition matrix is
 ##   1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE) 
 ##   0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt) 
 ## ## EOF 
-## 9999</code></pre>
-<p></p>
-<h2 id="the-no-m_1998-model-control-file">The no <span class="math"><em>M</em><sub>1998</sub></span> model control file:</h2>
-<pre><code>## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
+## 9999
+```
+
+\newpage\clearpage
+
+## The no $M_{1998}$ model control file:
+
+
+```
+## # Set up to do Stock Reduction Analysis using Catch data and informative priors. 
 ## # Controls for leading parameter vector theta 
 ## # LEGEND FOR PRIOR: 
-## #                  0 -&gt; uniform 
-## #                  1 -&gt; normal 
-## #                  2 -&gt; lognormal 
-## #                  3 -&gt; beta 
-## #                  4 -&gt; gamma 
+## #                  0 -> uniform 
+## #                  1 -> normal 
+## #                  2 -> lognormal 
+## #                  3 -> beta 
+## #                  4 -> gamma 
 ## # ntheta 
 ##   12 
 ## # ival        lb        ub        phz   prior     p1      p2         # parameter         # 
@@ -1275,7 +958,7 @@ In all scenarios, the stage-transition matrix is
 ##    1         1        1         1        1         # Retention periods 
 ##    0         0        0         0        0         # sex specific retention 
 ##    3         2        2         2        2         # male retention type 
-##    1         0        0         0        0         # male retention flag (0 -&gt; no, 1 -&gt; yes) 
+##    1         0        0         0        0         # male retention flag (0 -> no, 1 -> yes) 
 ## ## gear  par   sel                                             phz    start  end        ## 
 ## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
 ## # Gear-1 
@@ -1319,7 +1002,7 @@ In all scenarios, the stage-transition matrix is
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## PRIORS FOR CATCHABILITY 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1327,19 +1010,19 @@ In all scenarios, the stage-transition matrix is
 ## ## SURVEYS/INDICES ONLY 
 ## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
 ##    1.0     0        2     -4    0       0        9.0   0           1       # NMFS trawl 
-##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&amp;G pot 
+##    3.98689 0        5      4    0       0        9.0   0           1       # ADF&G pot 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ## 
 ## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
-## ##     and p2 are ignored). ival must be &gt; 0                                            ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
 ## ## LEGEND                                                                               ## 
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ival        lb        ub        phz   prior     p1      p2 
 ##    0.0001      0.00001   10.0      -4    4         1.0     100   # NMFS 
-##    0.0001      0.00001   10.0      -4    4         1.0     100   # ADF&amp;G 
+##    0.0001      0.00001   10.0      -4    4         1.0     100   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1350,7 +1033,7 @@ In all scenarios, the stage-transition matrix is
 ##    0.001     0.05     4.050      1   # Trawl 
 ##    0.001     0.05     4.020      1   # Fixed 
 ##    0.00      2.00     20.00     -1   # NMFS 
-##    0.00      2.00     20.00     -1   # ADF&amp;G 
+##    0.00      2.00     20.00     -1   # ADF&G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ——————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1381,7 +1064,7 @@ In all scenarios, the stage-transition matrix is
 ## ## TYPE:  
 ## ##      0 = constant natural mortality 
 ## ##      1 = Random walk (deviates constrained by variance in M) 
-## ##      2 = Cubic Spline (deviates constrained by nodes &amp; node-placement) 
+## ##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
 ## ##      3 = Blocked changes (deviates constrained by variance at specific knots) 
 ## ##      4 = Time blocks 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1409,15 +1092,5 @@ In all scenarios, the stage-transition matrix is
 ##   1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE) 
 ##   0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt) 
 ## ## EOF 
-## 9999</code></pre>
-<div class="references">
-
-</div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>NOAA grant Bering Sea Crab Research II, NA16FN2621, 1997.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>D. Pengilly, ADF&amp;G, pers. comm.<a href="#fnref3">↩</a></p></li>
-</ol>
-</div>
+## 9999
+```

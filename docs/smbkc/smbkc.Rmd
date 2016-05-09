@@ -133,7 +133,7 @@ names(Mselex) <- c("SMBKC")
 
 1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
 
-2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonnes (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).
+2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonnes (1.167 million pounds) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).
 
 3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 tonnes (20.98 million pounds; CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 5652 tonnes (12.46 million pounds; CV = 0.33) in 2012 and to 2202 tonnes (4.459 million pounds; CV = 0.22) in 2013 before going back up to 5472 tonnes (12.06 million pounds; CV = 0.44) in 2014 and 5134 tonnes (11.32 million pounds; CV = 0.76).
 
@@ -328,7 +328,7 @@ b. Tables of estimates.
 
 Model parameter estimates are summarized in Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_selex}, \ref{tab:est_pars_cv}, and \ref{tab:est_pars_M}. Negative log likelihood values and management measures for the four Gmacs scenarios are compared in Table \ref{tab:likelihood_components}. Estimated abundances by stage and mature male biomasses for three of the scenarios are listed in Tables \ref{tab:pop_abundance_2015}, \ref{tab:pop_abundance_base}, and \ref{tab:pop_abundance_selex}.
 
-The scenarios that estimated selectivities fit the data better. Scenarios with additional CV for the pot survey CPUE fit the trawl survey data better and result in higher abundance and biomass estimates in most recent years. Estimated directed pot and trawl survey selectivities > 1.0 for stage-2 crab are also troublesome.
+The scenarios that estimated stage-1 and stage-2 selectivities fit the data better. The scenario with additional CV for the pot survey CPUE fit the trawl survey data better and resulted in higher abundance and biomass estimates in the most recent years. Estimated directed pot and trawl survey selectivities > 1.0 for stage-2 crab are troublesome.
 
 c. Graphs of estimates.
 
@@ -338,8 +338,7 @@ d. Graphic evaluation of the fit to the data.
 
 Model estimated relative survey biomasses are different in each of the scenarios. The Gmacs base model has a comparatively low biomass in the early years compared with the other scenarios, including the 2015 model (Figure \ref{fig:trawl_survey_biomass}). The Gmacs CV scenario that includes additional CV for the pot survey CPUE results in much higher biomass estimates in recent years (Figure \ref{fig:trawl_survey_biomass}). Estimated pot survey CPUEs are also dependent on scenarios, and the difference among scenarios are very similar to the relative survey biomasses (Figure \ref{fig:pot_survey_cpue}).
 
-
-Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomasses on 15 February also fluctuates strongly over time; the high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure \ref{fig:mmb}).
+Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomass on 15 February also fluctuates strongly over time. The high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure \ref{fig:mmb}).
 
 e. Retrospective and historic analyses.
 
@@ -351,7 +350,7 @@ Estimated standard deviations of parameters for the four Gmacs scenarios are sum
 
 g. Comparison of alternative model scenarios.
 
-Discussion to come
+Discussion to come.
 
 # F. Calculation of the OFL and ABC
 
@@ -375,7 +374,6 @@ OFL, ABC, retained catch and bycatches for 2015 are summarized for scenarios 10 
 
 This stock is not currently subject to a rebuilding plan.
 
-
 # H. Data Gaps and Research Priorities
 
   1. Growth increments and molting probabilities as a function of size.
@@ -383,11 +381,9 @@ This stock is not currently subject to a rebuilding plan.
   3. Temporal changes in spatial distributions near the island.
   4. Natural mortality.
 
-
 # I. Projections and Future Outlook
 
 With the decline of estimated population biomass during recent years, outlook for this stock is not promising. If the decline continues, the stock will fall to depleted status soon.
-
 
 # J. Acknowledgements
 
@@ -584,7 +580,6 @@ for (ii in 2:5)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
 names(df) <- c("Component","Gmacs base","Gmacs selex","Gmacs CV","Gmacs M")
-
 tab <- xtable(df, caption = "Comparisons of negative log-likelihood values and management measures for the four Gmacs model scenarios. Biomass and OFL are in tonnes.", label = "tab:likelihood_components")
 print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
@@ -741,9 +736,31 @@ The Gmacs model has been specified to account only for male crab at least 90 mm 
 
 ## 2. Model Population Dynamics
 
-Each model year is split into four seasons. MMB is measured 15 February. To accomodate this, four seasons were defined.
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. MMB is measured 15 February. To accomodate this, each model year is split into four seasons:
+\begin{enumerate}
+    \item Season 1
+    \begin{itemize}
+        \item Beginning of the SMBKC fishing year (1 July)
+        \item Surveys
+    \end{itemize}
+    \item Season 2
+    \begin{itemize}
+        \item $M = 0.44$ and catch
+    \end{itemize}
+    \item Season 3
+    \begin{itemize}
+        \item $M = 0.185$
+        \item Calculate MMB (15 February)
+    \end{itemize}
+    \item Season 4
+    \begin{itemize}
+        \item $M = 0.375$
+        \item Growth and molting
+        \item Recruitment (all to stage-1)
+    \end{itemize}
+\end{enumerate}
 
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
+With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}
     \boldsymbol{n}_{t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{3,t,y} \right]^\top.
 \end{equation}
@@ -771,6 +788,18 @@ where $\bar{R}$ is the average annual recruitment. The basic population dynamics
     \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=4
 \end{align}
 
+The natural mortality
+\begin{equation}
+    M_{t,y} = \bar{M}_t + \delta_y^M \text{ where } \delta_y^M \sim \mathcal{N} \left( 0, \sigma_M^2 \right)
+\end{equation}
+where $\bar{M}_t = 0, 0.44$ and
+
+The fishing mortality by year $y$ and season $t$ is denoted $F_{t,y}$ and calculated as
+\begin{equation}
+    F_{t,y} = F_{t,y}^\text{df} + F_{t,y}^\text{tb} + F_{t,y}^\text{fb}
+\end{equation}
+where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed fishery, $F_{t,y}^\text{tb}$ is the fishing mortality associated with the trawl bycatch fishery, $F_{t,y}^\text{fb}$ is the fishing mortality associated with the fixed bycatch fishery.
+
 Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is not modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
 $$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
 where the diagonal matrices
@@ -786,7 +815,11 @@ account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard 
 
 Data inputs used in model estimation are listed in Table 1XX. All quantities relate to male SMBKC $\le$ 90mm CL.
 
+$y = \{ catch, cpue, lfs \}$
+
 ## 4. Model Parameters
+
+$\theta = \{ R_0, \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, Mdev, sel \}$
 
 Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include an estimated parameter for natural mortality ($M$) in 1998/99 assuming an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
 
@@ -801,9 +834,9 @@ In all scenarios, the stage-transition matrix is
 \end{equation}
 which includes molting probabilities.
 
-The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well. For scenarios 0 and 1, stage-transition matrix
+The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well.
 
-Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is treated as a season midpoint pulse. Groundfish bycatch is likewise modeled as a pulse effect, occurring at the nominal time of mating, February 15, which is also the reference date for calculation of federal management biomass quantities.
+Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is not treated as a season midpoint pulse. Groundfish bycatch is likewise not modeled as a pulse effect, occurring at the nominal time of mating, 15 February, which is also the reference date for calculation of federal management biomass quantities.
 
 ```{r limits_pars, results = "asis"}
 Parameter <- c("$Mdev_{1998}$", "$\\log (R_0)$","$\\log (\\bar{R})$",
