@@ -3389,6 +3389,14 @@ REPORT_SECTION
 	}
 
 
+	/**
+	 * @brief Calculate equilibrium initial conditions
+	 * @details
+	 *
+	 * TODO: use do/while loop rather than specify iterations
+	 *
+	 * @return dvar_vector ssb (model mature biomass).
+	**/
 FUNCTION dvar_matrix calc_brute_equilibrium()
 	int h,i,ig,o,m;
 	int ninit = 100;
