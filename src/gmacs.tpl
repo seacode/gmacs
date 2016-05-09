@@ -3395,7 +3395,7 @@ REPORT_SECTION
 	 *
 	 * TODO: use do/while loop rather than specify iterations
 	 *
-	 * @return dvar_vector ssb (model mature biomass).
+	 * @return dvar_matrix
 	**/
 FUNCTION dvar_matrix calc_brute_equilibrium()
 	int h,i,ig,o,m;
