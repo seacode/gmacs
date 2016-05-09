@@ -16,8 +16,8 @@
   \usepackage{tikz}
 
   \usebackgroundtemplate{%
-  % \tikz\node[opacity=0.50] {\hskip-2ex \includegraphics[trim = 300mm 0mm 0mm -80mm,clip,height=\paperheight,keepaspectratio=true]{./FIGS/Paralithodes_camtschaticus.jpg}};}
-  \tikz\node[opacity=0.40] {\hskip-2ex \includegraphics[trim = 00mm 0mm 0mm 0mm,clip,height=\paperheight,keepaspectratio=false]{./FIGS/Paralithodes_camtschaticus.jpg}};}
+  % \tikz\node[opacity=0.50] {\hskip-2ex \includegraphics[trim = 300mm 0mm 0mm -80mm,clip,height=\paperheight,keepaspectratio=true]{./figure/Paralithodes_camtschaticus.jpg}};}
+  \tikz\node[opacity=0.40] {\hskip-2ex \includegraphics[trim = 00mm 0mm 0mm 0mm,clip,height=\paperheight,keepaspectratio=false]{./figure/Paralithodes_camtschaticus.jpg}};}
 
   \addtobeamertemplate{block begin}{\pgfsetfillopacity{0.5}}{\pgfsetfillopacity{1}}
   \addtobeamertemplate{block alerted begin}{\pgfsetfillopacity{0.5}}{\pgfsetfillopacity{1}}
@@ -44,7 +44,7 @@
   \usepackage[orientation=landscape,size=custom,width=200,height=200,scale=1.95]{beamerposter}
   \listfiles
   \graphicspath{{figures/}}
-  \graphicspath{{FIGS/}}
+  \graphicspath{{figure/}}
   % Display a grid to help align images
   %\beamertemplategridbackground[1cm]
 
@@ -97,7 +97,7 @@
     \vskip1cm
    \end{column}
    \begin{column}{.1\linewidth}
-    \includegraphics{./FIGS/QRCode.png}
+    \includegraphics{./figure/QRCode.png}
    \end{column}
    \vspace{1cm}
   \end{columns}

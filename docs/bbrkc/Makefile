@@ -10,3 +10,4 @@ pdf: bbrkc.Rmd
 
 clean:
 	rm bbrkc.md 
+	rm app.md 
