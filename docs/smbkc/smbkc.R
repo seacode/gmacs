@@ -662,8 +662,6 @@ plot_size_comps(M, 2)
 plot_size_comps(M, 3)
 ```
 
-\newpage\clearpage
-
 ```{r sc_pot_res, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_pot_res}"}
 plot_size_comps(Mbase, 1, res = TRUE)
 ```
