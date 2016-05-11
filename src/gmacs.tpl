@@ -359,7 +359,7 @@ DATA_SECTION
 			cpue_sd(k)  = sqrt(log(1.0 + square(cpue_cv(k))));
 		}
 		WRITEDAT(nSurveys); WRITEDAT(nSurveyRows); WRITEDAT(dSurveyData);
-		ECHO(obs_cpue); ECHO(cpue_cv);ECHO(cpue_sd);
+		ECHO(obs_cpue); ECHO(cpue_cv); ECHO(cpue_sd);
 	END_CALCS
 
 	// |-----------------------|
@@ -3007,7 +3007,7 @@ FUNCTION calc_objective_function
 				nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
 			}
 		} else {
-			nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); 
+			nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
 		}
 	}
 

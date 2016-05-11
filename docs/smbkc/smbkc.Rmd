@@ -42,7 +42,7 @@ options(xtable.comment = FALSE)
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("2015 Model", "Gmacs base","Gmacs selex","Gmacs CV","Gmacs M")
+names(M) <- c("2015 Model", "Gmacs base","Gmacs selex","Gmacs cap sel","Gmacs CV")
 #names(M) <- c("2015 Model", "Gmacs lb")
 
 jj <- 1 # The position in the list that Jies model outputs sit
