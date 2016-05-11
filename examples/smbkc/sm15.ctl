@@ -12,15 +12,15 @@
   0.18      0.01         1        -4       2   0.18    0.02          # M
   14.3      -7.0        30        -2       0    -7       30          # log(R0)
   10.0      -7.0        20        -1       1   -10.0     20.0        # log(Rini)
-  13.7222   -7.0        20        -1       0    -7       30          # log(Rbar)
+  13.7222   -7.0        20         1       0    -7       30          # log(Rbar)
   80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value
   0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
   0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation
- 14.5       5.00     15.00        -1       0    5.00  15.00          # logN0 vector of initial numbers at length
- 14.0       5.00     15.00        -1       0    5.00  15.00          # logN0 vector of initial numbers at length
- 13.5       5.00     15.00        -1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 14.5       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 14.0       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 13.5       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
 ## GROWTH PARAM CONTROLS                                                                ##
 ## Two lines for each parameter if split sex, one line if not                           ##
 # ival        lb        ub         phz  prior     p1      p2         # parameter         #
@@ -142,8 +142,8 @@
 ##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  0   0   0  # Type of likelihood
-  1   1   1  # Type of likelihood
-#  2   2   2  # Type of likelihood
+#  1   1   1  # Type of likelihood
+  2   2   2  # Type of likelihood
 #  5   5   5   # Type of likelihood
   0   0   0   # Auto tail compression (pmin)
   1   1   1   # Initial value for effective sample size multiplier
