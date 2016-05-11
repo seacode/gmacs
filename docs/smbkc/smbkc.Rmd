@@ -29,6 +29,7 @@ options(xtable.comment = FALSE)
 
 # The model specs
 .MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/")
+.MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -39,9 +40,9 @@ options(xtable.comment = FALSE)
 .SEAS     = c("1","2","3","4")
 
 # Read report file and create gmacs report object (a list):
-fn       <- paste0(.MODELDIR, "gmacs")
+fn       <- paste0(.MODELDIR[1:2], "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("2015 Model", "Gmacs base","Gmacs selex","Gmacs CV","Gmacs M")
+names(M) <- c("2015 Model", "Gmacs base","Gmacs selex","Gmacs CV","Gmacs M")[1:2]
 
 jj <- 1 # The position in the list that Jies model outputs sit
 

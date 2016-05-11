@@ -124,9 +124,9 @@ plot_growth_inc(M)
 ggsave(paste0(.FIGS, "gi.png"), width = ww, height = hh)
 dev.off()
 
-plot_length_weight(M)
-ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
-dev.off()
+#plot_length_weight(M)
+#ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
+#dev.off()
 
 plot_numbers(M)
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*2, height = hh*1.5)
