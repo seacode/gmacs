@@ -124,9 +124,9 @@ fn <- paste0(.MODELDIR[2], "gmacs")
 Mbase <- lapply(fn, read_admb)
 names(Mbase) <- c("SMBKC")
 
-#fn <- paste0(.MODELDIR[3], "gmacs")
-#Mselex <- lapply(fn, read_admb)
-#names(Mselex) <- c("SMBKC")
+fn <- paste0(.MODELDIR[3], "gmacs")
+Mselex <- lapply(fn, read_admb)
+names(Mselex) <- c("SMBKC")
 ```
 
 # Executive Summary

@@ -667,24 +667,15 @@ Year & $N_1$ & $N_2$ & $N_3$ & MMB \\
 
 ![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_res}](figure/sc_pot_res-1.png)
 
-
-```
-## Error in .get_sizeComps_df(M): object 'Mselex' not found
-```
+![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\label{fig:sc_pot_res_selex}](figure/sc_pot_res_selex-1.png)
 
 ![Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_discarded_res}](figure/sc_pot_discarded_res-1.png)
 
-
-```
-## Error in .get_sizeComps_df(M): object 'Mselex' not found
-```
+![Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\label{fig:sc_pot_discarded_res_selex}](figure/sc_pot_discarded_res_selex-1.png)
 
 ![Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_trawl_discarded_res}](figure/sc_trawl_discarded_res-1.png)
 
-
-```
-## Error in .get_sizeComps_df(M): object 'Mselex' not found
-```
+![Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\label{fig:sc_trawl_discarded_res_selex}](figure/sc_trawl_discarded_res_selex-1.png)
 
 \newpage\clearpage
 
