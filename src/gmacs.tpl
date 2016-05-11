@@ -137,7 +137,7 @@ DATA_SECTION
 	END_CALCS
 	int n_grp;     ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
-	int nlikes;     // 1      2     3           4         5
+	int nlikes;    // 1      2     3           4         5
 	!! nlikes = 5; // catch, cpue, size comps, recruits, molt increments
 
 	// Set up index pointers
@@ -693,7 +693,6 @@ DATA_SECTION
 					slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
 					slx_priors(k,j,3) = slx_control_in(jj,10); // p2
 				}
-
 				//if ( slx_type(k) == 0 || slx_type(k) == 1 )
 				//{
 				//	slx_lb(jj) = log(slx_control_in(jj,6) / (1 - slx_control_in(jj,6)));
@@ -1691,7 +1690,6 @@ FUNCTION calc_natural_mortality
 	{
 		M(h) = M0;
 	}
-
 	// Add random walk to natural mortality rate
 	if ( active(m_dev) )
 	{
