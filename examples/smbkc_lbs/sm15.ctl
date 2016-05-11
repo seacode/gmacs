@@ -12,16 +12,16 @@
   0.18      0.01         1        -4       2   0.18    0.02          # M
   14.3      -7.0        30        -2       0    -7       30          # log(R0)
   10.0      -7.0        20        -1       1   -10.0     20.0        # log(Rini)
-6.81446260987   -7.0    20        -1       0    -7       30          # log(Rbar)
+6.81446260987   -7.0    20         1       0    -7       30          # log(Rbar)
   80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value
   0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
 #  0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R)
-  -0.9      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R)
+  -0.9      -10.0      0.75       -4       0  -10.0    0.75          # log(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation
-8.23810135281   5.00 15.00        -1       0    5.00  15.00          # logN0 vector of initial numbers at length
-7.79130244943   5.00 15.00        -1       0    5.00  15.00          # logN0 vector of initial numbers at length
-7.42555891189   5.00 15.00        -1       0    5.00  15.00          # logN0 vector of initial numbers at length
+8.23810135281   5.00 15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+7.79130244943   5.00 15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+7.42555891189   5.00 15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
 ## GROWTH PARAM CONTROLS                                                                ##
 ## Two lines for each parameter if split sex, one line if not                           ##
 # ival        lb        ub         phz  prior     p1      p2         # parameter         #
@@ -56,11 +56,11 @@
 ## gear  par   sel                                             phz    start  end        ##
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 # Gear-1
-   1     1     1   0    0.416198 0.001 2.0    0       0      1    -2     1978   2008
-   1     2     2   0    0.657528 0.001 2.0    0       0      1    -2     1978   2008
+   1     1     1   0    0.416198 0.001 2.0    0       0      1     2     1978   2008
+   1     2     2   0    0.657528 0.001 2.0    0       0      1     2     1978   2008
    1     3     3   0    1.0      0.001 1.0    0       0      1    -2     1978   2008
-   1     1     1   0    0.326889 0.001 2.0    0       0      1    -2     2009   2015
-   1     2     2   0    0.806548 0.001 2.0    0       0      1    -2     2009   2015
+   1     1     1   0    0.326889 0.001 2.0    0       0      1     2     2009   2015
+   1     2     2   0    0.806548 0.001 2.0    0       0      1     2     2009   2015
    1     3     3   0    1.0      0.001 1.0    0       0      1    -2     2009   2015
 # Gear-2
    2     7     1   0    40       10.0  200    0      10    200    -3     1978   2015
@@ -69,12 +69,12 @@
    3     9     1   0    40       10.0  200    0      10    200    -3     1978   2015
    3    10     2   0    60       10.0  200    0      10    200    -3     1978   2015
 # Gear-4
-   4     8     1   0    0.655565 0.001 2.0    0       0      1    -2     1978   2015
-   4     9     2   0    0.912882 0.001 2.0    0       0      1    -2     1978   2015
+   4     8     1   0    0.655565 0.001 2.0    0       0      1     2     1978   2015
+   4     9     2   0    0.912882 0.001 2.0    0       0      1     2     1978   2015
    4     10    3   0    1.0      0.001 1.0    0       0      1    -2     1978   2015
 # Gear-5
-   5     11    1   0    0.347014 0.001 2.0    0       0      1    -2     1978   2015
-   5     12    2   0    0.720493 0.001 2.0    0       0      1    -2     1978   2015
+   5     11    1   0    0.347014 0.001 2.0    0       0      1     2     1978   2015
+   5     12    2   0    0.720493 0.001 2.0    0       0      1     2     1978   2015
    5     13    3   0    1.0      0.001 1.0    0       0      1    -2     1978   2015
 ## Retained
 # Gear-1
@@ -103,8 +103,8 @@
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
-   1.0     0        2     -4    0       0        9.0   0           1       # NMFS trawl
-3.98688533089 0 5     -1    0       0        9.0   0           1       # ADF&G pot
+   1.0        0     2     -4    0       0        9.0   0           1       # NMFS trawl
+3.98688533089 0     5      1    0       0        9.0   0           1       # ADF&G pot
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -115,8 +115,8 @@
 ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival        lb        ub        phz   prior     p1      p2
-   0.0001      0.00001   10.0      -4    4         1.0     100   # NMFS
-   0.0001      0.00001   10.0      -4    4         1.0     100   # ADF&G
+   0.00001    0.000001   10.0      -4    4         1.0     100   # NMFS
+   0.00001    0.000001   10.0      -4    4         1.0     100   # ADF&G
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -143,8 +143,8 @@
 ##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  0   0   0  # Type of likelihood
-  1   1   1  # Type of likelihood
-#  2   2   2  # Type of likelihood
+#  1   1   1  # Type of likelihood
+  2   2   2  # Type of likelihood
 #  5   5   5   # Type of likelihood
   0   0   0   # Auto tail compression (pmin)
   1   1   1   # Initial value for effective sample size multiplier
@@ -167,7 +167,6 @@
 ## Phase of estimation
 4
 ## STDEV in m_dev for Random walk
-#  0.55
 10.0
 ## Number of nodes for cubic spline or number of step-changes for option 3
 2
@@ -178,15 +177,15 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  3       # Estimated rec_dev phase
-  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-  2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
-  1978    # First year for average recruitment for Bspr calculation
-  2015    # Last year for average recruitment for Bspr calculation
-  0.35    # Target SPR ratio for Bmsy proxy
-  1       # Gear index for SPR calculations (i.e. directed fishery)
-  1       # Lambda (proportion of mature male biomass for SPR reference points)
-  1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE)
-  0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt)
+3       # Estimated rec_dev phase
+0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
+1978    # First year for average recruitment for Bspr calculation
+2015    # Last year for average recruitment for Bspr calculation
+0.35    # Target SPR ratio for Bmsy proxy
+1       # Gear index for SPR calculations (i.e. directed fishery)
+1       # Lambda (proportion of mature male biomass for SPR reference points)
+1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE)
+0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt)
 ## EOF
 9999

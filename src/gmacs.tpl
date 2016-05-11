@@ -2058,9 +2058,6 @@ FUNCTION calc_initial_numbers_at_length
 				if ( nshell == 1 && nmature == 1 )
 				{
 					ig = pntr_hmo(h,1,1);
-					//d4_N(ig)(syr)(1)(1) = 3782350; // HARD CODED VALUES JIE HAS IN HIS SMBKC MODEL
-					//d4_N(ig)(syr)(1)(2) = 2419470;
-					//d4_N(ig)(syr)(1)(3) = 1678340;
 					d4_N(ig)(syr)(1) = mfexp(logN0);
 				}
 				//cout << "Free: " << d4_N(ig)(syr)(1) << endl;
