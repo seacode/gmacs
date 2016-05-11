@@ -1755,7 +1755,7 @@ FUNCTION calc_natural_mortality
 			{
 				for ( int i = syr+1; i <= nyr; i++ )
 				{
-					M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
+					M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
 				}
 			}
 		}
@@ -2109,13 +2109,15 @@ FUNCTION update_population_numbers_at_length
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
 
-	if ( bInitializeUnfished == 0 )
-	{
-		recruits(syr+1,nyr) = mfexp(logR0);
-	} else {
-		recruits(syr+1,nyr) = mfexp(logRbar);
-	}
+	//if ( bInitializeUnfished == 0 )
+	//{
+	//	recruits(syr+1,nyr) = mfexp(logR0);
+	//} else {
+	//	recruits(syr+1,nyr) = mfexp(logRbar);
+	//}
+	recruits(syr,nyr) = mfexp(logRbar);
 
+	//rec_dev(1978) = 1.53400195207;
 	//rec_dev(1979) = 1.53400195207;
 	//rec_dev(1980) = 1.32041549297;
 	//rec_dev(1981) = 0.143539369705;
@@ -3508,9 +3510,9 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	d4_N_init.initialize();
 	dvar_matrix equilibrium_numbers(1,n_grp,1,nclass);
 
-	dvector  x(1,nclass);
-	dvector  y(1,nclass);
-	dvector  z(1,nclass);
+	dvector x(1,nclass);
+	dvector y(1,nclass);
+	dvector z(1,nclass);
 	
 	if ( bInitializeUnfished == 0 )
 	{
