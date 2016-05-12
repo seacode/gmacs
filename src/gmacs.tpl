@@ -1151,11 +1151,11 @@ PARAMETER_SECTION
 			//		j++;
 			//	}
 			//} else {
-				for ( int i = 1; i <= slx_npar(k); i++ )
-				{
-					log_slx_pars(j) = log(slx_par(k,i));
-					j++;
-				}
+			for ( int i = 1; i <= slx_npar(k); i++ )
+			{
+				log_slx_pars(j) = log(slx_par(k,i));
+				j++;
+			}
 			//}
 			//COUT(exp(log_slx_pars(k)));
 			//COUT(log_slx_pars(k));
