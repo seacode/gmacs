@@ -1,4 +1,4 @@
-/// ==================================================================================== //
+// ==================================================================================== //
 //   Gmacs: A generalized size-structured stock assessment modeling framework.
 //
 //   Authors: gmacs development team at the
