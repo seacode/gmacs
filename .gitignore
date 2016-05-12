@@ -1,19 +1,8 @@
+*~
+
+# API files
 html/
 docs/api/html/
-
-src/build/*
-src/equilibrium.obj
-src/gmacs.cpp
-src/gmacs.exe
-src/gmacs.htp
-src/gmacs.obj
-src/moltIncrement.cpp
-src/multinomial.obj
-src/nloglike.obj
-src/robust_multi.obj
-src/spr.obj
-src/tailcompression.obj
-*~
 
 # Latex files
 *.aux
@@ -36,6 +25,14 @@ auto/
 .Rhistory
 *.Rmd.bak
 Rplots.pdf
+
+# ADMB build files
+src/lib/*.obj
+src/build/*
+src/gmacs.cpp
+src/gmacs.exe
+src/gmacs.htp
+src/gmacs.obj
 
 # ADMB standard output files
 *.b0*
