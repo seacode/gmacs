@@ -10,17 +10,23 @@
   12
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
   0.18      0.01         1        -4       2   0.18    0.02          # M
+<<<<<<< HEAD
+  14.3      -7.0        30        -2       0    -7       30          # log(R0)
+  10.0      -7.0        20        -1       1   -10.0     20.0        # log(Rini)
+  13.7222   -7.0        20         1       0    -7       30          # log(Rbar)
+=======
   14.3      -7.0        30        -2       0    -7       30          # logR0
   10.0      -7.0        20        -1       1   -10.0     20.0        # logRini
   10.0      -7.0        20         1       0    -7       30          # logRbar
+>>>>>>> develop
   80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value
   0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
- -0.40     -10.0      0.75        -4       0  -10.0    0.75          # ln(sigma_R)
+  0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation
- 14.0       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
- 14.0       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
- 14.0       5.00     15.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 14.5       5.00     18.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 14.0       5.00     18.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
+ 13.5       5.00     18.00         1       0    5.00  15.00          # logN0 vector of initial numbers at length
 ## GROWTH PARAM CONTROLS                                                                ##
 ## Two lines for each parameter if split sex, one line if not                           ##
 # ival        lb        ub         phz  prior     p1      p2         # parameter         #
@@ -55,19 +61,37 @@
 ## gear  par   sel                                             phz    start  end        ##
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 # Gear-1
+<<<<<<< HEAD
+   1     1     1   0    0.416198 0.001 2.0    0       0      1     2     1978   2008
+   1     2     2   0    0.657528 0.001 2.0    0       0      1     2     1978   2008
+   1     3     3   0    1.0      0.001 1.0    0       0      1    -2     1978   2008
+   1     1     1   0    0.326889 0.001 2.0    0       0      1     2     2009   2015
+   1     2     2   0    0.806548 0.001 2.0    0       0      1     2     2009   2015
+   1     3     3   0    1.0      0.001 1.0    0       0      1    -2     2009   2015
+=======
    1     1     1   0    0.4      0.001 2.0    0       0      1     2     1978   2008
    1     2     2   0    1.0      0.001 2.0    0       0      1     2     1978   2008
    1     3     3   0    1.0      0.001 2.0    0       0      1    -2     1978   2008
    1     1     1   0    0.3      0.001 2.0    0       0      1     2     2009   2015
    1     2     2   0    1.0      0.001 2.0    0       0      1     2     2009   2015
    1     3     3   0    1.0      0.001 2.0    0       0      1    -2     2009   2015
+>>>>>>> develop
 # Gear-2
-   2     7     1   0    40       10.0  200    0      10    200    -2     1978   2015
-   2     8     2   0    60       10.0  200    0      10    200    -2     1978   2015
+   2     7     1   0    40       10.0  200    0      10    200    -3     1978   2015
+   2     8     2   0    60       10.0  200    0      10    200    -3     1978   2015
 # Gear-3
    3     9     1   0    40       10.0  200    0      10    200    -2     1978   2015
    3    10     2   0    60       10.0  200    0      10    200    -2     1978   2015
 # Gear-4
+<<<<<<< HEAD
+   4     8     1   0    0.655565 0.001 2.0    0       0      1     2     1978   2015
+   4     9     2   0    0.912882 0.001 2.0    0       0      1     2     1978   2015
+   4     10    3   0    1.0      0.001 1.0    0       0      1    -2     1978   2015
+# Gear-5
+   5     11    1   0    0.347014 0.001 2.0    0       0      1     2     1978   2015
+   5     12    2   0    0.720493 0.001 2.0    0       0      1     2     1978   2015
+   5     13    3   0    1.0      0.001 1.0    0       0      1    -2     1978   2015
+=======
    4     8     1   0    0.6      0.001 2.0    0       0      1     2     1978   2015
    4     9     2   0    1.0      0.001 2.0    0       0      1     2     1978   2015
    4     10    3   0    1.0      0.001 2.0    0       0      1    -2     1978   2015
@@ -75,6 +99,7 @@
    5     11    1   0    0.4      0.001 2.0    0       0      1     2     1978   2015
    5     12    2   0    0.6      0.001 2.0    0       0      1     2     1978   2015
    5     13    3   0    1.0      0.001 2.0    0       0      1    -2     1978   2015
+>>>>>>> develop
 ## Retained
 # Gear-1
   -1     14    1   0   120   100   200    0      1    900   -1     1978   2015
@@ -103,7 +128,11 @@
 ## SURVEYS/INDICES ONLY
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
    1.0     0        2     -1    0       0        9.0   0           1       # NMFS trawl
+<<<<<<< HEAD
+3.98688533089e-06 0 5      1    0       0        9.0   0           1       # ADF&G pot
+=======
    3.98689 0        5      1    0       0        9.0   0           1       # ADF&G pot
+>>>>>>> develop
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -141,7 +170,6 @@
 ## AUTOTAIL COMPRESSION
 ##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-#  0   0   0  # Type of likelihood
 #  1   1   1  # Type of likelihood
   2   2   2  # Type of likelihood
 #  5   5   5   # Type of likelihood
@@ -161,16 +189,20 @@
 ##      3 = Blocked changes (deviates constrained by variance at specific knots)
 ##      4 = Time blocks
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  3
+## Type
+3
 ## Phase of estimation
+<<<<<<< HEAD
+4
+=======
   4
+>>>>>>> develop
 ## STDEV in m_dev for Random walk
-#  0.55
-  10.0
+10.0
 ## Number of nodes for cubic spline or number of step-changes for option 3
-  2
+2
 ## Year position of the knots (vector must be equal to the number of nodes)
-  1998 1999
+1998 1999
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

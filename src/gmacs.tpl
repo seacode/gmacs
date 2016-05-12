@@ -137,7 +137,7 @@ DATA_SECTION
 	END_CALCS
 	int n_grp;     ///> number of sex/newshell/oldshell groups
 	!! n_grp = nsex * nshell * nmature;
-	int nlikes     // 1      2     3           4         5
+	int nlikes;    // 1      2     3           4         5
 	!! nlikes = 5; // catch, cpue, size comps, recruits, molt increments
 
 	// Set up index pointers
@@ -169,10 +169,18 @@ DATA_SECTION
 	// | ALLOMETRY |
 	// |-----------|
 	init_int lw_type; ///> length-weight type/method (i.e. provide parameters or a vector)
+	int lw_dim;
+	LOC_CALCS
+		lw_dim = nsex;
+		if ( lw_type == 3 )
+		{
+			lw_dim = nsex * (nyr - syr + 1);
+		}
+	END_CALCS
 	init_vector lw_alfa(1,nsex);
 	init_vector lw_beta(1,nsex);
-	init_matrix mean_wt_in(1,nsex,1,nclass);
-	matrix mean_wt(1,nsex,1,nclass);
+	init_matrix mean_wt_in(1,lw_dim,1,nclass);
+	3darray mean_wt(1,nsex,syr,nyr,1,nclass);
 	LOC_CALCS
 		mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
 		switch ( lw_type )
@@ -180,15 +188,33 @@ DATA_SECTION
 			case 1:
 				for ( int h = 1; h <= nsex; h++ )
 				{
-					mean_wt(h) = lw_alfa(h) * pow(mid_points,lw_beta(h));
+					for ( int i = syr; i <= nyr; i++ )
+					{
+						mean_wt(h)(i) = lw_alfa(h) * pow(mid_points,lw_beta(h));
+					}
 				}
 			break;
 			case 2:
 				for ( int h = 1; h <= nsex; h++ )
 				{
-					for ( int l = 1; l <= nclass; l++ )
+					for ( int i = syr; i <= nyr; i++ )
 					{
-						mean_wt(h,l) = mean_wt_in(h,l);
+						for ( int l = 1; l <= nclass; l++ )
+						{
+							mean_wt(h,l) = mean_wt_in(h,l);
+						}
+					}
+				}
+			break;
+			case 3:
+				for ( int h = 1; h <= nsex; h++ )
+				{
+					for ( int i = syr; i <= nyr; i++ )
+					{
+						for ( int l = 1; l <= nclass; l++ )
+						{
+							mean_wt(h,i,l) = mean_wt_in(i-syr+1,l);
+						}
 					}
 				}
 			break;
@@ -333,7 +359,7 @@ DATA_SECTION
 			cpue_sd(k)  = sqrt(log(1.0 + square(cpue_cv(k))));
 		}
 		WRITEDAT(nSurveys); WRITEDAT(nSurveyRows); WRITEDAT(dSurveyData);
-		ECHO(obs_cpue); ECHO(cpue_cv);ECHO(cpue_sd);
+		ECHO(obs_cpue); ECHO(cpue_cv); ECHO(cpue_sd);
 	END_CALCS
 
 	// |-----------------------|
@@ -667,7 +693,6 @@ DATA_SECTION
 					slx_priors(k,j,2) = slx_control_in(jj,9);  // p1
 					slx_priors(k,j,3) = slx_control_in(jj,10); // p2
 				}
-
 				//if ( slx_type(k) == 0 || slx_type(k) == 1 )
 				//{
 				//	slx_lb(jj) = log(slx_control_in(jj,6) / (1 - slx_control_in(jj,6)));
@@ -1126,11 +1151,11 @@ PARAMETER_SECTION
 			//		j++;
 			//	}
 			//} else {
-				for ( int i = 1; i <= slx_npar(k); i++ )
-				{
-					log_slx_pars(j) = log(slx_par(k,i));
-					j++;
-				}
+			for ( int i = 1; i <= slx_npar(k); i++ )
+			{
+				log_slx_pars(j) = log(slx_par(k,i));
+				j++;
+			}
 			//}
 			//COUT(exp(log_slx_pars(k)));
 			//COUT(log_slx_pars(k));
@@ -1144,9 +1169,10 @@ PARAMETER_SECTION
 	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
 
 	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rdv_phz);  ///> initial size devs
-	// init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,-rdv_phz);  ///> initial size devs
+	//init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 	init_bounded_dev_vector rec_dev(syr,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+    // NOTE THE MINUS SIGNS FOR PHZ ABOVE, NEEDS TO BE FIXED LATER
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -1664,7 +1690,6 @@ FUNCTION calc_natural_mortality
 	{
 		M(h) = M0;
 	}
-
 	// Add random walk to natural mortality rate
 	if ( active(m_dev) )
 	{
@@ -1728,11 +1753,12 @@ FUNCTION calc_natural_mortality
 			{
 				for ( int i = syr+1; i <= nyr; i++ )
 				{
-					M(h)(i)  = M(h)(i-1) * mfexp(delta(i));                                                   
+					M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
 				}
 			}
 		}
 	}
+	//M(1)(1998) = 0.937813362435;
 
 
 	/**
@@ -1747,13 +1773,62 @@ FUNCTION calc_natural_mortality
 FUNCTION calc_total_mortality
 	Z.initialize();
 	S.initialize();
+	dvar_matrix m_prop_2(syr,nyr,1,nseason);
+	m_prop_2.initialize();
+	m_prop_2(1978)(2) = 0.07;
+	m_prop_2(1979)(2) = 0.06;
+	m_prop_2(1980)(2) = 0.07;
+	m_prop_2(1981)(2) = 0.05;
+	m_prop_2(1982)(2) = 0.07;
+	m_prop_2(1983)(2) = 0.12;
+	m_prop_2(1984)(2) = 0.10;
+	m_prop_2(1985)(2) = 0.14;
+	m_prop_2(1986)(2) = 0.14;
+	m_prop_2(1987)(2) = 0.14;
+	m_prop_2(1988)(2) = 0.14;
+	m_prop_2(1989)(2) = 0.14;
+	m_prop_2(1990)(2) = 0.14;
+	m_prop_2(1991)(2) = 0.18;
+	m_prop_2(1992)(2) = 0.14;
+	m_prop_2(1993)(2) = 0.18;
+	m_prop_2(1994)(2) = 0.18;
+	m_prop_2(1995)(2) = 0.18;
+	m_prop_2(1996)(2) = 0.18;
+	m_prop_2(1997)(2) = 0.18;
+	m_prop_2(1998)(2) = 0.18; //21
+	m_prop_2(1999)(2) = 0.18;
+	m_prop_2(2000)(2) = 0.18;
+	m_prop_2(2001)(2) = 0.18;
+	m_prop_2(2002)(2) = 0.18;
+	m_prop_2(2003)(2) = 0.18;
+	m_prop_2(2004)(2) = 0.18;
+	m_prop_2(2005)(2) = 0.18;
+	m_prop_2(2006)(2) = 0.18;
+	m_prop_2(2007)(2) = 0.18;
+	m_prop_2(2008)(2) = 0.18; //31
+	m_prop_2(2009)(2) = 0.44; //32
+	m_prop_2(2010)(2) = 0.44;
+	m_prop_2(2011)(2) = 0.44;
+	m_prop_2(2012)(2) = 0.44;
+	m_prop_2(2013)(2) = 0.44;
+	m_prop_2(2014)(2) = 0.44;
+	m_prop_2(2015)(2) = 0.44;
+	for ( int i = syr; i <= nyr; i++ )
+	{
+		m_prop_2(i)(4) = 0.63 - m_prop_2(i)(2) - m_prop_2(i)(3);
+		m_prop_2(i)(5) = 1 - sum(m_prop_2(i));
+	}
+
+	//cout << m_prop_2 << endl;
+	//exit(1);
 	for ( int h = 1; h <= nsex; h++ )
 	{
 		for ( int i = syr; i <= nyr; i++ )
 		{
 			for ( int j = 1; j <= nseason; j++ )
 			{
-				Z(h)(i)(j) = (m_prop(j) * M(h)(i)) + F(h)(i)(j);
+				Z(h)(i)(j) = (m_prop_2(i)(j) * M(h)(i)) + F(h)(i)(j);
+				//Z(h)(i)(j) = (m_prop(j) * M(h)(i)) + F(h)(i)(j);
 				for ( int l = 1; l <= nclass; l++ )
 				{
 					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
@@ -1981,9 +2056,6 @@ FUNCTION calc_initial_numbers_at_length
 				if ( nshell == 1 && nmature == 1 )
 				{
 					ig = pntr_hmo(h,1,1);
-					//d4_N(ig)(syr)(1)(1) = 3782350; // HARD CODED VALUES JIE HAS IN HIS SMBKC MODEL
-					//d4_N(ig)(syr)(1)(2) = 2419470;
-					//d4_N(ig)(syr)(1)(3) = 1678340;
 					d4_N(ig)(syr)(1) = mfexp(logN0);
 				}
 				//cout << "Free: " << d4_N(ig)(syr)(1) << endl;
@@ -2032,19 +2104,59 @@ FUNCTION update_population_numbers_at_length
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
 
-	if ( bInitializeUnfished == 0 )
-	{
-		recruits(syr+1,nyr) = mfexp(logR0);
-	} else {
-		recruits(syr+1,nyr) = mfexp(logRbar);
-	}
+	//if ( bInitializeUnfished == 0 )
+	//{
+	//	recruits(syr+1,nyr) = mfexp(logR0);
+	//} else {
+	//	recruits(syr+1,nyr) = mfexp(logRbar);
+	//}
+	recruits(syr,nyr) = mfexp(logRbar);
+
+	//rec_dev(1978) = 1.53400195207;
+	//rec_dev(1979) = 1.53400195207;
+	//rec_dev(1980) = 1.32041549297;
+	//rec_dev(1981) = 0.143539369705;
+	//rec_dev(1982) = 0.556100515749;
+	//rec_dev(1983) = -0.249293093121;
+	//rec_dev(1984) = -0.256055533128;
+	//rec_dev(1985) = 0.223703543562;
+	//rec_dev(1986) = 0.616508592140;
+	//rec_dev(1987) = 0.533469761148;
+	//rec_dev(1988) = 0.390562916683;
+	//rec_dev(1989) = 0.958984813664;
+	//rec_dev(1990) = 0.341445695216;
+	//rec_dev(1991) = 0.874756033361;
+	//rec_dev(1992) = 0.933028686244;
+	//rec_dev(1993) = 1.01981058901;
+	//rec_dev(1994) = 0.324819734112;
+	//rec_dev(1995) = 0.541030404404;
+	//rec_dev(1996) = 0.708024189230;
+	//rec_dev(1997) = 0.0482218408360;
+	//rec_dev(1998) = -0.349222279627;
+	//rec_dev(1999) = -0.843478266498;
+	//rec_dev(2000) = -0.814779536207;
+	//rec_dev(2001) = -0.825565449932;
+	//rec_dev(2002) = -1.90572137331;
+	//rec_dev(2003) = -0.779410026183;
+	//rec_dev(2004) = -1.43188385930;
+	//rec_dev(2005) = -0.405322301340;
+	//rec_dev(2006) = -0.0566542114838;
+	//rec_dev(2007) = -0.496238880972;
+	//rec_dev(2008) = 0.219672685937;
+	//rec_dev(2009) = 0.0107049129523;
+	//rec_dev(2010) = -0.0456293420190;
+	//rec_dev(2011) = -0.231653480187;
+	//rec_dev(2012) = -0.738095613443;
+	//rec_dev(2013) = -0.440234740019;
+	//rec_dev(2014) = -0.588969173256;
+	//rec_dev(2015) = -0.840594568975;
 
 	for ( i = syr; i <= nyr; i++ )
 	{
 		// if ( i > syr )
-		{
+		//{
 			recruits(i) *= mfexp(rec_dev(i));
-		}
+		//}
 		rt = (1.0/nsex * recruits(i)) * rec_sdd;
 
 		for ( int j = 1; j <= nseason; j++ )
@@ -2221,13 +2333,13 @@ FUNCTION calc_stock_recruitment_relationship
 		if ( nshell == 1 && nmature == 1 )
 		{
 			calc_equilibrium(x,_A,_S,rec_sdd);
-			phiB += lam * x * elem_prod(mean_wt(h), maturity(h));
+			phiB += lam * x * elem_prod(mean_wt(h)(syr), maturity(h));
 		}
 		// Continuous molt (newshell/oldshell)
 		if ( nshell == 2 && nmature == 1 )
 		{
 			calc_equilibrium(x,y,_A,_S,P(h),rec_sdd);
-			phiB += lam * x * elem_prod(mean_wt(h), maturity(h)) +  lam * y * elem_prod(mean_wt(h), maturity(h));
+			phiB += lam * x * elem_prod(mean_wt(h)(syr), maturity(h)) +  lam * y * elem_prod(mean_wt(h)(syr), maturity(h));
 		}
 		// Insert terminal molt case here
 
@@ -2319,22 +2431,8 @@ FUNCTION calc_predicted_catch
 					}
 				}
 				tmp_ft = ft(k)(h)(i)(j);
-				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
+				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
 				pre_catch(kk,jj) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
-				if (kk == 4 && jj == 17)
-				{
-					//cout << "obs_catch(kk)= " << obs_catch(kk,jj) << endl;
-					//cout << "pre_catch(kk)= " << pre_catch(kk,jj) << endl;
-					//cout << "obs_catch(kk,jj)= " << obs_catch(kk,jj) << endl;
-					//cout << "pre_catch(kk,jj)= " << pre_catch(kk,jj) << endl;
-					//cout << "nal= " << nal << endl;
-					//cout << "Z(h)(i)(j)= " << Z(h)(i)(j) << endl;
-					//cout << "ft(k)(h)= " << ft(k)(h) << endl;
-					//cout << "exp(log_fbar)= " << exp(log_fbar) << ", exp(log_fbar(k))= " << exp(log_fbar(k)) << endl;
-					//cout << "exp(log_fdev(k))= " << exp(log_fdev(k)) << endl;
-					//cout << "i= " << i << ", j= " << j << endl;
-					//if (pre_catch(kk,jj) > 1000.0) exit(1);
-				}
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -2364,7 +2462,7 @@ FUNCTION calc_predicted_catch
 						break;
 					}
 					tmp_ft = ft(k)(h)(i)(j);
-					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)) : nal;
+					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)(i)) : nal;
 					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
 				}
 			}
@@ -2420,7 +2518,7 @@ FUNCTION calc_predicted_catch_out
 					}
 				}
 				tmp_ft = ft(k)(h)(i)(j);
-				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)) : nal;
+				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
 				pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
 			} else {
 				// sexes combibed
@@ -2451,7 +2549,7 @@ FUNCTION calc_predicted_catch_out
 						break;
 					}
 					tmp_ft = ft(k)(h)(i)(j);
-					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)) : nal;
+					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)(i)) : nal;
 					pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
 				}
 			}
@@ -2495,7 +2593,7 @@ FUNCTION calc_relative_abundance
 					for ( int o = 1; o <= nshell; o++ )
 					{
 						ig = pntr_hmo(h,m,o);
-						nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)) : d4_N(ig)(i)(j);
+						nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)(i)) : d4_N(ig)(i)(j);
 					}
 				}
 				V(jj) = nal * sel;
@@ -2508,7 +2606,7 @@ FUNCTION calc_relative_abundance
 						for ( int o = 1; o <= nshell; o++ )
 						{
 							ig = pntr_hmo(h,m,o);
-							nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)) : d4_N(ig)(i)(j);
+							nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)(i)) : d4_N(ig)(i)(j);
 						}
 					}
 					V(jj) += nal * sel;
@@ -2909,14 +3007,14 @@ FUNCTION calc_objective_function
 				nloglike(2,k) += log(sdtmp) + 0.5*square(res_cpue(k,i)/sdtmp);
 			}
 		} else {
-			nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k)); 
+			nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
 		}
 	}
 
 	// 3) Likelihood for size composition data.
 	for ( int ii = 1; ii <= nSizeComps; ii++ )
 	{
-		dmatrix     O = d3_obs_size_comps(ii);
+		dmatrix O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 		dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii));
 		d3_res_size_comps.initialize();
@@ -2961,15 +3059,15 @@ FUNCTION calc_objective_function
 	if ( active(rec_dev) )
 	{
 		dvariable sigR = mfexp(logSigmaR);
+		nloglike(4,1) = dnorm(res_recruit, sigR);
 		switch ( nSRR_flag )
 		{
 			case 0:
-				//nloglike(4,1) = dnorm(rec_dev, sigR);
-				nloglike(4,1) = dnorm(res_recruit, sigR);
-				nloglike(4,1) += dnorm(rec_ini, sigR);
+				//nloglike(4,1) = dnorm(res_recruit, sigR);
+				//nloglike(4,1) += dnorm(rec_ini, sigR);
 			break;
 			case 1:
-				nloglike(4,1) = dnorm(res_recruit, sigR);
+				//nloglike(4,1) = dnorm(res_recruit, sigR);
 			break;
 		}
 	}
@@ -3024,7 +3122,7 @@ FUNCTION calc_objective_function
 	{
 		if ( active(rec_dev) && nSRR_flag !=0 )
 		{
-			nlogPenalty(4) = dnorm(rec_dev, 1.0);
+			//nlogPenalty(4) = dnorm(rec_dev, 1.0);
 		}
 		if ( active(rec_ini) && nSRR_flag !=0 )
 		{
@@ -3407,9 +3505,9 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	d4_N_init.initialize();
 	dvar_matrix equilibrium_numbers(1,n_grp,1,nclass);
 
-	dvector  x(1,nclass);
-	dvector  y(1,nclass);
-	dvector  z(1,nclass);
+	dvector x(1,nclass);
+	dvector y(1,nclass);
+	dvector z(1,nclass);
 	
 	if ( bInitializeUnfished == 0 )
 	{
@@ -3529,7 +3627,7 @@ FUNCTION dvar_vector calc_ssb()
 			m = imature(ig);
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-			ssb(i) += lam * d4_N(ig)(i)(season_ssb) * elem_prod(mean_wt(h), maturity(h));
+			ssb(i) += lam * d4_N(ig)(i)(season_ssb) * elem_prod(mean_wt(h)(i), maturity(h));
 		}
 	}
 	return(ssb);
@@ -3579,7 +3677,7 @@ FUNCTION void calc_spr_reference_points(const int iyr, const int iseason, const 
 		}
 		//todo fix me.
 		_N(h) = value(d4_N(1)(iyr)(season_ssb));
-		_wa(h) = elem_prod(mean_wt(h), maturity(h));
+		_wa(h) = elem_prod(mean_wt(h)(syr), maturity(h));
 	}
 	
 	dmatrix _fhk(1,nsex,1,nfleet);
@@ -3647,6 +3745,7 @@ FUNCTION double Eff_N(const dvector& pobs, const dvar_vector& phat)
 FUNCTION double mn_length(const dvector& pobs)
 	double mobs = (pobs*mid_points);
 	return mobs;
+
 
 	/**
 	 * @brief calculate effective sample size 
