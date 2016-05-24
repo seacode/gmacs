@@ -52,22 +52,11 @@ All of the time series used in this assessment have been updated to include the 
 
 ## Changes in Assessment Methodology
 
-This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within any number of discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. For example, in this assessment four seasons are defined and the proportion of natural mortality that is applied each season is 0, 0.44, 0.185, and 0.375 in the final season. In Gmacs the proportion of natural mortality that is applied each season is fixed (i.e. it can not change from year to year). The previous model allowed the proportion of natural mortality to change seasonally each year (i.e. during the second season natural mortality ranged from 0.05 to 0.18 before the year 2000 and was constant at 0.44 after 2000).
-
-In Gmacs the size transition matrix is a combination of the growth matrix and the molting probability. The growth matrix is derived from empirical molt increment data and the molting probability for each size class in the model is derived from an inverse logistic curve. Put simply, Gmacs does not allow the user to specify the size transition matrix directly, thus getting our size transition matrix to match that used in the previous model exactly was not possible. However, it is close:
-
-\begin{equation}
-  \left[ \begin{array}{ccc}
-    0.2056 & 0.6799 & 0.1144 \\
-    0 & 0.3963 & 0.6037 \\
-    0 & 0 & 1 \end{array} \right]
-\end{equation}
-
-Also see Figure \ref{fig:size_trans}. Further details of the Gmacs model and configuration used are provided in Appendix A (SMBKC Model Description).
+This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within any number of discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. 
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenario. The Gmacs base model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
+Changes in assessment results depend on model scenario. The Gmacs match model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
 
 
 # B. Responses to SSC and CPT Comments
@@ -181,22 +170,22 @@ The 2016 SMBKC assessment model makes use of the modeling framework Gmacs. The a
 
 Four different Gmacs model scenarios were considered. In this document results from these models and the 2015 model are compared.
 
-1. **2015 Model**: model output from 2015 provided by Jie.
+1. **2015 Model**: the 2015 provided by Jie (note that an error was found in the code, this error was fixed before making comparisons).
 
-2. **Gmacs base**: tries to match as closely as possible the 2015 Model.
+2. **Gmacs match**: tries to match as closely as possible the 2015 Model.
 
-3. **Gmacs selex**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab.
+3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
-4. **Gmacs CV**: additional CV is estimated for the ADF&G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab.
+4. **Gmacs CV**: additional CV is estimated for both the NMFS trawl survey and the ADF&G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
-5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab.
+5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years as well as estimating additional CV is estimated for both the NMFS trawl survey and the ADF&G pot survey and estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
 | Scenario | Selectivity estimated | Additional CV | Estimate $M_{1998}$ |
 |-|-|-|-|
-| Gmacs base | No | No | Yes |
-| Gmacs selex | Yes | No | Yes |
-| Gmacs CV | Yes | Yes | Yes |
-| Gmacs M | Yes | No | No |
+| Gmacs match | No  | No  | Yes |
+| Gmacs base  | Yes | No  | Yes |
+| Gmacs CV    | Yes | Yes | Yes |
+| Gmacs M     | Yes | Yes | No  |
 
 
 ## Results
@@ -325,131 +314,187 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analys
 
 \newpage\clearpage
 
-
-```
-## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 10, 9
-```
-
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs base} model.} 
+\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs match} model.} 
 \label{tab:est_pars_base}
-\begin{tabular}{rrrrrrr}
+\begin{tabular}{lrr}
   \hline
-Year & Stage-1 (90-104 mm) & Stage-2 (105-119 mm) & Stage-3 (120+ mm) & Total CPUE & CV & Number of crabs \\ 
+Parameter & Estimate & SD \\ 
   \hline
-1995.0000000 & 1.9190000 & 3.1980000 & 6.9220000 & 12.0420000 & 0.1300000 & 4624.0000000 \\ 
-  1998.0000000 & 0.9640000 & 2.7630000 & 8.8040000 & 12.5310000 & 0.0600000 & 4812.0000000 \\ 
-  2001.0000000 & 1.2660000 & 1.7370000 & 5.4870000 & 8.4770000 & 0.0800000 & 3255.0000000 \\ 
-  2004.0000000 & 0.1120000 & 0.4140000 & 1.1410000 & 1.6670000 & 0.1500000 & 640.0000000 \\ 
-  2007.0000000 & 1.0860000 & 2.7210000 & 4.8360000 & 8.6430000 & 0.0900000 & 3319.0000000 \\ 
-  2010.0000000 & 1.3260000 & 3.2760000 & 5.6070000 & 10.2090000 & 0.1300000 & 3920.0000000 \\ 
-  2013.0000000 & 0.8780000 & 1.3980000 & 3.3670000 & 5.6430000 & 0.1900000 & 2167.0000000 \\ 
-  2015.0000000 & 0.1980000 & 0.6820000 & 1.9240000 & 2.8050000 & 0.1800000 & 1077.0000000 \\ 
+Natural mortality ($M$) deviation in 1998/99 & 1.6550000 & 0.1265000 \\ 
+  $\log (\bar{R})$ & 13.3940000 & 0.0589080 \\ 
+  $\log (N_1)$ & 14.8560000 & 0.1698400 \\ 
+  $\log (N_2)$ & 14.4260000 & 0.1947500 \\ 
+  $\log (N_3)$ & 14.2250000 & 0.2028600 \\ 
+  ADF\&G pot survey catchability ($q$) & 0.0044854 & 0.0003114 \\ 
+  $\bar{F}_\text{pot}$ & -1.3700000 & 0.0514600 \\ 
+  $\bar{F}_\text{trawl bycatch}$ & -11.6660000 & 0.2112600 \\ 
+  $\bar{F}_\text{fixed bycatch}$ & -9.5487000 & 0.2084600 \\ 
    \hline
 \end{tabular}
 \end{table}
-
-
-```
-## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 18, 17
-```
 
 \begin{table}[ht]
 \centering
-\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs selex} model that estimates stage-1 and stage-2 selectivity.} 
+\caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs base} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_selex}
-\begin{tabular}{rrrrrrr}
+\begin{tabular}{lrr}
   \hline
-Year & Stage-1 (90-104 mm) & Stage-2 (105-119 mm) & Stage-3 (120+ mm) & Total CPUE & CV & Number of crabs \\ 
+Parameter & Estimate & SD \\ 
   \hline
-1995.0000000 & 1.9190000 & 3.1980000 & 6.9220000 & 12.0420000 & 0.1300000 & 4624.0000000 \\ 
-  1998.0000000 & 0.9640000 & 2.7630000 & 8.8040000 & 12.5310000 & 0.0600000 & 4812.0000000 \\ 
-  2001.0000000 & 1.2660000 & 1.7370000 & 5.4870000 & 8.4770000 & 0.0800000 & 3255.0000000 \\ 
-  2004.0000000 & 0.1120000 & 0.4140000 & 1.1410000 & 1.6670000 & 0.1500000 & 640.0000000 \\ 
-  2007.0000000 & 1.0860000 & 2.7210000 & 4.8360000 & 8.6430000 & 0.0900000 & 3319.0000000 \\ 
-  2010.0000000 & 1.3260000 & 3.2760000 & 5.6070000 & 10.2090000 & 0.1300000 & 3920.0000000 \\ 
-  2013.0000000 & 0.8780000 & 1.3980000 & 3.3670000 & 5.6430000 & 0.1900000 & 2167.0000000 \\ 
-  2015.0000000 & 0.1980000 & 0.6820000 & 1.9240000 & 2.8050000 & 0.1800000 & 1077.0000000 \\ 
+Natural mortality ($M$) deviation in 1998/99 & 1.6747000 & 0.1294300 \\ 
+  $\log (\bar{R})$ & 13.4150000 & 0.0602520 \\ 
+  $\log (N_1)$ & 14.8210000 & 0.1708900 \\ 
+  $\log (N_2)$ & 14.4200000 & 0.1998300 \\ 
+  $\log (N_3)$ & 14.1240000 & 0.2116100 \\ 
+  ADF\&G pot survey catchability ($q$) & 0.0042635 & 0.0003299 \\ 
+  $\log(\bar{F}_\text{pot})$ & -1.3669000 & 0.0546850 \\ 
+  $\log(\bar{F}_\text{trawl bycatch})$ & -11.6950000 & 0.2116600 \\ 
+  $\log(\bar{F}_\text{fixed bycatch})$ & -9.5787000 & 0.2087800 \\ 
+  Stage-1 directed pot selectivity 1978-2008 & -0.7543000 & 0.1744000 \\ 
+  Stage-2 directed pot selectivity 1978-2008 & -0.4120300 & 0.1267100 \\ 
+  Stage-1 directed pot selectivity 2009-2015 & -0.7642800 & 0.1824600 \\ 
+  Stage-2 directed pot selectivity 2009-2015 & -0.0000000 & 0.0000280 \\ 
+  Stage-1 NMFS trawl selectivity & -0.2707700 & 0.0662120 \\ 
+  Stage-2 NMFS trawl selectivity & -0.0000000 & 0.0000088 \\ 
+  Stage-1 ADF\&G pot selectivity & -0.8577800 & 0.1468500 \\ 
+  Stage-2 ADF\&G pot selectivity & -0.1042300 & 0.0842600 \\ 
    \hline
 \end{tabular}
 \end{table}
-
-
-```
-## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 19, 17
-```
 
 \begin{table}[ht]
 \centering
 \caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs CV} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_cv}
-\begin{tabular}{rrrrrrr}
+\begin{tabular}{lrr}
   \hline
-Year & Stage-1 (90-104 mm) & Stage-2 (105-119 mm) & Stage-3 (120+ mm) & Total CPUE & CV & Number of crabs \\ 
+Parameter & Estimate & SD \\ 
   \hline
-1995.0000000 & 1.9190000 & 3.1980000 & 6.9220000 & 12.0420000 & 0.1300000 & 4624.0000000 \\ 
-  1998.0000000 & 0.9640000 & 2.7630000 & 8.8040000 & 12.5310000 & 0.0600000 & 4812.0000000 \\ 
-  2001.0000000 & 1.2660000 & 1.7370000 & 5.4870000 & 8.4770000 & 0.0800000 & 3255.0000000 \\ 
-  2004.0000000 & 0.1120000 & 0.4140000 & 1.1410000 & 1.6670000 & 0.1500000 & 640.0000000 \\ 
-  2007.0000000 & 1.0860000 & 2.7210000 & 4.8360000 & 8.6430000 & 0.0900000 & 3319.0000000 \\ 
-  2010.0000000 & 1.3260000 & 3.2760000 & 5.6070000 & 10.2090000 & 0.1300000 & 3920.0000000 \\ 
-  2013.0000000 & 0.8780000 & 1.3980000 & 3.3670000 & 5.6430000 & 0.1900000 & 2167.0000000 \\ 
-  2015.0000000 & 0.1980000 & 0.6820000 & 1.9240000 & 2.8050000 & 0.1800000 & 1077.0000000 \\ 
+Natural mortality ($M$) deviation in 1998/99 & 1.9910000 & 0.1553600 \\ 
+  $\log (R_0)$ & 13.5630000 & 0.0653290 \\ 
+  $\log (\bar{R})$ & 14.8200000 & 0.1701800 \\ 
+  $\log (N_1)$ & 14.3890000 & 0.2002500 \\ 
+  $\log (N_2)$ & 14.1020000 & 0.2105800 \\ 
+  $\log (N_3)$ & 0.0035442 & 0.0004397 \\ 
+  ADF\&G pot survey catchability ($q$) & -13.8090000 & 26.0030000 \\ 
+  logAddCV & -1.7541000 & 0.1815000 \\ 
+  $\log(\bar{F}_\text{pot})$ & -1.4204000 & 0.0556580 \\ 
+  $\log(\bar{F}_\text{trawl bycatch})$ & -11.7510000 & 0.2125500 \\ 
+  $\log(\bar{F}_\text{fixed bycatch})$ & -9.6389000 & 0.2093800 \\ 
+  Stage-1 directed pot selectivity 1978-2008 & -0.7704000 & 0.1748300 \\ 
+  Stage-2 directed pot selectivity 1978-2008 & -0.4196900 & 0.1272100 \\ 
+  Stage-1 directed pot selectivity 2009-2015 & -1.0194000 & 0.1941800 \\ 
+  Stage-2 directed pot selectivity 2009-2015 & -0.0079593 & 0.0979160 \\ 
+  Stage-1 NMFS trawl selectivity & -0.3073500 & 0.0643110 \\ 
+  Stage-2 NMFS trawl selectivity & -0.0000000 & 0.0000118 \\ 
+  Stage-1 ADF\&G pot selectivity & -1.0905000 & 0.1434700 \\ 
+  Stage-2 ADF\&G pot selectivity & -0.2016800 & 0.0829760 \\ 
    \hline
 \end{tabular}
 \end{table}
-
-
-```
-## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 17, 16
-```
 
 \begin{table}[ht]
 \centering
 \caption{Model parameter estimates and standard deviations (SD) for the {\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.} 
 \label{tab:est_pars_M}
-\begin{tabular}{rrrrrrr}
+\begin{tabular}{lrr}
   \hline
-Year & Stage-1 (90-104 mm) & Stage-2 (105-119 mm) & Stage-3 (120+ mm) & Total CPUE & CV & Number of crabs \\ 
+Parameter & Estimate & SD \\ 
   \hline
-1995.0000000 & 1.9190000 & 3.1980000 & 6.9220000 & 12.0420000 & 0.1300000 & 4624.0000000 \\ 
-  1998.0000000 & 0.9640000 & 2.7630000 & 8.8040000 & 12.5310000 & 0.0600000 & 4812.0000000 \\ 
-  2001.0000000 & 1.2660000 & 1.7370000 & 5.4870000 & 8.4770000 & 0.0800000 & 3255.0000000 \\ 
-  2004.0000000 & 0.1120000 & 0.4140000 & 1.1410000 & 1.6670000 & 0.1500000 & 640.0000000 \\ 
-  2007.0000000 & 1.0860000 & 2.7210000 & 4.8360000 & 8.6430000 & 0.0900000 & 3319.0000000 \\ 
-  2010.0000000 & 1.3260000 & 3.2760000 & 5.6070000 & 10.2090000 & 0.1300000 & 3920.0000000 \\ 
-  2013.0000000 & 0.8780000 & 1.3980000 & 3.3670000 & 5.6430000 & 0.1900000 & 2167.0000000 \\ 
-  2015.0000000 & 0.1980000 & 0.6820000 & 1.9240000 & 2.8050000 & 0.1800000 & 1077.0000000 \\ 
+$\log (\bar{R})$ & 13.4320000 & 0.0620940 \\ 
+  $\log (N_1)$ & 14.8260000 & 0.1724300 \\ 
+  $\log (N_2)$ & 14.4680000 & 0.1982800 \\ 
+  $\log (N_3)$ & 14.1590000 & 0.2131800 \\ 
+  ADF\&G pot survey catchability ($q$) & 0.0039705 & 0.0005124 \\ 
+  $\log(\bar{F}_\text{pot})$ & -1.3571000 & 0.0574230 \\ 
+  $\log(\bar{F}_\text{trawl bycatch})$ & -11.6700000 & 0.2124900 \\ 
+  $\log(\bar{F}_\text{fixed bycatch})$ & -9.5584000 & 0.2093100 \\ 
+  Stage-1 directed pot selectivity 1978-2008 & -0.6308200 & 0.1799900 \\ 
+  Stage-2 directed pot selectivity 1978-2008 & -0.3728000 & 0.1279900 \\ 
+  Stage-1 directed pot selectivity 2009-2015 & -0.9814600 & 0.1930700 \\ 
+  Stage-2 directed pot selectivity 2009-2015 & -0.0000001 & 0.0002349 \\ 
+  Stage-1 NMFS trawl selectivity & -0.2169300 & 0.0618870 \\ 
+  Stage-2 NMFS trawl selectivity & -0.0000000 & 0.0000074 \\ 
+  Stage-1 ADF\&G pot selectivity & -0.9952800 & 0.1425400 \\ 
+  Stage-2 ADF\&G pot selectivity & -0.1518900 & 0.0826700 \\ 
    \hline
 \end{tabular}
 \end{table}
-
-
-```
-## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 62, 65
-```
-
-```
-## Error: Key column 'Model' does not exist in input.
-```
 
 \begin{table}[ht]
 \centering
 \caption{Comparisons of model parameter estimates for the four Gmacs model scenarios.} 
 \label{tab:est_pars_all}
-\begin{tabular}{rrrrrrr}
+\begin{tabular}{llr}
   \hline
-Year & Stage-1 (90-104 mm) & Stage-2 (105-119 mm) & Stage-3 (120+ mm) & Total CPUE & CV & Number of crabs \\ 
+Model & Parameter & Estimate \\ 
   \hline
-1995.000 & 1.919 & 3.198 & 6.922 & 12.042 & 0.130 & 4624.000 \\ 
-  1998.000 & 0.964 & 2.763 & 8.804 & 12.531 & 0.060 & 4812.000 \\ 
-  2001.000 & 1.266 & 1.737 & 5.487 & 8.477 & 0.080 & 3255.000 \\ 
-  2004.000 & 0.112 & 0.414 & 1.141 & 1.667 & 0.150 & 640.000 \\ 
-  2007.000 & 1.086 & 2.721 & 4.836 & 8.643 & 0.090 & 3319.000 \\ 
-  2010.000 & 1.326 & 3.276 & 5.607 & 10.209 & 0.130 & 3920.000 \\ 
-  2013.000 & 0.878 & 1.398 & 3.367 & 5.643 & 0.190 & 2167.000 \\ 
-  2015.000 & 0.198 & 0.682 & 1.924 & 2.805 & 0.180 & 1077.000 \\ 
+Gmacs match & Natural mortality ($M$) deviation in 1998/99 & 1.655 \\ 
+  Gmacs match & $\log (\bar{R})$ & 13.394 \\ 
+  Gmacs match & $\log (N_1)$ & 14.856 \\ 
+  Gmacs match & $\log (N_2)$ & 14.426 \\ 
+  Gmacs match & $\log (N_3)$ & 14.225 \\ 
+  Gmacs match & ADF\&G pot survey catchability ($q$) & 0.004 \\ 
+  Gmacs match & logAddCV & -1.370 \\ 
+  Gmacs match & $\log(\bar{F}_\text{trawl bycatch})$ & -11.666 \\ 
+  Gmacs match & $\log(\bar{F}_\text{fixed bycatch})$ & -9.549 \\ 
+  Gmacs base & Stage-1 directed pot selectivity 1978-2008 & 1.675 \\ 
+  Gmacs base & Natural mortality ($M$) deviation in 1998/99 & 13.415 \\ 
+  Gmacs base & $\log (\bar{R})$ & 14.821 \\ 
+  Gmacs base & $\log (N_1)$ & 14.420 \\ 
+  Gmacs base & $\log (N_2)$ & 14.124 \\ 
+  Gmacs base & $\log (N_3)$ & 0.004 \\ 
+  Gmacs base & ADF\&G pot survey catchability ($q$) & -1.367 \\ 
+  Gmacs base & logAddCV & -11.695 \\ 
+  Gmacs base & $\log(\bar{F}_\text{trawl bycatch})$ & -9.579 \\ 
+  Gmacs base & $\log(\bar{F}_\text{fixed bycatch})$ & -0.754 \\ 
+  Gmacs base & Stage-1 directed pot selectivity 1978-2008 & -0.412 \\ 
+  Gmacs base & Stage-2 directed pot selectivity 1978-2008 & -0.764 \\ 
+  Gmacs base & Stage-1 directed pot selectivity 2009-2015 & -0.000 \\ 
+  Gmacs base & Stage-2 directed pot selectivity 2009-2015 & -0.271 \\ 
+  Gmacs base & Stage-1 NMFS trawl selectivity & -0.000 \\ 
+  Gmacs base & Stage-2 NMFS trawl selectivity & -0.858 \\ 
+  Gmacs base & Stage-1 ADF\&G pot selectivity & -0.104 \\ 
+  Gmacs CV & Stage-2 ADF\&G pot selectivity & 1.991 \\ 
+  Gmacs CV & - & 13.563 \\ 
+  Gmacs CV & Natural mortality ($M$) deviation in 1998/99 & 14.820 \\ 
+  Gmacs CV & $\log (\bar{R})$ & 14.389 \\ 
+  Gmacs CV & $\log (N_1)$ & 14.102 \\ 
+  Gmacs CV & $\log (N_2)$ & 0.004 \\ 
+  Gmacs CV & $\log (N_3)$ & -13.809 \\ 
+  Gmacs CV & ADF\&G pot survey catchability ($q$) & -1.754 \\ 
+  Gmacs CV & logAddCV & -1.420 \\ 
+  Gmacs CV & $\log(\bar{F}_\text{pot})$ & -11.751 \\ 
+  Gmacs CV & $\log(\bar{F}_\text{trawl bycatch})$ & -9.639 \\ 
+  Gmacs CV & $\log(\bar{F}_\text{fixed bycatch})$ & -0.770 \\ 
+  Gmacs CV & Stage-1 directed pot selectivity 1978-2008 & -0.420 \\ 
+  Gmacs CV & Stage-2 directed pot selectivity 1978-2008 & -1.019 \\ 
+  Gmacs CV & Stage-1 directed pot selectivity 2009-2015 & -0.008 \\ 
+  Gmacs CV & Stage-2 directed pot selectivity 2009-2015 & -0.307 \\ 
+  Gmacs CV & Stage-1 NMFS trawl selectivity & -0.000 \\ 
+  Gmacs CV & Stage-2 NMFS trawl selectivity & -1.091 \\ 
+  Gmacs CV & Stage-1 ADF\&G pot selectivity & -0.202 \\ 
+  Gmacs M & Stage-2 ADF\&G pot selectivity & - \\ 
+  Gmacs M & Natural mortality ($M$) deviation in 1998/99 & 13.432 \\ 
+  Gmacs M & $\log (\bar{R})$ & 14.826 \\ 
+  Gmacs M & $\log (N_1)$ & 14.468 \\ 
+  Gmacs M & $\log (N_2)$ & 14.159 \\ 
+  Gmacs M & $\log (N_3)$ & 0.004 \\ 
+  Gmacs M & ADF\&G pot survey catchability ($q$) & -4.321 \\ 
+  Gmacs M & logAddCV & -1.658 \\ 
+  Gmacs M & $\log(\bar{F}_\text{trawl bycatch})$ & -1.357 \\ 
+  Gmacs M & $\log(\bar{F}_\text{fixed bycatch})$ & -11.670 \\ 
+  Gmacs M & Stage-1 directed pot selectivity 1978-2008 & -9.558 \\ 
+  Gmacs M & Stage-2 directed pot selectivity 1978-2008 & -0.631 \\ 
+  Gmacs M & Stage-1 directed pot selectivity 2009-2015 & -0.373 \\ 
+  Gmacs M & Stage-2 directed pot selectivity 2009-2015 & -0.981 \\ 
+  Gmacs M & Stage-1 NMFS trawl selectivity & -0.000 \\ 
+  Gmacs M & Stage-2 NMFS trawl selectivity & -0.217 \\ 
+  Gmacs M & Stage-1 ADF\&G pot selectivity & -0.000 \\ 
+  Gmacs M & Stage-2 ADF\&G pot selectivity & -0.995 \\ 
+  Gmacs M & - & -0.152 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -462,25 +507,25 @@ Year & Stage-1 (90-104 mm) & Stage-2 (105-119 mm) & Stage-3 (120+ mm) & Total CP
 \label{tab:likelihood_components}
 \begin{tabular}{lrrrr}
   \hline
-Component & Gmacs base & Gmacs selex & Gmacs CV & Gmacs M \\ 
+Component & Gmacs match & Gmacs base & Gmacs CV & Gmacs M \\ 
   \hline
-Pot Retained Catch & -66.39 & -66.90 & -66.81 & -67.11 \\ 
-  Pot Discarded Catch & 8.15 & 3.86 & 4.68 & 4.16 \\ 
+Pot Retained Catch & -66.70 & -66.81 & -67.09 & -67.05 \\ 
+  Pot Discarded Catch & 5.08 & 4.47 & 4.08 & 3.60 \\ 
   Trawl bycatch Discarded Catch & 22.05 & 22.05 & 22.05 & 22.05 \\ 
-  Fixed bycatch Discarded Catch & 20.92 & 20.87 & 20.88 & 20.86 \\ 
-  NMFS Trawl Survey & 21.35 & 24.90 & 21.75 & -14.80 \\ 
-  ADF\&G Pot Survey CPUE & 66.29 & 54.19 & 56.31 & 9.78 \\ 
-  Directed Pot LF & -11.57 & -11.81 & -12.05 & -12.21 \\ 
-  NMFS Trawl LF & 21.55 & 15.47 & 20.60 & 5.66 \\ 
-  ADF\&G Pot LF & -1.53 & -5.81 & -5.18 & -8.43 \\ 
-  Recruitment deviations & 55.46 & 55.46 & 55.41 & 54.16 \\ 
+  Fixed bycatch Discarded Catch & 20.88 & 20.88 & 20.86 & 20.86 \\ 
+  NMFS Trawl Survey & 23.46 & 21.87 & -14.64 & -8.77 \\ 
+  ADF\&G Pot Survey CPUE & 58.33 & 56.14 & 9.70 & 10.90 \\ 
+  Directed Pot LF & -11.96 & -12.05 & -12.18 & -11.39 \\ 
+  NMFS Trawl LF & 15.31 & 20.76 & 5.99 & 7.77 \\ 
+  ADF\&G Pot LF & -5.40 & -4.97 & -8.33 & -7.97 \\ 
+  Recruitment deviations & 55.67 & 55.58 & 54.30 & 54.68 \\ 
   F penalty & 14.49 & 14.49 & 14.49 & 14.49 \\ 
-  M penalty & 6.48 & 6.47 & 6.47 & 6.48 \\ 
-  Prior & 12.82 & 18.36 & 16.28 & 23.74 \\ 
-  Total & 170.07 & 151.60 & 154.87 & 58.85 \\ 
-  Total estimated parameters & 272.00 & 280.00 & 280.00 & 282.00 \\ 
-  \$MMB\_2015\$ & 3101.50 & 2431.17 & 2661.96 & 4428.98 \\ 
-  Fofl & 0.37 & 0.32 & 0.35 & 0.37 \\ 
+  M penalty & 6.47 & 6.47 & 6.48 & 0.00 \\ 
+  Prior & 12.82 & 15.59 & 23.68 & 26.75 \\ 
+  Total & 150.52 & 154.47 & 59.38 & 65.92 \\ 
+  Total estimated parameters & 272.00 & 280.00 & 282.00 & 280.00 \\ 
+  \$MMB\_2015\$ & 2602.55 & 2643.80 & 4399.47 & 4082.34 \\ 
+  Fofl & 0.32 & 0.32 & 0.36 & 0.36 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -493,44 +538,44 @@ Pot Retained Catch & -66.39 & -66.90 & -66.81 & -67.11 \\
   \hline
 Year & $N_1$ & $N_2$ & $N_3$ & MMB \\ 
   \hline
-1978 & 3782350 & 2419470 & 1678340 & 4562 \\ 
-  1979 & 4841660 & 2943230 & 2203410 & 6295 \\ 
-  1980 & 4218520 & 3805080 & 3265810 & 9501 \\ 
-  1981 & 1755600 & 3733730 & 4603820 & 9721 \\ 
-  1982 & 1876200 & 2216680 & 4779900 & 7070 \\ 
-  1983 & 1012660 & 1760260 & 3409680 & 4368 \\ 
-  1984 & 866184 & 1107100 & 2020700 & 3067 \\ 
-  1985 & 1278900 & 837916 & 1498640 & 2826 \\ 
-  1986 & 1895780 & 998129 & 1282260 & 2845 \\ 
-  1987 & 1865030 & 1417950 & 1371850 & 3415 \\ 
-  1988 & 1653320 & 1538130 & 1646100 & 3835 \\ 
-  1989 & 2648820 & 1454690 & 1888610 & 4405 \\ 
-  1990 & 1719180 & 2008780 & 2082160 & 4853 \\ 
-  1991 & 2467290 & 1643490 & 2389520 & 4531 \\ 
-  1992 & 2717060 & 1930930 & 2162950 & 4689 \\ 
-  1993 & 2969560 & 2176260 & 2269050 & 5095 \\ 
-  1994 & 1744630 & 2393860 & 2398840 & 5034 \\ 
-  1995 & 1847540 & 1751950 & 2431880 & 4911 \\ 
-  1996 & 2150610 & 1618910 & 2310670 & 4502 \\ 
-  1997 & 1306420 & 1746730 & 2143670 & 3901 \\ 
-  1998 & 852401 & 1283640 & 1799810 & 1923 \\ 
-  1999 & 456270 & 415120 & 691298 & 1623 \\ 
-  2000 & 479496 & 405329 & 785188 & 1775 \\ 
-  2001 & 479076 & 415779 & 858978 & 1913 \\ 
-  2002 & 215485 & 418944 & 925671 & 2031 \\ 
-  2003 & 453805 & 265868 & 982790 & 1970 \\ 
-  2004 & 293347 & 353951 & 953565 & 2012 \\ 
-  2005 & 656367 & 289723 & 973699 & 1980 \\ 
-  2006 & 970389 & 480511 & 958382 & 2150 \\ 
-  2007 & 716526 & 727161 & 1040240 & 2492 \\ 
-  2008 & 1251670 & 646712 & 1205010 & 2748 \\ 
-  2009 & 1129620 & 946953 & 1329280 & 3024 \\ 
-  2010 & 1057710 & 967554 & 1482740 & 2821 \\ 
-  2011 & 896425 & 919677 & 1431650 & 2454 \\ 
-  2012 & 581850 & 802819 & 1230770 & 2106 \\ 
-  2013 & 681566 & 586163 & 1061620 & 2440 \\ 
-  2014 & 619320 & 594288 & 1180390 & 2482 \\ 
-  2015 & 496048 & 557095 & 1218120 & 2680 \\ 
+1978 & 3032380 & 1959650 & 1609350 & 4105 \\ 
+  1979 & 3935440 & 2351410 & 2162280 & 5838 \\ 
+  1980 & 3483360 & 3078760 & 3263590 & 9125 \\ 
+  1981 & 1399440 & 3061830 & 4529080 & 9304 \\ 
+  1982 & 1395390 & 1786860 & 4497980 & 6427 \\ 
+  1983 & 726237 & 1329510 & 3064220 & 3382 \\ 
+  1984 & 683934 & 775568 & 1553320 & 1989 \\ 
+  1985 & 2205160 & 605801 & 984896 & 1669 \\ 
+  1986 & 1303830 & 1410240 & 904641 & 2670 \\ 
+  1987 & 1387260 & 1197070 & 1354150 & 3290 \\ 
+  1988 & 1263250 & 1187840 & 1635410 & 3613 \\ 
+  1989 & 2252400 & 1113040 & 1810310 & 4105 \\ 
+  1990 & 1424190 & 1664200 & 2032870 & 4603 \\ 
+  1991 & 1988020 & 1357180 & 2293490 & 4250 \\ 
+  1992 & 2333220 & 1553010 & 2098930 & 4368 \\ 
+  1993 & 2503120 & 1824300 & 2215840 & 4826 \\ 
+  1994 & 1446940 & 2001220 & 2380110 & 4771 \\ 
+  1995 & 1553850 & 1443750 & 2334010 & 4623 \\ 
+  1996 & 1759330 & 1342640 & 2201930 & 4209 \\ 
+  1997 & 1044040 & 1423500 & 2056840 & 3531 \\ 
+  1998 & 656793 & 1013930 & 1642390 & 1717 \\ 
+  1999 & 364932 & 338232 & 632065 & 1516 \\ 
+  2000 & 400439 & 326253 & 727657 & 1681 \\ 
+  2001 & 369769 & 343135 & 804742 & 1840 \\ 
+  2002 & 165003 & 330775 & 874845 & 1956 \\ 
+  2003 & 329593 & 206912 & 909941 & 1891 \\ 
+  2004 & 231656 & 261670 & 890695 & 1913 \\ 
+  2005 & 509789 & 222831 & 894291 & 1880 \\ 
+  2006 & 778720 & 372468 & 901109 & 2046 \\ 
+  2007 & 580634 & 579094 & 1003240 & 2390 \\ 
+  2008 & 1005230 & 519548 & 1147060 & 2652 \\ 
+  2009 & 919126 & 760501 & 1301030 & 2920 \\ 
+  2010 & 868450 & 782376 & 1441940 & 2684 \\ 
+  2011 & 712542 & 745364 & 1374460 & 2271 \\ 
+  2012 & 446333 & 632141 & 1149010 & 1870 \\ 
+  2013 & 517648 & 445721 & 939761 & 2196 \\ 
+  2014 & 449804 & 451532 & 1051450 & 2229 \\ 
+  2015 & 377699 & 410207 & 1076110 & 2410 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -543,44 +588,44 @@ Year & $N_1$ & $N_2$ & $N_3$ & MMB \\
   \hline
 Year & $N_1$ & $N_2$ & $N_3$ & MMB \\ 
   \hline
-1978 & 2365520 & 1497424 & 643890 & 3306 \\ 
-  1979 & 3950933 & 2037832 & 1630481 & 5129 \\ 
-  1980 & 3586467 & 2913159 & 2729204 & 8642 \\ 
-  1981 & 1442214 & 3039210 & 4143279 & 9269 \\ 
-  1982 & 1535758 & 1824985 & 4254386 & 6520 \\ 
-  1983 & 1371115 & 1628918 & 2061020 & 3817 \\ 
-  1984 & 707431 & 1443969 & 1027600 & 2602 \\ 
-  1985 & 603404 & 882665 & 827970 & 2333 \\ 
-  1986 & 881724 & 646403 & 1216035 & 2391 \\ 
-  1987 & 1202829 & 714694 & 1057146 & 2829 \\ 
-  1988 & 1073878 & 638011 & 745534 & 3130 \\ 
-  1989 & 1209966 & 896712 & 919399 & 3610 \\ 
-  1990 & 1122277 & 983911 & 1059596 & 4529 \\ 
-  1991 & 2470308 & 987661 & 1526447 & 4455 \\ 
-  1992 & 1595071 & 1729871 & 1800188 & 4632 \\ 
-  1993 & 1424069 & 1544258 & 1254741 & 4812 \\ 
-  1994 & 1668061 & 1430445 & 1415296 & 4589 \\ 
-  1995 & 1759139 & 1430340 & 1538382 & 4656 \\ 
-  1996 & 2063919 & 1510122 & 2229853 & 4575 \\ 
-  1997 & 1627489 & 1671675 & 2285233 & 4054 \\ 
-  1998 & 1452945 & 1492107 & 1290424 & 2823 \\ 
-  1999 & 1676993 & 1430040 & 1483580 & 1467 \\ 
-  2000 & 1559543 & 1425564 & 1473377 & 1651 \\ 
-  2001 & 1020346 & 1402302 & 2167688 & 1855 \\ 
-  2002 & 697597 & 1043541 & 1820195 & 1980 \\ 
-  2003 & 347779 & 520141 & 560351 & 1875 \\ 
-  2004 & 372913 & 284617 & 587855 & 1885 \\ 
-  2005 & 423916 & 306003 & 670181 & 1846 \\ 
-  2006 & 365355 & 353312 & 779455 & 1978 \\ 
-  2007 & 123330 & 324381 & 863960 & 2392 \\ 
-  2008 & 110066 & 289495 & 771044 & 2530 \\ 
-  2009 & 298774 & 171586 & 867500 & 2694 \\ 
-  2010 & 217328 & 226438 & 839520 & 2582 \\ 
-  2011 & 442493 & 204918 & 863717 & 2344 \\ 
-  2012 & 798823 & 319099 & 866946 & 2201 \\ 
-  2013 & 712347 & 284555 & 773095 & 2623 \\ 
-  2014 & 388290 & 533335 & 916759 & 2784 \\ 
-  2015 & 953322 & 396611 & 1070550 & 3102 \\ 
+1978 & 2526261 & 1643998 & 953299 & 4296 \\ 
+  1979 & 4072200 & 2192749 & 2015765 & 6195 \\ 
+  1980 & 3484765 & 3033094 & 3139989 & 9988 \\ 
+  1981 & 1346370 & 3020921 & 4542146 & 10440 \\ 
+  1982 & 1408932 & 1764508 & 4569757 & 7406 \\ 
+  1983 & 1257885 & 1574970 & 2345088 & 4351 \\ 
+  1984 & 672334 & 1354005 & 1249246 & 2933 \\ 
+  1985 & 586888 & 832810 & 966431 & 2615 \\ 
+  1986 & 866786 & 620050 & 1306584 & 2605 \\ 
+  1987 & 1239328 & 697492 & 1118610 & 3063 \\ 
+  1988 & 1106464 & 622658 & 800548 & 3348 \\ 
+  1989 & 1192873 & 911375 & 964702 & 3831 \\ 
+  1990 & 1096956 & 979059 & 1103456 & 4792 \\ 
+  1991 & 2534987 & 971267 & 1559025 & 4776 \\ 
+  1992 & 1639666 & 1761178 & 1825468 & 4946 \\ 
+  1993 & 1463883 & 1572206 & 1277779 & 5133 \\ 
+  1994 & 1651750 & 1465013 & 1457146 & 4851 \\ 
+  1995 & 1766327 & 1432567 & 1590509 & 4805 \\ 
+  1996 & 2043439 & 1515065 & 2276362 & 4607 \\ 
+  1997 & 1481188 & 1661695 & 2325916 & 3951 \\ 
+  1998 & 1322337 & 1483203 & 1329484 & 2678 \\ 
+  1999 & 1577779 & 1346430 & 1502427 & 1582 \\ 
+  2000 & 1454398 & 1341546 & 1439542 & 1729 \\ 
+  2001 & 818682 & 1311892 & 2084353 & 1892 \\ 
+  2002 & 570388 & 899084 & 1689562 & 2007 \\ 
+  2003 & 315058 & 496505 & 553924 & 1911 \\ 
+  2004 & 327174 & 280693 & 607655 & 1931 \\ 
+  2005 & 374366 & 278728 & 680369 & 1883 \\ 
+  2006 & 347236 & 314918 & 769146 & 2032 \\ 
+  2007 & 125181 & 301387 & 834265 & 2406 \\ 
+  2008 & 111719 & 268976 & 744548 & 2602 \\ 
+  2009 & 303061 & 165245 & 832488 & 2760 \\ 
+  2010 & 194649 & 226775 & 807496 & 2582 \\ 
+  2011 & 453537 & 191728 & 834024 & 2258 \\ 
+  2012 & 723391 & 321005 & 836555 & 1987 \\ 
+  2013 & 645088 & 286258 & 746003 & 2343 \\ 
+  2014 & 432675 & 493400 & 887159 & 2403 \\ 
+  2015 & 929244 & 408604 & 1030026 & 2603 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -593,44 +638,44 @@ Year & $N_1$ & $N_2$ & $N_3$ & MMB \\
   \hline
 Year & $N_1$ & $N_2$ & $N_3$ & MMB \\ 
   \hline
-1978 & 2648579 & 1702303 & 1151773 & 4654 \\ 
-  1979 & 4189851 & 2291110 & 2244988 & 6462 \\ 
-  1980 & 3468854 & 3132290 & 3391842 & 10171 \\ 
-  1981 & 1325982 & 3045022 & 4804294 & 10507 \\ 
-  1982 & 1372942 & 1760910 & 4799090 & 7495 \\ 
-  1983 & 1225754 & 1571772 & 2550315 & 4527 \\ 
-  1984 & 663251 & 1332882 & 1432080 & 3062 \\ 
-  1985 & 591194 & 820635 & 1108281 & 2727 \\ 
-  1986 & 888532 & 618437 & 1421387 & 2685 \\ 
-  1987 & 1268550 & 709311 & 1215871 & 3127 \\ 
-  1988 & 1132553 & 633212 & 887405 & 3390 \\ 
-  1989 & 1216919 & 931376 & 1052507 & 3856 \\ 
-  1990 & 1131418 & 999338 & 1189215 & 4934 \\ 
-  1991 & 2722609 & 998224 & 1646350 & 4933 \\ 
-  1992 & 1681181 & 1876658 & 1929947 & 5065 \\ 
-  1993 & 1500947 & 1675300 & 1371207 & 5251 \\ 
-  1994 & 1666862 & 1524834 & 1602320 & 4979 \\ 
-  1995 & 1812866 & 1461162 & 1744693 & 4890 \\ 
-  1996 & 2083194 & 1551877 & 2427783 & 4663 \\ 
-  1997 & 1483162 & 1696459 & 2475172 & 4024 \\ 
-  1998 & 1324100 & 1514248 & 1463538 & 2748 \\ 
-  1999 & 1584147 & 1358667 & 1641264 & 1652 \\ 
-  2000 & 1457998 & 1349221 & 1562684 & 1779 \\ 
-  2001 & 811808 & 1316628 & 2194951 & 1924 \\ 
-  2002 & 571612 & 896752 & 1784450 & 2031 \\ 
-  2003 & 325897 & 511163 & 627248 & 1927 \\ 
-  2004 & 336862 & 295138 & 677117 & 1948 \\ 
-  2005 & 386344 & 289012 & 746599 & 1890 \\ 
-  2006 & 370306 & 325461 & 832826 & 2066 \\ 
-  2007 & 137749 & 317977 & 894970 & 2449 \\ 
-  2008 & 122937 & 283784 & 798729 & 2678 \\ 
-  2009 & 319105 & 177462 & 890794 & 2846 \\ 
-  2010 & 202064 & 239928 & 863882 & 2638 \\ 
-  2011 & 506056 & 200576 & 890256 & 2297 \\ 
-  2012 & 760635 & 353758 & 893001 & 1986 \\ 
-  2013 & 678324 & 315477 & 796366 & 2281 \\ 
-  2014 & 511096 & 524322 & 952017 & 2290 \\ 
-  2015 & 964933 & 463340 & 1107257 & 2431 \\ 
+1978 & 2441183 & 1633375 & 824040 & 3987 \\ 
+  1979 & 3993698 & 2135313 & 1881186 & 5886 \\ 
+  1980 & 3512873 & 2969612 & 2991380 & 9609 \\ 
+  1981 & 1372100 & 3015807 & 4386748 & 10124 \\ 
+  1982 & 1466492 & 1777426 & 4439615 & 7153 \\ 
+  1983 & 1309274 & 1586489 & 2228038 & 4180 \\ 
+  1984 & 706056 & 1390139 & 1152960 & 2848 \\ 
+  1985 & 599904 & 864018 & 906835 & 2561 \\ 
+  1986 & 862417 & 638094 & 1273190 & 2570 \\ 
+  1987 & 1255015 & 700982 & 1099269 & 3048 \\ 
+  1988 & 1120469 & 625772 & 783241 & 3356 \\ 
+  1989 & 1211261 & 921187 & 952041 & 3863 \\ 
+  1990 & 1118853 & 992749 & 1099515 & 4858 \\ 
+  1991 & 2574268 & 988668 & 1564875 & 4839 \\ 
+  1992 & 1634308 & 1789247 & 1842841 & 5009 \\ 
+  1993 & 1459100 & 1597266 & 1293171 & 5209 \\ 
+  1994 & 1661353 & 1471071 & 1483898 & 4954 \\ 
+  1995 & 1787216 & 1440088 & 1616833 & 4912 \\ 
+  1996 & 2085931 & 1529784 & 2304847 & 4711 \\ 
+  1997 & 1488217 & 1690700 & 2360992 & 4088 \\ 
+  1998 & 1328613 & 1509103 & 1360530 & 2789 \\ 
+  1999 & 1590294 & 1359597 & 1544883 & 1619 \\ 
+  2000 & 1499861 & 1353019 & 1482449 & 1784 \\ 
+  2001 & 839695 & 1342485 & 2131837 & 1956 \\ 
+  2002 & 597888 & 921147 & 1746269 & 2081 \\ 
+  2003 & 326373 & 502726 & 577591 & 1984 \\ 
+  2004 & 352196 & 285646 & 622941 & 1993 \\ 
+  2005 & 386880 & 294578 & 698026 & 1938 \\ 
+  2006 & 366116 & 327678 & 793871 & 2123 \\ 
+  2007 & 130298 & 316333 & 863158 & 2527 \\ 
+  2008 & 116287 & 282318 & 770343 & 2732 \\ 
+  2009 & 300327 & 172846 & 863620 & 2899 \\ 
+  2010 & 198296 & 227739 & 837070 & 2682 \\ 
+  2011 & 506565 & 194199 & 860402 & 2327 \\ 
+  2012 & 759441 & 351937 & 864903 & 2048 \\ 
+  2013 & 677272 & 313858 & 771324 & 2406 \\ 
+  2014 & 451235 & 523115 & 928650 & 2458 \\ 
+  2015 & 964292 & 428983 & 1081445 & 2644 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -665,9 +710,9 @@ Year & $N_1$ & $N_2$ & $N_3$ & MMB \\
 
 ![Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios.\label{fig:sc_trawl_discarded}](figure/sc_trawl_discarded-1.png)
 
-![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_res}](figure/sc_pot_res-1.png)
+![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs match** model.\label{fig:sc_pot_res}](figure/sc_pot_res-1.png)
 
-![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\label{fig:sc_pot_res_selex}](figure/sc_pot_res_selex-1.png)
+![Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_res_selex}](figure/sc_pot_res_selex-1.png)
 
 ![Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\label{fig:sc_pot_discarded_res}](figure/sc_pot_discarded_res-1.png)
 
@@ -776,17 +821,6 @@ The fishing mortality by year $y$ and season $t$ is denoted $F_{t,y}$ and calcul
     F_{t,y} = F_{t,y}^\text{df} + F_{t,y}^\text{tb} + F_{t,y}^\text{fb}
 \end{equation}
 where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed fishery, $F_{t,y}^\text{tb}$ is the fishing mortality associated with the trawl bycatch fishery, $F_{t,y}^\text{fb}$ is the fishing mortality associated with the fixed bycatch fishery.
-
-Aside from natural mortality and molting and growth, only the directed fishery and some limited bycatch mortality in the groundfish fisheries are assumed to affect the stock. Nontrivial bycatch mortality with another fishery, as occurred in 2012/13, is assumed to be accounted for in the model in the estimate of groundfish bycatch mortality. The directed fishery is not modeled as a mid-season pulse occurring at time $\pi_t$ with full-selection fishing mortality $F_t$ relative to stage-3 crab. Year-t directed-fishery removals from the stock are computed as
-$$R^{df}_t = H^{df} S^{df} (1 - e^{F^{df}_t}) e^{-\tau_t M} N_t$$
-where the diagonal matrices
-\begin{equation}
-  \boldsymbol{H}^\text{df} = \left[ \begin{array}{ccc}
-    h^\text{df} & 0 & 0 \\
-    0 & h^\text{df} & 0 \\
-    0 & 0 & 1 \end{array} \right]
-\end{equation}
-account for stage selectivities $s_1^\text{df}$ and $s_2^\text{df}$ and discard handling mortality $h^\text{df}$ in the directed fishery, both assumed constant over time. Yearly stage removals resulting from bycatch mortality in the groundfish trawl and fixed-gear fisheries are calculated as 15 February (0.63 yr) pulse effects in terms of the respective fishing mortalities $F_t^\text{gt}$ and $F_t^\text{gf}$ by
 
 ## 3. Model Data
 

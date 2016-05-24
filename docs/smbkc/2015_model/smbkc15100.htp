@@ -1,0 +1,229 @@
+#if !defined(_smbkc15100_)
+#  define _smbkc15100_
+
+class model_data : public ad_comm{
+  data_int start_yr;
+  data_int nyrs;
+  data_vector wt;
+  data_number rret;
+  data_vector hm;
+  data_int nyrs_ts;
+  data_ivector yid_ts;
+  data_matrix ts_data;
+  data_int nyrs_ps;
+  data_ivector yid_ps;
+  data_matrix ps_data;
+  data_int nyrs_pf;
+  data_ivector yid_pf;
+  data_matrix pf_data;
+  data_int nyrs_ob;
+  data_ivector yid_ob;
+  data_matrix ob_data;
+  data_vector x_ob;
+  data_vector dstr0;
+  data_int nyrs_gf;
+  data_vector yid_gf;
+  data_matrix gf_data;
+  data_int eof;
+  ivector yrs;
+  dvector n_ts;
+  dvector n_ps;
+  dvector n_ob;
+  dvector x_ts;
+  dvector x_ps;
+  dvector x_ret;
+  dvector x_ret_b;
+  dvector x_ob1;
+  dvector x_ob2;
+  dvector b_ts;
+  dvector cv_ts_b;
+  dvector eff;
+  dvector lag_pf;
+  dvector ret_wt;
+  dvector avg_ret_wt;
+  dvector dstr;
+  dvector cv_ts;
+  dvector cv_ps;
+  dmatrix p_ts;
+  dmatrix p_ps;
+  dmatrix p_ob;
+  dvector gft_mort;
+  dvector gff_mort;
+  dvector sig_ts;
+  dvector sig_ps;
+  dvector sig_ts_b;
+  dvector effn_ts;
+  dvector effn_ps;
+  dvector effn_ob;
+  data_int ph_M;
+  data_int ph_M98;
+  data_int ph_Qts;
+  data_int ph_Qps;
+  data_int ph_logN1o;
+  data_int ph_logN2o;
+  data_int ph_logN3o;
+  data_int ph_logit_p12;
+  data_int ph_logit_p23;
+  data_int ph_s_ts;
+  data_int ph_s_ps;
+  data_int ph_s_pf;
+  data_int ph_mean_log_Fpf;
+  data_int ph_log_Fpf_dev;
+  data_int ph_mean_log_New;
+  data_int ph_log_New_dev;
+  data_vector Lw;
+  data_vector Pw;
+  data_number M_start;
+  data_number M98_start;
+  data_number Qts_start;
+  data_number Qps_start;
+  data_number logN1o_start;
+  data_number logN2o_start;
+  data_number logN3o_start;
+  data_number logit_p12_start;
+  data_number logit_p23_start;
+  data_number s_ts_start;
+  data_number s_ps_start;
+  data_number s_pf_start;
+  data_number mean_log_Fpf_start;
+  data_number mean_log_New_start;
+  data_number Nmax_ts;
+  data_number Nmax_ps;
+  data_number Nmax_ob1;
+  data_number Nmax_ob;
+  data_int eof_ctl;
+  ~model_data();
+  model_data(int argc,char * argv[]);
+  friend class model_parameters;
+};
+
+class model_parameters : public model_data ,
+  public function_minimizer
+{
+public:
+  ~model_parameters();
+  void preliminary_calculations(void);
+  void set_runtime(void);
+  virtual void * mycast(void) {return (void*)this;}
+  static int mc_phase(void)
+  {
+    return initial_params::mc_phase;
+  }
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+  static prevariable current_feval(void)
+  {
+    return *objective_function_value::pobjfun;
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_number M;
+  param_init_number M98;
+  param_init_bounded_dev_vector log_M_dev;
+  param_init_number Qts;
+  param_init_bounded_number Qps;
+  param_init_bounded_vector s_ts;
+  param_init_bounded_vector s_ps;
+  param_init_bounded_vector s_pf1;
+  param_init_bounded_vector s_pf2;
+  param_init_bounded_number logN1o;
+  param_init_bounded_number logN2o;
+  param_init_bounded_number logN3o;
+  param_init_number logit_p12;
+  param_init_number logit_p23;
+  param_init_bounded_number mean_log_Fpf;
+  param_init_bounded_dev_vector log_Fpf_dev;
+  param_init_bounded_number mean_log_New;
+  param_init_bounded_dev_vector log_New_dev;
+  param_init_bounded_number mean_log_Fgft;
+  param_init_bounded_number mean_log_Fgff;
+  param_init_bounded_dev_vector log_Fgft_dev;
+  param_init_bounded_dev_vector log_Fgff_dev;
+  param_vector MM;
+  param_matrix TM;
+  param_vector Fpf;
+  param_vector Fgft;
+  param_vector Fgff;
+  param_vector New;
+  param_matrix N;
+  param_matrix R_pf;
+  param_matrix R_gft;
+  param_matrix R_gff;
+  param_vector B_gft;
+  param_vector B_gff;
+  param_vector Dis_mort;
+  param_vector X_ts;
+  param_vector X_ps;
+  param_vector X_ret;
+  param_vector X_ret_b;
+  param_vector X_ob;
+  param_vector X_ob1;
+  param_vector X_ob2;
+  param_matrix s_pf;
+  param_vector B_ts;
+  param_matrix P_ts;
+  param_matrix P_ps;
+  param_matrix P_ob;
+  param_matrix Like_ts;
+  param_matrix Like_ps;
+  param_matrix Like_ob;
+  param_number t1;
+  param_number t0;
+  param_vector MMB215;
+  param_number prior_function_value;
+  param_number likelihood_function_value;
+  objective_function_value f;
+  param_vector LogLike;
+  param_vector Pen;
+  param_number FF;
+  param_number Bmsy;
+  param_number Fmsy;
+  param_number FOFL;
+  param_number OFL;
+  param_number Bret_proj;
+  param_number Bdis_proj;
+  param_number Bgft_proj;
+  param_number Bgff_proj;
+  param_number mmb215_proj;
+  param_stddev_number logOFL;
+  param_number SBPR;
+  param_number F35;
+  param_number Bmsy35;
+  param_stddev_number LMA;
+  param_stddev_number LMB;
+  param_stddev_number MMA;
+  param_stddev_number MMB;
+  param_stddev_number S2A;
+public:
+  virtual void userfunction(void);
+  virtual void report(const dvector& gradients);
+  virtual void final_calcs(void);
+  model_parameters(int sz,int argc, char * argv[]);
+  virtual void initializationfunction(void);
+  void get_numbers(void);
+  void run_pop_dynamics(void);
+  void predict_data(void);
+  void calculate_obj_function(void);
+  void project_biomasses(void);
+  void get_FOFL(void);
+  void get_SBPR(void);
+  void get_F35(void);
+
+};
+#endif
