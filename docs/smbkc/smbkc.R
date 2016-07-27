@@ -29,7 +29,6 @@ options(xtable.comment = FALSE)
 
 # The model specs
 .MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/")
-#.MODELDIR = c("../../examples/smbkc_lbs/", "../../examples/smbkc_lbs/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -711,9 +710,10 @@ plot_natural_mortality(M, knots = NULL, slab = "Model")
 
 The Gmacs model has been specified to account only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (size-classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the Gmacs base model configuration.
 
+
 ## 2. Model Population Dynamics
 
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. MMB is measured 15 February. To accomodate this, each model year is split into four seasons:
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. MMB is measured 15 February. To accomodate this, each model year is split into five seasons:
 \begin{enumerate}
     \item Season 1
     \begin{itemize}
@@ -722,16 +722,20 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
     \end{itemize}
     \item Season 2
     \begin{itemize}
-        \item $M = 0.44$ and catch
+        \item $\tau = 0.44$
     \end{itemize}
     \item Season 3
     \begin{itemize}
-        \item $M = 0.185$
-        \item Calculate MMB (15 February)
+        \item Fishing mortality applied
     \end{itemize}
     \item Season 4
     \begin{itemize}
-        \item $M = 0.375$
+        \item $\tau = 0.185$
+        \item Calculate MMB (15 February)
+    \end{itemize}
+    \item Season 5
+    \begin{itemize}
+        \item $\tau = 0.375$
         \item Growth and molting
         \item Recruitment (all to stage-1)
     \end{itemize}
@@ -776,6 +780,7 @@ The fishing mortality by year $y$ and season $t$ is denoted $F_{t,y}$ and calcul
     F_{t,y} = F_{t,y}^\text{df} + F_{t,y}^\text{tb} + F_{t,y}^\text{fb}
 \end{equation}
 where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed fishery, $F_{t,y}^\text{tb}$ is the fishing mortality associated with the trawl bycatch fishery, $F_{t,y}^\text{fb}$ is the fishing mortality associated with the fixed bycatch fishery.
+
 
 ## 3. Model Data
 

@@ -23,6 +23,7 @@
 5     # Season recruitment occurs
 5     # Season molting and growth occurs
 4     # Season to calculate SSB
+1     # Season for N output
 # size_breaks (a vector giving the break points between size intervals with dimension nclass+1)
 90  105  120  135
 # weight-at-length input method (1 = allometry i.e. w_l = a*l^b, 2 = vector by sex, 3 = matrix by sex)

@@ -1,14 +1,14 @@
 // ==================================================================================== //
-//   Gmacs: A generalized size-structured stock assessment modeling framework.
+//  Gmacs: A generalized size-structured stock assessment modeling framework.
 //
-//   Authors: gmacs development team at the
-//            Alaska Fisheries Science Centre, Seattle
-//            and the University of Washington
+//  Authors: gmacs development team at the
+//           Alaska Fisheries Science Centre, Seattle
+//           and the University of Washington.
 //
-//   Info: https://github.com/seacode/gmacs Copyright (C) 2014. All rights reserved.
+//  Info: https://github.com/seacode/gmacs Copyright (C) 2014. All rights reserved.
 //
 //  ACKNOWLEDGEMENTS:
-// 		- finacial support provided by NOAA and Bering Sea Fisheries Research Foundation.
+// 	  finacial support provided by NOAA and Bering Sea Fisheries Research Foundation.
 //
 //  INDEXES:
 //    g = group
@@ -130,6 +130,7 @@ DATA_SECTION
 	init_int season_recruitment; ///> Season that recruitment occurs (end of year before growth)
 	init_int season_growth;      ///> Season that growth occurs (end of year after recruitment)
 	init_int season_ssb;         ///> Season to calculate SSB (end of year)
+	init_int season_N;           ///> Season to output N
 
 	LOC_CALCS
 		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
@@ -479,7 +480,7 @@ DATA_SECTION
 	// |----------------------------|
 	// | Note that if bUseEmpiricalGrowth data is TRUE, then cannot estimate alpa & beta.
 	int nGrwth;
-	!! nGrwth = nsex*5;
+	!! nGrwth = nsex * 5;
 	init_matrix Grwth_control(1,nGrwth,1,7);
 
 	vector Grwth_ival(1,nGrwth);
@@ -1015,7 +1016,7 @@ DATA_SECTION
 				nMdev = m_nNodes;
 			break;
 			case 4:                 //add by Jie Zheng
-				nMdev = m_nNodes/2;
+				nMdev = m_nNodes / 2;
 		    break;
 		}
 	END_CALCS
@@ -1114,7 +1115,7 @@ PARAMETER_SECTION
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 
-	// Growth and molting probability parameters Sex-specific
+	// Growth and molting probability parameters (sex-specific)
 	// alpha    = Grwth(1);
 	// beta     = Grwth(2);
 	// gscale   = Grwth(3);
@@ -1660,7 +1661,7 @@ FUNCTION calc_growth_transition
 			{
 				if ( ll <= nclass+1 )
 				{
-					psi(ll) = cumd_gamma(sbi(ll),dMeanSizeAfterMolt);
+					psi(ll) = cumd_gamma(sbi(ll), dMeanSizeAfterMolt);
 				}
 			}
 			At(l)(l,nclass) = first_difference(psi(l,nclass+1));
@@ -1744,7 +1745,7 @@ FUNCTION calc_natural_mortality
 						M(h)(i) = M(h)(syr) * mfexp(delta(i)); // Deltas are devs from base value (not a walk)
 					}
 				}
-			break;                        
+			break;
 		}
 		// Update M by year.
 		if ( m_type < 4 )
@@ -1753,7 +1754,7 @@ FUNCTION calc_natural_mortality
 			{
 				for ( int i = syr+1; i <= nyr; i++ )
 				{
-					M(h)(i)  = M(h)(i-1) * mfexp(delta(i));
+					M(h)(i) = M(h)(i-1) * mfexp(delta(i));
 				}
 			}
 		}
@@ -1855,7 +1856,7 @@ FUNCTION reset_Z_to_M
 		{
 			for ( int j = 1; j <= nseason; j++ )
 			{
-				Z(h)(i)(j) = (m_prop(j) * M(h)(i));
+				Z(h)(i)(j) = m_prop(j) * M(h)(i);
 				for ( int l = 1; l <= nclass; l++ )
 				{
 					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
@@ -1974,7 +1975,8 @@ FUNCTION calc_initial_numbers_at_length
 			log_initial_recruits = logRini;
 		break;
 		case 2: // Free parameters
-			log_initial_recruits = logRini;
+			//log_initial_recruits = logRini;
+			log_initial_recruits = logN0(1); // only for SMBKC
 		break;
 	}
 	recruits(syr) = mfexp(log_initial_recruits);
@@ -2111,45 +2113,6 @@ FUNCTION update_population_numbers_at_length
 	//	recruits(syr+1,nyr) = mfexp(logRbar);
 	//}
 	recruits(syr,nyr) = mfexp(logRbar);
-
-	//rec_dev(1978) = 1.53400195207;
-	//rec_dev(1979) = 1.53400195207;
-	//rec_dev(1980) = 1.32041549297;
-	//rec_dev(1981) = 0.143539369705;
-	//rec_dev(1982) = 0.556100515749;
-	//rec_dev(1983) = -0.249293093121;
-	//rec_dev(1984) = -0.256055533128;
-	//rec_dev(1985) = 0.223703543562;
-	//rec_dev(1986) = 0.616508592140;
-	//rec_dev(1987) = 0.533469761148;
-	//rec_dev(1988) = 0.390562916683;
-	//rec_dev(1989) = 0.958984813664;
-	//rec_dev(1990) = 0.341445695216;
-	//rec_dev(1991) = 0.874756033361;
-	//rec_dev(1992) = 0.933028686244;
-	//rec_dev(1993) = 1.01981058901;
-	//rec_dev(1994) = 0.324819734112;
-	//rec_dev(1995) = 0.541030404404;
-	//rec_dev(1996) = 0.708024189230;
-	//rec_dev(1997) = 0.0482218408360;
-	//rec_dev(1998) = -0.349222279627;
-	//rec_dev(1999) = -0.843478266498;
-	//rec_dev(2000) = -0.814779536207;
-	//rec_dev(2001) = -0.825565449932;
-	//rec_dev(2002) = -1.90572137331;
-	//rec_dev(2003) = -0.779410026183;
-	//rec_dev(2004) = -1.43188385930;
-	//rec_dev(2005) = -0.405322301340;
-	//rec_dev(2006) = -0.0566542114838;
-	//rec_dev(2007) = -0.496238880972;
-	//rec_dev(2008) = 0.219672685937;
-	//rec_dev(2009) = 0.0107049129523;
-	//rec_dev(2010) = -0.0456293420190;
-	//rec_dev(2011) = -0.231653480187;
-	//rec_dev(2012) = -0.738095613443;
-	//rec_dev(2013) = -0.440234740019;
-	//rec_dev(2014) = -0.588969173256;
-	//rec_dev(2015) = -0.840594568975;
 
 	for ( i = syr; i <= nyr; i++ )
 	{
@@ -2362,17 +2325,11 @@ FUNCTION calc_stock_recruitment_relationship
 	{
 		case 0: // NO SRR
 			//res_recruit(syr) = log(recruits(syr)) - logRbar;
-			res_recruit(byr,nyr) = log(recruits(byr,nyr))
-			                       - (1.0-rho) * logRbar
-			                       - rho * log(++recruits(byr-1,nyr-1))
-			                       + sig2R;
+			res_recruit(byr,nyr) = log(recruits(byr,nyr)) - (1.0-rho) * logRbar - rho * log(++recruits(byr-1,nyr-1)) + sig2R;
 		break;
 		case 1: // SRR model
 			//xi(byr,nyr) = log(recruits(byr,nyr)) - log(rhat(byr,nyr)) + sig2R;
-			res_recruit(byr,nyr) = log(recruits(byr,nyr))
-			                       - (1.0-rho) * log(rhat(byr,nyr))
-			                       - rho * log(++recruits(byr-1,nyr-1))
-			                       + sig2R;
+			res_recruit(byr,nyr) = log(recruits(byr,nyr)) - (1.0-rho) * log(rhat(byr,nyr)) - rho * log(++recruits(byr-1,nyr-1)) + sig2R;
 		break;
 	}
 	
@@ -2462,7 +2419,7 @@ FUNCTION calc_predicted_catch
 						break;
 					}
 					tmp_ft = ft(k)(h)(i)(j);
-					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)(i)) : nal;
+					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
 					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
 				}
 			}
@@ -2549,7 +2506,7 @@ FUNCTION calc_predicted_catch_out
 						break;
 					}
 					tmp_ft = ft(k)(h)(i)(j);
-					nal = (unit == 1) ? elem_prod(nal,mean_wt(h)(i)) : nal;
+					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
 					pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
 				}
 			}
@@ -2593,7 +2550,7 @@ FUNCTION calc_relative_abundance
 					for ( int o = 1; o <= nshell; o++ )
 					{
 						ig = pntr_hmo(h,m,o);
-						nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)(i)) : d4_N(ig)(i)(j);
+						nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j), mean_wt(h)(i)) : d4_N(ig)(i)(j);
 					}
 				}
 				V(jj) = nal * sel;
@@ -2606,7 +2563,7 @@ FUNCTION calc_relative_abundance
 						for ( int o = 1; o <= nshell; o++ )
 						{
 							ig = pntr_hmo(h,m,o);
-							nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j),mean_wt(h)(i)) : d4_N(ig)(i)(j);
+							nal += ( unit == 1 ) ? elem_prod(d4_N(ig)(i)(j), mean_wt(h)(i)) : d4_N(ig)(i)(j);
 						}
 					}
 					V(jj) += nal * sel;
@@ -3421,17 +3378,17 @@ REPORT_SECTION
 			{
 				if ( isex(k) == 1 )
 				{
-					N_males(i,l) += d4_N(k,i,season_ssb,l);
+					N_males(i,l) += d4_N(k,i,season_N,l);
 					if ( ishell(k) == 2 )
 					{
-						N_males_old(i,l) += d4_N(k,i,season_ssb,l);
+						N_males_old(i,l) += d4_N(k,i,season_N,l);
 					}
 					if ( imature(k) == 1 )
 					{
-						N_mm(i,l) += d4_N(k,i,season_ssb,l);
+						N_mm(i,l) += d4_N(k,i,season_N,l);
 					}
 				}
-				N_len(i,l) += d4_N(k,i,season_ssb,l);
+				N_len(i,l) += d4_N(k,i,season_N,l);
 			}
 		}
 	}
@@ -3613,8 +3570,7 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	 * @return dvar_vector ssb (model mature biomass).
 	**/
 FUNCTION dvar_vector calc_ssb()
-	int ig,m,o;
-	int h = 1; // males
+	int ig,h,m,o;
 	dvar_vector ssb(syr,nyr);
 	ssb.initialize();
 
