@@ -5,7 +5,7 @@ author:
 - Jie Zheng
 - James Ianelli
 institute: "Quantifish, ADF&G, NOAA"
-date: "May 2016"
+date: "July 2016"
 output:
   pdf_document:
     highlight: zenburn
@@ -62,21 +62,19 @@ Changes in assessment results depend on model scenario. The Gmacs match model sc
 # B. Responses to SSC and CPT Comments
 
 ## CPT and SSC Comments on Assessments in General
-
-Spring 2016 CPT
-
-Comment: *comments*
-
-Response:
+No general comments relative to crab assessments were applied in this draft preliminary assessment.
 
 ## CPT and SSC Comments Specific to SMBKC Stock Assessment
+Comment:       
+*The SSC and CPT requested the following models for review at the spring  2016 meeting:*   
+  1. Base: try to match 2015 model but prevent dome shaped selex      
+  2. Base + add CV for both surveys      
+  3. Above + Francis re-weighting      
+  4. Above + remove M spike      
 
-Spring 2016 CPT
-
-Comment: *comments*
-
-Response:
-
+Response:    
+*Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model 
+requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting. *
 
 # C. Introduction
 
