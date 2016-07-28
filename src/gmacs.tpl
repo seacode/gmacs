@@ -191,7 +191,7 @@ DATA_SECTION
 				{
 					for ( int i = syr; i <= nyr; i++ )
 					{
-						mean_wt(h)(i) = lw_alfa(h) * pow(mid_points,lw_beta(h));
+						mean_wt(h)(i) = lw_alfa(h) * pow(mid_points, lw_beta(h));
 					}
 				}
 			break;
@@ -1187,9 +1187,10 @@ PARAMETER_SECTION
 	// Addtional CV for surveys/indices
 	init_bounded_number_vector log_add_cv(1,nSurveys,log_add_cv_lb,log_add_cv_ub,cv_phz);
 
+	vector priorDensity(1,ntheta+nGrwth+nSurveys+nSurveys+nslx_pars);
 	matrix nloglike(1,nlikes,1,ilike_vector);
 	vector nlogPenalty(1,6);
-	vector priorDensity(1,ntheta+nGrwth+nSurveys+nSurveys+nslx_pars);
+	matrix sdnr_MAR(1,10,1,2);
 
 	objective_function_value objfun;
 
@@ -2748,6 +2749,101 @@ FUNCTION calc_predicted_composition
 	}
 
 
+	// order is:     LFs    Tags     CPUE    PRI      CR       U
+FUNCTION void get_all_sdnr_MAR()
+	{
+		sdnr_MAR.initialize();
+		//resid=elem_div(log(elem_div(obs,pred)),std)+0.5*std;
+		//resid=elem_div(,std)+0.5*std;
+
+		int j = 1;
+		for ( int i = 1; i <= nSurveys; i++ )
+		{
+			dvector sdtmp = cpue_sd(i) * 1.0 / cpue_lambda(i);
+			sdnr_MAR(j++) = calc_sdnr_MAR(value(elem_div(res_cpue(i), sdtmp) + 0.5 * sdtmp));
+		}
+		for ( int k = 1; k <= nSizeComps; k++ )
+		{
+			//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
+			sdnr_MAR(j++) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
+		}
+	}
+
+
+FUNCTION dvector calc_sdnr_MAR(dvector tmpVec)
+	{
+		dvector out(1,2);
+		dvector tmp = fabs(tmpVec);
+		dvector w = sort(tmp);
+		out(1) = std_dev(tmpVec);                 // sdnr
+		out(2) = w(floor(0.5*(size_count(w)+1))); // MAR
+		return out;
+	}
+
+
+FUNCTION dvector calc_sdnr_MAR(dmatrix tmpMat)
+	{
+		dvector tmpVec(1,size_count(tmpMat));
+		dvector out(1,2);
+		int dmin,dmax;
+		dmin = 1;
+		for ( int ii = tmpMat.indexmin(); ii <= tmpMat.indexmax(); ii++ )
+		{
+			dmax = dmin + size_count(tmpMat(ii)) - 1;
+			tmpVec(dmin,dmax) = tmpMat(ii).shift(dmin);
+			dmin = dmax + 1;
+		}
+		dvector tmp = fabs(tmpVec);
+		dvector w = sort(tmp);
+		out(1) = std_dev(tmpVec);                 // sdnr
+		out(2) = w(floor(0.5*(size_count(w)+1))); // MAR
+		return out;
+	}
+
+
+  /**
+   * @brief Calculate Francis weights
+   * @details this code based on equation TA1.8 in Francis(2011) should be changed so separate weights if by sex
+  **/
+FUNCTION dvector calc_Francis_weights()
+	{
+		int j,nobs;
+		//int type,shell,bmature;
+		//d3_pre_size_comps_in.initialize();
+		//d3_pre_size_comps.initialize();
+		//dvar_vector dNtmp(1,nclass);
+		//dvar_vector dNtot(1,nclass);
+		//dvar_vector   nal(1,nclass);
+		dvector lfwt(1,nSizeComps);
+		double Obs, Pre, Var;
+		Obs = 0.0;
+		Pre = 0.0;
+		Var = 0.0;
+		//int nbins = nSizeCompCols(i);
+
+		for ( int k = 1; k <= nSizeComps; k++ )
+		{
+			nobs = nSizeCompRows(k);
+			dvector resid(1,nobs);
+			j = 1;
+			for ( int i = 1; i <= nSizeCompRows(k); i++ )
+			{
+				if ( sum(d3_obs_size_comps(k,i)) > 0 )
+				{
+					Obs += sum(elem_prod(d3_obs_size_comps(k,i), mid_points));
+					Pre += sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
+					Var += sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
+	        		//P_yj+= sum(elem_prod(value(Plfrq_risl(ireg,ii,isx)(bins(ireg,isx,1),bins(ireg,isx,2))), Size(bins(ireg,isx,1),bins(ireg,isx,2))));
+					//(d3_obs_size_comps(k,i) - d3_pre_size_comps(k,i))				
+				}
+			}
+			Var -= square(Pre);
+			resid(j++) = (Obs - Pre) / sqrt(Var);
+			lfwt(k) = 1.0 / (var(resid)*((nobs-1.0)/nobs*1.0));
+		}
+		return lfwt;
+	}
+
 
   /**
    * @brief Calculate prior pdf
@@ -3210,6 +3306,10 @@ REPORT_SECTION
 	REPORT(nloglike);
 	REPORT(nlogPenalty);
 	REPORT(priorDensity);
+
+	get_all_sdnr_MAR();
+	REPORT(sdnr_MAR);
+
 	REPORT(dCatchData);
 	REPORT(obs_catch);
 	REPORT(pre_catch);
