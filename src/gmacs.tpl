@@ -2808,11 +2808,7 @@ FUNCTION dvector calc_sdnr_MAR(dmatrix tmpMat)
 FUNCTION dvector calc_Francis_weights()
 	{
 		int j,nobs;
-		//d3_pre_size_comps_in.initialize();
-		//d3_pre_size_comps.initialize();
-		//dvar_vector dNtmp(1,nclass);
-		//dvar_vector dNtot(1,nclass);
-		//dvar_vector   nal(1,nclass);
+		
 		dvector lfwt(1,nSizeComps);
 		double Obs, Pre, Var;
 		Obs = 0.0;
