@@ -2749,7 +2749,10 @@ FUNCTION calc_predicted_composition
 	}
 
 
-	// order is:     LFs    Tags     CPUE    PRI      CR       U
+  /**
+   * @brief Calculate sdnr and MAR
+   * @details order is:     LFs    Tags     CPUE    PRI      CR       U
+  **/
 FUNCTION void get_all_sdnr_MAR()
 	{
 		sdnr_MAR.initialize();
@@ -2808,7 +2811,7 @@ FUNCTION dvector calc_sdnr_MAR(dmatrix tmpMat)
 FUNCTION dvector calc_Francis_weights()
 	{
 		int j,nobs;
-		
+
 		dvector lfwt(1,nSizeComps);
 		double Obs, Pre, Var;
 		Obs = 0.0;
@@ -3059,12 +3062,12 @@ FUNCTION calc_objective_function
 	}
 
 	// 3) Likelihood for size composition data.
+	d3_res_size_comps.initialize();
 	for ( int ii = 1; ii <= nSizeComps; ii++ )
 	{
 		dmatrix O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
 		dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii));
-		d3_res_size_comps.initialize();
 
 		bool bCmp = bTailCompression(ii);
 		class acl::negativeLogLikelihood *ploglike;
@@ -3389,7 +3392,7 @@ REPORT_SECTION
 		{
 			d3_obs_size_comps_out(kk,ii) = d3_obs_size_comps_in(kk,ii) / sum(d3_obs_size_comps_in(kk,ii));
 			d3_pre_size_comps_out(kk,ii) = d3_pre_size_comps_in(kk,ii) / sum(d3_pre_size_comps_in(kk,ii));
-			d3_res_size_comps_out(kk,ii) = d3_obs_size_comps_out(kk,ii) - d3_pre_size_comps_out(kk,ii);
+			d3_res_size_comps_out(kk,ii) = d3_obs_size_comps_out(kk,ii) - d3_pre_size_comps_out(kk,ii); // WRONG, DARCY 29 jULY 2016
 		}
 	}
 
@@ -3397,6 +3400,7 @@ REPORT_SECTION
 	REPORT(d3_obs_size_comps_out);
 	REPORT(d3_pre_size_comps_out);
 	REPORT(d3_res_size_comps_out);
+	REPORT(d3_res_size_comps);
 
 	REPORT(rec_sdd);
 	REPORT(rec_ini);
