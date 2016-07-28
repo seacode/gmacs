@@ -2834,7 +2834,6 @@ FUNCTION dvector calc_Francis_weights()
 					Pre += sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
 					Var += sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
 	        		//P_yj+= sum(elem_prod(value(Plfrq_risl(ireg,ii,isx)(bins(ireg,isx,1),bins(ireg,isx,2))), Size(bins(ireg,isx,1),bins(ireg,isx,2))));
-					//(d3_obs_size_comps(k,i) - d3_pre_size_comps(k,i))				
 				}
 			}
 			Var -= square(Pre);
