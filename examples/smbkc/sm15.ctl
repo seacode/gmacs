@@ -102,8 +102,8 @@
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
-   1.0     0        2     -1    0       0        9.0   0           0.5       # NMFS trawl
-3.98688533089e-06 0 5      1    0       0        9.0   0           0.5       # ADF&G pot
+   1.0     0        2     -1    0       0        9.0   0           1.0       # NMFS trawl
+3.98688533089e-06 0 5      1    0       0        9.0   0           1.0       # ADF&G pot
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -141,13 +141,15 @@
 ## AUTOTAIL COMPRESSION
 ##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-#  1   1   1  # Type of likelihood
-  2   2   2  # Type of likelihood
+  1   1   1  # Type of likelihood
+#  2   2   2  # Type of likelihood
 #  5   5   5   # Type of likelihood
   0   0   0   # Auto tail compression (pmin)
   1   1   1   # Initial value for effective sample size multiplier
  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
   1   2   3   # Composition aggregator
+#  1   1   1   # LAMBDA
+   1.6804   1.6931   2.7610
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

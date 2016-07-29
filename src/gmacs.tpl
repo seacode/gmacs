@@ -853,6 +853,8 @@ DATA_SECTION
 	init_vector nvn_ival_in(1,nSizeComps_in);
 	init_ivector nvn_phz_in(1,nSizeComps_in);
 	init_ivector iCompAggregator(1,nSizeComps_in);
+	init_vector lf_lambda_in(1,nSizeComps_in);
+
 
 	int nSizeComps;
 	!! nSizeComps = max(iCompAggregator);
@@ -862,6 +864,7 @@ DATA_SECTION
 	ivector bTailCompression(1,nSizeComps);
 	vector log_nvn_ival(1,nSizeComps);
 	ivector nvn_phz(1,nSizeComps);
+	vector lf_lambda(1,nSizeComps);
 
 	LOC_CALCS
 		WriteCtl(nAgeCompType_in);
@@ -882,6 +885,7 @@ DATA_SECTION
 			bTailCompression(k) = bTailCompression_in(kk);
 			log_nvn_ival(k) = log(nvn_ival_in(kk));
 			nvn_phz(k) = nvn_phz_in(kk);
+			lf_lambda(k) = lf_lambda_in(kk);
 		}
 		// Do the checks mentioned above
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
@@ -2810,6 +2814,8 @@ FUNCTION dvector calc_sdnr_MAR(dmatrix tmpMat)
   /**
    * @brief Calculate Francis weights
    * @details this code based on equation TA1.8 in Francis(2011) should be changed so separate weights if by sex
+   *
+   * Produces the new weight that should be used.
   **/
 FUNCTION dvector calc_Francis_weights()
 	{
@@ -2825,17 +2831,23 @@ FUNCTION dvector calc_Francis_weights()
 			resid.initialize();
 			for ( int i = 1; i <= nSizeCompRows(k); i++ )
 			{
-				if ( sum(d3_obs_size_comps(k,i)) > 0 )
-				{
+				//if ( sum(d3_obs_size_comps(k,i)) > 0 )
+				//{
 					Obs = sum(elem_prod(d3_obs_size_comps(k,i), mid_points));
 					Pre = sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
 					Var = sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
 	        		//P_yj+= sum(elem_prod(value(Plfrq_risl(ireg,ii,isx)(bins(ireg,isx,1),bins(ireg,isx,2))), Size(bins(ireg,isx,1),bins(ireg,isx,2))));
-				}
+				//}
 				Var -= square(Pre);
-				resid(j++) = (Obs - Pre) / sqrt(Var);
+        		//lfrqwt_ri(ireg,jj)=lfrq_in(ireg,jj,4);
+				//Lfsigma_risl(ireg,ii,isx)=sigmatilde/(lfrqwt_ri(ireg,ii)*LF_Like_wt(ireg,isx));
+				//dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii));
+				resid(j++) = (Obs - Pre) / sqrt(Var * 1.0 / (size_comp_sample_size(k,i) * lf_lambda(k)));
+				//resid(j++) = (Obs - Pre) / sqrt(Var * value(1.0 / (size_comp_sample_size(k,i) * 1.0)));
 			}
-			lfwt(k) = 1.0 / (var(resid)*((nobs-1.0)/nobs*1.0));
+			//lfwt(k) = 1.0 / (var(resid)*((nobs-1.0)/nobs*1.0));
+			lfwt(k) = 1.0 / (square(std_dev(resid)) * ((nobs - 1.0) / nobs * 1.0));
+			lfwt(k) *= lf_lambda(k);
 		}
 		return lfwt;
 	}
@@ -3311,8 +3323,10 @@ REPORT_SECTION
 
 	get_all_sdnr_MAR();
 	REPORT(sdnr_MAR_cpue);
+	REPORT(cpue_lambda);
 	REPORT(sdnr_MAR_lf);
 	REPORT(Francis_weights);
+	REPORT(lf_lambda);
 
 	REPORT(dCatchData);
 	REPORT(obs_catch);
