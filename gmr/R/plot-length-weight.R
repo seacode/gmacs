@@ -9,25 +9,31 @@
 {
     n   <- length(M)
     mdf <- NULL
-    for(i in 1:n)
+    for ( i in 1:n )
     {
         A  <- M[[i]]
-        nsex <- 1
-        if (is.matrix(A$mean_wt))
+        nsex <- A$nsex
+        if ( is.matrix(A$mean_wt) && nsex == 2 )
         {
-            nsex <- 2
             wt <- t(A$mean_wt)
+            colnames(wt) <- .SEX[1:nsex+1]
+        } else if ( is.matrix(A$mean_wt) && nsex == 1 ) {
+            wt <- t(A$mean_wt)
+            colnames(wt) <- A$mod_yrs
         } else {
             wt <- data.frame(A$mean_wt)
         }
-        colnames(wt) <- .SEX[1:nsex+1]
         df <- data.frame(Model = names(M)[i], Length = A$mid_points, wt)
-        df1 <- melt(df, id.var = c("Model", "Length"))
+        df1 <- reshape2::melt(df, id.var = c("Model", "Length"))
         mdf <- rbind(mdf, df1)
     }
-    names(mdf) <- c("Model", "Length", "Sex", "Weight")
-    mdf$Sex <- factor(mdf$Sex, levels = sort(levels(mdf$Sex)))
-    return(mdf)	
+    mdf$variable <- gsub("X", "", mdf$variable)
+    names(mdf) <- c("Model", "Length", "Year", "Weight")
+    #names(mdf) <- c("Model", "Length", "Sex", "Weight")
+    #mdf$Sex <- factor(mdf$Sex, levels = sort(levels(mdf$Sex)))
+    mdf$Year <- factor(mdf$Year)
+    mdf$Sex <- .SEX[1:nsex+1]
+    return(mdf)
 }
 
 
@@ -67,15 +73,16 @@ plot_length_weight <- function(M, xlab = "Mid-point of size class (mm)", ylab = 
     #    }
     #}
     
-    if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
-    {
-        p <- p + geom_line() + geom_point()
-    } else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
-        p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
-    } else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
-        p <- p + geom_line(aes(linetype = Sex))
-    } else {
-        p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
-    }
+    #if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
+    #{
+    #    p <- p + geom_line() + geom_point()
+    #} else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
+    #    p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
+    #} else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
+    #    p <- p + geom_line(aes(linetype = Sex))
+    #} else {
+    #    p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
+    #}
+    p <- p + geom_line(aes(col = Year))
     print(p + .THEME)
 }

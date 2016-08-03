@@ -36,12 +36,12 @@ options(xtable.comment = FALSE)
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate")
 .MATURITY = c("Aggregate")
-.SEAS     = c("1","2","3","4")
+.SEAS     = c("1","2","3","4","5")
 
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("2015 Model","Gmacs match","Gmacs base","Gmacs CV","Gmacs M")
+names(M) <- c("2015 Model","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis")
 
 jj <- 1 # The position in the list that Jies model outputs sit
 fn <- "2015_model/smbkc15100"
@@ -840,6 +840,27 @@ Table 4XX. Log-likelihood and penalty components of base-model objective functio
 |-----------|--------------|------|
 | Legal retained-catch biomass | Lognormal | $-0.5 \sum \left( \log (c_t/C_t)^2 / \log (1+cv^2_c) \right)$ |
 | Dis. Pot bycatch biomass | Lognormal | |
+
+
+
+\begin{align}
+  \sigma_i &= \frac{1}{\lambda} \sqrt{\log(1.0 + c_i^2)}\\
+  \delta_i &= \frac{\log(obs_i/pred_i)}{\sigma_i} + 0.5 \sigma_i
+\end{align}
+The standard deviation of the normalized (or standardized) residuals (SDNR) is calculated as
+\begin{equation}
+  sdnr = \sqrt{\frac{1}{n} \sum_{i=1}^n \left( \delta_i - \bar{\delta} \right)^2}
+\end{equation}
+For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Since the normalized residuals are (approximately) normally distributed, a reasonable guideline is that the SDNR should be less than $\chi^2$, where c2; m1 is the 95th percentile of a c2 distribution with $m - 1$ degrees of freedom (e.g., this means upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively). Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expectected abundances to ensure that the fit is good.
+
+The MAR is
+dvector tmp = fabs(tmpVec);
+dvector w = sort(tmp);
+out(2) = w(floor(0.5*(size_count(w)+1))); // MAR
+
+
+MAR, Francis weighting
+
 
 
 

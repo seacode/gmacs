@@ -42,7 +42,6 @@ private:
 	dmatrix m_wa;
 	dmatrix m_fref;
 
-
 	d3_array m_M;
 	d3_array m_A;
 	d3_array m_P;		// molting probability

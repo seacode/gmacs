@@ -186,6 +186,7 @@ DATA_SECTION
 		mid_points = size_breaks(1,nclass) + 0.5 * first_difference(size_breaks);
 		switch ( lw_type )
 		{
+			// allometry
 			case 1:
 				for ( int h = 1; h <= nsex; h++ )
 				{
@@ -195,6 +196,7 @@ DATA_SECTION
 					}
 				}
 			break;
+			// vector by sex
 			case 2:
 				for ( int h = 1; h <= nsex; h++ )
 				{
@@ -207,6 +209,7 @@ DATA_SECTION
 					}
 				}
 			break;
+			// matrix by sex
 			case 3:
 				for ( int h = 1; h <= nsex; h++ )
 				{
@@ -228,13 +231,15 @@ DATA_SECTION
 	// |-------------------------------|
 	init_vector fecundity(1,nclass);
 	init_matrix maturity(1,nsex,1,nclass);
-	init_vector m_prop(1,nseason);
+	init_int m_prop_type;
+	init_matrix m_prop(syr,nyr,1,nseason);
+	//matrix m_prop(syr,nyr,1,nseason);
 	LOC_CALCS
-		if ( sum(m_prop) != 1.0 )
-		{
-			cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1!" << endl;
-			exit(1);
-		}
+		//if ( sum(m_prop) != 1.0 )
+		//{
+		//	cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1!" << endl;
+		//	exit(1);
+		//}
 		WRITEDAT(fecundity); WRITEDAT(maturity);
 	END_CALCS
 
@@ -1766,7 +1771,6 @@ FUNCTION calc_natural_mortality
 			}
 		}
 	}
-	//M(1)(1998) = 0.937813362435;
 
 
 	/**
@@ -1781,62 +1785,14 @@ FUNCTION calc_natural_mortality
 FUNCTION calc_total_mortality
 	Z.initialize();
 	S.initialize();
-	dvar_matrix m_prop_2(syr,nyr,1,nseason);
-	m_prop_2.initialize();
-	m_prop_2(1978)(2) = 0.07;
-	m_prop_2(1979)(2) = 0.06;
-	m_prop_2(1980)(2) = 0.07;
-	m_prop_2(1981)(2) = 0.05;
-	m_prop_2(1982)(2) = 0.07;
-	m_prop_2(1983)(2) = 0.12;
-	m_prop_2(1984)(2) = 0.10;
-	m_prop_2(1985)(2) = 0.14;
-	m_prop_2(1986)(2) = 0.14;
-	m_prop_2(1987)(2) = 0.14;
-	m_prop_2(1988)(2) = 0.14;
-	m_prop_2(1989)(2) = 0.14;
-	m_prop_2(1990)(2) = 0.14;
-	m_prop_2(1991)(2) = 0.18;
-	m_prop_2(1992)(2) = 0.14;
-	m_prop_2(1993)(2) = 0.18;
-	m_prop_2(1994)(2) = 0.18;
-	m_prop_2(1995)(2) = 0.18;
-	m_prop_2(1996)(2) = 0.18;
-	m_prop_2(1997)(2) = 0.18;
-	m_prop_2(1998)(2) = 0.18; //21
-	m_prop_2(1999)(2) = 0.18;
-	m_prop_2(2000)(2) = 0.18;
-	m_prop_2(2001)(2) = 0.18;
-	m_prop_2(2002)(2) = 0.18;
-	m_prop_2(2003)(2) = 0.18;
-	m_prop_2(2004)(2) = 0.18;
-	m_prop_2(2005)(2) = 0.18;
-	m_prop_2(2006)(2) = 0.18;
-	m_prop_2(2007)(2) = 0.18;
-	m_prop_2(2008)(2) = 0.18; //31
-	m_prop_2(2009)(2) = 0.44; //32
-	m_prop_2(2010)(2) = 0.44;
-	m_prop_2(2011)(2) = 0.44;
-	m_prop_2(2012)(2) = 0.44;
-	m_prop_2(2013)(2) = 0.44;
-	m_prop_2(2014)(2) = 0.44;
-	m_prop_2(2015)(2) = 0.44;
-	for ( int i = syr; i <= nyr; i++ )
-	{
-		m_prop_2(i)(4) = 0.63 - m_prop_2(i)(2) - m_prop_2(i)(3);
-		m_prop_2(i)(5) = 1 - sum(m_prop_2(i));
-	}
 
-	//cout << m_prop_2 << endl;
-	//exit(1);
 	for ( int h = 1; h <= nsex; h++ )
 	{
 		for ( int i = syr; i <= nyr; i++ )
 		{
 			for ( int j = 1; j <= nseason; j++ )
 			{
-				Z(h)(i)(j) = (m_prop_2(i)(j) * M(h)(i)) + F(h)(i)(j);
-				//Z(h)(i)(j) = (m_prop(j) * M(h)(i)) + F(h)(i)(j);
+				Z(h)(i)(j) = (m_prop(i)(j) * M(h)(i)) + F(h)(i)(j);
 				for ( int l = 1; l <= nclass; l++ )
 				{
 					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
@@ -1863,7 +1819,7 @@ FUNCTION reset_Z_to_M
 		{
 			for ( int j = 1; j <= nseason; j++ )
 			{
-				Z(h)(i)(j) = m_prop(j) * M(h)(i);
+				Z(h)(i)(j) = m_prop(i)(j) * M(h)(i);
 				for ( int l = 1; l <= nclass; l++ )
 				{
 					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
@@ -2113,19 +2069,41 @@ FUNCTION update_population_numbers_at_length
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix At(1,nclass,1,nclass);
 
+	//switch( bInitializeUnfished )
+	//{
+	//	case 0: // Unfished conditions
+	//		log_initial_recruits = logR0;
+	//	break;
+	//	case 1: // Steady-state fished conditions
+	//		log_initial_recruits = logRini;
+	//	break;
+	//	case 2: // Free parameters
+	//		//log_initial_recruits = logRini;
+	//		log_initial_recruits = logN0(1); // only for SMBKC
+	//	break;
+	//}
+
 	//if ( bInitializeUnfished == 0 )
 	//{
 	//	recruits(syr+1,nyr) = mfexp(logR0);
 	//} else {
 	//	recruits(syr+1,nyr) = mfexp(logRbar);
 	//}
-	recruits(syr,nyr) = mfexp(logRbar);
+	//recruits(syr,nyr) = mfexp(logRbar);
+
+	// this is what should be used because recruitment is not always during the first season (i.e. during the initial conditions)
+	if ( bInitializeUnfished == 0 )
+	{
+		recruits(syr,nyr) = mfexp(logR0);
+	} else {
+		recruits(syr,nyr) = mfexp(logRbar);
+	}
 
 	for ( i = syr; i <= nyr; i++ )
 	{
 		// if ( i > syr )
 		//{
-			recruits(i) *= mfexp(rec_dev(i));
+		recruits(i) *= mfexp(rec_dev(i));
 		//}
 		rt = (1.0/nsex * recruits(i)) * rec_sdd;
 
@@ -2764,12 +2742,11 @@ FUNCTION void get_all_sdnr_MAR()
 		//           CPUEsigmafixed_ri(ireg,ind1)=data_in(ireg,ii,6);
         //   if(iy<CPUEprocerr2_yr) CPUEsigmafixed_ri(ireg,ind1)=sqrt(square(CPUEsigmafixed_ri(ireg,ind1))+square(CPUEprocerr)); = 0.25
         //   if(iy>=CPUEprocerr2_yr) CPUEsigmafixed_ri(ireg,ind1)=sqrt(square(CPUEsigmafixed_ri(ireg,ind1))+square(CPUEprocerr2)); = 0.25
-
 		for ( int k = 1; k <= nSurveys; k++ )
 		{
 			dvector stdtmp = cpue_sd(k) * 1.0 / cpue_lambda(k);
 			dvar_vector restmp = elem_div(log(elem_div(obs_cpue(k), pre_cpue(k))), stdtmp) + 0.5 * stdtmp;
-			sdnr_MAR_cpue(k) = calc_sdnr_MAR(value(elem_div(restmp, stdtmp) + 0.5 * stdtmp));
+			sdnr_MAR_cpue(k) = calc_sdnr_MAR(value(restmp));
 		}
 		for ( int k = 1; k <= nSizeComps; k++ )
 		{

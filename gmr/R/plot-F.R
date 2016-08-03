@@ -14,7 +14,7 @@
     {
         A <- M[[i]]
         nyear <- length(A$mod_yrs)
-        nseas <- nseason <- length(A$m_prop)
+        nseas <- nseason <- A$nseason
         nclass <- length(A$mid_points)
         nfleet <- A$nfleet
         df <- data.frame(A$ft, Model = names(M)[i])

@@ -148,6 +148,7 @@
   1   1   1   # Initial value for effective sample size multiplier
  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
   1   2   3   # Composition aggregator
+  1   1   1   # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

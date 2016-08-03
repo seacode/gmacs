@@ -9,7 +9,4 @@ gmr.version()
 \description{
 Function to return version number
 }
-\author{
-D'Arcy N. Webber
-}
 

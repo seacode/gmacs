@@ -3,7 +3,7 @@
 <li><p><strong>Stock</strong>: Blue king crab, <em>Paralithodes platypus</em>, Saint Matthew Island (SMBKC), Alaska.</p></li>
 <li><p><strong>Catches</strong>: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonnes (1.167 million pounds) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).</p></li>
 <li><p><strong>Stock biomass</strong>: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 tonnes (20.98 million pounds; CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 5652 tonnes (12.46 million pounds; CV = 0.33) in 2012 and to 2202 tonnes (4.459 million pounds; CV = 0.22) in 2013 before going back up to 5472 tonnes (12.06 million pounds; CV = 0.44) in 2014 and 5134 tonnes (11.32 million pounds; CV = 0.76).</p></li>
-<li><p><strong>Recruitment</strong>: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm CL size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate is 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty.</p></li>
+<li><p><strong>Recruitment</strong>: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate is 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty.</p></li>
 <li><p><strong>Management performance</strong>: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider.</p></li>
 </ol>
 <p>The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.</p>
@@ -191,8 +191,10 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <p></p>
 
 
+<pre><code>## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 19, 17</code></pre>
 
 
+<pre><code>## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 60, 64</code></pre>
 
 
 
@@ -263,7 +265,9 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <div class="figure">
 <img src="figure/mature_male_biomass-1.png" alt="Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios." /><p class="caption">Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios.</p>
 </div>
-<pre><code>## Error in `colnames&lt;-`(`*tmp*`, value = c(&quot;Male&quot;, NA)): length of &#39;dimnames&#39; [2] not equal to array extent</code></pre>
+<div class="figure">
+<img src="figure/length_weight-1.png" alt="Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs)." /><p class="caption">Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs).</p>
+</div>
 <div class="figure">
 <img src="figure/init_rec-1.png" alt="Distribution of carapace width (mm) at recruitment." /><p class="caption">Distribution of carapace width (mm) at recruitment.</p>
 </div>
@@ -342,6 +346,12 @@ In all scenarios, the stage-transition matrix is
 </tr>
 </tbody>
 </table>
+
+The standard deviation of the normalized (or standardized) residuals (SDNR) is calculated as
+
+<p>For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by &quot;much greater than 1&quot; depends on <span class="math"><em>m</em></span> (the number of years in the data set). Since the normalized residuals are (approximately) normally distributed, a reasonable guideline is that the SDNR should be less than <span class="math"><em>χ</em><sup>2</sup></span>, where c2; m1 is the 95th percentile of a c2 distribution with <span class="math"><em>m</em> − 1</span> degrees of freedom (e.g., this means upper limits of 1.54, 1.37, and 1.26 for <span class="math"><em>m</em></span> = 5, 10, and 20, respectively). Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expectected abundances to ensure that the fit is good.</p>
+<p>The MAR is dvector tmp = fabs(tmpVec); dvector w = sort(tmp); out(2) = w(floor(0.5*(size_count(w)+1))); // MAR</p>
+<p>MAR, Francis weighting</p>
 <h2 id="estimation">6. Estimation</h2>
 <p>The model was implemented using the software AD Model Builder (Fournier et al. 2012), with parameter estimation by minimization of the model objective function using automatic differentiation. Parameter estimates and standard deviations provided in this document are AD Model Builder reported values assuming maximum likelihood theory asymptotics.</p>
 <p></p>
@@ -501,6 +511,7 @@ In all scenarios, the stage-transition matrix is
 ##   1   1   1   # Initial value for effective sample size multiplier 
 ##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
 ##   1   2   3   # Composition aggregator 
+##   1   1   1   # LAMBDA 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -692,6 +703,7 @@ In all scenarios, the stage-transition matrix is
 ##   1   1   1   # Initial value for effective sample size multiplier 
 ##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
 ##   1   2   3   # Composition aggregator 
+##   1   1   1   # LAMBDA 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -849,8 +861,8 @@ In all scenarios, the stage-transition matrix is
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ival        lb        ub        phz   prior     p1      p2 
-##    0.00001      0.000001   10.0       4    4         1.0     100   # NMFS 
-##    0.00001      0.000001   10.0       4    4         1.0     100   # ADF&amp;G 
+##    0.00001      0.000001   10.0      -4    4         1.0     100   # NMFS 
+##    0.00001      0.000001   10.0      -4    4         1.0     100   # ADF&amp;G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -883,6 +895,7 @@ In all scenarios, the stage-transition matrix is
 ##   1   1   1   # Initial value for effective sample size multiplier 
 ##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
 ##   1   2   3   # Composition aggregator 
+##   1   1   1   # LAMBDA 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -896,7 +909,7 @@ In all scenarios, the stage-transition matrix is
 ## ##      4 = Time blocks 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## Type 
-## 3 
+## 0 
 ## ## Phase of estimation 
 ## 4 
 ## ## STDEV in m_dev for Random walk 
@@ -1029,7 +1042,7 @@ In all scenarios, the stage-transition matrix is
 ## ## SURVEYS/INDICES ONLY 
 ## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
 ##    1.0     0        2     -1    0       0        9.0   0           1       # NMFS trawl 
-## 4.26724288404e-06 0 5      1    0       0        9.0   0           1       # ADF&amp;G pot 
+## 4.26724288404e-06 0 5      1    0       0        9.0   0           0.2     # ADF&amp;G pot 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1040,8 +1053,8 @@ In all scenarios, the stage-transition matrix is
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ival        lb        ub        phz   prior     p1      p2 
-##    0.00001      0.000001   10.0       4    4         1.0     100   # NMFS 
-##    0.00001      0.000001   10.0       4    4         1.0     100   # ADF&amp;G 
+##    0.00001      0.000001   10.0      -4    4         1.0     100   # NMFS 
+##    0.00001      0.000001   10.0      -4    4         1.0     100   # ADF&amp;G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1074,6 +1087,8 @@ In all scenarios, the stage-transition matrix is
 ##   1   1   1   # Initial value for effective sample size multiplier 
 ##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
 ##   1   2   3   # Composition aggregator 
+## #  1   1   1   # LAMBDA 
+##    1.6281   0.9533   3.5785 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
