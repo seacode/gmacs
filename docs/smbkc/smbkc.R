@@ -713,7 +713,7 @@ The Gmacs model has been specified to account only for male crab at least 90 mm 
 
 ## 2. Model Population Dynamics
 
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. MMB is measured 15 February. To accomodate this, each model year is split into five seasons:
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. The timing of the fishery is different each year. MMB is measured 15 February. To accomodate this, each model year is split into five seasons and a proportion of the natural mortality ($\tau$) is applied in each of these seasons:
 \begin{enumerate}
     \item Season 1
     \begin{itemize}
@@ -740,6 +740,7 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
         \item Recruitment (all to stage-1)
     \end{itemize}
 \end{enumerate}
+Put the table if tau here.
 
 With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}

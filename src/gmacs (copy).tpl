@@ -120,7 +120,6 @@ DATA_SECTION
 	// |------------------|
 	init_int syr;     ///> initial year
 	init_int nyr;     ///> terminal year
-	init_int pyr;     ///> terminal projection year
 	init_int nseason; ///> time step (years)
 	init_int nfleet;  ///> number of gears
 	init_int nsex;    ///> number of sexes
@@ -1249,8 +1248,7 @@ PARAMETER_SECTION
 	4darray Z(1,nsex,syr,nyr,1,nseason,1,nclass);          ///> Total mortality
 	5darray S(1,nsex,syr,nyr,1,nseason,1,nclass,1,nclass); ///> Surival Rate (S=exp(-Z))
 
-	4darray d4_N(1,n_grp,syr,nyr,1,nseason,1,nclass);       ///> Numbers-at-sex/mature/shell/year/season/length.
-	4darray d4_N_proj(1,n_grp,nyr+1,pyr,1,nseason,1,nclass);  ///> Numbers-at-sex/mature/shell/year/season/length.
+	4darray d4_N(1,n_grp,syr,nyr+1,1,nseason,1,nclass);       ///> Numbers-at-sex/mature/shell/year/season/length.
 	4darray ft(1,nfleet,1,nsex,syr,nyr,1,nseason);            ///> Fishing mortality by gear
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
 	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass); ///> Old shell crabs-at-length.
@@ -2134,10 +2132,7 @@ FUNCTION update_population_numbers_at_length
 					}
 					if (j == nseason)
 					{
-						if (i != nyr)
-						{
-							d4_N(ig)(i+1)(1) = x;
-						}
+						d4_N(ig)(i+1)(1) = x;
 					} else {
 						d4_N(ig)(i)(j+1) = x;
 					}
@@ -2169,10 +2164,7 @@ FUNCTION update_population_numbers_at_length
 						}
 						if (j == nseason)
 						{
-							if (i != nyr)
-							{
-								d4_N(ig)(i+1)(1) = x;
-							}
+							d4_N(ig)(i+1)(1) = x;
 						} else {
 							d4_N(ig)(i)(j+1) = x;
 						}
@@ -2250,115 +2242,6 @@ FUNCTION update_population_numbers_at_length
 			}
 		}
 		//if (i == syr+2) exit(1);
-	}
-
-
-FUNCTION project_population_numbers_at_length
-	int h,i,ig,o,m;
-
-	dvar_vector rt(1,nclass);
-	dvar_vector  x(1,nclass);
-	dvar_vector  y(1,nclass);
-	dvar_vector  z(1,nclass);
-	
-	for ( ig = 1; ig <= n_grp; ig++ )
-	{
-		d4_N_proj(ig)(nyr+1)(1) = d4_N(ig)(nyr)(nseason);
-	}
-
-	for ( i = nyr+1; i <= pyr; i++ )
-	{
-		//recruits(i) *= mfexp(rec_dev(i));
-		//rt = (1.0/nsex * recruits(i)) * rec_sdd;
-		rt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
-
-		for ( int j = 1; j <= nseason; j++ )
-		{
-			for ( ig = 1; ig <= n_grp; ig++ )
-			{
-				h = isex(ig);
-				m = imature(ig);
-				o = ishell(ig);
-
-				if ( nshell == 1 )
-				{
-					x = d4_N_proj(ig)(i)(j);
-					// Mortality (natural and fishing)
-					x = x * S(h)(nyr)(j);
-					// Molting and growth
-					if (j == season_growth)
-					{
-						x = x * size_transition(h);
-					}
-					// Recruitment
-					if (j == season_recruitment)
-					{
-						x += rt;
-					}
-					if (j == nseason)
-					{
-						if (i != pyr)
-						{ 
-							d4_N_proj(ig)(i+1)(1) = x;
-						}
-					} else {
-						d4_N_proj(ig)(i)(j+1) = x;
-					}
-				} else {
-					if ( o == 1 ) // newshell
-					{
-						x = d4_N_proj(ig)(i)(j);
-						// Mortality (natural and fishing)
-						x = x * S(h)(nyr)(j);
-						// Molting and growth
-						if (j == season_growth)
-						{
-							y = elem_prod(x,1-diagonal(P(h))); // did not molt, become oldshell
-							x = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
-						}
-						// Recruitment
-						if (j == season_recruitment)
-						{
-							x += rt;
-						}
-						if (j == nseason)
-						{
-							if (i != pyr)
-							{
-								d4_N_proj(ig)(i+1)(1) = x;
-							}
-						} else {
-							d4_N_proj(ig)(i)(j+1) = x;
-						}
-					}
-					if ( o == 2 ) // oldshell
-					{
-						// add oldshell non-terminal molts to newshell
-						x = d4_N_proj(ig)(i)(j);
-						// Mortality (natural and fishing)
-						x = x * S(h)(i)(j);
-						// Molting and growth
-						z.initialize();
-						if (j == season_growth)
-						{
-							z = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
-							x = elem_prod(x,1-diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
-						}
-						if (j == nseason)
-						{
-							if (i != pyr)
-							{
-								d4_N_proj(ig-1)(i+1)(1) += z;
-								d4_N_proj(ig)(i+1)(1) = x;
-							}
-						} else {
-							d4_N_proj(ig-1)(i)(j+1) += z;
-							d4_N_proj(ig)(i)(j+1) = x;
-						}
-					}
-				}
-			}
-		}
 	}
 
 
@@ -3398,7 +3281,6 @@ FUNCTION simulation_model
 
 REPORT_SECTION
 	save_gradients(gradients);
-	project_population_numbers_at_length();
 	calc_predicted_catch_out();
 	REPORT(name_read_flt);
 	REPORT(name_read_srv);
@@ -3525,7 +3407,6 @@ REPORT_SECTION
 
 	REPORT(xi);
 	REPORT(d4_N);
-	REPORT(d4_N_proj);
 	REPORT(M);
 	REPORT(Z);
 	REPORT(mean_wt);
@@ -3539,8 +3420,7 @@ REPORT_SECTION
 	{
 		int refyear = nyr-1;
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
-		//calc_spr_reference_points(refyear, refseason, spr_fleet);
-		calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		calc_spr_reference_points(refyear, refseason, spr_fleet);
 		// Projections would be called here...
 
 		//calc_ofl(refyear,spr_fspr);
@@ -3576,17 +3456,17 @@ REPORT_SECTION
 		REPORT(size_comp_sample_size);
 	}
 	// Print total numbers at length
-	dvar_matrix N_len(syr,nyr,1,nclass);
-	dvar_matrix N_mm(syr,nyr,1,nclass);
-	dvar_matrix N_males(syr,nyr,1,nclass);
-	dvar_matrix N_males_old(syr,nyr,1,nclass);
+	dvar_matrix N_len(syr,nyr+1,1,nclass);
+	dvar_matrix N_mm(syr,nyr+1,1,nclass);
+	dvar_matrix N_males(syr,nyr+1,1,nclass);
+	dvar_matrix N_males_old(syr,nyr+1,1,nclass);
 	dvar_matrix N_initial(1,n_grp,1,nclass);
 	dvar_matrix N_brute(1,n_grp,1,nclass);
 	N_len.initialize();
 	N_males.initialize();
 	N_mm.initialize();
 	N_males_old.initialize();
-	for ( int i = syr; i <= nyr; i++ )
+	for ( int i = syr; i <= nyr+1; i++ )
 	{
 		for ( int l = 1; l <= nclass; l++ )
 		{
@@ -3662,6 +3542,9 @@ REPORT_SECTION
 
 	/**
 	 * @brief Calculate equilibrium initial conditions
+	 * @details
+	 *
+	 * TODO: use do/while loop rather than specify iterations
 	 *
 	 * @return dvar_matrix
 	**/
@@ -3772,116 +3655,6 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 		equilibrium_numbers(ig) = d4_N_init(ig)(ninit)(1);
 	}
 	return(equilibrium_numbers);
-
-
-FUNCTION dvar_matrix calc_brute_equilibrium2(const dvar_matrix& SS)
-	int h,i,ig,o,m;
-	int ninit = 100;
-
-	dvector rtt;
-
-	d4_array d4_N_init(1,n_grp,1,ninit,1,nseason,1,nclass);
-	d4_N_init.initialize();
-	dvar_matrix equilibrium_numbers(1,n_grp,1,nclass);
-
-	dvector x(1,nclass);
-	dvector y(1,nclass);
-	dvector z(1,nclass);
-	
-	if ( bInitializeUnfished == 0 )
-	{
-		rtt = value((1.0/nsex * mfexp(logR0)) * rec_sdd);
-	} else {
-		rtt = value((1.0/nsex * mfexp(logRbar)) * rec_sdd);
-	}
-
-	for ( i = 1; i < ninit; i++ )
-	{
-		for ( int j = 1; j <= nseason; j++ )
-		{
-			for ( ig = 1; ig <= n_grp; ig++ )
-			{
-				h = isex(ig);
-				m = imature(ig);
-				o = ishell(ig);
-
-				if ( nshell == 1 )
-				{
-					x = d4_N_init(ig)(i)(j);
-					// Mortality (natural and fishing)
-					x = value(x * SS);
-					// Molting and growth
-					if (j == season_growth)
-					{
-						x = value(x * size_transition(h));
-					}
-					// Recruitment
-					if (j == season_recruitment)
-					{
-						x += rtt;
-					}
-					if (j == nseason)
-					{
-						d4_N_init(ig)(i+1)(1) = x;
-					} else {
-						d4_N_init(ig)(i)(j+1) = x;
-					}
-				} else {
-					if ( o == 1 ) // newshell
-					{
-						x = d4_N_init(ig)(i)(j);
-						// Mortality (natural and fishing)
-						x = value(x * SS);
-						// Molting and growth
-						if (j == season_growth)
-						{
-							y = value(elem_prod(x,1-diagonal(P(h)))); // did not molt, become oldshell
-							x = value(elem_prod(x,diagonal(P(h))) * growth_transition(h)); // molted and grew, stay newshell
-						}
-						// Recruitment
-						if (j == season_recruitment)
-						{
-							x += rtt;
-						}
-						if (j == nseason)
-						{
-							d4_N_init(ig)(i+1)(1) = x;
-						} else {
-							d4_N_init(ig)(i)(j+1) = x;
-						}
-					}
-					if ( o == 2 ) // oldshell
-					{
-						// add oldshell non-terminal molts to newshell
-						x = d4_N_init(ig)(i)(j);
-						// Mortality (natural and fishing)
-						x = value(x * SS);
-						// Molting and growth
-						z.initialize();
-						if (j == season_growth)
-						{
-							z = value(elem_prod(x,diagonal(P(h))) * growth_transition(h)); // molted and grew, become newshell
-							x = value(elem_prod(x,1-diagonal(P(h))) + y); // did not molt, remain oldshell and add the newshell that become oldshell
-						}
-						if (j == nseason)
-						{
-							d4_N_init(ig-1)(i+1)(1) += z;
-							d4_N_init(ig)(i+1)(1) = x;
-						} else {
-							d4_N_init(ig-1)(i)(j+1) += z;
-							d4_N_init(ig)(i)(j+1) = x;
-						}
-					}
-				}
-			}
-		}
-	}
-	for ( ig = 1; ig <= n_grp; ig++ )
-	{
-		equilibrium_numbers(ig) = d4_N_init(ig)(ninit)(1);
-	}
-	return(equilibrium_numbers);
-
 
 
 	/**
@@ -4012,27 +3785,28 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	// Average recruitment
 	spr_rbar = mean(value(recruits(spr_syr,spr_nyr)));
 
-	int iter  = 0;
-	double fa = 0.00;
-	double fb = 2.00;
-	double fc = 0.5*(fa+fb);
-
-	double  m_ssb0; 
-	double  m_ssb;  
-	double  m_spr;
-	double  m_fspr;
-	double  m_bspr;
-	double  m_fofl;
-	double  m_cofl;
-
+	double _r = spr_rbar;
+	dvector _rx = value(rec_sdd);
+	d3_array _M(1,nsex,1,nclass,1,nclass);
+	_M.initialize();
+	dmatrix _N(1,nsex,1,nclass);
+	dmatrix _wa(1,nsex,1,nclass);
+	d3_array _A = value(growth_transition);
+	d3_array _P = value(P);
+	for ( int h = 1; h <= nsex; h++ )
+	{
+		for ( int l = 1; l <= nclass; l++ )
+		{
+			_M(h)(l,l) = value(M(h)(iyr)(l));
+		}
+		//todo fix me.
+		_N(h) = value(d4_N(1)(iyr)(season_ssb));
+		_wa(h) = elem_prod(mean_wt(h)(syr), maturity(h));
+	}
+	
 	dmatrix _fhk(1,nsex,1,nfleet);
 	d3_array _sel(1,nsex,1,nfleet,1,nclass);
 	d3_array _ret(1,nsex,1,nfleet,1,nclass);
-	dvector fratio(1,nfleet);
-	dmatrix _S(1,nclass,1,nclass);
-	dmatrix _Z(1,nclass,1,nclass);
-	d3_array _M(1,nsex,1,nclass,1,nclass);
-
 	for ( int h = 1; h <= nsex; h++ )
 	{
 		for ( int k = 1; k <= nfleet; k++ )
@@ -4041,101 +3815,42 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 			_sel(h)(k) = mfexp(value(log_slx_capture(k)(h)(iyr)));
 			_ret(h)(k) = mfexp(value(log_slx_retaind(k)(h)(iyr)));
 		}
-		for ( int l = 1; l <= nclass; l++ )
-		{
-			_M(h)(l,l) = value(M(h)(iyr)(l));
-		}
-	}
-	dmatrix _F = _fhk;
-
-	// get unfished mature male biomass per recruit.
-	m_ssb0 = 0.0;
-	for ( int h = 1; h <= nsex; h++ )
-	{
-		//dvector x = value(calc_brute_equilibrium2(exp(_M(h)))(1));
-		dvector x = value(calc_brute_equilibrium()(h));
-		double lam;
-		h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-		m_ssb0 += lam * x * mean_wt(h)(iyr);
 	}
 
-	// Get Fspr
-	do
+	// Discard Mortality rates
+	dvector _dmr(1,nfleet);
+	_dmr.initialize();
+	for ( int k = 1; k <= nfleet; k++ )
 	{
-		m_ssb = 0;
-		for ( int h = 1; h <= nsex; h++ )
-		{
-			_F(h)(ifleet) = fc;
-			for ( int k = 1; k <= nfleet; k++ )
-			{
-				fratio(k) = _F(h)(k)/_F(h)(ifleet);
-			}
-			
-			_Z = _M(h);
-			for ( int k = 1; k <= nfleet; k++ )
-			{
-				dvector _vul = elem_prod(_sel(h)(k),_ret(h)(k)+(1.0-_ret(h)(k))*dmr(iyr)(k));
-				for ( int l = 1; l <= nclass; ++l )
-				{
-					_Z(l,l) += (fc * fratio(k)) * _vul(l);
-				}
+		_dmr(k) = dmr(iyr,k);
+	}
+	
+	//spr *ptrSPR=nullptr;
+	spr *ptrSPR = 0;
+	
+	// SPR reference points for a single shell condition.
+	if ( nshell == 1 )
+	{
+		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_A);
+		ptrSPR = &c_spr;
+	}
+	// SPR reference points for new and old shell condition.
+	if ( nshell == 2 )
+	{
+		spr c_spr(_r,spr_lambda,_rx,_wa,_M,_P,_A);
+		ptrSPR = &c_spr;
+	}
+	// This class needs a setter for season
+	spr_fspr = ptrSPR->get_fspr(ifleet,spr_target,_fhk,_sel,_ret,_dmr);
+	spr_bspr = ptrSPR->get_bspr();
+	spr_ssbo = ptrSPR->get_ssbo();
 
-			}
-			
-			for ( int l = 1; l <= nclass; ++l )
-			{
-				_S(l,l) = exp(-diagonal(_Z)(l));
-			}
-
-			if ( nshell == 1 )
-			{
-				dvector x = value(calc_brute_equilibrium2(_S)(h));
-				double lam;
-				h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-				m_ssb += lam * x * mean_wt(h)(iyr);
-			}
-			
-			/*
-			if (m_nshell == 2)
-			{
-				dvector r = m_rbar/m_nsex * m_rx;
-				calc_equilibrium(n,o,m_A(h),S,m_P(h),r);
-				double lam;
-				h <= 1 ? lam=m_lambda: lam=(1.-m_lambda);
-				m_ssb += lam * (n+o) * m_wa(h);
-			}
-			*/
-		}	
-		// spawning potential ratio
-		m_spr = m_ssb/m_ssb0;
-		
-		// test for convergence
-		double t1 = m_spr - spr_target;
-		if ( t1==0 || 0.5*(fb-fa) < TOL )
-		{
-			m_fspr = fc;
-			m_bspr = m_ssb;
-			cout << "SPR calculations have converged. :)" << endl;
-			break;
-		}
-
-		// bisection update
-		if (t1 > 0)
-		{
-			fa = fc;
-		} else {
-			fb = fc;
-		}
-		cout << "iter = " << iter << "\tfc = " << fc << "\t(spr-spr_target)=" << m_spr << " - " << spr_target << " " << t1 << endl;
-		fc = 0.5*(fa+fb);
-	} while (iter++ < MAXIT);
-
-	cout << "spr_rbar = " << spr_rbar << endl;
-	cout << "spr_lambda = " << spr_lambda << endl;
-	cout << "m_ssb0 = " << m_ssb0 << endl;
-	cout << "m_ssb = " << m_ssb << endl;
-	cout << "m_spr = " << m_spr << endl;
-	cout << "m_fspr = " << m_fspr << endl;
+	// OFL Calculations
+	dvector ssb = value(calc_ssb());
+	double cuttoff = 0.1;
+	double limit = 0.25;
+	spr_fofl = ptrSPR->get_fofl(cuttoff,limit,ssb(nyr));
+	spr_cofl = ptrSPR->get_cofl(_N);
 
 
 	/**
