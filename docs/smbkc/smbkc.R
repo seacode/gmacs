@@ -173,10 +173,15 @@ Changes in assessment results depend on model scenario. The Gmacs match model sc
 # B. Responses to SSC and CPT Comments
 
 ## CPT and SSC Comments on Assessments in General
+
 No general comments relative to crab assessments were applied in this draft preliminary assessment.
 
 ## CPT and SSC Comments Specific to SMBKC Stock Assessment
-Comment:       
+
+Comment:
+*The SSC is not convinced that the model runs with extra CV are very informative.*
+
+Comment:
 *The SSC and CPT requested the following models for review at the spring  2016 meeting:*   
   1. Base: try to match 2015 model but prevent dome shaped selex      
   2. Base + add CV for both surveys      
