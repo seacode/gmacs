@@ -3398,7 +3398,6 @@ FUNCTION simulation_model
 
 REPORT_SECTION
 	save_gradients(gradients);
-	project_population_numbers_at_length();
 	calc_predicted_catch_out();
 	REPORT(name_read_flt);
 	REPORT(name_read_srv);
@@ -3486,7 +3485,7 @@ REPORT_SECTION
 	{
 		for ( int ii = 1; ii <= nSizeCompRows(kk); ii++ )
 		{
-			//double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii));
+			double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii));
 			//effN(kk,ii)        = Eff_N(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
 			//effN2(kk,ii)       = Eff_N2(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
 			//pre_mn_size(kk,ii) = mn_length(d3_pre_size_comps(kk,ii));
@@ -3541,7 +3540,7 @@ REPORT_SECTION
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
 		//calc_spr_reference_points(refyear, refseason, spr_fleet);
 		calc_spr_reference_points2(refyear, refseason, spr_fleet);
-		// Projections would be called here...
+		project_population_numbers_at_length();
 
 		//calc_ofl(refyear,spr_fspr);
 		REPORT(spr_fspr);
@@ -4207,7 +4206,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	cout << "m_bspr = " << m_bspr << endl;
 	cout << "m_fofl = " << m_fofl << endl;
 	cout << "m_cofl = " << m_cofl << endl;
-	//exit(1);
+	exit(1);
 
 
 	/**
