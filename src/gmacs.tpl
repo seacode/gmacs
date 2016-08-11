@@ -3539,8 +3539,8 @@ REPORT_SECTION
 	{
 		int refyear = nyr-1;
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
-		//calc_spr_reference_points(refyear, refseason, spr_fleet);
-		calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		calc_spr_reference_points(refyear, refseason, spr_fleet);
+		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
 		// Projections would be called here...
 
 		//calc_ofl(refyear,spr_fspr);
@@ -4207,7 +4207,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	cout << "m_bspr = " << m_bspr << endl;
 	cout << "m_fofl = " << m_fofl << endl;
 	cout << "m_cofl = " << m_cofl << endl;
-	exit(1);
+	//exit(1);
 
 
 	/**
