@@ -3539,8 +3539,8 @@ REPORT_SECTION
 	{
 		int refyear = nyr-1;
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
-		calc_spr_reference_points(refyear, refseason, spr_fleet);
-		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		//calc_spr_reference_points(refyear, refseason, spr_fleet);
+		calc_spr_reference_points2(refyear, refseason, spr_fleet);
 		// Projections would be called here...
 
 		//calc_ofl(refyear,spr_fspr);
