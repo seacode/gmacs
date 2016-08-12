@@ -4206,7 +4206,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	cout << "m_bspr = " << m_bspr << endl;
 	cout << "m_fofl = " << m_fofl << endl;
 	cout << "m_cofl = " << m_cofl << endl;
-	exit(1);
+	//exit(1);
 
 
 	/**
