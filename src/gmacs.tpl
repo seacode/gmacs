@@ -2541,6 +2541,7 @@ FUNCTION calc_predicted_catch_out
 	int h,i,j,k,ig;
 	int type,unit;
 	pre_catch_out.initialize();
+	res_catch_out.initialize();
 	dvariable tmp_ft;
 	dvar_vector sel(1,nclass);
 	dvar_vector nal(1,nclass); // numbers or biomass at length.
@@ -2613,7 +2614,13 @@ FUNCTION calc_predicted_catch_out
 				}
 			}
 		}
-		res_catch_out(kk) = log(obs_catch_out(kk)) - log(pre_catch_out(kk)); // Catch residuals
+		for ( i = syr; i <= nyr-1; i++ )
+		{
+			if ( obs_catch_out(kk,i) > 0.0 && pre_catch_out(kk,i) > 0.0 )
+			{
+				res_catch_out(kk,i) = log(obs_catch_out(kk,i)) - log(pre_catch_out(kk,i)); // Catch residuals
+			}
+		}
 	}
 
 
