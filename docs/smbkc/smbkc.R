@@ -178,19 +178,38 @@ No general comments relative to crab assessments were applied in this draft prel
 
 ## CPT and SSC Comments Specific to SMBKC Stock Assessment
 
-Comment:
-*The SSC is not convinced that the model runs with extra CV are very informative.*
+Comment: The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.
 
-Comment:
-*The SSC and CPT requested the following models for review at the spring  2016 meeting:*   
+Response:
+
+Comment: The descriptions of seasons in the model is confusing and currently reads as if M differs among seasons (see p. 39). More justification is needed on how seasons are defined and how they were selected, as well as clarification on M during these seasons. 
+
+Comment: During the presentation to the SSC, uncertainty was expressed about the origins of the growth transition matrix, but page 7 of the report indicates that the matrix was derived by Otto and Cummiskey (1990). As this matrix is critical to the model, the origin and integrity of the growth transition matrix should be carefully explained in the assessment for fall 2016. In some other models, the transition matrix can be estimated. If there are doubts about the veracity of the transition matrix, perhaps this can be explored in the modeling framework.
+
+Comment: The selectivities were constrained so that they do not exceed 1.0, but the tables of log-transformed parameter estimates do not indicate that this upper bound was approached. This should be clarified. 
+
+Comment: It would be helpful to include a table of NMFS trawl survey CPUE by crab stage, just as was provided for the ADF&G pot survey (Table 1).
+
+Comment: Page 10 refers to a table of observed and estimated sample size, but no such table was provided.
+
+Comment: As with the 2015 model, GMACS consistently overestimates trawl survey estimates of male biomass in the last decade, whereas GMACS tends to underestimate the last couple of pot survey estimates (Figure 9, 12). This is also reflected in patterns in residuals, and the proportions of stage-3 crab tend to be overestimated in recent years (Figure 14). These patterns should be discussed in the assessment.
+
+Comment: The report contains very little description and interpretation of results. Moreover, not all figures are cited in the document. The document should highlight the major features of the results and offer some explanation, as well.
+
+Comment: A brief explanation was provided about the future outlook (page 12) that indicated a declining stock. However, stock trends shown in Figure 24 generally suggest population growth since 1993. Closer examination of Tables 9-11 suggest that trends depend somewhat on model run and life stage. Statements about future outlook should be qualified and refer to figures and tables and explain any differences in outcomes.
+
+Comment: The SSC discussed the possibility that these patterns could be indicative of spatial patterns in stock distribution. The trawl survey covers a much larger geographic distribution than the pot survey (Figure 4). Crab distribution may vary with sex (females tend to be found close to shore) and life stage. Thus, the trawl and pot surveys may sample the crab stock differentially. Moreover, the geographic distributions of these stages may vary with stock density and temperature. It could be informative to conduct some spatial analyses, which could include: (1) estimation of survey catchability as a function of temperature, (2) a stock assessment model run that includes pot surveys and only those trawl stations that fall within the pot survey distribution as a comparison the runs that include the full trawl survey data, and (3) analysis of the spatial distribution of surveyed crabs by stage at high and low biomass and during warm and cold years.
+
+Comment: The CPT offered many insightful comments including recommendations on general code development for GMACS and the SMBKC application. The SSC appreciates and endorses the CPT recommendations.
+
+Comment: *The SSC and CPT requested the following models for review at the spring  2016 meeting:*   
   1. Base: try to match 2015 model but prevent dome shaped selex      
   2. Base + add CV for both surveys      
   3. Above + Francis re-weighting      
   4. Above + remove M spike      
 
-Response:    
-*Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model 
-requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting. *
+Response: *Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting.*
+
 
 # C. Introduction
 

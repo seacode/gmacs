@@ -133,14 +133,16 @@ DATA_SECTION
 	init_int season_ssb;         ///> Season to calculate SSB (end of year)
 	init_int season_N;           ///> Season to output N
 
+	int n_grp;     ///> number of sex/newshell/oldshell groups
+	int nproj;     ///> number of projection years
+	int nlikes;    // 1      2     3           4         5
 	LOC_CALCS
+		n_grp = nsex * nshell * nmature;
+		nproj = pyr - nyr;
+		nlikes = 5; // catch, cpue, size comps, recruits, molt increments
 		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
 	END_CALCS
-	int n_grp;     ///> number of sex/newshell/oldshell groups
-	!! n_grp = nsex * nshell * nmature;
-	int nlikes;    // 1      2     3           4         5
-	!! nlikes = 5; // catch, cpue, size comps, recruits, molt increments
 
 	// Set up index pointers
 	ivector isex(1,n_grp);
@@ -1250,7 +1252,6 @@ PARAMETER_SECTION
 	5darray S(1,nsex,syr,nyr,1,nseason,1,nclass,1,nclass); ///> Surival Rate (S=exp(-Z))
 
 	4darray d4_N(1,n_grp,syr,nyr,1,nseason,1,nclass);       ///> Numbers-at-sex/mature/shell/year/season/length.
-	4darray d4_N_proj(1,n_grp,nyr+1,pyr,1,nseason,1,nclass);  ///> Numbers-at-sex/mature/shell/year/season/length.
 	4darray ft(1,nfleet,1,nsex,syr,nyr,1,nseason);            ///> Fishing mortality by gear
 	3darray d3_newShell(1,nsex,syr,nyr+1,1,nclass); ///> New shell crabs-at-length.
 	3darray d3_oldShell(1,nsex,syr,nyr+1,1,nclass); ///> Old shell crabs-at-length.
@@ -1329,8 +1330,8 @@ PROCEDURE_SECTION
 	if ( verbose == 1 ) cout << "Ok after observation models ..." << endl;
 
 	// objective function ...
-	calculate_prior_densities(); if ( verbose == 1 ) cout << "Ok after priors ..." << endl;
-	calc_objective_function();   if ( verbose == 1 ) cout << "Ok after objective function ..." << endl;
+	calc_prior_densities();    if ( verbose == 1 ) cout << "Ok after priors ..." << endl;
+	calc_objective_function(); if ( verbose == 1 ) cout << "Ok after objective function ..." << endl;
 
 	// sd_report variables
 	if ( last_phase() )
@@ -1645,47 +1646,43 @@ FUNCTION calc_growth_increments
 
 
 	/**
-	 * \brief Calclate the growth and size transtion matrix
-	 * \Authors Team
-	 * \details Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution.  This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.
+	 * @brief Calclate the growth and size transtion matrix
+	 * @details Calculates the size transition matrix for each sex based on growth increments, which is a linear function of the size interval, and the scale parameter for the gamma distribution.  This function does the proper integration from the lower to upper size bin, where the mode of the growth increment is scaled by the scale parameter.
 	 *
-	 * This function loops over sex, then loops over the rows of the size transition matrix for each sex.  The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex.
-	 *
-	 * Issue 112 details some of evolution of code development here
+	 * This function loops over sex, then loops over the rows of the size transition matrix for each sex.  The probability of transitioning from size l to size ll is based on the vector molt_increment and the scale parameter. In all there are three parameters that define the size transition matrix (alpha, beta, scale) for each sex. Issue 112 details some of evolution of code development here
 	 *
 	 * @param gscale
 	 * @param P a 3D array of molting probabilities with dimension (1,nsex,1,nclass,1,nclass)
 	**/
 FUNCTION calc_growth_transition
 	int h,l,ll;
-	
-	dvariable dMeanSizeAfterMolt;
+	dvariable mean_size_after_molt;
 	dvar_vector psi(1,nclass+1);
 	dvar_vector sbi(1,nclass+1);
-	dvar_matrix At(1,nclass,1,nclass);
+	dvar_matrix gt(1,nclass,1,nclass);
 
 	for ( h = 1; h <= nsex; h++ )
 	{
-		At.initialize();
+		gt.initialize();
 		sbi = size_breaks / gscale(h);
 		for ( l = 1; l <= nclass; l++ )
 		{
-			dMeanSizeAfterMolt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
+			mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
 			for ( ll = l; ll <= nclass+1; ll++ )
 			{
 				if ( ll <= nclass+1 )
 				{
-					psi(ll) = cumd_gamma(sbi(ll), dMeanSizeAfterMolt);
+					psi(ll) = cumd_gamma(sbi(ll), mean_size_after_molt);
 				}
 			}
-			At(l)(l,nclass) = first_difference(psi(l,nclass+1));
-			At(l)(l,nclass) = At(l)(l,nclass) / sum(At(l));
+			gt(l)(l,nclass) = first_difference(psi(l,nclass+1));
+			gt(l)(l,nclass) = gt(l)(l,nclass) / sum(gt(l));
 		}
-		growth_transition(h) = At;
+		growth_transition(h) = gt;
 		size_transition(h) = P(h) * growth_transition(h);
 		for ( int l = 1; l <= nclass; l++ )
 		{
-			size_transition(h,l,l) += value(1.0 - P(h,l,l));
+			size_transition(h)(l,l) += value(1.0 - P(h)(l,l));
 		}
 	}
 
@@ -1695,13 +1692,10 @@ FUNCTION calc_growth_transition
 	 * @details Natural mortality (M) is a 3d array for sex, year and size.
 	 *
 	 * todo: Size-dependent mortality
-	 *
-	 * @return NULL
 	**/
 FUNCTION calc_natural_mortality
-	int h;
 	M.initialize();
-	for ( h = 1; h <= nsex; h++ )
+	for ( int h = 1; h <= nsex; h++ )
 	{
 		M(h) = M0;
 	}
@@ -1718,10 +1712,10 @@ FUNCTION calc_natural_mortality
 			break;
 			case 2: // cubic splines
 			{
-				dvector iyr = (m_nodeyear -syr) / (nyr-syr);
+				dvector iyr = (m_nodeyear - syr) / (nyr - syr);
 				dvector jyr(syr+1,nyr);
-				jyr.fill_seqadd(0,1./(nyr-syr-1));
-				vcubic_spline_function csf(iyr,m_dev);
+				jyr.fill_seqadd(0, 1.0 / (nyr - syr - 1));
+				vcubic_spline_function csf(iyr, m_dev);
 				delta = csf(jyr);
 			}
 			break;
@@ -1739,7 +1733,7 @@ FUNCTION calc_natural_mortality
 					for ( int i = m_nodeyear(1+(idev-1)*2); i <= m_nodeyear(2+(idev-1)*2); i++ )
 					{
 						delta(i) = m_dev(idev);
-						for ( h = 1; h <= nsex; h++ )
+						for ( int h = 1; h <= nsex; h++ )
 						{
 							M(h)(i) = mfexp(m_dev(idev));
 						}
@@ -1832,23 +1826,22 @@ FUNCTION reset_Z_to_M
 
 
 	/**
-	 * \brief Calculate the probability of moulting by carapace width.
-	 * \details Note that the parameters molt_mu and molt_cv can only be estimated in cases where there is new shell and old shell data. Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).
+	 * @brief Calculate the probability of moulting by carapace width.
+	 * @details Note that the parameters molt_mu and molt_cv can only be estimated in cases where there is new shell and old shell data. Note that the diagonal of the P matrix != 0, otherwise the matrix is singular in inv(P).
 	 *
 	 * @param molt_mu is the mean of the distribution
 	 * @param molt_cv scales the variance of the distribution
 	**/
 FUNCTION calc_molting_probability
-	int l,h;
 	molt_probability.initialize();
 	P.initialize();
 	double tiny = 0.000;
-	for ( h = 1; h <= nsex; h++ )
+	for ( int h = 1; h <= nsex; h++ )
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu * molt_cv(h);
-		molt_probability(h) = 1.0 - ((1.0-2.0*tiny)*plogis(mid_points,mu,sd) + tiny);
-		for ( l = 1; l <= nclass; l++ )
+		molt_probability(h) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points,mu,sd) + tiny);
+		for ( int l = 1; l <= nclass; l++ )
 		{
 			P(h)(l,l) = molt_probability(h)(l);
 		}
@@ -1868,7 +1861,7 @@ FUNCTION calc_recruitment_size_distribution
 	dvar_vector x(1,nclass+1);
 	for ( int l = 1; l <= nclass+1; l++ )
 	{
-		x(l) = cumd_gamma(size_breaks(l)/rbeta, ralpha);
+		x(l) = cumd_gamma(size_breaks(l) / rbeta, ralpha);
 	}
 	rec_sdd = first_difference(x);
 	rec_sdd /= sum(rec_sdd); // Standardize so each row sums to 1.0
@@ -1945,7 +1938,7 @@ FUNCTION calc_initial_numbers_at_length
 		break;
 	}
 	recruits(syr) = mfexp(log_initial_recruits);
-	dvar_vector rt = 1.0/nsex * recruits(syr) * rec_sdd;
+	dvar_vector rt = 1.0 / nsex * recruits(syr) * rec_sdd;
 
 	// Analytical equilibrium soln
 	int ig;
@@ -2107,7 +2100,7 @@ FUNCTION update_population_numbers_at_length
 		//{
 		recruits(i) *= mfexp(rec_dev(i));
 		//}
-		rt = (1.0/nsex * recruits(i)) * rec_sdd;
+		rt = (1.0 / nsex * recruits(i)) * rec_sdd;
 
 		for ( int j = 1; j <= nseason; j++ )
 		{
@@ -2253,42 +2246,107 @@ FUNCTION update_population_numbers_at_length
 	}
 
 
-FUNCTION project_population_numbers_at_length
-	int h,i,ig,o,m;
+FUNCTION dvector project_population_numbers_at_length(const int np, const int ifleet, const double log_F)
+	//init_number_vector log_fbar(1,nfleet,f_phz);                 ///> Male mean fishing mortality
+	//init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);      ///> Male f devs
+	//init_number_vector log_foff(1,nfleet,foff_phz);              ///> Female F offset to Male F
+	//init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
 
-	dvar_vector rt(1,nclass);
-	dvar_vector  x(1,nclass);
-	dvar_vector  y(1,nclass);
-	dvar_vector  z(1,nclass);
-	
-	for ( ig = 1; ig <= n_grp; ig++ )
+	dvector rt(1,nclass);
+	dvector  x(1,nclass);
+	dvector  y(1,nclass);
+	dvector  z(1,nclass);
+	d4_array numbers_proj_gytl(1,n_grp,1,np,1,nseason,1,nclass);
+
+	double xi; // discard mortality rate
+	F.initialize();
+	ft.initialize();
+	dvariable log_ftmp;
+	dvar_vector sel(1,nclass);
+	dvar_vector ret(1,nclass);
+	dvar_vector vul(1,nclass);
+
+	Z.initialize();
+	S.initialize();
+
+	for ( int k = 1; k <= nfleet; k++ )
 	{
-		d4_N_proj(ig)(nyr+1)(1) = d4_N(ig)(nyr)(nseason);
+		for ( int h = 1; h <= nsex; h++ )
+		{
+			int ik = 1; int yk = 1;
+			for ( int i = syr; i <= nyr; i++ )
+			{
+				for ( int j = 1; j <= nseason; j++ )
+				{
+					if ( fhit(i,j,k) )
+					{
+						//log_ftmp = log_fbar(k) + log_fdev(k,ik++);
+						if (k == ifleet)
+						{
+							log_ftmp = log_F;
+						} else {
+							log_ftmp = log_fbar(k);
+						}
+						if ( yhit(i,j,k) )
+						{
+							//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
+							log_ftmp += double(h-1) * log_foff(k);
+						}
+						ft(k)(h)(i)(j) = mfexp(log_ftmp);
+						xi  = dmr(i,k);                                      // Discard mortality rate
+						sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
+						ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
+						vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
+						F(h)(i)(j) += ft(k,h,i,j) * vul;
+					}
+				}
+			}
+		}
 	}
 
-	for ( i = nyr+1; i <= pyr; i++ )
+	for ( int h = 1; h <= nsex; h++ )
+	{
+		for ( int i = syr; i <= nyr; i++ )
+		{
+			for ( int j = 1; j <= nseason; j++ )
+			{
+				Z(h)(i)(j) = (m_prop(nyr)(j) * M(h)(nyr)) + F(h)(i)(j);
+				for ( int l = 1; l <= nclass; l++ )
+				{
+					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
+				}
+			}
+		}
+	}
+
+	for ( int ig = 1; ig <= n_grp; ig++ )
+	{
+		numbers_proj_gytl(ig)(1)(1) = value(d4_N(ig)(nyr)(nseason));
+	}
+
+	for ( int i = 1; i <= np; i++ )
 	{
 		//recruits(i) *= mfexp(rec_dev(i));
 		//rt = (1.0/nsex * recruits(i)) * rec_sdd;
-		rt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+		rt = value((1.0/nsex * mfexp(logRbar)) * rec_sdd);
 
 		for ( int j = 1; j <= nseason; j++ )
 		{
-			for ( ig = 1; ig <= n_grp; ig++ )
+			for ( int ig = 1; ig <= n_grp; ig++ )
 			{
-				h = isex(ig);
-				m = imature(ig);
-				o = ishell(ig);
+				int h = isex(ig);
+				int m = imature(ig);
+				int o = ishell(ig);
 
 				if ( nshell == 1 )
 				{
-					x = d4_N_proj(ig)(i)(j);
+					x = numbers_proj_gytl(ig)(i)(j);
 					// Mortality (natural and fishing)
-					x = x * S(h)(nyr)(j);
+					x = value(x * S(h)(nyr)(j));
 					// Molting and growth
 					if (j == season_growth)
 					{
-						x = x * size_transition(h);
+						x = value(x * size_transition(h));
 					}
 					// Recruitment
 					if (j == season_recruitment)
@@ -2297,24 +2355,24 @@ FUNCTION project_population_numbers_at_length
 					}
 					if (j == nseason)
 					{
-						if (i != pyr)
+						if (i != np)
 						{ 
-							d4_N_proj(ig)(i+1)(1) = x;
+							numbers_proj_gytl(ig)(i+1)(1) = x;
 						}
 					} else {
-						d4_N_proj(ig)(i)(j+1) = x;
+						numbers_proj_gytl(ig)(i)(j+1) = x;
 					}
 				} else {
 					if ( o == 1 ) // newshell
 					{
-						x = d4_N_proj(ig)(i)(j);
+						x = numbers_proj_gytl(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = x * S(h)(nyr)(j);
+						x = value(x * S(h)(nyr)(j));
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = elem_prod(x,1-diagonal(P(h))); // did not molt, become oldshell
-							x = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
+							y = value(elem_prod(x, 1 - diagonal(P(h)))); // did not molt, become oldshell
+							x = value(elem_prod(x, diagonal(P(h))) * growth_transition(h)); // molted and grew, stay newshell
 						}
 						// Recruitment
 						if (j == season_recruitment)
@@ -2323,37 +2381,37 @@ FUNCTION project_population_numbers_at_length
 						}
 						if (j == nseason)
 						{
-							if (i != pyr)
+							if (i != np)
 							{
-								d4_N_proj(ig)(i+1)(1) = x;
+								numbers_proj_gytl(ig)(i+1)(1) = x;
 							}
 						} else {
-							d4_N_proj(ig)(i)(j+1) = x;
+							numbers_proj_gytl(ig)(i)(j+1) = x;
 						}
 					}
 					if ( o == 2 ) // oldshell
 					{
 						// add oldshell non-terminal molts to newshell
-						x = d4_N_proj(ig)(i)(j);
+						x = numbers_proj_gytl(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = x * S(h)(i)(j);
+						x = value(x * S(h)(i)(j));
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
 						{
-							z = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
-							x = elem_prod(x,1-diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
+							z = value(elem_prod(x, diagonal(P(h))) * growth_transition(h)); // molted and grew, become newshell
+							x = value(elem_prod(x, 1 - diagonal(P(h))) + y); // did not molt, remain oldshell and add the newshell that become oldshell
 						}
 						if (j == nseason)
 						{
-							if (i != pyr)
+							if (i != np)
 							{
-								d4_N_proj(ig-1)(i+1)(1) += z;
-								d4_N_proj(ig)(i+1)(1) = x;
+								numbers_proj_gytl(ig-1)(i+1)(1) += z;
+								numbers_proj_gytl(ig)(i+1)(1) = x;
 							}
 						} else {
-							d4_N_proj(ig-1)(i)(j+1) += z;
-							d4_N_proj(ig)(i)(j+1) = x;
+							numbers_proj_gytl(ig-1)(i)(j+1) += z;
+							numbers_proj_gytl(ig)(i)(j+1) = x;
 						}
 					}
 				}
@@ -2361,13 +2419,29 @@ FUNCTION project_population_numbers_at_length
 		}
 	}
 
+	dvector ssb(1,np);
+	ssb.initialize();
+
+	for ( int i = 1; i <= np; i++ )
+	{
+		for ( int ig = 1; ig <= n_grp; ig++ )
+		{
+			int h = isex(ig);
+			int o = ishell(ig);
+			int m = imature(ig);
+			double lam;
+			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
+			ssb(i) += lam * numbers_proj_gytl(ig)(i)(season_ssb) * elem_prod(mean_wt(h)(nyr), maturity(h));
+		}
+	}
+	return(ssb);
+
 
 	/**
 	 * @brief Calculate stock recruitment relationship.
 	 * @details  Assuming a Beverton-Holt relationship between the mature biomass (user defined) and the annual recruits. Note that we derive so and bb in R = so MB / (1 + bb * Mb) from Ro and steepness (leading parameters defined in theta).
 	 *
-	 * NOTES:
-	 * if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
+	 * NOTES: if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
 	**/
 FUNCTION calc_stock_recruitment_relationship
 	dvariable so, bb;
@@ -2447,7 +2521,6 @@ FUNCTION calc_stock_recruitment_relationship
 	 *  4) discard is the total number of crab caught and discarded.
 	 *
 	 * @param  [description]
-	 * @return NULL
 	**/
 FUNCTION calc_predicted_catch
 	int h,i,j,k,ig;
@@ -2535,7 +2608,6 @@ FUNCTION calc_predicted_catch
    * @brief Calculate predicted catch for all years (not just data years)
    * @author D'Arcy N. Webber
    * @details The function uses the Baranov catch equation to predict the retained and discarded catch for all model years (not just those years for which we have observations). This is used for plotting purposes only.
-   * @return NULL
   **/
 FUNCTION calc_predicted_catch_out
 	int h,i,j,k,ig;
@@ -2579,7 +2651,7 @@ FUNCTION calc_predicted_catch_out
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-				pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
+				pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -2597,7 +2669,7 @@ FUNCTION calc_predicted_catch_out
 							}
 						break;
 						case 2: // discarded catch
-							sel = elem_prod(mfexp(sel),1.0 - mfexp( log_slx_retaind(k)(h)(i) ));
+							sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
 							for ( int m = 1; m <= nmature; m++ )
 							{
 								for ( int o = 1; o <= nshell; o++ )
@@ -2610,7 +2682,7 @@ FUNCTION calc_predicted_catch_out
 					}
 					tmp_ft = ft(k)(h)(i)(j);
 					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-					pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
+					pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 				}
 			}
 		}
@@ -2859,7 +2931,6 @@ FUNCTION calc_predicted_composition
 
   /**
    * @brief Calculate sdnr and MAR
-   * @details order is:     LFs    Tags     CPUE    PRI      CR       U
   **/
 FUNCTION void get_all_sdnr_MAR()
 	{
@@ -3017,7 +3088,7 @@ FUNCTION dvariable get_prior_pdf(const int &pType, const dvariable &_theta, cons
 	 *  @param C matrix of controls (priorType, p1, p2, lb, ub)
 	 *  @return vector of prior densities for each parameter
 	**/
-FUNCTION calculate_prior_densities
+FUNCTION calc_prior_densities
 	double p1,p2;
 	double lb,ub;
 	int iprior,itype;
@@ -3531,7 +3602,6 @@ REPORT_SECTION
 
 	REPORT(xi);
 	REPORT(d4_N);
-	REPORT(d4_N_proj);
 	REPORT(M);
 	REPORT(Z);
 	REPORT(mean_wt);
@@ -3546,8 +3616,12 @@ REPORT_SECTION
 		int refyear = nyr-1;
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
 		//calc_spr_reference_points(refyear, refseason, spr_fleet);
-		calc_spr_reference_points2(refyear, refseason, spr_fleet);
-		project_population_numbers_at_length();
+		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		spr_fofl = calc_spr_reference_points3(refyear, refseason, spr_fleet);
+
+		//d4_array d4_N_proj(1,n_grp,1,nproj,1,nseason,1,nclass);
+		//d4_N_proj = project_population_numbers_at_length(nproj, 1, log(1.0));
+		//REPORT(d4_N_proj);
 
 		//calc_ofl(refyear,spr_fspr);
 		REPORT(spr_fspr);
@@ -3581,6 +3655,7 @@ REPORT_SECTION
 		}
 		REPORT(size_comp_sample_size);
 	}
+
 	// Print total numbers at length
 	dvar_matrix N_len(syr,nyr,1,nclass);
 	dvar_matrix N_mm(syr,nyr,1,nclass);
@@ -4215,6 +4290,34 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	cout << "m_cofl = " << m_cofl << endl;
 	//exit(1);
 
+
+FUNCTION double calc_spr_reference_points3(const int iyr, const int iseason, const int ifleet)
+	d4_array numbers_proj_gytl(1,n_grp,1,1,1,nseason,1,nclass);
+	double Bmsy;
+	double Bproj;
+	double FF;
+	double Fmsy;
+	double Fofl;
+	double alpha = 0.10;
+	double beta = 0.25;
+
+	//Bmsy = value(sum(calc_ssb()(syr,nyr-1)) / (nyr-1));
+	Bmsy = value(mean(calc_ssb()(syr,nyr-1)));
+	Fmsy = value(M0);
+	FF = Fmsy;
+	Bproj = project_population_numbers_at_length(1, ifleet, log(FF))(1);
+
+	if (Bproj > Bmsy) FF = Fmsy; else
+
+	for( int k = 1; k <= 10; k++)
+	{
+		FF = Fmsy * (Bproj / Bmsy - alpha) / (1 - alpha);
+		Bproj = project_population_numbers_at_length(1, ifleet, log(FF))(1);
+	}
+	if (Bproj < 0.25 * Bmsy) FF = 0.0;
+	Fofl = FF;
+	OFL = Bret_proj + Bdis_proj + Bgff_proj + Bgft_proj;
+	return(Fofl);
 
 	/**
 	 * @brief calculate effective sample size 
