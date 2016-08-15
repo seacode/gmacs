@@ -1365,12 +1365,19 @@ FUNCTION calc_sdreport
 	}
 
 	//reset_Z_to_M();
-	//calc_initial_numbers_at_length();
-	//update_population_numbers_at_length();
-	//sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
-	//sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
-	//calc_total_mortality();
-
+  // 	3darray M(1,nsex,syr,nyr,1,nclass);                    ///> Natural mortality
+	dvar4_array ftmp(1,nsex,syr,nyr,1,nseason,1,nclass);          ///> Fishing mortality
+	ftmp = F;
+	F.initialize();
+	calc_total_mortality();
+	calc_initial_numbers_at_length();
+	update_population_numbers_at_length();
+	sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
+	sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
+	F = ftmp;
+	calc_total_mortality();
+	calc_initial_numbers_at_length();
+	update_population_numbers_at_length();
 
 	/**
 	 * @brief Initialize model parameters
