@@ -4323,7 +4323,7 @@ FUNCTION double calc_spr_reference_points3(const int iyr, const int iseason, con
 	}
 	if (Bproj < 0.25 * Bmsy) FF = 0.0;
 	Fofl = FF;
-	OFL = Bret_proj + Bdis_proj + Bgff_proj + Bgft_proj;
+	//OFL = Bret_proj + Bdis_proj + Bgff_proj + Bgft_proj;
 	return(Fofl);
 
 	/**
