@@ -4321,11 +4321,9 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 		{
 			for ( int k = 1; k <= nfleet; k++ )
 			{
-				log_ftmp = value(log_fbar(k));
-				if (k == ifleet)
-				{
-					log_ftmp = spr_fofl;
-				}
+				log_ftmp = value(ft(k)(h)(iyr)(j));
+				//log_ftmp = value(log_fbar(k));
+				if (k == ifleet) log_ftmp = log(spr_fofl);
 				//if ( yhit(nyr,j,k) )
 				//{
 				//	//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
