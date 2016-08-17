@@ -453,6 +453,9 @@ DATA_SECTION
 		ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV);
 	END_CALCS
 
+	init_int bUseCustomGrowthMatrix;
+	init_matrix CustomGrowthMatrix(1,nclass,1,nclass);
+
 	// |------------------|
 	// | END OF DATA FILE |
 	// |------------------|
@@ -1667,6 +1670,14 @@ FUNCTION calc_growth_transition
 	dvar_vector psi(1,nclass+1);
 	dvar_vector sbi(1,nclass+1);
 	dvar_matrix gt(1,nclass,1,nclass);
+
+	if ( bUseCustomGrowthMatrix == 1 )
+	{
+		for ( h = 1; h <= nsex; h++ )
+		{
+			growth_transition(h) = CustomGrowthMatrix;
+		}
+	}
 
 	for ( h = 1; h <= nsex; h++ )
 	{
