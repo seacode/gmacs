@@ -1094,16 +1094,6 @@ DATA_SECTION
 	int nf;
 	!! nf = 0;
 
-	// |----------------------|
-	// | SPR Reference points |
-	// |----------------------|
-	number spr_fspr;
-	number spr_bspr;
-	number spr_rbar;
-	number spr_cofl;
-	number spr_fofl;
-	number spr_ssbo;
-
 
 INITIALIZATION_SECTION
 	theta        theta_ival;
@@ -1270,6 +1260,17 @@ PARAMETER_SECTION
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
+	// |----------------------|
+	// | SPR Reference points |
+	// |----------------------|
+	number spr_rbar;
+	number spr_fspr;
+	number spr_bspr;
+	number spr_cofl;
+	number spr_fofl;
+	number spr_ssbo;
+
+	sdreport_number sd_rbar;
 	sdreport_number sd_fofl;
 	sdreport_number sd_ofl;
 	sdreport_vector sd_fbar(syr,nyr-1);
@@ -1369,6 +1370,8 @@ FUNCTION calc_sdreport
 	{
 		sd_fbar(i) = mean(F(1,i));
 	}
+
+	sd_rbar = spr_rbar;
 	sd_fofl = spr_fofl;
 	sd_ofl = spr_cofl;
 
@@ -3449,6 +3452,7 @@ REPORT_SECTION
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
 		//calc_spr_reference_points(refyear, refseason, spr_fleet);
 		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
 		calc_spr_reference_points2(refyear, refseason, spr_fleet);
 
 		//d4_array d4_N_proj(1,n_grp,1,nproj,1,nseason,1,nclass);
@@ -3628,9 +3632,9 @@ FUNCTION dvar_vector calc_ssb()
 	**/
 FUNCTION void calc_spr_reference_points_old(const int iyr, const int iseason, const int ifleet)
 	// Average recruitment
-	spr_rbar = mean(value(recruits(spr_syr,spr_nyr)));
+	spr_rbar = mean(recruits(spr_syr,spr_nyr));
 
-	double _r = spr_rbar;
+	double _r = value(spr_rbar);
 	dvector _rx = value(rec_sdd);
 	d3_array _M(1,nsex,1,nclass,1,nclass);
 	_M.initialize();
@@ -4304,30 +4308,30 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 
 FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const int ifleet)
 	d4_array numbers_proj_gytl(1,n_grp,1,1,1,nseason,1,nclass);
-	double Bmsy;
+	dvariable Bmsy;
 	double Bproj;
-	double FF;
-	double Fmsy;
+	dvariable FF;
+	dvariable Fmsy;
 	double alpha = 0.10; // cutoff
 	double beta = 0.25; // limit
 
-	spr_rbar = mean(value(recruits(spr_syr,spr_nyr)));
-	Bmsy = value(mean(calc_ssb()(syr,nyr-1))); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
-	Fmsy = value(M0);
+	spr_rbar = mean(recruits(spr_syr,spr_nyr));
+	Bmsy = mean(calc_ssb()(syr,nyr-1)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
+	Fmsy = M0;
 	FF = Fmsy;
-	Bproj = project_biomass(1, ifleet, log(FF))(1);
+	Bproj = project_biomass(1, ifleet, log(value(FF)))(1);
 
 	if (Bproj > Bmsy) FF = Fmsy; else
 
 	for( int k = 1; k <= 10; k++)
 	{
 		FF = Fmsy * (Bproj / Bmsy - alpha) / (1 - alpha);
-		Bproj = project_biomass(1, ifleet, log(FF))(1);
+		Bproj = project_biomass(1, ifleet, log(value(FF)))(1);
 	}
 	if (Bproj < 0.25 * Bmsy) FF = 0.0;
 	spr_fofl = FF;
 
-	double ctmp = 0;
+	dvariable ctmp = 0;
 	double log_ftmp;
 
 	for ( int h = 1; h <= nsex; h++ )
@@ -4338,7 +4342,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 			{
 				log_ftmp = value(ft(k)(h)(iyr)(j));
 				//log_ftmp = value(log_fbar(k));
-				if (k == ifleet) log_ftmp = log(spr_fofl);
+				if (k == ifleet) log_ftmp = log(value(spr_fofl));
 				//if ( yhit(nyr,j,k) )
 				//{
 				//	//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
@@ -4352,7 +4356,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 				dvector f = ftmp * vul;
 				dvector z = value(M(h)(nyr)) + f;
 				dvector o = 1.0 - exp(-z);
-				ctmp += elem_prod(value(d4_N(h)(nyr)(j)), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
+				ctmp += elem_prod(d4_N(h)(nyr)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
 			}
 		}
 	}

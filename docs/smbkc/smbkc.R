@@ -621,8 +621,8 @@ for (ii in 2:5)
     npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
     mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$MMB_", x$mod_yrs[length(x$mod_yrs)], "$")
     fofl <- x$spr_fofl; names(fofl) <- "Fofl"
-    OFL <- x$spr_fofl
-    v <- c(v, sv, npar, mmb, fofl, OFL = OFL)
+    OFL <- x$spr_cofl; names(OFL) <- "OFL"
+    v <- c(v, sv, npar, mmb, fofl, OFL)
     df <- cbind(df, v)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
