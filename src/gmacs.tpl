@@ -1270,10 +1270,13 @@ PARAMETER_SECTION
 	4darray log_slx_retaind(1,nfleet,1,nsex,syr,nyr,1,nclass);
 	4darray log_slx_discard(1,nfleet,1,nsex,syr,nyr,1,nclass);
 
+	sdreport_number sd_fofl;
+	sdreport_number sd_ofl;
 	sdreport_vector sd_fbar(syr,nyr-1);
 	sdreport_vector sd_log_recruits(syr,nyr);
 	sdreport_vector sd_log_ssb(syr,nyr);
 	sdreport_vector sd_log_dyn_Bzero(syr+1,nyr);
+
 	friend_class population_model;
 
 
@@ -1356,7 +1359,7 @@ FUNCTION write_eval
 
 
 	/**
-	 * @brief calculate sdreport variables in final phase
+	 * @brief calculate sd_report variables in final phase
 	**/
 FUNCTION calc_sdreport
 	sd_log_recruits = log(recruits);
@@ -1366,6 +1369,8 @@ FUNCTION calc_sdreport
 	{
 		sd_fbar(i) = mean(F(1,i));
 	}
+	sd_fofl = spr_fofl;
+	sd_ofl = spr_cofl;
 
 	//reset_Z_to_M();
   // 	3darray M(1,nsex,syr,nyr,1,nclass);                    ///> Natural mortality
@@ -4303,7 +4308,6 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	double Bproj;
 	double FF;
 	double Fmsy;
-	double Fofl;
 	double alpha = 0.10; // cutoff
 	double beta = 0.25; // limit
 

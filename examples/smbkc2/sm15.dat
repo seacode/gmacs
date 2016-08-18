@@ -14,6 +14,7 @@
 
 1978  # Start year
 2015  # End year
+2016  # Projection year
 5     # Number of seasons
 5     # Number of distinct data groups (among fishing fleets and surveys)
 1     # Number of sexes
@@ -365,5 +366,12 @@ NMFS_Trawl:ADFG_Pot
 #  97.5   1 13.8 0.2197
 #  112.5  1 14.1 0.2197
 #  127.5  1 14.4 0.2197
+# Use custom growth transition matrix (0=no, 1=yes)
+0
+# The growth matrix (if not using just fill with zeros)
+# Alternative TM (loosely) based on Otto and Cummiskey (1990)
+0.2  0.7  0.1
+0.0  0.4  0.6
+0.0  0.0  1.0
 ##  eof
 9999

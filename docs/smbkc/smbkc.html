@@ -25,22 +25,46 @@
 <h2 id="cpt-and-ssc-comments-specific-to-smbkc-stock-assessment">CPT and SSC Comments Specific to SMBKC Stock Assessment</h2>
 <p>Comment: The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.</p>
 <p>Response:</p>
-<p>Comment: The descriptions of seasons in the model is confusing and currently reads as if M differs among seasons (see p. 39). More justification is needed on how seasons are defined and how they were selected, as well as clarification on M during these seasons.</p>
+<p>Comment: The descriptions of seasons in the model is confusing and currently reads as if <span class="math inline"><em>M</em></span> differs among seasons (see page 39). More justification is needed on how seasons are defined and how they were selected, as well as clarification on <span class="math inline"><em>M</em></span> during these seasons.</p>
+<p>Response: This description has been ammended and justification provided in the appendix.</p>
 <p>Comment: During the presentation to the SSC, uncertainty was expressed about the origins of the growth transition matrix, but page 7 of the report indicates that the matrix was derived by Otto and Cummiskey (1990). As this matrix is critical to the model, the origin and integrity of the growth transition matrix should be carefully explained in the assessment for fall 2016. In some other models, the transition matrix can be estimated. If there are doubts about the veracity of the transition matrix, perhaps this can be explored in the modeling framework.</p>
+<p>Response: The report is correct, the growth matrix was derived by Otto and Cummiskey (1990) and used in this assessment.</p>
 <p>Comment: The selectivities were constrained so that they do not exceed 1.0, but the tables of log-transformed parameter estimates do not indicate that this upper bound was approached. This should be clarified.</p>
+<p>Response:</p>
 <p>Comment: It would be helpful to include a table of NMFS trawl survey CPUE by crab stage, just as was provided for the ADF&amp;G pot survey (Table 1).</p>
+<p>Response:</p>
 <p>Comment: Page 10 refers to a table of observed and estimated sample size, but no such table was provided.</p>
+<p>Response:</p>
 <p>Comment: As with the 2015 model, GMACS consistently overestimates trawl survey estimates of male biomass in the last decade, whereas GMACS tends to underestimate the last couple of pot survey estimates (Figure 9, 12). This is also reflected in patterns in residuals, and the proportions of stage-3 crab tend to be overestimated in recent years (Figure 14). These patterns should be discussed in the assessment.</p>
+<p>Response:</p>
 <p>Comment: The report contains very little description and interpretation of results. Moreover, not all figures are cited in the document. The document should highlight the major features of the results and offer some explanation, as well.</p>
+<p>Response:</p>
 <p>Comment: A brief explanation was provided about the future outlook (page 12) that indicated a declining stock. However, stock trends shown in Figure 24 generally suggest population growth since 1993. Closer examination of Tables 9-11 suggest that trends depend somewhat on model run and life stage. Statements about future outlook should be qualified and refer to figures and tables and explain any differences in outcomes.</p>
+<p>Response:</p>
 <p>Comment: The SSC discussed the possibility that these patterns could be indicative of spatial patterns in stock distribution. The trawl survey covers a much larger geographic distribution than the pot survey (Figure 4). Crab distribution may vary with sex (females tend to be found close to shore) and life stage. Thus, the trawl and pot surveys may sample the crab stock differentially. Moreover, the geographic distributions of these stages may vary with stock density and temperature. It could be informative to conduct some spatial analyses, which could include: (1) estimation of survey catchability as a function of temperature, (2) a stock assessment model run that includes pot surveys and only those trawl stations that fall within the pot survey distribution as a comparison the runs that include the full trawl survey data, and (3) analysis of the spatial distribution of surveyed crabs by stage at high and low biomass and during warm and cold years.</p>
-<p>Comment: The CPT offered many insightful comments including recommendations on general code development for GMACS and the SMBKC application. The SSC appreciates and endorses the CPT recommendations.</p>
+<p>Response:</p>
+<p>Comment: Andre Punt pointed out the need to use a fixed-iteration Newton’s method to calculate OFL, not bisection, to keep the calculation differentiable so that OFL can be reported as an sdreport variable.</p>
+<p>Response: This has been done and the OFL is reported as an sdreport variable.</p>
+<p>Comment: Regarding general code development, the CPT had the following requests:</p>
+<ol style="list-style-type: decimal">
+<li>1-year projection for calculating Tier 3 or 4 OFLs</li>
+<li>specify catchability as a fixed or estimated parameter or use the analytic calculation for the MLE</li>
+<li>specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors</li>
+<li>include an option to calculate dynamic B MSY</li>
+<li>add the ability to “jitter” initial parameter values</li>
+<li>add the ability to conduct retrospective analyses</li>
+<li>add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available</li>
+<li>allow different phases for “rec_ini”, “rec_dev” estimation</li>
+</ol>
+<p>Response:</p>
+<p>Comment: the CPT requests that some evaluation should also be included in the September report to the CPT which compares against the previous assessment model corrected for the error.</p>
+<p>Response:</p>
 <p>Comment: <em>The SSC and CPT requested the following models for review at the spring 2016 meeting:</em><br />
 1. Base: try to match 2015 model but prevent dome shaped selex<br />
 2. Base + add CV for both surveys<br />
 3. Above + Francis re-weighting<br />
 4. Above + remove M spike</p>
-<p>Response: <em>Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting. </em></p>
+<p>Response: <em>Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting.</em></p>
 <h1 id="c.-introduction">C. Introduction</h1>
 <h2 id="scientific-name">Scientific Name</h2>
 <p>The blue king crab is a lithodid crab, <em>Paralithodes platypus</em> (Brant 1850).</p>
@@ -211,6 +235,7 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 
 <p></p>
 
+<pre><code>## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 17, 19</code></pre>
 
 <pre><code>## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 19, 17</code></pre>
 
@@ -345,9 +370,10 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <h2 id="introduction">1. Introduction</h2>
 <p>The Gmacs model has been specified to account only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (size-classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the Gmacs base model configuration.</p>
 <h2 id="model-population-dynamics">2. Model Population Dynamics</h2>
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. The timing of the fishery is different each year. MMB is measured 15 February. To accomodate this, each model year is split into five seasons and a proportion of the natural mortality (<span class="math inline"><em>τ</em></span>) is applied in each of these seasons:
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. Although the timing of the fishery is different each year, MMB is measured 15 February. To accomodate this, each model year is split into five seasons and a proportion of the natural mortality (<span class="math inline"><em>τ</em><sub><em>i</em></sub></span>) is applied in each of these seasons where <span class="math inline">$\sum_{i=1}^{i=5} \tau_i = 1$</span>. Each model year consists of the following processes:
 
-<p>Put the table if tau here.</p>
+<p>The proportion of natural mortality (<span class="math inline"><em>τ</em></span>) applied during each season in the model is provided in Table . The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63/% of the year. Therefore 63/% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year <span class="math inline"><em>τ</em><sub>2</sub></span> is different each year and thus <span class="math inline"><em>τ</em><sub>4</sub></span> differs each year.</p>
+
 With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season <span class="math inline"><em>t</em></span> and year <span class="math inline"><em>y</em></span> as
 
 Using boldface uppercase letters to indicate a matrix, we describe the size transition matrix <span class="math inline"><strong>G</strong></span> as
@@ -481,10 +507,10 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## # Gear-1 
 ##    1     1     1   0    0.432928096608 0.001 2.0    0       0      1    -2     1978   2008 
 ##    1     2     2   0    0.670336057209 0.001 2.0    0       0      1    -2     1978   2008 
-##    1     3     3   0    1.0      0.001 2.0    0       0      1    -2     1978   2008 
+##    1     3     3   0    1.0            0.001 2.0    0       0      1    -2     1978   2008 
 ##    1     1     1   0    0.392207758620 0.001 2.0    0       0      1    -2     2009   2015 
 ##    1     2     2   0    0.956150805823 0.001 2.0    0       0      1    -2     2009   2015 
-##    1     3     3   0    1.0      0.001 2.0    0       0      1    -2     2009   2015 
+##    1     3     3   0    1.0            0.001 2.0    0       0      1    -2     2009   2015 
 ## # Gear-2 
 ##    2     7     1   0    40       10.0  200    0      10    200    -3     1978   2015 
 ##    2     8     2   0    60       10.0  200    0      10    200    -3     1978   2015 
@@ -494,11 +520,11 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## # Gear-4 
 ##    4     8     1   0    0.79506450558 0.001 2.0    0       0      1    -2     1978   2015 
 ##    4     9     2   0    1.08723867992 0.001 2.0    0       0      1    -2     1978   2015 
-##    4     10    3   0    1.0      0.001 2.0    0       0      1    -2     1978   2015 
+##    4     10    3   0    1.0           0.001 2.0    0       0      1    -2     1978   2015 
 ## # Gear-5 
 ##    5     11    1   0    0.405292074017 0.001 2.0    0       0      1    -2     1978   2015 
 ##    5     12    2   0    0.855141058500 0.001 2.0    0       0      1    -2     1978   2015 
-##    5     13    3   0    1.0      0.001 2.0    0       0      1    -2     1978   2015 
+##    5     13    3   0    1.0            0.001 2.0    0       0      1    -2     1978   2015 
 ## ## Retained 
 ## # Gear-1 
 ##   -1     14    1   0   120   100   200    0      1    900   -1     1978   2015 

@@ -64,7 +64,7 @@ plot_selectivity <- function(M,
     
     mdf <- .get_selectivity_df(M)
     
-    p <- ggplot(mdf) + expand_limits(y = 0)
+    p <- ggplot(mdf) + expand_limits(y = c(0,1))
     if (.OVERLAY)
     {
         p <- p + geom_line(aes(variable, value, col = factor(year), linetype = type))

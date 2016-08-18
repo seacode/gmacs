@@ -51,9 +51,12 @@ nmult_1 <- 1e+06
 nmult_2 <- 0.0004535923 * 1e+6
 
 # Add numbers at length data
-M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
-M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
-M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
+#M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
+#M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
+#M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
+M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1)
+M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2)
+M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3)
 
 # Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
 ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
@@ -182,25 +185,62 @@ Comment: The SSC is not convinced that the model runs with extra CV are very inf
 
 Response:
 
-Comment: The descriptions of seasons in the model is confusing and currently reads as if M differs among seasons (see p. 39). More justification is needed on how seasons are defined and how they were selected, as well as clarification on M during these seasons. 
+Comment: The descriptions of seasons in the model is confusing and currently reads as if $M$ differs among seasons (see page 39). More justification is needed on how seasons are defined and how they were selected, as well as clarification on $M$ during these seasons.
+
+Response: This description has been ammended and justification provided in the appendix.
 
 Comment: During the presentation to the SSC, uncertainty was expressed about the origins of the growth transition matrix, but page 7 of the report indicates that the matrix was derived by Otto and Cummiskey (1990). As this matrix is critical to the model, the origin and integrity of the growth transition matrix should be carefully explained in the assessment for fall 2016. In some other models, the transition matrix can be estimated. If there are doubts about the veracity of the transition matrix, perhaps this can be explored in the modeling framework.
 
+Response: The report is correct, the growth matrix was derived by Otto and Cummiskey (1990) and used in this assessment.
+
 Comment: The selectivities were constrained so that they do not exceed 1.0, but the tables of log-transformed parameter estimates do not indicate that this upper bound was approached. This should be clarified. 
+
+Response:
 
 Comment: It would be helpful to include a table of NMFS trawl survey CPUE by crab stage, just as was provided for the ADF&G pot survey (Table 1).
 
+Response:
+
 Comment: Page 10 refers to a table of observed and estimated sample size, but no such table was provided.
+
+Response:
 
 Comment: As with the 2015 model, GMACS consistently overestimates trawl survey estimates of male biomass in the last decade, whereas GMACS tends to underestimate the last couple of pot survey estimates (Figure 9, 12). This is also reflected in patterns in residuals, and the proportions of stage-3 crab tend to be overestimated in recent years (Figure 14). These patterns should be discussed in the assessment.
 
+Response:
+
 Comment: The report contains very little description and interpretation of results. Moreover, not all figures are cited in the document. The document should highlight the major features of the results and offer some explanation, as well.
+
+Response:
 
 Comment: A brief explanation was provided about the future outlook (page 12) that indicated a declining stock. However, stock trends shown in Figure 24 generally suggest population growth since 1993. Closer examination of Tables 9-11 suggest that trends depend somewhat on model run and life stage. Statements about future outlook should be qualified and refer to figures and tables and explain any differences in outcomes.
 
+Response:
+
 Comment: The SSC discussed the possibility that these patterns could be indicative of spatial patterns in stock distribution. The trawl survey covers a much larger geographic distribution than the pot survey (Figure 4). Crab distribution may vary with sex (females tend to be found close to shore) and life stage. Thus, the trawl and pot surveys may sample the crab stock differentially. Moreover, the geographic distributions of these stages may vary with stock density and temperature. It could be informative to conduct some spatial analyses, which could include: (1) estimation of survey catchability as a function of temperature, (2) a stock assessment model run that includes pot surveys and only those trawl stations that fall within the pot survey distribution as a comparison the runs that include the full trawl survey data, and (3) analysis of the spatial distribution of surveyed crabs by stage at high and low biomass and during warm and cold years.
 
-Comment: The CPT offered many insightful comments including recommendations on general code development for GMACS and the SMBKC application. The SSC appreciates and endorses the CPT recommendations.
+Response:
+
+Comment: Andre Punt pointed out the need to use a fixed-iteration Newton’s method to calculate OFL, not bisection, to keep the calculation differentiable so that OFL can be reported as an sdreport variable.
+
+Response: This has been done and the OFL is reported as an sdreport variable.
+
+Comment: Regarding general code development, the CPT had the following requests:
+
+  1. 1-year projection for calculating Tier 3 or 4 OFLs
+  2. specify catchability as a fixed or estimated parameter or use the analytic calculation for the MLE
+  3. specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors
+  4. include an option to calculate dynamic B MSY
+  5. add the ability to “jitter” initial parameter values
+  6. add the ability to conduct retrospective analyses
+  7. add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available
+  8. allow different phases for “rec_ini”, “rec_dev” estimation
+
+Response:
+
+Comment: the CPT requests that some evaluation should also be included in the September report to the CPT which compares against the previous assessment model corrected for the error.
+
+Response:
 
 Comment: *The SSC and CPT requested the following models for review at the spring  2016 meeting:*   
   1. Base: try to match 2015 model but prevent dome shaped selex      
@@ -447,12 +487,15 @@ x <- M[[2]]$fit
 i <- c(grep("m_dev", x$names)[1],
        grep("theta", x$names),
        grep("survey_q", x$names),
-       grep("log_fbar", x$names))
+       grep("log_fbar", x$names),
+       grep("sd_fofl", x$names),
+       grep("sd_ofl", x$names)
+       )
 #i <- grep("rec_dev", x$names)
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$")
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\bar{F}_\\text{pot}$","$\\bar{F}_\\text{trawl bycatch}$","$\\bar{F}_\\text{fixed bycatch}$","Fofl","OFL")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_base", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -464,7 +507,10 @@ i <- c(grep("m_dev", x$names)[1],
        grep("theta", x$names),
        grep("survey_q", x$names),
        grep("log_fbar", x$names),
-       grep("log_slx_pars", x$names))
+       grep("log_slx_pars", x$names),
+       grep("sd_fofl", x$names),
+       grep("sd_ofl", x$names)
+       )
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
@@ -575,7 +621,8 @@ for (ii in 2:5)
     npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
     mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$MMB_", x$mod_yrs[length(x$mod_yrs)], "$")
     fofl <- x$spr_fofl; names(fofl) <- "Fofl"
-    v <- c(v, sv, npar, mmb, fofl)
+    OFL <- x$spr_fofl
+    v <- c(v, sv, npar, mmb, fofl, OFL = OFL)
     df <- cbind(df, v)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
@@ -737,34 +784,44 @@ The Gmacs model has been specified to account only for male crab at least 90 mm 
 
 ## 2. Model Population Dynamics
 
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. The timing of the fishery is different each year. MMB is measured 15 February. To accomodate this, each model year is split into five seasons and a proportion of the natural mortality ($\tau$) is applied in each of these seasons:
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. Although the timing of the fishery is different each year, MMB is measured 15 February. To accomodate this, each model year is split into five seasons and a proportion of the natural mortality ($\tau_i$) is applied in each of these seasons where $\sum_{i=1}^{i=5} \tau_i = 1$. Each model year consists of the following processes:
 \begin{enumerate}
     \item Season 1
     \begin{itemize}
         \item Beginning of the SMBKC fishing year (1 July)
+        \item $\tau_1 = 0$
         \item Surveys
     \end{itemize}
     \item Season 2
     \begin{itemize}
-        \item $\tau = 0.44$
+        \item $\tau_2$ ranges from 0.05 to 0.44 depending on the time of year the fishery begins each year (i.e. a higher value indicates the fishery begins later in the year)
     \end{itemize}
     \item Season 3
     \begin{itemize}
+        \item $\tau_3 = 0$
         \item Fishing mortality applied
     \end{itemize}
     \item Season 4
     \begin{itemize}
-        \item $\tau = 0.185$
+        \item $\tau_4 = 0.63 - \sum_{i=1}^{i=4} \tau_i$
         \item Calculate MMB (15 February)
     \end{itemize}
     \item Season 5
     \begin{itemize}
-        \item $\tau = 0.375$
+        \item $\tau_5 = 0.37$
         \item Growth and molting
         \item Recruitment (all to stage-1)
     \end{itemize}
 \end{enumerate}
-Put the table if tau here.
+The proportion of natural mortality ($\tau$) applied during each season in the model is provided in Table \ref{tab:m_prop}. The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63/% of the year. Therefore 63/% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year $\tau_2$ is different each year and thus $\tau_4$ differs each year.
+
+```{r m_prop, results = "asis"}
+A <- M[[2]]
+df <- data.frame(A$m_prop)
+names(df) <- c("Season 1","Season 2","Season 3","Season 4","Season 5")
+tab <- xtable(df, digits = 2, caption = "Proportion of the natural mortality ($\\tau$) that is applied during each season in the model.", label = "tab:m_prop")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
+```
 
 With boldface lowercase letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}
