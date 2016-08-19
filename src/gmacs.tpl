@@ -4192,7 +4192,7 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 
 	for ( int ig = 1; ig <= n_grp; ig++ )
 	{
-		numbers_proj_gytl(ig)(1)(1) = value(d4_N(ig)(nyr)(nseason));
+		numbers_proj_gytl(ig)(1)(1) = d4_N(ig)(nyr)(nseason);
 	}
 
 	for ( int i = 1; i <= iproj; i++ )
@@ -4237,7 +4237,7 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 					{
 						x = numbers_proj_gytl(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = value(x * _S(h)(j));
+						x = x * _S(h)(j);
 						// Molting and growth
 						if (j == season_growth)
 						{
@@ -4320,16 +4320,17 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	Bmsy = mean(calc_ssb()(syr,nyr-1)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
 	Fmsy = M0;
 	FF = Fmsy;
-	Bproj = project_biomass(1, ifleet, log(value(FF)), numbers_proj_gytl)(1);
+	Bproj = project_biomass(1, ifleet, log(FF), numbers_proj_gytl)(1);
 
 	if (Bproj > Bmsy)
 	{
 		FF = Fmsy;
-	} else { // Adjust F if below target since it's a function biomass needs to be interated
+	} else {
+		// Adjust F if below target since it's a function biomass needs to be interated
 		for( int k = 1; k <= 10; k++)
 		{
 			FF = Fmsy * (Bproj / Bmsy - alpha) / (1 - alpha);
-			Bproj = project_biomass(1, ifleet, log(value(FF)), numbers_proj_gytl)(1);
+			Bproj = project_biomass(1, ifleet, log(FF), numbers_proj_gytl)(1);
 		}
 	}
 	if (Bproj < 0.25 * Bmsy)
@@ -4348,10 +4349,10 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 			for ( int k = 1; k <= nfleet; k++ )
 			{
 				// Use SPR Fofl for target fleet, recent year for all others
-				log_ftmp = value(ft(k)(h)(iyr)(j));
+				log_ftmp = ft(k)(h)(iyr)(j);
 				if (k == ifleet)
 				{
-					log_ftmp = log(value(spr_fofl));
+					log_ftmp = log(spr_fofl);
 				}
 				//if ( yhit(nyr,j,k) )
 				//{
