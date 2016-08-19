@@ -4324,7 +4324,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 
 	if (Bproj > Bmsy)
 	{
-		FF = Fmsy
+		FF = Fmsy;
 	} else { // Adjust F if below target since it's a function biomass needs to be interated
 		for( int k = 1; k <= 10; k++)
 		{
