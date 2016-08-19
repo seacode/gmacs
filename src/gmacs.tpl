@@ -1343,6 +1343,9 @@ PROCEDURE_SECTION
 	// sd_report variables
 	if ( last_phase() )
 	{
+		int refyear = nyr-1;
+		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
+		calc_spr_reference_points2(refyear, refseason, spr_fleet);
 		calc_sdreport();
 	}
 	nf++;
@@ -3453,7 +3456,7 @@ REPORT_SECTION
 		//calc_spr_reference_points(refyear, refseason, spr_fleet);
 		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
 		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
-		calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
 
 		//d4_array d4_N_proj(1,n_grp,1,nproj,1,nseason,1,nclass);
 		//d4_N_proj = project_population_numbers_at_length(nproj, 1, log(1.0));
@@ -4119,55 +4122,57 @@ FUNCTION void calc_spr_reference_oldagain()
 	*/
 
 
-FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double log_F)
+FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dvariable log_F, dvar4_array numbers_proj_gytl)
 	//init_number_vector log_fbar(1,nfleet,f_phz);                 ///> Male mean fishing mortality
 	//init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);      ///> Male f devs
 	//init_number_vector log_foff(1,nfleet,foff_phz);              ///> Female F offset to Male F
 	//init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
 
-	dvector rt(1,nclass);
-	dvector  x(1,nclass);
-	dvector  y(1,nclass);
-	dvector  z(1,nclass);
-	d4_array numbers_proj_gytl(1,n_grp,1,iproj,1,nseason,1,nclass);
+	dvariable log_ftmp;
 
-	F.initialize();
-	ft.initialize();
-	double log_ftmp;
+	dvar_vector rt(1,nclass);
+	dvar_vector  x(1,nclass);
+	dvar_vector  y(1,nclass);
+	dvar_vector  z(1,nclass);
+	//dvar4_array numbers_proj_gytl(1,n_grp,1,iproj,1,nseason,1,nclass);
 
-	Z.initialize();
-	S.initialize();
+	dvar3_array _F(1,nsex,1,nseason,1,nclass);          ///> Fishing mortality
+	dvar3_array _Z(1,nsex,1,nseason,1,nclass);          ///> Total mortality
+	dvar4_array _S(1,nsex,1,nseason,1,nclass,1,nclass); ///> Surival Rate (S=exp(-Z))
+	dvar3_array _ft(1,nfleet,1,nsex,1,nseason);            ///> Fishing mortality by gear
+
+	_F.initialize();
+	_Z.initialize();
+	_S.initialize();
+	_ft.initialize();
 
 	for ( int k = 1; k <= nfleet; k++ )
 	{
 		for ( int h = 1; h <= nsex; h++ )
 		{
-			int ik = 1; int yk = 1;
-			for ( int i = syr; i <= nyr; i++ )
+			int i = nyr;
+			for ( int j = 1; j <= nseason; j++ )
 			{
-				for ( int j = 1; j <= nseason; j++ )
+				if ( fhit(i,j,k) )
 				{
-					if ( fhit(i,j,k) )
+					//log_ftmp = log_fbar(k) + log_fdev(k,ik++);
+					if (k == ifleet)
 					{
-						//log_ftmp = log_fbar(k) + log_fdev(k,ik++);
-						if (k == ifleet)
-						{
-							log_ftmp = log_F;
-						} else {
-							log_ftmp = value(log_fbar(k));
-						}
-						if ( yhit(i,j,k) )
-						{
-							//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
-							log_ftmp += value(double(h-1) * log_foff(k));
-						}
-						ft(k)(h)(i)(j) = mfexp(log_ftmp);
-						double xi = dmr(i,k);                                      // Discard mortality rate
-						dvector sel = value(exp(log_slx_capture(k)(h)(i)));                 // Selectivity
-						dvector ret = value(exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k)); // Retension
-						dvector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
-						F(h)(i)(j) += ft(k,h,i,j) * vul;
+						log_ftmp = log_F;
+					} else {
+						log_ftmp = log_fbar(k);
 					}
+					if ( yhit(i,j,k) )
+					{
+						//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
+						log_ftmp += double(h-1) * log_foff(k);
+					}
+					_ft(k)(h)(j) = mfexp(log_ftmp);
+					double xi = dmr(i,k);                                      // Discard mortality rate
+					dvar_vector sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
+					dvar_vector ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
+					dvar_vector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
+					_F(h)(j) += _ft(k,h,j) * vul;
 				}
 			}
 		}
@@ -4175,15 +4180,12 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 
 	for ( int h = 1; h <= nsex; h++ )
 	{
-		for ( int i = syr; i <= nyr; i++ )
+		for ( int j = 1; j <= nseason; j++ )
 		{
-			for ( int j = 1; j <= nseason; j++ )
+			_Z(h)(j) = (m_prop(nyr)(j) * M(h)(nyr)) + _F(h)(j);
+			for ( int l = 1; l <= nclass; l++ )
 			{
-				Z(h)(i)(j) = (m_prop(nyr)(j) * M(h)(nyr)) + F(h)(i)(j);
-				for ( int l = 1; l <= nclass; l++ )
-				{
-					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
-				}
+				_S(h)(j)(l,l) = mfexp(-_Z(h)(j)(l));
 			}
 		}
 	}
@@ -4195,9 +4197,8 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 
 	for ( int i = 1; i <= iproj; i++ )
 	{
-		//recruits(i) *= mfexp(rec_dev(i));
-		//rt = (1.0/nsex * recruits(i)) * rec_sdd;
-		rt = value((1.0/nsex * mfexp(logRbar)) * rec_sdd);
+		//rt = value((1.0/nsex * mfexp(logRbar)) * rec_sdd);
+		rt = (1.0/nsex * spr_rbar) * rec_sdd;
 
 		for ( int j = 1; j <= nseason; j++ )
 		{
@@ -4211,11 +4212,11 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 				{
 					x = numbers_proj_gytl(ig)(i)(j);
 					// Mortality (natural and fishing)
-					x = value(x * S(h)(nyr)(j));
+					x = x * _S(h)(j);
 					// Molting and growth
 					if (j == season_growth)
 					{
-						x = value(x * size_transition(h));
+						x = x * size_transition(h);
 					}
 					// Recruitment
 					if (j == season_recruitment)
@@ -4236,12 +4237,12 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 					{
 						x = numbers_proj_gytl(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = value(x * S(h)(nyr)(j));
+						x = value(x * _S(h)(j));
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = value(elem_prod(x, 1 - diagonal(P(h)))); // did not molt, become oldshell
-							x = value(elem_prod(x, diagonal(P(h))) * growth_transition(h)); // molted and grew, stay newshell
+							y = elem_prod(x, 1 - diagonal(P(h))); // did not molt, become oldshell
+							x = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
 						}
 						// Recruitment
 						if (j == season_recruitment)
@@ -4263,13 +4264,13 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 						// add oldshell non-terminal molts to newshell
 						x = numbers_proj_gytl(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = value(x * S(h)(i)(j));
+						x = x * _S(h)(j);
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
 						{
-							z = value(elem_prod(x, diagonal(P(h))) * growth_transition(h)); // molted and grew, become newshell
-							x = value(elem_prod(x, 1 - diagonal(P(h))) + y); // did not molt, remain oldshell and add the newshell that become oldshell
+							z = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
+							x = elem_prod(x, 1 - diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
 						}
 						if (j == nseason)
 						{
@@ -4288,7 +4289,7 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 		}
 	}
 
-	dvector ssb(1,iproj);
+	dvar_vector ssb(1,iproj);
 	ssb.initialize();
 
 	for ( int i = 1; i <= iproj; i++ )
@@ -4307,9 +4308,9 @@ FUNCTION dvector project_biomass(const int iproj, const int ifleet, const double
 
 
 FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const int ifleet)
-	d4_array numbers_proj_gytl(1,n_grp,1,1,1,nseason,1,nclass);
+	dvar4_array numbers_proj_gytl(1,n_grp,1,1,1,nseason,1,nclass);
 	dvariable Bmsy;
-	double Bproj;
+	dvariable Bproj;
 	dvariable FF;
 	dvariable Fmsy;
 	double alpha = 0.10; // cutoff
@@ -4319,20 +4320,26 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	Bmsy = mean(calc_ssb()(syr,nyr-1)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
 	Fmsy = M0;
 	FF = Fmsy;
-	Bproj = project_biomass(1, ifleet, log(value(FF)))(1);
+	Bproj = project_biomass(1, ifleet, log(value(FF)), numbers_proj_gytl)(1);
 
-	if (Bproj > Bmsy) FF = Fmsy; else
-
-	for( int k = 1; k <= 10; k++)
+	if (Bproj > Bmsy)
 	{
-		FF = Fmsy * (Bproj / Bmsy - alpha) / (1 - alpha);
-		Bproj = project_biomass(1, ifleet, log(value(FF)))(1);
+		FF = Fmsy
+	} else { // Adjust F if below target since it's a function biomass needs to be interated
+		for( int k = 1; k <= 10; k++)
+		{
+			FF = Fmsy * (Bproj / Bmsy - alpha) / (1 - alpha);
+			Bproj = project_biomass(1, ifleet, log(value(FF)), numbers_proj_gytl)(1);
+		}
 	}
-	if (Bproj < 0.25 * Bmsy) FF = 0.0;
+	if (Bproj < 0.25 * Bmsy)
+	{
+		FF = 0.0;
+	}
 	spr_fofl = FF;
 
 	dvariable ctmp = 0;
-	double log_ftmp;
+	dvariable log_ftmp;
 
 	for ( int h = 1; h <= nsex; h++ )
 	{
@@ -4340,23 +4347,27 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 		{
 			for ( int k = 1; k <= nfleet; k++ )
 			{
+				// Use SPR Fofl for target fleet, recent year for all others
 				log_ftmp = value(ft(k)(h)(iyr)(j));
-				//log_ftmp = value(log_fbar(k));
-				if (k == ifleet) log_ftmp = log(value(spr_fofl));
+				if (k == ifleet)
+				{
+					log_ftmp = log(value(spr_fofl));
+				}
 				//if ( yhit(nyr,j,k) )
 				//{
 				//	//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
 				//	log_ftmp += value(double(h-1) * log_foff(k));
 				//}
-				double ftmp = mfexp(log_ftmp);
+				dvariable ftmp = mfexp(log_ftmp);
 				double xi = dmr(nyr,k);                                      // Discard mortality rate
-				dvector sel = value(exp(log_slx_capture(k)(h)(nyr)));                 // Selectivity
-				dvector ret = value(exp(log_slx_retaind(k)(h)(nyr)) * slx_nret(h,k)); // Retension
-				dvector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
-				dvector f = ftmp * vul;
-				dvector z = value(M(h)(nyr)) + f;
-				dvector o = 1.0 - exp(-z);
-				ctmp += elem_prod(d4_N(h)(nyr)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
+				dvar_vector sel = exp(log_slx_capture(k)(h)(nyr));                 // Selectivity
+				dvar_vector ret = exp(log_slx_retaind(k)(h)(nyr)) * slx_nret(h,k); // Retension
+				dvar_vector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
+				dvar_vector f = ftmp * vul;
+				dvar_vector z = M(h)(nyr) + f;
+				dvar_vector o = 1.0 - exp(-z);
+				//ctmp += elem_prod(d4_N(h)(nyr)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
+				ctmp += elem_prod(numbers_proj_gytl(h)(1)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
 			}
 		}
 	}
