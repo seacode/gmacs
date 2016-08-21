@@ -3463,6 +3463,8 @@ REPORT_SECTION
 		//REPORT(d4_N_proj);
 
 		//calc_ofl(refyear,spr_fspr);
+		REPORT(spr_syr);
+		REPORT(spr_nyr);
 		REPORT(spr_fleet);
 		REPORT(spr_fspr);
 		REPORT(spr_bspr);
@@ -4315,10 +4317,11 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 	dvariable Fmsy;
 	double alpha = 0.10; // cutoff
 	double beta = 0.25; // limit
+	double gamma = 1.0;
 
 	spr_rbar = mean(recruits(spr_syr,spr_nyr));
-	Bmsy = mean(calc_ssb()(syr,nyr-1)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
-	Fmsy = M0;
+	Bmsy = mean(calc_ssb()(spr_syr,spr_nyr)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
+	Fmsy = gamma * M0;
 	FF = Fmsy;
 	Bproj = project_biomass(1, ifleet, log(FF), numbers_proj_gytl)(1);
 
@@ -4354,11 +4357,11 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 				{
 					log_ftmp = log(spr_fofl);
 				}
-				//if ( yhit(nyr,j,k) )
-				//{
-				//	//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
-				//	log_ftmp += value(double(h-1) * log_foff(k));
-				//}
+				if ( yhit(nyr,j,k) )
+				{
+					//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
+					log_ftmp += double(h-1) * log_foff(k);
+				}
 				dvariable ftmp = mfexp(log_ftmp);
 				double xi = dmr(nyr,k);                                      // Discard mortality rate
 				dvar_vector sel = exp(log_slx_capture(k)(h)(nyr));                 // Selectivity
