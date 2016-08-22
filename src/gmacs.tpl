@@ -276,9 +276,9 @@ DATA_SECTION
 		}
 		for ( int i = syr; i <= nyr; i++ )
 		{
-			if ( sum(m_prop(i)) != 1.0 )
+			if ( sum(m_prop(i)) > 1.0000001 || sum(m_prop(i)) < 0.999999 )
 			{
-				cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1!" << endl;
+				cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1! It sums to " << sum(m_prop(i)) << endl;
 				exit(1);
 			}
 		}
