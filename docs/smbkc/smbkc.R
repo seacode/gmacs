@@ -626,10 +626,10 @@ for (ii in 2:5)
     names(ll_catch) <- unique(paste0(dc$fleet, " ", dc$type, " Catch"))
     # Abundance indices
     ll_cpue <- x$nloglike[2,1:2]
-    names(ll_cpue) <- c("NMFS Trawl Survey","ADF&G Pot Survey CPUE")
+    names(ll_cpue) <- c("NMFS Trawl Survey","ADF\\&G Pot Survey CPUE")
     # Size compositions
     ll_lf <- x$nloglike[3,1:3]
-    names(ll_lf) <- c("Directed Pot LF","NMFS Trawl LF","ADF&G Pot LF")
+    names(ll_lf) <- c("Directed Pot LF","NMFS Trawl LF","ADF\\&G Pot LF")
     # Recruitment deviations
     ll_rec <- sum(x$nloglike[4,], na.rm = TRUE)
     names(ll_rec) <- "Recruitment deviations"
@@ -641,8 +641,8 @@ for (ii in 2:5)
     v <- c(ll_catch, ll_cpue, ll_lf, ll_rec, F_pen, M_pen, prior)
     sv <- sum(v); names(sv) <- "Total"
     npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
-    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$MMB_", x$mod_yrs[length(x$mod_yrs)], "$")
-    fofl <- x$spr_fofl; names(fofl) <- "Fofl"
+    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\mathit{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+    fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
     OFL <- x$spr_cofl; names(OFL) <- "OFL"
     v <- c(v, sv, npar, mmb, fofl, OFL)
     df <- cbind(df, v)
@@ -650,7 +650,8 @@ for (ii in 2:5)
 df <- data.frame(rownames(df), df, row.names = NULL)
 names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs Francis","Gmacs M")
 tab <- xtable(df, caption = "Comparisons of negative log-likelihood values and management measures for the four Gmacs model scenarios. Biomass and OFL are in tonnes.", label = "tab:likelihood_components")
-print(tab, caption.placement = "top", include.rownames = FALSE)
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+#print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
 ```{r pop_abundance_2015, results = "asis"}
@@ -835,7 +836,7 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
         \item Recruitment (all to stage-1)
     \end{itemize}
 \end{enumerate}
-The proportion of natural mortality ($\tau$) applied during each season in the model is provided in Table \ref{tab:m_prop}. The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63/% of the year. Therefore 63/% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year $\tau_2$ is different each year and thus $\tau_4$ differs each year.
+The proportion of natural mortality ($\tau_t$) applied during each season in the model is provided in Table \ref{tab:m_prop}. The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63% of the year. Therefore 63% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year $\tau_2$ is different each year and thus $\tau_4$ differs each year.
 
 ```{r m_prop, results = "asis"}
 A <- M[[2]]
