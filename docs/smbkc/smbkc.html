@@ -115,17 +115,17 @@
 <p>Four different Gmacs model scenarios were considered. In this document results from these models and the 2015 model are compared.</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>2015 Model</strong>: the 2015 provided by Jie (note that an error was found in the code, this error was fixed before making comparisons).</p></li>
-<li><p><strong>Gmacs match</strong>: tries to match as closely as possible the 2015 Model.</p></li>
+<li><p><strong>Gmacs match</strong>: tries to match as closely as possible with the 2015 Model.</p></li>
 <li><p><strong>Gmacs base</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
-<li><p><strong>Gmacs M</strong>: natural mortality (<span class="math inline"><em>M</em></span>) is fixed at 0.18 <span class="math inline"><em>y</em><em>r</em><sup>−1</sup></span> during all years as well as estimating additional CV is estimated for both the NMFS trawl survey and the ADF&amp;G pot survey and estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
-<li><p><strong>Gmacs Francis</strong>: additional CV is estimated for both the NMFS trawl survey and the ADF&amp;G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
+<li><p><strong>Gmacs Francis</strong>: uses the Francis iterative re-weighting method as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
+<li><p><strong>Gmacs M</strong>: natural mortality (<span class="math inline"><em>M</em></span>) is fixed at 0.18 <span class="math inline"><em>y</em><em>r</em><sup>−1</sup></span> during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
 </ol>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Scenario</th>
 <th align="left">Selectivity estimated</th>
-<th align="left">Additional CV</th>
+<th align="left">Use Francis weighting</th>
 <th align="left">Estimate <span class="math inline"><em>M</em><sub>1998</sub></span></th>
 </tr>
 </thead>
@@ -146,13 +146,13 @@
 <td align="left">Gmacs M</td>
 <td align="left">Yes</td>
 <td align="left">Yes</td>
-<td align="left">No</td>
+<td align="left">Yes</td>
 </tr>
 <tr class="even">
 <td align="left">Gmacs Francis</td>
 <td align="left">Yes</td>
 <td align="left">Yes</td>
-<td align="left">Yes</td>
+<td align="left">No</td>
 </tr>
 </tbody>
 </table>
@@ -365,7 +365,7 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <h2 id="introduction">1. Introduction</h2>
 <p>The Gmacs model has been specified to account only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (size-classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the Gmacs base model configuration.</p>
 <h2 id="model-population-dynamics">2. Model Population Dynamics</h2>
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. Although the timing of the fishery is different each year, MMB is measured 15 February. To accomodate this, each model year is split into five seasons and a proportion of the natural mortality (<span class="math inline"><em>τ</em><sub><em>i</em></sub></span>) is applied in each of these seasons where <span class="math inline">$\sum_{i=1}^{i=5} \tau_i = 1$</span>. Each model year consists of the following processes:
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. Although the timing of the fishery is different each year, MMB is measured 15 February. To accomodate this, each model year is split into 5 seasons (<span class="math inline"><em>t</em></span>) and a proportion of the natural mortality (<span class="math inline"><em>τ</em><sub><em>t</em></sub></span>) is applied in each of these seasons where <span class="math inline">$\sum_{t=1}^{t=5} \tau_t = 1$</span>. Each model year consists of the following processes:
 
 <p>The proportion of natural mortality (<span class="math inline"><em>τ</em></span>) applied during each season in the model is provided in Table . The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63/% of the year. Therefore 63/% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year <span class="math inline"><em>τ</em><sub>2</sub></span> is different each year and thus <span class="math inline"><em>τ</em><sub>4</sub></span> differs each year.</p>
 
@@ -381,8 +381,7 @@ where <span class="math inline">$\bar{R}$</span> is the average annual recruitme
 
 The natural mortality
 
-<p>where <span class="math inline">$\bar{M}_t = 0, 0.44$</span> and</p>
-The fishing mortality by year <span class="math inline"><em>y</em></span> and season <span class="math inline"><em>t</em></span> is denoted <span class="math inline"><em>F</em><sub><em>t</em>, <em>y</em></sub></span> and calculated as
+Fishing mortality by year <span class="math inline"><em>y</em></span> and season <span class="math inline"><em>t</em></span> is denoted <span class="math inline"><em>F</em><sub><em>t</em>, <em>y</em></sub></span> and calculated as
 
 <p>where <span class="math inline"><em>F</em><sub><em>t</em>, <em>y</em></sub><sup>df</sup></span> is the fishing mortality associated with the directed fishery, <span class="math inline"><em>F</em><sub><em>t</em>, <em>y</em></sub><sup>tb</sup></span> is the fishing mortality associated with the trawl bycatch fishery, <span class="math inline"><em>F</em><sub><em>t</em>, <em>y</em></sub><sup>fb</sup></span> is the fishing mortality associated with the fixed bycatch fishery.</p>
 <h2 id="model-data">3. Model Data</h2>
