@@ -16,13 +16,13 @@
 <h2 id="changes-to-the-input-data">Changes to the Input Data</h2>
 <p>All of the time series used in this assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated full trawl-survey time series supplied by R. Foy in August 2015, updated groundfish bycatch estimates based on 1999-2014 NMFS AKRO data also supplied by R. Foy, and the ADF&amp;G pot survey data in 2015.</p>
 <h2 id="changes-in-assessment-methodology">Changes in Assessment Methodology</h2>
-<p>This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within any number of discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season.</p>
+<p>This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within 5 discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season.</p>
 <h2 id="changes-in-assessment-results">Changes in Assessment Results</h2>
-<p>Changes in assessment results depend on model scenario. The Gmacs match model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.</p>
+<p>Changes in assessment results depend on model scenario. The Gmacs match model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and the same (fixed) parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.</p>
 <h1 id="b.-responses-to-ssc-and-cpt-comments">B. Responses to SSC and CPT Comments</h1>
 <h2 id="cpt-and-ssc-comments-on-assessments-in-general">CPT and SSC Comments on Assessments in General</h2>
 <p>No general comments relative to crab assessments were applied in this draft preliminary assessment.</p>
-<h2 id="cpt-and-ssc-comments-specific-to-smbkc-stock-assessment">CPT and SSC Comments Specific to SMBKC Stock Assessment</h2>
+<h2 id="cpt-and-ssc-comments-specific-to-the-smbkc-stock-assessment">CPT and SSC Comments Specific to the SMBKC Stock Assessment</h2>
 <p>Comment: The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.</p>
 <p>Response:</p>
 <p>Comment: The descriptions of seasons in the model is confusing and currently reads as if <span class="math inline"><em>M</em></span> differs among seasons (see page 39). More justification is needed on how seasons are defined and how they were selected, as well as clarification on <span class="math inline"><em>M</em></span> during these seasons.</p>
@@ -117,8 +117,8 @@
 <li><p><strong>2015 Model</strong>: the 2015 provided by Jie (note that an error was found in the code, this error was fixed before making comparisons).</p></li>
 <li><p><strong>Gmacs match</strong>: tries to match as closely as possible the 2015 Model.</p></li>
 <li><p><strong>Gmacs base</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
-<li><p><strong>Gmacs CV</strong>: additional CV is estimated for both the NMFS trawl survey and the ADF&amp;G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
 <li><p><strong>Gmacs M</strong>: natural mortality (<span class="math inline"><em>M</em></span>) is fixed at 0.18 <span class="math inline"><em>y</em><em>r</em><sup>−1</sup></span> during all years as well as estimating additional CV is estimated for both the NMFS trawl survey and the ADF&amp;G pot survey and estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
+<li><p><strong>Gmacs Francis</strong>: additional CV is estimated for both the NMFS trawl survey and the ADF&amp;G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
 </ol>
 <table>
 <thead>
@@ -143,16 +143,16 @@
 <td align="left">Yes</td>
 </tr>
 <tr class="odd">
-<td align="left">Gmacs CV</td>
-<td align="left">Yes</td>
-<td align="left">Yes</td>
-<td align="left">Yes</td>
-</tr>
-<tr class="even">
 <td align="left">Gmacs M</td>
 <td align="left">Yes</td>
 <td align="left">Yes</td>
 <td align="left">No</td>
+</tr>
+<tr class="even">
+<td align="left">Gmacs Francis</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
 </tr>
 </tbody>
 </table>
@@ -192,7 +192,7 @@
 The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span>. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of <span class="math inline"><em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> and <span class="math inline"><em>F</em><sub><em>M</em><em>S</em><em>Y</em></sub></span>, along with two additional parameters <span class="math inline"><em>α</em></span> and <span class="math inline"><em>β</em></span>, <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span> is determined by the control rule
 
 <p>where <span class="math inline"><em>B</em></span> is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as <span class="math inline"><em>B</em></span> itself is a function of the fishing mortality <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span>, in case b) numerical approximation of <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span> is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span> taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.</p>
-<p>The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2015, to define a <span class="math inline"><em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy in terms of average estimated MMB and to put <span class="math inline"><em>γ</em></span> = 1.0 with assumed stock natural mortality <span class="math inline"><em>M</em></span> = 0.18 <span class="math inline">yr<sup>−1</sup></span> in setting the <span class="math inline"><em>F</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy value <span class="math inline"><em>γ</em><em>M</em></span>. The parameters <span class="math inline"><em>α</em></span> and <span class="math inline"><em>β</em></span> are assigned their default values <span class="math inline"><em>α</em></span> = 0.10 and <span class="math inline"><em>β</em></span> = 0.25. The <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span>, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. ABC is 80% of the OFL.</p>
+<p>The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2016, to define a <span class="math inline"><em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy in terms of average estimated MMB and to set <span class="math inline"><em>γ</em></span> = 1.0 with assumed stock natural mortality <span class="math inline"><em>M</em></span> = 0.18 <span class="math inline">yr<sup>−1</sup></span> in setting the <span class="math inline"><em>F</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy value <span class="math inline"><em>γ</em><em>M</em></span>. The parameters <span class="math inline"><em>α</em></span> and <span class="math inline"><em>β</em></span> are assigned their default values <span class="math inline"><em>α</em></span> = 0.10 and <span class="math inline"><em>β</em></span> = 0.25. The <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span>, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. ABC is 80% of the OFL.</p>
 <p>OFL, ABC, retained catch and bycatches for 2015 are summarized for scenarios 10 and 10-4 below:</p>
 <h1 id="g.-rebuilding-analysis">G. Rebuilding Analysis</h1>
 <p>This stock is not currently subject to a rebuilding plan.</p>
@@ -235,12 +235,7 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 
 <p></p>
 
-<pre><code>## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 17, 19</code></pre>
 
-<pre><code>## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 19, 17</code></pre>
-
-
-<pre><code>## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 60, 64</code></pre>
 
 
 
@@ -266,20 +261,11 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <img src="figure/molt_prob-1.png" alt="Molting probabilities by stage used in all of the Gmacs model scenarios." />
 <p class="caption">Molting probabilities by stage used in all of the Gmacs model scenarios.</p>
 </div>
-<div class="figure">
-<img src="figure/trawl_survey_biomass-1.png" alt="Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." />
-<p class="caption">Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
-</div>
+<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, &quot;pred&quot;, value = structure(c(7609.37370634, : replacement has 46 rows, data has 47</code></pre>
 
 <p></p>
-<div class="figure">
-<img src="figure/pot_survey_cpue-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations." />
-<p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations.</p>
-</div>
-<div class="figure">
-<img src="figure/pot_survey_cpue_CV-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations." />
-<p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations.</p>
-</div>
+<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, &quot;pred&quot;, value = structure(c(7609.37370634, : replacement has 46 rows, data has 47</code></pre>
+<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, &quot;pred&quot;, value = structure(c(7609.37370634, : replacement has 46 rows, data has 47</code></pre>
 <div class="figure">
 <img src="figure/bts_resid-1.png" alt="Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. " />
 <p class="caption">Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. </p>
@@ -444,7 +430,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 <p></p>
 <h2 id="the-base-model-data-file">The base model data file:</h2>
 <pre><code>## Warning in file(con, &quot;r&quot;): cannot open file &#39;../../examples/smbkc2/model_1/
-## sm15.dat&#39;: No such file or directory</code></pre>
+## sm16.dat&#39;: No such file or directory</code></pre>
 <pre><code>## Error in file(con, &quot;r&quot;): cannot open the connection</code></pre>
 <pre><code>## Error in ts[i]: object of type &#39;closure&#39; is not subsettable</code></pre>
 <h2 id="the-base-model-control-file">The base model control file:</h2>
@@ -984,7 +970,8 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ##   1   1   1   # Initial value for effective sample size multiplier 
 ##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
 ##   1   2   3   # Composition aggregator 
-##   1   1   1   # LAMBDA 
+## #  1   1   1   # LAMBDA 
+##    1.6081   0.6184   1.1189 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1178,7 +1165,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
 ##   1   2   3   # Composition aggregator 
 ## #  1   1   1   # LAMBDA 
-##    1.6281   0.9533   3.5785 
+##    1.6549   1.0187   2.6640 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1194,7 +1181,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## Type 
 ## 0 
 ## ## Phase of estimation 
-## 4 
+## -4 
 ## ## STDEV in m_dev for Random walk 
 ## 10.0 
 ## ## Number of nodes for cubic spline or number of step-changes for option 3 

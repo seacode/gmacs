@@ -8,7 +8,7 @@ all: pdf clean
 
 R_OPTS=--no-save --no-restore --no-init-file --no-site-file
 
-pdf: smbkc.R
+pdf: smbkc.R app.Rmd
 	cp smbkc.R smbkc.Rmd
 	R ${R_OPTS} -e 'library(knitr); knit("smbkc.Rmd"); knit("app.Rmd")'
 	pandoc -V geometry:margin=1in smbkc.md -o smbkc.pdf --bibliography=../references/Gmacs.bib

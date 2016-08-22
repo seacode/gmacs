@@ -103,7 +103,7 @@
 ## SURVEYS/INDICES ONLY
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
    1.0     0        2     -1    0       0        9.0   0           1       # NMFS trawl
-4.26724288404e-06 0 5      1    0       0        9.0   0           1       # ADF&G pot
+4.26724288404e-06 0 5      1    0       0        9.0   0           0.2     # ADF&G pot
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -148,7 +148,8 @@
   1   1   1   # Initial value for effective sample size multiplier
  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
   1   2   3   # Composition aggregator
-  1   1   1   # LAMBDA
+#  1   1   1   # LAMBDA
+   1.6549   1.0187   2.6640
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -164,7 +165,7 @@
 ## Type
 0
 ## Phase of estimation
-4
+-4
 ## STDEV in m_dev for Random walk
 10.0
 ## Number of nodes for cubic spline or number of step-changes for option 3

@@ -28,6 +28,7 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
+mod_names <- c("2015 Model","Gmacs match","Gmacs base","Gmacs Francis","Gmacs M")
 .MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
@@ -41,7 +42,7 @@ options(xtable.comment = FALSE)
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("2015 Model","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis")
+names(M) <- mod_names
 
 jj <- 1 # The position in the list that Jies model outputs sit
 fn <- "2015_model/smbkc15100"
@@ -51,33 +52,29 @@ nmult_1 <- 1e+06
 nmult_2 <- 0.0004535923 * 1e+6
 
 # Add numbers at length data
-#M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
-#M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
-#M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
-M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1)
-M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2)
-M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3)
+M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
+M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
+M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
 
 # Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
 ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
 M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
-M[[jj]]$fit$est[ii] <- log(M[[jj]]$ssb) 
+M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
 M[[jj]]$fit$std[ii] <- NA
 
 # Add natural mortality data
 ii <- which(M[[jj]]$mod_yrs == 1998)
 M[[jj]]$M[ii,] <- JJ[[jj]]$M98
-#M[[jj]]$M[21,] <- M[[jj]]$M[1,]
 
 # Add recruitment data - It looks like Jie has recorded this as millions of individuals
 din <- JJ[[jj]]$rec
 ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-M[[jj]]$fit$est[ii] <- log(nmult_1 * c(din, NA))
+M[[jj]]$fit$est[ii] <- c(log(nmult_1 * c(din, NA)), NA)
 M[[jj]]$fit$std[ii] <- NA
 
 # Add estimated trawl survey biomass (million of lbs)
-M[[jj]]$pre_cpue[1,] <- nmult_2 * JJ[[jj]]$B_ts
-M[[jj]]$obs_cpue[1,] <- nmult_2 * JJ[[jj]]$b_ts
+M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
+M[[jj]]$obs_cpue[1,] <- c(nmult_2 * JJ[[jj]]$b_ts, NA)
 M[[jj]]$pre_cpue[2,1:8] <- 1000 * JJ[[jj]]$X_ps
 M[[jj]]$obs_cpue[2,1:8] <- 1000 * JJ[[jj]]$x_ps
 
@@ -166,11 +163,11 @@ All of the time series used in this assessment have been updated to include the 
 
 ## Changes in Assessment Methodology
 
-This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within any number of discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. 
+This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within `r M[[2]]$nseason` discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. 
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenario. The Gmacs match model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
+Changes in assessment results depend on model scenario. The Gmacs match model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and the same (fixed) parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
 
 
 # B. Responses to SSC and CPT Comments
@@ -179,7 +176,7 @@ Changes in assessment results depend on model scenario. The Gmacs match model sc
 
 No general comments relative to crab assessments were applied in this draft preliminary assessment.
 
-## CPT and SSC Comments Specific to SMBKC Stock Assessment
+## CPT and SSC Comments Specific to the SMBKC Stock Assessment
 
 Comment: The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.
 
@@ -242,7 +239,7 @@ Comment: the CPT requests that some evaluation should also be included in the Se
 
 Response:
 
-Comment: *The SSC and CPT requested the following models for review at the spring  2016 meeting:*   
+Comment: *The SSC and CPT requested the following models for review at the spring 2016 meeting:*   
   1. Base: try to match 2015 model but prevent dome shaped selex      
   2. Base + add CV for both surveys      
   3. Above + Francis re-weighting      
@@ -344,16 +341,16 @@ Four different Gmacs model scenarios were considered. In this document results f
 
 3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
-4. **Gmacs CV**: additional CV is estimated for both the NMFS trawl survey and the ADF&G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
+4. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years as well as estimating additional CV is estimated for both the NMFS trawl survey and the ADF&G pot survey and estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
-5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years as well as estimating additional CV is estimated for both the NMFS trawl survey and the ADF&G pot survey and estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
+5. **Gmacs Francis**: additional CV is estimated for both the NMFS trawl survey and the ADF&G pot survey as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
 | Scenario | Selectivity estimated | Additional CV | Estimate $M_{1998}$ |
 |-|-|-|-|
-| Gmacs match | No  | No  | Yes |
-| Gmacs base  | Yes | No  | Yes |
-| Gmacs CV    | Yes | Yes | Yes |
-| Gmacs M     | Yes | Yes | No  |
+| Gmacs match   | No  | No  | Yes |
+| Gmacs base    | Yes | No  | Yes |
+| Gmacs M       | Yes | Yes | No  |
+| Gmacs Francis | Yes | Yes | Yes |
 
 
 ## Results
@@ -482,7 +479,7 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analys
 
 \newpage\clearpage
 
-```{r est_pars_base, results = "asis"}
+```{r est_pars_2, results = "asis"}
 x <- M[[2]]$fit
 i <- c(grep("m_dev", x$names)[1],
        grep("theta", x$names),
@@ -491,7 +488,6 @@ i <- c(grep("m_dev", x$names)[1],
        grep("sd_fofl", x$names),
        grep("sd_ofl", x$names)
        )
-#i <- grep("rec_dev", x$names)
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
@@ -501,7 +497,7 @@ tab <- xtable(df, caption = "Model parameter estimates and standard deviations (
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
-```{r est_pars_selex, results = "asis"}
+```{r est_pars_3, results = "asis"}
 x <- M[[3]]$fit
 i <- c(grep("m_dev", x$names)[1],
        grep("theta", x$names),
@@ -515,32 +511,34 @@ Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
 Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
-               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity","Fofl","OFL")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs base} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
-```{r est_pars_cv, results = "asis"}
+```{r est_pars_4, results = "asis"}
 x <- M[[4]]$fit
-i <- c(grep("m_dev", x$names)[1],
-       grep("theta", x$names),
+i <- c(grep("theta", x$names),
        grep("survey_q", x$names),
        grep("log_add_cv", x$names),
        grep("log_fbar", x$names),
-       grep("log_slx_pars", x$names))
+       grep("log_slx_pars", x$names),
+       grep("sd_fofl", x$names),
+       grep("sd_ofl", x$names)
+       )
 Parameter <- x$names[i]
 Estimate <- x$est[i]
 SD <- x$std[i]
-Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (R_0)$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
-               "ADF\\&G pot survey catchability ($q$)","logAddCV","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
-               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
+Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+               "ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity","Fofl","OFL")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs CV} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_cv", digits = 7)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
-```{r est_pars_M, results = "asis"}
+```{r est_pars_5, results = "asis"}
 x <- M[[5]]$fit
 i <- c(grep("theta", x$names),
        grep("survey_q", x$names),
@@ -568,7 +566,6 @@ for (ii in 2:5)
     i <- c(grep("m_dev", x$names)[1],
            grep("theta", x$names),
            grep("survey_q", x$names),
-           grep("log_add_cv", x$names),
            grep("log_fbar", x$names),
            grep("log_slx_pars", x$names))
     Parameter <- c(Parameter, x$names[i])
@@ -576,9 +573,14 @@ for (ii in 2:5)
     Model <- c(Model, rep(Mname[ii-1], length(i)))
 }
 Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
-               "ADF\\&G pot survey catchability ($q$)","logAddCV","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
-               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
-Parameter <- c(Parameter[c(1:7,9:11)],Parameter[c(1:7,9:19)],Parameter,Parameter[c(1:7,9:19)])
+               "ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008",
+               "Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015",
+               "Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
+Parameter <- c(Parameter[1:9],
+               Parameter[c(1:17)],
+               Parameter,
+               Parameter[c(1:17)])
 df <- data.frame(Model, Parameter, Estimate)
 #df <- tidyr::spread(df, Model, Estimate)
 tab <- xtable(df, caption = "Comparisons of model parameter estimates for the four Gmacs model scenarios.", label = "tab:est_pars_all", digits = 3)
@@ -633,26 +635,26 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 
 ```{r pop_abundance_2015, results = "asis"}
 A <- M[[1]]
-df <- data.frame(as.integer(A$mod_yrs), A$N_len[1:38,1], A$N_len[1:38,2], A$N_len[1:38,3], A$ssb)
+df <- data.frame(as.integer(A$mod_yrs), A$N_len[1:39,1], A$N_len[1:39,2], A$N_len[1:39,3], c(A$ssb,NA))
 names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
 tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab and mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf 2015 model}. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_2015")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 ```{r pop_abundance_base, results = "asis"}
-A <- M[[2]]
-df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(5,156,4),1], A$d4_N[seq(5,156,4),2], A$d4_N[seq(5,156,4),3], A$ssb)
-names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf Gmacs base} model. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_base")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
+#A <- M[[2]]
+#df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(5,156,4),1], A$d4_N[seq(5,156,4),2], A$d4_N[seq(5,156,4),3], c(A$ssb,NA))
+#names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
+#tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for the {\\bf Gmacs base} model. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_base")
+#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 ```{r pop_abundance_selex, results = "asis"}
-A <- M[[3]]
-df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(5,156,4),1], A$d4_N[seq(5,156,4),2], A$d4_N[seq(5,156,4),3], A$ssb)
-names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for {\\bf Gmacs selex} model. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_selex")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
+#A <- M[[3]]
+#df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(5,156,4),1], A$d4_N[seq(5,156,4),2], A$d4_N[seq(5,156,4),3], A$ssb)
+#names(df) <- c("Year","$N_1$","$N_2$","$N_3$","MMB")
+#tab <- xtable(df, digits = 0, caption = "Population abundances (N) by crab stage in numbers of crab, mature male biomass (MMB) at survey in tonnes on 15 February for {\\bf Gmacs selex} model. All abundances are at time of survey (season 3).", label = "tab:pop_abundance_selex")
+#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 \newpage\clearpage
