@@ -125,7 +125,7 @@ names(Mselex) <- c("SMBKC")
 
 1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
 
-2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonnes (1.167 million pounds) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).
+2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).
 
 3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 tonnes (20.98 million pounds; CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 5652 tonnes (12.46 million pounds; CV = 0.33) in 2012 and to 2202 tonnes (4.459 million pounds; CV = 0.22) in 2013 before going back up to 5472 tonnes (12.06 million pounds; CV = 0.44) in 2014 and 5134 tonnes (11.32 million pounds; CV = 0.76).
 
@@ -164,7 +164,7 @@ All of the time series used in this assessment have been updated to include the 
 
 ## Changes in Assessment Methodology
 
-This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within `r M[[2]]$nseason` discrete seasons. Season length in Gmacs is controlled simply by changing the proportion of natural mortality that is applied during each season. 
+This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment and the previous model. One of the major differences being that natural and fishing mortality are continuous within `r M[[2]]$nseason` discrete seasons. Season length in Gmacs is controlled by changing the proportion of natural mortality that is applied during each season. 
 
 ## Changes in Assessment Results
 
@@ -181,9 +181,9 @@ No general comments relative to crab assessments were applied in this draft prel
 
 Comment: The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.
 
-Response:
+Response: All model runs that estimate additonal CV were dropped from this analysis. Instead we provide to model runs that use the Francis iterative re-weighting method to weight the length-frequency data relative to the abundance indices.
 
-Comment: The descriptions of seasons in the model is confusing and currently reads as if $M$ differs among seasons (see page 39). More justification is needed on how seasons are defined and how they were selected, as well as clarification on $M$ during these seasons.
+Comment: The descriptions of seasons in the model is confusing and currently reads as if $M$ differs among seasons. More justification is needed on how seasons are defined and how they were selected, as well as clarification on $M$ during these seasons.
 
 Response: This description has been ammended and justification provided in the appendix.
 
@@ -228,7 +228,7 @@ Comment: Regarding general code development, the CPT had the following requests:
   1. 1-year projection for calculating Tier 3 or 4 OFLs
   2. specify catchability as a fixed or estimated parameter or use the analytic calculation for the MLE
   3. specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors
-  4. include an option to calculate dynamic B MSY
+  4. include an option to calculate dynamic $B_\mathit{MSY}$
   5. add the ability to “jitter” initial parameter values
   6. add the ability to conduct retrospective analyses
   7. add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available
@@ -240,11 +240,12 @@ Comment: the CPT requests that some evaluation should also be included in the Se
 
 Response:
 
-Comment: *The SSC and CPT requested the following models for review at the spring 2016 meeting:*   
-  1. Base: try to match 2015 model but prevent dome shaped selex      
-  2. Base + add CV for both surveys      
-  3. Above + Francis re-weighting      
-  4. Above + remove M spike      
+Comment: *The SSC and CPT requested the following models for review at the spring 2016 meeting:*
+
+  1. Base: try to match 2015 model but prevent dome shaped selectivity
+  2. Base + add CV for both surveys
+  3. Above + Francis re-weighting
+  4. Above + remove M spike
 
 Response: *Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting.*
 
