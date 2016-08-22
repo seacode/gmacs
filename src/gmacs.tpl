@@ -1159,7 +1159,9 @@ INITIALIZATION_SECTION
 
 
 PARAMETER_SECTION
-	!! cout << "*** Parameter section ***" << endl;
+	!! cout << "+----------------------+" << endl;
+	!! cout << "| Parameter section    |" << endl;
+	!! cout << "+----------------------+" << endl;
 	// Leading parameters
 	// M         = theta(1)
 	// ln(Ro)    = theta(2)
