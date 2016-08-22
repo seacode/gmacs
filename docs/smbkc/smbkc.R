@@ -77,6 +77,9 @@ M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
 M[[jj]]$obs_cpue[1,] <- c(nmult_2 * JJ[[jj]]$b_ts, NA)
 M[[jj]]$pre_cpue[2,1:8] <- 1000 * JJ[[jj]]$X_ps
 M[[jj]]$obs_cpue[2,1:8] <- 1000 * JJ[[jj]]$x_ps
+M[[jj]]$dSurveyData <- M[[jj]]$dSurveyData[-39,]
+M[[jj]]$cpue_cv_add <- M[[jj]]$cpue_cv_add[,-39]
+M[[jj]]$res_cpue <- M[[jj]]$res_cpue[,-39]
 
 #Estimated pot survey length compositions
 M[[jj]]$d3_pre_size_comps_out[1:14,] <- t(JJ[[jj]]$P_ob)
