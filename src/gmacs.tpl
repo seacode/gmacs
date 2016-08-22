@@ -97,11 +97,11 @@ DATA_SECTION
 		if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-retro",opt))>-1 )
 		{
 			cout << "\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | Running retrospective model with " << ad_comm::argv[on+1] << " recent yrs removed |\n";
 			cout << "  |----------------------------------------------------------|\n";
 			cout << "  | YET TO BE IMPLEMENTED                                    |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			exit(1);
 		}
 	END_CALCS
@@ -113,11 +113,14 @@ DATA_SECTION
 	init_adstring datafile;
 	init_adstring controlfile;
 	!! ad_comm::change_datafile_name(datafile); WriteFileName(datafile); WriteFileName(controlfile);
-	!! cout << "*** Reading data file ***" << endl;
+	!! cout << "+----------------------+" << endl;
+	!! cout << "| Reading data file    |" << endl;
+	!! cout << "+----------------------+" << endl;
 
 	// |------------------|
 	// | MODEL DIMENSIONS |
 	// |------------------|
+	!! cout << " * Model dimensions" << endl;
 	init_int syr;     ///> initial year
 	init_int nyr;     ///> terminal year
 	init_int pyr;     ///> terminal projection year
@@ -172,6 +175,7 @@ DATA_SECTION
 	// |-----------|
 	// | ALLOMETRY |
 	// |-----------|
+	!! cout << " * Allometry" << endl;
 	init_int lw_type; ///> length-weight type/method (i.e. provide parameters or a vector)
 	int lw_dim;
 	LOC_CALCS
@@ -207,7 +211,7 @@ DATA_SECTION
 					{
 						for ( int l = 1; l <= nclass; l++ )
 						{
-							mean_wt(h,l) = mean_wt_in(h,l);
+							mean_wt(h,i,l) = mean_wt_in(h,l);
 						}
 					}
 				}
@@ -232,17 +236,52 @@ DATA_SECTION
 	// |-------------------------------|
 	// | FECUNDITY FOR MMB CALCULATION |
 	// |-------------------------------|
+	!! cout << " * Maturity and natural mortality" << endl;
 	init_vector fecundity(1,nclass);
 	init_matrix maturity(1,nsex,1,nclass);
 	init_int m_prop_type;
-	init_matrix m_prop(syr,nyr,1,nseason);
-	//matrix m_prop(syr,nyr,1,nseason);
+	int m_dim;
 	LOC_CALCS
-		//if ( sum(m_prop) != 1.0 )
-		//{
-		//	cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1!" << endl;
-		//	exit(1);
-		//}
+		m_dim = 1;
+		if ( m_prop_type == 2 )
+		{
+			m_dim = nyr - syr + 1;
+		}
+	END_CALCS
+	init_matrix m_prop_in(1,m_dim,1,nseason);
+	matrix m_prop(syr,nyr,1,nseason);
+	LOC_CALCS
+		switch ( m_prop_type )
+		{
+			// vector by season
+			case 1:
+				for ( int i = syr; i <= nyr; i++ )
+				{
+					for ( int j = 1; j <= nseason; j++ )
+					{
+						m_prop(i,j) = m_prop_in(1,j);
+					}
+				}
+			break;
+			// matrix by year and season
+			case 2:
+				for ( int i = syr; i <= nyr; i++ )
+				{
+					for ( int j = 1; j <= nseason; j++ )
+					{
+						m_prop(i,j) = m_prop_in(i-syr+1,j);
+					}
+				}
+			break;
+		}
+		for ( int i = syr; i <= nyr; i++ )
+		{
+			if ( sum(m_prop(i)) != 1.0 )
+			{
+				cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1!" << endl;
+				exit(1);
+			}
+		}
 		WRITEDAT(fecundity); WRITEDAT(maturity);
 	END_CALCS
 
@@ -256,6 +295,7 @@ DATA_SECTION
 	// |--------------|
 	// | CATCH SERIES |
 	// |--------------|
+	!! cout << " * Catch data" << endl;
 	init_int nCatchDF;
 	init_ivector nCatchRows(1,nCatchDF);
 	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11); // array of catch data
@@ -353,6 +393,7 @@ DATA_SECTION
 	// |----------------------------|
 	// | RELATIVE ABUNDANCE INDICES |
 	// |----------------------------|
+	!! cout << " * Abundance data" << endl;
 	init_int nSurveys;
 	init_ivector nSurveyRows(1,nSurveys);
 	init_3darray dSurveyData(1,nSurveys,1,nSurveyRows,1,7);
@@ -374,6 +415,7 @@ DATA_SECTION
 	// |-----------------------|
 	// | SIZE COMPOSITION DATA |
 	// |-----------------------|
+	!! cout << " * Size composition data" << endl;
 	init_int nSizeComps_in;
 	init_ivector nSizeCompRows_in(1,nSizeComps_in);
 	init_ivector nSizeCompCols_in(1,nSizeComps_in);
@@ -398,6 +440,7 @@ DATA_SECTION
 	// |-----------------------|
 	// | GROWTH INCREMENT DATA |
 	// |-----------------------|
+	!! cout << " * Growth data" << endl;
 	init_int nGrowthObs;
 	init_matrix dGrowthData(1,nGrowthObs,1,4);
 
@@ -471,7 +514,11 @@ DATA_SECTION
 	// | LEADING PARAMETER CONTROLS |
 	// |----------------------------|
 	!! ad_comm::change_datafile_name(controlfile);
-	!! cout << "*** Reading control file ***" << endl;
+	!! cout << "+----------------------+" << endl;
+	!! cout << "| Reading control file |" << endl;
+	!! cout << "+----------------------+" << endl;
+
+	!! cout << " * Key parameter controls" << endl;
 	init_int ntheta;
 	init_matrix theta_control(1,ntheta,1,7);
 	
@@ -489,6 +536,7 @@ DATA_SECTION
 	// |----------------------------|
 	// | GROWTH PARAMETER CONTROLS  |
 	// |----------------------------|
+	!! cout << " * Growth parameter controls" << endl;
 	// | Note that if bUseEmpiricalGrowth data is TRUE, then cannot estimate alpa & beta.
 	int nGrwth;
 	!! nGrwth = nsex * 5;
@@ -509,6 +557,7 @@ DATA_SECTION
 	// |--------------------------------|
 	// | SELECTIVITY PARAMETER CONTROLS |
 	// |--------------------------------|
+	!! cout << " * Selectivity parameter controls" << endl;
 	int nslx;             // number of selectivities (gears x blocks selectivity + gears * blocks retained)
 	int nslx_pars;        // number of selectivity parameters in total
 	int nslx_rows_in;     // number of selectivity rows
@@ -732,6 +781,7 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | PRIORS FOR CATCHABILITIES OF SURVEYS/INDICES            |
 	// |---------------------------------------------------------|
+	!! cout << " * Catchability parameter controls" << endl;
 	init_matrix q_controls(1,nSurveys,1,9);
 
 	vector q_ival(1,nSurveys);
@@ -781,6 +831,7 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | ADDITIONAL SURVEY CV CONTROLS                           |
 	// |---------------------------------------------------------|
+	!! cout << " * Additional CV controls" << endl;
 	init_matrix cv_controls(1,nSurveys,1,7);
 	!! WriteCtl(cv_controls);
 
@@ -823,6 +874,7 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
 	// |---------------------------------------------------------|
+	!! cout << " * Fishing mortality controls" << endl;
 	init_matrix f_controls(1,nfleet,1,4);
 
 	ivector f_phz(1,nfleet);
@@ -859,13 +911,13 @@ DATA_SECTION
 	// |-----------------------------------|
 	// | OPTIONS FOR SIZE COMPOSITION DATA |
 	// |-----------------------------------|
+	!! cout << " * Size composition controls" << endl;
 	init_ivector nAgeCompType_in(1,nSizeComps_in);
 	init_ivector bTailCompression_in(1,nSizeComps_in);
 	init_vector nvn_ival_in(1,nSizeComps_in);
 	init_ivector nvn_phz_in(1,nSizeComps_in);
 	init_ivector iCompAggregator(1,nSizeComps_in);
 	init_vector lf_lambda_in(1,nSizeComps_in);
-
 
 	int nSizeComps;
 	!! nSizeComps = max(iCompAggregator);
@@ -1007,6 +1059,7 @@ DATA_SECTION
 	// |--------------------------------------------------|
 	// | OPTIONS FOR TIME-VARYING NATURAL MORTALITY RATES |
 	// |--------------------------------------------------|
+	!! cout << " * Natural mortality controls" << endl;
 	int nMdev;
 	init_int m_type;
 	init_int Mdev_phz;
@@ -1039,6 +1092,7 @@ DATA_SECTION
 	// |---------------------------------------------------------|
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
+	!! cout << " * Other controls" << endl;
 	init_vector model_controls(1,10);
 	int rdv_phz;             ///> Estimated rec_dev phase
 	int verbose;             ///> Flag to print to screen

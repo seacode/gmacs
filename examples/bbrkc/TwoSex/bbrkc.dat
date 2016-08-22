@@ -14,6 +14,7 @@
 
 1975  # Start year
 2015  # End year
+2017  # Projection year
 2     # Number of seasons
 4     # Number  of  distinct  data  groups  (among fishing fleets and surveys)
 2     # Number  of  sexes
@@ -23,7 +24,7 @@
 2     # Season recruitment occurs
 2     # Season molting and growth occurs
 2     # Season to calculate SSB
-##
+1     # Season for N output
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)
 65  70  75  80  85  90  95  100 105 110 115 120 125 130 135 140 145 150 155 160 165
 # weight-at-length input method (1 = allometry w_l = a*l^b, 2 = vector by sex)
@@ -45,6 +46,8 @@
 # Proportion  mature  by  sex
 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1
 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+# Natural mortality per season input type (1 = vector by season, 2 = matrix by season/year)
+1
 # Proportion of the total natural mortality to be applied each season
 0.5 0.5
 # Fishing fleet names (delimited  with  : no  spaces  in  names)
@@ -63,8 +66,8 @@ NMFS_Trawl:BSFRF
 ##  for BBRKC Units are in  1000 mt  for landed  & discards.
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##
 ##  Male  Retained  1000
-##  year  seas  fleet sex obs     cv    type  units molt  effort  discard_mortality
-    1975  1 1 1 23281.2 0.05  1 1 1 0 0
+##  year  seas  fleet sex obs     cv    type  units mult  effort  discard_mortality
+    1975  1  1  1  23281.2  0.05  1  1  1  0  0
     1976  1 1 1 28993.6 0.05  1 1 1 0 0
     1977  1 1 1 31736.9 0.05  1 1 1 0 0
     1978  1 1 1 39743.0 0.05  1 1 1 0 0
@@ -660,5 +663,28 @@ NMFS_Trawl:BSFRF
   152.5 1 15.577259 0.2
   157.5 1 15.526092 0.2
   162.5 1 15.475241 0.2
+# Use custom growth transition matrix (0=no, 1=yes)
+0
+# The growth matrix (if not using just fill with zeros)
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ##  eof
 9999
