@@ -1095,6 +1095,7 @@ DATA_SECTION
 	!! cout << " * Other controls" << endl;
 	init_vector model_controls(1,10);
 	int rdv_phz;             ///> Estimated rec_dev phase
+	int rec_ini_phz;         ///> Estimated rec_dev phase
 	int verbose;             ///> Flag to print to screen
 	int bInitializeUnfished; ///> Flag to initialize at unfished conditions
 	int spr_syr;
@@ -1115,10 +1116,22 @@ DATA_SECTION
 		spr_lambda          =     model_controls(8);
 		bUseEmpiricalGrowth = int(model_controls(9));
 		nSRR_flag           = int(model_controls(10));
+		if ( bInitializeUnfished == 2 )
+		{
+			rec_ini_phz  = -1; // If free parameters is selected then don't use deviations for initial numbers.
+			theta_phz(3) = -1; // Also don't use log(Rini) i.e. initial recruitment(syr). Instead we will use log(N0(1)).
+		} else {
+			rec_ini_phz = rdv_phz;
+		}
 		WriteCtl(model_controls);
 		if ( bInitializeUnfished == 1 && theta_phz(3) > 0 )
 		{
-			cout << "Error: cannot initialize unfished and estimate the logR1 parameter" << endl; 
+			cout << "Error: cannot initialize unfished and estimate the logRini parameter" << endl; 
+			exit(1);
+		}
+		if ( bInitializeUnfished == 2 && theta_phz(3) > 0 )
+		{
+			cout << "Error: cannot estimate initial numbers and the logRini parameter" << endl; 
 			exit(1);
 		}
 	END_CALCS
@@ -1133,7 +1146,7 @@ DATA_SECTION
 		COUT(Grwth_phz);
 		if ( bUseEmpiricalGrowth )
 		{
-			cerr << "WARNING:\n \tUsing empirical growth increment data,\n";
+			cerr << "Warning:\n \tUsing empirical growth increment data,\n";
 			cerr << "\talpha & beta parameters will not be estimated." << endl;
 			for ( int h = 1; h <= nsex; h++ )
 			{
@@ -1172,7 +1185,7 @@ PARAMETER_SECTION
 	// logSigmaR = theta(7)
 	// steepness = theta(8)
 	// rho       = theta(9)
-	// logN0     = theta(10)
+	// logN0     = theta(10,...)
 	
 	init_bounded_number_vector theta(1,ntheta,theta_lb,theta_ub,theta_phz);
 
@@ -1201,6 +1214,7 @@ PARAMETER_SECTION
 	init_bounded_number_vector log_slx_pars(1,nslx_pars,slx_lb,slx_ub,slx_phzm);
 
 	LOC_CALCS
+		// Selectivity
 		int j = 1;
 		for ( int k = 1; k <= nslx; k++ )
 		{
@@ -1231,10 +1245,9 @@ PARAMETER_SECTION
 	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
 
 	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,-rdv_phz);  ///> initial size devs
+	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rec_ini_phz);  ///> initial size devs
 	//init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 	init_bounded_dev_vector rec_dev(syr,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
-    // NOTE THE MINUS SIGNS FOR PHZ ABOVE, NEEDS TO BE FIXED LATER
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -1338,6 +1351,10 @@ PARAMETER_SECTION
 
 
 PRELIMINARY_CALCS_SECTION
+	cout << "+----------------------+" << endl;
+	cout << "| Preliminary section  |" << endl;
+	cout << "+----------------------+" << endl;
+
 	if ( simflag )
 	{
 		if ( !global_parfile )
@@ -1362,6 +1379,10 @@ PRELIMINARY_CALCS_SECTION
 			if ( l > nclass ) l = 1;
 		}
 	}
+
+	cout << "+----------------------+" << endl;
+	cout << "| Procedure section    |" << endl;
+	cout << "+----------------------+" << endl;
 
 
 PROCEDURE_SECTION
@@ -2018,8 +2039,7 @@ FUNCTION calc_initial_numbers_at_length
 			log_initial_recruits = logRini;
 		break;
 		case 2: // Free parameters
-			//log_initial_recruits = logRini;
-			log_initial_recruits = logN0(1); // only for SMBKC
+			log_initial_recruits = logN0(1);
 		break;
 	}
 	recruits(syr) = mfexp(log_initial_recruits);
@@ -2041,11 +2061,11 @@ FUNCTION calc_initial_numbers_at_length
 		switch( bInitializeUnfished )
 		{
 			case 0: // Unfished conditions
-				cout << "The unfished conditions options is broke!" << endl; exit(1);
-				for ( int i = 1; i <= nclass; i++ )
-				{
-					_S(i,i) = mfexp(-M(h)(syr)(i));
-				}
+				//cout << "The unfished conditions options is broke!" << endl; exit(1);
+				//for ( int i = 1; i <= nclass; i++ )
+				//{
+				//	_S(i,i) = mfexp(-M(h)(syr)(i));
+				//}
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{

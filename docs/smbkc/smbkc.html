@@ -842,9 +842,9 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ##   12 
 ## # ival        lb        ub        phz   prior     p1      p2         # parameter         # 
 ##   0.18      0.01         1        -4       2   0.18    0.02          # M 
-##   14.3      -7.0        30        -2       0    -7       30          # log(R0) 
-##   10.0      -7.0        20        -1       1   -10.0     20.0        # log(Rini) 
-##   13.7222   -7.0        20         1       0    -7       30          # log(Rbar) 
+##   14.3      -7.0        30        -2       0    -7       30          # log(R0) - unfished recruits 
+##   10.0      -7.0        20        -1       1   -10.0     20.0        # log(Rini) - initial recruitment(syr) 
+##   13.7222   -7.0        20         1       0    -7       30          # log(Rbar) - average recruits(syr+1,nyr) 
 ##   80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value 
 ##   0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component) 
 ##   0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R) 
@@ -973,8 +973,8 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## AUTOTAIL COMPRESSION 
 ## ##   pmin is the cumulative proportion used in tail compression. 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## #  1   1   1  # Type of likelihood 
-##   2   2   2  # Type of likelihood 
+##   1   1   1  # Type of likelihood 
+## #  2   2   2  # Type of likelihood 
 ## #  5   5   5   # Type of likelihood 
 ##   0   0   0   # Auto tail compression (pmin) 
 ##   1   1   1   # Initial value for effective sample size multiplier 
@@ -1167,8 +1167,8 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## AUTOTAIL COMPRESSION 
 ## ##   pmin is the cumulative proportion used in tail compression. 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
-## #  1   1   1  # Type of likelihood 
-##   2   2   2  # Type of likelihood 
+##   1   1   1  # Type of likelihood 
+## #  2   2   2  # Type of likelihood 
 ## #  5   5   5   # Type of likelihood 
 ##   0   0   0   # Auto tail compression (pmin) 
 ##   1   1   1   # Initial value for effective sample size multiplier 
