@@ -14,7 +14,7 @@
 
 1975  # Start year
 2015  # End year
-2017  # Projection year
+2016  # Projection year
 2     # Number of seasons
 4     # Number  of  distinct  data  groups  (among fishing fleets and surveys)
 2     # Number  of  sexes
@@ -58,7 +58,6 @@ NMFS_Trawl:BSFRF
 4
 # Number  of  rows  in  each  data  frame
 40  25  25  39
-#0.5  # Time  between survey  and fishery
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##
 ##  CATCH DATA
 ##  Type  of  catch:  1 = retained, 2 = discard,  3 =

@@ -60,9 +60,9 @@ DATA_SECTION
 		if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-i",opt))>-1 )
 		{
 			cout << "\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | CONTRIBUTIONS (code and intellectual)                    |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | Name:                        Organization:               |\n";
 			cout << "  | James Ianelli                NOAA-NMFS                   |\n";
 			cout << "  | D'Arcy Webber                Quantifish                  |\n";
@@ -74,32 +74,32 @@ DATA_SECTION
 			cout << "  | André Punt                   University of Washington    |\n";
 			cout << "  | Dave Fournier                Otter Research              |\n";
 			cout << "  | John Levitt                  Mathemetician               |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | FINANCIAL SUPPORT                                        |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | Financial support for this project was provided by the   |\n";
 			cout << "  | National Marine Fisheries Service, the Bering Sea        |\n";
 			cout << "  | Fisheries Research Foundation, ...                       |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | DOCUMENTATION                                            |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | online api: http://seacode.github.io/gmacs/index.html    |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "\n";
 			exit(1);
 		}
 
 		// Command line option here to do retrospective analysis
-		if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-retro",opt))>-1 )
+		if ( (on=option_match(ad_comm::argc,ad_comm::argv, "-retro", opt))>-1 )
 		{
 			cout << "\n";
 			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | Running retrospective model with " << ad_comm::argv[on+1] << " recent yrs removed |\n";
-			cout << "  |----------------------------------------------------------|\n";
+			cout << "  +----------------------------------------------------------+\n";
 			cout << "  | YET TO BE IMPLEMENTED                                    |\n";
 			cout << "  +----------------------------------------------------------+\n";
 			exit(1);
@@ -1387,25 +1387,25 @@ PRELIMINARY_CALCS_SECTION
 
 PROCEDURE_SECTION
 	// Initialize model parameters
-	initialize_model_parameters(); if ( verbose == 1 ) cout << "Ok after initializing model parameters ..." << endl;
+	initialize_model_parameters(); if ( verbose == 1 ) cout << "Ok after initialize_model_parameters ..." << endl;
 	
 	// Fishing fleet dynamics ...
-	calc_selectivities();
-	calc_fishing_mortality(); if ( verbose == 1 ) cout << "Ok after fleet dynamics ..." << endl;
+	calc_selectivities(); if ( verbose == 1 ) cout << "Ok after calc_selectivities ..." << endl;
+	calc_fishing_mortality(); if ( verbose == 1 ) cout << "Ok after calc_fishing_mortality ..." << endl;
 
 	// Population dynamics ...
 	if ( !bUseEmpiricalGrowth )
 	{
-		calc_growth_increments(); if ( verbose == 1 ) cout << "Ok after Growth increments ..." << endl;
+		calc_growth_increments(); if ( verbose == 1 ) cout << "Ok after calc_growth_increments ..." << endl;
 	}
-	calc_molting_probability(); if ( verbose == 1 ) cout << "Ok after molt increment ..." << endl;
-	calc_growth_transition();   if ( verbose == 1 ) cout << "Ok after growth transition ..." << endl;
-	calc_natural_mortality();   if ( verbose == 1 ) cout << "Ok after natural mortality ..." << endl;
-	calc_total_mortality();     if ( verbose == 1 ) cout << "Ok after total mortality ..." << endl;
-	calc_recruitment_size_distribution();  if ( verbose == 1 ) cout << "Ok after rec size distribution ..." << endl;
-	calc_initial_numbers_at_length();      if ( verbose == 1 ) cout << "Ok after n at length initial ..." << endl;
-	update_population_numbers_at_length(); if ( verbose == 1 ) cout << "Ok after n at length ..." << endl;
-	calc_stock_recruitment_relationship(); if ( verbose == 1 ) cout << "Ok after population dynamcs ..." << endl;
+	calc_molting_probability(); if ( verbose == 1 ) cout << "Ok after calc_molting_probability ..." << endl;
+	calc_growth_transition();   if ( verbose == 1 ) cout << "Ok after calc_growth_transition ..." << endl;
+	calc_natural_mortality();   if ( verbose == 1 ) cout << "Ok after calc_natural_mortality ..." << endl;
+	calc_total_mortality();     if ( verbose == 1 ) cout << "Ok after calc_total_mortality ..." << endl;
+	calc_recruitment_size_distribution();  if ( verbose == 1 ) cout << "Ok after calc_recruitment_size_distribution ..." << endl;
+	calc_initial_numbers_at_length();      if ( verbose == 1 ) cout << "Ok after calc_initial_numbers_at_length ..." << endl;
+	update_population_numbers_at_length(); if ( verbose == 1 ) cout << "Ok after update_population_numbers_at_length ..." << endl;
+	calc_stock_recruitment_relationship(); if ( verbose == 1 ) cout << "Ok after calc_stock_recruitment_relationship ..." << endl;
 
 	// observation models ...
 	calc_predicted_catch();       if ( verbose == 1 ) cout << "Ok after calc_predicted_catch ..." << endl;
@@ -1414,8 +1414,8 @@ PROCEDURE_SECTION
 	if ( verbose == 1 ) cout << "Ok after observation models ..." << endl;
 
 	// objective function ...
-	calc_prior_densities();    if ( verbose == 1 ) cout << "Ok after priors ..." << endl;
-	calc_objective_function(); if ( verbose == 1 ) cout << "Ok after objective function ..." << endl;
+	calc_prior_densities();    if ( verbose == 1 ) cout << "Ok after calc_prior_densities ..." << endl;
+	calc_objective_function(); if ( verbose == 1 ) cout << "Ok after calc_objective_function ..." << endl;
 
 	// sd_report variables
 	if ( last_phase() )
@@ -1423,7 +1423,9 @@ PROCEDURE_SECTION
 		int refyear = nyr-1;
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
 		calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		if ( verbose == 1 ) cout << "Ok after calc_spr_reference_points ..." << endl;
 		calc_sdreport();
+		if ( verbose == 1 ) cout << "Ok after calc_sdreport ..." << endl;
 	}
 	nf++;
 	if ( mceval_phase() )
@@ -1519,7 +1521,7 @@ FUNCTION initialize_model_parameters
 		alpha = mle_alpha;
 		beta  = mle_beta;
 	}
-	if ( verbose == 1 ) cout << theta << endl;
+	if ( verbose == 1 ) cout << "theta: " << theta << endl;
 
 
 	/**
@@ -1611,7 +1613,7 @@ FUNCTION calc_selectivities
 				} else {
 					//log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
 					log_slx_retaind(kk)(h)(i) = pSLX->logSelectivity(mid_points);
-					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i))+TINY);
+					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)) + TINY);
 				}
 			}
 		}
@@ -2049,15 +2051,15 @@ FUNCTION calc_initial_numbers_at_length
 	int ig;
 	d4_N.initialize();
 	dmatrix Id = identity_matrix(1,nclass);
-	dvar_matrix  x(1,nclass);
+	dvar_matrix  x(1,n_grp,1,nclass);
 	dvar_vector  y(1,nclass);
 	dvar_matrix  A(1,nclass,1,nclass);
 	dvar_matrix _S(1,nclass,1,nclass);
 	_S.initialize();
 
-	for ( int h = 1; h <= nsex; h++ )
-	{
-		A = growth_transition(h); // 2016-04-29 I THINK THIS OUGHT TO BE size_transition??
+	//for ( int h = 1; h <= nsex; h++ )
+	//{
+		//A = growth_transition(h); // 2016-04-29 I THINK THIS OUGHT TO BE size_transition??
 		switch( bInitializeUnfished )
 		{
 			case 0: // Unfished conditions
@@ -2069,15 +2071,27 @@ FUNCTION calc_initial_numbers_at_length
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{
-					//calc_equilibrium(x,A,_S,rt);
-					ig = pntr_hmo(h,1,1);
 					x = calc_brute_equilibrium();
-					d4_N(1)(syr)(1) = x(1);
+					for ( int ig = 1; ig <= n_grp; ig++ )
+					{
+						d4_N(ig)(syr)(1) = x(ig);
+					}
+					// SHOULD I ADD REC_INI TO THIS NOW?
+					//calc_equilibrium(x,A,_S,rt);
+					//ig = pntr_hmo(h,1,1);
+					//x = calc_brute_equilibrium();
+					//d4_N(1,n_grp)(syr)(1) = x;
 					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
 				}
 				// Continuous molt (newshell/oldshell)
 				if ( nshell == 2 && nmature == 1 )
 				{
+					//ig = pntr_hmo(h,1,1);
+					x = calc_brute_equilibrium();
+					for ( int ig = 1; ig <= n_grp; ig++ )
+					{
+						d4_N(ig)(syr)(1) = x(ig);
+					}
 					//calc_equilibrium(x,y,A,_S,P(h),rt);
 					//ig = pntr_hmo(h,1,1);
 					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
@@ -2087,7 +2101,7 @@ FUNCTION calc_initial_numbers_at_length
 			break;
 			case 1: // Steady-state fished conditions
 				cout << "The steady-state fished conditions options is broke!" << endl; exit(1);
-				_S = S(h)(syr)(1);
+				//_S = S(h)(syr)(1);
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{
@@ -2120,7 +2134,8 @@ FUNCTION calc_initial_numbers_at_length
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{
-					ig = pntr_hmo(h,1,1);
+					int h=1;
+					int ig = pntr_hmo(h,1,1);
 					d4_N(ig)(syr)(1) = mfexp(logN0);
 				}
 				//cout << "Free: " << d4_N(ig)(syr)(1) << endl;
@@ -2135,12 +2150,20 @@ FUNCTION calc_initial_numbers_at_length
 				// Insert terminal molt case here.
 			break;
 		}
-		if ( verbose == 1 ) COUT(P(h));
-		if ( verbose == 1 ) COUT(x);
-		if ( verbose == 1 ) COUT(y);
+		//if ( verbose == 1 ) COUT(x);
+		//if ( verbose == 1 ) COUT(y);
+	//}
+	if ( verbose == 1 ) 
+	{
+		for ( int h = 1; h <= nsex; h++ )
+		{
+			COUT(P(h));
+		}
+		for ( int ig = 1; ig <= n_grp; ig++ )
+		{
+			COUT(d4_N(ig)(syr)(1));
+		}
 	}
-	if ( verbose == 1 ) COUT(d4_N(1)(syr)(1));
-	// cout<<"End of calc_initial_numbers_at_length"<<endl;
 	
 
 	/**
@@ -2217,6 +2240,7 @@ FUNCTION update_population_numbers_at_length
 
 				if ( nshell == 1 )
 				{
+					//if ( verbose == 1 ) cout << "Single shell type dynamics" << endl;
 					x = d4_N(ig)(i)(j);
 					// Mortality (natural and fishing)
 					x = x * S(h)(i)(j);
@@ -2240,6 +2264,7 @@ FUNCTION update_population_numbers_at_length
 						d4_N(ig)(i)(j+1) = x;
 					}
 				} else {
+					//if ( verbose == 1 ) cout << "Multiple shell type dynamics" << endl;
 					if ( o == 1 ) // newshell
 					{
 						x = d4_N(ig)(i)(j);
@@ -2250,8 +2275,8 @@ FUNCTION update_population_numbers_at_length
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = elem_prod(x,1-diagonal(P(h))); // did not molt, become oldshell
-							x = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
+							y = elem_prod(x, 1 - diagonal(P(h))); // did not molt, become oldshell
+							x = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
 						}
 						//cout << diagonal(P(h)) << endl;
 						//cout << 1-diagonal(P(h)) << endl << endl;
@@ -2297,13 +2322,16 @@ FUNCTION update_population_numbers_at_length
 						z.initialize();
 						if (j == season_growth)
 						{
-							z = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
-							x = elem_prod(x,1-diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
+							z = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
+							x = elem_prod(x, 1 - diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
 						}
 						if (j == nseason)
 						{
-							d4_N(ig-1)(i+1)(1) += z;
-							d4_N(ig)(i+1)(1) = x;
+							if (i != nyr)
+							{
+								d4_N(ig-1)(i+1)(1) += z;
+								d4_N(ig)(i+1)(1) = x;
+							}
 						} else {
 							d4_N(ig-1)(i)(j+1) += z;
 							d4_N(ig)(i)(j+1) = x;
@@ -3792,21 +3820,21 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	int h,i,ig,o,m;
 	int ninit = 100;
 
-	dvector rtt;
+	dvar_vector rtt;
 
-	d4_array d4_N_init(1,n_grp,1,ninit,1,nseason,1,nclass);
+	dvar4_array d4_N_init(1,n_grp,1,ninit,1,nseason,1,nclass);
 	d4_N_init.initialize();
 	dvar_matrix equilibrium_numbers(1,n_grp,1,nclass);
 
-	dvector x(1,nclass);
-	dvector y(1,nclass);
-	dvector z(1,nclass);
+	dvar_vector x(1,nclass);
+	dvar_vector y(1,nclass);
+	dvar_vector z(1,nclass);
 	
 	if ( bInitializeUnfished == 0 )
 	{
-		rtt = value((1.0/nsex * mfexp(logR0)) * rec_sdd);
+		rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
 	} else {
-		rtt = value((1.0/nsex * mfexp(logRbar)) * rec_sdd);
+		rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
 	}
 
 	for ( i = 1; i < ninit; i++ )
@@ -3823,11 +3851,11 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 				{
 					x = d4_N_init(ig)(i)(j);
 					// Mortality (natural and fishing)
-					x = value(x * S(h)(syr)(j));
+					x = x * S(h)(syr)(j);
 					// Molting and growth
 					if (j == season_growth)
 					{
-						x = value(x * size_transition(h));
+						x = x * size_transition(h);
 					}
 					// Recruitment
 					if (j == season_recruitment)
@@ -3845,12 +3873,12 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 					{
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = value(x * S(h)(syr)(j));
+						x = x * S(h)(syr)(j);
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = value(elem_prod(x,1-diagonal(P(h)))); // did not molt, become oldshell
-							x = value(elem_prod(x,diagonal(P(h))) * growth_transition(h)); // molted and grew, stay newshell
+							y = elem_prod(x, 1 - diagonal(P(h))); // did not molt, become oldshell
+							x = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
 						}
 						// Recruitment
 						if (j == season_recruitment)
@@ -3869,13 +3897,13 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 						// add oldshell non-terminal molts to newshell
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = value(x * S(h)(syr)(j));
+						x = x * S(h)(syr)(j);
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
 						{
-							z = value(elem_prod(x,diagonal(P(h))) * growth_transition(h)); // molted and grew, become newshell
-							x = value(elem_prod(x,1-diagonal(P(h))) + y); // did not molt, remain oldshell and add the newshell that become oldshell
+							z = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
+							x = elem_prod(x,1-diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
 						}
 						if (j == nseason)
 						{
