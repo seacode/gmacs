@@ -3417,6 +3417,7 @@ FUNCTION simulation_model
 
 
 REPORT_SECTION
+	cout << "Beginning report section" << endl;
 	save_gradients(gradients);
 	calc_predicted_catch_out();
 	REPORT(name_read_flt);
@@ -3505,7 +3506,7 @@ REPORT_SECTION
 	{
 		for ( int ii = 1; ii <= nSizeCompRows(kk); ii++ )
 		{
-			double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii));
+			//double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii));
 			//effN(kk,ii)        = Eff_N(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
 			//effN2(kk,ii)       = Eff_N2(d3_obs_size_comps(kk,ii),d3_pre_size_comps(kk,ii));
 			//pre_mn_size(kk,ii) = mn_length(d3_pre_size_comps(kk,ii));
