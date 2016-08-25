@@ -4,11 +4,10 @@
 <li><p><strong>Catches</strong>: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).</p></li>
 <li><p><strong>Stock biomass</strong>: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 tonnes (20.98 million pounds; CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 5652 tonnes (12.46 million pounds; CV = 0.33) in 2012 and to 2202 tonnes (4.459 million pounds; CV = 0.22) in 2013 before going back up to 5472 tonnes (12.06 million pounds; CV = 0.44) in 2014 and 5134 tonnes (11.32 million pounds; CV = 0.76).</p></li>
 <li><p><strong>Recruitment</strong>: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate is 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty.</p></li>
-<li><p><strong>Management performance</strong>: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.</p></li>
-</ol>
-
-<ol start="6" style="list-style-type: decimal">
-<li><strong>Basis for the OFL</strong>: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The <span class="math inline"><em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.</li>
+<li><strong>Management performance</strong>: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15.
+</li>
+<li><strong>Basis for the OFL</strong>: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The <span class="math inline"><em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period.
+</li>
 </ol>
 <h1 id="a.-summary-of-major-changes">A. Summary of Major Changes</h1>
 <h2 id="changes-in-management-of-the-fishery">Changes in Management of the Fishery</h2>
@@ -57,6 +56,16 @@
 <li>allow different phases for “rec_ini”, “rec_dev” estimation</li>
 </ol>
 <p>Response:</p>
+<ol style="list-style-type: decimal">
+<li>Done</li>
+<li>Done</li>
+<li>specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors</li>
+<li>include an option to calculate dynamic <span class="math inline"><em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub></span></li>
+<li>add the ability to “jitter” initial parameter values</li>
+<li>add the ability to conduct retrospective analyses</li>
+<li>add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available</li>
+<li>Done</li>
+</ol>
 <p>Comment: the CPT requests that some evaluation should also be included in the September report to the CPT which compares against the previous assessment model corrected for the error.</p>
 <p>Response:</p>
 <p>Comment: <em>The SSC and CPT requested the following models for review at the spring 2016 meeting:</em></p>
@@ -66,7 +75,7 @@
 <li>Above + Francis re-weighting</li>
 <li>Above + remove M spike</li>
 </ol>
-<p>Response: <em>Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting.</em></p>
+<p>Response: <em>Models 1, 2, and 4 above are included and evaluated in this document. The software to implement the 3rd model requesting Francis re-weighting is incomplete but should be available for the September 2016 meeting.</em> If doing Francis iterative re-weighting then additional CV should not be added as well. The SSC recommended against the model runs with additional CV. Therefore we gave dropped the additional CV run and have incldued two runs that use the Francis method.</p>
 <h1 id="c.-introduction">C. Introduction</h1>
 <h2 id="scientific-name">Scientific Name</h2>
 <p>The blue king crab is a lithodid crab, <em>Paralithodes platypus</em> (Brant 1850).</p>
@@ -85,9 +94,14 @@
 <h2 id="life-history">Life History</h2>
 <p>Like the red king crab, <em>Paralithodes camtshaticus</em>, the blue king crab is considered a shallow water species by comparison with other lithodids such as golden king crab, <em>Lithodes aequispinus</em>, and the scarlet king crab, <em>Lithodes couesi</em> (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70 m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.</p>
 <h2 id="management-history">Management History</h2>
-<p>The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 545 tonnes (1.202 million pounds) in 1977, and harvests peaked in 1983 when 164 vessels landed 4288 tonnes (9.454 million pounds) (Fitch et al. 2012; Table 1XX). The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock-size threshold (MSST) of 4990 tonnes (11.0 million pounds) as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table XX2a). In November 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.</p>
+The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 545 tonnes (1.202 million pounds) in 1977, and harvests peaked in 1983 when 164 vessels landed 4288 tonnes (9.454 million pounds) (Fitch et al. 2012; Table ).
+
+<p>The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock-size threshold (MSST) of 4990 tonnes (11.0 million pounds) as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table XX2a). In November 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.</p>
 <p>NMFS declared the stock rebuilt on 21 September 2009, and the fishery was reopened after a 10-year closure on 15 October 2009 with a TAC of 529 tonnes (1.167 million pounds), closing again by regulation on 1 February 2010. Seven participating vessels landed a catch of 209 tonnes (460859 pounds) with a reported effort of 10697 pot lifts and an estimated CPUE of 9.9 retained individual crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&amp;G to close the fishery again for the 2013/14 season. Due to abundance an above thresholds, the fishery was reopened for the 2014/15 season with a low TAC of 297 tonnes (0.655 million pounds) and in 2015/16 the TAC was further reduced to 186 tonnes (0.411 million pounds).</p>
-<p>Though historical observer data are limited due to very limited sampling, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes more than twice as high as the catch of legal crab (Moore et al. 2000; ADF&amp;G Crab Observer Database). Pot-lift sampling by ADF&amp;G crab observers (Gaeuman 2013; ADF&amp;G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table 3XX), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (88 tonnes or 0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality. On the other hand, these same data suggest a significant reduction in the bycatch of females, which may be attributable to the later timing of the contemporary fishery and the more offshore distribution of fishery effort since reopening in 2009/10<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>. Some bycatch of discarded blue king crab has also been observed historically in the eastern Bering Sea snow crab fishery, but in recent years it has generally been negligible, and observers recorded no bycatch of blue king crab in sampled pot lifts during 2013/14. The St. Matthew Island golden king crab fishery, the third commercial crab fishery to have taken place in the area, typically occurred in areas with depths exceeding blue king crab distribution. NMFS observer data suggest that variable but mostly limited SMBKC bycatch has also occurred in the eastern Bering Sea groundfish fisheries (Table 5XX).</p>
+Though historical observer data are limited due to very limited sampling, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes more than twice as high as the catch of legal crab (Moore et al. 2000; ADF&amp;G Crab Observer Database). Pot-lift sampling by ADF&amp;G crab observers (Gaeuman 2013; ADF&amp;G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table ), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (88 tonnes or 0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality.
+
+On the other hand, these same data suggest a significant reduction in the bycatch of females, which may be attributable to the later timing of the contemporary fishery and the more offshore distribution of fishery effort since reopening in 2009/10<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>. Some bycatch of discarded blue king crab has also been observed historically in the eastern Bering Sea snow crab fishery, but in recent years it has generally been negligible, and observers recorded no bycatch of blue king crab in sampled pot lifts during 2013/14. The St. Matthew Island golden king crab fishery, the third commercial crab fishery to have taken place in the area, typically occurred in areas with depths exceeding blue king crab distribution. NMFS observer data suggest that variable but mostly limited SMBKC bycatch has also occurred in the eastern Bering Sea groundfish fisheries (Table ).
+
 <h1 id="d.-data">D. Data</h1>
 <h2 id="summary-of-new-information">Summary of New Information</h2>
 <p>Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2015, as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data extent and availability used in each of the Gmacs models is shown in Figure ).</p>
@@ -96,12 +110,13 @@
 <p class="caption">Data extent for the SMBKC assessment.</p>
 </div>
 <h2 id="major-data-sources">Major Data Sources</h2>
-<p>Major data sources used in this assessment include annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15; Table 1XX); results from the annual NMFS eastern Bering Sea trawl survey (1978-2015; Table 2XX); results from the triennial ADF&amp;G SMBKC pot survey (every third year during 1995-2013) and 2015 pot survey (Table ); size-frequency information from ADF&amp;G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15; Table XX3); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2014/15; Table XX5). Figure  maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&amp;G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure ). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&amp;G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure ). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&amp;G statistical area was not used.</p>
+Major data sources used in this assessment include annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15; Table ); results from the annual NMFS eastern Bering Sea trawl survey (1978-2015; Table 2XX); results from the triennial ADF&amp;G SMBKC pot survey (every third year during 1995-2013) and 2015 pot survey (Table ); size-frequency information from ADF&amp;G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15; Table ); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2014/15; Table ).
+
+<p>Figure  maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&amp;G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure ). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&amp;G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure ). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&amp;G statistical area was not used.</p>
 <div class="figure">
 <img src="figure/Fig3.png" alt="Trawl and pot-survey stations used in the SMBKC stock assessment." />
 <p class="caption">Trawl and pot-survey stations used in the SMBKC stock assessment.</p>
 </div>
-
 <h2 id="other-data-sources">Other Data Sources</h2>
 <p>As with the most recent model configuration developed for this assessment, this version makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the Gmacs model configuration used for this assessment.</p>
 <h2 id="excluded-data-sources">Excluded Data Sources</h2>
@@ -326,12 +341,12 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <p class="caption">Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels.</p>
 </div>
 <div class="figure">
-<img src="figure/recruitment-1.png" alt="Estimated recruitment time series during 1979-2015 in each of the scenarios." />
-<p class="caption">Estimated recruitment time series during 1979-2015 in each of the scenarios.</p>
+<img src="figure/recruitment-1.png" alt="Comparisons of estimated recruitment time series during 1979-2015 in each of the scenarios." />
+<p class="caption">Comparisons of estimated recruitment time series during 1979-2015 in each of the scenarios.</p>
 </div>
 <div class="figure">
-<img src="figure/mature_male_biomass-1.png" alt="Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios." />
-<p class="caption">Estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios.</p>
+<img src="figure/mature_male_biomass-1.png" alt="Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios." />
+<p class="caption">Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2015 for each of the model scenarios.</p>
 </div>
 <div class="figure">
 <img src="figure/length_weight-1.png" alt="Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs)." />
@@ -390,7 +405,7 @@ Fishing mortality by year <span class="math inline"><em>y</em></span> and season
 <p>Data inputs used in model estimation are listed in Table 1XX. All quantities relate to male SMBKC <span class="math inline">≤</span> 90mm CL.</p>
 <p><span class="math inline"><em>y</em> = {<em>c</em><em>a</em><em>t</em><em>c</em><em>h</em>, <em>c</em><em>p</em><em>u</em><em>e</em>, <em>l</em><em>f</em><em>s</em>}</span></p>
 <h2 id="model-parameters">4. Model Parameters</h2>
-<p><span class="math inline">$\theta = \{ \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, \delta^M_y, s^\text{pot}_{1,l=1}, s^\text{pot}_{1,l=2}, s^\text{pot}_{2,l=1}, s^\text{pot}_{2,l=2} s^\text{NMFS}_{l=1}, s^\text{NMFS}_{l=2}, s^\text{ADFG}_{l=1}, s^\text{ADFG}_{l=2} \}$</span></p>
+<p><span class="math inline">$\theta = \{ \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, \delta^M_{1998}, s^\text{pot}_{1,l=1}, s^\text{pot}_{1,l=2}, s^\text{pot}_{2,l=1}, s^\text{pot}_{2,l=2} s^\text{NMFS}_{l=1}, s^\text{NMFS}_{l=2}, s^\text{ADFG}_{l=1}, s^\text{ADFG}_{l=2} \}$</span></p>
 <p>Also, Fs, recdevs</p>
 <p>Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include an estimated parameter for natural mortality (<span class="math inline"><em>M</em></span>) in 1998/99 assuming an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 <span class="math inline">yr<sup>−1</sup></span>.</p>
 <p>In any year with no directed fishery, and hence zero retained catch, <span class="math inline"><em>F</em><sub><em>t</em></sub><sup>df</sup></span> is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, <span class="math inline"><em>F</em><sub><em>t</em></sub><sup>gf</sup></span> and <span class="math inline"><em>F</em><sub><em>t</em></sub><sup>gt</sup></span> are imputed to be the geometric means of the estimates from years for which there are data. Table 3XX lists additional externally determined parameters used in model computations.</p>
@@ -1024,6 +1039,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## OTHER CONTROLS 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##   3       # Estimated rec_dev phase 
+##   3       # Estimated rec_ini phase 
 ##   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
 ##   2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters) 
 ##   1978    # First year for average recruitment for Bspr calculation 
@@ -1217,6 +1233,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## OTHER CONTROLS 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##   3       # Estimated rec_dev phase 
+##   3       # Estimated rec_ini phase 
 ##   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
 ##   2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters) 
 ##   1978    # First year for average recruitment for Bspr calculation 
@@ -1411,6 +1428,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## OTHER CONTROLS 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##   3       # Estimated rec_dev phase 
+##   3       # Estimated rec_ini phase 
 ##   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
 ##   2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters) 
 ##   1978    # First year for average recruitment for Bspr calculation 
@@ -1605,6 +1623,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## OTHER CONTROLS 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##   3       # Estimated rec_dev phase 
+##   3       # Estimated rec_ini phase 
 ##   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
 ##   2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters) 
 ##   1978    # First year for average recruitment for Bspr calculation 
