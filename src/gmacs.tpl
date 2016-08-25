@@ -1093,7 +1093,7 @@ DATA_SECTION
 	// | OTHER CONTROLS                                          |
 	// |---------------------------------------------------------|
 	!! cout << " * Other controls" << endl;
-	init_vector model_controls(1,10);
+	init_vector model_controls(1,11);
 	int rdv_phz;             ///> Estimated rec_dev phase
 	int rec_ini_phz;         ///> Estimated rec_dev phase
 	int verbose;             ///> Flag to print to screen
@@ -1107,21 +1107,20 @@ DATA_SECTION
 	int nSRR_flag; // if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
-		verbose             = int(model_controls(2));
-		bInitializeUnfished = int(model_controls(3));
-		spr_syr             = int(model_controls(4));
-		spr_nyr             = int(model_controls(5));
-		spr_target          =     model_controls(6);
-		spr_fleet           = int(model_controls(7));
-		spr_lambda          =     model_controls(8);
-		bUseEmpiricalGrowth = int(model_controls(9));
-		nSRR_flag           = int(model_controls(10));
+		rec_ini_phz         = int(model_controls(2));
+		verbose             = int(model_controls(3));
+		bInitializeUnfished = int(model_controls(4));
+		spr_syr             = int(model_controls(5));
+		spr_nyr             = int(model_controls(6));
+		spr_target          =     model_controls(7);
+		spr_fleet           = int(model_controls(8));
+		spr_lambda          =     model_controls(9);
+		bUseEmpiricalGrowth = int(model_controls(10));
+		nSRR_flag           = int(model_controls(11));
 		if ( bInitializeUnfished == 2 )
 		{
 			rec_ini_phz  = -1; // If free parameters is selected then don't use deviations for initial numbers.
 			theta_phz(3) = -1; // Also don't use log(Rini) i.e. initial recruitment(syr). Instead we will use log(N0(1)).
-		} else {
-			rec_ini_phz = rdv_phz;
 		}
 		WriteCtl(model_controls);
 		if ( bInitializeUnfished == 1 && theta_phz(3) > 0 )

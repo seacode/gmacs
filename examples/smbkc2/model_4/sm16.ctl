@@ -178,6 +178,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
   3       # Estimated rec_dev phase
+  3       # Estimated rec_ini phase
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
   1978    # First year for average recruitment for Bspr calculation
