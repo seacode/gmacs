@@ -895,7 +895,9 @@ $y = \{ catch, cpue, lfs \}$
 
 ## 4. Model Parameters
 
-$\theta = \{ R_0, \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, Mdev, sel \}$
+$\theta = \{ \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, \delta^M_y, s^\text{pot}_{1,l=1}, s^\text{pot}_{1,l=2}, s^\text{pot}_{2,l=1}, s^\text{pot}_{2,l=2} s^\text{NMFS}_{l=1}, s^\text{NMFS}_{l=2}, s^\text{ADFG}_{l=1}, s^\text{ADFG}_{l=2} \}$
+
+Also, Fs, recdevs
 
 Estimated parameters with scenarios 8 and 10 are listed in Table 2XX and include an estimated parameter for natural mortality ($M$) in 1998/99 assuming an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
 

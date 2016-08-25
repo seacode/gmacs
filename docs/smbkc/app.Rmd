@@ -13,11 +13,11 @@ bibliography:
 
 \newpage\clearpage
 
-## The base model data file:
+## The data file:
 
 ```{r eval = TRUE, include=TRUE,echo=FALSE }
 opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
-ts <- readLines("../../examples/smbkc2/model_1/sm16.dat")
+ts <- readLines("../../examples/smbkc2/sm16.dat")
 for (i in 1:length(ts)) cat(ts[i], "\n")
 ```
 
@@ -41,7 +41,7 @@ for (i in 1:length(ts)) cat(ts[i], "\n")
 
 \newpage\clearpage
 
-## The add CV model control file:
+## The Francis model control file:
 
 ```{r eval = TRUE, include=TRUE,echo=FALSE }
 opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
