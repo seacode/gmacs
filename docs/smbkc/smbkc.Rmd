@@ -554,9 +554,9 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 \end{align}
 where $B$ is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_\mathit{OFL}$, in case b) numerical approximation of $F_\mathit{OFL}$ is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with $F_\mathit{OFL}$ taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
-The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$syr`-`r M[[2]]$nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, and MMB in 2015 for 18 scenarios are summarized in Table 10XX. ABC is 80% of the OFL.
+The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, and MMB in 2016 for all four scenarios are summarized in Table 10XX. ABC is 80% of the OFL.
 
-OFL, ABC, retained catch and bycatches for 2015 are summarized for scenarios 10 and 10-4 below:
+OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios:
 
 
 # G. Rebuilding Analysis
@@ -954,10 +954,9 @@ plot_natural_mortality(M, knots = NULL, slab = "Model")
 
 The Gmacs model has been specified to account only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (size-classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the Gmacs base model configuration.
 
-
 ## 2. Model Population Dynamics
 
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. Although the timing of the fishery is different each year, MMB is measured 15 February. To accomodate this, each model year is split into `r M[[2]]$nseason` seasons ($t$) and a proportion of the natural mortality ($\tau_t$) is applied in each of these seasons where $\sum_{t=1}^{t=5} \tau_t = 1$. Each model year consists of the following processes:
+Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. Although the timing of the fishery is different each year, MMB is measured 15 February, which is the reference date for calculation of federal management biomass quantities. To accomodate this, each model year is split into `r M[[2]]$nseason` seasons ($t$) and a proportion of the natural mortality ($\tau_t$) is applied in each of these seasons where $\sum_{t=1}^{t=5} \tau_t = 1$. Each model year consists of the following processes:
 \begin{enumerate}
     \item Season 1
     \begin{itemize}
@@ -967,7 +966,7 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
     \end{itemize}
     \item Season 2
     \begin{itemize}
-        \item $\tau_2$ ranges from 0.05 to 0.44 depending on the time of year the fishery begins each year (i.e. a higher value indicates the fishery begins later in the year)
+        \item $\tau_2$ ranges from 0.05 to 0.44 depending on the time of year the fishery begins each year (i.e. a higher value indicates the fishery begins later in the year; see Table XXX)
     \end{itemize}
     \item Season 3
     \begin{itemize}
@@ -1038,9 +1037,40 @@ where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed 
 
 ## 3. Model Data
 
-Data inputs used in model estimation are listed in Table 1XX. All quantities relate to male SMBKC $\le$ 90mm CL.
-
-$y = \{ catch, cpue, lfs \}$
+Data inputs used in model estimation are listed in Table \ref{tab:model_data}.
+\begin{table}[ht]
+\centering
+\caption{Data inputs used in model estimation.} 
+\label{tab:model_data}
+\begin{tabular}{lll}
+  \hline
+  Data & Years & Source \\
+  \hline
+  Directed pot-fishery retained-catch number & 1978/79 - 1998/99 & Fish tickets \\
+  & 2009/10 - 2014/15 & (fishery closed 1999/00 - 2008/09)\\
+  \hline
+  NMFS trawl-survey biomass index & & \\
+  (area-swept estimate) and CV & 1978-2015 & NMFS EBS trawl survey \\
+  \hline
+  ADF\&G pot-survey abundance index & & \\
+  (CPUE) and CV & Triennial 1995-2015 & ADF\&G SMBKC pot survey \\
+  \hline
+  NMFS trawl-survey stage proportions & & \\
+  and total number of measured crab & 1978-2015 & NMFS EBS trawl survey \\
+  \hline
+  ADF\&G pot-survey stage proportions & & \\
+  and total number of measured crab & Triennial 1995-2015 & ADF\&G SMBKC pot survey \\
+  \hline
+  Directed pot-fishery stage proportions & 1990/91 - 1998/99 & ADF\&G crab observer program \\
+  and total number of measured crab & 2009/10 - 2014/15 & (fishery closed 1999/00 - 2008/09) \\
+  \hline
+  Groundfish trawl bycatch biomass & 1992/93 - 2014/15 & NMFS groundfish observer program \\
+  \hline
+  Groundfish fixed-gear bycatch biomass & 1992/93 - 2014/15 & NMFS groundfish observer program \\
+  \hline
+\end{tabular}
+\end{table}
+All quantities relate to male SMBKC $\le$ 90mm CL.
 
 ## 4. Model Parameters
 
