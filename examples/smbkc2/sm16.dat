@@ -392,8 +392,8 @@ NMFS_Trawl:ADFG_Pot
 #  97.5   1 13.8 0.2197
 #  112.5  1 14.1 0.2197
 #  127.5  1 14.4 0.2197
-# Use custom growth transition matrix (0=no, 1=yes)
-1
+# Use custom transition matrix (0=no, 1=growth matrix, 2=transition matrix, i.e. growth and molting)
+2
 # The custom growth matrix (if not using just fill with zeros)
 # Alternative TM (loosely) based on Otto and Cummiskey (1990)
 0.2  0.7  0.1

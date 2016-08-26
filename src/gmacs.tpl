@@ -1760,36 +1760,45 @@ FUNCTION calc_growth_transition
 	dvar_vector sbi(1,nclass+1);
 	dvar_matrix gt(1,nclass,1,nclass);
 
-	if ( bUseCustomGrowthMatrix == 1 )
+	if ( bUseCustomGrowthMatrix == 2 )
 	{
 		for ( h = 1; h <= nsex; h++ )
 		{
 			growth_transition(h) = CustomGrowthMatrix;
+			size_transition(h) = CustomGrowthMatrix;
 		}
-	}
-
-	for ( h = 1; h <= nsex; h++ )
-	{
-		gt.initialize();
-		sbi = size_breaks / gscale(h);
-		for ( l = 1; l <= nclass; l++ )
+	} else {
+		for ( h = 1; h <= nsex; h++ )
 		{
-			mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
-			for ( ll = l; ll <= nclass+1; ll++ )
+			gt.initialize();
+			sbi = size_breaks / gscale(h);
+			for ( l = 1; l <= nclass; l++ )
 			{
-				if ( ll <= nclass+1 )
+				mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
+				for ( ll = l; ll <= nclass+1; ll++ )
 				{
-					psi(ll) = cumd_gamma(sbi(ll), mean_size_after_molt);
+					if ( ll <= nclass+1 )
+					{
+						psi(ll) = cumd_gamma(sbi(ll), mean_size_after_molt);
+					}
 				}
+				gt(l)(l,nclass) = first_difference(psi(l,nclass+1));
+				gt(l)(l,nclass) = gt(l)(l,nclass) / sum(gt(l));
 			}
-			gt(l)(l,nclass) = first_difference(psi(l,nclass+1));
-			gt(l)(l,nclass) = gt(l)(l,nclass) / sum(gt(l));
-		}
-		growth_transition(h) = gt;
-		size_transition(h) = P(h) * growth_transition(h);
-		for ( int l = 1; l <= nclass; l++ )
-		{
-			size_transition(h)(l,l) += value(1.0 - P(h)(l,l));
+			if ( bUseCustomGrowthMatrix == 1 )
+			{
+				for ( h = 1; h <= nsex; h++ )
+				{
+					growth_transition(h) = CustomGrowthMatrix;
+				}
+			} else {
+				growth_transition(h) = gt;
+			}
+			size_transition(h) = P(h) * growth_transition(h);
+			for ( int l = 1; l <= nclass; l++ )
+			{
+				size_transition(h)(l,l) += value(1.0 - P(h)(l,l));
+			}
 		}
 	}
 

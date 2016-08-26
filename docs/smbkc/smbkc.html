@@ -251,10 +251,14 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <p>Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analysis to blue king crab stocks near Pribilof and St. Matthew Islands. Alaska Fish. Res. Bull. 4:62-74.</p>
 
 <p></p>
+<pre><code>## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 11, 10</code></pre>
+<pre><code>## Error in UseMethod(&quot;xtable&quot;): no applicable method for &#39;xtable&#39; applied to an object of class &quot;function&quot;</code></pre>
+<pre><code>## Error in print(tab, caption.placement = &quot;top&quot;, include.rownames = FALSE, : object &#39;tab&#39; not found</code></pre>
 
 
 
-
+<pre><code>## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 59, 60</code></pre>
+<pre><code>## Error: Key column &#39;Model&#39; does not exist in input.</code></pre>
 
 
 
@@ -846,8 +850,8 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## #  97.5   1 13.8 0.2197 
 ## #  112.5  1 14.1 0.2197 
 ## #  127.5  1 14.4 0.2197 
-## # Use custom growth transition matrix (0=no, 1=yes) 
-## 1 
+## # Use custom transition matrix (0=no, 1=growth matrix, 2=transition matrix, i.e. growth and molting) 
+## 2 
 ## # The custom growth matrix (if not using just fill with zeros) 
 ## # Alternative TM (loosely) based on Otto and Cummiskey (1990) 
 ## 0.2  0.7  0.1 
@@ -914,11 +918,11 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## gear  par   sel                                             phz    start  end        ## 
 ## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
 ## # Gear-1 
-##    1     1     1   0    0.432928096608 0.001 2.0    0       0      1    -2     1978   2008 
-##    1     2     2   0    0.670336057209 0.001 2.0    0       0      1    -2     1978   2008 
+##    1     1     1   0    0.490680567427 0.001 2.0    0       0      1    -2     1978   2008 
+##    1     2     2   0    0.785300542244 0.001 2.0    0       0      1    -2     1978   2008 
 ##    1     3     3   0    1.0            0.001 2.0    0       0      1    -2     1978   2008 
-##    1     1     1   0    0.392207758620 0.001 2.0    0       0      1    -2     2009   2015 
-##    1     2     2   0    0.956150805823 0.001 2.0    0       0      1    -2     2009   2015 
+##    1     1     1   0    0.402423912257 0.001 2.0    0       0      1    -2     2009   2015 
+##    1     2     2   0    0.981647895824 0.001 2.0    0       0      1    -2     2009   2015 
 ##    1     3     3   0    1.0            0.001 2.0    0       0      1    -2     2009   2015 
 ## # Gear-2 
 ##    2     7     1   0    40       10.0  200    0      10    200    -3     1978   2015 
@@ -927,12 +931,12 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ##    3     9     1   0    40       10.0  200    0      10    200    -3     1978   2015 
 ##    3    10     2   0    60       10.0  200    0      10    200    -3     1978   2015 
 ## # Gear-4 
-##    4     8     1   0    0.79506450558 0.001 2.0    0       0      1    -2     1978   2015 
-##    4     9     2   0    1.08723867992 0.001 2.0    0       0      1    -2     1978   2015 
+##    4     8     1   0    0.793562338771 0.001 2.0    0       0      1    -2     1978   2015 
+##    4     9     2   0    1.08339465666 0.001 2.0    0       0      1    -2     1978   2015 
 ##    4     10    3   0    1.0           0.001 2.0    0       0      1    -2     1978   2015 
 ## # Gear-5 
-##    5     11    1   0    0.405292074017 0.001 2.0    0       0      1    -2     1978   2015 
-##    5     12    2   0    0.855141058500 0.001 2.0    0       0      1    -2     1978   2015 
+##    5     11    1   0    0.411256448303 0.001 2.0    0       0      1    -2     1978   2015 
+##    5     12    2   0    0.861094630732 0.001 2.0    0       0      1    -2     1978   2015 
 ##    5     13    3   0    1.0            0.001 2.0    0       0      1    -2     1978   2015 
 ## ## Retained 
 ## # Gear-1 
@@ -962,7 +966,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## SURVEYS/INDICES ONLY 
 ## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
 ##    1.0     0        2     -1    0       0        9.0   0           1       # NMFS trawl 
-## 4.26724288404e-06 0 5      1    0       0        9.0   0           1       # ADF&amp;G pot 
+## 0.00411135867487 0 5      -1    0       0        9.0   0           1       # ADF&amp;G pot 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -973,8 +977,8 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ## ## ival        lb        ub        phz   prior     p1      p2 
-##    0.00001      0.000001   10.0      -4    4         1.0     100   # NMFS 
-##    0.00001      0.000001   10.0      -4    4         1.0     100   # ADF&amp;G 
+##    0.0000001      0.00000001   10.0      -4    4         1.0     100   # NMFS 
+##    0.0000001      0.00000001   10.0      -4    4         1.0     100   # ADF&amp;G 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
