@@ -135,9 +135,10 @@ names(Mselex) <- c("SMBKC")
 \centering
 \caption{Status and catch specifications (1000 tonnes) (scenario 1).} 
 \label{tab:status}
-\begin{tabular}{lrrrrrrr}
+\begin{tabular}{lccccccc}
   \hline
-  Year & MSST & Biomass ($\mathit{MMB}_\text{mating}$) & TAC & Retained catch & Total male catch & OFL & ABC \\ 
+  & & Biomass & & Retained & Total & & \\ 
+  Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
   \hline
   2011/12 & 1.50 & 5.03 & 1.15 & 0.85 & 0.95 & 1.70 & 1.54 \\ 
   2012/13 & 1.80 & 2.85 & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
@@ -154,7 +155,7 @@ names(Mselex) <- c("SMBKC")
 \centering
 \caption{Basis for the OFL (1000 tonnes) (scenario 1).} 
 \label{tab:status}
-\begin{tabular}{lrrrrrrrr}
+\begin{tabular}{lcccccccc}
   \hline
   & & & Biomass & & & & & Natural \\ 
   Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{MSY}$ & $F_\mathit{OFL}$ & $\gamma$ & Basis for $B_\mathit{MSY}$ & mortality \\ 
@@ -341,12 +342,13 @@ The SMBKC fishery developed subsequent to baseline ecological studies associated
   2012/13 & 10/15 - 02/01 & 1.63    &   379,386 & 1,616,054 &  37,065 &  10 & 4.3 & 129.8 \\
   \multicolumn{2}{l}{2013/14} & \multicolumn{7}{c}{FISHERY CLOSED} \\
   2014/15 & 10/15 - 02/05 & 0.66    &    69,109 &   308,582 &  10,133 &   7 & 4.5 & 132.3 \\
+  2015/16 &               &         &           &           &         &     &     &       \\
   \hline
 \end{tabular}
 \end{table}
 The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock-size threshold (MSST) of 4990 tonnes (11.0 million pounds) as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table XX2a). In November 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.
 
-NMFS declared the stock rebuilt on 21 September 2009, and the fishery was reopened after a 10-year closure on 15 October 2009 with a TAC of 529 tonnes (1.167 million pounds), closing again by regulation on 1 February 2010. Seven participating vessels landed a catch of 209 tonnes (460859 pounds) with a reported effort of 10697 pot lifts and an estimated CPUE of 9.9 retained individual crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&G to close the fishery again for the 2013/14 season. Due to abundance an above thresholds, the fishery was reopened for the 2014/15 season with a low TAC of 297 tonnes (0.655 million pounds) and in 2015/16 the TAC was further reduced to 186 tonnes (0.411 million pounds).
+NMFS declared the stock rebuilt on 21 September 2009, and the fishery was reopened after a 10-year closure on 15 October 2009 with a TAC of 529 tonnes (1.167 million pounds), closing again by regulation on 1 February 2010. Seven participating vessels landed a catch of 209 tonnes (460859 pounds) with a reported effort of 10697 pot lifts and an estimated CPUE of 9.9 retained individual crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&G to close the fishery again for the 2013/14 season. Due to an abundance above thresholds, the fishery was reopened for the 2014/15 season with a low TAC of 297 tonnes (0.655 million pounds) and in 2015/16 the TAC was further reduced to 186 tonnes (0.411 million pounds).
 
 Though historical observer data are limited due to very limited sampling, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes more than twice as high as the catch of legal crab (Moore et al. 2000; ADF&G Crab Observer Database). Pot-lift sampling by ADF&G crab observers (Gaeuman 2013; ADF&G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table \ref{tab:stage_cpue_1}), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (88 tonnes or 0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality. 
 \begin{table}[ht]
@@ -373,6 +375,7 @@ Though historical observer data are limited due to very limited sampling, bycatc
   2012/13 & 37,065 & 2,841 & 57,298 & 0.141 & 0.318 & 0.541 \\
   \multicolumn{2}{l}{2013/14} & \multicolumn{5}{c}{FISHERY CLOSED} \\
   2014/15 & 10,133 & 895 & 9,906 & 0.094 & 0.228 & 0.679 \\
+  2015/16 &        &     &       &       &       &       \\
   \hline
 \end{tabular}
 \end{table}
@@ -411,6 +414,7 @@ On the other hand, these same data suggest a significant reduction in the bycatc
   2012/13 & 1.3 & 0.0 & 1.0 \\
   2013/14 & 0.4 & 0.6 & 0.6 \\
   2014/15 & 0.0 & 0.3 & 0.2 \\
+  2015/16 &     &     &     \\
   \hline
 \end{tabular}
 \end{table}
@@ -420,7 +424,7 @@ On the other hand, these same data suggest a significant reduction in the bycatc
 
 ## Summary of New Information
 
-Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2015, as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data extent and availability used in each of the Gmacs models is shown in Figure \ref{fig:data_extent}).
+Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2015, as well as updated 1993-2014 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data extent and availability used in each of the new models is shown in Figure \ref{fig:data_extent}).
 
 ```{r data_extent, fig.cap = "Data extent for the SMBKC assessment.\\label{fig:data_extent}"}
 plot_datarange(Mbase)
@@ -446,6 +450,7 @@ Major data sources used in this assessment include annual directed-fishery retai
   2010 & 1.326 & 3.276 & 5.607 & 10.209 & 0.13 & 3920 \\ 
   2013 & 0.878 & 1.398 & 3.367 & 5.643 & 0.19 & 2167 \\ 
   2015 & 0.198 & 0.682 & 1.924 & 2.805 & 0.18 & 1077 \\ 
+  2016 &       &       &       &       &      &      \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -456,7 +461,7 @@ Figure \ref{fig:stations} maps stations from which SMBKC trawl-survey and pot-su
 
 ## Other Data Sources
 
-As with the most recent model configuration developed for this assessment, this version makes use of a growth transition matrix based on Otto and Cummiskey (1990). Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which provides a detailed description of the Gmacs model configuration used for this assessment.
+Recent model configurations developed for SMBKC makes use of a growth transition matrix based on Otto and Cummiskey (1990), the same growth transition matrix is used in this assessment. Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which also provides a detailed description of the model configuration used for this assessment.
 
 ## Excluded Data Sources
 
@@ -850,7 +855,7 @@ plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
 ```{r pot_survey_cpue_CV, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue_CV}"}
-plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
+#plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
 ```
 
 ```{r bts_resid, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass and total male pot survey CPUEs for each of the Gmacs model scenarios. \\label{fig:bts_resid}"}
@@ -987,7 +992,7 @@ The proportion of natural mortality ($\tau_t$) applied during each season in the
 A <- M[[2]]
 df <- data.frame(A$m_prop)
 names(df) <- c("Season 1","Season 2","Season 3","Season 4","Season 5")
-tab <- xtable(df, digits = 2, caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season in the model.", label = "tab:m_prop")
+tab <- xtable(df, digits = 2, caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
