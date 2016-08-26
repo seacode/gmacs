@@ -126,7 +126,7 @@ names(Mselex) <- c("SMBKC")
 
 2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).
 
-3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 tonnes (20.98 million pounds; CV = 0.55) in 2011, the second highest in the 37-year time series used in this assessment. Survey mature male biomass then declined to 5652 tonnes (12.46 million pounds; CV = 0.33) in 2012 and to 2202 tonnes (4.459 million pounds; CV = 0.22) in 2013 before going back up to 5472 tonnes (12.06 million pounds; CV = 0.44) in 2014 and 5134 tonnes (11.32 million pounds; CV = 0.76).
+3. **Stock biomass**: Following a period of low numbers after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased in subsequent years, with survey estimated mature male biomass reaching 9516 tonnes (20.98 million pounds; CV = 0.55) in 2011, the second highest in the `r length(M[[1]]$mod_yrs)`-year time series used in this assessment. Survey mature male biomass then declined to 5652 tonnes (12.46 million pounds; CV = 0.33) in 2012 and to 2202 tonnes (4.459 million pounds; CV = 0.22) in 2013 before going back up to 5472 tonnes (12.06 million pounds; CV = 0.44) in 2014 and 5134 tonnes (11.32 million pounds; CV = 0.76) in 2015.
 
 4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate is 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty.
 
@@ -143,7 +143,8 @@ names(Mselex) <- c("SMBKC")
   2012/13 & 1.80 & 2.85 & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
   2013/14 & 1.50 & 3.01 & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
   2014/15 & 1.86 & 2.48 & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 &      & 2.45 &      &      &      & 0.28 & 0.22 \\ 
+  2015/16 &      & 2.45 &      &      &      & 0.28 & 0.22 \\
+  2016/17 &      &      &      &      &      &      &      \\
   \hline
 \end{tabular}
 \end{table}
@@ -163,6 +164,7 @@ names(Mselex) <- c("SMBKC")
   2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
   2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
+  2016/17 & 4b &      &      &      &      & 1 & 1978-2015 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -254,11 +256,11 @@ Response:
 
   1. Done
   2. Done
-  3. specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors
-  4. include an option to calculate dynamic $B_\mathit{MSY}$
-  5. add the ability to “jitter” initial parameter values
-  6. add the ability to conduct retrospective analyses
-  7. add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available
+  3. XXX
+  4. XXX
+  5. XXX
+  6. XXX
+  7. XXX
   8. Done
 
 Comment: the CPT requests that some evaluation should also be included in the September report to the CPT which compares against the previous assessment model corrected for the error.
@@ -296,7 +298,7 @@ The Alaska Department of Fish and Game (ADF&G) Gene Conservation Laboratory divi
 
 ## Life History
 
-Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodids such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70 m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77.0 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
+Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodids such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70 m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
 
 ## Management History
 

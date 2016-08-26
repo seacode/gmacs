@@ -133,7 +133,7 @@ NMFS_Trawl:ADFG_Pot
 ##  Units of catch: 1 = biomass, 2 = numbers
 ##  for SMBKC Units are in number of crab for landed & 1000 kg for discards.
 ##  Male Retained
-# year seas fleet sex obs cv type units mult effort discard_mortality
+# year  seas    fleet   sex     obs     cv      type    units   mult    effort  discard_mortality
 1978    2       1       1       436126  0.03    1       2       1       0       0
 1979    2       1       1       52966   0.03    1       2       1       0       0
 1980    2       1       1       33162   0.03    1       2       1       0       0
