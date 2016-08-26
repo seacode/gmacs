@@ -535,7 +535,7 @@ Gmacs retrospective analyses under development.
 
 f. Uncertainty and sensitivity analyses.
 
-Estimated standard deviations of parameters for the four Gmacs scenarios are summarized in Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_selex}, \ref{tab:est_pars_cv}, and \ref{tab:est_pars_M}. Probabilities for mature male biomass and OFL in 2015 are illustrated in section “F. Calculation of the OFL”.
+Estimated standard deviations of parameters for the four Gmacs scenarios are summarized in Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_selex}, \ref{tab:est_pars_cv}, and \ref{tab:est_pars_M}. Probabilities for mature male biomass and OFL in 2016 are illustrated in section F.
 
 g. Comparison of alternative model scenarios.
 
@@ -729,7 +729,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 Parameter <- NULL
 Estimate <- NULL
 Model <- NULL
-Mname <- c("Gmacs match","Gmacs base","Gmacs CV","Gmacs M")
+Mname <- c("Gmacs match","Gmacs base","Gmacs Francis","Gmacs M")
 for (ii in 2:5)
 {
     x <- M[[ii]]$fit
@@ -752,7 +752,7 @@ Parameter <- c(Parameter[1:9],
                Parameter,
                Parameter[c(1:17)])
 df <- data.frame(Model, Parameter, Estimate)
-#df <- tidyr::spread(df, Model, Estimate)
+df <- tidyr::spread(df, Model, Estimate)
 tab <- xtable(df, caption = "Comparisons of model parameter estimates for the four Gmacs model scenarios.", label = "tab:est_pars_all", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
 ```
@@ -850,7 +850,7 @@ plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 
 \newpage\clearpage
 
-```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE in the Gmacs CV scenario is not shown. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
+```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
