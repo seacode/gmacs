@@ -44,7 +44,7 @@ M        <- lapply(fn, read_admb)
 names(M) <- mod_names
 
 jj <- 1 # The position in the list that Jies model outputs sit
-fn <- "2015_model/smbkc15100"
+fn <- "2015_model_fixed/smbkc15100"
 JJ <- lapply(fn, read_admb)
 
 nmult_1 <- 1e+06

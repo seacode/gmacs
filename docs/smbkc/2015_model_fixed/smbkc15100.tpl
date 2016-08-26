@@ -423,8 +423,7 @@ PROCEDURE_SECTION
 
  // State quantitites
    LMA = N(nyrs)(3); LMB = N(nyrs)(3)*avg_ret_wt(nyrs);
-   MMA = N(nyrs)(2) + N(nyrs)(3); 
-   MMB = N(nyrs)(2)*wt(2)+N(nyrs)(3)*avg_ret_wt(nyrs);
+   MMA = N(nyrs)(2) + N(nyrs)(3); MMB = N(nyrs)(2)*wt(2)+N(nyrs)(3)*avg_ret_wt(nyrs);
    S2A = N(nyrs)(2);
 //________________________________________________________________________
 FUNCTION get_numbers
@@ -515,14 +514,13 @@ FUNCTION run_pop_dynamics
 
    // Discount who's left to end of year
    NN = NN*mfexp(-(0.37*MM(t)));
-   //NN = N(t)*mfexp(-MM(t));
 
    // Calculate next year's abundances only thru assessment year t+1 = nyrs
    if(t<nyrs)
    {
      N(t+1,1)=TM(1,1)*NN(1)+New(t+1);
      N(t+1,2)=TM(1,2)*NN(1)+TM(2,2)*NN(2);
-     N(t+1,3)=TM(2,3)*NN(2)+NN(3);
+     N(t+1,3)=TM(1,3)*NN(1)+TM(2,3)*NN(2)+NN(3);
    }
  }
 //________________________________________________________________________
@@ -598,10 +596,6 @@ FUNCTION calculate_obj_function
 
  // 1b. Retained catch biomass
   LogLike(1) = -0.5*norm2(log(x_ret_b + 0.001) - log(X_ret_b + 0.001));
-  //cout << "x_ret_b: " << x_ret_b << endl;
-  //cout << "X_ret_b: " << X_ret_b << endl;
-  //exit(1);
-  //LogLike(1) = dnorm(res_catch(k), catch_sd);
 
  // 2a. Trawl suvey abundance lognormally distributed about predicted value
  //LogLike(2) = -0.5*norm2(elem_div(log(x_ts)-log(X_ts),sig_ts));
@@ -977,6 +971,7 @@ REPORT_SECTION
    report<<"M"<<endl;
    report<<MM<<endl;
    report<<"avg_ret_wts"<<endl;
+   //report<<0.0004535923*avg_ret_wt<<endl;
    report<<avg_ret_wt<<endl;
 
 //Standard residuals
@@ -1044,20 +1039,11 @@ REPORT_SECTION
    report<<"Observed and predicted GFF discarded death biomass"<<endl;
    report<<x_gff_tot/1000.0<<endl;
    report<<B_gff/1000.0<<endl;
-   report << N << endl;
-   report << New << endl;
-   report << MM << endl;
-   report << Fgft << endl;
-   report << Fgff << endl;
-   report << dstr << endl;
-
-   
-   
  //_____________________________________________________
 
 FINAL_SECTION
 
-  ofstream report1("refp151.out");
+  ofstream report1("refp15100.out");
 
   // F35% stuff
   get_F35();

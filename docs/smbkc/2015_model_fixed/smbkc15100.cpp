@@ -1,3 +1,9 @@
+#ifdef DEBUG
+  #ifndef __SUNPRO_C
+    #include <cfenv>
+    #include <cstdlib>
+  #endif
+#endif
  #include <math.h>
  #include <admodel.h>
 #include <admodel.h>
@@ -6,7 +12,7 @@
   extern "C"  {
     void ad_boundf(int i);
   }
-#include <smbkc151.htp>
+#include <smbkc15100.htp>
 
 model_data::model_data(int argc,char * argv[]) : ad_comm(argc,argv)
 {
@@ -446,8 +452,7 @@ void model_parameters::userfunction(void)
    logOFL = log(OFL);
  // State quantitites
    LMA = N(nyrs)(3); LMB = N(nyrs)(3)*avg_ret_wt(nyrs);
-   MMA = N(nyrs)(2) + N(nyrs)(3); 
-   MMB = N(nyrs)(2)*wt(2)+N(nyrs)(3)*avg_ret_wt(nyrs);
+   MMA = N(nyrs)(2) + N(nyrs)(3); MMB = N(nyrs)(2)*wt(2)+N(nyrs)(3)*avg_ret_wt(nyrs);
    S2A = N(nyrs)(2);
 }
 
@@ -520,13 +525,12 @@ void model_parameters::run_pop_dynamics(void)
    MMB215(t) = NN(2)*wt(2)+NN(3)*avg_ret_wt(t);
    // Discount who's left to end of year
    NN = NN*mfexp(-(0.37*MM(t)));
-   //NN = N(t)*mfexp(-MM(t));
    // Calculate next year's abundances only thru assessment year t+1 = nyrs
    if(t<nyrs)
    {
      N(t+1,1)=TM(1,1)*NN(1)+New(t+1);
      N(t+1,2)=TM(1,2)*NN(1)+TM(2,2)*NN(2);
-     N(t+1,3)=TM(2,3)*NN(2)+NN(3);
+     N(t+1,3)=TM(1,3)*NN(1)+TM(2,3)*NN(2)+NN(3);
    }
  }
 }
@@ -592,10 +596,6 @@ void model_parameters::calculate_obj_function(void)
  // LogLike(1) = -0.5*norm2(log(x_ret + 0.001) - log(X_ret + 0.001));
  // 1b. Retained catch biomass
   LogLike(1) = -0.5*norm2(log(x_ret_b + 0.001) - log(X_ret_b + 0.001));
-  //cout << "x_ret_b: " << x_ret_b << endl;
-  //cout << "X_ret_b: " << X_ret_b << endl;
-  //exit(1);
-  //LogLike(1) = dnorm(res_catch(k), catch_sd);
  // 2a. Trawl suvey abundance lognormally distributed about predicted value
  //LogLike(2) = -0.5*norm2(elem_div(log(x_ts)-log(X_ts),sig_ts));
  // 2b. Trawl survey biomass lognormally distributed about predicted value
@@ -928,6 +928,7 @@ void model_parameters::report(const dvector& gradients)
    report<<"M"<<endl;
    report<<MM<<endl;
    report<<"avg_ret_wts"<<endl;
+   //report<<0.0004535923*avg_ret_wt<<endl;
    report<<avg_ret_wt<<endl;
    report<<"ts biomass residuals"<<endl;
    report<<elem_div(log(b_ts+0.001)-log(B_ts+0.001),sqrt(2*sig_ts_b))<<endl;
@@ -992,20 +993,12 @@ void model_parameters::report(const dvector& gradients)
    report<<"Observed and predicted GFF discarded death biomass"<<endl;
    report<<x_gff_tot/1000.0<<endl;
    report<<B_gff/1000.0<<endl;
-   report << N << endl;
-   report << New << endl;
-   report << MM << endl;
-   report << Fgft << endl;
-   report << Fgff << endl;
-   report << dstr << endl;
-   
-   
  //_____________________________________________________
 }
 
 void model_parameters::final_calcs()
 {
-  ofstream report1("refp151.out");
+  ofstream report1("refp15100.out");
   // F35% stuff
   get_F35();
   FF = F35;
@@ -1054,12 +1047,31 @@ int main(int argc,char * argv[])
     ad_set_new_handler();
   ad_exit=&ad_boundf;
     gradient_structure::set_NO_DERIVATIVES();
+#ifdef DEBUG
+  #ifndef __SUNPRO_C
+std::feclearexcept(FE_ALL_EXCEPT);
+  #endif
+#endif
     gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
     if (!arrmblsize) arrmblsize=15000000;
     model_parameters mp(arrmblsize,argc,argv);
     mp.iprint=10;
     mp.preliminary_calculations();
     mp.computations(argc,argv);
+#ifdef DEBUG
+  #ifndef __SUNPRO_C
+bool failedtest = false;
+if (std::fetestexcept(FE_DIVBYZERO))
+  { cerr << "Error: Detected division by zero." << endl; failedtest = true; }
+if (std::fetestexcept(FE_INVALID))
+  { cerr << "Error: Detected invalid argument." << endl; failedtest = true; }
+if (std::fetestexcept(FE_OVERFLOW))
+  { cerr << "Error: Detected overflow." << endl; failedtest = true; }
+if (std::fetestexcept(FE_UNDERFLOW))
+  { cerr << "Error: Detected underflow." << endl; }
+if (failedtest) { std::abort(); } 
+  #endif
+#endif
     return 0;
 }
 
