@@ -480,29 +480,37 @@ The 2015 SMBKC stock assessment model, first used in Fall 2012, was a variant of
 
 ## Assessment Methodology
 
-The 2016 SMBKC assessment model makes use of the modeling framework Gmacs. The aim when developing this model was to provide a fit to the data that best matched the 2015 SMBKC stock assessment model. A detailed description of the Gmacs model and its implementation is presented in Appendix A.
+The 2016 SMBKC assessment model makes use of the modeling framework Gmacs. The aim when developing this model was to first provide a fit to the data that best matched the 2015 SMBKC stock assessment model. A detailed description of the Gmacs model and its implementation is presented in Appendix A.
 
 ## Model Selection and Evaluation
 
 Four different Gmacs model scenarios were considered. In this document results from these models and the 2015 model are compared.
 
-1. **2015 Model**: the 2015 provided by Jie (note that an error was found in the code, this error was fixed before making comparisons).
+1. **2015 Model**: the 2015 provided by Jie. Note that an error was found in the 2015 model code. This error was fixed before making comparisons. Fixing this error caused the NMFS trawl survey selectivity to exceed 1 for stage-2 crab.
 
-2. **Gmacs match**: tries to match as closely as possible with the 2015 Model.
+2. **Gmacs match**: tries to match as closely as possible with the 2015 Model by fixing the selectivity parameters and the catchability coefficient ($q$) for the ADF&G pot survey at those values estimated in the 2015 model (and allows the NMFS trawl survey selectivity to exceed 1 for stage-2 crab). The parameters that are estimated in this model include the average recruitment ($\bar{R}$), the recruitment deviations, the intial numbers in each stage, the natural mortality in 1998 ($M_{1998}$), the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery.
 
-3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
+3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1.
 
 4. **Gmacs Francis**: uses the Francis iterative re-weighting method as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
 5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
-
-| Scenario | Selectivity estimated | Use Francis weighting | Estimate $M_{1998}$ |
-|-|-|-|-|
-| Gmacs match   | No  | No  | Yes |
-| Gmacs base    | Yes | No  | Yes |
-| Gmacs M       | Yes | Yes | Yes |
-| Gmacs Francis | Yes | Yes | No  |
+\begin{table}[ht]
+\centering
+\caption{Description of the four different Gmacs scenarios.} 
+\label{tab:model_runs}
+\begin{tabular}{lccc}
+  \hline
+  Scenario & Selectivity estimated & Use Francis weighting & Estimate $M_{1998}$ \\
+  \hline
+  Gmacs match   & No  & No  & Yes \\ 
+  Gmacs base    & Yes & No  & Yes \\ 
+  Gmacs Francis & Yes & Yes & Yes \\ 
+  Gmacs M       & Yes & Yes & No  \\ 
+  \hline
+\end{tabular}
+\end{table}
 
 
 ## Results

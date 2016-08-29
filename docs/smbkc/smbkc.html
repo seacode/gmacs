@@ -127,52 +127,17 @@ Major data sources used in this assessment include annual directed-fishery retai
 <p>Concerns about the pre-2011 assessment model led to the CPT and SSC recommendations that included development of an alternative model with provisional assessment based on survey biomass or some other index of abundance. An alternative 3-stage model was proposed to the CPT in May 2011 but was requested to proceed with a survey-based approach for the Fall 2011 assessment. In May 2012 the CPT approved a slightly revised and better documented version of the alternative model for assessment.</p>
 <p>The 2015 SMBKC stock assessment model, first used in Fall 2012, was a variant of the previous four-stage SMBKC CSA model and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considered only male crab at least 90 mm in CL, but it combined stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model.</p>
 <h2 id="assessment-methodology">Assessment Methodology</h2>
-<p>The 2016 SMBKC assessment model makes use of the modeling framework Gmacs. The aim when developing this model was to provide a fit to the data that best matched the 2015 SMBKC stock assessment model. A detailed description of the Gmacs model and its implementation is presented in Appendix A.</p>
+<p>The 2016 SMBKC assessment model makes use of the modeling framework Gmacs. The aim when developing this model was to first provide a fit to the data that best matched the 2015 SMBKC stock assessment model. A detailed description of the Gmacs model and its implementation is presented in Appendix A.</p>
 <h2 id="model-selection-and-evaluation">Model Selection and Evaluation</h2>
 <p>Four different Gmacs model scenarios were considered. In this document results from these models and the 2015 model are compared.</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>2015 Model</strong>: the 2015 provided by Jie (note that an error was found in the code, this error was fixed before making comparisons).</p></li>
-<li><p><strong>Gmacs match</strong>: tries to match as closely as possible with the 2015 Model.</p></li>
-<li><p><strong>Gmacs base</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
+<li><p><strong>2015 Model</strong>: the 2015 provided by Jie. Note that an error was found in the 2015 model code. This error was fixed before making comparisons. Fixing this error caused the NMFS trawl survey selectivity to exceed 1 for stage-2 crab.</p></li>
+<li><p><strong>Gmacs match</strong>: tries to match as closely as possible with the 2015 Model by fixing the selectivity parameters and the catchability coefficient (<span class="math inline"><em>q</em></span>) for the ADF&amp;G pot survey at those values estimated in the 2015 model (and allows the NMFS trawl survey selectivity to exceed 1 for stage-2 crab). The parameters that are estimated in this model include the average recruitment (<span class="math inline">$\bar{R}$</span>), the recruitment deviations, the intial numbers in each stage, the natural mortality in 1998 (<span class="math inline"><em>M</em><sub>1998</sub></span>), the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery.</p></li>
+<li><p><strong>Gmacs base</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1.</p></li>
 <li><p><strong>Gmacs Francis</strong>: uses the Francis iterative re-weighting method as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
 <li><p><strong>Gmacs M</strong>: natural mortality (<span class="math inline"><em>M</em></span>) is fixed at 0.18 <span class="math inline"><em>y</em><em>r</em><sup>−1</sup></span> during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
 </ol>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Scenario</th>
-<th align="left">Selectivity estimated</th>
-<th align="left">Use Francis weighting</th>
-<th align="left">Estimate <span class="math inline"><em>M</em><sub>1998</sub></span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Gmacs match</td>
-<td align="left">No</td>
-<td align="left">No</td>
-<td align="left">Yes</td>
-</tr>
-<tr class="even">
-<td align="left">Gmacs base</td>
-<td align="left">Yes</td>
-<td align="left">No</td>
-<td align="left">Yes</td>
-</tr>
-<tr class="odd">
-<td align="left">Gmacs M</td>
-<td align="left">Yes</td>
-<td align="left">Yes</td>
-<td align="left">Yes</td>
-</tr>
-<tr class="even">
-<td align="left">Gmacs Francis</td>
-<td align="left">Yes</td>
-<td align="left">Yes</td>
-<td align="left">No</td>
-</tr>
-</tbody>
-</table>
+
 <h2 id="results">Results</h2>
 <p>Preliminary results for the Gmacs configuration are provided here with comparisons to the 2015 model.</p>
 <ol style="list-style-type: lower-alpha">
