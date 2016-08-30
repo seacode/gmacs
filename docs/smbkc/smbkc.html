@@ -134,8 +134,8 @@ Major data sources used in this assessment include annual directed-fishery retai
 <li><p><strong>2015 Model</strong>: the 2015 provided by Jie. Note that an error was found in the 2015 model code. This error was fixed before making comparisons. Fixing this error caused the NMFS trawl survey selectivity to exceed 1 for stage-2 crab.</p></li>
 <li><p><strong>Gmacs match</strong>: tries to match as closely as possible with the 2015 Model by fixing the selectivity parameters and the catchability coefficient (<span class="math inline"><em>q</em></span>) for the ADF&amp;G pot survey at those values estimated in the 2015 model (and allows the NMFS trawl survey selectivity to exceed 1 for stage-2 crab). The parameters that are estimated in this model include the average recruitment (<span class="math inline">$\bar{R}$</span>), the recruitment deviations, the intial numbers in each stage, the natural mortality in 1998 (<span class="math inline"><em>M</em><sub>1998</sub></span>), the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery.</p></li>
 <li><p><strong>Gmacs base</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1.</p></li>
-<li><p><strong>Gmacs Francis</strong>: uses the Francis iterative re-weighting method as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
-<li><p><strong>Gmacs M</strong>: natural mortality (<span class="math inline"><em>M</em></span>) is fixed at 0.18 <span class="math inline"><em>y</em><em>r</em><sup>−1</sup></span> during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
+<li><p><strong>Gmacs Francis</strong>: uses the Francis iterative re-weighting method (Francis 2011) as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
+<li><p><strong>Gmacs M</strong>: natural mortality (<span class="math inline"><em>M</em></span>) is fixed at 0.18 <span class="math inline">yr<sup>−1</sup></span> during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
 </ol>
 
 <h2 id="results">Results</h2>
@@ -175,7 +175,8 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 
 <p>where <span class="math inline"><em>B</em></span> is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as <span class="math inline"><em>B</em></span> itself is a function of the fishing mortality <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span>, in case b) numerical approximation of <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span> is required. As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. In particular, the OFL catch is computed using equations A3, A4, and A5, with <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span> taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.</p>
 <p>The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-2016, to define a <span class="math inline"><em>B</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy in terms of average estimated MMB and to set <span class="math inline"><em>γ</em></span> = 1.0 with assumed stock natural mortality <span class="math inline"><em>M</em></span> = 0.18 <span class="math inline">yr<sup>−1</sup></span> in setting the <span class="math inline"><em>F</em><sub><em>M</em><em>S</em><em>Y</em></sub></span> proxy value <span class="math inline"><em>γ</em><em>M</em></span>. The parameters <span class="math inline"><em>α</em></span> and <span class="math inline"><em>β</em></span> are assigned their default values <span class="math inline"><em>α</em></span> = 0.10 and <span class="math inline"><em>β</em></span> = 0.25. The <span class="math inline"><em>F</em><sub><em>O</em><em>F</em><em>L</em></sub></span>, OFL, and MMB in 2016 for all four scenarios are summarized in Table 10XX. ABC is 80% of the OFL.</p>
-<p>OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios:</p>
+OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios in Table .
+
 <h1 id="g.-rebuilding-analysis">G. Rebuilding Analysis</h1>
 <p>This stock is not currently subject to a rebuilding plan.</p>
 <h1 id="h.-data-gaps-and-research-priorities">H. Data Gaps and Research Priorities</h1>
@@ -216,14 +217,10 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 <p>Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analysis to blue king crab stocks near Pribilof and St. Matthew Islands. Alaska Fish. Res. Bull. 4:62-74.</p>
 
 <p></p>
-<pre><code>## Error in data.frame(Parameter, Estimate, SD): arguments imply differing number of rows: 11, 10</code></pre>
-<pre><code>## Error in UseMethod(&quot;xtable&quot;): no applicable method for &#39;xtable&#39; applied to an object of class &quot;function&quot;</code></pre>
-<pre><code>## Error in print(tab, caption.placement = &quot;top&quot;, include.rownames = FALSE, : object &#39;tab&#39; not found</code></pre>
 
 
 
-<pre><code>## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 59, 60</code></pre>
-<pre><code>## Error: Key column &#39;Model&#39; does not exist in input.</code></pre>
+
 
 
 

@@ -492,9 +492,9 @@ Four different Gmacs model scenarios were considered. In this document results f
 
 3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1.
 
-4. **Gmacs Francis**: uses the Francis iterative re-weighting method as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
+4. **Gmacs Francis**: uses the Francis iterative re-weighting method (Francis 2011) as well as estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
-5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $yr^{-1}$ during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
+5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $\text{yr}^{-1}$ during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
 \begin{table}[ht]
 \centering
@@ -564,7 +564,22 @@ where $B$ is quantified as mature-male biomass (MMB) at mating with time of mati
 
 The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, and MMB in 2016 for all four scenarios are summarized in Table 10XX. ABC is 80% of the OFL.
 
-OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios:
+OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios in Table \ref{tab:spr_calcs}.
+\begin{table}[ht]
+\centering
+\caption{Summary of the OFL, ABC, retained catch and bycatches for the four different Gmacs scenarios.} 
+\label{tab:spr_calcs}
+\begin{tabular}{lccccc}
+  \hline
+  Scenario & OFL & ABC & Retained catch & Pot male bycatch & Groundfish bycatch \\
+  \hline
+  Gmacs match   & & & & & \\ 
+  Gmacs base    & & & & & \\ 
+  Gmacs Francis & & & & & \\ 
+  Gmacs M       & & & & & \\ 
+  \hline
+\end{tabular}
+\end{table}
 
 
 # G. Rebuilding Analysis
@@ -654,7 +669,7 @@ Estimate <- x$est[i]
 Estimate[j] <- Estimate[j] * 1000
 SD <- x$std[i]
 SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)","$\\log (\\bar{F}_\\text{pot})$","$\\log (\\bar{F}_\\text{trawl bycatch})$","$\\log (\\bar{F}_\\text{fixed bycatch})$","$F_\\text{OFL}$","OFL")
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","$\\log (\\bar{F}_\\text{pot})$","$\\log (\\bar{F}_\\text{trawl bycatch})$","$\\log (\\bar{F}_\\text{fixed bycatch})$","$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_base", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -751,11 +766,12 @@ for (ii in 2:5)
     Model <- c(Model, rep(Mname[ii-1], length(i)))
 }
 Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
-               "ADF\\&G pot survey catchability ($q$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "ADF\\&G pot survey catchability ($q$)",
+               "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
                "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008",
                "Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015",
                "Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity")
-Parameter <- c(Parameter[1:9],
+Parameter <- c(Parameter[1:8],
                Parameter[c(1:17)],
                Parameter,
                Parameter[c(1:17)])
@@ -1107,24 +1123,25 @@ Both surveys are assigned a nominal date of 1 July, the start of the crab year. 
 \centering
 \caption{Model bounds, initial values, priors and estimation phase.} 
 \label{tab:bounds_pars}
-\begin{tabular}{lrrrlrrr}
+\begin{tabular}{lrrrlr}
   \hline
-  Parameter & LB & Initial value & UB & Prior type & Prior par1 & Prior par2 & Phase \\ 
+  Parameter & LB & Initial value & UB & Prior type & Phase \\ 
   \hline
-  $\delta^M_{1998}$ & - & 0.0 & - & Random walk & 0 & 10 & 2 \\ 
-  $\log (\bar{R})$ & -7 & 10.0 & 20 & Uniform & -7 & 20 & 1 \\ 
-  $\log (N_1)$ & 5 & 14.0 & 15 & Uniform & 5 & 15 & 1 \\ 
-  $\log (N_2)$ & 5 & 14.0 & 15 & Uniform & 5 & 15 & 1 \\ 
-  $\log (N_3)$ & 5 & 14.0 & 15 & Uniform & 5 & 15 & 1 \\ 
-  $q_{pot}$ & 0 & 4.0 & 5 & Uniform & 0 & 5 & 4 \\ 
-  Stage-1 1978-2008 & 0 & 0.4 & 2 & Uniform & 0 & 2 & 4 \\ 
-  Stage-2 1978-2008 & 0 & 0.7 & 2 & Uniform & 0 & 2 & 4 \\ 
-  Stage-1 2009-2015 & 0 & 0.3 & 2 & Uniform & 0 & 2 & 4 \\ 
-  Stage-2 2009-2015 & 0 & 0.8 & 2 & Uniform & 0 & 2 & 4 \\ 
-  Stage-1 NMFS & 0 & 0.7 & 2 & Uniform & 0 & 2 & 4 \\ 
-  Stage-2 NMFS & 0 & 0.9 & 2 & Uniform & 0 & 2 & 4 \\ 
-  Stage-1 ADFG & 0 & 0.3 & 2 & Uniform & 0 & 2 & 4 \\ 
-  Stage-2 ADFG & 0 & 0.7 & 2 & Uniform & 0 & 2 & 4 \\ 
+  $\delta^M_{1998}$ & -3 & 0.0 & 3 & Random walk & 2 \\ 
+  $\delta^R_y$ & -7 & 0.0 & 7 & Normal(0, $\sigma_R^2$) & 2 \\ 
+  $\log (\bar{R})$ & -7 & 10.0 & 20 & Uniform & 1 \\ 
+  $\log (N_1)$ & 5 & 14.0 & 15 & Uniform & 1 \\ 
+  $\log (N_2)$ & 5 & 14.0 & 15 & Uniform & 1 \\ 
+  $\log (N_3)$ & 5 & 14.0 & 15 & Uniform & 1 \\ 
+  $q_{pot}$ & 0 & 4.0 & 5 & Uniform & 4 \\ 
+  Stage-1 1978-2008 & 0 & 0.4 & 2 & Uniform(0,1) & 4 \\ 
+  Stage-2 1978-2008 & 0 & 0.7 & 2 & Uniform(0,1) & 4 \\ 
+  Stage-1 2009-2015 & 0 & 0.3 & 2 & Uniform(0,1) & 4 \\ 
+  Stage-2 2009-2015 & 0 & 0.8 & 2 & Uniform(0,1) & 4 \\ 
+  Stage-1 NMFS & 0 & 0.7 & 2 & Uniform(0,1) & 4 \\ 
+  Stage-2 NMFS & 0 & 0.9 & 2 & Uniform(0,1) & 4 \\ 
+  Stage-1 ADFG & 0 & 0.3 & 2 & Uniform(0,1) & 4 \\ 
+  Stage-2 ADFG & 0 & 0.7 & 2 & Uniform(0,1) & 4 \\ 
    \hline
 \end{tabular}
 \end{table}
