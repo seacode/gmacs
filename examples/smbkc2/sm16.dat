@@ -250,7 +250,7 @@ NMFS_Trawl:ADFG_Pot
 ##  Number  of  relative  abundance indicies
 2
 ##  Number  of  rows  in  each  index
-39  8
+39  9
 # Survey data (abundance indices, units are mt for trawl survey and crab/potlift for pot survey)
 # Year, Seas, Fleet,  Sex,  Abundance,  CV     units
 1978  1 4 1 6832.819  0.394 1
@@ -300,11 +300,11 @@ NMFS_Trawl:ADFG_Pot
 2010  1 5 1 10209.000 0.130 2
 2013  1 5 1 5643.000  0.190 2
 2015  1 5 1 2805.000  0.180 2
-##2016
+2016  1 5 1 2378.000  0.186 2
 ##  Number  of  length  frequency matrices
 3
 ##  Number  of  rows  in  each  matrix
-15  39  8
+15  39  9
 ##  Number  of  bins  in  each  matrix  (columns  of  size  data)
 3  3  3
 ##  SIZE  COMPOSITION DATA  FOR ALL FLEETS
@@ -381,7 +381,7 @@ NMFS_Trawl:ADFG_Pot
   2010  1 5 1 0 0 0 100  0.1299  0.3209  0.5492
   2013  1 5 1 0 0 0 100  0.1556  0.2477  0.5967
   2015  1 5 1 0 0 0 100  0.0706  0.2431  0.6859
-##2016
+  2016  1 5 1 0 0 0 100  0.0832  0.1917  0.7251
 ##  Growth data (increment)
 # nobs_growth
 3

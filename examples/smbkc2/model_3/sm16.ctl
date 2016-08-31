@@ -147,7 +147,7 @@
   1   1   1   # Initial value for effective sample size multiplier
  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
   1   2   3   # Composition aggregator
-  1.5920   0.6187   1.1272
+  1.7239   0.5009   1.7008
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -161,7 +161,7 @@
 ##      4 = Time blocks
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Type
-0
+3
 ## Phase of estimation
 4
 ## STDEV in m_dev for Random walk
