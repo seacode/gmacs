@@ -123,13 +123,14 @@ plot_cpue_res <- function(M, subsetby = "", xlab = "Year", ylab = "Residual", sl
     
     p  <- ggplot(data = mdf, aes(year, resd)) +
         geom_hline(aes(yintercept = 0))
+    
     if (length(M) == 1 && length(unique(mdf$sex)) == 1)
     {
         p <- p + geom_point(data = mdf, aes(year, resd)) +
             geom_segment(aes(x = year, xend = year, y = 0, yend = resd)) +
             facet_wrap(~fleet, scales = "free_y")
     } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
-        p <- p + geom_point(data = mdf, aes(year, resd, color = Model)) +
+        p <- p + geom_point(data = mdf, aes(year, resd, color = Model, shape = Model)) +
             geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = Model)) +
             facet_wrap(~fleet, scales = "free_y")
     } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
@@ -138,7 +139,7 @@ plot_cpue_res <- function(M, subsetby = "", xlab = "Year", ylab = "Residual", sl
             facet_wrap(~fleet + sex, scales = "free_y")
     } else {
         p <- p + geom_point(data = mdf, aes(year, resd, color = Model)) +
-            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = Model)) +
+            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = Model, shape = Model)) +
             facet_wrap(~fleet + sex, scales = "free_y")
     }
 

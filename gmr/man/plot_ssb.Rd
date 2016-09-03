@@ -4,12 +4,19 @@
 \alias{plot_ssb}
 \title{Plot predicted spawning stock biomass (ssb)}
 \usage{
-plot_ssb(M, xlab = "Year", ylab = "SSB (tonnes)", ylim = NULL)
+plot_ssb(M, xlab = "Year", ylab = "SSB (tonnes)", ylim = NULL,
+  alpha = 0.1)
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}
 
-\item{ylim}{is the upper limit for figure}
+\item{xlab}{the x-label of the figure}
+
+\item{ylab}{the y-label of the figure}
+
+\item{ylim}{is the upper limit of the figure}
+
+\item{alpha}{the opacity of the ribbon}
 }
 \value{
 Plot of model estimates of spawning stock biomass
@@ -17,8 +24,5 @@ Plot of model estimates of spawning stock biomass
 \description{
 Spawning biomass may be defined as all males or some combination of males and
 females
-}
-\author{
-SJD Martell, D'Arcy N. Webber
 }
 

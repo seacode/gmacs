@@ -20,7 +20,4 @@ plot of the length-weight relationship
 \description{
 Plot length-weight relationship
 }
-\author{
-D'Arcy N. Webber
-}
 

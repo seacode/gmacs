@@ -2,7 +2,6 @@
 #'
 #' @param M List object created by read_admb function
 #' @return dataframe of the length-weight relationship used in the model
-#' @author D'Arcy N. Webber
 #' @export
 #'
 .get_length_weight_df <- function(M)
@@ -43,7 +42,6 @@
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @return plot of the length-weight relationship
-#' @author D'Arcy N. Webber
 #' @export
 #' 
 plot_length_weight <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Weight (tonnes)")
@@ -73,16 +71,16 @@ plot_length_weight <- function(M, xlab = "Mid-point of size class (mm)", ylab = 
     #    }
     #}
     
-    #if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
-    #{
-    #    p <- p + geom_line() + geom_point()
-    #} else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
-    #    p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
-    #} else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
-    #    p <- p + geom_line(aes(linetype = Sex))
-    #} else {
-    #    p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
-    #}
-    p <- p + geom_line(aes(col = Year))
+    if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
+    {
+        p <- p + geom_line() + geom_point()
+    } else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
+        p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
+    } else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
+        p <- p + geom_line(aes(linetype = Sex))
+    } else {
+        p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
+    }
+    
     print(p + .THEME)
 }
