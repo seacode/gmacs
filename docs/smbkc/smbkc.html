@@ -136,6 +136,7 @@ Major data sources used in this assessment include annual directed-fishery retai
 <li><p><strong>Gmacs base</strong>: directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1.</p></li>
 <li><p><strong>Gmacs Francis</strong>: uses the Francis iterative re-weighting method (Francis 2011) as well as estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
 <li><p><strong>Gmacs M</strong>: natural mortality (<span class="math inline"><em>M</em></span>) is fixed at 0.18 <span class="math inline">yr<sup>−1</sup></span> during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&amp;G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.</p></li>
+<li><p><strong>Gmacs force</strong>:</p></li>
 </ol>
 Table  outlines the major features of each of the models.
 
@@ -153,7 +154,7 @@ Table  outlines the major features of each of the models.
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Graphs of estimates.</li>
 </ol>
-<p>Estimated (and fixed) selectivities are compared in Figure  and molting probabilities are shown in Figure . The various model fits to total male (<span class="math inline">&gt;</span> 89 mm CL) trawl survey biomass are compared in Figure , and the fits to pot survey CPUE are compared in Figure . Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figure . Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the Gmacs base model. Fits to retained catch biomass and bycatch death biomass are shown for all Gmacs scenarios in Figure . Estimated recruitment and mature male biomass are compared in Figures  and , respectively.</p>
+<p>Estimated (and fixed) selectivities are compared in Figure . The various model fits to total male (<span class="math inline">&gt;</span> 89 mm CL) trawl survey biomass are compared in Figure , and the fits to pot survey CPUE are compared in Figure . Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figure . Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures , , and  for the Gmacs base model. Fits to retained catch biomass and bycatch death biomass are shown for all Gmacs scenarios in Figure . Estimated recruitment and mature male biomass are compared in Figures  and , respectively.</p>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Graphic evaluation of the fit to the data.</li>
 </ol>
@@ -227,6 +228,7 @@ OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios
 
 
 
+
 <p></p>
 <div class="figure">
 <img src="figure/Fig4.png" alt="Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&amp;G pot-survey data used in the assessment." />
@@ -246,10 +248,18 @@ OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios
 <img src="figure/trawl_survey_biomass-1.png" alt="Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." />
 <p class="caption">Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
 </div>
+<div class="figure">
+<img src="figure/trawl_survey_biomass_weights-1.png" alt="Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." />
+<p class="caption">Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
+</div>
 
 <p></p>
 <div class="figure">
 <img src="figure/pot_survey_cpue-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." />
+<p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
+</div>
+<div class="figure">
+<img src="figure/pot_survey_cpue_weights-1.png" alt="Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations." />
 <p class="caption">Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.</p>
 </div>
 <div class="figure">
@@ -362,7 +372,7 @@ In all scenarios, the stage-transition matrix is
 
 <p>which includes molting probabilities.</p>
 <p>The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well.</p>
-<p>Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is not treated as a season midpoint pulse. Groundfish bycatch is likewise not modeled as a pulse effect, occurring at the nominal time of mating, 15 February, which is also the reference date for calculation of federal management biomass quantities.</p>
+<p>Both surveys are assigned a nominal date of 1 July, the start of the crab year.</p>
 
 <h2 id="model-objective-function-and-weighting-scheme">5. Model Objective Function and Weighting Scheme</h2>
 <p>The objective function consists of a sum of eight &quot;negative log-likelihood&quot; terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four &quot;penalty&quot; terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries. See Table , where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes <span class="math inline"><em>n</em><sub><em>t</em></sub></span> (observed number of male SMBKC <span class="math inline">≤</span> 90 mm CL) and estimated coefficients of variation <span class="math inline">$\widehat{cv}_t$</span> were used to develop appropriate variances for stage-proportion and abundance-index components. The weights <span class="math inline"><em>λ</em><sub><em>j</em></sub></span> appearing in the objective function component expressions in Table  play the role of &quot;tuning&quot; parameters in the modeling procedure.</p>
@@ -397,7 +407,7 @@ In all scenarios, the stage-transition matrix is
 The standard deviation of the normalized (or standardized) residuals (SDNR) is calculated as
 
 <p>For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by &quot;much greater than 1&quot; depends on <span class="math inline"><em>m</em></span> (the number of years in the data set). Since the normalized residuals are (approximately) normally distributed, a reasonable guideline is that the SDNR should be less than <span class="math inline"><em>χ</em><sup>2</sup></span>, where c2; m1 is the 95th percentile of a c2 distribution with <span class="math inline"><em>m</em> − 1</span> degrees of freedom (e.g., this means upper limits of 1.54, 1.37, and 1.26 for <span class="math inline"><em>m</em></span> = 5, 10, and 20, respectively). Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expectected abundances to ensure that the fit is good.</p>
-<p>The MAR is dvector tmp = fabs(tmpVec); dvector w = sort(tmp); out(2) = w(floor(0.5*(size_count(w)+1))); // MAR</p>
+<p>The MAR is</p>
 <p>MAR, Francis weighting</p>
 <h2 id="estimation">6. Estimation</h2>
 <p>The model was implemented using the software AD Model Builder (Fournier et al. 2012), with parameter estimation by minimization of the model objective function using automatic differentiation. Parameter estimates and standard deviations provided in this document are AD Model Builder reported values assuming maximum likelihood theory asymptotics.</p>
@@ -1254,26 +1264,26 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## gear  par   sel                                             phz    start  end        ## 
 ## ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
 ## # Gear-1 
-##    1     1     1   0    0.432928096608 0.001 2.0    0       0      1     2     1978   2008 
-##    1     2     2   0    0.670336057209 0.001 1.0    0       0      1     2     1978   2008 
-##    1     3     3   0    1.0            0.001 2.0    0       0      1    -2     1978   2008 
-##    1     1     1   0    0.392207758620 0.001 2.0    0       0      1     2     2009   2015 
-##    1     2     2   0    0.956150805823 0.001 1.0    0       0      1     2     2009   2015 
-##    1     3     3   0    1.0            0.001 2.0    0       0      1    -2     2009   2015 
+##    1     1     1   0    0.432 0.001 2.0    0       0      1     2     1978   2008 
+##    1     2     2   0    0.670 0.001 1.0    0       0      1     2     1978   2008 
+##    1     3     3   0    1.0   0.001 2.0    0       0      1    -2     1978   2008 
+##    1     1     1   0    0.392 0.001 2.0    0       0      1     2     2009   2015 
+##    1     2     2   0    0.956 0.001 1.0    0       0      1     2     2009   2015 
+##    1     3     3   0    1.    0.001 2.0    0       0      1    -2     2009   2015 
 ## # Gear-2 
-##    2     7     1   0    40       10.0  200    0      10    200    -3     1978   2015 
-##    2     8     2   0    60       10.0  200    0      10    200    -3     1978   2015 
+##    2     7     1   0    40    10.0  200    0      10    200    -3     1978   2015 
+##    2     8     2   0    60    10.0  200    0      10    200    -3     1978   2015 
 ## # Gear-3 
-##    3     9     1   0    40       10.0  200    0      10    200    -3     1978   2015 
-##    3    10     2   0    60       10.0  200    0      10    200    -3     1978   2015 
+##    3     9     1   0    40    10.0  200    0      10    200    -3     1978   2015 
+##    3    10     2   0    60    10.0  200    0      10    200    -3     1978   2015 
 ## # Gear-4 
-##    4     8     1   0    0.79506450558 0.001 2.0    0       0      1     2     1978   2015 
-##    4     9     2   0    1.08723867992 0.001 1.0    0       0      1     2     1978   2015 
-##    4     10    3   0    1.0           0.001 2.0    0       0      1    -2     1978   2015 
+##    4     8     1   0    0.795 0.001 2.0    0       0      1     2     1978   2015 
+##    4     9     2   0    1.087 0.001 1.0    0       0      1     2     1978   2015 
+##    4     10    3   0    1.0   0.001 2.0    0       0      1    -2     1978   2015 
 ## # Gear-5 
-##    5     11    1   0    0.405292074017 0.001 2.0    0       0      1     2     1978   2015 
-##    5     12    2   0    0.855141058500 0.001 1.0    0       0      1     2     1978   2015 
-##    5     13    3   0    1.0            0.001 2.0    0       0      1    -2     1978   2015 
+##    5     11    1   0    0.405 0.001 2.0    0       0      1     2     1978   2015 
+##    5     12    2   0    0.855 0.001 1.0    0       0      1     2     1978   2015 
+##    5     13    3   0    1.0   0.001 2.0    0       0      1    -2     1978   2015 
 ## ## Retained 
 ## # Gear-1 
 ##   -1     14    1   0   120   100   200    0      1    900   -1     1978   2015 
@@ -1302,7 +1312,7 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ## ## SURVEYS/INDICES ONLY 
 ## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
 ##    1.0     0        2     -1    0       0        9.0   0           1       # NMFS trawl 
-## 4.26724288404e-06 0 5      1    0       0        9.0   0           1       # ADF&amp;G pot 
+##    4.2e-6  0        5      1    0       0        9.0   0           1       # ADF&amp;G pot 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
@@ -1347,6 +1357,8 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 ##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
 ##   1   2   3   # Composition aggregator 
 ##   1.7239   0.5009   1.7008 
+## #  5 5 5 
+## #  1 1 1 
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 
 ##  
 ## ## ———————————————————————————————————————————————————————————————————————————————————— ## 

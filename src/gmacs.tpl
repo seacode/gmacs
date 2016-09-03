@@ -3187,7 +3187,7 @@ FUNCTION calc_objective_function
 			for ( int i = 1; i <= nSurveyRows(k); i++ )
 			{
 				dvariable stdtmp = sqrt(log(1.0 + square(cpue_cv(k,i) + mfexp(log_add_cv(k)))));
-				nloglike(2,k) += log(stdtmp) + 0.5*square(res_cpue(k,i)/stdtmp);
+				nloglike(2,k) += log(stdtmp) + 0.5 * square(res_cpue(k,i) / stdtmp);
 			}
 		} else {
 			//nloglike(2,k) += cpue_lambda(k) * dnorm(res_cpue(k), cpue_sd(k));
@@ -3460,10 +3460,15 @@ REPORT_SECTION
 	REPORT(res_catch_out);
 	REPORT(dCatchData_out);
 	REPORT(dSurveyData);
-	for ( int k = 1; k <= nSurveys; k++ )
-	{
-		cpue_cv_add(k) = cpue_cv(k) + value(mfexp(log_add_cv(k)));
-	}
+	//for ( int k = 1; k <= nSurveys; k++ )
+	//{
+	//	if ( cpue_lambda(k) != 1.0 )
+	//	{
+	//		cpue_cv_add(k) = sqrt(exp(square(cpue_sd(k) * 1.0 / cpue_lambda(k))) - 1.0);
+	//	} else {
+	//		cpue_cv_add(k) = cpue_cv(k) + value(mfexp(log_add_cv(k)));
+	//	}
+	//}
 	REPORT(cpue_cv_add);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);

@@ -27,8 +27,8 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2015 Model","Gmacs match","Gmacs base","Gmacs Francis","Gmacs M")
-.MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/")
+mod_names <- c("2015 Model","Gmacs match","Gmacs base","Gmacs Francis","Gmacs M","Gmacs force")
+.MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/","../../examples/smbkc2/model_5/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -501,6 +501,8 @@ Four different Gmacs model scenarios were considered. In this document results f
 
 5. **Gmacs M**: natural mortality ($M$) is fixed at 0.18 $\text{yr}^{-1}$ during all years as well as using the Francis iterative re-weighting method and estimating the directed pot, NMFS trawl survey and ADF&G pot survey selectivities for stage-1 and stage-2 crab. These selectivities are bounded so that they cannot be greater than 1.
 
+6. **Gmacs force**:
+
 Table \ref{tab:model_runs} outlines the major features of each of the models.
 \begin{table}[ht]
 \centering
@@ -514,6 +516,7 @@ Table \ref{tab:model_runs} outlines the major features of each of the models.
   Gmacs base    & Yes & No  & Yes \\ 
   Gmacs Francis & Yes & Yes & Yes \\ 
   Gmacs M       & Yes & Yes & No  \\ 
+  Gmacs force   & Yes & Yes & No  \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -535,7 +538,7 @@ The scenarios that estimated stage-1 and stage-2 selectivities fit the data bett
 
 c. Graphs of estimates.
 
-Estimated (and fixed) selectivities are compared in Figure \ref{fig:selectivity} and molting probabilities are shown in Figure \ref{fig:molt_prob}. The various model fits to total male ($>$ 89 mm CL) trawl survey biomass are compared in Figure \ref{fig:trawl_survey_biomass}, and the fits to pot survey CPUE are compared in Figure \ref{fig:pot_survey_cpue}. Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figure \ref{fig:bts_resid}. Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and \ref{fig:sc_trawl_discarded} for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot_res}, \ref{fig:sc_pot_discarded_res}, and \ref{fig:sc_trawl_discarded_res} for the Gmacs base model. Fits to retained catch biomass and bycatch death biomass are shown for all Gmacs scenarios in Figure \ref{fig:fit_to_catch}. Estimated recruitment and mature male biomass are compared in Figures \ref{fig:recruitment} and \ref{fig:mmb}, respectively.
+Estimated (and fixed) selectivities are compared in Figure \ref{fig:selectivity}. The various model fits to total male ($>$ 89 mm CL) trawl survey biomass are compared in Figure \ref{fig:trawl_survey_biomass}, and the fits to pot survey CPUE are compared in Figure \ref{fig:pot_survey_cpue}. Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figure \ref{fig:bts_resid}. Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and \ref{fig:sc_trawl_discarded} for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot_res}, \ref{fig:sc_pot_discarded_res}, and \ref{fig:sc_trawl_discarded_res} for the Gmacs base model. Fits to retained catch biomass and bycatch death biomass are shown for all Gmacs scenarios in Figure \ref{fig:fit_to_catch}. Estimated recruitment and mature male biomass are compared in Figures \ref{fig:recruitment} and \ref{fig:mmb}, respectively.
 
 d. Graphic evaluation of the fit to the data.
 
@@ -584,6 +587,7 @@ OFL, ABC, retained catch and bycatches for 2016 are summarized for all scenarios
   Gmacs base    & & & & & \\ 
   Gmacs Francis & & & & & \\ 
   Gmacs M       & & & & & \\ 
+  Gmacs force   & & & & & \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -662,9 +666,9 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analys
 \newpage\clearpage
 
 ```{r length_weight, results = "asis"}
-df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt)
+df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt * 1000)
 names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
-tab <- xtable(df, caption = "Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length to Gmacs).", label = "tab:length-weight", digits = 3)
+tab <- xtable(df, caption = "Relationship between carapace width (mm) and weight (kg) in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length-weight", digits = c(0,0,1,1,1))
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -678,14 +682,14 @@ i <- c(grep("m_dev", x$names)[1],
        grep("sd_ofl", x$names)
        )
 Parameter <- x$names[i]
-j <- grep("survey_q", Parameter)
 Estimate <- x$est[i]
-Estimate[j] <- Estimate[j] * 1000
 SD <- x$std[i]
+j <- grep("survey_q", Parameter)
+Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
 Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","$\\log (\\bar{F}_\\text{pot})$","$\\log (\\bar{F}_\\text{trawl bycatch})$","$\\log (\\bar{F}_\\text{fixed bycatch})$","$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_base", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_base", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -700,16 +704,21 @@ i <- c(grep("m_dev", x$names)[1],
        grep("sd_ofl", x$names)
        )
 Parameter <- x$names[i]
-j <- grep("survey_q", Parameter)
 Estimate <- x$est[i]
-Estimate[j] <- Estimate[j] * 1000
 SD <- x$std[i]
+j <- grep("survey_q", Parameter)
+Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
-               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity",
+Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+               "ADF\\&G pot survey catchability ($q \\times 1000$)",
+               "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
+               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
+               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs base} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -724,17 +733,21 @@ i <- c(grep("theta", x$names),
        grep("sd_ofl", x$names)
        )
 Parameter <- x$names[i]
-j <- grep("survey_q", Parameter)
 Estimate <- x$est[i]
-Estimate[j] <- Estimate[j] * 1000
 SD <- x$std[i]
+j <- grep("survey_q", Parameter)
+Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
 Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
-               "ADF\\&G pot survey catchability ($q \\times 1000$)","$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
-               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity",
+               "ADF\\&G pot survey catchability ($q \\times 1000$)",
+               "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
+               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 NMFS trawl selectivity", "log Stage-2 NMFS trawl selectivity",
+               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs Francis} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_cv", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs Francis} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_cv", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -748,17 +761,47 @@ i <- c(grep("theta", x$names),
        grep("sd_ofl", x$names)
        )
 Parameter <- x$names[i]
-j <- grep("survey_q", Parameter)
 Estimate <- x$est[i]
-Estimate[j] <- Estimate[j] * 1000
 SD <- x$std[i]
+j <- grep("survey_q", Parameter)
+Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
 Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
-               "Stage-1 directed pot selectivity 1978-2008","Stage-2 directed pot selectivity 1978-2008","Stage-1 directed pot selectivity 2009-2015","Stage-2 directed pot selectivity 2009-2015","Stage-1 NMFS trawl selectivity","Stage-2 NMFS trawl selectivity","Stage-1 ADF\\&G pot selectivity","Stage-2 ADF\\&G pot selectivity",
+               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
+               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
+               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates and standard deviations (SD) for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 3)
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+```
+
+```{r est_pars_6, results = "asis"}
+x <- M[[6]]$fit
+i <- c(grep("theta", x$names),
+       grep("survey_q", x$names),
+       grep("log_fbar", x$names),
+       grep("log_slx_pars", x$names),
+       grep("sd_fofl", x$names),
+       grep("sd_ofl", x$names)
+       )
+Parameter <- x$names[i]
+Estimate <- x$est[i]
+SD <- x$std[i]
+j <- grep("survey_q", Parameter)
+Estimate[j] <- Estimate[j] * 1000
+SD[j] <- SD[j] * 1000
+Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)",
+               "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
+               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
+               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
+               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
+               "$F_\\text{OFL}$","OFL")
+df <- data.frame(Parameter, Estimate, SD)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs force} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_force", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -882,10 +925,18 @@ plot_selectivity(M, ncol = 5)
 plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
 ```
 
+```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass_weights}"}
+plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)", ShowEstErr = TRUE)
+```
+
 \newpage\clearpage
 
 ```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
 plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
+```
+
+```{r pot_survey_cpue_weights, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue_weights}"}
+plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
 ```
 
 ```{r pot_survey_cpue_CV, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The additional CV for the pot survey CPUE is shown. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue_CV}"}
@@ -1037,7 +1088,7 @@ with $\pi_{jk}$ equal to the proportion of stage-$j$ crab that molt and grow int
 \end{equation}
 where $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$. The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only, thus
 \begin{equation}
-    \boldsymbol{r}_{t,y} = \left[ \bar{R}, 0, 0 \right]^\top,
+    \boldsymbol{r}_{t,y} = \left[ \bar{R}, 0, 0 \right]^\top \quad \text{for} \quad t=5,
 \end{equation}
 where $\bar{R}$ is the average annual recruitment. The basic population dynamics underlying Gmacs can thus be described as
 \begin{align}
@@ -1115,7 +1166,7 @@ which includes molting probabilities.
 
 The combination of the growth matrix and molting probabilities results in the stage-transition matrix for scenarios 3-11. Molting probability for stage 1 for scenarios 8, 9, 10, 11 during 1978-2000 is assumed to be 0.91 estimated from the tagging data and ratio of molting probabilities of stages 2 to stage 1 is fixed as 0.69231 from the tagging data as well.
 
-Both surveys are assigned a nominal date of 1 July, the start of the crab year. The directed fishery is not treated as a season midpoint pulse. Groundfish bycatch is likewise not modeled as a pulse effect, occurring at the nominal time of mating, 15 February, which is also the reference date for calculation of federal management biomass quantities.
+Both surveys are assigned a nominal date of 1 July, the start of the crab year.
 
 \begin{table}[ht]
 \centering
@@ -1168,10 +1219,6 @@ The standard deviation of the normalized (or standardized) residuals (SDNR) is c
 For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Since the normalized residuals are (approximately) normally distributed, a reasonable guideline is that the SDNR should be less than $\chi^2$, where c2; m1 is the 95th percentile of a c2 distribution with $m - 1$ degrees of freedom (e.g., this means upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively). Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expectected abundances to ensure that the fit is good.
 
 The MAR is
-dvector tmp = fabs(tmpVec);
-dvector w = sort(tmp);
-out(2) = w(floor(0.5*(size_count(w)+1))); // MAR
-
 
 MAR, Francis weighting
 
