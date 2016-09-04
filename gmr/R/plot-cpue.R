@@ -43,7 +43,6 @@
 #' @param logy Plot the CPUE in log-space
 #' @param slab the sex label for the plot that appears above the key
 #' @return plot of all observed and predicted incices
-#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
 plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex", ShowEstErr = FALSE, logy = FALSE)
@@ -105,12 +104,12 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
 
 #' Plot residuals of cpue or other indices
 #'
-#' @param replist List object created by read_admb function
+#' @param M List object created by read_admb function
+#' @param subsetby the fleet or fleets to plot
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @param slab the sex label for the plot that appears above the key
 #' @return plot of fit indices residuals
-#' @author SJD Martell, D'Arcy N. Webber
 #' @export
 #' 
 plot_cpue_res <- function(M, subsetby = "", xlab = "Year", ylab = "Residual", slab = "Sex")
@@ -126,20 +125,20 @@ plot_cpue_res <- function(M, subsetby = "", xlab = "Year", ylab = "Residual", sl
     
     if (length(M) == 1 && length(unique(mdf$sex)) == 1)
     {
-        p <- p + geom_point(data = mdf, aes(year, resd)) +
-            geom_segment(aes(x = year, xend = year, y = 0, yend = resd)) +
-            facet_wrap(~fleet, scales = "free_y")
+        p <- p + geom_point(data = mdf, aes(year, resd), position = position_dodge(0.5)) +
+          geom_linerange(aes(ymin = 0, ymax = resd), position = position_dodge(0.5)) +
+          facet_wrap(~fleet, scales = "free_y")
     } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
-        p <- p + geom_point(data = mdf, aes(year, resd, color = Model, shape = Model)) +
-            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = Model)) +
+        p <- p + geom_point(data = mdf, aes(year, resd, color = Model, shape = Model), position = position_dodge(0.5)) +
+            geom_linerange(aes(ymin = 0, ymax = resd, color = Model), position = position_dodge(0.5)) +
             facet_wrap(~fleet, scales = "free_y")
     } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
-        p <- p + geom_point(data = mdf, aes(year, resd, color = sex)) + labs(col = slab) +
-            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = sex)) +
+        p <- p + geom_point(data = mdf, aes(year, resd, color = sex, shape = sex), position = position_dodge(0.5)) + labs(col = slab) +
+          geom_linerange(aes(ymin = 0, ymax = resd, color = sex), position = position_dodge(0.5)) +
             facet_wrap(~fleet + sex, scales = "free_y")
     } else {
-        p <- p + geom_point(data = mdf, aes(year, resd, color = Model)) +
-            geom_segment(aes(x = year, xend = year, y = 0, yend = resd, color = Model, shape = Model)) +
+        p <- p + geom_point(data = mdf, aes(year, resd, color = Model, shape = Model), position = position_dodge(0.5)) +
+          geom_linerange(aes(ymin = 0, ymax = resd, color = Model), position = position_dodge(0.5)) +
             facet_wrap(~fleet + sex, scales = "free_y")
     }
 

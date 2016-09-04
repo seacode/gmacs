@@ -8,21 +8,20 @@ plot_cpue_res(M, subsetby = "", xlab = "Year", ylab = "Residual",
   slab = "Sex")
 }
 \arguments{
+\item{M}{List object created by read_admb function}
+
+\item{subsetby}{the fleet or fleets to plot}
+
 \item{xlab}{the x-axis label for the plot}
 
 \item{ylab}{the y-axis label for the plot}
 
 \item{slab}{the sex label for the plot that appears above the key}
-
-\item{replist}{List object created by read_admb function}
 }
 \value{
 plot of fit indices residuals
 }
 \description{
 Plot residuals of cpue or other indices
-}
-\author{
-SJD Martell, D'Arcy N. Webber
 }
 

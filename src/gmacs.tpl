@@ -3460,15 +3460,15 @@ REPORT_SECTION
 	REPORT(res_catch_out);
 	REPORT(dCatchData_out);
 	REPORT(dSurveyData);
-	//for ( int k = 1; k <= nSurveys; k++ )
-	//{
-	//	if ( cpue_lambda(k) != 1.0 )
-	//	{
-	//		cpue_cv_add(k) = sqrt(exp(square(cpue_sd(k) * 1.0 / cpue_lambda(k))) - 1.0);
-	//	} else {
-	//		cpue_cv_add(k) = cpue_cv(k) + value(mfexp(log_add_cv(k)));
-	//	}
-	//}
+	for ( int k = 1; k <= nSurveys; k++ )
+	{
+		if ( cpue_lambda(k) != 1.0 )
+		{
+			cpue_cv_add(k) = sqrt(exp(square(cpue_sd(k) * 1.0 / cpue_lambda(k))) - 1.0);
+		} else {
+			cpue_cv_add(k) = cpue_cv(k) + value(mfexp(log_add_cv(k)));
+		}
+	}
 	REPORT(cpue_cv_add);
 	REPORT(obs_cpue);
 	REPORT(pre_cpue);
@@ -3521,7 +3521,7 @@ REPORT_SECTION
 		{
 			double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii));
 			effN(kk,ii)        = Eff_N(d3_obs_size_comps(kk,ii), d3_pre_size_comps(kk,ii));
-			//effN2(kk,ii)       = Eff_N2(d3_obs_size_comps(kk,ii), d3_pre_size_comps(kk,ii));
+			effN2(kk,ii)       = Eff_N2(d3_obs_size_comps(kk,ii), d3_pre_size_comps(kk,ii));
 			pre_mn_size(kk,ii) = mn_length(d3_pre_size_comps(kk,ii));
 			obs_mn_size(kk,ii) = mn_length(d3_obs_size_comps(kk,ii));
 			lb_mn_size(kk,ii)  = obs_mn_size(kk,ii) - sdl_tmp * 2.0 / sqrt(size_comp_sample_size(kk,ii));
@@ -4439,6 +4439,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 
 	spr_rbar = mean(recruits(spr_syr,spr_nyr));
 	Bmsy = mean(calc_ssb()(spr_syr,spr_nyr)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
+	spr_bspr = Bmsy;
 	Fmsy = gamma * M0;
 	FF = Fmsy;
 	Bproj = project_biomass(1, ifleet, log(FF), numbers_proj_gytl)(1);
