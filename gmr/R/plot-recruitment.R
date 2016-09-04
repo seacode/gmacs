@@ -28,6 +28,9 @@
         df$year <- A$mod_yrs
         df$lb <- exp(df$log_rec - 1.96*df$log_sd)
         df$ub <- exp(df$log_rec + 1.96*df$log_sd)
+        j <- which(M[[i]]$fit$names %in% c("theta[4]"))
+        #rstd <- M[[i]]$fit$std[j]
+        df$rbar = exp(M[[i]]$fit$est[j])
         mdf <- rbind(mdf, df)
     }
     return(mdf)
@@ -82,11 +85,12 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
     {
         p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06)) +
             geom_bar(stat = "identity", alpha = 0.4, position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec)/1e+06, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
+            geom_pointrange(aes(year, exp(log_rec)/1e+6, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     } else {
         p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06, col = Model, group = Model)) +
+            geom_hline(aes(yintercept = rbar/1e+6, col = Model)) +
             geom_bar(stat = "identity", alpha = 0.4, aes(fill = Model), position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec)/1e+06, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
+            geom_pointrange(aes(year, exp(log_rec)/1e+6, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     }
     p <- p + labs(x = xlab, y = ylab)
     if (!.OVERLAY) p <- p + facet_wrap(~Model)
