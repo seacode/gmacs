@@ -397,45 +397,6 @@ tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tonnes) esti
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
-\begin{table}[ht]
-\centering
-\caption{Groundfish SMBKC male bycatch biomass (tonnes) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. The total mortality is calculated assuming handling mortalities of 0.8 for trawl and 0.5 for fixed gear. Source: J. Zheng, ADF\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.} 
-\label{tab:smbkc_groundfish_bycatch}
-\begin{tabular}{lccc}
-  \hline
-  & \multicolumn{2}{c}{Bycatch} & \\
-  \cline{2-3}
-  Year & Trawl & Fixed gear & Total mortality \\
-  \hline
-  1991/92 & 7.8 & 0.1 & 6.3 \\
-  1992/93 & 4.4 & 5.0 & 6.0 \\
-  1993/94 & 3.4 & 0.0 & 2.7 \\
-  1994/95 & 0.7 & 0.2 & 0.7 \\
-  1995/96 & 1.4 & 0.3 & 1.3 \\
-  1996/97 & 0.0 & 0.1 & 0.1 \\
-  1997/98 & 0.0 & 0.4 & 0.2 \\
-  1998/99 & 0.0 & 2.0 & 1.0 \\
-  1999/00 & 0.0 & 3.0 & 1.5 \\
-  2000/01 & 0.0 & 0.0 & 0.0 \\
-  2001/02 & 0.0 & 1.9 & 1.0 \\
-  2002/03 & 1.6 & 0.9 & 1.7 \\
-  2003/04 & 2.2 & 2.5 & 3.0 \\
-  2004/05 & 0.2 & 1.4 & 0.9 \\
-  2005/06 & 0.0 & 1.3 & 0.7 \\
-  2006/07 & 6.2 & 3.2 & 6.6 \\
-  2007/08 & 0.1 & 153.7 & 76.9 \\
-  2008/09 & 0.6 & 14.6 & 7.8 \\
-  2009/10 & 1.4 & 16.6 & 9.4 \\
-  2010/11 & 0.8 & 21.1 & 11.2 \\
-  2011/12 & 0.4 & 1.3 & 1.0 \\
-  2012/13 & 1.3 & 0.0 & 1.0 \\
-  2013/14 & 0.4 & 0.6 & 0.6 \\
-  2014/15 & 0.0 & 0.3 & 0.2 \\
-  2015/16 &     &     &     \\
-  \hline
-\end{tabular}
-\end{table}
-
 
 # D. Data
 
@@ -751,7 +712,7 @@ SD <- x$std[i]
 j <- grep("survey_q", Parameter)
 Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","$\\log (\\bar{F}_\\text{pot})$","$\\log (\\bar{F}_\\text{trawl bycatch})$","$\\log (\\bar{F}_\\text{fixed bycatch})$","$F_\\text{OFL}$","OFL")
+Parameter <- c("Natural mortality deviation in 1998/99 $\\delta^M_{1998}$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$","$\\log (\\bar{F}_\\text{pot})$","$\\log (\\bar{F}_\\text{trawl bycatch})$","$\\log (\\bar{F}_\\text{fixed bycatch})$","$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_base", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -773,7 +734,7 @@ SD <- x$std[i]
 j <- grep("survey_q", Parameter)
 Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+Parameter <- c("Natural mortality deviation in 1998/99 $\\delta^M_{1998}$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
                "ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
                "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
@@ -782,13 +743,14 @@ Parameter <- c("Natural mortality ($M$) deviation in 1998/99","$\\log (\\bar{R})
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_selex", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_selex", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 ```{r est_pars_4, results = "asis"}
 x <- M[[4]]$fit
-i <- c(grep("theta", x$names),
+i <- c(grep("m_dev", x$names)[1],
+       grep("theta", x$names),
        grep("survey_q", x$names),
        grep("log_add_cv", x$names),
        grep("log_fbar", x$names),
@@ -802,7 +764,7 @@ SD <- x$std[i]
 j <- grep("survey_q", Parameter)
 Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
-Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
+Parameter <- c("Natural mortality deviation in 1998/99 $\\delta^M_{1998}$","$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3)$",
                "ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}_\\text{pot})$","$\\log(\\bar{F}_\\text{trawl bycatch})$","$\\log(\\bar{F}_\\text{fixed bycatch})$",
                "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
@@ -811,7 +773,7 @@ Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs Francis} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_cv", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs Francis} model.", label = "tab:est_pars_cv", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -838,7 +800,7 @@ Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs M} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_M", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs M} model.", label = "tab:est_pars_M", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -865,7 +827,7 @@ Parameter <- c("$\\log (\\bar{R})$","$\\log (N_1)$","$\\log (N_2)$","$\\log (N_3
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs force} model that estimates stage-1 and stage-2 selectivity.", label = "tab:est_pars_force", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs force} model.", label = "tab:est_pars_force", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -873,7 +835,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 Parameter <- NULL
 Estimate <- NULL
 Model <- NULL
-Mname <- c("Gmacs match","Gmacs base","Gmacs Francis","Gmacs M","Gmacs force")
+Mname <- c("Match","Base","Francis","M","Force")
 for (ii in 2:6)
 {
     x <- M[[ii]]$fit
@@ -947,7 +909,7 @@ for (ii in 2:6)
     df <- cbind(df, v)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs Francis","Gmacs M","Gmacs force")
+names(df) <- c("Component","Match","Base","Francis","M","Force")
 tab <- xtable(df, caption = "Comparisons of negative log-likelihood values, SDNR values, and MAR values for the five Gmacs model scenarios.", label = "tab:likelihood_components")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
