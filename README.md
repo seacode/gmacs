@@ -1,7 +1,5 @@
 # Gmacs
 
-[![Build Status](https://travis-ci.org/seacode/gmacs.svg?branch=issue77)](https://travis-ci.org/seacode/gmacs)
-
 A generalized size-structured stock assessment modelling framework. Gmacs includes:
 
   * The [Gmacs](https://github.com/seacode/gmacs/tree/develop/src) model
