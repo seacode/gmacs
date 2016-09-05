@@ -117,12 +117,12 @@ M[[jj]]$rec_sdd <- c(1,0,0)
 #like[[2]] <- readLines("../../examples/bbrkc/TwoSex/gmacs.rep")
 
 fn <- paste0(.MODELDIR[2], "gmacs")
-Mbase <- lapply(fn, read_admb)
-names(Mbase) <- c("SMBKC")
+Mmatch <- lapply(fn, read_admb)
+names(Mmatch) <- c("SMBKC")
 
 fn <- paste0(.MODELDIR[3], "gmacs")
-Mselex <- lapply(fn, read_admb)
-names(Mselex) <- c("SMBKC")
+Mbase <- lapply(fn, read_admb)
+names(Mbase) <- c("SMBKC")
 
 rinline <- function(code){
   html <- '<code  class="r">``` `CODE` ```</code>'
@@ -235,7 +235,7 @@ Response: This has been done and the $F_\mathit{OFL}$ and OFL have both been rep
 
 Comment: *the CPT requests that some evaluation should also be included in the September report to the CPT which compares against the previous assessment model corrected for the error.*
 
-Response: The error in the 2015 was fixed and this model was run again. Comparisons with the Gmacs models and the 2015 model are presented throughout this document.
+Response: The error in the 2015 was fixed and this model was run again. Comparisons between the Gmacs models and the 2015 model are presented throughout this document.
 
 Comment: *The SSC and CPT requested the following models for review at the spring 2016 meeting:*
 
@@ -244,7 +244,7 @@ Comment: *The SSC and CPT requested the following models for review at the sprin
   3. *Above + Francis re-weighting*
   4. *Above + remove M spike*
 
-Response: Models 1, 3 and 4 are all included and evaluated in this document as the **Gmacs base**, **Gmacs Francis** and **Gmacs M** scenarios. Model 2 was not included in this document for two reasons. Firstly, if doing Francis iterative re-weighting then additional CV should not be added as well. Secondly, the SSC recommended against the model runs with additional CV (see the comment from the SSC below).
+Response: Models 1, 3, and 4 are all included and evaluated in this document as the **Gmacs base**, **Gmacs Francis**, and **Gmacs M** scenarios. Model 2 was not included in this document for two reasons. Firstly, if doing Francis iterative re-weighting then additional CV should not be added as well. Secondly, the SSC recommended against the model runs with additional CV (see the comment from the SSC below).
 
 Comment: *The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.*
 
@@ -563,7 +563,7 @@ Observed and estimated effective sample sizes are compared in Table \ref{tab:eff
 
 ### b. Tables of estimates.
 
-Model parameter estimates for each of the Gmacs scenarios are summarized in Tables \ref{tab:est_pars_match}, \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and \ref{tab:est_pars_force}. These parameter estimates are compared in Table \ref{tab:est_pars_all}. Negative log-likelihood values and management measures for the five Gmacs scenarios are compared in Tables \ref{tab:likelihood_components} and \ref{tab:management_quants}.
+Model parameter estimates for each of the Gmacs scenarios are summarized in Tables \ref{tab:est_pars_match}, \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and \ref{tab:est_pars_force}. These parameter estimates are compared in Table \ref{tab:est_pars_all}. Negative log-likelihood values and management measures for each of the Gmacs scenarios are compared in Tables \ref{tab:likelihood_components} and \ref{tab:management_quants}.
 
 ### c. Graphs of estimates.
 
@@ -571,7 +571,7 @@ Estimated (and fixed) selectivities are compared in Figure \ref{fig:selectivity}
 
 The various model fits to total male ($>$ 89 mm CL) trawl survey biomass are compared in Figures \ref{fig:trawl_survey_biomass} and \ref{fig:trawl_survey_biomass_weights}. The fits to pot survey CPUE are compared in Figures \ref{fig:pot_survey_cpue} and \ref{fig:pot_survey_cpue_weights}. Standardized residuals of total male trawl survey biomass and pot survey CPUE are plotted in Figures \ref{fig:bts_resid_nmfs} and \ref{fig:bts_resid_adfg}. 
 
-Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and \ref{fig:sc_trawl_discarded} for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot_res}, \ref{fig:sc_pot_discarded_res}, and \ref{fig:sc_trawl_discarded_res} for the Gmacs base model. 
+Fits to stage compositions for trawl survey, pot survey, and commercial observer data are shown in Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and \ref{fig:sc_trawl_discarded} for the all scenarios. Bubble plots of stage composition residuals for trawl survey, pot survey, and commercial observer data are shown for the **Gmacs base**, **Gmacs Francis**, **Gmacs M**, and **Gmacs force** scenarios in Figures \ref{fig:sc_res_base}, \ref{fig:sc_res_Francis}, \ref{fig:sc_res_M}, and \ref{fig:sc_res_force}, respectively.
 
 Fits to retained catch numbers and bycatch biomass are shown for all Gmacs scenarios in Figure \ref{fig:fit_to_catch}.
 
@@ -579,7 +579,9 @@ Estimated recruitment is compared in Figure \ref{fig:recruitment}. Estimated abu
 
 ### d. Graphic evaluation of the fit to the data.
 
-Model estimated relative survey biomasses are different in each of the scenarios. The Gmacs base model has a comparatively low biomass in the early years compared with the other scenarios, including the 2015 model (Figure \ref{fig:trawl_survey_biomass}). The Gmacs CV scenario that includes additional CV for the pot survey CPUE results in much higher biomass estimates in recent years (Figure \ref{fig:trawl_survey_biomass}). Estimated pot survey CPUEs are also dependent on scenarios, and the difference among scenarios are very similar to the relative survey biomasses (Figure \ref{fig:pot_survey_cpue}).
+There is little difference between model estimated survey biomass in the gmacs scenarios when compared with the 2015 model (Figures \ref{fig:trawl_survey_biomass} and \ref{fig:pot_survey_cpue}). Looking at the model fits to the NMFS trawl survey biomass (Figure \ref{fig:trawl_survey_biomass}), the **Gmacs match** scenario is the most similar to the 2015 model, and the **Gmacs base** model is very similar as well. In all scenarios, Gmacs produces a better fit during the mid-late 1980s. However, since about 2010 Gmacs estimates a slighly lower survey biomass than the 2015 model in an attempt to better fit the ADF&G pot survey CPUE (Figure \ref{fig:pot_survey_cpue}). The two Gmacs scenarios that do not attempt to estimate natural mortality in 1998/99 (**Gmacs M** and **Gmacs force**) predict lower survey biomass from 1992 to 1998 than the other scenarios and the 2015 model. These same two runs also predict a lower survey biomass in recent years (since about 2010). While these two models may result in slightly worse fits to the data, they do not risk over-fitting the data in the same way the other scenarios do. As exptected the model that upweights the NMFS survey biomass and ADF&G pot survey CPUE (**Gmacs force**) provides a better fit to the survey biomass during the mid-late 1980s and a much better fit to the pot survey CPUE in the most recent two years (Figures \ref{fig:trawl_survey_biomass}, \ref{fig:trawl_survey_biomass_weights}, \ref{fig:pot_survey_cpue}, and \ref{fig:pot_survey_cpue_weights}). Keep in mind that this scenario was only included for exploratory purposes and forcing these weights resulted in worse SDNR and MAR values for the two abundance indices.
+
+LFs
 
 Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomass on 15 February also fluctuates strongly over time. The high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure \ref{fig:mmb}).
 
@@ -667,7 +669,9 @@ Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder, 
 
 Francis, R.I.C.C. 2011. Data weighting in statistical fisheries stock assessment models. Can. J. Fish. Aquat. Sci. 68: 1124-1138.
 
-Gaeuman, W.B. 2013. Summary of the 2012/13 mandatory crab observer program database for the Bering Sea/Aleutian Islands commercial crab fisheries. Alaska Department of Fish and Game, Fishery Data Series No. 13-54, Anchorage. Gish, R.K., V.A. Vanek, and D. Pengilly. 2012. Results of the 2010 triennial St. Matthew Island blue king crab pot survey and 2010/11 tagging study. Alaska Department of Fish and Game, Fishery Management Report No. 12-24, Anchorage.
+Gaeuman, W.B. 2013. Summary of the 2012/13 mandatory crab observer program database for the Bering Sea/Aleutian Islands commercial crab fisheries. Alaska Department of Fish and Game, Fishery Data Series No. 13-54, Anchorage. 
+
+Gish, R.K., V.A. Vanek, and D. Pengilly. 2012. Results of the 2010 triennial St. Matthew Island blue king crab pot survey and 2010/11 tagging study. Alaska Department of Fish and Game, Fishery Management Report No. 12-24, Anchorage.
 
 Jensen, G.C. and D.A. Armstrong. 1989. Biennial reproductive cycle of blue king crab, Paralithodes platypus, at the Pribilof Islands, Alaska and comparison to a congener, P. camtschatica. Can. J. Fish. Aquat. Sci. 46: 932-940.
 
@@ -677,7 +681,7 @@ North Pacific Fishery Management Council (NPFMC). 1998. Fishery Management Plan 
 
 North Pacific Fishery Management Council (NPFMC). 1999. Environmental assessment/regulatory impact review/initial regulatory flexibility analysis for Amendment 11 to the Fishery Management Plan for Bering Sea/Aleutian Islands king and Tanner crabs. North Pacific Fishery Management Council, Anchorage.
 
-North Pacific Fishery Management Council (NPFMC). 2000. Environmental assessment/regulatoryimpact review/initial regulatory flexibility analysis for proposed Amendment 15 to the Fishery Management Plan for king and Tanner crab fisheries in the Bering Sea/Aleutian Islands and regulatory amendment to the Fishery Management Plan for the groundfish fishery of the Bering Sea and Aleutian Islands area: A rebuilding plan for the St. Matthew blue king crab stock. North Pacific Fishery Management Council, Anchorage. Draft report.
+North Pacific Fishery Management Council (NPFMC). 2000. Environmental assessment/regulatory impact review/initial regulatory flexibility analysis for proposed Amendment 15 to the Fishery Management Plan for king and Tanner crab fisheries in the Bering Sea/Aleutian Islands and regulatory amendment to the Fishery Management Plan for the groundfish fishery of the Bering Sea and Aleutian Islands area: A rebuilding plan for the St. Matthew blue king crab stock. North Pacific Fishery Management Council, Anchorage. Draft report.
 
 North Pacific Fishery Management Council (NPFMC). 2007. Public Review Draft: Environmental assessment for proposed Amendment 24 to the Fishery Management Plan for Bering Sea and Aleutian Islands king and Tanner crabs to revise overfishing definitions. 14 November 2007. North Pacific Fishery Management Council, Anchorage.
 
@@ -689,7 +693,9 @@ Paul, J.M., A. J. Paul, R.S. Otto, and R.A. MacIntosh. 1991. Spermatophore prese
 
 Pengilly, D. and D. Schmidt. 1995. Harvest Strategy for Kodiak and Bristol Bay Red king Crab and St. Matthew Island and Pribilof Blue King Crab. Alaska Department of Fish and Game, Commercial Fisheries Management and Development Division, Special Publication Number 7, Juneau.
 
-Schirripa, M.J., C.P. Goodyear, and R.M. Methot. 2009. Testing different methods of incorporating climate data into the assessment of US West Coast sablefish. ICES Journal of Marine Science, 66: 1605–1613. Somerton, D.A., and R.A. MacIntosh. 1983. The size at sexual maturity of blue king crab, Paralithodes platypus, in Alaska. Fishery Bulletin 81: 621-828.
+Schirripa, M.J., C.P. Goodyear, and R.M. Methot. 2009. Testing different methods of incorporating climate data into the assessment of US West Coast sablefish. ICES Journal of Marine Science, 66: 1605–1613. 
+
+Somerton, D.A., and R.A. MacIntosh. 1983. The size at sexual maturity of blue king crab, Paralithodes platypus, in Alaska. Fishery Bulletin 81: 621-828.
 
 Wilderbuer, T., D. G. Nichol, and J. Ianelli. 2013. Assessment of the yellowfin sole stock in the Bering Sea and Aleutian Islands. Pages 619-708 in 2013 North Pacific Groundfish Stock Assessment and Fishery Evaluation Reports for 2014. North Pacific Fishery Management Council, Anchorage.
 
@@ -705,7 +711,7 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analys
 ```{r length_weight, results = "asis"}
 df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt * 1000)
 names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
-tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length-weight", digits = c(0,0,1,1,1))
+tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length_weight", digits = c(0,0,1,1,1))
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -1081,28 +1087,24 @@ plot_size_comps(M, 2)
 plot_size_comps(M, 3)
 ```
 
-```{r sc_pot_res, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs match** model.\\label{fig:sc_pot_res}"}
-plot_size_comps_res(Mbase)
+```{r sc_pot_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_res_base}"}
+fn <- paste0(.MODELDIR[3], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
+plot_size_comps_res(MM)
 ```
 
-```{r sc_pot_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_pot_res_selex}"}
-plot_size_comps(Mselex, 1, res = TRUE)
+```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs Francis** model.\\label{fig:sc_res_Francis}"}
+fn <- paste0(.MODELDIR[4], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
+plot_size_comps_res(MM)
 ```
 
-```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_pot_discarded_res}"}
-plot_size_comps(Mbase, 2, res = TRUE)
+```{r sc_pot_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs M** model.\\label{fig:sc_res_M}"}
+fn <- paste0(.MODELDIR[5], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
+plot_size_comps_res(MM)
 ```
 
-```{r sc_pot_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\\label{fig:sc_pot_discarded_res_selex}"}
-plot_size_comps(Mselex, 2, res = TRUE)
-```
-
-```{r sc_trawl_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_trawl_discarded_res}"}
-plot_size_comps(Mbase, 3, res = TRUE)
-```
-
-```{r sc_trawl_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs selex** model.\\label{fig:sc_trawl_discarded_res_selex}"}
-plot_size_comps(Mselex, 3, res = TRUE)
+```{r sc_trawl_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs force** model.\\label{fig:sc_res_force}"}
+fn <- paste0(.MODELDIR[6], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
+plot_size_comps_res(MM)
 ```
 
 \newpage\clearpage
@@ -1112,7 +1114,7 @@ A <- M; A[[jj]] <- NULL
 plot_catch(A)
 ```
 
-```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios.\\label{fig:recruitment}"}
+```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of $\\bar{R}$ in each model scenario.\\label{fig:recruitment}"}
 plot_recruitment(M)
 ```
 

@@ -315,6 +315,14 @@ DATA_SECTION
 			catch_cv(k)   = column(dCatchData(k),6);
 			catch_dm(k)   = column(dCatchData(k),11);
 			obs_catch(k)  = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
+			// If the catch is zero then add a small constant
+			for ( int i = 1; i <= nCatchRows(k); i++ )
+			{
+				if ( obs_catch(k)(i) < 1e-4 )
+				{
+					obs_catch(k)(i) = 1e-4;
+				}
+			}
 		}
 		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 		ECHO(obs_catch); ECHO(catch_cv);

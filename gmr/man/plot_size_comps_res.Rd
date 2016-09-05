@@ -4,13 +4,11 @@
 \alias{plot_size_comps_res}
 \title{Plot fits to size composition data}
 \usage{
-plot_size_comps_res(M, which_plots = "all", xlab = "Year",
+plot_size_comps_res(M, ncol = 1, xlab = "Year",
   ylab = "Mid-point of size-class (mm)")
 }
 \arguments{
 \item{M}{List object(s) created by read_admb function}
-
-\item{which_plots}{the size composition fits that you want to plot}
 
 \item{xlab}{the x-axis label for the plot}
 

@@ -31,9 +31,9 @@
         mrf <- rbind(mrf, rf)
     }
     
-    mdf <- melt(mdf, id.var = 1:9)
-    mpf <- melt(mpf, id.var = 1:9)
-    mrf <- melt(mrf, id.var = 1:9)
+    mdf <- reshape2::melt(mdf, id.var = 1:9)
+    mpf <- reshape2::melt(mpf, id.var = 1:9)
+    mrf <- reshape2::melt(mrf, id.var = 1:9)
     
     for(i in 1:n)
     {
@@ -184,13 +184,12 @@ plot_size_comps <- function(M, which_plots = "all", xlab = "Mid-point of size-cl
 #' Get observed and predicted size composition values
 #'
 #' @param M List object(s) created by read_admb function
-#' @param which_plots the size composition fits that you want to plot
 #' @param xlab the x-axis label for the plot
 #' @param ylab the y-axis label for the plot
 #' @return Plots of observed and predicted size composition values
 #' @export
 #'
-plot_size_comps_res <- function(M, which_plots = "all", xlab = "Year", ylab = "Mid-point of size-class (mm)")
+plot_size_comps_res <- function(M, ncol = 1, xlab = "Year", ylab = "Mid-point of size-class (mm)")
 {
     xlab <- paste0(xlab, "\n")
     ylab <- paste0(ylab, "\n")
@@ -203,7 +202,7 @@ plot_size_comps_res <- function(M, which_plots = "all", xlab = "Year", ylab = "M
         geom_point(aes(factor(year), variable, col = factor(sign(resd)), size = abs(resd)), alpha = 0.6) +
         scale_size_area(max_size = 10) +
         labs(x = xlab, y = xlab, col = "Sign", size = "Residual") +
-        facet_wrap(model ~ fleet + seas + sex + type, scales = "free_x") +
+        facet_wrap(fleet ~ seas, scales = "free_x", ncol = ncol) +
         .THEME + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
     print(p)
 }
