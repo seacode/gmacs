@@ -197,7 +197,7 @@ This assessment is done using Gmacs. The model is based upon the 3-stage length-
 
 ## Changes in Assessment Results
 
-Changes in assessment results depend on model scenario. The Gmacs match model scenario attempts to match the 2015 assessment by specifying the same (or similar) dynamics and the same (fixed) parameter values. However, a different Gmacs scenario (Gmacs selex) provides a much better match to the 2015 model assessment.
+One of the Gmacs model scenarios (**Gmacs match**) attempts to match the 2015 assessment as closely as possible by specifying the same (or similar) dynamics and some of the same (fixed) parameter values. There are some minor differences between the 2015 model and the **Gmacs match** model, but given that Gmacs and the 2015 model have different underpinning dynamics, these differences should be of little concern. Four other Gmacs scenarios are presented as well, each providing a slightly different fit to the data.
 
 
 # B. Responses to SSC and CPT Comments
@@ -1193,6 +1193,22 @@ With boldface lower-case letters indicating vector quantities we designate the v
 \begin{equation}
     \boldsymbol{n}_{t,y} = n_{l,t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{3,t,y} \right]^\top.
 \end{equation}
+The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only during season $t=5$, thus the recruitment size distribution is
+\begin{equation}
+    \phi_l = \left[ 1, 0, 0 \right]^\top,
+\end{equation}
+and the recruitment is
+\begin{equation}
+  \boldsymbol{r}_{t,y} = 
+  \begin{cases}
+    0 &\text{for} \quad t<5\\
+    \bar{R} \phi_l \delta^R_y &\text{for} \quad t=5.
+  \end{cases}
+\end{equation}
+where $\bar{R}$ is the average annual recruitment and $\delta^R_y$ are the recruitment deviations each year $y$
+\begin{equation}
+    \delta^R_y \sim \mathcal(N) \left( 0, \sigma_R^2 \right).
+\end{equation}
 Using boldface upper-case letters to indicate a matrix, we describe the size transition matrix $\boldsymbol{G}$ as
 \begin{equation}
   \boldsymbol{G} = \left[ \begin{array}{ccc}
@@ -1200,43 +1216,43 @@ Using boldface upper-case letters to indicate a matrix, we describe the size tra
     0 & 1 - \pi_{23} & \pi_{23} \\
     0 & 0 & 1 \end{array} \right],
 \end{equation}
-with $\pi_{jk}$ equal to the proportion of stage-$j$ crab that molt and grow into stage-$k$ within a season or year. Similarly, the survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
-\begin{equation}
-  \boldsymbol{S}_{t,y} = \left[ \begin{array}{ccc}
-    1-e^{-Z_{1,t,y}} & 0 & 0 \\
-    0 & 1-e^{-Z_{2,t,y}} & 0 \\
-    0 & 0 & 1-e^{-Z_{3,t,y}} \end{array} \right],
-\end{equation}
-where $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$
-\begin{equation}
-    \boldsymbol{Z}_{t,y} = Z_{l,t,y} = M_{t,y} + F_{t,y}.
-\end{equation}
-The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only during season $t=5$, thus
-\begin{equation}
-    \boldsymbol{r}_{t,y} = \left[ \bar{R}, 0, 0 \right]^\top \quad \text{for} \quad t=5,
-\end{equation}
-where $\bar{R}$ is the average annual recruitment. The basic population dynamics underlying Gmacs can thus be described as
-\begin{align}
-    \boldsymbol{n}_{t+1,y} &= \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y}, &\text{ if } t<5 \notag\\
-    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=5
-\end{align}
+with $\pi_{jk}$ equal to the proportion of stage-$j$ crab that molt and grow into stage-$k$ within a season or year. 
 
-The natural mortality
+The natural mortality each season $t$ and year $y$ is
 \begin{equation}
     M_{t,y} = \bar{M} \tau_t + \delta_y^M \text{ where } \delta_y^M \sim \mathcal{N} \left( 0, \sigma_M^2 \right)
 \end{equation}
-
 Fishing mortality by year $y$ and season $t$ is denoted $F_{t,y}$ and calculated as
 \begin{equation}
     F_{t,y} = F_{t,y}^\text{df} + F_{t,y}^\text{tb} + F_{t,y}^\text{fb}
 \end{equation}
 where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed fishery, $F_{t,y}^\text{tb}$ is the fishing mortality associated with the trawl bycatch fishery, $F_{t,y}^\text{fb}$ is the fishing mortality associated with the fixed bycatch fishery. Each of these are derived as
 \begin{align}
-    F_{t,y}^tex{df} &= \bar{F}^tex{df} + \delta^tex{df}_{t,y}, \notag\\
-    F_{t,y}^tex{tb} &= \bar{F}^tex{tb} + \delta^tex{tb}_{t,y}, \notag\\
-    F_{t,y}^tex{fb} &= \bar{F}^tex{fb} + \delta^tex{fb}_{t,y},
+    F_{t,y}^\text{df} &= \bar{F}^\text{df} + \delta^\text{df}_{t,y} \quad \text{where} \quad \delta^\text{df}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{df} \right), \notag\\
+    F_{t,y}^\text{tb} &= \bar{F}^\text{tb} + \delta^\text{tb}_{t,y} \quad \text{where} \quad \delta^\text{df}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tb} \right), \notag\\
+    F_{t,y}^\text{fb} &= \bar{F}^\text{fb} + \delta^\text{fb}_{t,y} \quad \text{where} \quad \delta^\text{df}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{fb} \right),
 \end{align}
-where $\delta^tex{df}_{t,y}$, $\delta^tex{tb}_{t,y}$, and $\delta^tex{fb}_{t,y}$ are the fishing mortality deviations for each of the fisheries, each season $t$ during each year $y$, $\bar{F}^tex{df}$, $\bar{F}^tex{tb}$, and $\bar{F}^tex{fb}$ are the average fishing mortalities for each fishery. Also add selectivity, retension, discard mortality in here. Also catch, CPUE.
+where $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, and $\delta^\text{fb}_{t,y}$ are the fishing mortality deviations for each of the fisheries, each season $t$ during each year $y$, $\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, and $\bar{F}^\text{fb}$ are the average fishing mortalities for each fishery. The total mortality $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$
+\begin{equation}
+    \boldsymbol{Z}_{t,y} = Z_{l,t,y} = M_{t,y} + F_{t,y}.
+\end{equation}
+The survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
+\begin{equation}
+  \boldsymbol{S}_{t,y} = \left[ \begin{array}{ccc}
+    1-e^{-Z_{1,t,y}} & 0 & 0 \\
+    0 & 1-e^{-Z_{2,t,y}} & 0 \\
+    0 & 0 & 1-e^{-Z_{3,t,y}} \end{array} \right].
+\end{equation}
+
+The basic population dynamics underlying Gmacs can thus be described as
+\begin{align}
+    \boldsymbol{n}_{t+1,y} &= \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y}, &\text{ if } t<5 \notag\\
+    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=5
+\end{align}
+
+Also add selectivity $s_{l,y}$, retension, discard mortality in here. Also catch $C_{t,y}$, CPUE $I_{t,y} = q B_{t,y}$. weight $w_{l,y}$. Biomass $B_{t,y} = \sum_l n_{l,t,y} w_{l,y} s_{l,y}$. MMB, LFs.
+
+$\theta = \{ \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, \delta^M_{1998}, s^\text{pot}_{1,l=1}, s^\text{pot}_{1,l=2}, s^\text{pot}_{2,l=1}, s^\text{pot}_{2,l=2} s^\text{NMFS}_{l=1}, s^\text{NMFS}_{l=2}, s^\text{ADFG}_{l=1}, s^\text{ADFG}_{l=2} \}$
 
 
 ## 3. Model Data
@@ -1317,7 +1333,7 @@ which is the combination of the growth matrix and molting probabilities.
 \end{tabular}
 \end{table}
 
-Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an estimated parameter for natural mortality ($M$) in 1998/99 assuming an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
+Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an estimated natural mortality deviation parameter in 1998/99 ($\delta^M_{1998}$) assuming an anomalous mortality event in that year, as hypothesized by Zheng and Kruse (2002), with natural mortality otherwise fixed at 0.18 $\text{yr}^{-1}$.
 \begin{table}[ht]
 \centering
 \caption{The lower bound (LB), upper bound (UB), initial value, prior, and estimation phase for each estimated model parameter.} 
@@ -1344,11 +1360,6 @@ Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an es
   \hline
 \end{tabular}
 \end{table}
-
-
-$\theta = \{ \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, \delta^M_{1998}, s^\text{pot}_{1,l=1}, s^\text{pot}_{1,l=2}, s^\text{pot}_{2,l=1}, s^\text{pot}_{2,l=2} s^\text{NMFS}_{l=1}, s^\text{NMFS}_{l=2}, s^\text{ADFG}_{l=1}, s^\text{ADFG}_{l=2} \}$
-
-Also Fs
 
 In any year with no directed fishery, and hence zero retained catch, $F_t^\text{df}$ is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, $F_t^\text{gf}$ and $F_t^\text{gt}$ are imputed to be the geometric means of the estimates from years for which there are data. 
 
