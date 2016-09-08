@@ -4477,24 +4477,25 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int ifleet)
 					} else {
 						log_ftmp = log_fbar(k);
 					}
-					//if ( yhit(iyr,j,k) )
-					//{
-					//	log_ftmp += double(h-1) * log_foff(k);
-					//}
+					if ( yhit(iyr,j,k) )
+					{
+						log_ftmp += double(h-1) * log_foff(k);
+					}
 					dvariable ftmp = mfexp(log_ftmp);
-					double xi = dmr(iyr,k);                                      // Discard mortality rate
-					dvar_vector sel = exp(log_slx_capture(k)(h)(iyr));                 // Selectivity
-					dvar_vector ret = exp(log_slx_retaind(k)(h)(iyr)) * slx_nret(h,k); // Retension
+					double xi = dmr(nyr,k);                                      // Discard mortality rate
+					dvar_vector sel = exp(log_slx_capture(k)(h)(nyr));                 // Selectivity
+					dvar_vector ret = exp(log_slx_retaind(k)(h)(nyr)) * slx_nret(h,k); // Retension
 					dvar_vector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
 					dvar_vector f = ftmp * vul;
 					dvar_vector z = M(h)(iyr) + f;
 					dvar_vector o = 1.0 - exp(-z);
-					ctmp += elem_prod(numbers_proj_gytl(h)(1)(j), mean_wt(h)(iyr)) * elem_div(elem_prod(f, o), z);
+					ctmp += elem_prod(numbers_proj_gytl(h)(1)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
 				}
 			}
 		}
 	}
-	spr_cofl = ctmp; // Jies code: spr_cofl = Bret_proj + Bdis_proj + Bgff_proj + Bgft_proj;
+	spr_cofl = ctmp; 
+	// Jies code: spr_cofl = Bret_proj + Bdis_proj + Bgff_proj + Bgft_proj;
    //Bret_proj = Rpf(3)*(1.0-dstr(nyrs))/(1.0-dstr(nyrs)+dstr(nyrs)*hm(1))*avg_ret_wt(nyrs)*rret;      //adjust legal weight to retained weight with rret and legal discard
    //Bdis_proj = Rpf(1)*wt(1)+Rpf(2)*wt(2)+Rpf(3)/(1.0-dstr(nyrs)+dstr(nyrs)*hm(1))*dstr(nyrs)*hm(1)*avg_ret_wt(nyrs);
    //Bgft_proj = Rgft(1)*wt(1)+Rgft(2)*wt(2)+Rgft(3)*avg_ret_wt(nyrs);
