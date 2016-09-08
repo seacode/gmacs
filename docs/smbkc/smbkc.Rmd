@@ -143,19 +143,18 @@ rinline <- function(code){
 5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15 (Table \ref{tab:status}).
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (1000 tonnes) (scenario XX).} 
+\caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewd by the Crab Plan Team in September 2013, B - calculated from the assessment reviewd by the Crab Plan Team in September 2014, C - calculated from the assessment reviewd by the Crab Plan Team in September 2015, D - calculated from the assessment reviewd by the Crab Plan Team in September 2016} 
 \label{tab:status}
 \begin{tabular}{lccccccc}
   \hline
   & & Biomass & & Retained & Total & & \\ 
   Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
   \hline
-  2011/12 & 1.50 & 5.03 & 1.15 & 0.85 & 0.95 & 1.70 & 1.54 \\ 
-  2012/13 & 1.80 & 2.85 & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
-  2013/14 & 1.50 & 3.01 & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
-  2014/15 & 1.86 & 2.48 & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 &      & 2.45 &      &      &      & 0.28 & 0.22 \\
-  2016/17 &      &      &      &      &      &      &      \\
+  2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
+  2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
+  2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
+  2015/16 & 1.84$^D$ & `r round(M[[3]]$ssb[length(M[[3]]$ssb)-1]/1000, 2)`$^D$ & 0.41 & 0.05 & 0.05 & 0.28 & 0.22 \\
+  2016/17 &          & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/1000, 2)`$^D$ &      &      &      & `r round(M[[3]]$spr_cofl/1000, 2)` & `r round(M[[3]]$spr_cofl/1000*0.8, 2)` \\
   \hline
 \end{tabular}
 \end{table}
@@ -163,19 +162,18 @@ rinline <- function(code){
 6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
 \begin{table}[ht]
 \centering
-\caption{Basis for the OFL (1000 tonnes) (scenario XX).} 
+\caption{Basis for the OFL (1000 tonnes) (scenario {\bf Gmacs base}).} 
 \label{tab:ofl_basis}
 \begin{tabular}{lcccccccc}
   \hline
   & & & Biomass & & & & & Natural \\ 
   Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{MSY}$ & $F_\mathit{OFL}$ & $\gamma$ & Basis for $B_\mathit{MSY}$ & mortality \\ 
   \hline
-  2011/12 & 4a & 3.11 & 7.17 & 2.31 & 0.18 & 1 & 1989-2010 & 0.18 \\ 
   2012/13 & 4a & 3.56 & 5.63 & 1.56 & 0.18 & 1 & 1978-2012 & 0.18 \\ 
   2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
   2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
-  2016/17 & 4b &      &      &      &      & 1 & 1978-2016 & 0.18 \\ 
+  2016/17 & 4b & `r round(M[[3]]$spr_bspr/1000, 2)` & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/1000, 2)` & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/M[[3]]$spr_bspr, 2)` & 0.09 & 1 & 1978-2016 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -284,7 +282,7 @@ Response:
 
 Comment: *The SSC discussed the possibility that these patterns could be indicative of spatial patterns in stock distribution. The trawl survey covers a much larger geographic distribution than the pot survey (Figure 4). Crab distribution may vary with sex (females tend to be found close to shore) and life stage. Thus, the trawl and pot surveys may sample the crab stock differentially. Moreover, the geographic distributions of these stages may vary with stock density and temperature. It could be informative to conduct some spatial analyses, which could include: (1) estimation of survey catchability as a function of temperature, (2) a stock assessment model run that includes pot surveys and only those trawl stations that fall within the pot survey distribution as a comparison the runs that include the full trawl survey data, and (3) analysis of the spatial distribution of surveyed crabs by stage at high and low biomass and during warm and cold years.*
 
-Response:
+Response: In the past Jie has tried to estimate survey catchability as a function of temperature with little success. We will try again this year, but this run will not be presented in this document.
 
 
 # C. Introduction
@@ -315,7 +313,7 @@ Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is consi
 The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 545 tonnes (1.202 million pounds) in 1977, and harvests peaked in 1983 when 164 vessels landed 4288 tonnes (9.454 million pounds) (Fitch et al. 2012; Table \ref{tab:smbkc_fishery}). 
 \begin{table}[ht]
 \centering
-\caption{The 1978/79 to 2014/15 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm.} 
+\caption{The 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm.} 
 \label{tab:smbkc_fishery}
 \begin{tabular}{lrrrrrrrr}
   \hline
@@ -351,7 +349,7 @@ The SMBKC fishery developed subsequent to baseline ecological studies associated
   2012/13 & 10/15 - 02/01 & 1.63    &   379,386 & 1,616,054 &  37,065 &  10 & 4.3 & 129.8 \\
   \multicolumn{2}{l}{2013/14} & \multicolumn{7}{c}{FISHERY CLOSED} \\
   2014/15 & 10/15 - 02/05 & 0.66    &    69,109 &   308,582 &  10,133 &   7 & 4.5 & 132.3 \\
-  2015/16 &               &         &           &           &         &     &     &       \\
+  2015/16 & 10/19 - 11/28 & 0.41    &    24,076 &   105,010 &   5,475 &   4 & 4.4 & 132.6 \\
   \hline
 \end{tabular}
 \end{table}
@@ -384,7 +382,7 @@ Though historical observer data are limited due to very limited sampling, bycatc
   2012/13 & 37,065 & 2,841 & 57,298 & 0.141 & 0.318 & 0.541 \\
   \multicolumn{2}{l}{2013/14} & \multicolumn{5}{c}{FISHERY CLOSED} \\
   2014/15 & 10,133 & 895 & 9,906 & 0.094 & 0.228 & 0.679 \\
-  2015/16 &        &     &       &       &       &       \\
+  2015/16 &  5,475 & 419 & 3,248 & 0.115 & 0.252 & 0.633 \\
   \hline
 \end{tabular}
 \end{table}
@@ -430,13 +428,13 @@ Major data sources used in this assessment include annual directed-fishery retai
   2010 & 1.326 & 3.276 & 5.607 & 10.209 & 0.13 & 3920 \\ 
   2013 & 0.878 & 1.398 & 3.367 & 5.643 & 0.19 & 2167 \\ 
   2015 & 0.198 & 0.682 & 1.924 & 2.805 & 0.18 & 1077 \\ 
-  2016 &       &       &       &       &      &      \\ 
+  2016 & 0.083 & 0.192 & 0.725 & 2.378 & 0.186 & 777 \\ 
    \hline
 \end{tabular}
 \end{table}
 \begin{table}[ht]
 \centering
-\caption{NMFS EBS trawl-survey area-swept estimates of male crab abundance ($10^6$ crab) and of mature male biomass ($10^6$ lbs). Total number of captured male crab $\ge$ 90 mm CL is alos given. Source: R. Foy, NMFS. The "+" refer to plus group.} 
+\caption{NMFS EBS trawl-survey area-swept estimates of male crab abundance ($10^6$ crab) and of mature male biomass ($10^6$ lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R. Foy, NMFS. The "+" refer to plus group.} 
 \label{tab:stage_cpue_nmfs}
 \begin{tabular}{lccccccccc}
   \hline
@@ -483,7 +481,7 @@ Major data sources used in this assessment include annual directed-fishery retai
   2013 & 0.335 & 0.452 & 0.807 & 1.593 & 0.215 & & 5.043 & 0.217 & 74 \\
   2014 & 0.723 & 1.627 & 1.809 & 4.160 & 0.503 & & 13.292 & 0.449 & 181 \\
   2015 & 0.992 & 1.269 & 1.979 & 4.240 & 0.774 & & 12.958 & 0.770 & 153 \\
-  2016 & & & & & & & & & \\
+  2016 & 0.535 & 0.660 & 1.178 & 2.373 & 0.447 & & 7.685 & 0.393 & 108 \\
   \hline
 \end{tabular}
 \end{table}
@@ -770,8 +768,8 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
   2012 &  57282       & 193        &          & & 50           & 50         & \\
   2013 &              &  74        &  2167    & &              & 37         & 100 \\
   2014 &  9906        & 181        &          & & 50           & 50         & \\
-  2015 &              & 153        &  1077    & & 50           & 50         & 100 \\
-  2016 &              &            &          & &              & 50         & 100 \\
+  2015 &  3248        & 153        &  1077    & & 50           & 50         & 100 \\
+  2016 &              & 108        &   777    & &              & 50         & 100 \\
   \hline
 \end{tabular}
 \end{table}
