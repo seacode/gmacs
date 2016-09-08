@@ -1428,8 +1428,7 @@ PROCEDURE_SECTION
 	if ( last_phase() )
 	{
 		int refyear = nyr-1;
-		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
-		calc_spr_reference_points2(refyear, refseason, spr_fleet);
+		calc_spr_reference_points2(refyear, spr_fleet);
 		if ( verbose == 1 ) cout << "Ok after calc_spr_reference_points ..." << endl;
 		calc_sdreport();
 		if ( verbose == 1 ) cout << "Ok after calc_sdreport ..." << endl;
@@ -3581,8 +3580,6 @@ REPORT_SECTION
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
 		//calc_spr_reference_points(refyear, refseason, spr_fleet);
 		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
-		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
-		//calc_spr_reference_points2(refyear, refseason, spr_fleet);
 
 		//d4_array d4_N_proj(1,n_grp,1,nproj,1,nseason,1,nclass);
 		//d4_N_proj = project_population_numbers_at_length(nproj, 1, log(1.0));
@@ -4251,11 +4248,6 @@ FUNCTION void calc_spr_reference_oldagain()
 
 
 FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dvariable log_F, dvar4_array numbers_proj_gytl)
-	//init_number_vector log_fbar(1,nfleet,f_phz);                 ///> Male mean fishing mortality
-	//init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);      ///> Male f devs
-	//init_number_vector log_foff(1,nfleet,foff_phz);              ///> Female F offset to Male F
-	//init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
-
 	dvariable log_ftmp;
 
 	dvar_vector rt(1,nclass);
@@ -4283,7 +4275,6 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 			{
 				if ( fhit(i,j,k) )
 				{
-					//log_ftmp = log_fbar(k) + log_fdev(k,ik++);
 					if (k == ifleet)
 					{
 						log_ftmp = log_F;
@@ -4292,7 +4283,6 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 					}
 					if ( yhit(i,j,k) )
 					{
-						//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
 						log_ftmp += double(h-1) * log_foff(k);
 					}
 					_ft(k)(h)(j) = mfexp(log_ftmp);
@@ -4435,7 +4425,7 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 	return(ssb);
 
 
-FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const int ifleet)
+FUNCTION void calc_spr_reference_points2(const int iyr, const int ifleet)
 	dvar4_array numbers_proj_gytl(1,n_grp,1,1,1,nseason,1,nclass);
 	dvariable Bmsy;
 	dvariable Bproj;
@@ -4478,27 +4468,29 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int iseason, const
 		{
 			for ( int k = 1; k <= nfleet; k++ )
 			{
-				// Use SPR Fofl for target fleet, recent year for all others
-				log_ftmp = ft(k)(h)(iyr)(j);
-				if (k == ifleet)
+				if ( fhit(iyr,j,k) )
 				{
-					log_ftmp = log(spr_fofl);
+					// Use SPR Fofl for target fleet
+					if (k == ifleet)
+					{
+						log_ftmp = log(spr_fofl);
+					} else {
+						log_ftmp = log_fbar(k);
+					}
+					//if ( yhit(iyr,j,k) )
+					//{
+					//	log_ftmp += double(h-1) * log_foff(k);
+					//}
+					dvariable ftmp = mfexp(log_ftmp);
+					double xi = dmr(iyr,k);                                      // Discard mortality rate
+					dvar_vector sel = exp(log_slx_capture(k)(h)(iyr));                 // Selectivity
+					dvar_vector ret = exp(log_slx_retaind(k)(h)(iyr)) * slx_nret(h,k); // Retension
+					dvar_vector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
+					dvar_vector f = ftmp * vul;
+					dvar_vector z = M(h)(iyr) + f;
+					dvar_vector o = 1.0 - exp(-z);
+					ctmp += elem_prod(numbers_proj_gytl(h)(1)(j), mean_wt(h)(iyr)) * elem_div(elem_prod(f, o), z);
 				}
-				if ( yhit(nyr,j,k) )
-				{
-					//log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
-					log_ftmp += double(h-1) * log_foff(k);
-				}
-				dvariable ftmp = mfexp(log_ftmp);
-				double xi = dmr(nyr,k);                                      // Discard mortality rate
-				dvar_vector sel = exp(log_slx_capture(k)(h)(nyr));                 // Selectivity
-				dvar_vector ret = exp(log_slx_retaind(k)(h)(nyr)) * slx_nret(h,k); // Retension
-				dvar_vector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
-				dvar_vector f = ftmp * vul;
-				dvar_vector z = M(h)(nyr) + f;
-				dvar_vector o = 1.0 - exp(-z);
-				//ctmp += elem_prod(d4_N(h)(nyr)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
-				ctmp += elem_prod(numbers_proj_gytl(h)(1)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
 			}
 		}
 	}

@@ -136,14 +136,14 @@ rinline <- function(code){
 
 2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).
 
-3. **Stock biomass**: Following a period of low numbers (below 30% of the 1978-2016 mean of 5,865 t) after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased to well above average from 2007-2012. In 2013 the survey biomass estimate was low (~40% of the mean value) but was followed by average biomass estimates in 2014 and 2015 (with sampling CVs of 77% and 45%, respectively). The 2016 biomass estimate was 3,500 t (7.7 million lbs with a CV of 39%). This value represents about 60% of the long term mean with the most recent 3-year average surveys at 87% of the mean value. This suggests a general decline in biomass compared to the recent peak survey estimate of nearly twice the average. The assessment model estimates moderate the interannual variability observed in the survey biomass substantially and suggest that the stock (in survey biomass units) is stable but only at about 45% of the long term model-predicted survey biomass average.
+3. **Stock biomass**: Following a period of low numbers (below 30% of the 1978-2016 mean of 5,865 tonnes) after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased to well above average from 2007-2012. In 2013 the survey biomass estimate was low (~40% of the mean value) but was followed by average biomass estimates in 2014 and 2015 (with sampling CVs of 77% and 45%, respectively). The 2016 survey biomass estimate was 3,500 tonnes (7.7 million lbs with a CV of 39%). This value represents about 60% of the long term mean with the most recent 3-year average surveys at 87% of the mean value. This suggests a general decline in biomass compared to the recent peak survey estimate of nearly twice the average. The assessment model estimates dampen the interannual variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about 45% of the long term model-predicted survey biomass average. The trend from these values suggest a slight decline.
 
 4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate is 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty.
 
 5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15 (Table \ref{tab:status}).
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (1000 tonnes) (scenario 1).} 
+\caption{Status and catch specifications (1000 tonnes) (scenario XX).} 
 \label{tab:status}
 \begin{tabular}{lccccccc}
   \hline
@@ -163,7 +163,7 @@ rinline <- function(code){
 6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
 \begin{table}[ht]
 \centering
-\caption{Basis for the OFL (1000 tonnes) (scenario 1).} 
+\caption{Basis for the OFL (1000 tonnes) (scenario XX).} 
 \label{tab:ofl_basis}
 \begin{tabular}{lcccccccc}
   \hline
@@ -1011,7 +1011,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r pop_abundance_match, results = "asis"}
 A <- M[[2]]
-df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(1,195,5),1], A$d4_N[seq(1,195,5),2], A$d4_N[seq(1,195,5),3], c(A$ssb))
+df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
 tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs match} model.", label = "tab:pop_abundance_match")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
@@ -1019,7 +1019,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r pop_abundance_base, results = "asis"}
 A <- M[[3]]
-df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(1,195,5),1], A$d4_N[seq(1,195,5),2], A$d4_N[seq(1,195,5),3], c(A$ssb))
+df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
 tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs base} model.", label = "tab:pop_abundance_base")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
@@ -1027,7 +1027,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r pop_abundance_Francis, results = "asis"}
 A <- M[[4]]
-df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(1,195,5),1], A$d4_N[seq(1,195,5),2], A$d4_N[seq(1,195,5),3], c(A$ssb))
+df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
 tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs Francis} model.", label = "tab:pop_abundance_Francis")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
@@ -1035,7 +1035,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r pop_abundance_M, results = "asis"}
 A <- M[[5]]
-df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(1,195,5),1], A$d4_N[seq(1,195,5),2], A$d4_N[seq(1,195,5),3], c(A$ssb))
+df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
 tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs M} model.", label = "tab:pop_abundance_M")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
@@ -1043,9 +1043,9 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r pop_abundance_force, results = "asis"}
 A <- M[[6]]
-df <- data.frame(as.integer(A$mod_yrs), A$d4_N[seq(1,195,5),1], A$d4_N[seq(1,195,5),2], A$d4_N[seq(1,195,5),3], c(A$ssb))
+df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs M} model.", label = "tab:pop_abundance_force")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs force} model.", label = "tab:pop_abundance_force")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1126,7 +1126,13 @@ plot_catch(A)
 ```
 
 ```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}"}
-plot_recruitment(M)
+A <- M
+for (i in 2:6) {
+  ii <- which(A[[i]]$fit$names %in% "sd_log_recruits"); ii <- ii[length(ii)]
+  A[[i]]$fit$est[ii] <- NA
+  A[[i]]$fit$std[ii] <- NA
+}
+plot_recruitment(A)
 ```
 
 ```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2016 for each of the model scenarios.\\label{fig:mmb}"}
@@ -1142,7 +1148,7 @@ A <- M; A[[5]] <- NULL; A[[4]] <- NULL; A[[3]] <- NULL
 plot_size_transition(M, xlab = "Carapace width after transition (mm)")
 ```
 
-```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July) in each of the models including the 2015 model.\\label{fig:init_N}", fig.height = 15}
+```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2015 model.\\label{fig:init_N}", fig.height = 15}
 plot_numbers(M)
 ```
 
