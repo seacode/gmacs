@@ -2962,6 +2962,8 @@ FUNCTION dvector calc_Francis_weights()
 			{
 				//if ( sum(d3_obs_size_comps(k,i)) > 0 )
 				//{
+	cout << "k= " << k << " i=" << i << endl;
+	cout << d3_obs_size_comps(k,i) << endl;
 					Obs = sum(elem_prod(d3_obs_size_comps(k,i), mid_points));
 					Pre = sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
 					Var = sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
@@ -3432,7 +3434,9 @@ FUNCTION simulation_model
 
 
 REPORT_SECTION
-	cout << "Beginning report section" << endl;
+	cout << "+--------------------------+" << endl;
+	cout << "| Beginning report section |" << endl;
+	cout << "+--------------------------+" << endl;
 	save_gradients(gradients);
 	calc_predicted_catch_out();
 	REPORT(name_read_flt);
@@ -3452,6 +3456,7 @@ REPORT_SECTION
 	REPORT(priorDensity);
 
 	get_all_sdnr_MAR();
+
 	REPORT(sdnr_MAR_cpue);
 	REPORT(cpue_lambda);
 	REPORT(sdnr_MAR_lf);

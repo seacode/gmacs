@@ -21,8 +21,8 @@
 2     # Number  of  shell condition types
 1     # Number  of  maturity  types
 20    # Number  of  size-classes  in  the model
-2     # Season recruitment occurs
-2     # Season molting and growth occurs
+4     # Season recruitment occurs
+4     # Season molting and growth occurs
 2     # Season to calculate SSB
 1     # Season for N output
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)                                                         
@@ -221,11 +221,9 @@ NMFS_Trawl:BSFRF
 ##  Number  of  length  frequency matrices
 6
 ##  Number  of  rows  in  each  matrix                                                                    
-36  22  37                                                                        
-40  40  2                                                                         
+36  22  37  40  40  2
 ##  Number  of  bins  in  each  matrix  (columns  of  size  data)                                                           
-20  20  20                                                                        
-20  20  20                                                                          
+20  20  20  20  20  20
 ##  SIZE  COMPOSITION DATA  FOR ALL FLEETS                                                                    
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##                                                                            
 ##  SIZE  COMP  LEGEND                                                                          

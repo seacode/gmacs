@@ -13,7 +13,8 @@ ts := $(shell /bin/date "+%Y-%m-%d---%H-%M-%S")
 pn = gmpl_$(ts)
 R_OPTS=--no-save --no-restore --no-init-file --no-site-file -e 'library(knitr); knit("plot.Rmd")'
 plotscript = plot.md
-all: run
+
+all: run png
 
 $(EXEC): $(DIST)$(EXEC).tpl
 	ln -sf $(DIST)$(EXEC) $@
@@ -23,7 +24,6 @@ $(DIST)$(EXEC).tpl:
 
 run: $(EXEC)
 	 ./$(EXEC) $(ARGS)
-	 R CMD BATCH plot.R
 
 png: 
 	R CMD BATCH plot.R

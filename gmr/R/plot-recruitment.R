@@ -30,7 +30,11 @@
         df$ub <- exp(df$log_rec + 1.96*df$log_sd)
         j <- which(M[[i]]$fit$names %in% c("theta[4]"))
         #rstd <- M[[i]]$fit$std[j]
-        df$rbar = exp(M[[i]]$fit$est[j])
+        if (length(j) > 0) {
+            df$rbar = exp(M[[i]]$fit$est[j])
+        } else {
+            df$rbar = NA
+        }
         mdf <- rbind(mdf, df)
     }
     return(mdf)
