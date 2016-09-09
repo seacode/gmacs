@@ -1375,7 +1375,7 @@ Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an es
   Stage-2 ADF\&G pot survey selectivity & 0 & 0.7 & 1 & Uniform(0,1) & 4 \\ 
   Natural mortality deviation during 1998 $\delta^M_{1998}$ & -3 & 0.0 & 3 & Normal(0, $\sigma^2_M$) & 4 \\ 
   Recruitment deviations $\delta^R_y$ & -7 & 0.0 & 7 & Normal(0, $\sigma_R^2$) & 3 \\ 
-  Average directed fishery fishing mortality $\bar{F}^\text{df}$                 & -  & 0.3 & - & - & 1 \\
+  Average directed fishery fishing mortality $\bar{F}^\text{df}$                 & -  & 0.2 & - & - & 1 \\
   $\bar{F}^\text{tb}$                 & -  & 0.001 & - & - & 1 \\
   $\bar{F}^\text{fb}$                 & -  & 0.001 & - & - & 1 \\
   \hline

@@ -122,7 +122,7 @@
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
-   0.3       0.05     50.0       1   # Pot
+   0.2       0.05     50.0       1   # Pot
    0.001     0.05     50.0       1   # Trawl
    0.001     0.05     50.0       1   # Fixed
    0.00      2.00     20.00     -1   # NMFS
