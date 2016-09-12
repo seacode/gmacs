@@ -9,7 +9,6 @@ date: "`r format(Sys.time(), '%B %Y')`"
 output:
   pdf_document:
     includes:
-      in_header: header.tex
     highlight: zenburn
   html_document:
     theme: flatly
@@ -134,16 +133,16 @@ rinline <- function(code){
 
 1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
 
-2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds).
+2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds). The retained catch in 2015/16 was even lower at 48 tonnes (0.105 million pounds).
 
 3. **Stock biomass**: Following a period of low numbers (below 30% of the 1978-2016 mean of 5,865 tonnes) after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased to well above average from 2007-2012. In 2013 the survey biomass estimate was low (~40% of the mean value) but was followed by average biomass estimates in 2014 and 2015 (with sampling CVs of 77% and 45%, respectively). The 2016 survey biomass estimate was 3,500 tonnes (7.7 million lbs with a CV of 39%). This value represents about 60% of the long term mean with the most recent 3-year average surveys at 87% of the mean value. This suggests a general decline in biomass compared to the recent peak survey estimate of nearly twice the average. The assessment model estimates dampen the interannual variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about 45% of the long term model-predicted survey biomass average. The trend from these values suggest a slight decline.
 
-4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate is 0.723 million. The survey recruitment is 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty.
+4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate was 0.723 million. Survey recruitment was 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty. In 2016, survey recruitment declined to 0.535 million.
 
-5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2014/15 and is hence not overfished. Overfishing did not occur in 2014/15 (Table \ref{tab:status}).
+5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2015/16 and is hence not overfished. Overfishing did not occur in 2015/16 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewd by the Crab Plan Team in September 2013, B - calculated from the assessment reviewd by the Crab Plan Team in September 2014, C - calculated from the assessment reviewd by the Crab Plan Team in September 2015, D - calculated from the assessment reviewd by the Crab Plan Team in September 2016} 
+\caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
 \label{tab:status}
 \begin{tabular}{lccccccc}
   \hline
@@ -153,8 +152,25 @@ rinline <- function(code){
   2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
   2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
   2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 & 1.84$^D$ & `r round(M[[3]]$ssb[length(M[[3]]$ssb)-1]/1000, 2)`$^D$ & 0.41 & 0.05 & 0.05 & 0.28 & 0.22 \\
-  2016/17 &          & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/1000, 2)`$^D$ &      &      &      & `r round(M[[3]]$spr_cofl/1000, 2)` & `r round(M[[3]]$spr_cofl/1000*0.8, 2)` \\
+  2015/16 & `r round(M[[3]]$spr_bspr/1000 * 0.5, 2)`$^D$ & `r round(M[[3]]$ssb[length(M[[3]]$ssb)-1]/1000, 2)`$^D$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\
+  2016/17 & & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/1000, 2)`$^D$ & & & & `r round(M[[3]]$spr_cofl/1000, 2)` & `r round(M[[3]]$spr_cofl/1000*0.8, 2)` \\
+  \hline
+\end{tabular}
+\end{table}
+\begin{table}[ht]
+\centering
+\caption{Status and catch specifications (million pounds) (scenario {\bf Gmacs base}).} 
+\label{tab:status_pounds}
+\begin{tabular}{lccccccc}
+  \hline
+  & & Biomass & & Retained & Total & & \\ 
+  Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
+  \hline
+  2012/13 & 4.0$^A$ & 6.29$^A$ & 1.630 & 1.616 & 1.81   & 2.24 & 2.02 \\ 
+  2013/14 & 3.4$^B$ & 6.64$^B$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
+  2014/15 & 4.1$^C$ & 5.47$^C$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
+  2015/16 & `r sprintf("%.1f", round(M[[3]]$spr_bspr * 2204.62/1e6 * 0.5, 1))`$^D$ & `r round(M[[3]]$ssb[length(M[[3]]$ssb)-1] * 2204.62/1e6, 2)`$^D$ & 0.41 & 0.105 & 0.105 & 0.62 & 0.49 \\
+  2016/17 & & `r round(M[[3]]$ssb[length(M[[3]]$ssb)] * 2204.62/1e6, 2)`$^D$ & & & & `r round(M[[3]]$spr_cofl * 2204.62/1e6, 2)` & `r round(M[[3]]$spr_cofl * 2204.62/1e6*0.8, 2)` \\
   \hline
 \end{tabular}
 \end{table}
@@ -187,7 +203,7 @@ There are no new changes in management of the fishery.
 
 ## Changes to the Input Data
 
-All of the time series used in this assessment have been updated to include the most recent fishery and survey results. This assessment makes use of an updated trawl-survey time series supplied by R. Foy in August 2016, updated groundfish bycatch estimates based on 1999-2015 NMFS AKRO data also supplied by R. Foy, and the ADF&G pot survey data in 2016.
+Data used in this assessment have been updated to include the most recently available fishery and survey numbers. This assessment makes use of two new survey data points including the 2016 NMFS trawl-survey estimate of abudance, and the 2016 ADF&G pot survey CPUE. Both of these surveys have associated size compositon data. The assessment also uses updated 1993-2015 groundfish and fixed gear bycatch estimates based on AKRO data. The 2015/16 directed fishery catch data and associated size composition data were also used.
 
 ## Changes in Assessment Methodology
 
@@ -254,11 +270,11 @@ Response: This description has been updated and justification provided in Append
 
 Comment: *During the presentation to the SSC, uncertainty was expressed about the origins of the growth transition matrix, but page 7 of the report indicates that the matrix was derived by Otto and Cummiskey (1990). As this matrix is critical to the model, the origin and integrity of the growth transition matrix should be carefully explained in the assessment for fall 2016. In some other models, the transition matrix can be estimated. If there are doubts about the veracity of the transition matrix, perhaps this can be explored in the modeling framework.*
 
-Response: The report is correct, the growth matrix was derived by Otto and Cummiskey (1990) and used in this assessment. PERHAPS JIE CAN HELP OUT WITH SOME MORE DETAIL HERE?
+Response: The report is correct, the growth matrix was derived by Otto and Cummiskey (1990) and used in this assessment. 
 
 Comment: *The selectivities were constrained so that they do not exceed 1.0, but the tables of log-transformed parameter estimates do not indicate that this upper bound was approached. This should be clarified.*
 
-Response: After fixing the error in the 2015 SMBKC model code, it was found that the NMFS trawl survey selectivity does exceed 1 for stage-2 crab. The **Gmacs match** scenario does allow selectivity to be greater than 1 (it uses the same fixed selectvity values as the 2015 model). At the request of the CPT an upper bound of 1 was specified for the remaining Gmacs scenarios. Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and \ref{tab:est_pars_force} all show that this upper bound was approached in all of these scenarios.
+Response: After fixing the error in the 2015 SMBKC model code, it was found that the NMFS trawl survey selectivity does exceed 1 for stage-2 crab. The **Gmacs match** scenario does allow selectivity to be greater than 1 (it uses the same fixed selectvity values as the 2015 model). At the request of the CPT an upper bound of 1 was specified for the remaining Gmacs scenarios. Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and \ref{tab:est_pars_force} all show that this upper bound was approached for at least one selectivity parameter in all of these scenarios.
 
 Comment: *It would be helpful to include a table of NMFS trawl survey CPUE by crab stage, just as was provided for the ADF&G pot survey (Table 1).*
 
@@ -270,15 +286,7 @@ Response: This table has been added.
 
 Comment: *As with the 2015 model, GMACS consistently overestimates trawl survey estimates of male biomass in the last decade, whereas GMACS tends to underestimate the last couple of pot survey estimates (Figure 9, 12). This is also reflected in patterns in residuals, and the proportions of stage-3 crab tend to be overestimated in recent years (Figure 14). These patterns should be discussed in the assessment.*
 
-Response:
-
-Comment: *The report contains very little description and interpretation of results. Moreover, not all figures are cited in the document. The document should highlight the major features of the results and offer some explanation, as well.*
-
-Response:
-
-Comment: *A brief explanation was provided about the future outlook (page 12) that indicated a declining stock. However, stock trends shown in Figure 24 generally suggest population growth since 1993. Closer examination of Tables 9-11 suggest that trends depend somewhat on model run and life stage. Statements about future outlook should be qualified and refer to figures and tables and explain any differences in outcomes.*
-
-Response:
+Response: Done.
 
 Comment: *The SSC discussed the possibility that these patterns could be indicative of spatial patterns in stock distribution. The trawl survey covers a much larger geographic distribution than the pot survey (Figure 4). Crab distribution may vary with sex (females tend to be found close to shore) and life stage. Thus, the trawl and pot surveys may sample the crab stock differentially. Moreover, the geographic distributions of these stages may vary with stock density and temperature. It could be informative to conduct some spatial analyses, which could include: (1) estimation of survey catchability as a function of temperature, (2) a stock assessment model run that includes pot surveys and only those trawl stations that fall within the pot survey distribution as a comparison the runs that include the full trawl survey data, and (3) analysis of the spatial distribution of surveyed crabs by stage at high and low biomass and during warm and cold years.*
 
@@ -402,7 +410,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 
 ## Summary of New Information
 
-Data used in this assessment have been updated to include the most recently available fishery and survey numbers. In addition, this assessment makes use of an updated trawl-survey time series provided by R. Foy in August 2016, as well as updated 1993-2015 groundfish bycatch estimates based on AKRO data also supplied by R. Foy. The data used in each of the new models is shown in Figure \ref{fig:data_extent}.
+Data used in this assessment have been updated to include the most recently available fishery and survey numbers. This assessment makes use of two new survey data points including the 2016 NMFS trawl-survey estimate of abudance, and the 2016 ADF&G pot survey CPUE. Both of these surveys have associated size compositon data. The assessment also uses updated 1993-2015 groundfish and fixed gear bycatch estimates based on AKRO data. The 2015/16 directed fishery catch data and associated size composition data were also used. The data used in each of the new models is shown in Figure \ref{fig:data_extent}.
 
 ```{r data_extent, fig.cap = "Data extent for the SMBKC assessment.\\label{fig:data_extent}"}
 plot_datarange(Mbase)
@@ -530,7 +538,7 @@ Five different Gmacs model scenarios were considered, in this document results f
 
 3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1. This model also estimates the catchability coefficient ($q$) for the ADF&G pot survey as well as the average recruitment ($\bar{R}$), the recruitment deviations ($\delta^R_y$), the initial numbers in each stage ($\boldsymbol{n}^0$), the natural mortality deviation 1998 ($\delta^M_{1998}$), and the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery ($\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, $\bar{F}^\text{fb}$, $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, $\delta^\text{fb}_{t,y}$).
 
-4. **Gmacs Francis**: is the same as above except that it also uses the Francis iterative re-weighting method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and pot survey weights were left as is (i.e. a weight of 1) because upweighting these series resulted in worse standard deviation of the normalised residual (SDNR) and median of the absolute residual (MAR) values for each of the surveys. Down-weighting the two surveys actually improved the SDNR and MAR values, but it would be unwise to down-weight both of these series.
+4. **Gmacs Francis**: is the same as above except that it also uses the Francis iterative re-weighting method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and pot survey weights were left as is (i.e. a weight of 1) because upweighting these series resulted in worse standard deviation of the normalised residual (SDNR) and median of the absolute residual (MAR) values for each of the surveys. Down-weighting the two surveys actually improved the SDNR and MAR values, but it would be unwise to down-weight either of these series.
 
 5. **Gmacs M**: is the same as above except that natural mortality ($M$) is fixed at 0.18 $\text{yr}^{-1}$ during all years. The Francis weights for each of the size-compostitons were recalculated and applied again in this model.
 
@@ -557,19 +565,19 @@ Table \ref{tab:model_runs} outlines the major features of each of the models.
 
 ## Results
 
-Results for all Gmacs scenarios are provided with comparisons to the 2015 model. We recommend scenario XXX to be used for the overfishing determination in 2016, based on the fit to the data and the plausibility of parameter estimates.
+Results for all Gmacs scenarios are provided with comparisons to the 2015 model. We recommend that the **Gmacs M** scenario be used for overfishing determination in 2016, based on the fit to the data and the plausibility of parameter estimates.
 
 ### a. Effective sample sizes and weighting factors.
 
 Observed and estimated effective sample sizes are compared in Table \ref{tab:effn}. Effective sample sizes are also shown on size-composition plots (Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and \ref{fig:sc_trawl_discarded}). 
 
-Data weighting factors, SDNRs, and MARs are presented in Table \ref{tab:data_weighting}. The SDNR for the trawl survey is acceptable at 1.44 in the **Gmacs match** scenario, and improves to 1.41 and 1.36 in the **Gmacs base** and **Gmacs Francis** scenarios. In the **Gmacs M** model the SDNR of the trawl survey is slightly worse at 1.54, and is much worse in the exploratory **Gmacs force** scenario at 2.26. The SDNRs for the pot surveys show much the same pattern between each of the scenarios, but are much higher values (ranging from 3.77 to 5.94). These values are very high, and whilst they can be improved by down-weighting the pot survey, it is recommended that they be left as they are as the pot survey is one of the most important data series in this model. The MAR for the trawl and pot surveys shows the same pattern among each of the scenarios as the SDNR. The SDNR (and MAR) values for the trawl survey and pot survey size compositions were excellent, ranging from 0.79 to 1.35 (except for in the **Gmacs force** scenario where the weights were a little high). The SDNRs for the directed pot fishery size compositions are a little low, ranging from 0.65 to 0.8. However, the SDNRs (and MARs) were not used when weighting the size composition data set. Instead, the Francis size composition weights were used (Francis 2011). In all model scenarios, the Francis weights match the weights that were actually applied to each of the size composition data sets.
+Data weighting factors, SDNRs, and MARs are presented in Table \ref{tab:data_weighting}. The SDNR for the trawl survey is acceptable at 1.44 in the **Gmacs match** scenario, and improves to 1.41 and 1.36 in the **Gmacs base** and **Gmacs Francis** scenarios. In the **Gmacs M** model the SDNR of the trawl survey is slightly worse at 1.54, and is much worse in the exploratory **Gmacs force** scenario at 2.26. The SDNRs for the pot surveys show much the same pattern between each of the scenarios, but are much higher values (ranging from 3.77 to 5.94). These values are very high, and whilst they can be improved by down-weighting the pot survey, it is recommended that they be left as they are as the pot survey is one of the most important data series in this model. The MAR for the trawl and pot surveys shows the same pattern among each of the scenarios as the SDNR. The SDNR (and MAR) values for the trawl survey and pot survey size compositions were excellent, ranging from 0.79 to 1.35 (except for in the **Gmacs force** scenario where the weights were a little high). The SDNRs for the directed pot fishery size compositions are a little low, ranging from 0.65 to 0.8. However, the SDNRs (and MARs) were not used when weighting the size composition data sets in those scenarios that used the Francis weighting method (i.e. in the **Gmacs Francis**, **Gmacs M**, and **Gmacs Force** scenarios). Instead, the Francis size composition weights were used (Francis 2011). In all model scenarios, the Francis weights match the weights that were actually applied to each of the size composition data sets.
 
 ### b. Tables of estimates.
 
 Model parameter estimates for each of the Gmacs scenarios are summarized in Tables \ref{tab:est_pars_match}, \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and \ref{tab:est_pars_force}. These parameter estimates are compared in Table \ref{tab:est_pars_all}. Negative log-likelihood values and management measures for each of the Gmacs scenarios are compared in Tables \ref{tab:likelihood_components} and \ref{tab:management_quants}.
 
-There is little difference in the parameter estimates within the **Gmacs match** and **Gmacs base** scenarios. This is reflected in the log-likelihood components and the management quantities.
+There is little difference in the parameter estimates within the **Gmacs match** and **Gmacs base** scenarios. This is reflected in the log-likelihood components and the management quantities. The parameter estimates in the **Gmacs M** scenario are a little different to the previous scenarios, particularly the estimate of the ADF&G pot survey catchability ($q$) (see Table \ref{tab:est_pars_all}).
 
 ### c. Graphs of estimates.
 
@@ -587,7 +595,7 @@ Estimated recruitment is compared in Figure \ref{fig:recruitment}. Estimated abu
 
 There is little difference between model estimated survey biomass in the gmacs scenarios when compared with the 2015 model (Figures \ref{fig:trawl_survey_biomass} and \ref{fig:pot_survey_cpue}). Looking at the model fits to the NMFS trawl survey biomass (Figure \ref{fig:trawl_survey_biomass}), the **Gmacs match** scenario is the most similar to the 2015 model, and the **Gmacs base** model is very similar as well. In all scenarios, Gmacs produces a better fit during the mid-late 1980s. However, since about 2010 Gmacs estimates a slighly lower survey biomass than the 2015 model in an attempt to better fit the ADF&G pot survey CPUE (Figure \ref{fig:pot_survey_cpue}). The two Gmacs scenarios that do not attempt to estimate natural mortality in 1998/99 (**Gmacs M** and **Gmacs force**) predict lower survey biomass from 1992 to 1998 than the other scenarios and the 2015 model. These same two runs also predict a lower survey biomass in recent years (since about 2010). While these two models may result in slightly worse fits to the data, they do not risk over-fitting the data in the same way the other scenarios do. As exptected the model that upweights the NMFS survey biomass and ADF&G pot survey CPUE (**Gmacs force**) provides a better fit to the survey biomass during the mid-late 1980s and a much better fit to the pot survey CPUE in the most recent two years (Figures \ref{fig:trawl_survey_biomass}, \ref{fig:trawl_survey_biomass_weights}, \ref{fig:pot_survey_cpue}, and \ref{fig:pot_survey_cpue_weights}). Keep in mind that this scenario was only included for exploratory purposes and forcing these weights resulted in worse SDNR and MAR values for the two abundance indices.
 
-Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomass on 15 February also fluctuates strongly over time. The high biomass estimates in recent years for the Gmacs CV scenario is quite different to the other scenarios (Figure \ref{fig:mmb}).
+Estimated recruitment to the model is variable over time (Figure \ref{fig:recruitment}). Estimated recruitment during recent years is generally low in all scenarios. Estimated mature male biomass on 15 February also fluctuates strongly over time (Figure \ref{fig:mmb}).
 
 ### e. Retrospective and historic analyses.
 
@@ -599,9 +607,13 @@ Estimated standard deviations of parameters and selected management measures for
 
 ### g. Comparison of alternative model scenarios.
 
+Both the **Gmacs match** and **Gmacs base** scenarios provide adequate matches between the 2015 model and its Gmacs equivalent. In fact, despite a few minor differences, estimates produced by the 2015 model are generally encompassed the in the uncertainty bounds of the **Gmacs match** model.
+
 Looking at the plot of mature male biomass (Figure \ref{fig:mmb}), the **Gmacs force** scenario stands out as being quite different to the other models (including the 2015 model). This scenario results in a lower MMB from the mid-1908s through to the late-1990s, and is again lower in the most recent 5 years. This scenario upweights both the trawl survey and the pot survey abundance indices (it upweights the pot survey more than the trawl survey) and represents a model run that places greater trust in the abundance indices, particularly the pot survey, than other data sources.
 
-In summary, we recommend that scenario XXX be used for overfishing determination for this stock in 2016.
+Although the **Gmacs M** scenario presents a worse fit to the data, particularly the NMFS trawl-survey time series, this model does not simply allow a better fit to by estimating an unconstrained pulse in natural mortality. Allowing a better fit in this way is a bit like estimating catchability ($q$) every year, it is not recommended. Although doing so produces a better fit to the model, it reduces predictive power and support for such a phenomena, anecdotal or otherwise, seems to be limited. It also raises concerns about what the implications would be for an “average” true natural mortality which can affect the management measures.
+
+In summary, we recommend that the **Gmacs M** scenario be used for overfishing determination for this stock in 2016.
 
 
 # F. Calculation of the OFL and ABC
@@ -723,11 +735,11 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 \begin{table}[ht]
 \centering
-\caption{Observed and effective sample sizes for observer data from the directed pot fishery, the NMFS trawl survey, and the ADF\&G pot survey.} 
+\caption{Observed and assumed sample sizes for observer data from the directed pot fishery, the NMFS trawl survey, and the ADF\&G pot survey.} 
 \label{tab:effn}
 \begin{tabular}{lccccccc}
   \hline
-  & \multicolumn{3}{c}{Observed sample sizes} & \multicolumn{3}{c}{Effective sample sizes} \\
+  & \multicolumn{3}{c}{Observed sample sizes} & \multicolumn{3}{c}{Assumed sample sizes} \\
   \cline{2-4}\cline{6-8}
   Year & Observer pot & NMFS trawl & ADF\&G pot & & Observer pot & NMFS trawl & ADF\&G pot \\ 
   \hline
@@ -960,8 +972,8 @@ for (ii in 2:6)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
 names(df) <- c("Component","Match","Base","Francis","M","Force")
-tab <- xtable(df, caption = "Comparisons of data weights, Francis LF weights, SDNR values, and MAR values for the five Gmacs model scenarios.", label = "tab:data_weighting")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+tab <- xtable(df, caption = "Comparisons of data weights, Francis LF weights (i.e. the new weights that should be applied to the LFs), SDNR values, and MAR values for the five Gmacs model scenarios. Note that in the Gmacs Francis, M and Force scenarios, the Francis LF weights and the LF weights applied to each size composition are the same as the size compositions have been re-weighted using the Francis method.", label = "tab:data_weighting")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, hline.after = c(-1,0,5,8,13,nrow(tab)))
 ```
 
 ```{r likelihood_components, results = "asis"}
@@ -1262,12 +1274,8 @@ The survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
 The basic population dynamics underlying Gmacs can thus be described as
 \begin{align}
     \boldsymbol{n}_{t+1,y} &= \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y}, &\text{ if } t<5 \notag\\
-    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y}, &\text{ if } t=5
+    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y} &\text{ if } t=5.
 \end{align}
-
-Also add selectivity $s_{l,y}$, retension, discard mortality in here. Also catch $C_{t,y}$, CPUE $I_{t,y} = q B_{t,y}$. weight $w_{l,y}$. Biomass $B_{t,y} = \sum_l n_{l,t,y} w_{l,y} s_{l,y}$. MMB, LFs.
-
-$\theta = \{ \bar{R}, \boldsymbol{n}_0, q_\text{pot}, cv, \delta^M_{1998}, s^\text{pot}_{1,l=1}, s^\text{pot}_{1,l=2}, s^\text{pot}_{2,l=1}, s^\text{pot}_{2,l=2} s^\text{NMFS}_{l=1}, s^\text{NMFS}_{l=2}, s^\text{ADFG}_{l=1}, s^\text{ADFG}_{l=2} \}$
 
 
 ## 3. Model Data
@@ -1331,8 +1339,7 @@ which is the combination of the growth matrix and molting probabilities.
   Natural mortality & $M$ & 0.18 $\text{yr}^{-1}$ & NPFMC (2007) \\
   Size transition matrix & $\boldsymbol{G}$ & Equation \ref{eq:size_transition} & Otto and Cummiskey (1990) \\
   Stage-1 and stage-2 & $w_{1}$, $w_{2}$ & 0.7, 1.2 kg & Length-weight equation (B. Foy, NMFS) \\
-  mean weights & & & \\
-  & & & applied to stage midpoints \\
+  mean weights & & & applied to stage midpoints \\
   Stage-3 mean weight & $w_{3,y}$ & Depends on year & Fishery reported average retained weight \\
   & & Table \ref{tab:length_weight} & from fish tickets, or its average, and \\
   & & & mean weights of legal males \\
@@ -1344,9 +1351,12 @@ which is the combination of the growth matrix and molting probabilities.
   handling mortality & & & \\
   Groundfish fixed-gear & & 0.5 & 2010 Crab SAFE \\
   handling mortality & & & \\
-  Fishing mortality & $\sigma_\text{df}$ & 50 & \\
-  Fishing mortality & $\sigma_\text{tb}$ & 50 & \\
-  Fishing mortality & $\sigma_\text{fb}$ & 50 & \\
+  SD of directed fishery & & & \\
+  fishing mortality deviations & $\sigma_\text{df}$ & 50 & \\
+  SD of trawl bycatch & & & \\
+  fishing mortality deviations & $\sigma_\text{tb}$ & 50 & \\
+  SD of fixed gear bycatch & & & \\
+  fishing mortality deviations & $\sigma_\text{fb}$ & 50 & \\
   \hline
 \end{tabular}
 \end{table}
@@ -1376,48 +1386,20 @@ Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an es
   Natural mortality deviation during 1998 $\delta^M_{1998}$ & -3 & 0.0 & 3 & Normal(0, $\sigma^2_M$) & 4 \\ 
   Recruitment deviations $\delta^R_y$ & -7 & 0.0 & 7 & Normal(0, $\sigma_R^2$) & 3 \\ 
   Average directed fishery fishing mortality $\bar{F}^\text{df}$                 & -  & 0.2 & - & - & 1 \\
-  $\bar{F}^\text{tb}$                 & -  & 0.001 & - & - & 1 \\
-  $\bar{F}^\text{fb}$                 & -  & 0.001 & - & - & 1 \\
+  Average trawl bycatch fishing mortality $\bar{F}^\text{tb}$                 & -  & 0.001 & - & - & 1 \\
+  Average fixed gear bycatch fishing mortality $\bar{F}^\text{fb}$                 & -  & 0.001 & - & - & 1 \\
   \hline
 \end{tabular}
 \end{table}
-
-In any year with no directed fishery, and hence zero retained catch, $F_t^\text{df}$ is set to zero rather than model estimated. Similarly, for years in which no groundfish bycatch data are available, $F_t^\text{gf}$ and $F_t^\text{gt}$ are imputed to be the geometric means of the estimates from years for which there are data. 
-
-Both surveys are assigned a nominal date of 1 July, the start of the crab year.
-
 
 
 ## 5. Model Objective Function and Weighting Scheme
 
-The objective function consists of a sum of eight "negative log-likelihood" terms characterizing the hypothesized error structure of the principal data inputs with respect to their true, i.e., model-predicted, values and four "penalty" terms associated with year-to-year variation in model recruit abundance and fishing mortality in the directed fishery and groundfish trawl and fixed-gear fisheries (Table \ref{tab:likelihoods}). See Table \ref{tab:stage_cpue}, where upper and lower case letters designate model-predicted and data-computed quantities, respectively, and boldface letters again indicate vector quantities. Sample sizes $n_t$ (observed number of male SMBKC $\le$ 90 mm CL) and estimated coefficients of variation $\widehat{cv}_t$ were used to develop appropriate variances for stage-proportion and abundance-index components. The weights $\lambda_j$ appearing in the objective function component expressions in Table \ref{tab:stage_cpue} play the role of "tuning" parameters in the modeling procedure.
-\begin{table}[ht]
-\centering
-\caption{Log-likelihood and penalty components of base-model objective function. The $\lambda_k$ are weights, described in text; the neff t are effective sample sizes, also described in text. All summations are with respect to years over each data series.} 
-\label{tab:likelihoods}
-\begin{tabular}{lrr}
-  \hline
-  Component & Distribution & Form \\ 
-  \hline
-  Legal retained-catch biomass & Lognormal & $-0.5 \sum \left( \log (c_t/C_t)^2 / \log (1+cv^2_c) \right)$ \\ 
-  Dis. Pot bycatch biomass & Lognormal & $-0.5 \sum \left( \log (c_t/C_t)^2 / \log (1+cv^2_c) \right)$ \\ 
-  \hline
-\end{tabular}
-\end{table}
+The objective function consists of the sum of several "negative log-likelihood" terms characterizing the hypothesized error structure of the principal data inputs (Table \ref{tab:likelihood_components}).
 
+Gmacs calculates standard deviation of the normalised residual (SDNR) values and median of the absolute residual (MAR) values for all abundance indices and size compositions to help the user come up with resonable likelihood weights. For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Francis (2011) suggests upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively. Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expected abundances to ensure that the fit is good.
 
-
-\begin{align}
-  \sigma_i &= \frac{1}{\lambda} \sqrt{\log(1.0 + c_i^2)}\\
-  \delta_i &= \frac{\log(obs_i/pred_i)}{\sigma_i} + 0.5 \sigma_i
-\end{align}
-The standard deviation of the normalized (or standardized) residuals (SDNR) is calculated as
-\begin{equation}
-  \text{SDNR} = \sqrt{\frac{1}{n} \sum_{i=1}^n \left( \delta_i - \bar{\delta} \right)^2}
-\end{equation}
-For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Francis (2011) suggests upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively. Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expected abundances to ensure that the fit is good.
-
-MAR, Francis weighting (Francis 2011).
+Gmacs also calculates Francis weights for each of the size composition data sets supplied (Francis 2011). If the user wishes to use the Francis iterative re-weighting method, first the weights applied to the abundance indices should be adjusted by trial and error until the SDNR (and/or MAR) are adequte. Then the Francis weights supplied by Gmacs should be used as the new likelihood weights for each of the size composition data sets the next time the model is run. The user can then iteratively adjust the abudance index and size composition weights until adequate SDNR (and/or MAR) values are achieved, given the Francis weights.
 
 
 ## 6. Estimation
