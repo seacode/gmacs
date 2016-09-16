@@ -1131,11 +1131,11 @@ DATA_SECTION
 			theta_phz(3) = -1; // Also don't use log(Rini) i.e. initial recruitment(syr). Instead we will use log(N0(1)).
 		}
 		WriteCtl(model_controls);
-		if ( bInitializeUnfished == 1 && theta_phz(3) > 0 )
-		{
-			cout << "Error: cannot initialize unfished and estimate the logRini parameter" << endl; 
-			exit(1);
-		}
+		//if ( bInitializeUnfished == 1 && theta_phz(3) > 0 )
+		//{
+		//	cout << "Error: cannot initialize unfished and estimate the logRini parameter" << endl; 
+		//	exit(1);
+		//}
 		if ( bInitializeUnfished == 2 && theta_phz(3) > 0 )
 		{
 			cout << "Error: cannot estimate initial numbers and the logRini parameter" << endl; 
@@ -2115,8 +2115,36 @@ FUNCTION calc_initial_numbers_at_length
 				// Insert terminal molt case here.
 			break;
 			case 1: // Steady-state fished conditions
-				cout << "The steady-state fished conditions options is broke!" << endl; exit(1);
-				//_S = S(h)(syr)(1);
+				//cout << "The steady-state fished conditions options is broke!" << endl; exit(1);
+				// Single shell condition
+				if ( nshell == 1 && nmature == 1 )
+				{
+					x = calc_brute_equilibrium();
+					for ( int ig = 1; ig <= n_grp; ig++ )
+					{
+						d4_N(ig)(syr)(1) = x(ig);
+					}
+					// SHOULD I ADD REC_INI TO THIS NOW?
+					//calc_equilibrium(x,A,_S,rt);
+					//ig = pntr_hmo(h,1,1);
+					//x = calc_brute_equilibrium();
+					//d4_N(1,n_grp)(syr)(1) = x;
+					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));
+				}
+				// Continuous molt (newshell/oldshell)
+				if ( nshell == 2 && nmature == 1 )
+				{
+					//ig = pntr_hmo(h,1,1);
+					x = calc_brute_equilibrium();
+					for ( int ig = 1; ig <= n_grp; ig++ )
+					{
+						d4_N(ig)(syr)(1) = x(ig);
+					}
+					//calc_equilibrium(x,y,A,_S,P(h),rt);
+					//ig = pntr_hmo(h,1,1);
+					//d4_N(ig)(syr)(1) = elem_prod(x, mfexp(rec_ini));;
+					//d4_N(ig+1)(syr)(1) = elem_prod(y, mfexp(rec_ini));;
+				}				//_S = S(h)(syr)(1);
 				// Single shell condition
 				if ( nshell == 1 && nmature == 1 )
 				{
@@ -3854,12 +3882,26 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	dvar_vector y(1,nclass);
 	dvar_vector z(1,nclass);
 	
-	if ( bInitializeUnfished == 0 )
+	// Initial recruitment
+	switch( bInitializeUnfished )
 	{
-		rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
-	} else {
-		rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+		case 0: // Unfished conditions
+			rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
+		break;
+		case 1: // Steady-state fished conditions
+			rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+		break;
+		case 2: // Free parameters
+			rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+		break;
 	}
+
+	//if ( bInitializeUnfished == 0 )
+	//{
+	//	rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
+	//} else {
+	//	rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+	//}
 
 	for ( i = 1; i < ninit; i++ )
 	{

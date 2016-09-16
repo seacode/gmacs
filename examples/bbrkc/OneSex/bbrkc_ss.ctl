@@ -9,10 +9,10 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  0.18      0.01         1         -4       2   0.18    0.02         # M
-  12.0       -10        20          2       1   10.1    30.1         # logR0
-  10.0       -10        20          2       1   10.0    35.0         # logR1      
-  10.0       -10        20         -1       1   10.0    35.0         # logRbar      
+  0.18      0.01         1          4       2   0.18    0.02         # M
+  11.0       -10        40          2       0  -10.0    40.0         # log(R0)
+  15.0       -10        40          2       0  -10.0    40.0         # log(Rini)      
+  10.0       -10        20         -1       1   10.0    35.0         # log(Rbar)      
   72.0        55       100         -2       1   72.5    7.25         # Recruitment Expected Value
   0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
  -0.40       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
@@ -58,18 +58,18 @@
 ## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # Gear-1
-   1     1     1   0    129  100    200    0      1     200    1     1975   2014
-   1     2     2   0    156  100    200    0      1     200    1     1975   2014
+   1     1     1   0    129  100    200    0      1     200   -1     1975   2014
+   1     2     2   0    156  100    200    0      1     200   -1     1975   2014
 # Gear-2
    2     3     1   0     90    10   200    0      10    200   -2     1975   2014
    2     4     2   0    180    10   200    0      10    200   -2     1975   2014
 # Gear-3
-   3     5     1   0    136   60    200    0       1    200    3     1975   1981
-   3     6     2   0    182   60    200    0       1    200    4     1975   1981
-   3     7     1   0     95   60    200    0       1    200    3     1982   2014
-   3     8     2   0    140   60    200    0       1    200    4     1982   2014
+   3     5     1   0  77.63   60    200    0       1    200   -3     1975   1981
+   3     6     2   0     96   60    200    0       1    200   -4     1975   1981
+   3     7     1   0  89.48   60    200    0       1    200   -3     1982   2014
+   3     8     2   0    145   60    200    0       1    200   -4     1982   2014
 # Gear-4
-   4     9     1   0     80    1    200    0       1    200   -4     1975   2014
+   4     9     1   0  78.02    1    200    0       1    200   -4     1975   2014
    4     10    2   0     90    1    200    0       1    200   -4     1975   2014
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained
@@ -99,8 +99,8 @@
 ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit.
 ## SURVEYS/INDICES ONLY
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
-   0.843136  0.001   2      4    1  0.843136     0.01   0           4       # NMFS trawl
-   1.0       0.001   5      4    0  0.001         5     0           1       # BSFRF
+   0.935    0.001   5      4    0  0.001         5     0           4       # NMFS trawl
+   1.0      0.001   5      4    0  0.001         5     0           1       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -119,8 +119,8 @@
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
-     0.20      0.05     45.50      1  # Trap
-     0.05      0.05     45.50      1  # Trawl
+     0.20      0.05     40.00      1  # Trap
+     0.01      0.05     40.00      1  # Trawl
      0.00      2.00     20.00     -1  # NMFS
      0.00      2.00     20.00     -1  # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -136,14 +136,15 @@
 ## AUTOTAIL COMPRESSION:
 ##   - pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-# 1   1   1   1   1   1 # Type of likelihood.
- 2   2   2   2   2   2 # Type of likelihood.
+ 1   1   1   1   1   1 # Type of likelihood.
+# 2   2   2   2   2   2 # Type of likelihood.
  0   0   0   0   0   0 # Auto tail compression (pmin)
  1   1   1   1   1   1 # Initial value for effective sample size multiplier
 -4  -4  -4  -4  -4  -4 # Phz for estimating effective sample size (if appl.)
 # 1   2   3   4   4   5 # Composition aggregator
  1   2   3   4   5   6 # Composition aggregator
- 1   1   1   1   1   1 # LAMBDA
+# 1   1   1   1   1   1 # LAMBDA
+ 0.1   0.1   0.1   0.1   0.1   0.1 # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -155,7 +156,7 @@
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
 ##      5 = Blocked changes (deviates constrained by variance AT specific knots relative to base)
-  3
+  1
 ## Phase of estimation
   3
 ## STDEV in m_dev for Random walk
@@ -172,7 +173,7 @@
    3       # Estimated rec_dev phase
    3       # Estimated rec_ini phase
    0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-   0       # # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
+   1       # # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
    1984    # First year for average recruitment for Bspr calculation.
    2014    # Last year for average recruitment for Bspr calculation.
    0.35    # Target SPR ratio for Bmsy proxy.

@@ -15,14 +15,14 @@
 1975  # Start year
 2015  # End year
 2016  # Projection year
-2     # Number of seasons
+4     # Number of seasons
 4     # Number  of  distinct  data  groups  (among fishing fleets and surveys)
 2     # Number  of  sexes
 2     # Number  of  shell condition types
 1     # Number  of  maturity  types
 20    # Number  of  size-classes  in  the model
-2     # Season recruitment occurs
-2     # Season molting and growth occurs
+4     # Season recruitment occurs
+4     # Season molting and growth occurs
 2     # Season to calculate SSB
 1     # Season for N output
 # size_breaks (a  vector  giving  the break points  between size  intervals,  dim=nclass+1)
@@ -49,7 +49,7 @@
 # Natural mortality per season input type (1 = vector by season, 2 = matrix by season/year)
 1
 # Proportion of the total natural mortality to be applied each season
-0.5 0.5
+0.5 0.5 0.0 0.0
 # Fishing fleet names (delimited  with  : no  spaces  in  names)
 Pot_Fishery:Trawl_Bycatch
 # Survey  names (delimited  with  : no  spaces  in  names)
