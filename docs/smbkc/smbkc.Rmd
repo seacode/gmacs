@@ -127,6 +127,9 @@ rinline <- function(code){
   html <- '<code  class="r">``` `CODE` ```</code>'
   sub("CODE", code, html)
 }
+
+#rec_mod <- 3
+rec_mod <- 6
 ```
 
 # Executive Summary
@@ -152,8 +155,8 @@ rinline <- function(code){
   2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
   2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
   2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 & `r round(M[[3]]$spr_bspr/1000 * 0.5, 2)`$^D$ & `r round(M[[3]]$ssb[length(M[[3]]$ssb)-1]/1000, 2)`$^D$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\
-  2016/17 & & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/1000, 2)`$^D$ & & & & `r round(M[[3]]$spr_cofl/1000, 2)` & `r round(M[[3]]$spr_cofl/1000*0.8, 2)` \\
+  2015/16 & `r round(M[[rec_mod]]$spr_bspr/1000 * 0.5, 2)`$^D$ & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)-1]/1000, 2)`$^D$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\
+  2016/17 & & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/1000, 2)`$^D$ & & & & `r round(M[[rec_mod]]$spr_cofl/1000, 2)` & `r round(M[[rec_mod]]$spr_cofl/1000*0.8, 2)` \\
   \hline
 \end{tabular}
 \end{table}
@@ -169,8 +172,8 @@ rinline <- function(code){
   2012/13 & 4.0$^A$ & 6.29$^A$ & 1.630 & 1.616 & 1.81   & 2.24 & 2.02 \\ 
   2013/14 & 3.4$^B$ & 6.64$^B$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
   2014/15 & 4.1$^C$ & 5.47$^C$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
-  2015/16 & `r sprintf("%.1f", round(M[[3]]$spr_bspr * 2204.62/1e6 * 0.5, 1))`$^D$ & `r round(M[[3]]$ssb[length(M[[3]]$ssb)-1] * 2204.62/1e6, 2)`$^D$ & 0.41 & 0.105 & 0.105 & 0.62 & 0.49 \\
-  2016/17 & & `r round(M[[3]]$ssb[length(M[[3]]$ssb)] * 2204.62/1e6, 2)`$^D$ & & & & `r round(M[[3]]$spr_cofl * 2204.62/1e6, 2)` & `r round(M[[3]]$spr_cofl * 2204.62/1e6*0.8, 2)` \\
+  2015/16 & `r sprintf("%.1f", round(M[[rec_mod]]$spr_bspr * 2204.62/1e6 * 0.5, 1))`$^D$ & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)-1] * 2204.62/1e6, 2)`$^D$ & 0.41 & 0.105 & 0.105 & 0.62 & 0.49 \\
+  2016/17 & & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)] * 2204.62/1e6, 2)`$^D$ & & & & `r round(M[[rec_mod]]$spr_cofl * 2204.62/1e6, 2)` & `r round(M[[rec_mod]]$spr_cofl * 2204.62/1e6*0.8, 2)` \\
   \hline
 \end{tabular}
 \end{table}
@@ -189,7 +192,7 @@ rinline <- function(code){
   2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
   2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
-  2016/17 & 4b & `r round(M[[3]]$spr_bspr/1000, 2)` & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/1000, 2)` & `r round(M[[3]]$ssb[length(M[[3]]$ssb)]/M[[3]]$spr_bspr, 2)` & 0.09 & 1 & 1978-2016 & 0.18 \\ 
+  2016/17 & 4b & `r round(M[[rec_mod]]$spr_bspr/1000, 2)` & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/1000, 2)` & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/M[[rec_mod]]$spr_bspr, 2)` & 0.09 & 1 & 1978-2016 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
