@@ -1252,9 +1252,9 @@ PARAMETER_SECTION
 	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
 
 	// Recruitment deviation parameters
-	init_bounded_dev_vector rec_ini(1,nclass,-7.0,7.0,rec_ini_phz);  ///> initial size devs
+	init_bounded_dev_vector rec_ini(1,nclass,-14.0,14.0,rec_ini_phz);  ///> initial size devs
 	//init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
-	init_bounded_dev_vector rec_dev(syr,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_dev(syr,nyr,-8.0,8.0,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -2138,7 +2138,7 @@ FUNCTION calc_initial_numbers_at_length
 					x = calc_brute_equilibrium();
 					for ( int ig = 1; ig <= n_grp; ig++ )
 					{
-						d4_N(ig)(syr)(1) = x(ig);
+						d4_N(ig)(syr)(1) = elem_prod(x(ig), mfexp(rec_ini));
 					}
 					//calc_equilibrium(x,y,A,_S,P(h),rt);
 					//ig = pntr_hmo(h,1,1);

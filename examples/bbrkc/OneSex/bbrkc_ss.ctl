@@ -9,10 +9,10 @@
 # —————————————————————————————————————————————————————————————————————————————————————— #
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #                            
 # —————————————————————————————————————————————————————————————————————————————————————— #
-  0.18      0.01         1          4       2   0.18    0.02         # M
+  0.18      0.01         1         -4       2   0.18    0.02         # M
   11.0       -10        40          2       0  -10.0    40.0         # log(R0)
-  15.0       -10        40          2       0  -10.0    40.0         # log(Rini)      
-  10.0       -10        20         -1       1   10.0    35.0         # log(Rbar)      
+  15.0       -10        40          2       0  -10.0    40.0         # log(Rini)
+  10.0       -10        20         -1       1   10.0    35.0         # log(Rbar)
   72.0        55       100         -2       1   72.5    7.25         # Recruitment Expected Value
   0.561      0.1         5         -3       0    0.1     5.0         # Recruitment scale (variance component)
  -0.40       -10      0.75         -4       0  -10.0    0.75         # ln(sigma_R)
@@ -119,8 +119,8 @@
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
-     0.20      0.05     40.00      1  # Trap
-     0.01      0.05     40.00      1  # Trawl
+     0.20      0.05      5.00      1  # Trap
+     0.01      0.05      5.00      1  # Trawl
      0.00      2.00     20.00     -1  # NMFS
      0.00      2.00     20.00     -1  # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -156,11 +156,11 @@
 ##      2 = Cubic Spline (deviates constrained by nodes & node-placement)
 ##      3 = Blocked changes (deviates constrained by variance AT specific knots)
 ##      5 = Blocked changes (deviates constrained by variance AT specific knots relative to base)
-  1
+  0
 ## Phase of estimation
   3
 ## STDEV in m_dev for Random walk
-   0.20
+   0.1
 ## Number of nodes for cubic spline or number of step-changes for option 3
    2
 ## Year position of the knots (vector must be equal to the number of nodes)
@@ -173,7 +173,7 @@
    3       # Estimated rec_dev phase
    3       # Estimated rec_ini phase
    0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-   1       # # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
+   1       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
    1984    # First year for average recruitment for Bspr calculation.
    2014    # Last year for average recruitment for Bspr calculation.
    0.35    # Target SPR ratio for Bmsy proxy.
