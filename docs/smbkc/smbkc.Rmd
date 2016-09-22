@@ -128,8 +128,9 @@ rinline <- function(code){
   sub("CODE", code, html)
 }
 
-rec_mod <- 3
-#rec_mod <- 6
+rec_mod <- 3 # base
+#rec_mod <- 5 # M
+#rec_mod <- 6 # force
 ```
 
 # Executive Summary
