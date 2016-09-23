@@ -123,9 +123,9 @@
 ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ
-   0.2       0.05     40.0       1   # Pot
-   0.001     0.05     40.0       1   # Trawl
-   0.001     0.05     40.0       1   # Fixed
+   0.2       0.05     50.0       1   # Pot
+   0.001     0.05     50.0       1   # Trawl
+   0.001     0.05     50.0       1   # Fixed
    0.00      2.00     20.00     -1   # NMFS
    0.00      2.00     20.00     -1   # ADF&G
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -142,7 +142,7 @@
 ## AUTOTAIL COMPRESSION
 ##   pmin is the cumulative proportion used in tail compression.
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  1   1   1  # Type of likelihood
+  2   2   2  # Type of likelihood
   0   0   0   # Auto tail compression (pmin)
   1   1   1   # Initial value for effective sample size multiplier
  -4  -4  -4   # Phz for estimating effective sample size (if appl.)
