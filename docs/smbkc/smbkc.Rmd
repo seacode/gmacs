@@ -146,7 +146,7 @@ rec_mod <- 3 # base
 5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2015/16 and is hence not overfished. Overfishing did not occur in 2015/16 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
+\caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs M}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
 \label{tab:status}
 \begin{tabular}{lccccccc}
   \hline
@@ -163,7 +163,7 @@ rec_mod <- 3 # base
 \end{table}
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (million pounds) (scenario {\bf Gmacs base}).} 
+\caption{Status and catch specifications (million pounds) (scenario {\bf Gmacs M}).} 
 \label{tab:status_pounds}
 \begin{tabular}{lccccccc}
   \hline
@@ -182,7 +182,7 @@ rec_mod <- 3 # base
 6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
 \begin{table}[ht]
 \centering
-\caption{Basis for the OFL (1000 tonnes) (scenario {\bf Gmacs base}).} 
+\caption{Basis for the OFL (1000 tonnes) (scenario {\bf Gmacs M}).} 
 \label{tab:ofl_basis}
 \begin{tabular}{lcccccccc}
   \hline
