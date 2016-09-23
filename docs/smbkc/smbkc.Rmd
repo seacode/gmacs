@@ -559,8 +559,8 @@ Table \ref{tab:model_runs} outlines the major features of each of the models.
   \hline
   Gmacs match   & No  & No  & Yes \\ 
   Gmacs base    & Yes & No  & Yes \\ 
-  Gmacs Francis & Yes & Yes & Yes \\ 
-  Gmacs M       & Yes & Yes & No  \\ 
+  Gmacs M       & Yes & No  & No  \\ 
+  Gmacs Francis & Yes & Yes & No  \\ 
   Gmacs force   & Yes & Yes & No  \\ 
   \hline
 \end{tabular}
@@ -648,7 +648,7 @@ for (ii in 2:6)
     df <- cbind(df, v)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs Francis","Gmacs M","Gmacs force")
+names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
 tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tonnes.", label = "tab:management_quants", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
@@ -866,7 +866,7 @@ Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998}$)","$\
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs Francis} model.", label = "tab:est_pars_Francis", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs M} model.", label = "tab:est_pars_Francis", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -893,7 +893,7 @@ Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log 
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs M} model.", label = "tab:est_pars_M", digits = 3)
+tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs Francis} model.", label = "tab:est_pars_M", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -928,7 +928,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 Parameter <- NULL
 Estimate <- NULL
 Model <- NULL
-Mname <- c("Match","Base","Francis","M","Force")
+Mname <- c("Match","Base","M","Francis","Force")
 for (ii in 2:6)
 {
     x <- M[[ii]]$fit
@@ -955,7 +955,7 @@ Parameter <- c(Parameter[c(1:5,7:9)],
                Parameter[c(1:17)])
 df <- data.frame(Model, Parameter, Estimate)
 df <- tidyr::spread(df, Model, Estimate) %>%
-  dplyr::select(Parameter, Match, Base, Francis, M, Force)
+  dplyr::select(Parameter, Match, Base, M, Francis, Force)
 df[1,2:6] <- df[1,2:6] * 1000
 tab <- xtable(df, caption = "Comparisons of model parameter estimates for the five Gmacs model scenarios.", label = "tab:est_pars_all", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
@@ -975,7 +975,7 @@ for (ii in 2:6)
     df <- cbind(df, v)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Match","Base","Francis","M","Force")
+names(df) <- c("Component","Match","Base","M","Francis","Force")
 tab <- xtable(df, caption = "Comparisons of data weights, Francis LF weights (i.e. the new weights that should be applied to the LFs), SDNR values, and MAR values for the five Gmacs model scenarios. Note that in the Gmacs Francis, M and Force scenarios, the Francis LF weights and the LF weights applied to each size composition are the same as the size compositions have been re-weighted using the Francis method.", label = "tab:data_weighting")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, hline.after = c(-1,0,5,8,13,nrow(tab)))
 ```
@@ -1010,7 +1010,7 @@ for (ii in 2:6)
     df <- cbind(df, v)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Match","Base","Francis","M","Force")
+names(df) <- c("Component","Match","Base","M","Francis","Force")
 tab <- xtable(df, caption = "Comparisons of negative log-likelihood values for the five Gmacs model scenarios.", label = "tab:likelihood_components")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
@@ -1043,7 +1043,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[4]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs Francis} model.", label = "tab:pop_abundance_Francis")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs M} model.", label = "tab:pop_abundance_Francis")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1051,7 +1051,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[5]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs M} model.", label = "tab:pop_abundance_M")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs Francis} model.", label = "tab:pop_abundance_M")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
