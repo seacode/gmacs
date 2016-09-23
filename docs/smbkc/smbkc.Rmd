@@ -28,7 +28,7 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2015 Model","Gmacs match","Gmacs base","Gmacs Francis","Gmacs M","Gmacs force")
+mod_names <- c("2015 Model","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
 .MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/","../../examples/smbkc2/model_5/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE

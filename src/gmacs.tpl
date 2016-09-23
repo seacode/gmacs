@@ -3243,7 +3243,9 @@ FUNCTION calc_objective_function
 	{
 		dmatrix O = d3_obs_size_comps(ii);
 		dvar_matrix P = d3_pre_size_comps(ii);
-		dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii));
+		//dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii));
+		dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii) * lf_lambda(ii));
+		//dvector stdtmp = cpue_sd(k) * 1.0 / cpue_lambda(k);
 
 		bool bCmp = bTailCompression(ii);
 		class acl::negativeLogLikelihood *ploglike;
