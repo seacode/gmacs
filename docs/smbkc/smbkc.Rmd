@@ -266,7 +266,7 @@ Response: Models 1, 3, and 4 are all included and evaluated in this document as 
 
 Comment: *The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.*
 
-Response: All model runs that estimate additional CV were dropped from this document. Instead we provide three model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the **Gmacs Francis**, **Gmacs M**, and **Gmacs force** scenarios. The final Gmacs scenario (**Gmacs force**) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).
+Response: All model runs that estimate additional CV were dropped from this document. Instead we provide two model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the **Gmacs Francis**, and **Gmacs force** scenarios. The final Gmacs scenario (**Gmacs force**) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).
 
 Comment: *The descriptions of seasons in the model is confusing and currently reads as if $M$ differs among seasons. More justification is needed on how seasons are defined and how they were selected, as well as clarification on $M$ during these seasons.*
 
@@ -842,8 +842,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 ```{r est_pars_4, results = "asis"}
 x <- M[[4]]$fit
-i <- c(grep("m_dev", x$names)[1],
-       grep("theta", x$names),
+i <- c(grep("theta", x$names),
        grep("survey_q", x$names),
        grep("log_add_cv", x$names),
        grep("log_fbar", x$names),
@@ -857,7 +856,7 @@ SD <- x$std[i]
 j <- grep("survey_q", Parameter)
 Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998}$)","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$",
+Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$",
                "ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
                "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
@@ -1117,12 +1116,12 @@ fn <- paste0(.MODELDIR[3], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c
 plot_size_comps_res(MM)
 ```
 
-```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs Francis** model.\\label{fig:sc_res_Francis}"}
+```{r sc_pot_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs M** model.\\label{fig:sc_res_M}"}
 fn <- paste0(.MODELDIR[4], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
 plot_size_comps_res(MM)
 ```
 
-```{r sc_pot_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs M** model.\\label{fig:sc_res_M}"}
+```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs Francis** model.\\label{fig:sc_res_Francis}"}
 fn <- paste0(.MODELDIR[5], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
 plot_size_comps_res(MM)
 ```
@@ -1355,12 +1354,6 @@ which is the combination of the growth matrix and molting probabilities.
   handling mortality & & & \\
   Groundfish fixed-gear & & 0.5 & 2010 Crab SAFE \\
   handling mortality & & & \\
-  SD of directed fishery & & & \\
-  fishing mortality deviations & $\sigma_\text{df}$ & 50 & \\
-  SD of trawl bycatch & & & \\
-  fishing mortality deviations & $\sigma_\text{tb}$ & 50 & \\
-  SD of fixed gear bycatch & & & \\
-  fishing mortality deviations & $\sigma_\text{fb}$ & 50 & \\
   \hline
 \end{tabular}
 \end{table}
@@ -1401,20 +1394,18 @@ Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an es
 
 The objective function consists of the sum of several "negative log-likelihood" terms characterizing the hypothesized error structure of the principal data inputs (Table \ref{tab:likelihood_components}). A lognormal distribution is assumed to characterize the catch data and is modelled as
 \begin{align}
-  \sigma_{t,y} &= \sqrt{\log \left( 1 + cv_{t,y}^2 \right)}\\
-  \delta_{t,y} &= \mathcal{N} (0, \sigma_{t,y}^2)
+  \sigma_{t,y}^\text{catch} &= \sqrt{\log \left( 1 + \left( \mathit{CV}_{t,y}^\text{catch} \right)^2 \right)}\\
+  \delta_{t,y}^\text{catch} &= \mathcal{N} \left( 0, \left( \sigma_{t,y}^\text{catch} \right)^2 \right)
 \end{align}
-where $\delta_{t,y}$ is the residual catch. The relative abudance data is also assumed to be lognormally distributed
+where $\delta_{t,y}^\text{catch}$ is the residual catch. The relative abudance data is also assumed to be lognormally distributed
 \begin{align}
-  \sigma_{t,y} &= \frac{1}{\lambda} \sqrt{\log \left( 1 + cv_{t,y}^2 \right)}\\
-  \delta &= \log \left( obs / pre \right) / \sigma + 0.5 \sigma
+  \sigma_{t,y}^\text{I} &= \frac{1}{\lambda} \sqrt{\log \left( 1 + \left( \mathit{CV}_{t,y}^\text{I} \right)^2 \right)}\\
+  \delta_{t,y}^\text{I} &= \log \left( I^\text{obs} / I^\text{pred} \right) / \sigma_{t,y}^\text{I} + 0.5 \sigma_{t,y}^\text{I}
 \end{align}
 and the likelihood is
 \begin{equation}
-  \sum \log (\delta) + \sum 0.5 \sigma^2
+  \sum \log \left( \delta_{t,y}^\text{I} \right) + \sum 0.5 \left( \sigma_{t,y}^\text{I} \right)^2
 \end{equation}
-
-
 
 Gmacs calculates standard deviation of the normalised residual (SDNR) values and median of the absolute residual (MAR) values for all abundance indices and size compositions to help the user come up with resonable likelihood weights. For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Francis (2011) suggests upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively. Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expected abundances to ensure that the fit is good.
 

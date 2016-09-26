@@ -56,7 +56,7 @@
 </ol>
 <p>Response: Models 1, 3, and 4 are all included and evaluated in this document as the <strong>Gmacs base</strong>, <strong>Gmacs Francis</strong>, and <strong>Gmacs M</strong> scenarios. Model 2 was not included in this document for two reasons. Firstly, if doing Francis iterative re-weighting then additional CV should not be added as well (as the two methods basically do the same thing). Secondly, the SSC recommended against the model runs with additional CV (see the comment from the SSC below).</p>
 <p>Comment: <em>The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.</em></p>
-<p>Response: All model runs that estimate additional CV were dropped from this document. Instead we provide three model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the <strong>Gmacs Francis</strong>, <strong>Gmacs M</strong>, and <strong>Gmacs force</strong> scenarios. The final Gmacs scenario (<strong>Gmacs force</strong>) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).</p>
+<p>Response: All model runs that estimate additional CV were dropped from this document. Instead we provide two model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the <strong>Gmacs Francis</strong>, and <strong>Gmacs force</strong> scenarios. The final Gmacs scenario (<strong>Gmacs force</strong>) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).</p>
 <p>Comment: <em>The descriptions of seasons in the model is confusing and currently reads as if <span class="math inline"><em>M</em></span> differs among seasons. More justification is needed on how seasons are defined and how they were selected, as well as clarification on <span class="math inline"><em>M</em></span> during these seasons.</em></p>
 <p>Response: This description has been updated and justification provided in Appendix A.</p>
 <p>Comment: <em>During the presentation to the SSC, uncertainty was expressed about the origins of the growth transition matrix, but page 7 of the report indicates that the matrix was derived by Otto and Cummiskey (1990). As this matrix is critical to the model, the origin and integrity of the growth transition matrix should be carefully explained in the assessment for fall 2016. In some other models, the transition matrix can be estimated. If there are doubts about the veracity of the transition matrix, perhaps this can be explored in the modeling framework.</em></p>
@@ -286,12 +286,12 @@ The currently recommended Tier 4 convention is to use the full assessment period
 <p class="caption">Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs base</strong> model.</p>
 </div>
 <div class="figure">
-<img src="figure/sc_pot_discarded_res-1.png" alt="Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs Francis model." />
-<p class="caption">Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs Francis</strong> model.</p>
-</div>
-<div class="figure">
 <img src="figure/sc_pot_discarded_res_selex-1.png" alt="Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs M model." />
 <p class="caption">Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs M</strong> model.</p>
+</div>
+<div class="figure">
+<img src="figure/sc_pot_discarded_res-1.png" alt="Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs Francis model." />
+<p class="caption">Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the <strong>Gmacs Francis</strong> model.</p>
 </div>
 <div class="figure">
 <img src="figure/sc_trawl_discarded_res-1.png" alt="Bubble plots of residuals by stage and year for the ADF&amp;G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the Gmacs force model." />
@@ -373,7 +373,7 @@ Estimated parameters are listed in Table  and include an estimated natural morta
 <h2 id="model-objective-function-and-weighting-scheme">5. Model Objective Function and Weighting Scheme</h2>
 The objective function consists of the sum of several &quot;negative log-likelihood&quot; terms characterizing the hypothesized error structure of the principal data inputs (Table ). A lognormal distribution is assumed to characterize the catch data and is modelled as
 
-where <span class="math inline"><em>δ</em><sub><em>t</em>, <em>y</em></sub></span> is the residual catch. The relative abudance data is also assumed to be lognormally distributed
+where <span class="math inline"><em>δ</em><sub><em>t</em>, <em>y</em></sub><sup>catch</sup></span> is the residual catch. The relative abudance data is also assumed to be lognormally distributed
 
 and the likelihood is
 
