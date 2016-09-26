@@ -538,13 +538,13 @@ Five different Gmacs model scenarios were considered, in this document results f
 
 1. **2015 Model**: the 2015 provided by Jie. Note that an error was found in the 2015 model code^[The error in the 2015 model code was in the population dynamics function where the growth transition matrix is applied to the numbers at length to calculate the numbers during the following time-step, specifically `r rinline("N(t+1,3)=TM(2,3)*NN(2)+NN(3);")` which should be `r rinline("N(t+1,3)=TM(1,3)*NN(1)+TM(2,3)*NN(2)+NN(3);")`.]. This error was fixed before making comparisons. Fixing this error caused the NMFS trawl survey selectivity to exceed 1 for stage-2 crab.
 
-2. **Gmacs match**: tries to match as closely as possible with the 2015 Model by fixing the stage-1 and stage-2 selectivity parameters and the catchability coefficient ($q$) for the ADF&G pot survey at those values estimated in the 2015 model (and allows the NMFS trawl survey selectivity to exceed 1 for stage-2 crab). The parameters that are estimated in this model include the average recruitment ($\bar{R}$), the recruitment deviations ($\delta^R_y$), the initial numbers in each stage ($\boldsymbol{n}^0$), the natural mortality deviation 1998 ($\delta^M_{1998}$), and the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery ($\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, $\bar{F}^\text{fb}$, $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, $\delta^\text{fb}_{t,y}$).
+2. **Gmacs match**: tries to match as closely as possible with the 2015 Model by fixing the stage-1 and stage-2 selectivity parameters and the catchability coefficient ($q$) for the ADF&G pot survey at those values estimated in the 2015 model (and allows the NMFS trawl survey selectivity to exceed 1 for stage-2 crab). The parameters that are estimated in this model include the average recruitment ($\bar{R}$), the recruitment deviations ($\delta^R_y$), the initial numbers in each stage ($\boldsymbol{n}^0$), the natural mortality deviation 1998 ($\delta^M_{1998}$), and the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery ($\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, $\bar{F}^\text{fb}$, $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, $\delta^\text{fb}_{t,y}$). As in the 2015 model, the robust multinomial distribution was used to model the length-frequency data.
 
-3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1. This model also estimates the catchability coefficient ($q$) for the ADF&G pot survey as well as the average recruitment ($\bar{R}$), the recruitment deviations ($\delta^R_y$), the initial numbers in each stage ($\boldsymbol{n}^0$), the natural mortality deviation 1998 ($\delta^M_{1998}$), and the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery ($\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, $\bar{F}^\text{fb}$, $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, $\delta^\text{fb}_{t,y}$).
+3. **Gmacs base**: directed pot, NMFS trawl survey and ADF&G pot survey selectivities are estimated for stage-1 and stage-2 crab (and fixed at 1 for stage-3 crab). These selectivities are bounded so that they cannot be greater than 1. This model also estimates the catchability coefficient ($q$) for the ADF&G pot survey as well as the average recruitment ($\bar{R}$), the recruitment deviations ($\delta^R_y$), the initial numbers in each stage ($\boldsymbol{n}^0$), the natural mortality deviation 1998 ($\delta^M_{1998}$), and the fishing mortalities for the directed pot fishery, the trawl bycatch fishery, and the fixed bycatch fishery ($\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, $\bar{F}^\text{fb}$, $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, $\delta^\text{fb}_{t,y}$). As in the 2015 model, the robust multinomial distribution was used to model the length-frequency data.
 
 4. **Gmacs M**: is the same as above except that natural mortality ($M$) is fixed at 0.18 $\text{yr}^{-1}$ during all years.
 
-5. **Gmacs Francis**: is the same as above except that it also uses the Francis iterative re-weighting method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and pot survey weights were left as is (i.e. a weight of 1) because upweighting these series resulted in worse standard deviation of the normalised residual (SDNR) and median of the absolute residual (MAR) values for each of the surveys. Down-weighting the two surveys actually improved the SDNR and MAR values, but it would be unwise to down-weight either of these series. When applying the Francis iterative re-weighting method only once iteration was done (i.e. the model was run once with the size composition likelihood weights set to one, the new Francis weights were calculated, and the model was run once more using these weights).
+5. **Gmacs Francis**: is similar to the scenario above except that it also uses the Francis iterative re-weighting method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and pot survey weights were left as is (i.e. a weight of 1) because upweighting these series resulted in worse standard deviation of the normalised residual (SDNR) and median of the absolute residual (MAR) values for each of the surveys. Down-weighting the two surveys actually improved the SDNR and MAR values, but it would be unwise to down-weight either of these series. When applying the Francis iterative re-weighting method only once iteration was done (i.e. the model was run once with the size composition likelihood weights set to one, the new Francis weights were calculated, and the model was run once more using these weights). In this scenario the multinomail distribution was used instead as the theory underpinning the Francis weighting method is based on this distribution.
 
 6. **Gmacs force**: is an exploratory scenario that the same as above except the NMFS trawl survey is up-weighted by $\lambda^\text{NMFS}=$ `r M[[6]]$cpue_lambda[1]` and the ADF&G pot survey is up-weighted by $\lambda^\text{ADFG}=$ `r M[[6]]$cpue_lambda[2]`. After this, the Francis weights for each of the size-compostitons were recalculated and applied again in this model. This scenario should not be used for overfishing determination as it upweights the trawl and pot survey abundance indices to force a better fit to each of these data sets and provide some contrast among the Gmacs model runs. This scenario forces a better fit to the trawl and pot surveys at the expense of the SDNR (and MAR) for each of these series.
 
@@ -1238,7 +1238,7 @@ and the recruitment is
 \end{equation}
 where $\bar{R}$ is the average annual recruitment and $\delta^R_y$ are the recruitment deviations each year $y$
 \begin{equation}
-    \delta^R_y \sim \mathcal(N) \left( 0, \sigma_R^2 \right).
+    \delta^R_y \sim \mathcal{N} \left( 0, \sigma_R^2 \right).
 \end{equation}
 Using boldface upper-case letters to indicate a matrix, we describe the size transition matrix $\boldsymbol{G}$ as
 \begin{equation}
@@ -1399,7 +1399,22 @@ Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an es
 
 ## 5. Model Objective Function and Weighting Scheme
 
-The objective function consists of the sum of several "negative log-likelihood" terms characterizing the hypothesized error structure of the principal data inputs (Table \ref{tab:likelihood_components}).
+The objective function consists of the sum of several "negative log-likelihood" terms characterizing the hypothesized error structure of the principal data inputs (Table \ref{tab:likelihood_components}). A lognormal distribution is assumed to characterize the catch data and is modelled as
+\begin{align}
+  \sigma_{t,y} &= \sqrt{\log \left( 1 + cv_{t,y}^2 \right)}\\
+  \delta_{t,y} &= \mathcal{N} (0, \sigma_{t,y}^2)
+\end{align}
+where $\delta_{t,y}$ is the residual catch. The relative abudance data is also assumed to be lognormally distributed
+\begin{align}
+  \sigma_{t,y} &= \frac{1}{\lambda} \sqrt{\log \left( 1 + cv_{t,y}^2 \right)}\\
+  \delta &= \log \left( obs / pre \right) / \sigma + 0.5 \sigma
+\end{align}
+and the likelihood is
+\begin{equation}
+  \sum \log (\delta) + \sum 0.5 \sigma^2
+\end{equation}
+
+
 
 Gmacs calculates standard deviation of the normalised residual (SDNR) values and median of the absolute residual (MAR) values for all abundance indices and size compositions to help the user come up with resonable likelihood weights. For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Francis (2011) suggests upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively. Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expected abundances to ensure that the fit is good.
 
