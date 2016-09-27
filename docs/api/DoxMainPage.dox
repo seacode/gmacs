@@ -18,7 +18,11 @@
  //-----------------------------------------------------------------------------------//
  /**
 	\page p_about  About
-	I'll tell you more about it when I have time to tell you about it.
+ Scientists at NOAA's Alaska Fisheries Science Center and colleagues 
+	have developed a Generalized Model for Alaska of Crab Stocks (GMACS) using AD Model Builder.  
+	GMACS is a generalized and flexible size-structured modeling framework. 
+	A goal of the project is to provide a standardized size structured assessment software
+	that is transparent and flexible and consistent with current approaches.
 */
  //-----------------------------------------------------------------------------------//
  //	INSTALL PAGE
@@ -27,8 +31,8 @@
   * \page p_install Install instructions
   * 
   * There are two options for installing Gmacs:
-  *  -# clone the githup repository
-  *  -# download the source code
+  *  -# clone the github repository (and read the wiki)
+  *  -# download the source code (and read the wiki)
   * 
   * 
   */

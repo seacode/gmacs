@@ -2,7 +2,8 @@
 
 ## to do list
 
- go through datafiles
+ [ ] go through datafiles
+ [ ] something affecting scale
 
 ## Files
 

@@ -1,0 +1,68 @@
+---
+title: "Appendix B: SMBKC Stock Assessment Input Files"
+output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  html_document:
+    theme: flatly
+    toc: yes
+  word_document: default
+bibliography: 
+---
+
+\newpage\clearpage
+
+## The data file:
+
+```{r eval = TRUE, include=TRUE,echo=FALSE }
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("../../examples/smbkc2/sm16.dat")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+```
+
+## The match model control file:
+
+```{r eval = TRUE, include=TRUE,echo=FALSE }
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("../../examples/smbkc2/model_1/sm16.ctl")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+```
+
+\newpage\clearpage
+
+## The base model control file:
+
+```{r eval = TRUE, include=TRUE,echo=FALSE }
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("../../examples/smbkc2/model_2/sm16.ctl")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+```
+
+\newpage\clearpage
+
+## The Francis model control file:
+
+```{r eval = TRUE, include=TRUE,echo=FALSE }
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("../../examples/smbkc2/model_3/sm16.ctl")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+```
+
+\newpage\clearpage
+
+## The no $M_{1998}$ model control file:
+
+```{r eval = TRUE, include=TRUE,echo=FALSE }
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("../../examples/smbkc2/model_4/sm16.ctl")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+```
+
+## The force model control file:
+
+```{r eval = TRUE, include=TRUE,echo=FALSE }
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("../../examples/smbkc2/model_5/sm16.ctl")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+```

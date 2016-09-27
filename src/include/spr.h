@@ -42,7 +42,6 @@ private:
 	dmatrix m_wa;
 	dmatrix m_fref;
 
-
 	d3_array m_M;
 	d3_array m_A;
 	d3_array m_P;		// molting probability
@@ -92,7 +91,7 @@ public:
 	                const dvector _dmr);
 
 	double get_bspr() {return m_bspr;}
-
+	double get_ssbo() {return m_ssb0;}
 	
 	double get_fofl(const double& alpha, const double& limit, const double& ssb);
 	double get_cofl(const dmatrix& N);
