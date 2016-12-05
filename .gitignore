@@ -55,6 +55,7 @@ gradient.*
 *.rep
 *.r0*
 *.std
+*.tmp
 *_in.ctl
 *_in.dat
 variance
