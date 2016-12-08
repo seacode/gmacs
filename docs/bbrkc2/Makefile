@@ -4,11 +4,15 @@ else
     RM=rm -rf
 endif
 
-all: pdf clean
+all: app pdf clean
 
 R_OPTS=--no-save --no-restore --no-init-file --no-site-file
 
-pdf: bbrkc.Rmd app.Rmd
+app: app.Rmd
+	R ${R_OPTS} -e 'library(knitr); knit("smbkc.Rmd"); knit("app.Rmd")'
+	pandoc -V geometry:margin=1in app.md -o app.pdf 
+
+pdf: bbrkc.Rmd
 	R ${R_OPTS} -e 'library(knitr); knit("smbkc.Rmd"); knit("app.Rmd")'
 	pandoc -V geometry:margin=1in bbrkc.md -o bbrkc.pdf --bibliography=../references/Gmacs.bib
 	pandoc -V geometry:margin=1in app.md -o app.pdf 
