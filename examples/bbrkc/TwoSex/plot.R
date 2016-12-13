@@ -64,16 +64,13 @@ plot_recruitment(M)
 ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
 dev.off()
 
-plot_size_transition(M, females = TRUE)
+#plot_size_transition(M, females = TRUE)
+plot_size_transition(M)
 ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
 plot_growth_inc(M)
 ggsave(paste0(.FIGS, "gi.png"), width = ww, height = hh)
-dev.off()
-
-plot_length_weight(M)
-ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
 dev.off()
 
 plot_numbers(M)
@@ -166,4 +163,8 @@ dev.off()
 
 plot_datarange(M)
 ggsave(paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0)
+dev.off()
+
+plot_length_weight(M)
+ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
 dev.off()

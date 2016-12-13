@@ -188,8 +188,8 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
    3       # Estimated rec_dev phase
    3       # Estimated rec_ini phase
-   1       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
-   0       # # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
+   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
+   0       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
    1984    # First year for average recruitment for Bspr calculation.
    2014    # Last year for average recruitment for Bspr calculation.
    0.35    # Target SPR ratio for Bmsy proxy.

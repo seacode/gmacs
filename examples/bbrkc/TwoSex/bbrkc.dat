@@ -6,8 +6,6 @@
 #    2        : Trawl bycatch
 #    3        : Trawl survey
 
-
-
 # Fisheries:  1 Pot Fishery,  2 Pot Discard,  3 Trawl by-catch, 4 BSFRF
 # Surveys:    3 NMFS  Trawl Survey, 4 BSFRF Survey
 #========================================================================================================

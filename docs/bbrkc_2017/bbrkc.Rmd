@@ -28,9 +28,9 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2015 Model","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
-.MODELDIR = c("../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_1/", "../../examples/smbkc2/model_2/", "../../examples/smbkc2/model_3/", "../../examples/smbkc2/model_4/","../../examples/smbkc2/model_5/")
-.THEME    = theme_bw(base_size = 12, base_family = "")
+mod_names <- c("2015 Model","Gmacs match")
+.MODELDIR = c("../../examples/bbrkc/TwoSex/", "../../examples/bbrkc/TwoSex/")
+.THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
 .FLEET    = c("Pot","Trawl bycatch","Fixed bycatch","NMFS Trawl","ADF&G Pot")
@@ -45,7 +45,7 @@ M        <- lapply(fn, read_admb)
 names(M) <- mod_names
 
 jj <- 1 # The position in the list that Jies model outputs sit
-fn <- "2015_model_fixed/smbkc15100"
+fn <- "2016_model/rk75162"
 JJ <- lapply(fn, read_admb)
 
 nmult_1 <- 1e+06
@@ -64,13 +64,13 @@ M[[jj]]$fit$std[ii] <- NA
 
 # Add natural mortality data
 ii <- which(M[[jj]]$mod_yrs == 1998)
-M[[jj]]$M[ii,] <- JJ[[jj]]$M98
+#M[[jj]]$M[ii,] <- JJ[[jj]]$M98
 
 # Add recruitment data - It looks like Jie has recorded this as millions of individuals
 din <- JJ[[jj]]$rec
 ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-M[[jj]]$fit$est[ii] <- c(log(nmult_1 * c(din, NA)), NA)
-M[[jj]]$fit$std[ii] <- NA
+#M[[jj]]$fit$est[ii] <- c(log(nmult_1 * c(din, NA)), NA)
+#M[[jj]]$fit$std[ii] <- NA
 
 # Add estimated trawl survey biomass (million of lbs)
 M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
@@ -85,24 +85,24 @@ M[[jj]]$res_cpue[1,39] <- NA
 M[[jj]]$res_cpue[2,9] <- NA
 
 # Add estimated length compositions
-M[[jj]]$d3_pre_size_comps_out[1:15,] <- rbind(t(JJ[[jj]]$P_ob), c(NA,NA,NA))
-M[[jj]]$d3_pre_size_comps_out[16:54,] <- rbind(t(JJ[[jj]]$P_ts), c(NA,NA,NA))
-M[[jj]]$d3_pre_size_comps_out[55:63,] <- rbind(t(JJ[[jj]]$P_ps), c(NA,NA,NA))
+#M[[jj]]$d3_pre_size_comps_out[1:15,] <- rbind(t(JJ[[jj]]$P_ob), c(NA,NA,NA))
+#M[[jj]]$d3_pre_size_comps_out[16:54,] <- rbind(t(JJ[[jj]]$P_ts), c(NA,NA,NA))
+#M[[jj]]$d3_pre_size_comps_out[55:63,] <- rbind(t(JJ[[jj]]$P_ps), c(NA,NA,NA))
 
 # Add selectivity data
 # year, sex, fleet, vec
-ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[1:31]
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[1:2],1) # Directed pot fisheries
-ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[32:38]
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[3:4],1) # Directed pot fisheries
-ind <- which(M[[jj]]$slx_capture[,3] %in% 4)
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ts,1) # Trawl survey
-ind <- which(M[[jj]]$slx_capture[,3] %in% 5)
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ps,1) # ADF&G pot survey
+# ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[1:31]
+# for (i in ind)
+#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[1:2],1) # Directed pot fisheries
+# ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[32:38]
+# for (i in ind)
+#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[3:4],1) # Directed pot fisheries
+# ind <- which(M[[jj]]$slx_capture[,3] %in% 4)
+# for (i in ind)
+#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ts,1) # Trawl survey
+# ind <- which(M[[jj]]$slx_capture[,3] %in% 5)
+# for (i in ind)
+#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ps,1) # ADF&G pot survey
 
 # Add size transition data
 M[[jj]]$size_transition_M <- matrix(c(0.2,0.7,0.1,0,0.4,0.6,0,0,1), nrow = 3, ncol = 3, byrow = TRUE)
@@ -119,7 +119,7 @@ fn <- paste0(.MODELDIR[2], "gmacs")
 Mmatch <- lapply(fn, read_admb)
 names(Mmatch) <- c("SMBKC")
 
-fn <- paste0(.MODELDIR[3], "gmacs")
+fn <- paste0(.MODELDIR[2], "gmacs")
 Mbase <- lapply(fn, read_admb)
 names(Mbase) <- c("SMBKC")
 
@@ -128,14 +128,14 @@ rinline <- function(code){
   sub("CODE", code, html)
 }
 
-rec_mod <- 3 # base
+rec_mod <- 2 # base
 #rec_mod <- 4 # M
 #rec_mod <- 6 # force
 ```
 
 # Executive Summary
 
-1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
+1. **Stock**: Red king crab (RKC), *Paralithodes camtschaticus*, in Bristol Bay, Alaska.
 
 2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds). The retained catch in 2015/16 was even lower at 48 tonnes (0.105 million pounds).
 
@@ -308,10 +308,6 @@ The blue king crab is a lithodid crab, *Paralithodes platypus* (Brant 1850).
 Blue king crab are sporadically distributed throughout the North Pacific Ocean from Hokkaido, Japan, to southeastern Alaska (Figure \ref{fig:distribution}). 
 In the eastern Bering Sea small populations are distributed around St. Matthew Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2 (Figure \ref{fig:registration_area}), which is the Northern District of the Bering Sea king crab registration area and includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).
 
-![Distribution of blue king crab (*Paralithodes platypus*) in the Gulf of Alaska, Bering Sea, and Aleutian Islands waters (shown in blue).\label{fig:distribution}](figure/Fig1.png)
-
-![King crab Registration Area Q (Bering Sea).\label{fig:registration_area}](figure/Fig2.png)
-
 ## Stock Structure
 
 The Alaska Department of Fish and Game (ADF&G) Gene Conservation Laboratory division has detected regional population differences between blue king crab collected from St. Matthew Island and the Pribilof Islands^[NOAA grant Bering Sea Crab Research II, NA16FN2621, 1997.]. NMFS tag-return data from studies on blue king crab in the Pribilof Islands and St. Matthew Island support the idea that legal-sized males do not migrate between the two areas (Otto and Cummiskey 1990). St. Matthew Island blue king crab tend to be smaller than their Pribilof conspecifics, and the two stocks are managed separately.
@@ -400,13 +396,12 @@ Though historical observer data are limited due to very limited sampling, bycatc
 \end{table}
 On the other hand, these same data suggest a significant reduction in the bycatch of females, which may be attributable to the later timing of the contemporary fishery and the more offshore distribution of fishery effort since reopening in 2009/10^[D. Pengilly, ADF&G, pers. comm.]. Some bycatch of discarded blue king crab has also been observed historically in the eastern Bering Sea snow crab fishery, but in recent years it has generally been negligible, and observers recorded no bycatch of blue king crab in sampled pot lifts during 2013/14. The St. Matthew Island golden king crab fishery, the third commercial crab fishery to have taken place in the area, typically occurred in areas with depths exceeding blue king crab distribution. NMFS observer data suggest that variable but mostly limited SMBKC bycatch has also occurred in the eastern Bering Sea groundfish fisheries (Table \ref{tab:smbkc_groundfish_bycatch}).
 ```{r smbkc_groundfish_bycatch, results = "asis"}
-df <- dplyr::filter(data.frame(M[[2]]$dCatchData_out), V2 == 2, V3 %in% c(2,3)) %>%
-  dplyr::select(V1, V3, V5) %>%
-  tidyr::spread(key = V3, value = V5) #%>%
-  #dplyr::mutate(V1 = paste0(V1, "/", as.numeric(sub('.*(?=.{2}$)', '', V1, perl = TRUE)) + 1))
-names(df) <- c("Year","Trawl bycatch","Fixed gear bycatch")
-tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tonnes) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:smbkc_groundfish_bycatch", digits = c(0,0,3,3))
-print(tab, caption.placement = "top", include.rownames = FALSE)
+#df <- dplyr::filter(data.frame(M[[2]]$dCatchData_out), V2 == 2, V3 %in% c(2,3)) %>%
+#  dplyr::select(V1, V3, V5) %>%
+#  tidyr::spread(key = V3, value = V5)
+#names(df) <- c("Year","Trawl bycatch","Fixed gear bycatch")
+#tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tonnes) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:smbkc_groundfish_bycatch", digits = c(0,0,3,3))
+#print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
 
@@ -417,7 +412,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 Data used in this assessment have been updated to include the most recently available fishery and survey numbers. This assessment makes use of two new survey data points including the 2016 NMFS trawl-survey estimate of abudance, and the 2016 ADF&G pot survey CPUE. Both of these surveys have associated size compositon data. The assessment also uses updated 1993-2015 groundfish and fixed gear bycatch estimates based on AKRO data. The 2015/16 directed fishery catch data and associated size composition data were also used. The data used in each of the new models is shown in Figure \ref{fig:data_extent}.
 
 ```{r data_extent, fig.cap = "Data extent for the SMBKC assessment.\\label{fig:data_extent}"}
-plot_datarange(Mbase)
+#plot_datarange(Mbase)
 ```
 
 ## Major Data Sources
@@ -500,13 +495,6 @@ Major data sources used in this assessment include annual directed-fishery retai
 
 Figure \ref{fig:stations} maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure \ref{fig:catch181}). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure \ref{fig:reporting_areas}). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&G statistical area was not used.
 
-![Trawl and pot-survey stations used in the SMBKC stock assessment.\label{fig:stations}](figure/Fig3.png)
-
-![Catches of 181 male blue king crab measuring at least 90 mm CL from the 2014 NMFS trawl-survey at the 56 stations used to assess the SMBKC stock. Note that the area north of St. Matthew Island, which includes the large catch of 67 crab at station R-24, is not represented in the ADF&G pot-survey data used in the assessment.\label{fig:catch181}](figure/Fig4.png)
-
-![NFMS Bering Sea reporting areas. Estimates of SMBKC bycatch in the groundfish fisheries are based on NMFS observer data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.png)
-
-
 ## Other Data Sources
 
 Recent model configurations developed for SMBKC makes use of a growth transition matrix based on Otto and Cummiskey (1990), the same growth transition matrix is used in this assessment. Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which also provides a detailed description of the model configuration used for this assessment.
@@ -546,7 +534,7 @@ Five different Gmacs model scenarios were considered, in this document results f
 
 5. **Gmacs Francis**: is similar to the scenario above except that it also uses the Francis iterative re-weighting method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and pot survey weights were left as is (i.e. a weight of 1) because upweighting these series resulted in worse standard deviation of the normalised residual (SDNR) and median of the absolute residual (MAR) values for each of the surveys. Down-weighting the two surveys actually improved the SDNR and MAR values, but it would be unwise to down-weight either of these series. When applying the Francis iterative re-weighting method only once iteration was done (i.e. the model was run once with the size composition likelihood weights set to one, the new Francis weights were calculated, and the model was run once more using these weights). In this scenario the multinomial distribution was used instead as the theory underpinning the Francis weighting method is based on this distribution.
 
-6. **Gmacs force**: is an exploratory scenario that the same as above except the NMFS trawl survey is up-weighted by $\lambda^\text{NMFS}=$ `r M[[6]]$cpue_lambda[1]` and the ADF&G pot survey is up-weighted by $\lambda^\text{ADFG}=$ `r M[[6]]$cpue_lambda[2]`. After this, the Francis weights for each of the size-compostitons were recalculated and applied again in this model. This scenario should not be used for overfishing determination as it upweights the trawl and pot survey abundance indices to force a better fit to each of these data sets and provide some contrast among the Gmacs model runs. This scenario forces a better fit to the trawl and pot surveys at the expense of the SDNR (and MAR) for each of these series.
+6. **Gmacs force**: is an exploratory scenario that the same as above except the NMFS trawl survey is up-weighted by $\lambda^\text{NMFS}=$ `r M[[2]]$cpue_lambda[1]` and the ADF&G pot survey is up-weighted by $\lambda^\text{ADFG}=$ `r M[[2]]$cpue_lambda[2]`. After this, the Francis weights for each of the size-compostitons were recalculated and applied again in this model. This scenario should not be used for overfishing determination as it upweights the trawl and pot survey abundance indices to force a better fit to each of these data sets and provide some contrast among the Gmacs model runs. This scenario forces a better fit to the trawl and pot surveys at the expense of the SDNR (and MAR) for each of these series.
 
 Table \ref{tab:model_runs} outlines the major features of each of the models.
 \begin{table}[ht]
@@ -635,22 +623,22 @@ where $B$ is quantified as mature-male biomass (MMB) at mating with time of mati
 
 The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, ABC, and MMB in 2016 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC is 80% of the OFL.
 ```{r management_quants, results = "asis"}
-df <- NULL
-for (ii in 2:6)
-{
-    x <- M[[ii]]
-    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-    fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
-    OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-    Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
-    ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-    v <- c(mmb, Bmsy, fofl, OFL, ABC)
-    df <- cbind(df, v)
-}
-df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
-tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tonnes.", label = "tab:management_quants", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+#df <- NULL
+#for (ii in 2:6)
+#{
+#    x <- M[[ii]]
+#    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+#    fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
+#    OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+#    Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
+#    ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+#    v <- c(mmb, Bmsy, fofl, OFL, ABC)
+#    df <- cbind(df, v)
+#}
+#df <- data.frame(rownames(df), df, row.names = NULL)
+#names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
+#tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tonnes.", label = "tab:management_quants", digits = 3)
+#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 
@@ -733,8 +721,8 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analys
 ```{r length_weight, results = "asis"}
 df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt * 1000)
 names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
-tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length_weight", digits = c(0,0,1,1,1))
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+#tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length_weight", digits = c(0,0,1,1,1))
+#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 \begin{table}[ht]
@@ -805,261 +793,10 @@ SD <- x$std[i]
 j <- grep("survey_q", Parameter)
 Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
-df <- data.frame(Parameter, Estimate, SD)
+#Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
+#df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_match", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
-
-```{r est_pars_3, results = "asis"}
-x <- M[[3]]$fit
-i <- c(grep("m_dev", x$names)[1],
-       grep("theta", x$names),
-       grep("survey_q", x$names),
-       grep("log_fbar", x$names),
-       grep("log_slx_pars", x$names),
-       grep("sd_fofl", x$names),
-       grep("sd_ofl", x$names)
-       )
-Parameter <- x$names[i]
-Estimate <- x$est[i]
-SD <- x$std[i]
-j <- grep("survey_q", Parameter)
-Estimate[j] <- Estimate[j] * 1000
-SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998}$)","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$",
-               "ADF\\&G pot survey catchability ($q \\times 1000$)",
-               "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
-               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
-               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
-               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
-               "$F_\\text{OFL}$","OFL")
-df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
-
-```{r est_pars_4, results = "asis"}
-x <- M[[4]]$fit
-i <- c(grep("theta", x$names),
-       grep("survey_q", x$names),
-       grep("log_add_cv", x$names),
-       grep("log_fbar", x$names),
-       grep("log_slx_pars", x$names),
-       grep("sd_fofl", x$names),
-       grep("sd_ofl", x$names)
-       )
-Parameter <- x$names[i]
-Estimate <- x$est[i]
-SD <- x$std[i]
-j <- grep("survey_q", Parameter)
-Estimate[j] <- Estimate[j] * 1000
-SD[j] <- SD[j] * 1000
-Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$",
-               "ADF\\&G pot survey catchability ($q \\times 1000$)",
-               "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
-               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
-               "log Stage-1 NMFS trawl selectivity", "log Stage-2 NMFS trawl selectivity",
-               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
-               "$F_\\text{OFL}$","OFL")
-df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs M} model.", label = "tab:est_pars_Francis", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
-
-```{r est_pars_5, results = "asis"}
-x <- M[[5]]$fit
-i <- c(grep("theta", x$names),
-       grep("survey_q", x$names),
-       grep("log_fbar", x$names),
-       grep("log_slx_pars", x$names),
-       grep("sd_fofl", x$names),
-       grep("sd_ofl", x$names)
-       )
-Parameter <- x$names[i]
-Estimate <- x$est[i]
-SD <- x$std[i]
-j <- grep("survey_q", Parameter)
-Estimate[j] <- Estimate[j] * 1000
-SD[j] <- SD[j] * 1000
-Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)",
-               "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
-               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
-               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
-               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
-               "$F_\\text{OFL}$","OFL")
-df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs Francis} model.", label = "tab:est_pars_M", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
-
-```{r est_pars_6, results = "asis"}
-x <- M[[6]]$fit
-i <- c(grep("theta", x$names),
-       grep("survey_q", x$names),
-       grep("log_fbar", x$names),
-       grep("log_slx_pars", x$names),
-       grep("sd_fofl", x$names),
-       grep("sd_ofl", x$names)
-       )
-Parameter <- x$names[i]
-Estimate <- x$est[i]
-SD <- x$std[i]
-j <- grep("survey_q", Parameter)
-Estimate[j] <- Estimate[j] * 1000
-SD[j] <- SD[j] * 1000
-Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)",
-               "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
-               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
-               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
-               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
-               "$F_\\text{OFL}$","OFL")
-df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs force} model.", label = "tab:est_pars_force", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
-
-```{r est_pars_all, results = "asis"}
-Parameter <- NULL
-Estimate <- NULL
-Model <- NULL
-Mname <- c("Match","Base","M","Francis","Force")
-for (ii in 2:6)
-{
-    x <- M[[ii]]$fit
-    i <- c(grep("m_dev", x$names)[1],
-           grep("theta", x$names),
-           grep("survey_q", x$names),
-           grep("log_fbar", x$names),
-           grep("log_slx_pars", x$names))
-    Parameter <- c(Parameter, x$names[i])
-    Estimate <- c(Estimate, x$est[i])
-    Model <- c(Model, rep(Mname[ii-1], length(i)))
-}
-Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998}$)","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$",
-               "ADF\\&G pot survey catchability ($q$)",
-               "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
-               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2015","log Stage-2 directed pot selectivity 2009-2015",
-               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
-               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity")
-Parameter <- c(Parameter[c(1:5,7:9)],
-               Parameter[c(1:17)],
-               Parameter,
-               Parameter[c(1:17)],
-               Parameter[c(1:17)])
-df <- data.frame(Model, Parameter, Estimate)
-df <- tidyr::spread(df, Model, Estimate) %>%
-  dplyr::select(Parameter, Match, Base, M, Francis, Force)
-df[1,2:6] <- df[1,2:6] * 1000
-tab <- xtable(df, caption = "Comparisons of model parameter estimates for the five Gmacs model scenarios.", label = "tab:est_pars_all", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
-```
-
-```{r data_weighting, results = "asis"}
-df <- NULL
-for (ii in 2:6)
-{
-    x <- M[[ii]]
-    SDNR <- c(x$sdnr_MAR_cpue[,1], x$sdnr_MAR_lf[,1]); names(SDNR) <- c("SDNR NMFS trawl survey","SDNR ADF\\&G pot survey","SDNR directed pot LF","SDNR NMFS trawl survey LF","SDNR ADF\\&G pot survey LF")
-    MAR <- c(x$sdnr_MAR_cpue[,2], x$sdnr_MAR_lf[,2]); names(MAR) <- c("MAR NMFS trawl survey","MAR ADF\\&G pot survey","MAR directed pot LF","MAR NMFS trawl survey LF","MAR ADF\\&G pot survey LF")
-    Francis <- x$Francis_weights; names(Francis) <- c("Francis weight for directed pot LF","Francis weight for NMFS trawl survey LF","Francis weight for ADF\\&G pot survey LF")
-    wt_cpue <- x$cpue_lambda; names(wt_cpue) <- c("NMFS trawl survey weight","ADF\\&G pot survey weight")
-    wt_lf <- x$lf_lambda; names(wt_lf) <- c("Directed pot LF weight","NMFS trawl survey LF weight","ADF\\&G pot survey LF weight")
-    v <- c(wt_cpue, wt_lf, Francis, SDNR, MAR)
-    df <- cbind(df, v)
-}
-df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Match","Base","M","Francis","Force")
-tab <- xtable(df, caption = "Comparisons of data weights, Francis LF weights (i.e. the new weights that should be applied to the LFs), SDNR values, and MAR values for the five Gmacs model scenarios.", label = "tab:data_weighting")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, hline.after = c(-1,0,5,8,13,nrow(tab)))
-```
-
-```{r likelihood_components, results = "asis"}
-df <- NULL
-for (ii in 2:6)
-{
-    x <- M[[ii]]
-    # Catch
-    ll_catch <- x$nloglike[1,]
-    dc <- .get_catch_df(Mbase)
-    names(ll_catch) <- unique(paste0(dc$fleet, " ", dc$type, " Catch"))
-    # Abundance indices
-    ll_cpue <- x$nloglike[2,1:2]
-    names(ll_cpue) <- c("NMFS Trawl Survey","ADF\\&G Pot Survey CPUE")
-    # Size compositions
-    ll_lf <- x$nloglike[3,1:3]
-    names(ll_lf) <- c("Directed Pot LF","NMFS Trawl LF","ADF\\&G Pot LF")
-    # Recruitment deviations
-    ll_rec <- sum(x$nloglike[4,], na.rm = TRUE)
-    names(ll_rec) <- "Recruitment deviations"
-    # Penalties
-    F_pen <- x$nlogPenalty[2]; names(F_pen) <- "F penalty"
-    M_pen <- x$nlogPenalty[3]; names(M_pen) <- "M penalty"
-    # Priors
-    prior <- sum(x$priorDensity); names(prior) <- "Prior"
-    v <- c(ll_catch, ll_cpue, ll_lf, ll_rec, F_pen, M_pen, prior)
-    sv <- sum(v); names(sv) <- "Total"
-    npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
-    v <- c(v, sv, npar)
-    df <- cbind(df, v)
-}
-df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Match","Base","M","Francis","Force")
-tab <- xtable(df, caption = "Comparisons of negative log-likelihood values for the five Gmacs model scenarios. It is important to note that not all of these model runs are directly comparable as the {\\bf Gmacs Francis} and {\\bf Gmacs force} models implement the Francis iterative reweighting method (Francis 2011).", label = "tab:likelihood_components")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
-
-```{r pop_abundance_2015, results = "asis"}
-A <- M[[1]]
-df <- data.frame(as.integer(A$mod_yrs[1:(length(A$mod_yrs)-1)]), A$N_len[1:38,1], A$N_len[1:38,2], A$N_len[1:38,3], c(A$ssb))
-names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey and mature male biomass (MMB) in tonnes on 15 February for the {\\bf 2015 model}.", label = "tab:pop_abundance_2015")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
-```
-
-```{r pop_abundance_match, results = "asis"}
-A <- M[[2]]
-df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
-names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs match} model.", label = "tab:pop_abundance_match")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
-```
-
-```{r pop_abundance_base, results = "asis"}
-A <- M[[3]]
-df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
-names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs base} model.", label = "tab:pop_abundance_base")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
-```
-
-```{r pop_abundance_Francis, results = "asis"}
-A <- M[[4]]
-df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
-names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs M} model.", label = "tab:pop_abundance_Francis")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
-```
-
-```{r pop_abundance_M, results = "asis"}
-A <- M[[5]]
-df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
-names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs Francis} model.", label = "tab:pop_abundance_M")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
-```
-
-```{r pop_abundance_force, results = "asis"}
-A <- M[[6]]
-df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
-names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs force} model.", label = "tab:pop_abundance_force")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 
@@ -1092,11 +829,6 @@ A <- M; A[[jj]] <- NULL
 plot_cpue_res(A, "NMFS Trawl")
 ```
 
-```{r bts_resid_adfg, fig.cap = "Standardized residuals for total male pot survey CPUEs for each of the Gmacs model scenarios.\\label{fig:bts_resid_adfg}"}
-A <- M; A[[jj]] <- NULL
-plot_cpue_res(A, "ADF&G Pot")
-```
-
 \newpage\clearpage
 
 ```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of SMBKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2015 year.\\label{fig:sc_pot}"}
@@ -1111,25 +843,6 @@ plot_size_comps(M, 2)
 plot_size_comps(M, 3)
 ```
 
-```{r sc_pot_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the directed pot fishery size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs base** model.\\label{fig:sc_res_base}"}
-fn <- paste0(.MODELDIR[3], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
-plot_size_comps_res(MM)
-```
-
-```{r sc_pot_discarded_res_selex, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs M** model.\\label{fig:sc_res_M}"}
-fn <- paste0(.MODELDIR[4], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
-plot_size_comps_res(MM)
-```
-
-```{r sc_pot_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the NMFS trawl survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs Francis** model.\\label{fig:sc_res_Francis}"}
-fn <- paste0(.MODELDIR[5], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
-plot_size_comps_res(MM)
-```
-
-```{r sc_trawl_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs force** model.\\label{fig:sc_res_force}"}
-fn <- paste0(.MODELDIR[6], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
-plot_size_comps_res(MM)
-```
 
 \newpage\clearpage
 
