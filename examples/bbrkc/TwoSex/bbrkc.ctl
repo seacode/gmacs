@@ -11,7 +11,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
     0.18        0.01      1         -4       2    0.18    0.04        # M
    14.0       -10        20          2       1   10.0    30.0         # logR0 
-   14.0       -10        20          2       1   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
+   14.0       -10        20         -2       1   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
    14.0       -10        20         -1       1   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.0        55       100         -4       1   72.5     7.25        # recruitment expected value
     0.561       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component)
@@ -68,7 +68,7 @@
 # Gear-1
    1      1    1   1    100    5    185    0       1    999   -3     1975   2014
    1      2    2   1    120    5    185    0       1    999   -3     1975   2014
-   1      3    1   2     80   60    150    0       1    999   -3     1975   2014
+   1      3    1   2     84   60    150    0       1    999   -3     1975   2014
    1      4    2   2     95   60    150    0       1    999   -3     1975   2014
 # Gear-2
    2      5    1   0    110    5    185    0       1    999   -3     1975   2014
@@ -114,8 +114,8 @@
 ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
-   0.843136  0        2     -4    1     0.843136 0.03   0           4       # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   1.0       0        5     -4    0     0.001    5.00   0           1       # BSFRF
+   0.843136  0        2     4    1     0.843136 0.03   0           2       # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   1.0       0        5    -4    0     0.001    5.00   0           1       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -157,9 +157,10 @@
    0   0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
    1   1   1   1   1   1   1   1   1  1  # Initial value for effective sample size multiplier
   -4  -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
-#   1   2   2   3   3   4   4   4   5  5  # Composition aggregator
-   1   2   3   4   5   6   7   8   9  10  # Composition aggregator
-   1   1   1   1   1   1   1   1   1  1  # LAMBDA
+   1   2   2   3   3   4   4   4   5  5  # Composition aggregator
+#   1   2   3   4   5   6   7   8   9  10  # Composition aggregator
+#   1   1   1   1   1   1   1   1   1  1  # LAMBDA
+   0.01   0.01   0.01   0.01   0.01   0.01   0.01   0.01   0.01  0.01  # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -172,7 +173,7 @@
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Type
-   3
+   0
 ## Phase of estimation
    3
 ## STDEV in m_dev for Random walk
