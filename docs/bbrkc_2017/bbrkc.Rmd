@@ -28,23 +28,25 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2015 Model","Gmacs match")
+mod_names <- c("Gmacs","2016 Model")
 .MODELDIR = c("../../examples/bbrkc/TwoSex/", "../../examples/bbrkc/TwoSex/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
-.SEX      = c("Aggregate","Male")
-.FLEET    = c("Pot","Trawl bycatch","Fixed bycatch","NMFS Trawl","ADF&G Pot")
+.SEX      = c("Aggregate","Male","Female")
+.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
-.SHELL    = c("Aggregate")
+.SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate")
+.MATURITY = c("Aggregate","Immature","Mature")
 .SEAS     = c("1","2","3","4","5")
+.SEAS     = c("Annual")
 
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
 names(M) <- mod_names
 
-jj <- 1 # The position in the list that Jies model outputs sit
+jj <- 2 # The position in the list that Jies model outputs sit
 fn <- "2016_model/rk75162"
 JJ <- lapply(fn, read_admb)
 
@@ -52,37 +54,37 @@ nmult_1 <- 1e+06
 nmult_2 <- 0.0004535923 * 1e+6
 
 # Add numbers at length data
-M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
-M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
-M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
+# M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
+# M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
+# M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
 
 # Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
-ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
-M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
-M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
-M[[jj]]$fit$std[ii] <- NA
+# ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
+# M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
+# M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
+# M[[jj]]$fit$std[ii] <- NA
 
 # Add natural mortality data
-ii <- which(M[[jj]]$mod_yrs == 1998)
+#ii <- which(M[[jj]]$mod_yrs == 1998)
 #M[[jj]]$M[ii,] <- JJ[[jj]]$M98
 
 # Add recruitment data - It looks like Jie has recorded this as millions of individuals
-din <- JJ[[jj]]$rec
-ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
+#din <- JJ[[jj]]$rec
+#ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
 #M[[jj]]$fit$est[ii] <- c(log(nmult_1 * c(din, NA)), NA)
 #M[[jj]]$fit$std[ii] <- NA
 
 # Add estimated trawl survey biomass (million of lbs)
-M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
-M[[jj]]$obs_cpue[1,] <- c(nmult_2 * JJ[[jj]]$b_ts, NA)
-M[[jj]]$pre_cpue[2,1:9] <- c(1000 * JJ[[jj]]$X_ps, NA)
-M[[jj]]$obs_cpue[2,1:9] <- c(1000 * JJ[[jj]]$x_ps, NA)
-ii <- which(M[[jj]]$dSurveyData[,1] == 2016)
-M[[jj]]$dSurveyData <- M[[jj]]$dSurveyData[-ii,]
-M[[jj]]$cpue_cv_add[1,39] <- NA
-M[[jj]]$cpue_cv_add[2,9] <- NA
-M[[jj]]$res_cpue[1,39] <- NA
-M[[jj]]$res_cpue[2,9] <- NA
+# M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
+# M[[jj]]$obs_cpue[1,] <- c(nmult_2 * JJ[[jj]]$b_ts, NA)
+# M[[jj]]$pre_cpue[2,1:9] <- c(1000 * JJ[[jj]]$X_ps, NA)
+# M[[jj]]$obs_cpue[2,1:9] <- c(1000 * JJ[[jj]]$x_ps, NA)
+# ii <- which(M[[jj]]$dSurveyData[,1] == 2016)
+# M[[jj]]$dSurveyData <- M[[jj]]$dSurveyData[-ii,]
+# M[[jj]]$cpue_cv_add[1,39] <- NA
+# M[[jj]]$cpue_cv_add[2,9] <- NA
+# M[[jj]]$res_cpue[1,39] <- NA
+# M[[jj]]$res_cpue[2,9] <- NA
 
 # Add estimated length compositions
 #M[[jj]]$d3_pre_size_comps_out[1:15,] <- rbind(t(JJ[[jj]]$P_ob), c(NA,NA,NA))
@@ -104,11 +106,8 @@ M[[jj]]$res_cpue[2,9] <- NA
 # for (i in ind)
 #     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ps,1) # ADF&G pot survey
 
-# Add size transition data
-M[[jj]]$size_transition_M <- matrix(c(0.2,0.7,0.1,0,0.4,0.6,0,0,1), nrow = 3, ncol = 3, byrow = TRUE)
-
 # Add recruitment size distribution data - in Jies model all recruit to first size class, in gmacs almost all to first size class.
-M[[jj]]$rec_sdd <- c(1,0,0)
+#M[[jj]]$rec_sdd <- c(1,0,0)
 
 # The .rep files for each of the Gmacs models. Used for making tables of the likelihood components
 #like <- list()
@@ -156,8 +155,6 @@ rec_mod <- 2 # base
   2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
   2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
   2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 & `r round(M[[rec_mod]]$spr_bspr/1000 * 0.5, 2)`$^D$ & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)-1]/1000, 2)`$^D$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\
-  2016/17 & & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/1000, 2)`$^D$ & & & & `r round(M[[rec_mod]]$spr_cofl/1000, 2)` & `r round(M[[rec_mod]]$spr_cofl/1000*0.8, 2)` \\
   \hline
 \end{tabular}
 \end{table}
@@ -173,8 +170,6 @@ rec_mod <- 2 # base
   2012/13 & 4.0$^A$ & 6.29$^A$ & 1.630 & 1.616 & 1.81   & 2.24 & 2.02 \\ 
   2013/14 & 3.4$^B$ & 6.64$^B$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
   2014/15 & 4.1$^C$ & 5.47$^C$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
-  2015/16 & `r sprintf("%.1f", round(M[[rec_mod]]$spr_bspr * 2204.62/1e6 * 0.5, 1))`$^D$ & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)-1] * 2204.62/1e6, 2)`$^D$ & 0.41 & 0.105 & 0.105 & 0.62 & 0.49 \\
-  2016/17 & & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)] * 2204.62/1e6, 2)`$^D$ & & & & `r round(M[[rec_mod]]$spr_cofl * 2204.62/1e6, 2)` & `r round(M[[rec_mod]]$spr_cofl * 2204.62/1e6*0.8, 2)` \\
   \hline
 \end{tabular}
 \end{table}
@@ -193,7 +188,6 @@ rec_mod <- 2 # base
   2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
   2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
-  2016/17 & 4b & `r round(M[[rec_mod]]$spr_bspr/1000, 2)` & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/1000, 2)` & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/M[[rec_mod]]$spr_bspr, 2)` & 0.09 & 1 & 1978-2016 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -222,38 +216,12 @@ One of the Gmacs model scenarios (**Gmacs match**) attempts to match the 2015 as
 
 ## CPT and SSC Comments on Assessments in General
 
-Comment: *Regarding general code development, the CPT had the following requests:*
-
-  1. *1-year projection for calculating Tier 3 or 4 OFLs*
-  2. *specify catchability as a fixed or estimated parameter or use the analytic calculation for the MLE*
-  3. *specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors*
-  4. *include an option to calculate dynamic $B_\mathit{MSY}$*
-  5. *add the ability to “jitter” initial parameter values*
-  6. *add the ability to conduct retrospective analyses*
-  7. *add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available*
-  8. *allow different phases for “rec_ini”, “rec_dev” estimation*
-
-Response:
-
-  1. Done
-  2. Done
-  3. Not yet implemented
-  4. Not yet implemented
-  5. Not yet implemented
-  6. Not yet implemented
-  7. Not yet implemented
-  8. Done
-
 Comment: *Andre Punt pointed out the need to use a fixed-iteration Newton’s method to calculate OFL, not bisection, to keep the calculation differentiable so that OFL can be reported as an sdreport variable.*
 
 Response: This has been done and the $F_\mathit{OFL}$ and OFL have both been reported as an sdreport variables in this document.
 
 
 ## CPT and SSC Comments Specific to the SMBKC Stock Assessment
-
-Comment: *the CPT requests that some evaluation should also be included in the September report to the CPT which compares against the previous assessment model corrected for the error.*
-
-Response: The error in the 2015 was fixed and this model was run again. Comparisons between the Gmacs models and the 2015 model are presented throughout this document. One of the Gmacs model scenarios (**Gmacs match**) attempts to match the 2015 assessment as closely as possible by specifying the same (or similar) dynamics and some of the same (fixed) parameter values.
 
 Comment: *The SSC and CPT requested the following models for review at the spring 2016 meeting:*
 
@@ -267,34 +235,6 @@ Response: Models 1, 3, and 4 are all included and evaluated in this document as 
 Comment: *The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.*
 
 Response: All model runs that estimate additional CV were dropped from this document. Instead we provide two model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the **Gmacs Francis**, and **Gmacs force** scenarios. The final Gmacs scenario (**Gmacs force**) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).
-
-Comment: *The descriptions of seasons in the model is confusing and currently reads as if $M$ differs among seasons. More justification is needed on how seasons are defined and how they were selected, as well as clarification on $M$ during these seasons.*
-
-Response: This description has been updated and justification provided in Appendix A.
-
-Comment: *During the presentation to the SSC, uncertainty was expressed about the origins of the growth transition matrix, but page 7 of the report indicates that the matrix was derived by Otto and Cummiskey (1990). As this matrix is critical to the model, the origin and integrity of the growth transition matrix should be carefully explained in the assessment for fall 2016. In some other models, the transition matrix can be estimated. If there are doubts about the veracity of the transition matrix, perhaps this can be explored in the modeling framework.*
-
-Response: The report is correct, the growth matrix was derived by Otto and Cummiskey (1990) and used in this assessment. 
-
-Comment: *The selectivities were constrained so that they do not exceed 1.0, but the tables of log-transformed parameter estimates do not indicate that this upper bound was approached. This should be clarified.*
-
-Response: After fixing the error in the 2015 SMBKC model code, it was found that the NMFS trawl survey selectivity does exceed 1 for stage-2 crab. The **Gmacs match** scenario does allow selectivity to be greater than 1 (it uses the same fixed selectvity values as the 2015 model). At the request of the CPT an upper bound of 1 was specified for the remaining Gmacs scenarios. Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and \ref{tab:est_pars_force} all show that this upper bound was approached for at least one selectivity parameter in all of these scenarios.
-
-Comment: *It would be helpful to include a table of NMFS trawl survey CPUE by crab stage, just as was provided for the ADF&G pot survey (Table 1).*
-
-Response: This table has been added.
-
-Comment: *Page 10 refers to a table of observed and estimated sample size, but no such table was provided.*
-
-Response: This table has been added.
-
-Comment: *As with the 2015 model, GMACS consistently overestimates trawl survey estimates of male biomass in the last decade, whereas GMACS tends to underestimate the last couple of pot survey estimates (Figure 9, 12). This is also reflected in patterns in residuals, and the proportions of stage-3 crab tend to be overestimated in recent years (Figure 14). These patterns should be discussed in the assessment.*
-
-Response: Done.
-
-Comment: *The SSC discussed the possibility that these patterns could be indicative of spatial patterns in stock distribution. The trawl survey covers a much larger geographic distribution than the pot survey (Figure 4). Crab distribution may vary with sex (females tend to be found close to shore) and life stage. Thus, the trawl and pot surveys may sample the crab stock differentially. Moreover, the geographic distributions of these stages may vary with stock density and temperature. It could be informative to conduct some spatial analyses, which could include: (1) estimation of survey catchability as a function of temperature, (2) a stock assessment model run that includes pot surveys and only those trawl stations that fall within the pot survey distribution as a comparison the runs that include the full trawl survey data, and (3) analysis of the spatial distribution of surveyed crabs by stage at high and low biomass and during warm and cold years.*
-
-Response: In the past Jie has tried to estimate survey catchability as a function of temperature with little success. We will try again this year, but this run will not be presented in this document.
 
 
 # C. Introduction
@@ -802,6 +742,43 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 \newpage\clearpage
 
+```{r molt_prob, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:molt_prob}"}
+mp1 <- c(0.999966, 0.999934, 0.99987, 0.999746, 0.999504, 0.999031, 0.998109, 0.996311, 0.992816, 0.986056, 0.973108, 0.948763, 0.90454, 0.829026, 0.712748, 0.559415, 0.393843, 0.249522, 0.145401, 0.0800909)
+mp2 <- c(0.999292, 0.998841, 0.998102, 0.996894, 0.994921, 0.991705, 0.986481, 0.978039, 0.964516, 0.943149, 0.910114, 0.86072, 0.790431, 0.697152, 0.584195, 0.461642, 0.343556, 0.242093, 0.163148, 0.106334)
+
+M1 <- M
+M1[[3]] <- M[[2]]
+names(M1) <- c('Gmacs','1975-1979','1980-present')
+
+M1[[2]]$molt_probability[1,] <- mp1
+M1[[2]]$molt_probability[2,] <- 1
+M1[[3]]$molt_probability[1,] <- mp2
+M1[[3]]$molt_probability[2,] <- 1
+
+plot_molt_prob(M1)
+```
+
+```{r growth_inc, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:growth_inc}"}
+gi1 <- c(13.8, 12.2, 10.5, 8.4, 7.5, 7, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7, 0.4)
+gi2 <- c(15.4, 13.8, 12.2, 10.5, 8.9, 7.9, 7.2, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7)
+gi3 <- c(15.1, 14, 12.9, 11.8, 10.6, 8.7, 7.4, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7)
+gi4 <- c(16.5, 16.5, 16.4, 16.3, 16.3, 16.2, 16.2, 16.1, 16.1, 16, 16, 15.9, 15.8, 15.8, 15.7, 15.7, 15.6, 15.6, 15.5, 15.5)
+
+M1 <- M
+M1[[3]] <- M[[2]]
+M1[[4]] <- M[[2]]
+names(M1) <- c('Gmacs','1968-1982','1983-93','1994-present')
+
+M1[[2]]$pMoltInc[M1[[2]]$iMoltIncSex == 1] <- gi4
+M1[[2]]$pMoltInc[M1[[2]]$iMoltIncSex == 2] <- gi1
+M1[[3]]$pMoltInc[M1[[3]]$iMoltIncSex == 1] <- gi4
+M1[[3]]$pMoltInc[M1[[3]]$iMoltIncSex == 2] <- gi2
+M1[[4]]$pMoltInc[M1[[4]]$iMoltIncSex == 1] <- gi4
+M1[[4]]$pMoltInc[M1[[4]]$iMoltIncSex == 2] <- gi3
+
+plot_growth_inc(M1)
+```
+
 ```{r selectivity, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:selectivity}", fig.height = 15}
 plot_selectivity(M, ncol = 5)
 ```
@@ -817,11 +794,11 @@ plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)", ShowEstErr = TRUE)
 \newpage\clearpage
 
 ```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
-plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)")
+#plot_cpue(M, "BSFRF", ylab = "Pot survey CPUE (crab/potlift)")
 ```
 
 ```{r pot_survey_cpue_weights, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:pot_survey_cpue_weights}"}
-plot_cpue(M, "ADF&G Pot", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
+#plot_cpue(M, "BSFRF", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
 ```
 
 ```{r bts_resid_nmfs, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass for each of the Gmacs model scenarios. \\label{fig:bts_resid_nmfs}"}
@@ -832,15 +809,15 @@ plot_cpue_res(A, "NMFS Trawl")
 \newpage\clearpage
 
 ```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of SMBKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2015 year.\\label{fig:sc_pot}"}
-plot_size_comps(M, 1)
+#plot_size_comps(M, 1)
 ```
 
 ```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male SMBKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\\label{fig:sc_pot_discarded}"}
-plot_size_comps(M, 2)
+#plot_size_comps(M, 2)
 ```
 
 ```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\\label{fig:sc_trawl_discarded}"}
-plot_size_comps(M, 3)
+#plot_size_comps(M, 3)
 ```
 
 
@@ -853,11 +830,11 @@ plot_catch(A)
 
 ```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}"}
 A <- M
-for (i in 2:6) {
-  ii <- which(A[[i]]$fit$names %in% "sd_log_recruits"); ii <- ii[length(ii)]
-  A[[i]]$fit$est[ii] <- NA
-  A[[i]]$fit$std[ii] <- NA
-}
+# for (i in 2:6) {
+#   ii <- which(A[[i]]$fit$names %in% "sd_log_recruits"); ii <- ii[length(ii)]
+#   A[[i]]$fit$est[ii] <- NA
+#   A[[i]]$fit$std[ii] <- NA
+# }
 plot_recruitment(A)
 ```
 
@@ -866,12 +843,66 @@ plot_ssb(M, ylab = "Mature male biomass (tonnes) on 15 February")
 ```
 
 ```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
-plot_recruitment_size(M, xlab = "Carapace width (mm)")
+#plot_recruitment_size(M, xlab = "Carapace width (mm)")
 ```
 
 ```{r size_trans, fig.cap = "Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2015 SMBKC assessment).\\label{fig:size_trans}"}
-A <- M; A[[5]] <- NULL; A[[4]] <- NULL; A[[3]] <- NULL
-plot_size_transition(M, xlab = "Carapace width after transition (mm)")
+gm_f <- matrix(scan(text = "
+ 0 0.0315365 0.29835 0.415939 0.203388 0.0507866 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0.0715876 0.40062 0.374586 0.133701 0.0195053 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0.1459 0.478366 0.296233 0.076745 0.0027561 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0.00293279 0.2747 0.495812 0.195133 0.0314218 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0.0106724 0.435786 0.435296 0.110078 0.00816757 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0.0342176 0.540301 0.364189 0.0612922 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0.0569465 0.602618 0.304312 0.0361236 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0.0853184 0.644334 0.2515 0.0188471 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0.12638 0.660964 0.206567 0.00608825 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0.172781 0.666124 0.161095 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0.231245 0.653752 0.115003 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0.302451 0.622588 0.0749609 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0.385785 0.573046 0.041169 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0.478849 0.507767 0.0133836 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.560249 0.439751 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+"), nrow = 20, ncol = 20, byrow = TRUE)
+gm_m <- matrix(scan(text = "
+ 0 0.0374249 0.257557 0.369321 0.236624 0.0941279 0.00494521 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0.0374249 0.257557 0.369321 0.236624 0.0941279 0.00494521 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0.0390317 0.262221 0.369126 0.233146 0.0916878 0.00478779 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0.0406974 0.266902 0.368829 0.229653 0.0892849 0.00463398 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0.0406974 0.266902 0.368829 0.229653 0.0892849 0.00463398 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0.0424237 0.271597 0.36843 0.226146 0.0869192 0.00448375 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0.0424237 0.271597 0.36843 0.226146 0.0869192 0.00448375 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0.0442121 0.276304 0.367927 0.222629 0.084591 0.00433705 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0.0442121 0.276304 0.367927 0.222629 0.084591 0.00433705 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0.0460642 0.28102 0.367321 0.219101 0.0823004 0.00419385 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0.0460642 0.28102 0.367321 0.219101 0.0823004 0.00419385 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0.0479817 0.285742 0.36661 0.215565 0.0800475 0.00405411 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0499661 0.290466 0.365796 0.212022 0.0778325 0.0039178 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0499661 0.290466 0.365796 0.212022 0.0778325 0.0039178
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0520191 0.295189 0.364877 0.208474 0.0794404
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0520191 0.295189 0.364877 0.287915
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0541422 0.29991 0.645948
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0541422 0.945858
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+", quiet = TRUE), nrow = 20, ncol = 20, byrow = TRUE)
+
+# M[[2]]$size_transition_F <- gm_f
+# M[[2]]$size_transition_M <- gm_m
+
+M[[2]]$growth_transition[1:20,] <- gm_m
+M[[2]]$growth_transition[21:40,] <- gm_f
+
+#M[[1]]$growth_transition[1:20,]
+#M[[1]]$growth_transition[21:40,]
+
+#plot_size_transition(M, xlab = "Carapace width after transition (mm)")
+plot_growth_transition(M, xlab = "Carapace width after transition (mm)")
 ```
 
 ```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2015 model.\\label{fig:init_N}", fig.height = 15}
@@ -879,7 +910,7 @@ plot_numbers(M)
 ```
 
 ```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998/99 (i.e. $M_{1998}$). \\label{fig:M_t}"}
-plot_natural_mortality(M, knots = NULL, slab = "Model")
+#plot_natural_mortality(M, knots = NULL, slab = "Model")
 ```
 
 
@@ -927,9 +958,9 @@ The proportion of natural mortality ($\tau_t$) applied during each season in the
 ```{r m_prop, results = "asis"}
 A <- M[[2]]
 df <- data.frame(A$mod_yrs, A$m_prop)
-names(df) <- c("Year","Season 1","Season 2","Season 3","Season 4","Season 5")
-tab <- xtable(df, digits = c(0,0,2,2,2,2,2), caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
+#names(df) <- c("Year","Season 1","Season 2","Season 3","Season 4","Season 5")
+#tab <- xtable(df, digits = c(0,0,2,2,2,2,2), caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
+#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 With boldface lower-case letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as

@@ -23,7 +23,7 @@ bibliography: ../references/Gmacs.bib
 
 # Executive Summary
 
-1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
+1. **Stock**: Red king crab (RKC), *Paralithodes camtschaticus*, in Bristol Bay, Alaska.
 
 2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds). The retained catch in 2015/16 was even lower at 48 tonnes (0.105 million pounds).
 
@@ -44,8 +44,6 @@ bibliography: ../references/Gmacs.bib
   2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
   2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
   2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 & 19.63$^D$ & 47.03$^D$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\
-  2016/17 & & 47.86$^D$ & & & & 3.9 & 3.12 \\
   \hline
 \end{tabular}
 \end{table}
@@ -61,8 +59,6 @@ bibliography: ../references/Gmacs.bib
   2012/13 & 4.0$^A$ & 6.29$^A$ & 1.630 & 1.616 & 1.81   & 2.24 & 2.02 \\ 
   2013/14 & 3.4$^B$ & 6.64$^B$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
   2014/15 & 4.1$^C$ & 5.47$^C$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
-  2015/16 & 43.3$^D$ & 103.68$^D$ & 0.41 & 0.105 & 0.105 & 0.62 & 0.49 \\
-  2016/17 & & 105.51$^D$ & & & & 8.59 & 6.87 \\
   \hline
 \end{tabular}
 \end{table}
@@ -81,7 +77,6 @@ bibliography: ../references/Gmacs.bib
   2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
   2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
-  2016/17 & 4b & 39.25 & 47.86 & 1.22 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -110,38 +105,12 @@ One of the Gmacs model scenarios (**Gmacs match**) attempts to match the 2015 as
 
 ## CPT and SSC Comments on Assessments in General
 
-Comment: *Regarding general code development, the CPT had the following requests:*
-
-  1. *1-year projection for calculating Tier 3 or 4 OFLs*
-  2. *specify catchability as a fixed or estimated parameter or use the analytic calculation for the MLE*
-  3. *specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors*
-  4. *include an option to calculate dynamic $B_\mathit{MSY}$*
-  5. *add the ability to “jitter” initial parameter values*
-  6. *add the ability to conduct retrospective analyses*
-  7. *add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available*
-  8. *allow different phases for “rec_ini”, “rec_dev” estimation*
-
-Response:
-
-  1. Done
-  2. Done
-  3. Not yet implemented
-  4. Not yet implemented
-  5. Not yet implemented
-  6. Not yet implemented
-  7. Not yet implemented
-  8. Done
-
 Comment: *Andre Punt pointed out the need to use a fixed-iteration Newton’s method to calculate OFL, not bisection, to keep the calculation differentiable so that OFL can be reported as an sdreport variable.*
 
 Response: This has been done and the $F_\mathit{OFL}$ and OFL have both been reported as an sdreport variables in this document.
 
 
 ## CPT and SSC Comments Specific to the SMBKC Stock Assessment
-
-Comment: *the CPT requests that some evaluation should also be included in the September report to the CPT which compares against the previous assessment model corrected for the error.*
-
-Response: The error in the 2015 was fixed and this model was run again. Comparisons between the Gmacs models and the 2015 model are presented throughout this document. One of the Gmacs model scenarios (**Gmacs match**) attempts to match the 2015 assessment as closely as possible by specifying the same (or similar) dynamics and some of the same (fixed) parameter values.
 
 Comment: *The SSC and CPT requested the following models for review at the spring 2016 meeting:*
 
@@ -155,34 +124,6 @@ Response: Models 1, 3, and 4 are all included and evaluated in this document as 
 Comment: *The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.*
 
 Response: All model runs that estimate additional CV were dropped from this document. Instead we provide two model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the **Gmacs Francis**, and **Gmacs force** scenarios. The final Gmacs scenario (**Gmacs force**) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).
-
-Comment: *The descriptions of seasons in the model is confusing and currently reads as if $M$ differs among seasons. More justification is needed on how seasons are defined and how they were selected, as well as clarification on $M$ during these seasons.*
-
-Response: This description has been updated and justification provided in Appendix A.
-
-Comment: *During the presentation to the SSC, uncertainty was expressed about the origins of the growth transition matrix, but page 7 of the report indicates that the matrix was derived by Otto and Cummiskey (1990). As this matrix is critical to the model, the origin and integrity of the growth transition matrix should be carefully explained in the assessment for fall 2016. In some other models, the transition matrix can be estimated. If there are doubts about the veracity of the transition matrix, perhaps this can be explored in the modeling framework.*
-
-Response: The report is correct, the growth matrix was derived by Otto and Cummiskey (1990) and used in this assessment. 
-
-Comment: *The selectivities were constrained so that they do not exceed 1.0, but the tables of log-transformed parameter estimates do not indicate that this upper bound was approached. This should be clarified.*
-
-Response: After fixing the error in the 2015 SMBKC model code, it was found that the NMFS trawl survey selectivity does exceed 1 for stage-2 crab. The **Gmacs match** scenario does allow selectivity to be greater than 1 (it uses the same fixed selectvity values as the 2015 model). At the request of the CPT an upper bound of 1 was specified for the remaining Gmacs scenarios. Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and \ref{tab:est_pars_force} all show that this upper bound was approached for at least one selectivity parameter in all of these scenarios.
-
-Comment: *It would be helpful to include a table of NMFS trawl survey CPUE by crab stage, just as was provided for the ADF&G pot survey (Table 1).*
-
-Response: This table has been added.
-
-Comment: *Page 10 refers to a table of observed and estimated sample size, but no such table was provided.*
-
-Response: This table has been added.
-
-Comment: *As with the 2015 model, GMACS consistently overestimates trawl survey estimates of male biomass in the last decade, whereas GMACS tends to underestimate the last couple of pot survey estimates (Figure 9, 12). This is also reflected in patterns in residuals, and the proportions of stage-3 crab tend to be overestimated in recent years (Figure 14). These patterns should be discussed in the assessment.*
-
-Response: Done.
-
-Comment: *The SSC discussed the possibility that these patterns could be indicative of spatial patterns in stock distribution. The trawl survey covers a much larger geographic distribution than the pot survey (Figure 4). Crab distribution may vary with sex (females tend to be found close to shore) and life stage. Thus, the trawl and pot surveys may sample the crab stock differentially. Moreover, the geographic distributions of these stages may vary with stock density and temperature. It could be informative to conduct some spatial analyses, which could include: (1) estimation of survey catchability as a function of temperature, (2) a stock assessment model run that includes pot surveys and only those trawl stations that fall within the pot survey distribution as a comparison the runs that include the full trawl survey data, and (3) analysis of the spatial distribution of surveyed crabs by stage at high and low biomass and during warm and cold years.*
-
-Response: In the past Jie has tried to estimate survey catchability as a function of temperature with little success. We will try again this year, but this run will not be presented in this document.
 
 
 # C. Introduction
@@ -413,7 +354,7 @@ Five different Gmacs model scenarios were considered, in this document results f
 
 5. **Gmacs Francis**: is similar to the scenario above except that it also uses the Francis iterative re-weighting method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and pot survey weights were left as is (i.e. a weight of 1) because upweighting these series resulted in worse standard deviation of the normalised residual (SDNR) and median of the absolute residual (MAR) values for each of the surveys. Down-weighting the two surveys actually improved the SDNR and MAR values, but it would be unwise to down-weight either of these series. When applying the Francis iterative re-weighting method only once iteration was done (i.e. the model was run once with the size composition likelihood weights set to one, the new Francis weights were calculated, and the model was run once more using these weights). In this scenario the multinomial distribution was used instead as the theory underpinning the Francis weighting method is based on this distribution.
 
-6. **Gmacs force**: is an exploratory scenario that the same as above except the NMFS trawl survey is up-weighted by $\lambda^\text{NMFS}=$ 4 and the ADF&G pot survey is up-weighted by $\lambda^\text{ADFG}=$ 1. After this, the Francis weights for each of the size-compostitons were recalculated and applied again in this model. This scenario should not be used for overfishing determination as it upweights the trawl and pot survey abundance indices to force a better fit to each of these data sets and provide some contrast among the Gmacs model runs. This scenario forces a better fit to the trawl and pot surveys at the expense of the SDNR (and MAR) for each of these series.
+6. **Gmacs force**: is an exploratory scenario that the same as above except the NMFS trawl survey is up-weighted by $\lambda^\text{NMFS}=$ 2 and the ADF&G pot survey is up-weighted by $\lambda^\text{ADFG}=$ 1. After this, the Francis weights for each of the size-compostitons were recalculated and applied again in this model. This scenario should not be used for overfishing determination as it upweights the trawl and pot survey abundance indices to force a better fit to each of these data sets and provide some contrast among the Gmacs model runs. This scenario forces a better fit to the trawl and pot surveys at the expense of the SDNR (and MAR) for each of these series.
 
 Table \ref{tab:model_runs} outlines the major features of each of the models.
 \begin{table}[ht]
@@ -684,6 +625,7 @@ Year & Stage-1 & Stage-2 & Stage-3 & NA & NA & NA & NA & NA & NA & NA & NA & NA 
   2013.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
   2014.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
   2015.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
+  2016.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
   1975.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
   1976.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
   1977.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
@@ -725,6 +667,7 @@ Year & Stage-1 & Stage-2 & Stage-3 & NA & NA & NA & NA & NA & NA & NA & NA & NA 
   2013.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
   2014.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
   2015.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
+  2016.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -732,70 +675,48 @@ Year & Stage-1 & Stage-2 & Stage-3 & NA & NA & NA & NA & NA & NA & NA & NA & NA 
 
 \newpage\clearpage
 
+![Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\label{fig:molt_prob}](figure/molt_prob-1.png)
+
+![Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\label{fig:growth_inc}](figure/growth_inc-1.png)
+
 ![Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\label{fig:selectivity}](figure/selectivity-1.png)
 
+![Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png)
 
-```
-## Error in data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData)): arguments imply differing number of rows: 1, 0
-```
-
-
-```
-## Error in data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData)): arguments imply differing number of rows: 1, 0
-```
+![Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\label{fig:trawl_survey_biomass_weights}](figure/trawl_survey_biomass_weights-1.png)
 
 \newpage\clearpage
 
 
-```
-## Error in data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData)): arguments imply differing number of rows: 1, 0
-```
 
 
-```
-## Error in data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData)): arguments imply differing number of rows: 1, 0
-```
 
 ![Standardized residuals for area-swept estimates of total male survey biomass for each of the Gmacs model scenarios. \label{fig:bts_resid_nmfs}](figure/bts_resid_nmfs-1.png)
 
 \newpage\clearpage
 
-![Observed and model estimated size-frequencies of SMBKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2015 year.\label{fig:sc_pot}](figure/sc_pot-1.png)
 
-![Observed and model estimated size-frequencies of discarded male SMBKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\label{fig:sc_pot_discarded}](figure/sc_pot_discarded-1.png)
 
-![Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\label{fig:sc_trawl_discarded}](figure/sc_trawl_discarded-1.png)
+
+
+
 
 
 \newpage\clearpage
 
 ![Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tonnes).\label{fig:fit_to_catch}](figure/fit_to_catch-1.png)
 
-
-```
-## Error in A[[i]]: subscript out of bounds
-```
-
 ![Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\bar{R}$) in each model scenario.\label{fig:recruitment}](figure/recruitment-1.png)
 
 ![Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2016 for each of the model scenarios.\label{fig:mmb}](figure/mature_male_biomass-1.png)
 
 
-```
-## Error in data.frame(Model = names(M)[i], mid_points = A$mid_points, rec_sdd = A$rec_sdd, : arguments imply differing number of rows: 1, 20, 3
-```
 
-
-```
-## Error in rbind(G, M[[i]]$size_transition_F): number of columns of matrices must match (see arg 2)
-```
+![Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2015 SMBKC assessment).\label{fig:size_trans}](figure/size_trans-1.png)
 
 ![Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2015 model.\label{fig:init_N}](figure/init_N-1.png)
 
 
-```
-## Error in ss[[2]]: subscript out of bounds
-```
 
 
 \newpage\clearpage
@@ -840,107 +761,6 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
 The proportion of natural mortality ($\tau_t$) applied during each season in the model is provided in Table \ref{tab:m_prop}. The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63% of the year. Therefore 63% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year $\tau_2$ is different each year and thus $\tau_4$ differs each year.
 
 
-```
-## Error in names(df) <- c("Year", "Season 1", "Season 2", "Season 3", "Season 4", : 'names' attribute [6] must be the same length as the vector [5]
-```
-
-```
-## Error in `digits<-.xtable`(`*tmp*`, value = c(0, 0, 2, 2, 2, 2, 2)): if argument 'digits' is a vector of length more than one, it must have length equal to 6 ( ncol(x) + 1 )
-```
-
-\begin{table}[ht]
-\centering
-\caption{Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\bf Gmacs match} model.} 
-\label{tab:est_pars_match}
-\begin{tabular}{rrrrrrrrrrrrrrrrrrrrr}
-  \hline
-Year & Stage-1 & Stage-2 & Stage-3 & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA & NA \\ 
-  \hline
-1975.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1976.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1977.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1978.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1979.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1980.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1981.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1982.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1983.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1984.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1985.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1986.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1987.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1988.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1989.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1990.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1991.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1992.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1993.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1994.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1995.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1996.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1997.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1998.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1999.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2000.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2001.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2002.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2003.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2004.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2005.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2006.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2007.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2008.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2009.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2010.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2011.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2012.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2013.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2014.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  2015.000 & 224.800 & 281.400 & 346.900 & 422.200 & 507.900 & 604.800 & 713.600 & 834.900 & 969.700 & 1118.600 & 1282.300 & 1461.600 & 1657.400 & 1870.200 & 2101.000 & 2350.500 & 2619.400 & 2908.600 & 3218.800 & 3905.900 \\ 
-  1975.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1976.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1977.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1978.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1979.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1980.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1981.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1982.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1983.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1984.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1985.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1986.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1987.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1988.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1989.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1990.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1991.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1992.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1993.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1994.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1995.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1996.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1997.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1998.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  1999.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2000.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2001.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2002.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2003.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2004.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2005.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2006.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2007.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2008.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2009.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2010.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2011.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2012.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2013.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2014.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-  2015.000 & 215.100 & 269.000 & 331.400 & 402.900 & 484.400 & 627.100 & 721.600 & 824.500 & 936.200 & 1056.800 & 1186.700 & 1326.100 & 1475.400 & 1634.700 & 1804.400 & 2183.100 & 2183.100 & 2183.100 & 2183.100 & 2183.100 \\ 
-   \hline
-\end{tabular}
-\end{table}
 
 With boldface lower-case letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}

@@ -23,8 +23,6 @@ $(DIST)$(EXEC).tpl:
 
 run: $(EXEC)
 	./$(EXEC) $(ARGS)
-	R CMD BATCH plot.R
-
 
 sim: $(EXEC)
 	./$(EXEC) -ainp gmacs.par -sim 123

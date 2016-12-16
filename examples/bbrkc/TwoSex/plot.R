@@ -48,7 +48,7 @@ plot_cpue(M, "BSFRF", ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue_BSFRF.png"), width = ww, height = hh)
 dev.off()
 
-plot_cpue(M, "NMFS Trawl",ShowEstErr=TRUE)
+plot_cpue(M, "NMFS Trawl", ShowEstErr = TRUE)
 ggsave(paste0(.FIGS, "cpue_NMFS.png"), width = ww*2.5, height = hh)
 dev.off()
 
@@ -64,9 +64,17 @@ plot_recruitment(M)
 ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
 dev.off()
 
+plot_molt_prob(M)
+ggsave(paste0(.FIGS, "molt_prob.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+
 #plot_size_transition(M, females = TRUE)
 plot_size_transition(M)
 ggsave(paste0(.FIGS, "size_transition.png"), width = ww*1.5, height = hh*1.5)
+dev.off()
+
+plot_growth_transition(M)
+ggsave(paste0(.FIGS, "growth_transition.png"), width = ww*1.5, height = hh*1.5)
 dev.off()
 
 plot_growth_inc(M)
@@ -74,10 +82,10 @@ ggsave(paste0(.FIGS, "gi.png"), width = ww, height = hh)
 dev.off()
 
 plot_numbers(M)
-ggsave(paste0(.FIGS, "numbers.png"), width = ww*2, height = hh*1.5)
+ggsave(paste0(.FIGS, "numbers_all_yrs.png"), width = ww*2, height = hh*1.5)
 dev.off()
 
-plot_numbers(M, subsetby = c("1975","2014"))
+plot_numbers(M, subsetby = c("1975","1976","1977","2014","2015","2016"))
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*1.2, height = hh)
 dev.off()
 

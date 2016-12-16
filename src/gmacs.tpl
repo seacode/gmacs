@@ -1794,10 +1794,7 @@ FUNCTION calc_growth_transition
 			}
 			if ( bUseCustomGrowthMatrix == 1 )
 			{
-				for ( h = 1; h <= nsex; h++ )
-				{
-					growth_transition(h) = CustomGrowthMatrix;
-				}
+				growth_transition(h) = CustomGrowthMatrix;
 			} else {
 				growth_transition(h) = gt;
 			}
@@ -3471,11 +3468,19 @@ REPORT_SECTION
 	calc_predicted_catch_out();
 	REPORT(name_read_flt);
 	REPORT(name_read_srv);
+
 	REPORT(nfleet);
+	REPORT(n_grp);
 	REPORT(nsex);
+	REPORT(nshell);
 	REPORT(syr);
 	REPORT(nseason);
 	REPORT(nyr);
+
+	REPORT(isex);
+	REPORT(imature);
+	REPORT(ishell);
+
 	dvector mod_yrs(syr,nyr);
 	mod_yrs.fill_seqadd(syr,1);
 	REPORT(mod_yrs);
@@ -3717,21 +3722,20 @@ REPORT_SECTION
 	}
 	REPORT(survey_q);
 	
-	// Growth and size transition.
+	// Molting probability
+	dvector molt_prob_M(1,nclass);
+	dvector	molt_prob_F(1,nclass);
+	molt_prob_M = value(diagonal(P(1)));
 	REPORT(P);
+	REPORT(molt_prob_M);
+	if ( nsex == 2 )
+	{
+		molt_prob_F = value(diagonal(P(2)));
+		REPORT(molt_prob_F);
+	}
+	// Growth and size transition.
 	REPORT(growth_transition);
 	REPORT(size_transition);
-	// 2016-04-28 I don't know why this transposed stuff is here, could be depreciated but should check gmr first. 2016-04-29 it seems to be depreciated.
-	//d3_array tG(1,nsex,1,nclass,1,nclass);
-	//d3_array tS(1,nsex,1,nclass,1,nclass);
-	//for ( int h = 1; h <= nsex; h++ )
-	//{
-	//	tG(h) = trans(value(growth_transition(h)));
-	//	tS(h) = trans(value(size_transition(h)));
-	//}
-	//REPORT(tG);
-	//REPORT(tS);
-	// 2016-04-29 I may be able to depreciate the size_transition stuff below and just use the one above
 	dmatrix size_transition_M(1,nclass,1,nclass);
 	dmatrix size_transition_F(1,nclass,1,nclass);
 	size_transition_M = value(size_transition(1));
@@ -3874,7 +3878,7 @@ FUNCTION void calc_spr_reference_points_old(const int iyr, const int iseason, co
 	**/
 FUNCTION dvar_matrix calc_brute_equilibrium()
 	int h,i,ig,o,m;
-	int ninit = 100;
+	int ninit = 200;
 
 	dvar_vector rtt;
 
@@ -3942,12 +3946,14 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 					if ( o == 1 ) // newshell
 					{
 						x = d4_N_init(ig)(i)(j);
+						//cout << "d4_N_init(ig)(i)(j):" << endl;
+						//cout << d4_N_init(ig)(i)(j) << endl;
 						// Mortality (natural and fishing)
 						x = x * S(h)(syr)(j);
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = elem_prod(x, 1 - diagonal(P(h))); // did not molt, become oldshell
+							y = elem_prod(x, 1 - diagonal(P(h))); // did not molt, becomes oldshell
 							x = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
 						}
 						// Recruitment
@@ -3964,7 +3970,6 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 					}
 					if ( o == 2 ) // oldshell
 					{
-						// add oldshell non-terminal molts to newshell
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
 						x = x * S(h)(syr)(j);
@@ -3972,8 +3977,9 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 						z.initialize();
 						if (j == season_growth)
 						{
-							z = elem_prod(x,diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
-							x = elem_prod(x,1-diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
+							z = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
+							x = elem_prod(x, 1 - diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
+							y.initialize();
 						}
 						if (j == nseason)
 						{

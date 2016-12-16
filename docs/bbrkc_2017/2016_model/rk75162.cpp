@@ -2784,6 +2784,10 @@ void model_parameters::report(const dvector& gradients)
           pre_mfemales(i)+=na_f(i,j)*sel_srv(1,i,j)*qf_tem(i);
         }
       }
+  report << "growth matrix: " << endl;
+  report << len_len << endl;
+  report << "growth increment per molt: " << endl;
+  report << g << endl;
   report << "observed retained catch biomass  : seq(1968,2008)" << endl;
   report << catch_ret << endl;
   report << "predicted retained catch biomass : seq(1968,2008)" << endl;
@@ -2808,18 +2812,25 @@ void model_parameters::report(const dvector& gradients)
   report << tmpp(1)<<endl;
   report << tmpo(2)<<endl;
   report << tmpp(2)<<endl;
+  report << "Observed survey mature male abundance: seq(1968,2008)"<<endl;
   tem_02.initialize();
   for(i=1;i<=nobs_srv1;i++) { tem_02(yrs_srv1(i))=obs_mmales(i);}
   report << tem_02<<endl;
+  report << "Predicted survey mature male abundance : seq(1968,2008) " << endl;
   report << pre_mmales<<endl;
+  report << "Observed survey mature female abundance: seq(1968,2008)"<<endl;
   tem_02.initialize();
   for(i=1;i<=nobs_srv1;i++) { tem_02(yrs_srv1(i))=obs_mfemales(i);}
   report << tem_02<<endl;
+  report << "Predicted survey mature female abundance : seq(1968,2008) " << endl;
   report << pre_mfemales<<endl;
+  report << "molting probs male:67.5-162.5"<< endl;
   report << moltp(1975)<<endl;
   report << moltp(1982)<<endl;
   report << moltp(1987)<<endl;
+  report<<" length - length transition matrix Females :67.5-162.5"<< endl;
   report<<len_len(2)<<endl;
+  report<<" length - length transition matrix Males :67.5-162.5"<< endl;
   report<<len_len(4)<<endl;
   report << "estimated annual total fishing mortality : seq(1968,2008)" << endl;
   report << mfexp(log_avg_fmort+fmort_dev) << endl;
@@ -3190,7 +3201,7 @@ void model_parameters::report(const dvector& gradients)
   report3 << "size_fish_ret" << endl << size_fish_ret << endl;
   report3 << "size_fish_discf" << endl << size_fish_discf << endl;
   report3 << "size_fish_discm" << endl << size_fish_discm << endl;
-  report3 << "obs_p_srv1_len_f" << endl << obs_p_srv1_len_f << endl;        //Observed Length Prop survey females
+  report3 << "obs_p_srv1_len_f" << endl << obs_p_srv1_len_f << endl;        // Length Prop survey females
   report3 << "pred_p_srv1_len_f" << endl << pred_p_srv1_len_f << endl;     //Predicted length prop survey females
   report3 << "obs_p_srv1_len_m" << endl << obs_p_srv1_len_m(1) << endl;    //Observed Length Prop survey males
   report3 << "pred_p_srv1_len_m" << endl << pred_p_srv1_len_m(1)<< endl;    //Predicted length prop survey males
