@@ -10,12 +10,12 @@
 ## ival        lb        ub        phz   prior     p1      p2         # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
     0.18        0.01      1         -4       2    0.18    0.04        # M
-   10.0       -10        20          2       0  -10.0    20.0         # logR0
+   16.54      -10        20         -2       0  -10.0    20.0         # logR0
    14.0       -10        20         -2       0   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
    14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
     0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
-   -0.40      -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
+   -0.90      -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
     0.75        0.20      1.00      -2       3    3.0     2.00        # steepness
     0.01        0.00      1.00      -3       3    1.01    1.01        # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -111,7 +111,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
    0.843136  0        2     4    1     0.843136 0.03   0           2       # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   1.0       0        5     4    0     0.001    5.00   0           2       # BSFRF
+   1.0       0        5    -4    0     0.001    5.00   0           2       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -173,9 +173,9 @@
 ## STDEV in m_dev for Random walk
    0.20
 ## Number of nodes for cubic spline or number of step-changes for option 3
-   2
+   4
 ## Year position of the knots (vector must be equal to the number of nodes)
-   1980 1985 
+   1976 1980 1985 1994 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

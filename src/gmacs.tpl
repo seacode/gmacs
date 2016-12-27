@@ -504,8 +504,15 @@ DATA_SECTION
 		ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV);
 	END_CALCS
 
+	// |-------------------|
+	// | CUSTOM INPUT DATA |
+	// |-------------------|
+	!! cout << " * Custom data" << endl;
 	init_int bUseCustomGrowthMatrix;
 	init_matrix CustomGrowthMatrix(1,nclass,1,nclass);
+
+	init_int bUseCustomNaturalMortality;
+	init_matrix CustomNaturalMortality(1,nsex,syr,nyr);
 
 	// |------------------|
 	// | END OF DATA FILE |
@@ -1884,6 +1891,17 @@ FUNCTION calc_natural_mortality
 				{
 					M(h)(i) = M(h)(i-1) * mfexp(delta(i));
 				}
+			}
+		}
+	}
+	// Custom natural mortality input
+	if ( bUseCustomNaturalMortality == 1 )
+	{
+		for ( int h = 1; h <= nsex; h++ )
+		{
+			for ( int i = syr; i <= nyr; i++ )
+			{
+				M(h)(i) = CustomNaturalMortality(h)(i);
 			}
 		}
 	}

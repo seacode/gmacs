@@ -60,6 +60,10 @@ plot_ssb(M)
 ggsave(paste0(.FIGS, "ssb.png"), width = ww, height = hh)
 dev.off()
 
+plot_recruitment_size(M)
+ggsave(paste0(.FIGS, "rec_size.png"), width = ww*2.5, height = hh*1.5)
+dev.off()
+
 plot_recruitment(M)
 ggsave(paste0(.FIGS, "recruitment.png"), width = ww, height = hh)
 dev.off()
@@ -87,6 +91,10 @@ dev.off()
 
 plot_numbers(M, subsetby = c("1975","1976","1977","2014","2015","2016"))
 ggsave(paste0(.FIGS, "numbers.png"), width = ww*1.2, height = hh)
+dev.off()
+
+plot_numbers(M, subsetby = c("1975"))
+ggsave(paste0(.FIGS, "numbers_initial.png"), width = ww*1.2, height = hh)
 dev.off()
 
 plot_size_comps(M, 1)
@@ -173,6 +181,6 @@ plot_datarange(M)
 ggsave(paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0)
 dev.off()
 
-plot_length_weight(M)
-ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
-dev.off()
+#plot_length_weight(M)
+#ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
+#dev.off()

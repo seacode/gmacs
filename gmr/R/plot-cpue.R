@@ -63,8 +63,9 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
 
-    p  <- ggplot(mdf, aes(year, cpue))
-    p  <- p + geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black")
+    p  <- ggplot(mdf, aes(year, cpue)) +
+        expand_limits(y = 0) +
+        geom_pointrange(aes(year, cpue, ymax = ub, ymin = lb), col = "black")
     
     if (ShowEstErr) {
         if (length(M) == 1 && length(unique(mdf$sex)) == 1) {
