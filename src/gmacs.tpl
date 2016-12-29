@@ -2222,6 +2222,56 @@ FUNCTION calc_initial_numbers_at_length
 			COUT(d4_N(ig)(syr)(1));
 		}
 	}
+
+	//d4_N(ig)(syr)(1) = x(ig);
+	d4_N(2)(syr)(1) = 0.0001;
+	d4_N(4)(syr)(1) = 0.0001;
+	// male newshell
+    d4_N(1)(syr)(1)(1) = 27987700;
+    d4_N(1)(syr)(1)(2) = 28795300;
+    d4_N(1)(syr)(1)(3) = 14848500;
+    d4_N(1)(syr)(1)(4) = 16048300;
+    d4_N(1)(syr)(1)(5) = 13312600;
+    d4_N(1)(syr)(1)(6) = 11007400;
+    d4_N(1)(syr)(1)(7) = 11088900;
+    d4_N(1)(syr)(1)(8) = 8969550;
+    d4_N(1)(syr)(1)(9) = 9684750;
+    d4_N(1)(syr)(1)(10) = 11032400;
+    d4_N(1)(syr)(1)(11) = 9030270;
+    d4_N(1)(syr)(1)(12) = 9403100;
+    d4_N(1)(syr)(1)(13) = 8644670;
+    d4_N(1)(syr)(1)(14) = 8526260;
+    d4_N(1)(syr)(1)(15) = 7705410;
+    d4_N(1)(syr)(1)(16) = 6804960;
+    d4_N(1)(syr)(1)(17) = 5640800;
+    d4_N(1)(syr)(1)(18) = 4001730;
+    d4_N(1)(syr)(1)(19) = 2343550;
+    d4_N(1)(syr)(1)(20) = 2292990;
+	// females newshell
+    d4_N(3)(syr)(1)(1) = 45234000;
+    d4_N(3)(syr)(1)(2) = 40950300;
+    d4_N(3)(syr)(1)(3) = 39428100;
+    d4_N(3)(syr)(1)(4) = 33387700;
+    d4_N(3)(syr)(1)(5) = 31708300;
+    d4_N(3)(syr)(1)(6) = 20033100;
+    d4_N(3)(syr)(1)(7) = 13834700;
+    d4_N(3)(syr)(1)(8) = 10330000;
+    d4_N(3)(syr)(1)(9) = 8845460;
+    d4_N(3)(syr)(1)(10) = 7000700;
+    d4_N(3)(syr)(1)(11) = 3895850;
+    d4_N(3)(syr)(1)(12) = 3524640;
+    d4_N(3)(syr)(1)(13) = 2660370;
+    d4_N(3)(syr)(1)(14) = 1073200;
+    d4_N(3)(syr)(1)(15) = 1053050;
+    d4_N(3)(syr)(1)(16) = 2061060;
+    d4_N(3)(syr)(1)(17) = 0;
+    d4_N(3)(syr)(1)(18) = 0;
+    d4_N(3)(syr)(1)(19) = 0;
+    d4_N(3)(syr)(1)(20) = 0;
+
+
+
+
 	
 
 	/**
@@ -2280,13 +2330,105 @@ FUNCTION update_population_numbers_at_length
 		recruits(syr,nyr) = mfexp(logRbar);
 	}
 
+	dvar_vector rtf(1,nclass);
+	dvar_vector recruitsf(syr,nyr);
+
+    recruits(1975) = 27987700;
+    recruits(1976) = 4303930;
+    recruits(1977) = 3830250;
+    recruits(1978) = 4712290;
+    recruits(1979) = 6194830;
+    recruits(1980) = 7536880;
+    recruits(1981) = 3359010;
+    recruits(1982) = 16192200;
+    recruits(1983) = 8200470;
+    recruits(1984) = 8348340;
+    recruits(1985) = 1015420;
+    recruits(1986) = 3922150;
+    recruits(1987) = 1627080;
+    recruits(1988) = 814453;
+    recruits(1989) = 938272;
+    recruits(1990) = 2947100;
+    recruits(1991) = 1860510;
+    recruits(1992) = 324792;
+    recruits(1993) = 1475560;
+    recruits(1994) = 229910;
+    recruits(1995) = 7081220;
+    recruits(1996) = 1140860;
+    recruits(1997) = 479557;
+    recruits(1998) = 1692370;
+    recruits(1999) = 3874550;
+    recruits(2000) = 1504970;
+    recruits(2001) = 783445;
+    recruits(2002) = 6060080;
+    recruits(2003) = 1057750;
+    recruits(2004) = 2206270;
+    recruits(2005) = 5575720;
+    recruits(2006) = 3047160;
+    recruits(2007) = 1725870;
+    recruits(2008) = 1091940;
+    recruits(2009) = 1110660;
+    recruits(2010) = 2023270;
+    recruits(2011) = 1883270;
+    recruits(2012) = 1376510;
+    recruits(2013) = 1142590;
+    recruits(2014) = 310252;
+    recruits(2015) = 714499;
+    recruits(2016) = 397010;
+
+    recruitsf(1975) = 45234000;
+    recruitsf(1976) = 4313380;
+    recruitsf(1977) = 6550650;
+    recruitsf(1978) = 7547030;
+    recruitsf(1979) = 13063300;
+    recruitsf(1980) = 9696830;
+    recruitsf(1981) = 3701650;
+    recruitsf(1982) = 17790600;
+    recruitsf(1983) = 8391030;
+    recruitsf(1984) = 13366800;
+    recruitsf(1985) = 1156320;
+    recruitsf(1986) = 7047310;
+    recruitsf(1987) = 1554860;
+    recruitsf(1988) = 1106600;
+    recruitsf(1989) = 1045190;
+    recruitsf(1990) = 2888700;
+    recruitsf(1991) = 1759900;
+    recruitsf(1992) = 181670;
+    recruitsf(1993) = 1156330;
+    recruitsf(1994) = 145342;
+    recruitsf(1995) = 7359290;
+    recruitsf(1996) = 503761;
+    recruitsf(1997) = 192840;
+    recruitsf(1998) = 1253190;
+    recruitsf(1999) = 4238790;
+    recruitsf(2000) = 1379950;
+    recruitsf(2001) = 1544000;
+    recruitsf(2002) = 7716440;
+    recruitsf(2003) = 1023420;
+    recruitsf(2004) = 1834330;
+    recruitsf(2005) = 7959020;
+    recruitsf(2006) = 1496800;
+    recruitsf(2007) = 1332760;
+    recruitsf(2008) = 1276290;
+    recruitsf(2009) = 1489660;
+    recruitsf(2010) = 2088530;
+    recruitsf(2011) = 2182140;
+    recruitsf(2012) = 1293240;
+    recruitsf(2013) = 638043;
+    recruitsf(2014) = 260680;
+    recruitsf(2015) = 641208;
+    recruitsf(2016) = 394725;
+
+
 	for ( i = syr; i <= nyr; i++ )
 	{
 		// if ( i > syr )
 		//{
-		recruits(i) *= mfexp(rec_dev(i));
+		//recruits(i) *= mfexp(rec_dev(i));
 		//}
-		rt = (1.0 / nsex * recruits(i)) * rec_sdd;
+		//rt = (1.0 / nsex * recruits(i)) * rec_sdd;
+		rt = recruits(i) * rec_sdd;
+		rtf = recruitsf(i) * rec_sdd;
 
 		for ( int j = 1; j <= nseason; j++ )
 		{
@@ -2310,7 +2452,8 @@ FUNCTION update_population_numbers_at_length
 					// Recruitment
 					if (j == season_recruitment)
 					{
-						x += rt;
+						if (h==1) x += rt;
+						if (h==2) x += rtf;
 					}
 					if (j == nseason)
 					{

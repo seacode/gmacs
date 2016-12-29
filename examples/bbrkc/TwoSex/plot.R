@@ -130,11 +130,11 @@ ggsave(paste0(.FIGS, "lf_8.png"), width = ww*2, height = hh*1.5)
 dev.off()
 
 plot_size_comps(M, 9)
-ggsave(paste0(.FIGS, "lf_9.png"), width = ww, height = hh*0.5)
+ggsave(paste0(.FIGS, "lf_9.png"), width = ww, height = hh)
 dev.off()
 
 plot_size_comps(M, 10)
-ggsave(paste0(.FIGS, "lf_10.png"), width = ww, height = hh*0.5)
+ggsave(paste0(.FIGS, "lf_10.png"), width = ww, height = hh)
 dev.off()
 
 plot_size_comps(M, 1, res = TRUE)
