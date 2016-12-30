@@ -509,7 +509,8 @@ DATA_SECTION
 	// |-------------------|
 	!! cout << " * Custom data" << endl;
 	init_int bUseCustomGrowthMatrix;
-	init_matrix CustomGrowthMatrix(1,nclass,1,nclass);
+	//init_matrix CustomGrowthMatrix(1,nsex,1,nclass,1,nclass);
+	init_3darray CustomGrowthMatrix(1,nsex,1,nclass,1,nclass);
 
 	init_int bUseCustomNaturalMortality;
 	init_matrix CustomNaturalMortality(1,nsex,syr,nyr);
@@ -1778,8 +1779,8 @@ FUNCTION calc_growth_transition
 	{
 		for ( h = 1; h <= nsex; h++ )
 		{
-			growth_transition(h) = CustomGrowthMatrix;
-			size_transition(h) = CustomGrowthMatrix;
+			growth_transition(h) = CustomGrowthMatrix(h);
+			size_transition(h) = CustomGrowthMatrix(h);
 		}
 	} else {
 		for ( h = 1; h <= nsex; h++ )
@@ -1801,7 +1802,7 @@ FUNCTION calc_growth_transition
 			}
 			if ( bUseCustomGrowthMatrix == 1 )
 			{
-				growth_transition(h) = CustomGrowthMatrix;
+				growth_transition(h) = CustomGrowthMatrix(h);
 			} else {
 				growth_transition(h) = gt;
 			}
@@ -2330,6 +2331,7 @@ FUNCTION update_population_numbers_at_length
 		recruits(syr,nyr) = mfexp(logRbar);
 	}
 
+	/*
 	dvar_vector rtf(1,nclass);
 	dvar_vector recruitsf(syr,nyr);
 
@@ -2418,17 +2420,17 @@ FUNCTION update_population_numbers_at_length
     recruitsf(2014) = 260680;
     recruitsf(2015) = 641208;
     recruitsf(2016) = 394725;
-
+	*/
 
 	for ( i = syr; i <= nyr; i++ )
 	{
 		// if ( i > syr )
 		//{
-		//recruits(i) *= mfexp(rec_dev(i));
+		recruits(i) *= mfexp(rec_dev(i));
 		//}
-		//rt = (1.0 / nsex * recruits(i)) * rec_sdd;
-		rt = recruits(i) * rec_sdd;
-		rtf = recruitsf(i) * rec_sdd;
+		rt = (1.0 / nsex * recruits(i)) * rec_sdd;
+		//rt = recruits(i) * rec_sdd;
+		//rtf = recruitsf(i) * rec_sdd;
 
 		for ( int j = 1; j <= nseason; j++ )
 		{
@@ -2452,8 +2454,7 @@ FUNCTION update_population_numbers_at_length
 					// Recruitment
 					if (j == season_recruitment)
 					{
-						if (h==1) x += rt;
-						if (h==2) x += rtf;
+						x += rt;
 					}
 					if (j == nseason)
 					{
@@ -2490,6 +2491,8 @@ FUNCTION update_population_numbers_at_length
 						if (j == season_recruitment)
 						{
 							x += rt;
+							//if (h==1) x += rt;
+							//if (h==2) x += rtf;
 						}
 						if (j == nseason)
 						{
