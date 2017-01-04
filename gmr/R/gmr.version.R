@@ -4,5 +4,5 @@
 #'
 gmr.version <- function()
 {
-    return("Version: 1.00\nCompile date: 2016-12-18\n")
+    return("Version: 1.00\nCompile date: 2017-01-05\n")
 }

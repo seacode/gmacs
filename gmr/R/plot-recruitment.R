@@ -25,12 +25,15 @@
                          log_rec = A$fit$est,
                          log_sd  = A$fit$std)
         df <- subset(df, par == "sd_log_recruits")
-        df$year <- A$mod_yrs
+        df$year <- rep(A$mod_yrs, by = A$nsex)
+        df$sex <- rep(1:A$nsex, each = length(A$mod_yrs))
+        df$sex <- .SEX[df$sex + 1]
         df$lb <- exp(df$log_rec - 1.96*df$log_sd)
         df$ub <- exp(df$log_rec + 1.96*df$log_sd)
         j <- which(M[[i]]$fit$names %in% c("theta[4]"))
         #rstd <- M[[i]]$fit$std[j]
-        if (length(j) > 0) {
+        if (length(j) > 0)
+        {
             df$rbar = exp(M[[i]]$fit$est[j])
         } else {
             df$rbar = NA
@@ -98,6 +101,7 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
     }
     p <- p + labs(x = xlab, y = ylab)
     if (!.OVERLAY) p <- p + facet_wrap(~Model)
+    if (length(unique(mdf$sex)) > 1) p <- p + facet_wrap(~sex, ncol = 1)
     print(p + .THEME)
 }
 
