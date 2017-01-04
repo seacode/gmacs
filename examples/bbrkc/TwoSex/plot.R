@@ -13,7 +13,7 @@ require(gmr)
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
-.SEAS     = c("Annual")
+.SEAS     = c("1","2","3","4")
 .FIGS     = c("figure/")
 
 fn       <- paste0(.MODELDIR, "gmacs")

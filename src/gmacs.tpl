@@ -1263,6 +1263,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector rec_ini(1,nclass,-14.0,14.0,rec_ini_phz);  ///> initial size devs
 	//init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 	init_bounded_dev_vector rec_dev(syr,nyr,-8.0,8.0,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector rec_prop(syr,nyr,-100,100,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -1305,7 +1306,7 @@ PARAMETER_SECTION
 
 	vector rec_sdd(1,nclass); ///> recruitment size_density_distribution
 
-	vector    recruits(syr,nyr); ///> vector of estimated recruits
+	matrix    recruits(1,nsex,syr,nyr); ///> vector of estimated recruits
 	vector res_recruit(syr,nyr); ///> vector of estimated recruits
 	vector          xi(syr,nyr); ///> vector of residuals for SRR
 
@@ -1358,7 +1359,7 @@ PARAMETER_SECTION
 	sdreport_number sd_fofl;
 	sdreport_number sd_ofl;
 	sdreport_vector sd_fbar(syr,nyr-1);
-	sdreport_vector sd_log_recruits(syr,nyr);
+	sdreport_matrix sd_log_recruits(1,nsex,syr,nyr);
 	sdreport_vector sd_log_ssb(syr,nyr);
 	sdreport_vector sd_log_dyn_Bzero(syr+1,nyr);
 
@@ -2075,8 +2076,11 @@ FUNCTION calc_initial_numbers_at_length
 			log_initial_recruits = logN0(1);
 		break;
 	}
-	recruits(syr) = mfexp(log_initial_recruits);
-	dvar_vector rt = 1.0 / nsex * recruits(syr) * rec_sdd;
+	for ( int h = 1; h <= nsex; h++ )
+	{
+		recruits(h)(syr) = mfexp(log_initial_recruits);
+	}
+	//dvar_vector rt = 1.0 / nsex * recruits(h)(syr) * rec_sdd;
 
 	// Analytical equilibrium soln
 	int ig;
@@ -2324,111 +2328,28 @@ FUNCTION update_population_numbers_at_length
 	//recruits(syr,nyr) = mfexp(logRbar);
 
 	// this is what should be used because recruitment is not always during the first season (i.e. during the initial conditions)
-	if ( bInitializeUnfished == 0 )
+	for ( i = syr; i <= nyr; i++ )
 	{
-		recruits(syr,nyr) = mfexp(logR0);
-	} else {
-		recruits(syr,nyr) = mfexp(logRbar);
+		for ( h = 1; h <= nsex; h++ )
+		{
+			if ( bInitializeUnfished == 0 )
+			{
+				recruits(h)(i) = mfexp(logR0);
+			} else {
+				recruits(h)(i) = mfexp(logRbar);
+			}
+			if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + exp(-rec_prop(i)));
+			if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + exp(-rec_prop(i))));
+		}
 	}
-
-	/*
-	dvar_vector rtf(1,nclass);
-	dvar_vector recruitsf(syr,nyr);
-
-    recruits(1975) = 27987700;
-    recruits(1976) = 4303930;
-    recruits(1977) = 3830250;
-    recruits(1978) = 4712290;
-    recruits(1979) = 6194830;
-    recruits(1980) = 7536880;
-    recruits(1981) = 3359010;
-    recruits(1982) = 16192200;
-    recruits(1983) = 8200470;
-    recruits(1984) = 8348340;
-    recruits(1985) = 1015420;
-    recruits(1986) = 3922150;
-    recruits(1987) = 1627080;
-    recruits(1988) = 814453;
-    recruits(1989) = 938272;
-    recruits(1990) = 2947100;
-    recruits(1991) = 1860510;
-    recruits(1992) = 324792;
-    recruits(1993) = 1475560;
-    recruits(1994) = 229910;
-    recruits(1995) = 7081220;
-    recruits(1996) = 1140860;
-    recruits(1997) = 479557;
-    recruits(1998) = 1692370;
-    recruits(1999) = 3874550;
-    recruits(2000) = 1504970;
-    recruits(2001) = 783445;
-    recruits(2002) = 6060080;
-    recruits(2003) = 1057750;
-    recruits(2004) = 2206270;
-    recruits(2005) = 5575720;
-    recruits(2006) = 3047160;
-    recruits(2007) = 1725870;
-    recruits(2008) = 1091940;
-    recruits(2009) = 1110660;
-    recruits(2010) = 2023270;
-    recruits(2011) = 1883270;
-    recruits(2012) = 1376510;
-    recruits(2013) = 1142590;
-    recruits(2014) = 310252;
-    recruits(2015) = 714499;
-    recruits(2016) = 397010;
-
-    recruitsf(1975) = 45234000;
-    recruitsf(1976) = 4313380;
-    recruitsf(1977) = 6550650;
-    recruitsf(1978) = 7547030;
-    recruitsf(1979) = 13063300;
-    recruitsf(1980) = 9696830;
-    recruitsf(1981) = 3701650;
-    recruitsf(1982) = 17790600;
-    recruitsf(1983) = 8391030;
-    recruitsf(1984) = 13366800;
-    recruitsf(1985) = 1156320;
-    recruitsf(1986) = 7047310;
-    recruitsf(1987) = 1554860;
-    recruitsf(1988) = 1106600;
-    recruitsf(1989) = 1045190;
-    recruitsf(1990) = 2888700;
-    recruitsf(1991) = 1759900;
-    recruitsf(1992) = 181670;
-    recruitsf(1993) = 1156330;
-    recruitsf(1994) = 145342;
-    recruitsf(1995) = 7359290;
-    recruitsf(1996) = 503761;
-    recruitsf(1997) = 192840;
-    recruitsf(1998) = 1253190;
-    recruitsf(1999) = 4238790;
-    recruitsf(2000) = 1379950;
-    recruitsf(2001) = 1544000;
-    recruitsf(2002) = 7716440;
-    recruitsf(2003) = 1023420;
-    recruitsf(2004) = 1834330;
-    recruitsf(2005) = 7959020;
-    recruitsf(2006) = 1496800;
-    recruitsf(2007) = 1332760;
-    recruitsf(2008) = 1276290;
-    recruitsf(2009) = 1489660;
-    recruitsf(2010) = 2088530;
-    recruitsf(2011) = 2182140;
-    recruitsf(2012) = 1293240;
-    recruitsf(2013) = 638043;
-    recruitsf(2014) = 260680;
-    recruitsf(2015) = 641208;
-    recruitsf(2016) = 394725;
-	*/
 
 	for ( i = syr; i <= nyr; i++ )
 	{
 		// if ( i > syr )
 		//{
-		recruits(i) *= mfexp(rec_dev(i));
+		//recruits(i) *= mfexp(rec_dev(i));
 		//}
-		rt = (1.0 / nsex * recruits(i)) * rec_sdd;
+		//rt = (1.0 / nsex * recruits(i)) * rec_sdd;
 		//rt = recruits(i) * rec_sdd;
 		//rtf = recruitsf(i) * rec_sdd;
 
@@ -2454,7 +2375,10 @@ FUNCTION update_population_numbers_at_length
 					// Recruitment
 					if (j == season_recruitment)
 					{
-						x += rt;
+						if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + exp(-rec_prop(i)));
+						if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + exp(-rec_prop(i))));
+						//if (h == 1) x += recruits(h)(i) * mfexp(rec_dev(i)) * rec_prop(i) * rec_sdd;
+						//if (h == 2) x += recruits(h)(i) * mfexp(rec_dev(i)) * (1 - rec_prop(i)) * rec_sdd;
 					}
 					if (j == nseason)
 					{
@@ -2490,7 +2414,11 @@ FUNCTION update_population_numbers_at_length
 						// Recruitment
 						if (j == season_recruitment)
 						{
-							x += rt;
+							//if (h == 1) x += recruits(h)(i) * mfexp(rec_dev(i)) * rec_prop(i) * rec_sdd;
+							//if (h == 2) x += recruits(h)(i) * mfexp(rec_dev(i)) * (1 - rec_prop(i)) * rec_sdd;
+							if (h == 1) x += recruits(h)(i) * rec_sdd;
+							if (h == 2) x += recruits(h)(i) * rec_sdd;
+							//x += recruits(h)(i) * mfexp(rec_dev(h)(i));
 							//if (h==1) x += rt;
 							//if (h==2) x += rtf;
 						}
@@ -2647,11 +2575,11 @@ FUNCTION calc_stock_recruitment_relationship
 	{
 		case 0: // NO SRR
 			//res_recruit(syr) = log(recruits(syr)) - logRbar;
-			res_recruit(byr,nyr) = log(recruits(byr,nyr)) - (1.0-rho) * logRbar - rho * log(++recruits(byr-1,nyr-1)) + sig2R;
+			res_recruit(byr,nyr) = log(recruits(1)(byr,nyr)) - (1.0-rho) * logRbar - rho * log(++recruits(1)(byr-1,nyr-1)) + sig2R;
 		break;
 		case 1: // SRR model
 			//xi(byr,nyr) = log(recruits(byr,nyr)) - log(rhat(byr,nyr)) + sig2R;
-			res_recruit(byr,nyr) = log(recruits(byr,nyr)) - (1.0-rho) * log(rhat(byr,nyr)) - rho * log(++recruits(byr-1,nyr-1)) + sig2R;
+			res_recruit(byr,nyr) = log(recruits(1)(byr,nyr)) - (1.0-rho) * log(rhat(byr,nyr)) - rho * log(++recruits(1)(byr-1,nyr-1)) + sig2R;
 		break;
 	}
 	
@@ -3965,7 +3893,7 @@ FUNCTION dvar_vector calc_ssb()
 	**/
 FUNCTION void calc_spr_reference_points_old(const int iyr, const int iseason, const int ifleet)
 	// Average recruitment
-	spr_rbar = mean(recruits(spr_syr,spr_nyr));
+	spr_rbar = mean(recruits(1)(spr_syr,spr_nyr));
 
 	double _r = value(spr_rbar);
 	dvector _rx = value(rec_sdd);
@@ -4656,7 +4584,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int ifleet)
 	double beta = 0.25; // limit
 	double gamma = 1.0;
 
-	spr_rbar = mean(recruits(spr_syr,spr_nyr));
+	spr_rbar = mean(recruits(1)(spr_syr,spr_nyr));
 	Bmsy = mean(calc_ssb()(spr_syr,spr_nyr)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
 	spr_bspr = Bmsy;
 	Fmsy = gamma * M0;
