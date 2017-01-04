@@ -1048,13 +1048,16 @@ A <- M; A[[jj]] <- NULL
 plot_catch(A)
 ```
 
-```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}"}
+```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}", fig.height = 12}
+rec_f <- c(17.0707, 25.925, 29.8683, 51.6996, 38.3764, 14.6497, 70.4083, 33.2085, 52.9009, 4.57629, 27.8906, 6.15353, 4.37952, 4.13648, 11.4324, 6.96502, 0.718979, 4.5763, 0.575209, 29.1253, 1.99369, 0.763189, 4.95964, 16.7755, 5.46132, 6.11056, 30.5387, 4.0503, 7.25958, 31.4988, 5.92376, 5.27457, 5.05108, 5.89551, 8.26562, 8.63609, 5.11815, 2.52513, 1.03167, 2.53766, 1.56217)
+# estimated number of recruitments male: seq(1968,2008)
+rec_m <- c(17.1233, 15.2388, 18.748, 24.6463, 29.9857, 13.3639, 64.4212, 32.6258, 33.2142, 4.03989, 15.6044, 6.4734, 3.24033, 3.73295, 11.7251, 7.40212, 1.2922, 5.87057, 0.914705, 28.1729, 4.53894, 1.90793, 6.73314, 15.415, 5.98756, 3.11696, 24.1102, 4.20828, 8.77771, 22.1832, 12.1232, 6.86644, 4.34433, 4.41878, 8.04963, 7.49265, 5.47651, 4.54582, 1.23435, 2.84266, 1.57952)
+
 A <- M
-# for (i in 2:6) {
-#   ii <- which(A[[i]]$fit$names %in% "sd_log_recruits"); ii <- ii[length(ii)]
-#   A[[i]]$fit$est[ii] <- NA
-#   A[[i]]$fit$std[ii] <- NA
-# }
+ii <- which(A[[2]]$fit$names %in% "sd_log_recruits")#; ii <- ii[length(ii)]
+A[[2]]$fit$est[ii] <- log(c(rec_m, NA, rec_f, NA) * 1e6)
+A[[2]]$fit$std[ii] <- NA
+
 plot_recruitment(A)
 ```
 

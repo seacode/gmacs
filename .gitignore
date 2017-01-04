@@ -19,6 +19,7 @@ auto/
 
 # R files
 .Rproj.user
+*.Rproj
 *.Rout
 *.R~
 .RData
