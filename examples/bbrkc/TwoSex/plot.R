@@ -169,8 +169,8 @@ plot_size_comps(M, 9, res = TRUE)
 ggsave(paste0(.FIGS, "lf_9b.png"), width = ww, height = hh*0.5)
 dev.off()
 
+png(filename = paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0, units = 'in', res = 400)
 plot_datarange(M)
-ggsave(paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0)
 dev.off()
 
 #plot_length_weight(M)
