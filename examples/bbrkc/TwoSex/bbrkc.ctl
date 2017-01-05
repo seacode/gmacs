@@ -167,7 +167,7 @@
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Type
-   0
+   3
 ## Phase of estimation
    3
 ## STDEV in m_dev for Random walk
