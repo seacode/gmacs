@@ -3695,6 +3695,7 @@ REPORT_SECTION
 	REPORT(rec_sdd);
 	REPORT(rec_ini);
 	REPORT(rec_dev);
+	REPORT(rec_prop);
 	REPORT(recruits);
 
 	REPORT(xi);

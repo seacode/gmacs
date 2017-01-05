@@ -1066,7 +1066,12 @@ plot_ssb(M, ylab = "Mature male biomass (tonnes) on 15 February")
 ```
 
 ```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
-#plot_recruitment_size(M, xlab = "Carapace width (mm)")
+A <- M
+A[[3]] <- A[[2]]
+names(A) <- c("Gmacs","Females 2016","Males 2016")
+A[[2]]$rec_sdd <- c( 0.252677, 0.347303, 0.25851, 0.111753, 0.029757, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+A[[3]]$rec_sdd <- c(0.251349, 0.343023, 0.256401, 0.112449, 0.0306581, 0.00545854, 0.000662105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+plot_recruitment_size(A, xlab = "Carapace width (mm)")
 ```
 
 ```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2015 model.\\label{fig:init_N}", fig.height = 15}

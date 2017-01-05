@@ -15,7 +15,7 @@
    14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
     0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
-   -0.90      -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
+   -0.95      -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
     0.75        0.20      1.00      -2       3    3.0     2.00        # steepness
     0.01        0.00      1.00      -3       3    1.01    1.01        # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -110,7 +110,7 @@
 ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
-   0.843136  0        2     4    1     0.843136 0.03   0           2       # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   0.843136  0        2     4    1     0.843136 0.03   0           4       # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
    1.0       0        5    -4    0     0.001    5.00   0           2       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -148,14 +148,13 @@
 ## AUTO TAIL COMPRESSION                                                                ##
 ##     pmin is the cumulative proportion used in tail compression                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-#  0   0   0   0   0   1   1   1   1  1  # Type of likelihood
-   1   1   1   1   1   1   1   1   1  1  # Type of likelihood
-   0   0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
-   1   1   1   1   1   1   1   1   1  1  # Initial value for effective sample size multiplier
-  -4  -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
-   1   2   2   3   3   4   4   4   5  5  # Composition aggregator
-#   1   2   3   4   5   6   7   8   9  10  # Composition aggregator
-   1   1   1   1   1   1   1   1   1  1  # LAMBDA
+   1   1   1   1   1   1   1   1  1  # Type of likelihood
+   0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
+   1   1   1   1   1   1   1   1  1  # Initial value for effective sample size multiplier
+  -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
+#   1   2   2   3   3   4   4   5  5  # Composition aggregator
+   1   2   3   4   5   6   7   8  9  # Composition aggregator
+   1   1   1   1   1   1   1   1  1  # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
