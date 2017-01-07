@@ -214,7 +214,7 @@ NMFS_Trawl:BSFRF
 ##  Number  of  relative  abundance indicies
 2
 ##  Number  of  rows  in  each  index
-82  6
+84  6
 # Survey  data  (abundance  indices,  units are 1000 mt)
 # Year, Seas, Fleet,  Sex,  Abundance,  CV     units
   1975  1     3       1    135463.32    0.193   1
@@ -258,6 +258,7 @@ NMFS_Trawl:BSFRF
   2013  1     3       1    39833.23     0.244   1
   2014  1     3       1    60859.12     0.191   1
   2015  1     3       1    36919.28     0.208   1
+  2016  1     3       1    27302.6      0.194   1
   
   1975  1     3       2    67267.28     0.193   1
   1976  1     3       2    71718.04     0.144   1
@@ -300,6 +301,7 @@ NMFS_Trawl:BSFRF
   2013  1     3       2    22576.58     0.244   1
   2014  1     3       2    53243.87     0.191   1
   2015  1     3       2    27320.77     0.208   1
+  2016  1     3       2    33928.4      0.194   1
 
   2007  1     4       0    130352.8     0.2164  1
   2008  1     4       0    106040.9     0.1939  1

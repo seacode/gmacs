@@ -2788,6 +2788,8 @@ void model_parameters::report(const dvector& gradients)
   report << len_len << endl;
   report << "growth increment per molt: " << endl;
   report << g << endl;
+  report << "obs_srv1_bioms: " << endl;  
+  report << obs_srv1_bioms << endl;
   report << "observed retained catch biomass  : seq(1968,2008)" << endl;
   report << catch_ret << endl;
   report << "predicted retained catch biomass : seq(1968,2008)" << endl;
