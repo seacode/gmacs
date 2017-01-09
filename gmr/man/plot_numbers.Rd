@@ -4,7 +4,7 @@
 \alias{plot_numbers}
 \title{Plot numbers at length}
 \usage{
-plot_numbers(M, subsetby = "")
+plot_numbers(M, subsetby = "", nrow = 2, ncol = NULL)
 }
 \arguments{
 \item{M}{list object created by read_admb function}

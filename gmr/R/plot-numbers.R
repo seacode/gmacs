@@ -12,12 +12,26 @@
     for (i in 1:n)
     {
         A  <- M[[i]]
-        df <- data.frame(Model = names(M)[i], mp = A$mid_points, t(A$N_len))
-        names(df) <- c("Model", "mp", A$mod_yrs)
-        df <- melt(df, id.vars = c("Model", "mp"))
-        names(df) <- c("Model", "mp", "Year", "N")
-        mdf <- rbind(mdf, df)
+        for (s in 1:A$nsex)
+        {
+            for (o in 1:A$nshell)
+            {
+                if (s == 1) {
+                    if (o == 1) df <- data.frame(Model = names(M)[i], mp = A$mid_points, sex = s, shell = o, t(A$N_males_new))
+                    if (o == 2) df <- data.frame(Model = names(M)[i], mp = A$mid_points, sex = s, shell = o, t(A$N_males_old))
+                } else {
+                    if (o == 1) df <- data.frame(Model = names(M)[i], mp = A$mid_points, sex = s, shell = o, t(A$N_females_new))
+                    if (o == 2) df <- data.frame(Model = names(M)[i], mp = A$mid_points, sex = s, shell = o, t(A$N_females_old))
+                }
+                names(df) <- c("Model", "mp", "Sex", "Shell", A$mod_yrs)
+                df <- reshape2::melt(df, id.vars = c("Model", "mp", "Sex", "Shell"))
+                names(df) <- c("Model", "mp", "Sex", "Shell","Year", "N")
+                mdf <- rbind(mdf, df)
+            }
+        }
     }
+    mdf$Sex <- .SEX[mdf$Sex+1]
+    mdf$Shell <- .SHELL[mdf$Shell+1]
     return(mdf)
 }
 
@@ -30,17 +44,17 @@
 #' @author D'Arcy N. Webber
 #' @export
 #' 
-plot_numbers <- function(M, subsetby = "")
+plot_numbers <- function(M, subsetby = "", nrow = 2, ncol = NULL)
 {
     mdf <- .get_numbers_df(M)
     if (all(subsetby != "")) mdf <- mdf[mdf$Year %in% subsetby,]
     p <- ggplot(mdf, aes(x = mp, y = N)) + labs(x = "\nMid-point of size-class (mm)", y = "Number of inidividuals\n")
     if (length(M) == 1)
     {
-        p <- p + geom_line()
+        p <- p + geom_line(aes(col = Sex, linetype = Shell))
     } else {
-        p <- p + geom_line(aes(col = Model))
+        p <- p + geom_line(aes(col = Model, linetype = Sex))
     }
-    p <- p + facet_wrap(~Year)
+    p <- p + facet_wrap(Sex ~ Year, nrow = nrow, ncol = ncol)
     print(p + .THEME)
 }

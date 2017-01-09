@@ -85,7 +85,7 @@ plot_growth_inc(M)
 ggsave(paste0(.FIGS, "gi.png"), width = ww, height = hh)
 dev.off()
 
-plot_numbers(M)
+plot_numbers(M, nrow = 4)
 ggsave(paste0(.FIGS, "numbers_all_yrs.png"), width = ww*2, height = hh*1.5)
 dev.off()
 

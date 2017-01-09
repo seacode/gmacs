@@ -1254,6 +1254,7 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
+	init_number_vector log_fini(1,nfleet,f_phz);
 	init_number_vector log_fbar(1,nfleet,f_phz);                 ///> Male mean fishing mortality
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);      ///> Male f devs
 	init_number_vector log_foff(1,nfleet,foff_phz);              ///> Female F offset to Male F
@@ -2350,8 +2351,8 @@ FUNCTION update_population_numbers_at_length
 			} else {
 				recruits(h)(i) = mfexp(logRbar);
 			}
-			if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + exp(-rec_prop(i)));
-			if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + exp(-rec_prop(i))));
+			if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + mfexp(-rec_prop(i)));
+			if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + mfexp(-rec_prop(i))));
 		}
 	}
 
@@ -2387,8 +2388,7 @@ FUNCTION update_population_numbers_at_length
 					// Recruitment
 					if (j == season_recruitment)
 					{
-						if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + exp(-rec_prop(i)));
-						if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + exp(-rec_prop(i))));
+						x += recruits(h)(i) * rec_sdd;
 						//if (h == 1) x += recruits(h)(i) * mfexp(rec_dev(i)) * rec_prop(i) * rec_sdd;
 						//if (h == 2) x += recruits(h)(i) * mfexp(rec_dev(i)) * (1 - rec_prop(i)) * rec_sdd;
 					}
@@ -2428,8 +2428,7 @@ FUNCTION update_population_numbers_at_length
 						{
 							//if (h == 1) x += recruits(h)(i) * mfexp(rec_dev(i)) * rec_prop(i) * rec_sdd;
 							//if (h == 2) x += recruits(h)(i) * mfexp(rec_dev(i)) * (1 - rec_prop(i)) * rec_sdd;
-							if (h == 1) x += recruits(h)(i) * rec_sdd;
-							if (h == 2) x += recruits(h)(i) * rec_sdd;
+							x += recruits(h)(i) * rec_sdd;
 							//x += recruits(h)(i) * mfexp(rec_dev(h)(i));
 							//if (h==1) x += rt;
 							//if (h==2) x += rtf;
@@ -3715,7 +3714,7 @@ REPORT_SECTION
 	REPORT(recruits);
 
 	REPORT(xi);
-	REPORT(d4_N);
+	//REPORT(d4_N);
 	REPORT(M);
 	REPORT(Z);
 	REPORT(mean_wt);
@@ -3773,16 +3772,26 @@ REPORT_SECTION
 	}
 
 	// Print total numbers at length
-	dvar_matrix N_len(syr,nyr,1,nclass);
-	dvar_matrix N_mm(syr,nyr,1,nclass);
-	dvar_matrix N_males(syr,nyr,1,nclass);
-	dvar_matrix N_males_old(syr,nyr,1,nclass);
 	dvar_matrix N_initial(1,n_grp,1,nclass);
 	dvar_matrix N_brute(1,n_grp,1,nclass);
-	N_len.initialize();
+	dvar_matrix N_total(syr,nyr,1,nclass);
+	dvar_matrix N_males(syr,nyr,1,nclass);
+	dvar_matrix N_females(syr,nyr,1,nclass);
+	dvar_matrix N_males_new(syr,nyr,1,nclass);
+	dvar_matrix N_females_new(syr,nyr,1,nclass);
+	dvar_matrix N_males_old(syr,nyr,1,nclass);
+	dvar_matrix N_females_old(syr,nyr,1,nclass);
+	dvar_matrix N_males_mature(syr,nyr,1,nclass);
+	dvar_matrix N_females_mature(syr,nyr,1,nclass);
+	N_total.initialize();
 	N_males.initialize();
-	N_mm.initialize();
+	N_females.initialize();
+	N_males_new.initialize();
+	N_females_new.initialize();
 	N_males_old.initialize();
+	N_females_old.initialize();
+	N_males_mature.initialize();
+	N_females_mature.initialize();
 	for ( int i = syr; i <= nyr; i++ )
 	{
 		for ( int l = 1; l <= nclass; l++ )
@@ -3792,16 +3801,34 @@ REPORT_SECTION
 				if ( isex(k) == 1 )
 				{
 					N_males(i,l) += d4_N(k,i,season_N,l);
+					if ( ishell(k) == 1 )
+					{
+						N_males_new(i,l) += d4_N(k,i,season_N,l);
+					}
 					if ( ishell(k) == 2 )
 					{
 						N_males_old(i,l) += d4_N(k,i,season_N,l);
 					}
 					if ( imature(k) == 1 )
 					{
-						N_mm(i,l) += d4_N(k,i,season_N,l);
+						N_males_mature(i,l) += d4_N(k,i,season_N,l);
+					}
+				} else {
+					N_females(i,l) += d4_N(k,i,season_N,l);
+					if ( ishell(k) == 1 )
+					{
+						N_females_new(i,l) += d4_N(k,i,season_N,l);
+					}
+					if ( ishell(k) == 2 )
+					{
+						N_females_old(i,l) += d4_N(k,i,season_N,l);
+					}
+					if ( imature(k) == 1 )
+					{
+						N_females_mature(i,l) += d4_N(k,i,season_N,l);
 					}
 				}
-				N_len(i,l) += d4_N(k,i,season_N,l);
+				N_total(i,l) += d4_N(k,i,season_N,l);
 			}
 		}
 	}
@@ -3810,12 +3837,17 @@ REPORT_SECTION
 		N_initial(k) = d4_N(k)(syr)(1);
 	}
 	N_brute = calc_brute_equilibrium();
-	REPORT(N_len);
-	REPORT(N_mm);
-	REPORT(N_males);
-	REPORT(N_males_old);
 	REPORT(N_initial);
 	REPORT(N_brute);
+	REPORT(N_total);
+	REPORT(N_males);
+	REPORT(N_females);
+	REPORT(N_males_new);
+	REPORT(N_females_new);
+	REPORT(N_males_old);
+	REPORT(N_females_old);
+	REPORT(N_males_mature);
+	REPORT(N_females_mature);
 
 	REPORT(molt_increment);
 	REPORT(dPreMoltSize);
@@ -3986,10 +4018,10 @@ FUNCTION void calc_spr_reference_points_old(const int iyr, const int iseason, co
 	 * @return dvar_matrix
 	**/
 FUNCTION dvar_matrix calc_brute_equilibrium()
-	int h,i,ig,o,m;
-	int ninit = 200;
+	int h,i,j,k,l,m,o,ig;
+	int ninit = 250;
 
-	dvar_vector rtt;
+	dvar_matrix rtt(1,nsex,1,nclass);
 
 	dvar4_array d4_N_init(1,n_grp,1,ninit,1,nseason,1,nclass);
 	d4_N_init.initialize();
@@ -3998,8 +4030,17 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	dvar_vector x(1,nclass);
 	dvar_vector y(1,nclass);
 	dvar_vector z(1,nclass);
+
+	dvar3_array FF(1,nsex,1,nseason,1,nclass);          ///> Fishing mortality
+	dvar3_array ZZ(1,nsex,1,nseason,1,nclass);          ///> Total mortality
+	dvar4_array SS(1,nsex,1,nseason,1,nclass,1,nclass); ///> Surival Rate (S=exp(-Z))
+
+	double xi; // discard mortality rate
+	dvariable log_ftmp;
+	dvar_vector sel(1,nclass);
+	dvar_vector ret(1,nclass);
+	dvar_vector vul(1,nclass);
 	
-	/*
 	FF.initialize();
 	ZZ.initialize();
 	SS.initialize();
@@ -4008,15 +4049,14 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	{
 		for ( h = 1; h <= nsex; h++ )
 		{
-			ik = 1; yk = 1;
 			for ( j = 1; j <= nseason; j++ )
 			{
 				if ( fhit(syr,j,k) )
 				{
-					log_ftmp = log_fbar(k) + log_fdev(k,ik++);
+					log_ftmp = log_fbar(k) + log_fini(k);
 					if ( yhit(syr,j,k) )
 					{
-						log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
+						log_ftmp += double(h-1) * log_fini(k);
 					}
 					xi  = dmr(syr,k);                                      // Discard mortality rate
 					sel = exp(log_slx_capture(k)(h)(syr));                 // Selectivity
@@ -4028,30 +4068,35 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 		}
 	}
 
-	for ( int h = 1; h <= nsex; h++ )
+	for ( h = 1; h <= nsex; h++ )
 	{
-		for ( int j = 1; j <= nseason; j++ )
+		for ( j = 1; j <= nseason; j++ )
 		{
-			ZZ(h)(j) = (m_prop(1)(j) * M(h)(1)) + FF(h)(j);
-			for ( int l = 1; l <= nclass; l++ )
+			ZZ(h)(j) = (m_prop(syr)(j) * M(h)(syr)) + FF(h)(j);
+			for ( l = 1; l <= nclass; l++ )
 			{
 				SS(h)(j)(l,l) = mfexp(-ZZ(h)(j)(l));
 			}
 		}
 	}
-	*/
 
 	// Initial recruitment
 	switch( bInitializeUnfished )
 	{
 		case 0: // Unfished conditions
-			rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
+			//rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
+			rtt(1) = mfexp(logR0) * 1 / (1 + mfexp(-rec_prop(syr))) * rec_sdd;
+			rtt(2) = mfexp(logR0) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
 		break;
 		case 1: // Steady-state fished conditions
-			rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+			//rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-rec_prop(syr))) * rec_sdd;
+			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
 		break;
 		case 2: // Free parameters
-			rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+			//rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-rec_prop(syr))) * rec_sdd;
+			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
 		break;
 	}
 
@@ -4076,8 +4121,8 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 				{
 					x = d4_N_init(ig)(i)(j);
 					// Mortality (natural and fishing)
-					//x = x * SS(h)(j);
-					x = x * S(h)(syr)(j);
+					x = x * SS(h)(j);
+					//x = x * S(h)(syr)(j);
 					// Molting and growth
 					if (j == season_growth)
 					{
@@ -4086,7 +4131,7 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 					// Recruitment
 					if (j == season_recruitment)
 					{
-						x += rtt;
+						x += rtt(h);
 					}
 					if (j == nseason)
 					{
@@ -4101,8 +4146,8 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 						//cout << "d4_N_init(ig)(i)(j):" << endl;
 						//cout << d4_N_init(ig)(i)(j) << endl;
 						// Mortality (natural and fishing)
-						//x = x * SS(h)(j);
-						x = x * S(h)(syr)(j);
+						x = x * SS(h)(j);
+						//x = x * S(h)(syr)(j);
 						// Molting and growth
 						if (j == season_growth)
 						{
@@ -4112,7 +4157,7 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 						// Recruitment
 						if (j == season_recruitment)
 						{
-							x += rtt;
+							x += rtt(h);
 						}
 						if (j == nseason)
 						{
@@ -4125,8 +4170,8 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 					{
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
-						//x = x * SS(h)(j);
-						x = x * S(h)(syr)(j);
+						x = x * SS(h)(j);
+						///x = x * S(h)(syr)(j);
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
