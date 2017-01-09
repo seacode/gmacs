@@ -4094,7 +4094,6 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
 		break;
 		case 2: // Free parameters
-			//rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
 			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-rec_prop(syr))) * rec_sdd;
 			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
 		break;
