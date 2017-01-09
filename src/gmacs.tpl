@@ -1267,6 +1267,7 @@ PARAMETER_SECTION
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
+	//init_bounded_dev_vector m_devf(1,nMdev,-3.0,3.0,-Mdev_phz);    ///> natural mortality deviations
 
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
@@ -1849,10 +1850,19 @@ FUNCTION calc_natural_mortality
 			}
 			break;
 			case 3: // Specific break points
-				for ( int idev = 1; idev <= nMdev; idev++ )
-				{
-					delta(m_nodeyear(idev)) = m_dev(idev);
-				}
+				//for ( int h = 1; h <= nsex; h++ )
+				//{
+					for ( int idev = 1; idev <= nMdev; idev++ )
+					{
+						delta(m_nodeyear(idev)) = m_dev(idev);
+						//if (h == 1) delta(m_nodeyear(idev)) = m_dev(idev);
+						//if (h == 2) delta(m_nodeyear(idev)) = m_dev(idev);
+					}
+				//	for ( int i = syr+1; i <= nyr; i++ )
+				//	{
+				//		M(h)(i) = M(h)(i-1) * mfexp(delta(i));
+				//	}
+				//}
 			break;
 			// Modifying by Jie Zheng for specific time blocks
 			case 4: // time blocks
@@ -1884,17 +1894,17 @@ FUNCTION calc_natural_mortality
 				}
 			break;
 		}
-		// Update M by year.
-		if ( m_type < 4 )
+	// Update M by year.
+	if ( m_type < 4 )
+	{
+		for ( int h = 1; h <= nsex; h++ )
 		{
-			for ( int h = 1; h <= nsex; h++ )
+			for ( int i = syr+1; i <= nyr; i++ )
 			{
-				for ( int i = syr+1; i <= nyr; i++ )
-				{
-					M(h)(i) = M(h)(i-1) * mfexp(delta(i));
-				}
+				M(h)(i) = M(h)(i-1) * mfexp(delta(i));
 			}
 		}
+	}
 	}
 	// Custom natural mortality input
 	if ( bUseCustomNaturalMortality == 1 )
@@ -2228,6 +2238,7 @@ FUNCTION calc_initial_numbers_at_length
 		}
 	}
 
+	/*
 	//d4_N(ig)(syr)(1) = x(ig);
 	d4_N(2)(syr)(1) = 0.0001;
 	d4_N(4)(syr)(1) = 0.0001;
@@ -2273,6 +2284,7 @@ FUNCTION calc_initial_numbers_at_length
     d4_N(3)(syr)(1)(18) = 0;
     d4_N(3)(syr)(1)(19) = 0;
     d4_N(3)(syr)(1)(20) = 0;
+    */
 
 
 
@@ -3433,6 +3445,10 @@ FUNCTION calc_objective_function
 	{
 		nlogPenalty(3) = dnorm(m_dev, m_stdev);
 	}
+	//if ( active(m_devf) )
+	//{
+	//	nlogPenalty(3) = dnorm(m_devf, m_stdev);
+	//}
 
 	// 4 Penalty on recruitment devs.
 	if ( !last_phase() )
@@ -3983,6 +3999,48 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	dvar_vector y(1,nclass);
 	dvar_vector z(1,nclass);
 	
+	/*
+	FF.initialize();
+	ZZ.initialize();
+	SS.initialize();
+
+	for ( k = 1; k <= nfleet; k++ )
+	{
+		for ( h = 1; h <= nsex; h++ )
+		{
+			ik = 1; yk = 1;
+			for ( j = 1; j <= nseason; j++ )
+			{
+				if ( fhit(syr,j,k) )
+				{
+					log_ftmp = log_fbar(k) + log_fdev(k,ik++);
+					if ( yhit(syr,j,k) )
+					{
+						log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
+					}
+					xi  = dmr(syr,k);                                      // Discard mortality rate
+					sel = exp(log_slx_capture(k)(h)(syr));                 // Selectivity
+					ret = exp(log_slx_retaind(k)(h)(syr)) * slx_nret(h,k); // Retension
+					vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
+					FF(h)(j) += mfexp(log_ftmp) * vul;
+				}
+			}
+		}
+	}
+
+	for ( int h = 1; h <= nsex; h++ )
+	{
+		for ( int j = 1; j <= nseason; j++ )
+		{
+			ZZ(h)(j) = (m_prop(1)(j) * M(h)(1)) + FF(h)(j);
+			for ( int l = 1; l <= nclass; l++ )
+			{
+				SS(h)(j)(l,l) = mfexp(-ZZ(h)(j)(l));
+			}
+		}
+	}
+	*/
+
 	// Initial recruitment
 	switch( bInitializeUnfished )
 	{
@@ -4018,6 +4076,7 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 				{
 					x = d4_N_init(ig)(i)(j);
 					// Mortality (natural and fishing)
+					//x = x * SS(h)(j);
 					x = x * S(h)(syr)(j);
 					// Molting and growth
 					if (j == season_growth)
@@ -4042,6 +4101,7 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 						//cout << "d4_N_init(ig)(i)(j):" << endl;
 						//cout << d4_N_init(ig)(i)(j) << endl;
 						// Mortality (natural and fishing)
+						//x = x * SS(h)(j);
 						x = x * S(h)(syr)(j);
 						// Molting and growth
 						if (j == season_growth)
@@ -4065,6 +4125,7 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 					{
 						x = d4_N_init(ig)(i)(j);
 						// Mortality (natural and fishing)
+						//x = x * SS(h)(j);
 						x = x * S(h)(syr)(j);
 						// Molting and growth
 						z.initialize();
