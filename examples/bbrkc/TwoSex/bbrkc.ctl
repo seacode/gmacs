@@ -73,8 +73,8 @@
 ## index index par sex  ival  lb    ub     prior   p1   p2     phz   period period      ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # Gear-1
-   1      1    1   1    100    5    185    0       1    999    3     1975   2016
-   1      2    2   1    120    5    185    0       1    999    3     1975   2016
+   1      1    1   1    100    5    133    0       1    999    3     1975   2016
+   1      2    2   1    120    5    137    0       1    999    3     1975   2016
    1      3    1   2     84   60    150    0       1    999    3     1975   2016
    1      4    2   2     95   60    150    0       1    999    3     1975   2016
 # Gear-2
@@ -201,7 +201,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
    3       # Estimated rec_dev phase
-   3       # Estimated rec_ini phase
+   -3       # Estimated rec_ini phase
    0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
    0       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
    1984    # First year for average recruitment for Bspr calculation.
