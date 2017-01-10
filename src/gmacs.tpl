@@ -1254,7 +1254,7 @@ PARAMETER_SECTION
 	END_CALCS
 
 	// Fishing mortality rate parameters
-	init_number_vector log_fini(1,nfleet,f_phz);
+	//init_number_vector log_fini(1,nfleet,-f_phz);
 	init_number_vector log_fbar(1,nfleet,f_phz);                 ///> Male mean fishing mortality
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);      ///> Male f devs
 	init_number_vector log_foff(1,nfleet,foff_phz);              ///> Female F offset to Male F
@@ -2239,10 +2239,7 @@ FUNCTION calc_initial_numbers_at_length
 		}
 	}
 
-	/*
 	//d4_N(ig)(syr)(1) = x(ig);
-	d4_N(2)(syr)(1) = 0.0001;
-	d4_N(4)(syr)(1) = 0.0001;
 	// male newshell
     d4_N(1)(syr)(1)(1) = 27987700;
     d4_N(1)(syr)(1)(2) = 28795300;
@@ -2264,6 +2261,8 @@ FUNCTION calc_initial_numbers_at_length
     d4_N(1)(syr)(1)(18) = 4001730;
     d4_N(1)(syr)(1)(19) = 2343550;
     d4_N(1)(syr)(1)(20) = 2292990;
+	// male oldshell
+	d4_N(2)(syr)(1) = 0.0001;
 	// females newshell
     d4_N(3)(syr)(1)(1) = 45234000;
     d4_N(3)(syr)(1)(2) = 40950300;
@@ -2285,7 +2284,8 @@ FUNCTION calc_initial_numbers_at_length
     d4_N(3)(syr)(1)(18) = 0;
     d4_N(3)(syr)(1)(19) = 0;
     d4_N(3)(syr)(1)(20) = 0;
-    */
+	// female oldshell
+	d4_N(4)(syr)(1) = 0.0001;
 
 
 
@@ -2936,13 +2936,13 @@ FUNCTION calc_predicted_composition
 				switch ( type )
 				{
 					case 1: // retained
-						dNtmp = elem_prod(tmp,elem_prod(sel,ret));
+						dNtmp = elem_prod(tmp, elem_prod(sel, ret));
 					break;
 					case 2: // discarded
-						dNtmp = elem_prod(tmp,elem_prod(sel,dis));
+						dNtmp = elem_prod(tmp, elem_prod(sel, dis));
 					break;
 					default: // both retained and discarded
-						dNtmp = elem_prod(tmp,sel);
+						dNtmp = elem_prod(tmp, sel);
 					break;
 				}
 			} else { // sexes combined in the observations
@@ -4053,10 +4053,10 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 			{
 				if ( fhit(syr,j,k) )
 				{
-					log_ftmp = log_fbar(k) + log_fini(k);
+					log_ftmp = log_fbar(k);// + log_fini(k);
 					if ( yhit(syr,j,k) )
 					{
-						log_ftmp += double(h-1) * log_fini(k);
+						log_ftmp += double(h-1);// * log_fini(k);
 					}
 					xi  = dmr(syr,k);                                      // Discard mortality rate
 					sel = exp(log_slx_capture(k)(h)(syr));                 // Selectivity

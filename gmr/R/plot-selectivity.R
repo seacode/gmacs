@@ -16,18 +16,18 @@
         df <- data.frame(Model = names(M)[i], type = .TYPE[1], M[[i]]$slx_capture)
         # retained
         dr <- data.frame(Model = names(M)[i], type = .TYPE[2], M[[i]]$slx_retaind)
-        colnames(df) <- c("Model", "type", "year", "sex", "fleet", as.character(A$mid_points))
-        colnames(dr) <- colnames(df)
-        df$sex   = .SEX[df$sex + 1]
-        df$fleet = .FLEET[df$fleet]
-        dr$sex   = .SEX[dr$sex + 1]
-        dr$fleet = .FLEET[dr$fleet]
+        # returned
+        dd <- data.frame(Model = names(M)[i], type = .TYPE[3], M[[i]]$slx_capture)
+        dd[,4:ncol(dd)] <- dd[,4:ncol(dd)] - dr[,4:ncol(dr)]
+        colnames(df) <- colnames(dr) <- colnames(dd) <- c("Model", "type", "year", "sex", "fleet", as.character(A$mid_points))
+        df$sex <- dr$sex <- dd$sex <- .SEX[df$sex + 1]
+        df$fleet <- dr$fleet <- dd$fleet <- .FLEET[df$fleet]
         Mslx <- M[[i]][["slx_control"]]
         blkyr <- Mslx[Mslx[,1] > 0, 12]
-        df <- filter(df, year %in% blkyr)
-        blkyr <- Mslx[Mslx[,1] < 0, 12]
-        dr <- filter(dr, year %in% blkyr)
-        mdf <- rbind(mdf, melt(df, id.var = 1:5), melt(dr, id.var = 1:5))
+        df <- dplyr::filter(df, year %in% blkyr)
+        dr <- dplyr::filter(dr, year %in% blkyr)
+        dd <- dplyr::filter(dd, year %in% blkyr)
+        mdf <- rbind(mdf, reshape2::melt(df, id.var = 1:5), reshape2::melt(dr, id.var = 1:5), reshape2::melt(dd, id.var = 1:5))
         mdf$variable <- as.numeric(as.character(mdf$variable))
     }
     mdf$fleet <- factor(mdf$fleet, levels = .FLEET)
@@ -79,10 +79,11 @@ plot_selectivity <- function(M,
             p <- p + facet_wrap(~Model + sex + fleet, nrow = nrow, ncol = ncol)
         }
     } else {
-        p <- p + geom_line(aes(variable, value, col = factor(year), linetype = sex))
+        p <- p + geom_line(aes(variable, value, col = factor(year), linetype = sex), alpha = 0.5)
         p <- p + facet_wrap(~Model + fleet + type, nrow = nrow, ncol = ncol)
     }
-    p <- p + labs(y = ylab, x = xlab, col = ilab, linetype = tlab)
+    p <- p + labs(y = ylab, x = xlab, col = ilab, linetype = tlab) +
+        scale_linetype_manual(values = c("solid", "dashed", "dotted"))
     print(p + .THEME)
 }
 

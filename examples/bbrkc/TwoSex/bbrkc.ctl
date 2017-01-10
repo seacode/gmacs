@@ -10,7 +10,7 @@
 ## ival        lb        ub        phz   prior     p1      p2         # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
     0.18        0.01      1         -4       2    0.18    0.04        # M
-   16.5       -10        18          2       0  -10.0    20.0         # logR0
+   16.5       -10        18         -2       0  -10.0    20.0         # logR0
    14.0       -10        20         -2       0   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
    14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
@@ -118,7 +118,7 @@
 ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival     lb       ub    phz   prior  p1        p2     Analytic?   LAMBDA
-   0.84      0        1     4    1      0.843136  0.03   0           3       # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   0.84      0        1     4    1      0.843136  0.03   0           3     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
    1.0       0        5    -4    0      0.001     5.00   0           1       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -161,8 +161,8 @@
    0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
    1   1   1   1   1   1   1   1  1  # Initial value for effective sample size multiplier
   -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
-   1   2   2   3   3   4   4   5  5  # Composition aggregator
-#   1   2   3   4   4   5   5   6  6  # Composition aggregator
+#   1   2   2   3   3   4   4   5  5  # Composition aggregator
+   1   2   3   4   5   6   7   8  9  # Composition aggregator
    1   1   1   1   1   1   1   1  1  # LAMBDA
 #   0.7   0.7   0.7   0.7   0.7   0.7   0.7   0.7  0.7  # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -177,7 +177,7 @@
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Type
-0
+3
 ## Phase of estimation
 3
 ## STDEV in m_dev for Random walk
