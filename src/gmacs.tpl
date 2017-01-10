@@ -1991,7 +1991,7 @@ FUNCTION calc_molting_probability
 	{
 		dvariable mu = molt_mu(h);
 		dvariable sd = mu * molt_cv(h);
-		molt_probability(h) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points,mu,sd) + tiny);
+		molt_probability(h) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu,sd) + tiny);
 		for ( int l = 1; l <= nclass; l++ )
 		{
 			P(h)(l,l) = molt_probability(h)(l);
@@ -2413,8 +2413,8 @@ FUNCTION update_population_numbers_at_length
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = elem_prod(x, 1 - diagonal(P(h))); // did not molt, become oldshell
-							x = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, stay newshell
+							y = elem_prod(x, 1 - molt_probability(h)); // did not molt, become oldshell
+							x = elem_prod(x, molt_probability(h)) * growth_transition(h); // molted and grew, stay newshell
 						}
 						//cout << diagonal(P(h)) << endl;
 						//cout << 1-diagonal(P(h)) << endl << endl;
