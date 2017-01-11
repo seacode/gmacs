@@ -45,18 +45,17 @@ plot_molt_prob <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Pro
     mdf <- .get_molt_prob_df(M)
     
     p <- ggplot(mdf, aes(x = Length, y = MP)) +
-        expand_limits(y = c(0,1)) +
+        expand_limits(y = c(0, 1)) +
         labs(x = xlab, y = ylab)
     
-    if (length(M) == 1 && length(unique(mdf$Sex)) == 1)
-    {
+    if (length(M) == 1 && length(unique(mdf$Sex)) == 1) {
         p <- p + geom_line() + geom_point()
     } else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
-        p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
+        p <- p + geom_line(aes(col = Model, linetype = Year)) + geom_point(aes(col = Model, linetype = Year))
     } else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
-        p <- p + geom_line(aes(linetype = Sex, col = Year))
+        p <- p + geom_line(aes(linetype = Sex, col = Year)) + geom_point(aes(col = Year, linetype = Sex))
     } else {
-        p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
+        p <- p + geom_line(aes(linetype = Model, col = Year)) + geom_point(aes(linetype = Model, col = Year)) + facet_wrap(~Sex)
     }
     print(p + .THEME)
 }

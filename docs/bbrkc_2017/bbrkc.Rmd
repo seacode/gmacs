@@ -746,16 +746,11 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 mp1 <- c(0.999966, 0.999934, 0.99987, 0.999746, 0.999504, 0.999031, 0.998109, 0.996311, 0.992816, 0.986056, 0.973108, 0.948763, 0.90454, 0.829026, 0.712748, 0.559415, 0.393843, 0.249522, 0.145401, 0.0800909)
 mp2 <- c(0.999292, 0.998841, 0.998102, 0.996894, 0.994921, 0.991705, 0.986481, 0.978039, 0.964516, 0.943149, 0.910114, 0.86072, 0.790431, 0.697152, 0.584195, 0.461642, 0.343556, 0.242093, 0.163148, 0.106334)
 
-M1 <- M
-M1[[3]] <- M[[2]]
-names(M1) <- c('Gmacs','1975-1979','1980-present')
+M[[2]]$molt_probability[1:5,] <- matrix(mp1, nrow = 5, ncol = 20, byrow = TRUE)
+M[[2]]$molt_probability[6:42,] <- matrix(mp2, nrow = 37, ncol = 20, byrow = TRUE)
+M[[2]]$molt_probability[43:84,] <- 1
 
-M1[[2]]$molt_probability[1,] <- mp1
-M1[[2]]$molt_probability[2,] <- 1
-M1[[3]]$molt_probability[1,] <- mp2
-M1[[3]]$molt_probability[2,] <- 1
-
-plot_molt_prob(M1)
+plot_molt_prob(M)
 ```
 
 ```{r growth_inc, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:growth_inc}"}
