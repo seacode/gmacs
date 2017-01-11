@@ -1321,7 +1321,7 @@ PARAMETER_SECTION
 	matrix res_cpue(1,nSurveys,1,nSurveyRows); ///> relative abundance residuals
 	
 	matrix molt_increment(1,nsex,1,nclass);   ///> linear molt increment
-	matrix molt_probability(1,nsex,1,nclass); ///> probability of molting
+	3darray molt_probability(1,nsex,syr,nyr,1,nclass); ///> probability of molting
 	3darray P(1,nsex,1,nclass,1,nclass);      //> Diagonal matrix of molt probabilities
 
 	3darray growth_transition(1,nsex,1,nclass,1,nclass);   ///> The growth transition matrix
@@ -1989,12 +1989,21 @@ FUNCTION calc_molting_probability
 	double tiny = 0.000;
 	for ( int h = 1; h <= nsex; h++ )
 	{
-		dvariable mu = molt_mu(h);
-		dvariable sd = mu * molt_cv(h);
-		molt_probability(h) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu,sd) + tiny);
-		for ( int l = 1; l <= nclass; l++ )
+		for ( int i = syr; i <= nyr; i++ )
 		{
-			P(h)(l,l) = molt_probability(h)(l);
+			if ( i < 1980 & h == 1 ) {
+				dvariable mu = 144.170986;
+				dvariable sd = mu * 0.05;//1.144537;
+				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
+			} else {
+				dvariable mu = molt_mu(h);
+				dvariable sd = mu * molt_cv(h);
+				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
+			}
+			for ( int l = 1; l <= nclass; l++ )
+			{
+				P(h)(l,l) = molt_probability(h)(i)(l);
+			}
 		}
 	}
 
@@ -2413,8 +2422,8 @@ FUNCTION update_population_numbers_at_length
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = elem_prod(x, 1 - molt_probability(h)); // did not molt, become oldshell
-							x = elem_prod(x, molt_probability(h)) * growth_transition(h); // molted and grew, stay newshell
+							y = elem_prod(x, 1 - molt_probability(h)(i)); // did not molt, become oldshell
+							x = elem_prod(x, molt_probability(h)(i)) * growth_transition(h); // molted and grew, stay newshell
 						}
 						//cout << diagonal(P(h)) << endl;
 						//cout << 1-diagonal(P(h)) << endl << endl;
@@ -2465,8 +2474,8 @@ FUNCTION update_population_numbers_at_length
 						z.initialize();
 						if (j == season_growth)
 						{
-							z = elem_prod(x, diagonal(P(h))) * growth_transition(h); // molted and grew, become newshell
-							x = elem_prod(x, 1 - diagonal(P(h))) + y; // did not molt, remain oldshell and add the newshell that become oldshell
+							z = elem_prod(x, molt_probability(h)(i)) * growth_transition(h); // molted and grew, become newshell
+							x = elem_prod(x, 1 - molt_probability(h)(i)) + y; // did not molt, remain oldshell and add the newshell that become oldshell
 						}
 						if (j == nseason)
 						{

@@ -12,21 +12,18 @@
     for(i in 1:n)
     {
         A  <- M[[i]]
-        nsex <- 1
-        if (is.matrix(A$molt_probability))
-        {
-            nsex <- 2
-            mp <- t(A$molt_probability)
-        } else {
-            mp <- data.frame(A$molt_probability)
-        }
-        colnames(mp) <- .SEX[1:nsex+1]
-        df <- data.frame(Model = names(M)[i], Length = A$mid_points, mp)
-        df1 <- melt(df, id.var = c("Model", "Length"))
-        mdf <- rbind(mdf, df1)
+        mp <- A$molt_probability
+        rownames(mp) <- rep(.SEX[1:A$nsex+1], each = length(A$syr:A$nyr))
+        colnames(mp) <- A$mid_points
+        df <- reshape2::melt(mp)
+        df$Year <- rep(A$syr:A$nyr, by = A$nsex)
+        df$Model <- names(M)[i]
+        names(df) <- c("Sex", "Length", "MP", "Year", "Model")
+        df <- dplyr::distinct(df, Sex, Length, MP, Model, .keep_all = TRUE)
+        mdf <- rbind(mdf, df)
     }
-    names(mdf) <- c("Model", "Length", "Sex", "MP")
     mdf$Sex <- factor(mdf$Sex, levels = sort(levels(mdf$Sex)))
+    mdf$Year <- as.factor(mdf$Year)
     return(mdf)	
 }
 
@@ -57,7 +54,7 @@ plot_molt_prob <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Pro
     } else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
         p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
     } else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
-        p <- p + geom_line(aes(linetype = Sex))
+        p <- p + geom_line(aes(linetype = Sex, col = Year))
     } else {
         p <- p + geom_line(aes(linetype = Sex, col = Model)) + geom_point(aes(col = Model))
     }
