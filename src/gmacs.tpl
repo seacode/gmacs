@@ -1178,12 +1178,13 @@ DATA_SECTION
 
 
 INITIALIZATION_SECTION
-	theta        theta_ival;
-	Grwth        Grwth_ival;
-	log_fbar     log_pen_fbar;
-	log_vn       log_nvn_ival;
-	survey_q     q_ival;
-	log_add_cv   log_add_cv_ival;
+	theta          theta_ival;
+	Grwth          Grwth_ival;
+	log_fbar       log_pen_fbar;
+	log_vn         log_nvn_ival;
+	survey_q       q_ival;
+	log_add_cv     log_add_cv_ival;
+	logit_rec_prop 0.0;
 
 
 PARAMETER_SECTION
@@ -1264,7 +1265,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector rec_ini(1,nclass,-14.0,14.0,rec_ini_phz);  ///> initial size devs
 	//init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 	init_bounded_dev_vector rec_dev(syr,nyr,-8.0,8.0,rdv_phz); ///> recruitment deviations
-	init_bounded_dev_vector rec_prop(syr,nyr,-100,100,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector logit_rec_prop(syr,nyr,-100,100,rdv_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
@@ -2360,8 +2361,8 @@ FUNCTION update_population_numbers_at_length
 			} else {
 				recruits(h)(i) = mfexp(logRbar);
 			}
-			if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + mfexp(-rec_prop(i)));
-			if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + mfexp(-rec_prop(i))));
+			if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + mfexp(-logit_rec_prop(i)));
+			if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + mfexp(-logit_rec_prop(i))));
 		}
 	}
 
@@ -3408,6 +3409,10 @@ FUNCTION calc_objective_function
 			break;
 		}
 	}
+	if ( active(logit_rec_prop) )
+	{
+		nloglike(4,1) += dnorm(logit_rec_prop, 0.1);
+	}
 
 	// 5) Likelihood for growth increment data
 	if ( !bUseEmpiricalGrowth && (active(Grwth(1)) || active(Grwth(2))) )
@@ -3719,7 +3724,7 @@ REPORT_SECTION
 	REPORT(rec_sdd);
 	REPORT(rec_ini);
 	REPORT(rec_dev);
-	REPORT(rec_prop);
+	REPORT(logit_rec_prop);
 	REPORT(recruits);
 
 	REPORT(xi);
@@ -4094,17 +4099,17 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 	{
 		case 0: // Unfished conditions
 			//rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
-			rtt(1) = mfexp(logR0) * 1 / (1 + mfexp(-rec_prop(syr))) * rec_sdd;
-			rtt(2) = mfexp(logR0) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
+			rtt(1) = mfexp(logR0) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
+			rtt(2) = mfexp(logR0) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
 		break;
 		case 1: // Steady-state fished conditions
 			//rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
-			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-rec_prop(syr))) * rec_sdd;
-			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
+			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
+			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
 		break;
 		case 2: // Free parameters
-			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-rec_prop(syr))) * rec_sdd;
-			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-rec_prop(syr)))) * rec_sdd;
+			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
+			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
 		break;
 	}
 

@@ -18,6 +18,7 @@ docs/api/html/
 auto/
 
 # R files
+rsconnect/
 .Rproj.user
 *.Rproj
 *.Rout

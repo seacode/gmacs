@@ -15,7 +15,7 @@
    14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
     0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
-   -0.95      -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
+   -0.9       -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
     0.75        0.20      1.00      -2       3    3.0     2.00        # steepness
     0.01        0.00      1.00      -3       3    1.01    1.01        # recruitment autocorrelation
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -125,7 +125,7 @@
 ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival     lb       ub    phz   prior  p1        p2     Analytic?   LAMBDA
-   0.84      0        1     4    1      0.843136  0.03   0           3     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   0.84      0        1     4    1      0.843136  0.03   0           1.5     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
    1.0       0        5    -4    0      0.001     5.00   0           1       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -186,14 +186,14 @@
 ## Type
 3
 ## Phase of estimation
-3
+-3
 ## STDEV in m_dev for Random walk
 0.1
 ## Number of nodes for cubic spline or number of step-changes for option 3
-2
+4
 ## Year position of the knots (vector must be equal to the number of nodes)
-#1976 1980 1985 1994
-1980 1985
+1976 1980 1985 1994
+#1980 1985
 #1980 1985 1994
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -201,7 +201,7 @@
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
    3       # Estimated rec_dev phase
-   -3       # Estimated rec_ini phase
+  -3       # Estimated rec_ini phase
    0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
    0       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
    1984    # First year for average recruitment for Bspr calculation.
