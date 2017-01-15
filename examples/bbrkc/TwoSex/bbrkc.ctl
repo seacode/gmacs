@@ -9,7 +9,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival        lb        ub        phz   prior     p1      p2         # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-    0.18        0.01      1         -4       2    0.18    0.04        # M
+    0.18        0.1     0.3         -4       2    0.18    0.04        # M
    16.5       -10        18         -2       0  -10.0    20.0         # logR0
    14.0       -10        20         -2       0   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
    14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
@@ -125,8 +125,9 @@
 ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival     lb       ub    phz   prior  p1        p2     Analytic?   LAMBDA
-   0.84      0        1     4    1      0.843136  0.03   0           1.5     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   1.0       0        5    -4    0      0.001     5.00   0           1       # BSFRF
+#   0.84      0        1     4    1      0.843136  0.03   0           1.4     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   0.84      0        1     4    1      0.843136  0.03   0           1     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   1.0       0        5     4    0      0.001     5.00   0           1       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -163,6 +164,7 @@
 ## AUTO TAIL COMPRESSION                                                                ##
 ##     pmin is the cumulative proportion used in tail compression                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
+#  Pot         Trawl   NMFS    BSFRF
    1   1   1   1   1   1   1   1  1  # Type of likelihood
 #   2   2   2   2   2   2   2   2  2  # Type of likelihood
    0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
@@ -186,7 +188,7 @@
 ## Type
 3
 ## Phase of estimation
--3
+3
 ## STDEV in m_dev for Random walk
 0.1
 ## Number of nodes for cubic spline or number of step-changes for option 3

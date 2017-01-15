@@ -3355,7 +3355,6 @@ FUNCTION calc_objective_function
 		dvar_matrix P = d3_pre_size_comps(ii);
 		//dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii));
 		dvar_vector log_effn = log(mfexp(log_vn(ii)) * size_comp_sample_size(ii) * lf_lambda(ii));
-		//dvector stdtmp = cpue_sd(k) * 1.0 / cpue_lambda(k);
 
 		bool bCmp = bTailCompression(ii);
 		class acl::negativeLogLikelihood *ploglike;
@@ -3878,16 +3877,16 @@ REPORT_SECTION
 	REPORT(survey_q);
 	
 	// Molting probability
-	dvector molt_prob_M(1,nclass);
-	dvector	molt_prob_F(1,nclass);
-	molt_prob_M = value(diagonal(P(1)));
-	REPORT(P);
-	REPORT(molt_prob_M);
-	if ( nsex == 2 )
-	{
-		molt_prob_F = value(diagonal(P(2)));
-		REPORT(molt_prob_F);
-	}
+	//dvector molt_prob_M(1,nclass);
+	//dvector	molt_prob_F(1,nclass);
+	//molt_prob_M = value(diagonal(P(1)));
+	//REPORT(P);
+	//REPORT(molt_prob_M);
+	//if ( nsex == 2 )
+	//{
+	//	molt_prob_F = value(diagonal(P(2)));
+	//	REPORT(molt_prob_F);
+	//}
 	// Growth and size transition.
 	REPORT(growth_transition);
 	REPORT(size_transition);
