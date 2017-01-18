@@ -15,7 +15,8 @@
         if ( is.matrix(A$mean_wt) && nsex == 2 )
         {
             wt <- t(A$mean_wt)
-            colnames(wt) <- .SEX[1:nsex+1]
+            #colnames(wt) <- .SEX[1:nsex+1]
+            colnames(wt) <- rep(A$mod_yrs, nsex)
         } else if ( is.matrix(A$mean_wt) && nsex == 1 ) {
             wt <- t(A$mean_wt)
             colnames(wt) <- A$mod_yrs

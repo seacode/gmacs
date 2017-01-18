@@ -30,6 +30,7 @@ options(xtable.comment = FALSE)
 # The model specs
 mod_names <- c("Gmacs","2016 Model")
 .MODELDIR = c("../../examples/bbrkc_2017/model_3/", "../../examples/bbrkc_2017/model_3/")
+#.MODELDIR = c("../../examples/bbrkc_2017/model_5/", "../../examples/bbrkc_2017/model_5/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
@@ -303,8 +304,6 @@ The SMBKC fishery developed subsequent to baseline ecological studies associated
 \end{table}
 The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock-size threshold (MSST) of 4990 tonnes (11.0 million pounds) as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table \ref{tab:stage_cpue_nmfs}). In November 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.
 
-NMFS declared the stock rebuilt on 21 September 2009, and the fishery was reopened after a 10-year closure on 15 October 2009 with a TAC of 529 tonnes (1.167 million pounds), closing again by regulation on 1 February 2010. Seven participating vessels landed a catch of 209 tonnes (460,859 pounds) with a reported effort of 10,697 pot lifts and an estimated CPUE of 9.9 retained individual crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&G to close the fishery again for the 2013/14 season. Due to an abundance above thresholds, the fishery was reopened for the 2014/15 season with a low TAC of 297 tonnes (0.655 million pounds) and in 2015/16 the TAC was further reduced to 186 tonnes (0.411 million pounds).
-
 Though historical observer data are limited due to very limited sampling, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes more than twice as high as the catch of legal crab (Moore et al. 2000; ADF&G Crab Observer Database). Pot-lift sampling by ADF&G crab observers (Gaeuman 2013; ADF&G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table \ref{tab:stage_cpue_1}), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (88 tonnes or 0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality. 
 \begin{table}[ht]
 \centering
@@ -451,10 +450,6 @@ Groundfish bycatch size-frequency data are available for selected years. These d
 ## History of Modeling Approaches for this Stock
 
 A four-stage catch-survey-analysis (CSA) assessment model was used before 2011 to estimate abundance and biomass and prescribe fishery quotas for the SMBKC stock (2010 SAFE; Zheng et al. 1997). The four-stage CSA is similar to a full length-based analysis, the major difference being coarser length groups, which are more suited to a small stock with consistently low survey catches. In this approach, the abundance of male crab with a CL of 90 mm or above is modeled in terms of four crab stages: stage 1: 90-104 mm CL; stage 2: 105-119 mm CL; stage 3: newshell 120-133 mm CL; and stage 4: oldshell $\ge$ 120 mm CL and newshell $\ge$ 134 mm CL. Motivation for these stage definitions comes from the fact that for management of the SMBKC stock, male crab measuring at least 105 mm CL are considered mature, whereas 120 mm CL is considered a proxy for the legal size of 5.5 in carapace width, including spines. Additional motivation for these stage definitions comes from an estimated average growth increment of about 14 mm per molt for SMBKC (Otto and Cummiskey 1990).
-
-Concerns about the pre-2011 assessment model led to the CPT and SSC recommendations that included development of an alternative model with provisional assessment based on survey biomass or some other index of abundance. An alternative 3-stage model was proposed to the CPT in May 2011 but was requested to proceed with a survey-based approach for the Fall 2011 assessment. In May 2012 the CPT approved a slightly revised and better documented version of the alternative model for assessment.
-
-The 2015 SMBKC stock assessment model, first used in Fall 2012, was a variant of the previous four-stage SMBKC CSA model and similar in complexity to that described by Collie et al. (2005). Like the earlier model, it considered only male crab at least 90 mm in CL, but it combined stages 3 and 4 of the earlier model resulting in just three stages (male size classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120 mm+ (i.e., 120 mm and above). This consolidation was driven by concern about the accuracy and consistency of shell-condition information, which had been used in distinguishing stages 3 and 4 of the earlier model.
 
 ## Assessment Methodology
 
@@ -871,15 +866,10 @@ M1 <- M
 M1[[3]] <- M[[2]]
 names(M1) <- c('Gmacs','1983-93','1994-present')
 
-#M1[[2]]$growth_transition[1:20,] <- gm_m1
-#M1[[2]]$growth_transition[21:40,] <- gm_f1
-#M1[[3]]$growth_transition[1:20,] <- gm_m2
-#M1[[3]]$growth_transition[21:40,] <- gm_f2
-
-M1[[2]]$size_transition_M<- gm_m1
-M1[[2]]$size_transition_F <- gm_f1
-M1[[3]]$size_transition_M <- gm_m2
-M1[[3]]$size_transition_F <- gm_f2
+M1[[2]]$growth_transition[1:20,] <- gm_m1
+M1[[2]]$growth_transition[21:40,] <- gm_f1
+M1[[3]]$growth_transition[1:20,] <- gm_m2
+M1[[3]]$growth_transition[21:40,] <- gm_f2
 
 plot_growth_transition(M1, xlab = "Carapace width after transition (mm)")
 ```
@@ -986,12 +976,12 @@ names(M1) <- c('Gmacs','1983-93','1994-present')
 #M1[[3]]$growth_transition[1:20,] <- gm_m2
 #M1[[3]]$growth_transition[21:40,] <- gm_f2
 
-M1[[2]]$size_transition_M<- gm_m1
+M1[[2]]$size_transition_M <- gm_m1
 M1[[2]]$size_transition_F <- gm_f1
 M1[[3]]$size_transition_M <- gm_m2
 M1[[3]]$size_transition_F <- gm_f2
 
-plot_size_transition(M1, xlab = "Carapace width after transition (mm)")
+#plot_size_transition(M1, xlab = "Carapace width after transition (mm)")
 ```
 
 ```{r selectivity, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:selectivity}", fig.height = 15}
@@ -1057,6 +1047,9 @@ plot_recruitment(A)
 ```
 
 ```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2016 for each of the model scenarios.\\label{fig:mmb}"}
+ii <- M[[2]]$fit$names == "sd_log_ssb"
+M[[2]]$fit$est[ii] <- log(c(80955.7, 90716.6, 94074.4, 97136, 82946.7, 24783.7, 8313.41, 8157.77, 8593.47, 6490.84, 10386, 15126.5, 21635.7, 27635.8, 31316.5, 29177.6, 24245.2, 22123.5, 19574, 25045, 27809.1, 25767.2, 23897.7, 26161.7, 30664, 30535.2, 29357.2, 31147.2, 29741.6, 27613.8, 27847.8, 29785.6, 27042, 28194.5, 31980.5, 32224.4, 32349.9, 31140, 30002.1, 28843, 27680.4, 23940))
+M[[2]]$fit$std[ii] <- NA
 plot_ssb(M, ylab = "Mature male biomass (tonnes) on 15 February")
 ```
 

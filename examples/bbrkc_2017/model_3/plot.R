@@ -173,6 +173,6 @@ png(filename = paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0, uni
 plot_datarange(M)
 dev.off()
 
-#plot_length_weight(M)
-#ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
-#dev.off()
+plot_length_weight(M)
+ggsave(paste0(.FIGS, "length_weight.png"), width = ww, height = hh)
+dev.off()
