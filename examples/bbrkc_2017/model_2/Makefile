@@ -13,7 +13,7 @@ else
     RM=rm -rf
 endif
 
-all: run
+all: run plot
 
 $(EXEC): $(DIST)$(EXEC).tpl
 	ln -sf $(DIST)$(EXEC) $@

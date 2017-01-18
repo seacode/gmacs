@@ -3038,12 +3038,12 @@ FUNCTION void get_all_sdnr_MAR()
 			dvar_vector restmp = elem_div(log(elem_div(obs_cpue(k), pre_cpue(k))), stdtmp) + 0.5 * stdtmp;
 			sdnr_MAR_cpue(k) = calc_sdnr_MAR(value(restmp));
 		}
-		for ( int k = 1; k <= nSizeComps; k++ )
-		{
-			//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
-			sdnr_MAR_lf(k) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
-		}
-		Francis_weights = calc_Francis_weights();
+		//for ( int k = 1; k <= nSizeComps; k++ )
+		//{
+		//	//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
+		//	sdnr_MAR_lf(k) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
+		//}
+		//Francis_weights = calc_Francis_weights();
 	}
 
 
@@ -3610,7 +3610,7 @@ REPORT_SECTION
 	REPORT(nlogPenalty);
 	REPORT(priorDensity);
 
-	//get_all_sdnr_MAR();
+	get_all_sdnr_MAR();
 
 	REPORT(sdnr_MAR_cpue);
 	REPORT(cpue_lambda);
