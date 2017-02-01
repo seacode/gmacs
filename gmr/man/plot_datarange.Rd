@@ -18,4 +18,3 @@ Plot data range by fleet and year
 \author{
 Ian Taylor, Huihua Lee, Jim Ianelli, D'Arcy N. Webber
 }
-

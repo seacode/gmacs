@@ -24,4 +24,3 @@ Plot fishing mortality
 \author{
 D'Arcy N. Webber
 }
-

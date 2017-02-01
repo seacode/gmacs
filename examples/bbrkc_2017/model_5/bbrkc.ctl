@@ -184,7 +184,7 @@
 ## Type
 3
 ## Phase of estimation
-3
+-3
 ## STDEV in m_dev for Random walk
 0.1
 ## Number of nodes for cubic spline or number of step-changes for option 3

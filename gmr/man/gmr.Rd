@@ -8,4 +8,3 @@
 \description{
 gmr is a set of tools for analysing data and outputs related to Gmacs stock assessment models.
 }
-

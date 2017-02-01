@@ -3410,7 +3410,7 @@ FUNCTION calc_objective_function
 	}
 	if ( active(logit_rec_prop) )
 	{
-		nloglike(4,1) += dnorm(logit_rec_prop, 0.1);
+		nloglike(4,1) += dnorm(logit_rec_prop, 1.0);
 	}
 
 	// 5) Likelihood for growth increment data

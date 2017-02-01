@@ -18,4 +18,3 @@ Read ADMB .par, .std, and .cor file and return an R object of type 'list' of est
 \author{
 Steve Martell, Anders Nielsen, Athol Whitten, D'Arcy N. Webber
 }
-

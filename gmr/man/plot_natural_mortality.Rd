@@ -21,4 +21,3 @@ Plot natural mortality
 \author{
 J Ianelli, SJD Martell, DN Webber
 }
-

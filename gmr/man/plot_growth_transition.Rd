@@ -25,4 +25,3 @@ The sex-specific growth transition probabilities (G_h, for all crabs that molt)
 \author{
 SJD Martell, D'Arcy N. Webber
 }
-
