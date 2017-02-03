@@ -12,7 +12,7 @@
     0.18        0.15    0.2         -4       2    0.18    0.04        # M
    16.5       -10        18         -2       0  -10.0    20.0         # logR0
    14.0       -10        20         -2       0   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
-   14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
+   14.0       -10        20          1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
     0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
    -0.9       -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
