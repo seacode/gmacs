@@ -165,8 +165,8 @@
 ##     pmin is the cumulative proportion used in tail compression                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  Pot         Trawl   NMFS    BSFRF
-   1   1   1   1   1   1   1   1  1  # Type of likelihood
-#   2   2   2   2   2   2   2   2  2  # Type of likelihood
+#   1   1   1   1   1   1   1   1  1  # Type of likelihood
+   2   2   2   2   2   2   2   2  2  # Type of likelihood
    0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
    1   1   1   1   1   1   1   1  1  # Initial value for effective sample size multiplier
   -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
@@ -202,7 +202,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## OTHER CONTROLS
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-  3       # Estimated rec_dev phase
+   3       # Estimated rec_dev phase
   -3       # Estimated rec_ini phase
    0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
    0       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)

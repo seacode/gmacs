@@ -10,9 +10,9 @@
 ## ival        lb        ub        phz   prior     p1      p2         # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
     0.18        0.15    0.2         -4       2    0.18    0.04        # M
-   16.5       -10        18         -2       0  -10.0    20.0         # logR0
-   14.0       -10        20         -2       0   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
-   14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
+   15.8       -10        18         -2       0  -10.0    20.0         # logR0
+   15.8       -10        20         -2       0   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
+   15.8       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
     0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
    -0.9       -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
@@ -57,17 +57,17 @@
 ##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Gear-1   Gear-2   Gear-3   Gear-4
-   1        1        2        1         # selectivity periods
-   1        0        1        1         # sex specific selectivity
-   3        3        3        3         # male selectivity type
-   3        3        3        3         # female selectivity type
+   1        1        1         # selectivity periods
+   1        1        1         # sex specific selectivity
+   3        3        3         # male selectivity type
+   3        3        3         # female selectivity type
 ## Gear-1   Gear-2   Gear-3   Gear-4
-   1        1        1        1         # retention periods
-   1        0        0        0         # sex specific retention
-   3        2        2        2         # male   retention type
-   2        2        2        2         # female retention type
-   1        0        0        0         # male   retention flag (0 = no, 1 = yes)
-   0        0        0        0         # female retention flag (0 = no, 1 = yes)
+   1        1        1         # retention periods
+   1        0        0         # sex specific retention
+   3        2        2         # male   retention type
+   2        2        2         # female retention type
+   1        0        0         # male   retention flag (0 = no, 1 = yes)
+   0        0        0         # female retention flag (0 = no, 1 = yes)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## gear  par   sel                                                   start  end         ##
 ## index index par sex  ival  lb    ub     prior   p1   p2     phz   period period      ##
@@ -77,23 +77,16 @@
    1      2    2   1    120    5    137    0       1    999    3     1975   2016
    1      3    1   2     84   60    150    0       1    999    3     1975   2016
    1      4    2   2     95   60    150    0       1    999    3     1975   2016
-# Gear-2
-   2      5    1   0    110    5    185    0       1    999    3     1975   2016
-   2      6    2   0    150    5    185    0       1    999    3     1975   2016
 # Gear-3
-   3      7    1   1     74   60     90    0       1    999    3     1975   1981
-   3      8    2   1     95   70    150    0       1    999    3     1975   1981
-   3      9    1   1     90   60     90    0       1    999    3     1982   2016
-   3     10    2   1    160   70    150    0       1    999    3     1982   2016
-   3      7    1   2     74   60    180    0       1    999    3     1975   1981
-   3      8    2   2     95   70    180    0       1    999    3     1975   1981
-   3      9    1   2     90   60    180    0       1    999    3     1982   2016
-   3     10    2   2    160   70    180    0       1    999    3     1982   2016
+   2      7    1   1     74   60     90    0       1    999    3     1975   2016
+   2      8    2   1     95   70    150    0       1    999    3     1975   2016
+   2      7    1   2     74   60     90    0       1    999    3     1975   2016
+   2      8    2   2     95   70    150    0       1    999    3     1975   2016
 # Gear-4
-   4     11    1   1     70    1    180    0       1    999    4     1975   2016
-   4     12    2   1     90    1    180    0       1    999    4     1975   2016
-   4     13    1   2    110    1    180    0       1    999    4     1975   2016
-   4     14    2   2    190    1    180    0       1    999    4     1975   2016
+   3     11    1   1     70    1    180    0       1    999    4     1975   2016
+   3     12    2   1     90    1    180    0       1    999    4     1975   2016
+   3     13    1   2    110    1    180    0       1    999    4     1975   2016
+   3     14    2   2    190    1    180    0       1    999    4     1975   2016
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Retained                                                                             ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -102,15 +95,12 @@
   -1     20    2   1    137    1    999    0       1    999   -4     1975   2016
   -1     21    1   2    591    1    999    0       1    999   -3     1975   2016
   -1     22    2   2     11    1    999    0       1    999   -3     1975   2016
-# Gear-2
-  -2     23    1   0    595    1    999    0       1    999   -3     1975   2016
-  -2     24    2   0     10    1    999    0       1    999   -3     1975   2016
 # Gear-3
-  -3     25    1   0    590    1    999    0       1    999   -3     1975   2016
-  -3     26    2   0     10    1    999    0       1    999   -3     1975   2016
+  -2     25    1   0    590    1    999    0       1    999   -3     1975   2016
+  -2     26    2   0     10    1    999    0       1    999   -3     1975   2016
 # Gear-4
-  -4     27    1   0    580    1    999    0       1    999   -3     1975   2016
-  -4     28    2   0     20    1    999    0       1    999   -3     1975   2016
+  -3     27    1   0    580    1    999    0       1    999   -3     1975   2016
+  -3     28    2   0     20    1    999    0       1    999   -3     1975   2016
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -143,7 +133,6 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Mean_F   STD_PHZ1   STD_PHZ2   PHZ
    0.1      0.5        45.50      1   # Pot
-   0.005    0.5        45.50      1   # Trawl
    0.00     2.00       20.00     -1   # NMFS trawl survey (0 catch)
    0.00     2.00       20.00     -1   # BSFRF (0)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -161,15 +150,14 @@
 ##     pmin is the cumulative proportion used in tail compression                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  Pot         Trawl   NMFS    BSFRF
-   1   1   1   1   1   1   1   1  1  # Type of likelihood
-#   2   2   2   2   2   2   2   2  2  # Type of likelihood
-   0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
-   1   1   1   1   1   1   1   1  1  # Initial value for effective sample size multiplier
-  -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
+#   1   1   1   1   1   1   1   1  1  # Type of likelihood
+   2   2   2   2   2   2   2  # Type of likelihood
+   0   0   0   0   0   0   0  # Auto tail compression (pmin)
+   1   1   1   1   1   1   1  # Initial value for effective sample size multiplier
+  -4  -4  -4  -4  -4  -4  -4  # Phz for estimating effective sample size (if appl.)
 #   1   2   2   3   3   4   4   5  5  # Composition aggregator
-   1   2   3   4   5   6   7   8  9  # Composition aggregator
-   1   1   1   1   1   1   1   1  1  # LAMBDA
-#   0.7   0.7   0.7   0.7   0.7   0.7   0.7   0.7  0.7  # LAMBDA
+   1   2   3   4   5   6   7  # Composition aggregator
+   1   1   1   1   1   1   1  # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

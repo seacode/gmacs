@@ -9,7 +9,7 @@ require(gmr)
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
-.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
+.FLEET    = c("Pot","NMFS Trawl","BSFRF")
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
@@ -125,14 +125,6 @@ plot_size_comps(M, 7)
 ggsave(paste0(.FIGS, "lf_7.png"), width = ww*2, height = hh*1.5)
 dev.off()
 
-plot_size_comps(M, 8)
-ggsave(paste0(.FIGS, "lf_8.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 9)
-ggsave(paste0(.FIGS, "lf_9.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
 plot_size_comps(M, 1, res = TRUE)
 ggsave(paste0(.FIGS, "lf_1b.png"), width = ww*2, height = hh*1.5)
 dev.off()
@@ -159,14 +151,6 @@ dev.off()
 
 plot_size_comps(M, 7, res = TRUE)
 ggsave(paste0(.FIGS, "lf_7b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 8, res = TRUE)
-ggsave(paste0(.FIGS, "lf_8b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 9, res = TRUE)
-ggsave(paste0(.FIGS, "lf_9b.png"), width = ww, height = hh*0.5)
 dev.off()
 
 png(filename = paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0, units = 'in', res = 400)

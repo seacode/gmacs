@@ -12,7 +12,7 @@
     0.18        0.15    0.2         -4       2    0.18    0.04        # M
    16.5       -10        18         -2       0  -10.0    20.0         # logR0
    14.0       -10        20         -2       0   10.0    30.0         # logR1, to estimate if NOT initialized at unfished
-   14.0       -10        20          1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
+   14.0       -10        20         -1       0   10.0    30.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
     0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
    -0.9       -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
@@ -161,15 +161,14 @@
 ##     pmin is the cumulative proportion used in tail compression                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  Pot         Trawl   NMFS    BSFRF
-   1   1   1   1   1   1   1   1  1  # Type of likelihood
-#   2   2   2   2   2   2   2   2  2  # Type of likelihood
+#   1   1   1   1   1   1   1   1  1  # Type of likelihood
+   2   2   2   2   2   2   2   2  2  # Type of likelihood
    0   0   0   0   0   0   0   0  0  # Auto tail compression (pmin)
    1   1   1   1   1   1   1   1  1  # Initial value for effective sample size multiplier
   -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
 #   1   2   2   3   3   4   4   5  5  # Composition aggregator
    1   2   3   4   5   6   7   8  9  # Composition aggregator
    1   1   1   1   1   1   1   1  1  # LAMBDA
-#   0.7   0.7   0.7   0.7   0.7   0.7   0.7   0.7  0.7  # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -182,9 +181,9 @@
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Type
-1
+0
 ## Phase of estimation
-3
+-3
 ## STDEV in m_dev for Random walk
 0.1
 ## Number of nodes for cubic spline or number of step-changes for option 3
