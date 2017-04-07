@@ -3665,6 +3665,9 @@ REPORT_SECTION
 	REPORT(log_slx_discard);
 	
 	REPORT(log_fbar);
+	//REPORT(log_fdev);
+	//REPORT(log_foff);
+	//REPORT(log_fdov);
 	REPORT(ft);
 	REPORT(F);
 
