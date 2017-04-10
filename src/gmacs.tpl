@@ -1992,15 +1992,15 @@ FUNCTION calc_molting_probability
 	{
 		for ( int i = syr; i <= nyr; i++ )
 		{
-			//if ( i < 1980 & h == 1 ) {
-			//	dvariable mu = 144.170986;
-			//	dvariable sd = mu * 0.05;//1.144537;
-			//	molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
-			//} else {
+			if ( i < 1980 & h == 1 ) {
+				dvariable mu = 144.170986;
+				dvariable sd = mu * 0.05;//1.144537;
+				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
+			} else {
 				dvariable mu = molt_mu(h);
 				dvariable sd = mu * molt_cv(h);
 				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
-			//}
+			}
 			for ( int l = 1; l <= nclass; l++ )
 			{
 				P(h)(l,l) = molt_probability(h)(i)(l);

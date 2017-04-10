@@ -112,8 +112,8 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival     lb       ub    phz   prior  p1        p2     Analytic?   LAMBDA
 #   0.84      0        1     4    1      0.843136  0.03   0           1.4     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   0.84      0        1     4    1      0.843136  0.03   0           1     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   1.0       0        5    -4    0      0.001     5.00   0           1       # BSFRF
+   0.84      0        1     4    1      0.843136  0.03   0           1.0     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   1.0       0        5    -4    0      0.001     5.00   0           1.0       # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -151,14 +151,21 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  Pot         Trawl   NMFS    BSFRF
    1   1   1   1   1   1   1  # Type of likelihood
-#   2   2   2   2   2   2   2  # Type of likelihood
+##   2   2   2   2   2   2   2  # Type of likelihood
    0   0   0   0   0   0   0  # Auto tail compression (pmin)
    1   1   1   1   1   1   1  # Initial value for effective sample size multiplier
   -4  -4  -4  -4  -4  -4  -4  # Phz for estimating effective sample size (if appl.)
-#   1   2   2   3   3   4   4   5  5  # Composition aggregator
+##   1   2   2   3   3   4   4   5  5  # Composition aggregator
    1   2   3   4   5   6   7  # Composition aggregator
    1   1   1   1   1   1   1  # LAMBDA
-## ———————————————————————————————————————————————————————————————————————————————————— ##
+
+#   1   1   1   1   1  # Type of likelihood
+#   0   0   0   0   0  # Auto tail compression (pmin)
+#   1   1   1   1   1  # Initial value for effective sample size multiplier
+#  -4  -4  -4  -4  -4  # Phz for estimating effective sample size (if appl.)
+#   1   2   3   4   5  # Composition aggregator
+#   1   1   1   1   1  # LAMBDA
+   ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## TIME VARYING NATURAL MORTALIIY RATES                                                 ##
@@ -170,9 +177,9 @@
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Type
-0
+1
 ## Phase of estimation
--3
+3
 ## STDEV in m_dev for Random walk
 0.1
 ## Number of nodes for cubic spline or number of step-changes for option 3
