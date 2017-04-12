@@ -168,7 +168,7 @@
   -4  -4  -4  -4  -4  -4  -4  -4 -4  # Phz for estimating effective sample size (if appl.)
    1   2   2   3   3   4   4   5  5  # Composition aggregator
 #   1   2   3   4   4   5   5   6  6  # Composition aggregator
-   1   0.5   0.5   1   1   1   1   1  1  # LAMBDA
+   1   1   1   1   1   1   1   1  1  # LAMBDA
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -183,7 +183,7 @@
 ## Type
 3
 ## Phase of estimation
--3
+3
 ## STDEV in m_dev for Random walk
 0.1
 ## Number of nodes for cubic spline or number of step-changes for option 3
