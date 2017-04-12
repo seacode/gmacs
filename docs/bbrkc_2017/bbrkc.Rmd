@@ -137,13 +137,36 @@ rec_mod <- 2 # base
 
 1. **Stock**: Red king crab (RKC), *Paralithodes camtschaticus*, in Bristol Bay, Alaska.
 
-2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds). The retained catch in 2015/16 was even lower at 48 tonnes (0.105 million pounds).
+2. **Catches**: 
+The domestic RKC fishery began to expand in the late 1960s and peaked in 1980
+with a catch of 129.95 million lbs (58,943 t). The catch declined dramatically in the early
+1980s and remained at low levels during the last three decades. Catches during recent years
+until 2010/11 were among the high catches in last 15 years. The retained catch in 2015/16
+was about 10 million lbs (4,500 t), similar to the catch in 2014/15. The magnitude of
+bycatch from groundfish trawl fisheries has been stable and small relative to stock
+abundance during the last 10 years.
 
-3. **Stock biomass**: Following a period of low numbers (below 30% of the 1978-2016 mean of 5,865 tonnes) after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased to well above average from 2007-2012. In 2013 the survey biomass estimate was low (~40% of the mean value) but was followed by average biomass estimates in 2014 and 2015 (with sampling CVs of 77% and 45%, respectively). The 2016 survey biomass estimate was 3,500 tonnes (7.7 million lbs with a CV of 39%). This value represents about 60% of the long term mean with the most recent 3-year average surveys at 87% of the mean value. This suggests a general decline in biomass compared to the recent peak survey estimate of nearly twice the average. The assessment model estimates dampen the interannual variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about 45% of the long term model-predicted survey biomass average. The trend from these values suggest a slight decline.
+3. **Stock biomass**: 
+Estimated mature biomass increased dramatically in the mid 1970s and
+decreased precipitously in the early 1980s. Estimated mature crab abundance had increased
+during 1985-2009 with mature females being about three times more abundant in 2009 than
+in 1985 and mature males being about two times more abundant in 2009 than in 1985.
+Estimated mature abundance has steadily declined since 2009.
 
-4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate was 0.723 million. Survey recruitment was 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty. In 2016, survey recruitment declined to 0.535 million.
+4. **Recruitment**: 
+Estimated recruitment was high during 1970s and early 1980s and has
+generally been low since 1985 (1979 year class). During 1984-2016, only in 1984, 1986,
+1995, 1999, 2002 and 2005 were estimated recruitments above the historical average for
+1976-2016. Estimated recruitment was extremely low during the last 10 years.
 
-5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2015/16 and is hence not overfished. Overfishing did not occur in 2015/16 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
+5. **Management performance**: 
+Status and catch specifications (1,000 t) (scenario 2) are given below.
+In recent assessments, estimated total male catch has been determined as the sum of fishery-reported 
+retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch 
+mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing 
+mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2016/17 and is 
+hence not overfished. Overfishing did not occur in 2016/17 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
+
 \begin{table}[ht]
 \centering
 \caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
@@ -156,6 +179,7 @@ rec_mod <- 2 # base
   2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
   2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
   2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
+  2015/16 & 1.86$^D$ & 2.48$^D$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -198,72 +222,152 @@ rec_mod <- 2 # base
 
 ## Changes in Management of the Fishery
 
-There are no new changes in management of the fishery.
+There were no new changes in management of the fishery.
 
 ## Changes to the Input Data
-
-Data used in this assessment have been updated to include the most recently available fishery and survey numbers. This assessment makes use of two new survey data points including the 2016 NMFS trawl-survey estimate of abudance, and the 2016 ADF&G pot survey CPUE. Both of these surveys have associated size compositon data. The assessment also uses updated 1993-2015 groundfish and fixed gear bycatch estimates based on AKRO data. The 2015/16 directed fishery catch data and associated size composition data were also used.
+  a. The new 2016 NMFS trawl survey data and BSFRF side-by-side trawl survey data during
+2013-2016 were used.     
+  b. Catch and biomass data were updated to include the 2016/17 information.     
 
 ## Changes in Assessment Methodology
 
-This assessment is done using Gmacs. The model is based upon the 3-stage length-based assessment model first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. There are several differences between the Gmacs assessment model and the previous model. One of the major differences being that natural and fishing mortality are continuous within `r M[[2]]$nseason` discrete seasons (using the "correct" catch equation rather than being applied as a pulse). Season length in Gmacs is controlled by changing the proportion of natural mortality that is applied during each season. A detailed outline of the Gmacs implementation of the SMBKC model is provided in Appendix A.
+This assessment was done using Gmacs. 
+There are several differences between the
+Gmacs assessment model and the previous model. One of the major differences
+being that natural and fishing mortality are continuous within `r
+M[[2]]$nseason` discrete seasons. 
+Season length in Gmacs is controlled by
+changing the proportion of natural mortality that is applied during each
+season. A detailed outline of the Gmacs implementation of the BBRKC model is
+provided in Appendix A.
 
 ## Changes in Assessment Results
 
-One of the Gmacs model scenarios (**Gmacs match**) attempts to match the 2015 assessment as closely as possible by specifying the same (or similar) dynamics and some of the same (fixed) parameter values. There are some minor differences between the 2015 model and the **Gmacs match** model, but given that Gmacs and the 2015 model have different underpinning population dynamics, these differences should be of little concern. Four other Gmacs scenarios are presented as well, each providing a slightly different fit to the data.
-
-
+  
 # B. Responses to SSC and CPT Comments
 
 ## CPT and SSC Comments on Assessments in General
 
-Comment: *Andre Punt pointed out the need to use a fixed-iteration Newton’s method to calculate OFL, not bisection, to keep the calculation differentiable so that OFL can be reported as an sdreport variable.*
+Comment: 
+*To come*
 
-Response: This has been done and the $F_\mathit{OFL}$ and OFL have both been reported as an sdreport variables in this document.
+Response: 
 
 
-## CPT and SSC Comments Specific to the SMBKC Stock Assessment
+## CPT and SSC Comments Specific to the BBRKC Stock Assessment
 
-Comment: *The SSC and CPT requested the following models for review at the spring 2016 meeting:*
+Comment: * [to come ] The SSC and CPT requested the following models for review at the spring 2016 meeting:*
 
   1. *Base: try to match 2015 model but prevent dome shaped selectivity*
   2. *Base + add CV for both surveys*
   3. *Above + Francis re-weighting*
   4. *Above + remove M spike*
 
-Response: Models 1, 3, and 4 are all included and evaluated in this document as the **Gmacs base**, **Gmacs Francis**, and **Gmacs M** scenarios. Model 2 was not included in this document for two reasons. Firstly, if doing Francis iterative re-weighting then additional CV should not be added as well (as the two methods basically do the same thing). Secondly, the SSC recommended against the model runs with additional CV (see the comment from the SSC below).
+Response:  [to come ] Models 1, 3, and 4 are all included and evaluated in this document as the **Gmacs base**, **Gmacs Francis**, and **Gmacs M** scenarios. Model 2 was not included in this document for two reasons. Firstly, if doing Francis iterative re-weighting then additional CV should not be added as well (as the two methods basically do the same thing). Secondly, the SSC recommended against the model runs with additional CV (see the comment from the SSC below).
 
-Comment: *The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.*
+Comment: * [to come ] The SSC is not convinced that the model runs with extra CV are very informative. The inclusion of extra CV seems to be rather arbitrary based on the numbers of points that fall within confidence intervals estimated from trawl surveys. The SSC recommends coming up with some alternative way to consider extra variability, which could be informed by simulation testing.*
 
-Response: All model runs that estimate additional CV were dropped from this document. Instead we provide two model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the **Gmacs Francis**, and **Gmacs force** scenarios. The final Gmacs scenario (**Gmacs force**) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).
+Response:  [to come ] All model runs that estimate additional CV were dropped from this document. Instead we provide two model runs that use the Francis iterative re-weighting method to re-weight the length-frequency data relative to the abundance indices. These runs are the **Gmacs Francis**, and **Gmacs force** scenarios. The final Gmacs scenario (**Gmacs force**) is an exploratory model run that upweights both the trawl-survey and pot survey abundance indices (it upweights the pot survey more than the trawl survey).
 
 
 # C. Introduction
 
 ## Scientific Name
 
-The blue king crab is a lithodid crab, *Paralithodes platypus* (Brant 1850).
+Red king crab (RKC), *Paralithodes camtschaticus*, in Bristol Bay, Alaska.
 
 ## Distribution
-
-Blue king crab are sporadically distributed throughout the North Pacific Ocean from Hokkaido, Japan, to southeastern Alaska (Figure \ref{fig:distribution}). 
-In the eastern Bering Sea small populations are distributed around St. Matthew Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2 (Figure \ref{fig:registration_area}), which is the Northern District of the Bering Sea king crab registration area and includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).
+Red king crab inhabit intertidal waters to depths >200 m of the North Pacific Ocean from British
+Columbia, Canada, to the Bering Sea, and south to Hokkaido, Japan, and are found in several
+areas of the Aleutian Islands, eastern Bering Sea, and the Gulf of Alaska.
 
 ## Stock Structure
-
-The Alaska Department of Fish and Game (ADF&G) Gene Conservation Laboratory division has detected regional population differences between blue king crab collected from St. Matthew Island and the Pribilof Islands^[NOAA grant Bering Sea Crab Research II, NA16FN2621, 1997.]. NMFS tag-return data from studies on blue king crab in the Pribilof Islands and St. Matthew Island support the idea that legal-sized males do not migrate between the two areas (Otto and Cummiskey 1990). St. Matthew Island blue king crab tend to be smaller than their Pribilof conspecifics, and the two stocks are managed separately.
+The State of Alaska divides the Aleutian Islands and eastern Bering Sea into three management
+registration areas to manage RKC fisheries: Aleutian Islands, Bristol Bay, and Bering Sea
+(Alaska Department of Fish and Game (ADF&G) 2012). The Bristol Bay area includes all waters
+north of the latitude of Cape Sarichef (54°36' N lat.), east of 168°00' W long., and south of the
+latitude of Cape Newenham (58°39' N lat.) and the fishery for RKC in this area is managed
+separately from fisheries for RKC outside of this area; i.e., the red king crab in the Bristol Bay
+area are assumed to be a separate stock from red king crab outside of this area. This report
+summarizes the stock assessment results for the Bristol Bay RKC stock.
 
 ## Life History
+Red king crab have a complex life history. Fecundity is a function of female size, ranging from
+several tens of thousands to a few hundreds of thousands (Haynes 1968; Swiney et al. 2012). The
+eggs are extruded by females, fertilized in the spring, and held by females for about 11 months
+(Powell and Nickerson 1965). Fertilized eggs are hatched in the spring, most during April-June
+(Weber 1967). Primiparous females are bred a few weeks earlier in the season than multiparous
+females.
+Larval duration and juvenile crab growth depend on temperature (Stevens 1990; Stevens and
+Swiney 2007). Male and female RKC mature at 5–12 years old, depending on stock and
+temperature (Loher et al. 2001; Stevens 1990) and may live >20 years (Matsuura and Takeshita
+1990). Males and females attain a maximum size of 227 and 195 mm carapace length (CL),
+respectively (Powell and Nickerson 1965). Female maturity is evaluated by the size at which
+females are observed to carry egg clutches. Male maturity can be defined by multiple criteria
+including spermataphore production and size, chelae vs. carapace allometry, and participation in
+mating in situ (reviewed by Webb 2014). For management purposes, females >89 mm CL and
+males >119 mm CL are assumed to be mature for Bristol Bay RKC. Juvenile RKC molt multiple
+times per year until age 3 or 4; thereafter, molting continues annually in females for life and in
+males until maturity. Male molting frequency declines after attaining functional maturity.
 
-Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is considered a shallow water species by comparison with other lithodids such as golden king crab, *Lithodes aequispinus*, and the scarlet king crab, *Lithodes couesi* (Donaldson and Byersdorfer 2005). Adult male blue king crab are found at an average depth of 70 m (NPFMC 1998). The reproductive cycle appears to be annual for the first two reproductive cycles and biennial thereafter (cf. Jensen and Armstrong 1989) and mature crab seasonally migrate inshore where they molt and mate. Unlike red king crab, juvenile blue king crab do not form pods, but instead rely on cryptic coloration for protection from predators and require suitable habitat such as cobble and shell hash. Somerton and MacIntosh (1983) estimated SMBKC male size at sexual maturity to be 77 mm carapace length (CL). Paul et al. (1991) found that spermatophores were present in the vas deferens of 50% of the St. Matthew Island blue king crab males examined with sizes of 40-49 mm CL and in 100% of the males at least 100 mm CL. Spermataphore diameter also increased with increasing CL with an asymptote at ~ 100 mm CL. They noted, however, that although spermataphore presence indicates physiological sexual maturity, it may not be an indicator of functional sexual maturity. For purposes of management of the St. Matthew Island blue king crab fishery, the State of Alaska uses 105 mm CL to define the lower size bound of functionally mature males (Pengilly and Schmidt 1995). Otto and Cummiskey (1990) report an average growth increment of 14.1 mm CL for adult SMBKC males.
+## Fishery
+The RKC stock in Bristol Bay, Alaska, supports one of the most valuable fisheries in the United
+States. A review of the history of the Bristol Bay RKC fishery is provided in Fitch et al. (2012) and
+Otto (1989). The Japanese fleet started the fishery in the early 1930s, stopped fishing from 1940 to
+1952, and resumed the fishery from 1953 until 1974. The Russian fleet fished for RKC from 1959
+to 1971. The Japanese fleet employed primarily tanglenets with a very small proportion of catch
+from trawls and pots. The Russian fleet used only tanglenets. United States trawlers started fishing
+Bristol Bay RKC in 1947, but the effort and catch declined in the 1950s. The domestic RKC fishery
+began to expand in the late 1960s and peaked in 1980 with a catch of 129.95 million lbs (58,943 t),
+worth an estimated $115.3 million ex-vessel value. The catch declined dramatically in the early
+1980s and has remained at low levels during the last two decades (Table 1). After the early 1980s
+stock collapse, the Bristol Bay RKC fishery took place during a short period in the fall (usually
+lasting about a week) with the catch quota based on the stock assessment conducted the previous
+summer (Zheng and Kruse 2002). Beginning with the 2005/2006 season, new regulations associated
+with fishery rationalization resulted in an increase in the duration of the fishing season (October 15
+to January 15). With the implementation of crab rationalization, historical guideline harvest levels
+(GHL) were changed to a total allowable catch (TAC). Before rationalization, the implementation
+errors were quite high for some years and total actual catch from 1980 to 2007 was about 6% less
+than the sum of GHL/TAC over that period.
 
-## Management History
+## Fisheries Management
+King and Tanner crab stocks in the Bering Sea and Aleutian Islands are managed by the State of
+Alaska through a federal king and Tanner crab fishery management plan (FMP). Under the FMP,
+management measures are divided into three categories: (1) fixed in the FMP, (2) frame worked in
+the FMP, and (3) discretion of the State of Alaska. The State of Alaska is responsible for
+determining and establishing the GHL/TAC under the framework in the FMP.
+Harvest strategies for the Bristol Bay RKC fishery have changed over time. Two major
+management objectives for the fishery are to maintain a healthy stock that ensures reproductive
+viability and to provide for sustained levels of harvest over the long term (ADF&G 2012). In
+attempting to meet these objectives, the GHL/TAC is coupled with size-sex-season restrictions.
+Only males ≥6.5-in carapace width (equivalent to 135-mm carapace length, CL) may be
+harvested and no fishing is allowed during molting and mating periods (ADF&G 2012).
+Specification of TAC is based on a harvest rate strategy. Before 1990, harvest rates on legal
+males were based on population size, abundance of prerecruits to the fishery, and postrecruit
+abundance, and rates varied from less than 20% to 60% (Schmidt and Pengilly 1990). In 1990,
+the harvest strategy was modified, and a 20% mature male harvest rate was applied to the
+abundance of mature-sized (≥120-mm CL) males with a maximum 60% harvest rate cap of legal
+(≥135-mm CL) males (Pengilly and Schmidt 1995). In addition, a minimum threshold of 8.4
+million mature-sized females (≥90-mm CL) was added to existing management measures to
+avoid recruitment overfishing (Pengilly and Schmidt 1995). Based on a new assessment model
+and research findings (Zheng et al. 1995a, 1995b, 1997a, 1997b), the Alaska Board of Fisheries
+adopted a new harvest strategy in 1996. That strategy had two mature male harvest rates: 10%
+when effective spawning biomass (ESB) is between 14.5 and 55.0 million lbs and 15% when
+ESB is at or above 55.0 million lbs (Zheng et al. 1996). The maximum harvest rate cap of legal
+males was changed from 60% to 50%. A threshold of 14.5 million lbs of ESB was also added. In
+1997, a minimum threshold of 4.0 million lbs was established as the minimum GHL for opening
+the fishery and maintaining fishery manageability when the stock abundance is low. The Board
+modified the current harvest strategy by adding a mature harvest rate of 12.5% when the ESB is
+between 34.75 and 55.0 million lbs in 2003 and eliminated the minimum GHL threshold in 2012.
+The current harvest strategy is illustrated in Figure 1.
 
-The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 545 tonnes (1.202 million pounds) in 1977, and harvests peaked in 1983 when 164 vessels landed 4288 tonnes (9.454 million pounds) (Fitch et al. 2012; Table \ref{tab:smbkc_fishery}). 
+
+\ref{tab:bbrkc_fishery}).
+
 \begin{table}[ht]
 \centering
 \caption{The 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm.} 
-\label{tab:smbkc_fishery}
+\label{tab:bbrkc_fishery}
 \begin{tabular}{lrrrrrrrr}
   \hline
   & & & \multicolumn{2}{c}{Harvest} & & & & \\
