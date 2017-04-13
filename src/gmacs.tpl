@@ -1269,7 +1269,7 @@ PARAMETER_SECTION
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
-	//init_bounded_dev_vector m_devf(1,nMdev,-3.0,3.0,-Mdev_phz);    ///> natural mortality deviations
+	init_bounded_dev_vector m_devf(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
 
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
@@ -1835,12 +1835,15 @@ FUNCTION calc_natural_mortality
 	if ( active(m_dev) )
 	{
 		dvar_vector delta(syr+1,nyr);
+		dvar_vector deltaf(syr+1,nyr);
 		delta.initialize();
+		deltaf.initialize();
 		switch( m_type )
 		{
 			// case 0 not here as this is not evaluated if m_dev is not active
 			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
+				deltaf = m_devf.shift(syr+1);
 			break;
 			case 2: // cubic splines
 			{
@@ -1852,19 +1855,11 @@ FUNCTION calc_natural_mortality
 			}
 			break;
 			case 3: // Specific break points
-				//for ( int h = 1; h <= nsex; h++ )
-				//{
-					for ( int idev = 1; idev <= nMdev; idev++ )
-					{
-						delta(m_nodeyear(idev)) = m_dev(idev);
-						//if (h == 1) delta(m_nodeyear(idev)) = m_dev(idev);
-						//if (h == 2) delta(m_nodeyear(idev)) = m_dev(idev);
-					}
-				//	for ( int i = syr+1; i <= nyr; i++ )
-				//	{
-				//		M(h)(i) = M(h)(i-1) * mfexp(delta(i));
-				//	}
-				//}
+				for ( int idev = 1; idev <= nMdev; idev++ )
+				{
+					delta(m_nodeyear(idev)) = m_dev(idev);
+					deltaf(m_nodeyear(idev)) = m_devf(idev);
+				}
 			break;
 			// Modifying by Jie Zheng for specific time blocks
 			case 4: // time blocks
@@ -1896,17 +1891,18 @@ FUNCTION calc_natural_mortality
 				}
 			break;
 		}
-	// Update M by year.
-	if ( m_type < 4 )
-	{
-		for ( int h = 1; h <= nsex; h++ )
+		// Update M by year.
+		if ( m_type < 4 )
 		{
-			for ( int i = syr+1; i <= nyr; i++ )
-			{
-				M(h)(i) = M(h)(i-1) * mfexp(delta(i));
-			}
+			//for ( int h = 1; h <= nsex; h++ )
+			//{
+				for ( int i = syr+1; i <= nyr; i++ )
+				{
+					M(1)(i) = M(1)(i-1) * mfexp(delta(i));
+					M(2)(i) = M(2)(i-1) * mfexp(deltaf(i));
+				}
+			//}
 		}
-	}
 	}
 	// Custom natural mortality input
 	if ( bUseCustomNaturalMortality == 1 )
@@ -3462,12 +3458,9 @@ FUNCTION calc_objective_function
 	// 3) Penalty to constrain M in random walk
 	if ( active(m_dev) )
 	{
-		nlogPenalty(3) = dnorm(m_dev, m_stdev);
+		nlogPenalty(3) += dnorm(m_dev, m_stdev);
+		nlogPenalty(3) += dnorm(m_devf, m_stdev);
 	}
-	//if ( active(m_devf) )
-	//{
-	//	nlogPenalty(3) = dnorm(m_devf, m_stdev);
-	//}
 
 	// 4 Penalty on recruitment devs.
 	if ( !last_phase() )

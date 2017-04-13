@@ -122,8 +122,8 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival     lb       ub    phz   prior  p1        p2     Analytic?   LAMBDA
 #   0.84      0        1     4    1      0.843136  0.03   0           1.4     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   0.84      0        1     4    1      0.843136  0.03   0           1.0     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   1.0       0        5    -4    0      0.001     5.00   0           1.0     # BSFRF
+   0.84      0        1     4    1      0.843136  0.03   0           2     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
+   1.0       0        5    -4    0      0.001     5.00   0           2     # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -183,14 +183,14 @@
 ## Type
 3
 ## Phase of estimation
--3
+3
 ## STDEV in m_dev for Random walk
-0.1
+0.3
 ## Number of nodes for cubic spline or number of step-changes for option 3
-2
+4
 ## Year position of the knots (vector must be equal to the number of nodes)
-#1976 1980 1985 1994
-1980 1985
+1976 1980 1985 1994
+#1980 1985
 #1980 1985 1994
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
