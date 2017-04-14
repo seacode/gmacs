@@ -59,7 +59,7 @@ nmult_2 <- 0.0004535923 * 1e+6
 # M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
 # M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
 
-# Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
+# Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tons
 # ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
 # M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
 # M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
@@ -166,54 +166,77 @@ retained catch, estimated male discard mortality in the directed fishery, and es
 mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing 
 mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2016/17 and is 
 hence not overfished. Overfishing did not occur in 2016/17 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
-
+  
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
+\caption{Status and catch specifications (1000 tons) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
 \label{tab:status}
 \begin{tabular}{lccccccc}
-  \hline
-  & & Biomass & & Retained & Total & & \\ 
-  Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
-  \hline
-  2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
-  2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
-  2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 & 1.86$^D$ & 2.48$^D$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  \hline
+\hline
+          &          & Biomass                        &     & Retained & Total &     & \\ 
+Year      & MSST     & ($\mathit{MMB}_\text{mating}$) & TAC & catch    & catch & OFL & ABC \\ 
+\hline
+2012/13   & 13.19$^A$   & 29.05$^A$   & 3.56 & 3.62 & 3.9  & 7.96 & 7.17 \\
+2013/14   & 12.85$^B$   & 27.12$^B$   & 3.90 & 3.99 & 4.56 & 7.07 & 6.36 \\
+2014/15   & 13.03$^C$   & 27.25$^C$   & 4.49 & 4.54 & 5.44 & 6.82 & 6.14 \\
+2015/16   & 12.89$^D$   & 27.68$^D$   & 4.52 & 4.61 & 5.34 & 6.73 & 6.06 \\
+2016/17   &             & 24.00$^D$   &      &      &      & 6.64 & 5.97 \\
+\hline
 \end{tabular}
 \end{table}
+
 \begin{table}[ht]
 \centering
 \caption{Status and catch specifications (million pounds) (scenario {\bf Gmacs base}).} 
 \label{tab:status_pounds}
-\begin{tabular}{lccccccc}
-  \hline
-  & & Biomass & & Retained & Total & & \\ 
-  Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
-  \hline
-  2012/13 & 4.0$^A$ & 6.29$^A$ & 1.630 & 1.616 & 1.81   & 2.24 & 2.02 \\ 
-  2013/14 & 3.4$^B$ & 6.64$^B$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
-  2014/15 & 4.1$^C$ & 5.47$^C$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
-  \hline
+\begin{tabular}{lcccccccc}
+\hline
+          &          & Biomass                        &     & Retained & Total &     &     \\ 
+Year      & MSST     & ($\mathit{MMB}_\text{mating}$) & TAC & catch    & catch & OFL & ABC \\ 
+\hline
+2012/13 & 29.1$^A$ & 64.0$^A$         & 7.85 & 7.98           & 8.59        & 17.55 & 15.8  \\
+2013/14 & 28.3$^B$ & 59.9$^B$         & 8.6  & 8.8            & 10.05       & 15.58 & 14.02 \\
+2014/15 & 28.7$^C$ & 60.1$^C$         & 9.99 & 10.01          & 11.99       & 15.04 & 13.53 \\
+2015/16 & 28.4$^D$ & 61.0$^D$         & 9.97 & 10.17          & 11.77       & 14.84 & 13.36 \\
+2016/17 &          & 52.9$^D$         &      &                &             & 14.63 & 13.17 \\
+\hline
 \end{tabular}
 \end{table}
 
 6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
 \begin{table}[ht]
 \centering
-\caption{Basis for the OFL (1000 tonnes) (scenario {\bf Gmacs base}).} 
+\caption{Basis for the OFL (1000 tons) (scenario {\bf Gmacs base}).} 
 \label{tab:ofl_basis}
 \begin{tabular}{lcccccccc}
-  \hline
-  & & & Biomass & & & & & Natural \\ 
-  Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{MSY}$ & $F_\mathit{OFL}$ & $\gamma$ & Basis for $B_\mathit{MSY}$ & mortality \\ 
-  \hline
-  2012/13 & 4a & 3.56 & 5.63 & 1.56 & 0.18 & 1 & 1978-2012 & 0.18 \\ 
-  2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
-  2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
-  2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
-  \hline
+\hline
+     &      &                  & Biomass                        &                    &                  &          &                            & Natural  \\ 
+Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{MSY}$ & $F_\mathit{OFL}$ & $\gamma$ & Basis for $B_\mathit{MSY}$ & mortality \\ 
+\hline
+2012/13 & 3b & 27.5 & 26.3    & 0.96         & 0.31 & 1.0 & 1984-2012 &          0.18 \\
+2013/14 & 3b & 26.4 & 25.0    & 0.95         & 0.27 & 1.0 & 1984-2013 &          0.18 \\
+2014/15 & 3b & 25.7 & 24.7    & 0.96         & 0.28 & 1.0 & 1984-2014 &          0.18 \\
+2015/16 & 3b & 26.1 & 24.7    & 0.95         & 0.27 & 1.0 & 1984-2015 &          0.18 \\
+2016/17 & 3b & 25.8 & 24.0    & 0.93         & 0.27 & 1.0 & 1984-2016 &          0.18 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Basis for the OFL (millions of lbs ) (scenario {\bf Gmacs base}).} 
+\label{tab:ofl_basis_pounds}
+\begin{tabular}{lcccccccc}
+\hline
+     &      &                  & Biomass                        &                    &                  &          &                            & Natural  \\ 
+Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{MSY}$ & $F_\mathit{OFL}$ & $\gamma$ & Basis for $B_\mathit{MSY}$ & mortality \\ 
+\hline
+2012/13 & 3b & 60.7 & 58.0   & 0.96         & 0.31 & 1.0 & 1984-2012 &            0.18 \\
+2013/14 & 3b & 58.2 & 55.0   & 0.95         & 0.27 & 1.0 & 1984-2013 &            0.18 \\
+2014/15 & 3b & 56.7 & 54.4   & 0.96         & 0.28 & 1.0 & 1984-2014 &            0.18 \\
+2015/16 & 3b & 57.5 & 54.4   & 0.95         & 0.27 & 1.0 & 1984-2015 &            0.18 \\
+2016/17 & 3b & 56.8 & 52.9   & 0.93         & 0.27 & 1.0 & 1984-2016 &            0.18 \\
+\hline
 \end{tabular}
 \end{table}
 
@@ -366,44 +389,81 @@ The current harvest strategy is illustrated in Figure 1.
 
 \begin{table}[ht]
 \centering
-\caption{The 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm.} 
+\caption{ Bristol Bay red king crab annual catch and bycatch mortality biomass (t) from
+June 1 to May 31. A handling mortality rate of 20% for the directed pot, 25%
+for the Tanner fishery, and 80% for trawl was assumed to estimate bycatch
+mortality biomass. }
 \label{tab:bbrkc_fishery}
-\begin{tabular}{lrrrrrrrr}
-  \hline
-  & & & \multicolumn{2}{c}{Harvest} & & & & \\
-  \cline{4-5}
-  Year & Dates & GHL/TAC & Crab & Pounds & Pot lifts & CPUE & avg wt & avg CL \\
-  \hline
-  1978/79 & 07/15 - 09/03 &  & 436,126 & 1,984,251 & 43,754 & 10 & 4.5 & 132.2 \\
-  1979/80 & 07/15 - 08/24 &  &  52,966 &   210,819 &  9,877 &  5 & 4.0 & 128.8 \\
-  1980/81 & 07/15 - 09/03 & \multicolumn{7}{c}{CONFIDENTIAL} \\
-  1981/82 & 07/15 - 08/21 &  & 1,045,619 & 4,627,761 &  58,550 &  18 & 4.4 & NA \\
-  1982/83 & 08/01 - 08/16 &  & 1,935,886 & 8,844,789 & 165,618 &  12 & 4.6 & 135.1 \\
-  1983/84 & 08/20 - 09/06 & 8.0     & 1,931,990 & 9,454,323 & 133,944 &  14 & 4.9 & 137.2 \\
-  1984/85 & 09/01 - 09/08 & 2.0-4.0 &   841,017 & 3,764,592 &  73,320 &  11 & 4.5 & 135.5 \\
-  1985/86 & 09/01 - 09/06 & 0.9-1.9 &   436,021 & 2,175,087 &  46,988 &   9 & 5.0 & 139.0 \\
-  1986/87 & 09/01 - 09/06 & 0.2-0.5 &   219,548 & 1,003,162 &  22,073 &  10 & 4.6 & 134.3 \\
-  1987/88 & 09/01 - 09/05 & 0.6-1.3 &   227,447 & 1,039,779 &  28,230 &   8 & 4.6 & 134.1 \\
-  1988/89 & 09/01 - 09/05 & 0.7-1.5 &   280,401 & 1,236,462 &  21,678 &  13 & 4.4 & 133.3 \\
-  1989/90 & 09/01 - 09/04 & 1.7     &   247,641 & 1,166,258 &  30,803 &   8 & 4.7 & 134.6 \\
-  1990/91 & 09/01 - 09/07 & 1.9     &   391,405 & 1,725,349 &  26,264 &  15 & 4.4 & 134.3 \\
-  1991/92 & 09/16 - 09/20 & 3.2     &   726,519 & 3,372,066 &  37,104 &  20 & 4.6 & 134.1 \\
-  1992/93 & 09/04 - 09/07 & 3.1     &   545,222 & 2,475,916 &  56,630 &  10 & 4.5 & 134.1 \\
-  1993/94 & 09/15 - 09/21 & 4.4     &   630,353 & 3,003,089 &  58,647 &  11 & 4.8 & 135.4 \\
-  1994/95 & 09/15 - 09/22 & 3.0     &   827,015 & 3,764,262 &  60,860 &  14 & 4.9 & 133.3 \\
-  1995/96 & 09/15 - 09/20 & 2.4     &   666,905 & 3,166,093 &  48,560 &  14 & 4.7 & 135.0 \\
-  1996/97 & 09/15 - 09/23 & 4.3     &   660,665 & 3,078,959 &  91,085 &   7 & 4.7 & 134.6 \\
-  1997/98 & 09/15 - 09/22 & 5.0     &   939,822 & 4,649,660 &  81,117 &  12 & 4.9 & 139.5 \\
-  1998/99 & 09/15 - 09/26 & 4.0     &   635,370 & 2,968,573 &  91,826 &   7 & 4.7 & 135.8 \\
-  \multicolumn{2}{l}{1999/00 - 2008/09} & \multicolumn{7}{c}{FISHERY CLOSED} \\
-  2009/10 & 10/15 - 02/01 & 1.17    &   103,376 &   460,859 &  10,697 &  10 & 4.5 & 134.9 \\
-  2010/11 & 10/15 - 02/01 & 1.60    &   298,669 & 1,263,982 &  29,344 &  10 & 4.2 & 129.3 \\
-  2011/12 & 10/15 - 02/01 & 2.54    &   437,862 & 1,881,322 &  48,554 &   9 & 4.3 & 130.0 \\
-  2012/13 & 10/15 - 02/01 & 1.63    &   379,386 & 1,616,054 &  37,065 &  10 & 4.3 & 129.8 \\
-  \multicolumn{2}{l}{2013/14} & \multicolumn{7}{c}{FISHERY CLOSED} \\
-  2014/15 & 10/15 - 02/05 & 0.66    &    69,109 &   308,582 &  10,133 &   7 & 4.5 & 132.3 \\
-  2015/16 & 10/19 - 11/28 & 0.41    &    24,076 &   105,010 &   5,475 &   4 & 4.4 & 132.6 \\
-  \hline
+\small
+\begin{tabular}{lrrrrrrrrr}
+\hline
+Year & \multicolumn{4}{c}{Retained Catch}                 & \multicolumn{2}{c}{Pot Bycatch}Trawl         & Tanner Fshry  & Total      \\
+     & U.S.           & Cost-Recovery & Foreign & Total   & Males       & Females & Bycatch       & Bycatch        & Catch      \\
+\hline
+1953 & 1331.3         &               & 4705.6  & 6036.9  &             &         &               &                & 6036.9     \\
+1954 & 1149.9         &               & 3720.4  & 4870.2  &             &         &               &                & 4870.2      \\
+1955 & 1029.2         &               & 3712.7  & 4741.9  &             &         &               &                & 4741.9      \\
+1956 & 973.4          &               & 3572.9  & 4546.4  &             &         &               &                & 4546.4      \\
+1957 & 339.7          &               & 3718.1  & 4057.8  &             &         &               &                & 4057.8      \\
+1958 & 3.2            &               & 3541.6  & 3544.8  &             &         &               &                & 3544.8      \\
+1959 & 0              &               & 6062.3  & 6062.3  &             &         &               &                & 6062.3      \\
+1960 & 272.2          &               & 12200.7 & 12472.9 &             &         &               &                & 12472.9     \\
+1961 & 193.7          &               & 20226.6 & 20420.3 &             &         &               &                & 20420.3     \\
+1962 & 30.8           &               & 24618.7 & 24649.6 &             &         &               &                & 24649.6     \\
+1963 & 296.2          &               & 24930.8 & 25227   &             &         &               &                & 25227       \\
+1964 & 373.3          &               & 26385.5 & 26758.8 &             &         &               &                & 26758.8     \\
+1965 & 648.2          &               & 18730.6 & 19378.8 &             &         &               &                & 19378.8     \\
+1966 & 452.2          &               & 19212.4 & 19664.6 &             &         &               &                & 19664.6     \\
+1967 & 1407           &               & 15257   & 16664.1 &             &         &               &                & 16664.1     \\
+1968 & 3939.9         &               & 12459.7 & 16399.6 &             &         &               &                & 16399.6     \\
+1969 & 4718.7         &               & 6524    & 11242.7 &             &         &               &                & 11242.7     \\
+1970 & 3882.3         &               & 5889.4  & 9771.7  &             &         &               &                & 9771.7      \\
+1971 & 5872.2         &               & 2782.3  & 8654.5  &             &         &               &                & 8654.5      \\
+1972 & 9863.4         &               & 2141    & 12004.3 &             &         &               &                & 12004.3     \\
+1973 & 12207.8        &               & 103.4   & 12311.2 &             &         &               &                & 12311.2     \\
+1974 & 19171.7        &               & 215.9   & 19387.6 &             &         &               &                & 19387.6     \\
+1975 & 23281.2        &               & 0       & 23281.2 &             &         &               &                & 23281.2     \\
+1976 & 28993.6        &               & 0       & 28993.6 &             &         & 682.8         &                & 29676.4     \\
+1977 & 31736.9        &               & 0       & 31736.9 &             &         & 1249.9        &                & 32986.8     \\
+1978 & 39743          &               & 0       & 39743   &             &         & 1320.6        &                & 41063.6     \\
+1979 & 48910          &               & 0       & 48910   &             &         & 1331.9        &                & 50241.9     \\
+1980 & 58943.6        &               & 0       & 58943.6 &             &         & 1036.5        &                & 59980.1     \\
+1981 & 15236.8        &               & 0       & 15236.8 &             &         & 219.4         &                & 15456.2     \\
+1982 & 1361.3         &               & 0       & 1361.3  &             &         & 574.9         &                & 1936.2      \\
+1983 & 0              &               & 0       & 0       &             &         & 420.4         &                & 420.4       \\
+1984 & 1897.1         &               & 0       & 1897.1  &             &         & 1094          &                & 2991.1      \\
+1985 & 1893.8         &               & 0       & 1893.8  &             &         & 390.1         &                & 2283.8      \\
+1986 & 5168.2         &               & 0       & 5168.2  &             &         & 200.6         &                & 5368.8      \\
+1987 & 5574.2         &               & 0       & 5574.2  &             &         & 186.4         &                & 5760.7      \\
+1988 & 3351.1         &               & 0       & 3351.1  &             &         & 597.8         &                & 3948.9      \\
+1989 & 4656           &               & 0       & 4656    &             &         & 174.1         &                & 4830.1      \\
+1990 & 9236.2         & 36.6          & 0       & 9272.8  & 526.9       & 651.5   & 247.6         &                & 10698.7     \\
+1991 & 7791.8         & 93.4          & 0       & 7885.1  & 407.8       & 75      & 316           & 1401.8         & 10085.7     \\
+1992 & 3648.2         & 33.6          & 0       & 3681.8  & 552         & 418.5   & 335.4         & 244.4          & 5232.2      \\
+1993 & 6635.4         & 24.1          & 0       & 6659.6  & 763.2       & 637.1   & 426.6         & 54.6           & 8541        \\
+1994 & 0              & 42.3          & 0       & 42.3    & 3.8         & 1.9     & 88.9          & 10.8           & 147.8       \\
+1995 & 0              & 36.4          & 0       & 36.4    & 3.3         & 1.6     & 194.2         & 0              & 235.5       \\
+1996 & 3812.7         & 49            & 0       & 3861.7  & 164.6       & 1       & 106.5         & 0              & 4133.9      \\
+1997 & 3971.9         & 70.2          & 0       & 4042.1  & 244.7       & 19.6    & 73.4          & 0              & 4379.8      \\
+1998 & 6693.8         & 85.4          & 0       & 6779.2  & 959.7       & 864.9   & 159.8         & 0              & 8763.7      \\
+1999 & 5293.5         & 84.3          & 0       & 5377.9  & 314.2       & 8.8     & 201.6         & 0              & 5902.4      \\
+2000 & 3698.8         & 39.1          & 0       & 3737.9  & 360.8       & 40.5    & 100.4         & 0              & 4239.5      \\
+2001 & 3811.5         & 54.6          & 0       & 3866.2  & 417.9       & 173.5   & 164.6         & 0              & 4622.1      \\
+2002 & 4340.9         & 43.6          & 0       & 4384.5  & 442.7       & 7.3     & 155.1         & 0              & 4989.6      \\
+2003 & 7120           & 15.3          & 0       & 7135.3  & 918.9       & 430.4   & 172.3         & 0              & 8656.9      \\
+2004 & 6915.2         & 91.4          & 0       & 7006.7  & 345.5       & 187     & 119.6         & 0              & 7658.8      \\
+2005 & 8305           & 94.7          & 0       & 8399.7  & 1359.5      & 498.3   & 155.2         & 0              & 10412.8     \\
+2006 & 7005.3         & 137.9         & 0       & 7143.2  & 563.8       & 37      & 116.7         & 3.8            & 7864.4      \\
+2007 & 9237.9         & 66.1          & 0       & 9303.9  & 1001.3      & 186.1   & 138.5         & 1.8            & 10631.6     \\
+2008 & 9216.1         & 0             & 0       & 9216.1  & 1165.5      & 148.4   & 159.5         & 4              & 10693.5     \\
+2009 & 7226.9         & 45.5          & 0       & 7272.5  & 888.1       & 85.2    & 103.7         & 1.6            & 8351.2      \\
+2010 & 6728.5         & 33            & 0       & 6761.5  & 797.5       & 122.6   & 85.3          & 0              & 7767        \\
+2011 & 3553.3         & 53.8          & 0       & 3607.1  & 395         & 24      & 68.8          & 0              & 4094.9      \\
+2012 & 3560.6         & 61.1          & 0       & 3621.7  & 205.2       & 12.3    & 61.2          & 0              & 3900.5      \\
+2013 & 3901.1         & 89.9          & 0       & 3991    & 310.6       & 99.8    & 136.2         & 28.5           & 4566        \\
+2014 & 4530           & 8.6           & 0       & 4538.6  & 584.7       & 86.2    & 221.9         & 42             & 5473.4      \\
+2015 & 4522.3         & 91.4          & 0       & 4613.7  & 266.1       & 222.9   & 149.4         & 84.2           & 5336.3      \\
+\hline
 \end{tabular}
 \end{table}
 
@@ -441,7 +501,7 @@ The current harvest strategy is illustrated in Figure 1.
 #  dplyr::select(V1, V3, V5) %>%
 #  tidyr::spread(key = V3, value = V5)
 #names(df) <- c("Year","Trawl bycatch","Fixed gear bycatch")
-#tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tonnes) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:smbkc_groundfish_bycatch", digits = c(0,0,3,3))
+#tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tons) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:smbkc_groundfish_bycatch", digits = c(0,0,3,3))
 #print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
@@ -450,10 +510,17 @@ The current harvest strategy is illustrated in Figure 1.
 
 ## Summary of New Information
 
-Data used in this assessment have been updated to include the most recently available fishery and survey numbers. This assessment makes use of two new survey data points including the 2016 NMFS trawl-survey estimate of abudance, and the 2016 ADF&G pot survey CPUE. Both of these surveys have associated size compositon data. The assessment also uses updated 1993-2015 groundfish and fixed gear bycatch estimates based on AKRO data. The 2015/16 directed fishery catch data and associated size composition data were also used. The data used in each of the new models is shown in Figure \ref{fig:data_extent}.
+Data used in this assessment have been updated to include the most recently
+available fishery and survey numbers. This assessment makes use of two new
+survey data points including the 2016 NMFS trawl-survey estimate of abundance,
+and the 2016 ADF&G pot survey CPUE. Both of these surveys have associated size
+compositon data. The assessment also uses updated 1993-2015 groundfish and
+fixed gear bycatch estimates based on AKRO data. The 2015/16 directed fishery
+catch data and associated size composition data were also used. The data used
+in each of the new models is shown in Figure \ref{fig:data_extent}.
 
-```{r data_extent, fig.cap = "Data extent for the SMBKC assessment.\\label{fig:data_extent}"}
-#plot_datarange(Mbase)
+```{r data_extent, fig.cap = "Data extent for the BBRKC assessment.\\label{fig:data_extent}"}
+plot_datarange(Mbase)
 ```
 
 ## Major Data Sources
@@ -534,11 +601,27 @@ Major data sources used in this assessment include annual directed-fishery retai
 \end{tabular}
 \end{table}
 
-Figure \ref{fig:stations} maps stations from which SMBKC trawl-survey and pot-survey data were obtained. Further information concerning the NMFS trawl survey as it relates to commercial crab species is available in Daly et al. (2014); see Gish et al. (2012) for a description of ADF&G SMBKC pot-survey methods. It should be noted that the two surveys cover different geographic regions and that each has in some years encountered proportionally large numbers of male blue king crab in areas where the other is not represented (Figure \ref{fig:catch181}). Crab-observer sampling protocols are detailed in the crab-observer training manual (ADF&G 2013). Groundfish SMBKC bycatch data come from NMFS Bering Sea reporting areas 521 and 524 (Figure \ref{fig:reporting_areas}). Note that for this assessment the newly available NMFS groundfish observer data reported by ADF&G statistical area was not used.
+XXXFigure \ref{fig:stations} maps stations from which SMBKC trawl-survey and pot-
+survey data were obtained. Further information concerning the NMFS trawl
+survey as it relates to commercial crab species is available in Daly et al.
+(2014); see Gish et al. (2012) for a description of ADF&G SMBKC pot-survey
+methods. It should be noted that the two surveys cover different geographic
+regions and that each has in some years encountered proportionally large
+numbers of male blue king crab in areas where the other is not represented
+(Figure \ref{fig:catch181}). Crab-observer sampling protocols are detailed in
+the crab-observer training manual (ADF&G 2013). Groundfish SMBKC bycatch data
+come from NMFS Bering Sea reporting areas 521 and 524 (Figure
+\ref{fig:reporting_areas}). Note that for this assessment the newly available
+NMFS groundfish observer data reported by ADF&G statistical area was not used.
 
 ## Other Data Sources
 
-Recent model configurations developed for SMBKC makes use of a growth transition matrix based on Otto and Cummiskey (1990), the same growth transition matrix is used in this assessment. Other relevant data sources, including assumed population and fishery parameters, are presented in Appendix A, which also provides a detailed description of the model configuration used for this assessment.
+XXXRecent model configurations developed for SMBKC makes use of a growth
+transition matrix based on Otto and Cummiskey (1990), the same growth
+transition matrix is used in this assessment. Other relevant data sources,
+including assumed population and fishery parameters, are presented in Appendix
+A, which also provides a detailed description of the model configuration used
+for this assessment.
 
 ## Excluded Data Sources
 
@@ -551,7 +634,20 @@ Groundfish bycatch size-frequency data are available for selected years. These d
 
 ## History of Modeling Approaches for this Stock
 
-A four-stage catch-survey-analysis (CSA) assessment model was used before 2011 to estimate abundance and biomass and prescribe fishery quotas for the SMBKC stock (2010 SAFE; Zheng et al. 1997). The four-stage CSA is similar to a full length-based analysis, the major difference being coarser length groups, which are more suited to a small stock with consistently low survey catches. In this approach, the abundance of male crab with a CL of 90 mm or above is modeled in terms of four crab stages: stage 1: 90-104 mm CL; stage 2: 105-119 mm CL; stage 3: newshell 120-133 mm CL; and stage 4: oldshell $\ge$ 120 mm CL and newshell $\ge$ 134 mm CL. Motivation for these stage definitions comes from the fact that for management of the SMBKC stock, male crab measuring at least 105 mm CL are considered mature, whereas 120 mm CL is considered a proxy for the legal size of 5.5 in carapace width, including spines. Additional motivation for these stage definitions comes from an estimated average growth increment of about 14 mm per molt for SMBKC (Otto and Cummiskey 1990).
+XXXA four-stage catch-survey-analysis (CSA) assessment model was used before 2011
+to estimate abundance and biomass and prescribe fishery quotas for the SMBKC
+stock (2010 SAFE; Zheng et al. 1997). The four-stage CSA is similar to a full
+length-based analysis, the major difference being coarser length groups, which
+are more suited to a small stock with consistently low survey catches. In this
+approach, the abundance of male crab with a CL of 90 mm or above is modeled in
+terms of four crab stages: stage 1: 90-104 mm CL; stage 2: 105-119 mm CL;
+stage 3: newshell 120-133 mm CL; and stage 4: oldshell $\ge$ 120 mm CL and
+newshell $\ge$ 134 mm CL. Motivation for these stage definitions comes from
+the fact that for management of the SMBKC stock, male crab measuring at least
+105 mm CL are considered mature, whereas 120 mm CL is considered a proxy for
+the legal size of 5.5 in carapace width, including spines. Additional
+motivation for these stage definitions comes from an estimated average growth
+increment of about 14 mm per molt for SMBKC (Otto and Cummiskey 1990).
 
 ## Assessment Methodology
 
@@ -674,7 +770,7 @@ The currently recommended Tier 4 convention is to use the full assessment period
 #}
 #df <- data.frame(rownames(df), df, row.names = NULL)
 #names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
-#tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tonnes.", label = "tab:management_quants", digits = 3)
+#tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
 #print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -1090,12 +1186,12 @@ M1[[3]]$size_transition_F <- gm_f2
 plot_selectivity(M, ncol = 4)
 ```
 
-```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
-plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
+```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
+plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)")
 ```
 
-```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
-plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)", ShowEstErr = TRUE)
+```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
+plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)", ShowEstErr = TRUE)
 ```
 
 \newpage\clearpage
@@ -1130,7 +1226,7 @@ plot_cpue_res(A, "NMFS Trawl")
 
 \newpage\clearpage
 
-```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tonnes).\\label{fig:fit_to_catch}", fig.height = 12}
+```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\\label{fig:fit_to_catch}", fig.height = 12}
 A <- M; A[[jj]] <- NULL
 plot_catch(A)
 ```
@@ -1152,7 +1248,7 @@ plot_recruitment(A)
 ii <- M[[2]]$fit$names == "sd_log_ssb"
 M[[2]]$fit$est[ii] <- log(c(80955.7, 90716.6, 94074.4, 97136, 82946.7, 24783.7, 8313.41, 8157.77, 8593.47, 6490.84, 10386, 15126.5, 21635.7, 27635.8, 31316.5, 29177.6, 24245.2, 22123.5, 19574, 25045, 27809.1, 25767.2, 23897.7, 26161.7, 30664, 30535.2, 29357.2, 31147.2, 29741.6, 27613.8, 27847.8, 29785.6, 27042, 28194.5, 31980.5, 32224.4, 32349.9, 31140, 30002.1, 28843, 27680.4, 23940))
 M[[2]]$fit$std[ii] <- NA
-plot_ssb(M, ylab = "Mature male biomass (tonnes) on 15 February")
+plot_ssb(M, ylab = "Mature male biomass (tons) on 15 February")
 ```
 
 ```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
@@ -1406,7 +1502,7 @@ The objective function consists of the sum of several "negative log-likelihood" 
   \sigma_{t,y}^\text{catch} &= \sqrt{\log \left( 1 + \left( \mathit{CV}_{t,y}^\text{catch} \right)^2 \right)}\\
   \delta_{t,y}^\text{catch} &= \mathcal{N} \left( 0, \left( \sigma_{t,y}^\text{catch} \right)^2 \right)
 \end{align}
-where $\delta_{t,y}^\text{catch}$ is the residual catch. The relative abudance data is also assumed to be lognormally distributed
+where $\delta_{t,y}^\text{catch}$ is the residual catch. The relative abundance data is also assumed to be lognormally distributed
 \begin{align}
   \sigma_{t,y}^\text{I} &= \frac{1}{\lambda} \sqrt{\log \left( 1 + \left( \mathit{CV}_{t,y}^\text{I} \right)^2 \right)}\\
   \delta_{t,y}^\text{I} &= \log \left( I^\text{obs} / I^\text{pred} \right) / \sigma_{t,y}^\text{I} + 0.5 \sigma_{t,y}^\text{I}
@@ -1418,7 +1514,7 @@ and the likelihood is
 
 Gmacs calculates standard deviation of the normalised residual (SDNR) values and median of the absolute residual (MAR) values for all abundance indices and size compositions to help the user come up with resonable likelihood weights. For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Francis (2011) suggests upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively. Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expected abundances to ensure that the fit is good.
 
-Gmacs also calculates Francis weights for each of the size composition data sets supplied (Francis 2011). If the user wishes to use the Francis iterative re-weighting method, first the weights applied to the abundance indices should be adjusted by trial and error until the SDNR (and/or MAR) are adequte. Then the Francis weights supplied by Gmacs should be used as the new likelihood weights for each of the size composition data sets the next time the model is run. The user can then iteratively adjust the abudance index and size composition weights until adequate SDNR (and/or MAR) values are achieved, given the Francis weights.
+Gmacs also calculates Francis weights for each of the size composition data sets supplied (Francis 2011). If the user wishes to use the Francis iterative re-weighting method, first the weights applied to the abundance indices should be adjusted by trial and error until the SDNR (and/or MAR) are adequte. Then the Francis weights supplied by Gmacs should be used as the new likelihood weights for each of the size composition data sets the next time the model is run. The user can then iteratively adjust the abundance index and size composition weights until adequate SDNR (and/or MAR) values are achieved, given the Francis weights.
 
 
 ## 6. Estimation

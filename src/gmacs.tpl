@@ -1072,18 +1072,26 @@ DATA_SECTION
 		ilike_vector(5) = 1;
 	END_CALCS
 
-	// |--------------------------------------------------|
-	// | OPTIONS FOR TIME-VARYING NATURAL MORTALITY RATES |
-	// |--------------------------------------------------|
+	// |-------------------------------------|
+	// | OPTIONS FOR NATURAL MORTALITY RATES |
+	// |-------------------------------------|
 	!! cout << " * Natural mortality controls" << endl;
 	int nMdev;
+	init_int m_females;
 	init_int m_type;
 	init_int Mdev_phz;
+	int Mdev_phz_females;
 	init_number m_stdev;
 	init_int m_nNodes;
 	init_ivector m_nodeyear(1,m_nNodes);
 	LOC_CALCS
 		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear);
+		if (m_females == 1)
+		{
+			Mdev_phz_females = Mdev_phz;
+		} else {
+			Mdev_phz_females = -Mdev_phz;
+		}
 		switch ( m_type )
 		{
 			case 0:
@@ -1269,7 +1277,7 @@ PARAMETER_SECTION
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
-	init_bounded_dev_vector m_devf(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
+	init_bounded_dev_vector m_dev_females(1,nMdev,-3.0,3.0,Mdev_phz_females);    ///> natural mortality deviations
 
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
@@ -1835,15 +1843,15 @@ FUNCTION calc_natural_mortality
 	if ( active(m_dev) )
 	{
 		dvar_vector delta(syr+1,nyr);
-		dvar_vector deltaf(syr+1,nyr);
+		dvar_vector delta_females(syr+1,nyr);
 		delta.initialize();
-		deltaf.initialize();
+		delta_females.initialize();
 		switch( m_type )
 		{
 			// case 0 not here as this is not evaluated if m_dev is not active
 			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
-				deltaf = m_devf.shift(syr+1);
+				delta_females = m_dev_females.shift(syr+1);
 			break;
 			case 2: // cubic splines
 			{
@@ -1858,7 +1866,7 @@ FUNCTION calc_natural_mortality
 				for ( int idev = 1; idev <= nMdev; idev++ )
 				{
 					delta(m_nodeyear(idev)) = m_dev(idev);
-					deltaf(m_nodeyear(idev)) = m_devf(idev);
+					delta_females(m_nodeyear(idev)) = m_dev_females(idev);
 				}
 			break;
 			// Modifying by Jie Zheng for specific time blocks
@@ -1899,7 +1907,7 @@ FUNCTION calc_natural_mortality
 				for ( int i = syr+1; i <= nyr; i++ )
 				{
 					M(1)(i) = M(1)(i-1) * mfexp(delta(i));
-					M(2)(i) = M(2)(i-1) * mfexp(deltaf(i));
+					M(2)(i) = M(2)(i-1) * mfexp(delta_females(i));
 				}
 			//}
 		}
@@ -3459,7 +3467,7 @@ FUNCTION calc_objective_function
 	if ( active(m_dev) )
 	{
 		nlogPenalty(3) += dnorm(m_dev, m_stdev);
-		nlogPenalty(3) += dnorm(m_devf, m_stdev);
+		nlogPenalty(3) += dnorm(m_dev_females, m_stdev);
 	}
 
 	// 4 Penalty on recruitment devs.

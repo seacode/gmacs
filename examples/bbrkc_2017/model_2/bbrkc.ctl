@@ -121,7 +121,6 @@
 ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival     lb       ub    phz   prior  p1        p2     Analytic?   LAMBDA
-#   0.84      0        1     4    1      0.843136  0.03   0           1.4     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
    0.84      0        1     4    1      0.843136  0.03   0           2     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
    1.0       0        5    -4    0      0.001     5.00   0           2     # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -180,6 +179,8 @@
 ##       3 = Blocked changes (deviates constrained by variance at specific knots)       ##
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
+## Sex-specific? (0=no, 1=yes)
+1
 ## Type
 3
 ## Phase of estimation
