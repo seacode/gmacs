@@ -394,7 +394,7 @@ June 1 to May 31. A handling mortality rate of 20% for the directed pot, 25%
 for the Tanner fishery, and 80% for trawl was assumed to estimate bycatch
 mortality biomass. }
 \label{tab:bbrkc_fishery}
-\small
+\footnotesize
 \begin{tabular}{lrrrrrrrrr}
 \hline
 Year & \multicolumn{4}{c}{Retained Catch}                 & \multicolumn{2}{c}{Pot Bycatch}Trawl         & Tanner Fshry  & Total      \\
