@@ -24,6 +24,9 @@
 ## GROWTH PARAMETER CONTROLS                                                            ##
 ##     Two lines for each parameter if split sex, one line if not                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
+## number of molt periods
+2
+## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival       lb        ub        phz   prior     p1      p2          # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
    99.9       1.0      90.0        -3       0    0.0    999.0         # alpha males or combined
@@ -32,13 +35,20 @@
     0.00      0.0       0.9        -3       0    0.0    999.0         # beta
     1.365758  0.1       3.0        -4       0    0.0    999.0         # gscale males or combined
     1.885541  0.1       3.0        -4       0    0.0    999.0         # gscale
+## ——————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
-## MOLTING PARAMETER CONTROLS                                                            ##
+## MOLTING PROBABILITY CONTROLS                                                         ##
 ##     Two lines for each parameter if split sex, one line if not                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival       lb        ub        phz   prior     p1      p2          # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##    
+## Period 1
+  144.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
+  400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
+    0.05      0.0001    1.0         4       0    0.0    999.0         # molt_cv males
+    0.1       0.0001    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
+## Period 2
   140.5       1.0     195.0         3       0    0.0    999.0         # molt_mu males
   400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
     0.071     0.0001    9.0         4       0    0.0    999.0         # molt_cv males
@@ -188,11 +198,11 @@
 ## STDEV in m_dev for Random walk
 0.3
 ## Number of nodes for cubic spline or number of step-changes for option 3
+2
 4
 ## Year position of the knots (vector must be equal to the number of nodes)
+1980 1985
 1976 1980 1985 1994
-#1980 1985
-#1980 1985 1994
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

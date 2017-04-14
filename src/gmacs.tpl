@@ -554,8 +554,9 @@ DATA_SECTION
 	// |----------------------------|
 	!! cout << " * Growth parameter controls" << endl;
 	// | Note that if bUseEmpiricalGrowth data is TRUE, then cannot estimate alpa & beta.
+	init_int nmolt;
 	int nGrwth;
-	!! nGrwth = nsex * 5;
+	!! nGrwth = (nsex * 3) + (nsex * nmolt * 2);
 	init_matrix Grwth_control(1,nGrwth,1,7);
 
 	vector Grwth_ival(1,nGrwth);
@@ -1077,13 +1078,16 @@ DATA_SECTION
 	// |-------------------------------------|
 	!! cout << " * Natural mortality controls" << endl;
 	int nMdev;
+	int nMdev_females;
 	init_int m_females;
 	init_int m_type;
 	init_int Mdev_phz;
 	int Mdev_phz_females;
 	init_number m_stdev;
 	init_int m_nNodes;
+	init_int m_nNodes_females;
 	init_ivector m_nodeyear(1,m_nNodes);
+	init_ivector m_nodeyear_females(1,m_nNodes_females);
 	LOC_CALCS
 		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear);
 		if (m_females == 1)
@@ -1096,19 +1100,25 @@ DATA_SECTION
 		{
 			case 0:
 				nMdev = 0;
+				nMdev_females = 0;
 				Mdev_phz = -1;
+				Mdev_phz_females = -1;
 			break;
 			case 1:
 				nMdev = nyr - syr;
+				nMdev_females = nyr - syr;
 			break;
 			case 2:
 				nMdev = m_nNodes;
+				nMdev_females = m_nNodes_females;
 			break;
 			case 3:
 				nMdev = m_nNodes;
+				nMdev_females = m_nNodes_females;
 			break;
 			case 4:                 //add by Jie Zheng
 				nMdev = m_nNodes / 2;
+				nMdev_females = m_nNodes_females / 2;
 		    break;
 		}
 	END_CALCS
@@ -1277,7 +1287,7 @@ PARAMETER_SECTION
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
-	init_bounded_dev_vector m_dev_females(1,nMdev,-3.0,3.0,Mdev_phz_females);    ///> natural mortality deviations
+	init_bounded_dev_vector m_dev_females(1,nMdev_females,-3.0,3.0,Mdev_phz_females);    ///> natural mortality deviations
 
 	// Effective sample size parameter for multinomial
 	init_number_vector log_vn(1,nSizeComps,nvn_phz);
@@ -1312,8 +1322,8 @@ PARAMETER_SECTION
 	vector   alpha(1,nsex); ///> intercept for linear growth increment model
 	vector    beta(1,nsex); ///> slope for the linear growth increment model
 	vector  gscale(1,nsex); ///> scale parameter for the gamma distribution
-	vector molt_mu(1,nsex); ///> 50% probability of molting at length each year
-	vector molt_cv(1,nsex); ///> CV in molting probabilility
+	matrix molt_mu(1,nsex,1,nmolt); ///> 50% probability of molting at length each year
+	matrix molt_cv(1,nsex,1,nmolt); ///> CV in molting probabilility
 
 	vector rec_sdd(1,nclass); ///> recruitment size_density_distribution
 
@@ -1536,11 +1546,16 @@ FUNCTION initialize_model_parameters
 		beta(h)    = Grwth(icnt);
 		icnt += nsex;
 		gscale(h)  = Grwth(icnt);
-		icnt += nsex;
-		molt_mu(h) = Grwth(icnt);
-		icnt += nsex;
-		molt_cv(h) = Grwth(icnt);
 	}
+	// molt_mu(h,i)
+	molt_mu(1,1) = Grwth(7);
+	molt_mu(2,1) = Grwth(8);
+	molt_cv(1,1) = Grwth(9);
+	molt_cv(2,1) = Grwth(10);
+	molt_mu(1,2) = Grwth(11);
+	molt_mu(2,2) = Grwth(12);
+	molt_cv(1,2) = Grwth(13);
+	molt_cv(2,2) = Grwth(14);
 
 	if ( !bUseEmpiricalGrowth )
 	{
@@ -1843,15 +1858,12 @@ FUNCTION calc_natural_mortality
 	if ( active(m_dev) )
 	{
 		dvar_vector delta(syr+1,nyr);
-		dvar_vector delta_females(syr+1,nyr);
 		delta.initialize();
-		delta_females.initialize();
 		switch( m_type )
 		{
 			// case 0 not here as this is not evaluated if m_dev is not active
 			case 1: // random walk in natural mortality
 				delta = m_dev.shift(syr+1);
-				delta_females = m_dev_females.shift(syr+1);
 			break;
 			case 2: // cubic splines
 			{
@@ -1866,7 +1878,6 @@ FUNCTION calc_natural_mortality
 				for ( int idev = 1; idev <= nMdev; idev++ )
 				{
 					delta(m_nodeyear(idev)) = m_dev(idev);
-					delta_females(m_nodeyear(idev)) = m_dev_females(idev);
 				}
 			break;
 			// Modifying by Jie Zheng for specific time blocks
@@ -1907,9 +1918,72 @@ FUNCTION calc_natural_mortality
 				for ( int i = syr+1; i <= nyr; i++ )
 				{
 					M(1)(i) = M(1)(i-1) * mfexp(delta(i));
-					M(2)(i) = M(2)(i-1) * mfexp(delta_females(i));
 				}
 			//}
+		}
+	}
+	if ( active(m_dev_females) )
+	{
+		dvar_vector delta(syr+1,nyr);
+		delta.initialize();
+		switch( m_type )
+		{
+			// case 0 not here as this is not evaluated if m_dev is not active
+			case 1: // random walk in natural mortality
+				delta = m_dev_females.shift(syr+1);
+			break;
+			case 2: // cubic splines
+			{
+				dvector iyr = (m_nodeyear_females - syr) / (nyr - syr);
+				dvector jyr(syr+1,nyr);
+				jyr.fill_seqadd(0, 1.0 / (nyr - syr - 1));
+				vcubic_spline_function csf(iyr, m_dev);
+				delta = csf(jyr);
+			}
+			break;
+			case 3: // Specific break points
+				for ( int idev = 1; idev <= nMdev_females; idev++ )
+				{
+					delta(m_nodeyear_females(idev)) = m_dev_females(idev);
+				}
+			break;
+			// Modifying by Jie Zheng for specific time blocks
+			case 4: // time blocks
+				for ( int idev = 1; idev <= nMdev_females; idev++ )
+				{
+					// Is this syntax for split sex?
+					for ( int i = m_nodeyear_females(1+(idev-1)*2); i <= m_nodeyear_females(2+(idev-1)*2); i++ )
+					{
+						delta(i) = m_dev_females(idev);
+						for ( int h = 1; h <= nsex; h++ )
+						{
+							M(h)(i) = mfexp(m_dev_females(idev));
+						}
+					}
+				}
+			break;
+			// Case for specific years
+			case 5: // time blocks
+				for ( int idev = 1; idev <= nMdev_females; idev++ )
+				{
+					delta(m_nodeyear_females(idev)) = m_dev_females(idev);
+				}
+				for ( int h = 1; h <= nsex; h++ )
+				{
+					for ( int i = syr+1; i <= nyr; i++ )
+					{
+						M(h)(i) = M(h)(syr) * mfexp(delta(i)); // Deltas are devs from base value (not a walk)
+					}
+				}
+			break;
+		}
+		// Update M by year.
+		if ( m_type < 4 )
+		{
+			for ( int i = syr+1; i <= nyr; i++ )
+			{
+				M(2)(i) = M(2)(i-1) * mfexp(delta(i));
+			}
 		}
 	}
 	// Custom natural mortality input
@@ -1996,13 +2070,13 @@ FUNCTION calc_molting_probability
 	{
 		for ( int i = syr; i <= nyr; i++ )
 		{
-			if ( i < 1980 & h == 1 ) {
-				dvariable mu = 144.170986;
-				dvariable sd = mu * 0.05;//1.144537;
+			if ( i < 1980 ) {
+				dvariable mu = molt_mu(h,1);
+				dvariable sd = mu * molt_cv(h,1);
 				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
 			} else {
-				dvariable mu = molt_mu(h);
-				dvariable sd = mu * molt_cv(h);
+				dvariable mu = molt_mu(h,2);
+				dvariable sd = mu * molt_cv(h,2);
 				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
 			}
 			for ( int l = 1; l <= nclass; l++ )
@@ -3467,6 +3541,9 @@ FUNCTION calc_objective_function
 	if ( active(m_dev) )
 	{
 		nlogPenalty(3) += dnorm(m_dev, m_stdev);
+	}
+	if ( active(m_dev_females) )
+	{
 		nlogPenalty(3) += dnorm(m_dev_females, m_stdev);
 	}
 
