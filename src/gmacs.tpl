@@ -2699,8 +2699,6 @@ FUNCTION calc_stock_recruitment_relationship
 	 *  2) discards are all females (new and old) and male only crab.
 	 *  3) Natural and fishing mortality occur simultaneously.
 	 *  4) discard is the total number of crab caught and discarded.
-	 *
-	 * @param  [description]
 	**/
 FUNCTION calc_predicted_catch
 	int h,i,j,k,ig;
@@ -2716,10 +2714,11 @@ FUNCTION calc_predicted_catch
 		{
 			i    =     dCatchData(kk,jj,1);  // year index
 			j    =     dCatchData(kk,jj,2);  // season index
-			k    =     dCatchData(kk,jj,3);  // gear index
+			k    =     dCatchData(kk,jj,3);  // fleet/gear index
 			h    =     dCatchData(kk,jj,4);  // sex index
 			type = int(dCatchData(kk,jj,7)); // Type of catch (retained = 1, discard = 2)
 			unit = int(dCatchData(kk,jj,8)); // Units of catch equation (1 = biomass, 2 = numbers)
+
 			if ( h ) // sex specific
 			{
 				nal.initialize();
@@ -2727,8 +2726,7 @@ FUNCTION calc_predicted_catch
 				switch ( type )
 				{
 					case 1: // retained catch
-						// Question here about what the retained catch is. Should probably include shell condition here as well. Now assuming both old and new shell are retained.
-						sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
+						sel = mfexp(sel + log_slx_retaind(k)(h)(i));
 					break;
 					case 2: // discarded catch
 						sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
@@ -2744,7 +2742,7 @@ FUNCTION calc_predicted_catch
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-				pre_catch(kk,jj) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -2754,28 +2752,23 @@ FUNCTION calc_predicted_catch
 					switch( type )
 					{
 						case 1: // retained catch
-							sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
-							for ( int m = 1; m <= nmature; m++ )
-							{
-								ig = pntr_hmo(h,m,1); // indexes new shell.
-								nal += d4_N(ig)(i)(j);
-							}
+							sel = mfexp(sel + log_slx_retaind(k)(h)(i));
 						break;
 						case 2: // discarded catch
-							sel = elem_prod(mfexp(sel),1.0 - mfexp( log_slx_retaind(k)(h)(i) ));
-							for ( int m = 1; m <= nmature; m++ )
-							{
-								for ( int o = 1; o <= nshell; o++ )
-								{
-									ig = pntr_hmo(h,m,o);
-									nal += d4_N(ig)(i)(j);
-								}
-							}
+							sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
 						break;
+					}
+					for ( int m = 1; m <= nmature; m++ )
+					{
+						for ( int o = 1; o <= nshell; o++ )
+						{
+							ig = pntr_hmo(h,m,o);
+							nal += d4_N(ig)(i)(j);
+						}
 					}
 					tmp_ft = ft(k)(h)(i)(j);
 					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft*sel,1.0-mfexp(-Z(h)(i)(j))),Z(h)(i)(j));
+					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 				}
 			}
 		}
@@ -2814,7 +2807,6 @@ FUNCTION calc_predicted_catch_out
 				switch ( type )
 				{
 					case 1: // retained catch
-						// Question here about what the retained catch is. Should probably include shell condition here as well. Now assuming both old and new shell are retained.
 						sel = mfexp(sel + log_slx_retaind(k)(h)(i));
 					break;
 					case 2: // discarded catch
@@ -2831,7 +2823,7 @@ FUNCTION calc_predicted_catch_out
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-				pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -2841,28 +2833,23 @@ FUNCTION calc_predicted_catch_out
 					switch( type )
 					{
 						case 1: // retained catch
-							sel = mfexp( sel + log_slx_retaind(k)(h)(i) );
-							for ( int m = 1; m <= nmature; m++ )
-							{
-								ig = pntr_hmo(h,m,1); // indexes new shell.
-								nal += d4_N(ig)(i)(j);
-							}
+							sel = mfexp(sel + log_slx_retaind(k)(h)(i));
 						break;
 						case 2: // discarded catch
 							sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
-							for ( int m = 1; m <= nmature; m++ )
-							{
-								for ( int o = 1; o <= nshell; o++ )
-								{
-									ig = pntr_hmo(h,m,o);
-									nal += d4_N(ig)(i)(j);
-								}
-							}
 						break;
+					}
+					for ( int m = 1; m <= nmature; m++ )
+					{
+						for ( int o = 1; o <= nshell; o++ )
+						{
+							ig = pntr_hmo(h,m,o);
+							nal += d4_N(ig)(i)(j);
+						}
 					}
 					tmp_ft = ft(k)(h)(i)(j);
 					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-					pre_catch_out(kk,i) = nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 				}
 			}
 		}
@@ -2991,7 +2978,6 @@ FUNCTION calc_predicted_composition
 	d3_pre_size_comps_in.initialize();
 	d3_pre_size_comps.initialize();
 	dvar_vector dNtmp(1,nclass);
-	dvar_vector dNtot(1,nclass);
 	dvar_vector   nal(1,nclass);
 
 	for ( int ii = 1; ii <= nSizeComps_in; ii++ )
@@ -3000,8 +2986,6 @@ FUNCTION calc_predicted_composition
 		for ( int jj = 1; jj <= nSizeCompRows_in(ii); jj++ )
 		{
 			dNtmp.initialize();
-			dNtot.initialize();
-			nal.initialize();
 			i       = d3_SizeComps_in(ii)(jj,-7); // year
 			j       = d3_SizeComps_in(ii)(jj,-6); // seas
 			k       = d3_SizeComps_in(ii)(jj,-5); // gear (a.k.a. fleet)
@@ -3012,10 +2996,10 @@ FUNCTION calc_predicted_composition
 			
 			if ( h ) // sex specific
 			{
+				nal.initialize();
 				dvar_vector sel = mfexp(log_slx_capture(k)(h)(i));
 				dvar_vector ret = mfexp(log_slx_retaind(k)(h)(i));
 				dvar_vector dis = mfexp(log_slx_discard(k)(h)(i));
-				// dvar_vector tmp = N(h)(i);
 
 				for ( int m = 1; m <= nmature; m++ )
 				{
@@ -3026,27 +3010,26 @@ FUNCTION calc_predicted_composition
 						if ( shell == o ) nal += d4_N(ig)(i)(j);
 					}
 				}
-				dvar_vector tmp = nal;
-				
+
 				switch ( type )
 				{
 					case 1: // retained
-						dNtmp = elem_prod(tmp, elem_prod(sel, ret));
+						dNtmp += elem_prod(nal, elem_prod(sel, ret));
 					break;
 					case 2: // discarded
-						dNtmp = elem_prod(tmp, elem_prod(sel, dis));
+						dNtmp += elem_prod(nal, elem_prod(sel, dis));
 					break;
 					default: // both retained and discarded
-						dNtmp = elem_prod(tmp, sel);
+						dNtmp += elem_prod(nal, sel);
 					break;
 				}
 			} else { // sexes combined in the observations
 				for ( h = 1; h <= nsex; h++ )
 				{
+					nal.initialize();
 					dvar_vector sel = mfexp(log_slx_capture(k)(h)(i));
 					dvar_vector ret = mfexp(log_slx_retaind(k)(h)(i));
 					dvar_vector dis = mfexp(log_slx_discard(k)(h)(i));
-					// dvar_vector tmp = N(h)(i);
 
 					for ( int m = 1; m <= nmature; m++ )
 					{
@@ -3057,18 +3040,19 @@ FUNCTION calc_predicted_composition
 							if ( shell == o ) nal += d4_N(ig)(i)(j);
 						}
 					}
-					dvar_vector tmp = nal;
 
 					switch ( type )
 					{
 						case 1:
-							dNtmp += elem_prod(tmp,ret);
+							dNtmp += elem_prod(nal, elem_prod(sel, ret));
+							//dNtmp += elem_prod(tmp, ret);
 						break;
 						case 2:
-							dNtmp += elem_prod(tmp,dis);
+							dNtmp += elem_prod(nal, elem_prod(sel, dis));
+							//dNtmp += elem_prod(tmp, dis);
 						break;
 						default:
-							dNtmp += elem_prod(tmp,sel);
+							dNtmp += elem_prod(nal, sel);
 						break;
 					}
 				}

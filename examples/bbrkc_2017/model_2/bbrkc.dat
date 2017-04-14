@@ -101,7 +101,7 @@ NMFS_Trawl:BSFRF
 40  24  24  40
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##
 ##  CATCH DATA
-##  Type  of  catch:  1 = retained, 2 = discard,  3 =
+##  Type  of  catch:  1 = retained, 2 = discard
 ##  Units of  catch:  1 = biomass,  2 = numbers
 ##  for BBRKC Units are in  1000 mt  for landed  & discards.
 ##  ————————————————————————————————————————————————————————————————————————————————————  ##
