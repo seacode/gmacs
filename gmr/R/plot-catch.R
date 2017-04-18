@@ -73,7 +73,7 @@ plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
     
     p <- ggplot(mdf, aes(x = year, y = observed)) +
         geom_bar(stat = "identity", position = "dodge", alpha = 0.15) +
-        geom_linerange(aes(year, observed, ymax = ub, ymin = lb, position = "dodge"), size = 0.2, alpha = 0.5, col = "black") +
+        geom_linerange(aes(x = year, y = observed, ymax = ub, ymin = lb, position = "dodge"), size = 0.2, alpha = 0.5, col = "black") +
         labs(x = xlab, y = ylab)
     
     if (.OVERLAY)
@@ -93,7 +93,7 @@ plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
                 labs(col = mlab)
         } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
             p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4) +
-                facet_wrap(~sex + fleet + type + units, scales = scales)
+                facet_wrap(~fleet + sex + type + units, scales = scales)
         } else {
             p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
                 facet_wrap(~sex + fleet + type + units, scales = scales) +

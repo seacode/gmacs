@@ -17,3 +17,4 @@ Gives user control over plot theme by running ggplot2 functions
 that do the same. This allows a user to set the theme without 
 independently loading the ggplot2 package.
 }
+

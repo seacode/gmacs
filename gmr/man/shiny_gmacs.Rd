@@ -12,3 +12,4 @@ shiny_gmacs(gmrep)
 \description{
 Plot Gmacs on shiny app
 }
+

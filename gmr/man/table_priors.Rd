@@ -18,3 +18,4 @@ Create a table of priors
 \author{
 D'Arcy N. Webber
 }
+
