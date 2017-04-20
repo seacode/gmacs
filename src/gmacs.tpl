@@ -1840,6 +1840,38 @@ FUNCTION calc_growth_transition
 			}
 		}
 	}
+	/*
+	} else if ( bUseCustomGrowthMatrix == 2 ) {
+		for ( h = 1; h <= nsex; h++ )
+		{
+			gt.initialize();
+			sbi = size_breaks / gscale(h);
+			for ( l = 1; l <= nclass; l++ )
+			{
+				mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
+				for ( ll = l; ll <= nclass+1; ll++ )
+				{
+					if ( ll <= nclass+1 )
+					{
+						psi(ll) = cumd_gamma(sbi(ll), mean_size_after_molt);
+					}
+				}
+				gt(l)(l,nclass) = first_difference(psi(l,nclass+1));
+				gt(l)(l,nclass) = gt(l)(l,nclass) / sum(gt(l));
+			}
+			if ( bUseCustomGrowthMatrix == 1 )
+			{
+				growth_transition(h) = CustomGrowthMatrix(h);
+			} else {
+				growth_transition(h) = gt;
+			}
+			size_transition(h) = P(h) * growth_transition(h);
+			for ( int l = 1; l <= nclass; l++ )
+			{
+				size_transition(h)(l,l) += value(1.0 - P(h)(l,l));
+			}
+		}
+	*/
 
 
 	/**
