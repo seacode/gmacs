@@ -9,7 +9,7 @@ require(gmr)
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
-.FLEET    = c("Pot","Trawl Bycatch","Bairdi fishery bycatch","Fixed_gear", "NMFS Trawl","BSFRF")
+.FLEET    = c("Pot","Trawl bycatch","TC fishery bycatch","Fixed bycatch", "NMFS Trawl","BSFRF")
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate","Immature","Mature")
