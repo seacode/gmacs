@@ -5,7 +5,7 @@
 #devtools::install_github("seacode/gmacs", subdir = "/gmr", ref = "develop")
 require(gmr)
 
-.MODELDIR = c("model_1/", "model_2/", "model_3/", "model_4/", "model_5/")
+.MODELDIR = c("model_2/", "model_7/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
@@ -18,7 +18,7 @@ require(gmr)
 
 fn       <- paste0(.MODELDIR, "gmacs")
 M        <- lapply(fn, read_admb)
-names(M) <- c("Constant M","Random-walk M","2016 Model M","Estimate BSFRF q","NMFS lambda=4")
+names(M) <- c("Constant M", ,"NMFS lambda=4")
 
 ww <- 6
 hh <- 5
