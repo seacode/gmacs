@@ -200,8 +200,15 @@ Year      & MSST     & ($\mathit{MMB}_\text{mating}$) & TAC & catch    & catch &
 2015/16 & 28.4$^D$ & 61.0$^D$         & 9.97 & 10.17          & 11.77       & 14.84 & 13.36 \\
 2016/17 &          & 52.9$^D$         &      &                &             & 14.63 & 13.17 \\
 \hline
-\end{tabular}
+\end{tabular} \\
+\\
+Notes: \\
+A – Calculated from the assessment reviewed by the Crab Plan Team in September 2013 \\
+B – Calculated from the assessment reviewed by the Crab Plan Team in September 2014 \\
+C – Calculated from the assessment reviewed by the Crab Plan Team in September 2015\\
+D – Calculated from the assessment reviewed by the Crab Plan Team in September 2016\\
 \end{table}
+
 
 6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
 \begin{table}[ht]
