@@ -27,4 +27,3 @@ represents the size transition.
 \author{
 SJD Martell, D'Arcy N. Webber
 }
-

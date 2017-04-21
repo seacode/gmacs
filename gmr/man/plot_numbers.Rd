@@ -20,4 +20,3 @@ Plot numbers at length
 \author{
 D'Arcy N. Webber
 }
-

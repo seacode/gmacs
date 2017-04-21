@@ -9,4 +9,3 @@ table_ref_points(M)
 \description{
 Create a table of SPR reference points
 }
-

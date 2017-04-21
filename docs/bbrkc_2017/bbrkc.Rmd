@@ -1,4 +1,10 @@
 ---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+--
 title: "Bristol Bay Red King Crab Stock Assessment 2017"
 author: |
   | D'Arcy Webber$^1$, Jie Zheng$^2$, and James Ianelli$^3$
@@ -29,7 +35,7 @@ options(xtable.comment = FALSE)
 
 # The model specs
 mod_names <- c("Gmacs","2016 Model")
-.MODELDIR = c("../../examples/bbrkc_2017/model_7/", "../../examples/bbrkc_2017/model_2/")
+.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
 #.MODELDIR = c("../../examples/bbrkc_2017/model_5/", "../../examples/bbrkc_2017/model_5/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
@@ -48,8 +54,8 @@ M        <- lapply(fn, read_admb)
 names(M) <- mod_names
 
 jj <- 2 # The position in the list that Jies model outputs sit
-#fn <- "2016_model/rk75162"
-fn <- "Jie_2017/rk75162b"
+fn <- "2016_model/rk75162"
+#fn <- "Jie_2017/rk75162b"
 JJ <- lapply(fn, read_admb)
 
 nmult_1 <- 1e+06
@@ -118,11 +124,11 @@ nmult_2 <- 0.0004535923 * 1e+6
 
 fn <- paste0(.MODELDIR[2], "gmacs")
 Mmatch <- lapply(fn, read_admb)
-names(Mmatch) <- c("SMBKC")
+names(Mmatch) <- c("BBRKC")
 
 fn <- paste0(.MODELDIR[2], "gmacs")
 Mbase <- lapply(fn, read_admb)
-names(Mbase) <- c("SMBKC")
+names(Mbase) <- c("BBRKC")
 
 rinline <- function(code){
   html <- '<code  class="r">``` `CODE` ```</code>'
@@ -202,7 +208,7 @@ Year      & MSST     & ($\mathit{MMB}_\text{mating}$) & TAC & catch    & catch &
 2016/17 &          & 52.9$^D$         &      &                &             & 14.63 & 13.17 \\
 \hline
 \end{tabular} \\
-\\
+     
 Notes: \\
 A – Calculated from the assessment reviewed by the Crab Plan Team in September 2013 \\
 B – Calculated from the assessment reviewed by the Crab Plan Team in September 2014 \\
@@ -504,12 +510,12 @@ Year & \multicolumn{4}{c}{Retained Catch}                 & \multicolumn{2}{c}{P
 \end{tabular}
 \end{table}
 
-```{r smbkc_groundfish_bycatch, results = "asis"}
+```{r bbrkc_groundfish_bycatch, results = "asis"}
 #df <- dplyr::filter(data.frame(M[[2]]$dCatchData_out), V2 == 2, V3 %in% c(2,3)) %>%
 #  dplyr::select(V1, V3, V5) %>%
 #  tidyr::spread(key = V3, value = V5)
 #names(df) <- c("Year","Trawl bycatch","Fixed gear bycatch")
-#tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tons) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:smbkc_groundfish_bycatch", digits = c(0,0,3,3))
+#tab <- xtable(df, caption = "Groundfish BBRKC male bycatch biomass (tons) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:bbrkc_groundfish_bycatch", digits = c(0,0,3,3))
 #print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
@@ -533,7 +539,7 @@ plot_datarange(Mbase)
 
 ## Major Data Sources
 
-Major data sources used in this assessment include annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15-2015/16; Table \ref{tab:smbkc_fishery}); results from the annual NMFS eastern Bering Sea trawl survey (1978-2016; Table \ref{tab:stage_cpue_nmfs}); results from the triennial ADF&G SMBKC pot survey (every third year during 1995-2013), the 2015 pot survey, and the 2016 pot survey (Table \ref{tab:stage_cpue}); size-frequency information from ADF&G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15-2015/16; Table \ref{tab:stage_cpue_1}); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2015/16; Table \ref{tab:smbkc_groundfish_bycatch}). 
+Major data sources used in this assessment include annual directed-fishery retained-catch statistics from fish tickets (1978/79-1998/99, 2009/10-2012/13, and 2014/15-2015/16; Table \ref{tab:bbrkc_fishery}); results from the annual NMFS eastern Bering Sea trawl survey (1978-2016; Table \ref{tab:stage_cpue_nmfs}); results from the triennial ADF&G bbrkC pot survey (every third year during 1995-2013), the 2015 pot survey, and the 2016 pot survey (Table \ref{tab:stage_cpue}); size-frequency information from ADF&G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and 2014/15-2015/16; Table \ref{tab:stage_cpue_1}); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2015/16; Table \ref{tab:smbkc_groundfish_bycatch}). 
 \begin{table}[ht]
 \centering
 \caption{Size-class and total CPUE (90+ mm CL) with estimated CV and total number of captured crab (90+ mm CL) from the 96 common stations surveyed during the seven triennial ADF\&G SMBKC pot surveys and the 2015 and 2016 surveys. Source: D. Pengilly and R. Gish, ADF\&G.} 
@@ -764,22 +770,22 @@ where $B$ is quantified as mature-male biomass (MMB) at mating with time of mati
 
 The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, ABC, and MMB in 2016 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC is 80% of the OFL.
 ```{r management_quants, results = "asis"}
-#df <- NULL
-#for (ii in 2:6)
-#{
-#    x <- M[[ii]]
-#    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-#    fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
-#    OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-#    Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
-#    ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-#    v <- c(mmb, Bmsy, fofl, OFL, ABC)
-#    df <- cbind(df, v)
-#}
-#df <- data.frame(rownames(df), df, row.names = NULL)
-#names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
-#tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
-#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+df <- NULL
+for (ii in 2:4)
+{
+    x <- M[[ii]]
+    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+    fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
+    OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+    Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
+    ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+    v <- c(mmb, Bmsy, fofl, OFL, ABC)
+    df <- cbind(df, v)
+}
+df <- data.frame(rownames(df), df, row.names = NULL)
+names(df) <- c("Component","Gmacs base","Const M","Time-varying M")
+tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 
@@ -860,7 +866,8 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997. Application of catch-survey analys
 \newpage\clearpage
 
 ```{r length_weight, results = "asis"}
-df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt * 1000)
+df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt[,3:18] * 1000)
+#xxxx
 names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 #tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length_weight", digits = c(0,0,1,1,1))
 #print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -935,7 +942,7 @@ j <- grep("survey_q", Parameter)
 Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
 #Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
-#df <- data.frame(Parameter, Estimate, SD)
+df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_match", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
@@ -1327,9 +1334,9 @@ The proportion of natural mortality ($\tau_t$) applied during each season in the
 ```{r m_prop, results = "asis"}
 A <- M[[2]]
 df <- data.frame(A$mod_yrs, A$m_prop)
-#names(df) <- c("Year","Season 1","Season 2","Season 3","Season 4","Season 5")
-#tab <- xtable(df, digits = c(0,0,2,2,2,2,2), caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
-#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
+names(df) <- c("Year","Season 1","Season 2","Season 3","Season 4","Season 5")
+tab <- xtable(df, digits = c(0,0,2,2,2,2,2), caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 With boldface lower-case letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
@@ -1520,11 +1527,33 @@ and the likelihood is
   \sum \log \left( \delta_{t,y}^\text{I} \right) + \sum 0.5 \left( \sigma_{t,y}^\text{I} \right)^2
 \end{equation}
 
-Gmacs calculates standard deviation of the normalised residual (SDNR) values and median of the absolute residual (MAR) values for all abundance indices and size compositions to help the user come up with resonable likelihood weights. For an abundance data set to be well fitted, the SDNR should not be much greater than 1 (a value much less than 1, which means that the data set is fitted better than was expected, is not a cause for concern). What is meant by "much greater than 1" depends on $m$ (the number of years in the data set). Francis (2011) suggests upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10, and 20, respectively. Although an SDNR not much greater than 1 is a necessary condition for a good fit, it is not sufficient. It is important to plot the observed and expected abundances to ensure that the fit is good.
+Gmacs calculates standard deviation of the normalised residual (SDNR) values
+and median of the absolute residual (MAR) values for all abundance indices and
+size compositions to help the user come up with resonable likelihood weights.
+For an abundance data set to be well fitted, the SDNR should not be much
+greater than 1 (a value much less than 1, which means that the data set is
+fitted better than was expected, is not a cause for concern). What is meant by
+"much greater than 1" depends on $m$ (the number of years in the data set).
+Francis (2011) suggests upper limits of 1.54, 1.37, and 1.26 for $m$ = 5, 10,
+and 20, respectively. Although an SDNR not much greater than 1 is a necessary
+condition for a good fit, it is not sufficient. It is important to plot the
+observed and expected abundances to ensure that the fit is good.
 
-Gmacs also calculates Francis weights for each of the size composition data sets supplied (Francis 2011). If the user wishes to use the Francis iterative re-weighting method, first the weights applied to the abundance indices should be adjusted by trial and error until the SDNR (and/or MAR) are adequte. Then the Francis weights supplied by Gmacs should be used as the new likelihood weights for each of the size composition data sets the next time the model is run. The user can then iteratively adjust the abundance index and size composition weights until adequate SDNR (and/or MAR) values are achieved, given the Francis weights.
+Gmacs also calculates Francis weights for each of the size composition data
+sets supplied (Francis 2011). If the user wishes to use the Francis iterative
+re-weighting method, first the weights applied to the abundance indices should
+be adjusted by trial and error until the SDNR (and/or MAR) are adequte. Then
+the Francis weights supplied by Gmacs should be used as the new likelihood
+weights for each of the size composition data sets the next time the model is
+run. The user can then iteratively adjust the abundance index and size
+composition weights until adequate SDNR (and/or MAR) values are achieved,
+given the Francis weights.
 
 
 ## 6. Estimation
 
-The model was implemented using the software AD Model Builder (Fournier et al. 2012), with parameter estimation by minimization of the model objective function using automatic differentiation. Parameter estimates and standard deviations provided in this document are AD Model Builder reported values assuming maximum likelihood theory asymptotics.
+The model was implemented using the software AD Model Builder (Fournier et al.
+2012), with parameter estimation by minimization of the model objective
+function using automatic differentiation. Parameter estimates and standard
+deviations provided in this document are AD Model Builder reported values
+assuming maximum likelihood theory asymptotics.

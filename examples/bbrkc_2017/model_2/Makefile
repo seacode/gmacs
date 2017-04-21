@@ -32,6 +32,7 @@ plot:
 
 clean:
 	@$(RM) -f $(EXEC)
+	@$(RM) -f gradient.[0123456789]
 	@$(RM) -f admodel.*
 	@$(RM) -f $(EXEC)  $(EXEC).[brces]* $(EXEC).*[0123456789] *.rpt *.log variance
 
