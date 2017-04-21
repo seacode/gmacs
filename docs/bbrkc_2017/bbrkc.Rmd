@@ -29,12 +29,12 @@ options(xtable.comment = FALSE)
 
 # The model specs
 mod_names <- c("Gmacs","2016 Model")
-.MODELDIR = c("../../examples/bbrkc_2017/model_2/", "../../examples/bbrkc_2017/model_2/")
+.MODELDIR = c("../../examples/bbrkc_2017/model_7/", "../../examples/bbrkc_2017/model_2/")
 #.MODELDIR = c("../../examples/bbrkc_2017/model_5/", "../../examples/bbrkc_2017/model_5/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
-.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl","BSFRF")
+.FLEET    = c("Pot","Trawl bycatch","TC bycatch","Fixed Bycatch","NMFS Trawl","BSFRF")
 .TYPE     = c("Retained & Discarded","Retained","Discarded")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate")
@@ -48,7 +48,8 @@ M        <- lapply(fn, read_admb)
 names(M) <- mod_names
 
 jj <- 2 # The position in the list that Jies model outputs sit
-fn <- "2016_model/rk75162"
+#fn <- "2016_model/rk75162"
+fn <- "Jie_2017/rk75162b"
 JJ <- lapply(fn, read_admb)
 
 nmult_1 <- 1e+06
