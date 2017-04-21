@@ -97,77 +97,15 @@ plot_numbers(M, subsetby = c("1975"))
 ggsave(paste0(.FIGS, "numbers_initial.png"), width = ww*1.2, height = hh)
 dev.off()
 
-plot_size_comps(M, 1)
-ggsave(paste0(.FIGS, "lf_1.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 2)
-ggsave(paste0(.FIGS, "lf_2.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 3)
-ggsave(paste0(.FIGS, "lf_3.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 4)
-ggsave(paste0(.FIGS, "lf_4.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 5)
-ggsave(paste0(.FIGS, "lf_5.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 6)
-ggsave(paste0(.FIGS, "lf_6.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 7)
-ggsave(paste0(.FIGS, "lf_7.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 8)
-ggsave(paste0(.FIGS, "lf_8.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 9)
-ggsave(paste0(.FIGS, "lf_9.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 1, res = TRUE)
-ggsave(paste0(.FIGS, "lf_1b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 2, res = TRUE)
-ggsave(paste0(.FIGS, "lf_2b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 3, res = TRUE)
-ggsave(paste0(.FIGS, "lf_3b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 4, res = TRUE)
-ggsave(paste0(.FIGS, "lf_4b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 5, res = TRUE)
-ggsave(paste0(.FIGS, "lf_5b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 6, res = TRUE)
-ggsave(paste0(.FIGS, "lf_6b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 7, res = TRUE)
-ggsave(paste0(.FIGS, "lf_7b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 8, res = TRUE)
-ggsave(paste0(.FIGS, "lf_8b.png"), width = ww*2, height = hh*1.5)
-dev.off()
-
-plot_size_comps(M, 9, res = TRUE)
-ggsave(paste0(.FIGS, "lf_9b.png"), width = ww, height = hh*0.5)
-dev.off()
+for (i in 1:9) {
+    plot_size_comps(M, i)
+    ggsave(paste0(.FIGS, "lf_", i, ".png"), width = ww*2, height = hh*1.5)
+    dev.off()
+    
+    plot_size_comps(M, i, res = TRUE)
+    ggsave(paste0(.FIGS, "lf_", i, "b.png"), width = ww*2, height = hh*1.5)
+    dev.off()
+}
 
 png(filename = paste0(.FIGS, "data_range.png"), width = ww, height = hh*1.0, units = 'in', res = 400)
 plot_datarange(M)
