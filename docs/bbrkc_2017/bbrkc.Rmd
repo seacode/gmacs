@@ -1,10 +1,4 @@
 ---
-output:
-  pdf_document: default
-  html_document: default
----
-
---
 title: "Bristol Bay Red King Crab Stock Assessment 2017"
 author: |
   | D'Arcy Webber$^1$, Jie Zheng$^2$, and James Ianelli$^3$
@@ -16,6 +10,8 @@ output:
   pdf_document:
     includes:
     highlight: zenburn
+    keep_tex: yes
+    latex_engine: xelatex
   html_document:
     theme: flatly
     toc: yes
@@ -35,8 +31,8 @@ options(xtable.comment = FALSE)
 
 # The model specs
 mod_names <- c("Gmacs","2016 Model")
-.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
-#.MODELDIR = c("../../examples/bbrkc_2017/model_5/", "../../examples/bbrkc_2017/model_5/")
+#.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
+.MODELDIR = c("../../examples/bbrkc_2017/model_7/", "../../examples/bbrkc_2017/model_7/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
@@ -45,8 +41,7 @@ mod_names <- c("Gmacs","2016 Model")
 .SHELL    = c("Aggregate","New Shell","Old Shell")
 .MATURITY = c("Aggregate")
 .MATURITY = c("Aggregate","Immature","Mature")
-.SEAS     = c("1","2","3","4","5")
-.SEAS     = c("Annual")
+.SEAS     = c("1","2","3","4")
 
 # Read report file and create gmacs report object (a list):
 fn       <- paste0(.MODELDIR, "gmacs")
@@ -356,7 +351,7 @@ to 1971. The Japanese fleet employed primarily tanglenets with a very small prop
 from trawls and pots. The Russian fleet used only tanglenets. United States trawlers started fishing
 Bristol Bay RKC in 1947, but the effort and catch declined in the 1950s. The domestic RKC fishery
 began to expand in the late 1960s and peaked in 1980 with a catch of 129.95 million lbs (58,943 t),
-worth an estimated $115.3 million ex-vessel value. The catch declined dramatically in the early
+worth an estimated \\$115.3 million ex-vessel value. The catch declined dramatically in the early
 1980s and has remained at low levels during the last two decades (Table 1). After the early 1980s
 stock collapse, the Bristol Bay RKC fishery took place during a short period in the fall (usually
 lasting about a week) with the catch quota based on the stock assessment conducted the previous
@@ -770,22 +765,22 @@ where $B$ is quantified as mature-male biomass (MMB) at mating with time of mati
 
 The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, ABC, and MMB in 2016 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC is 80% of the OFL.
 ```{r management_quants, results = "asis"}
-df <- NULL
-for (ii in 2:4)
-{
-    x <- M[[ii]]
-    mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-    fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
-    OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-    Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
-    ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-    v <- c(mmb, Bmsy, fofl, OFL, ABC)
-    df <- cbind(df, v)
-}
-df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Gmacs base","Const M","Time-varying M")
-tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+# df <- NULL
+# for (ii in 2:4)
+# {
+#     x <- M[[ii]]
+#     mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+#     fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
+#     OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+#     Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
+#     ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+#     v <- c(mmb, Bmsy, fofl, OFL, ABC)
+#     df <- cbind(df, v)
+# }
+# df <- data.frame(rownames(df), df, row.names = NULL)
+# names(df) <- c("Component","Gmacs base","Const M","Time-varying M")
+# tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
+# print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 
@@ -927,24 +922,24 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 \end{table}
 
 ```{r est_pars_2, results = "asis"}
-x <- M[[2]]$fit
-i <- c(grep("m_dev", x$names)[1],
-       grep("theta", x$names),
-       grep("survey_q", x$names),
-       grep("log_fbar", x$names),
-       grep("sd_fofl", x$names),
-       grep("sd_ofl", x$names)
-       )
-Parameter <- x$names[i]
-Estimate <- x$est[i]
-SD <- x$std[i]
-j <- grep("survey_q", Parameter)
-Estimate[j] <- Estimate[j] * 1000
-SD[j] <- SD[j] * 1000
-#Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
-df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_match", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+# x <- M[[2]]$fit
+# i <- c(grep("m_dev", x$names)[1],
+#        grep("theta", x$names),
+#        grep("survey_q", x$names),
+#        grep("log_fbar", x$names),
+#        grep("sd_fofl", x$names),
+#        grep("sd_ofl", x$names)
+#        )
+# Parameter <- x$names[i]
+# Estimate <- x$est[i]
+# SD <- x$std[i]
+# j <- grep("survey_q", Parameter)
+# Estimate[j] <- Estimate[j] * 1000
+# SD[j] <- SD[j] * 1000
+# #Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
+# df <- data.frame(Parameter, Estimate, SD)
+# tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_match", digits = 3)
+# print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 
@@ -1206,7 +1201,7 @@ plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)")
 ```
 
 ```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
-plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)", ShowEstErr = TRUE)
+plot_cpue(M, subsetby = "NMFS Trawl", ylab = "Survey biomass (tons)", ShowEstErr = TRUE)
 ```
 
 \newpage\clearpage
@@ -1332,11 +1327,11 @@ Within the model, the beginning of the crab year is assumed contemporaneous with
 The proportion of natural mortality ($\tau_t$) applied during each season in the model is provided in Table \ref{tab:m_prop}. The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63% of the year. Therefore 63% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year $\tau_2$ is different each year and thus $\tau_4$ differs each year.
 
 ```{r m_prop, results = "asis"}
-A <- M[[2]]
-df <- data.frame(A$mod_yrs, A$m_prop)
-names(df) <- c("Year","Season 1","Season 2","Season 3","Season 4","Season 5")
-tab <- xtable(df, digits = c(0,0,2,2,2,2,2), caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
+# A <- M[[2]]
+# df <- data.frame(A$mod_yrs, A$m_prop)
+# names(df) <- c("Year","Season 1","Season 2","Season 3","Season 4","Season 5")
+# tab <- xtable(df, digits = c(0,0,2,2,2,2,2), caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
+# print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
 With boldface lower-case letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
