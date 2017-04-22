@@ -14,7 +14,7 @@
    14.0       -10        20         -2       0   10.0    20.0         # logR1, to estimate if NOT initialized at unfished
    14.0       -10        20          1       0   10.0    20.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
-    0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
+    0.544       0.1       5         -4       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
    -0.9       -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
     0.75        0.20      1.00      -2       3    3.0     2.00        # steepness
     0.01        0.00      1.00      -3       3    1.01    1.01        # recruitment autocorrelation
@@ -44,14 +44,14 @@
 ## ival       lb        ub        phz   prior     p1      p2          # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##    
 ## Period 1
-  144.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
+  142.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
   400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
     0.05      0.0001    1.0         4       0    0.0    999.0         # molt_cv males
     0.1       0.0001    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
 ## Period 2
-  140.5       1.0     195.0         3       0    0.0    999.0         # molt_mu males
+  138.5       1.0     195.0         4       0    0.0    999.0         # molt_mu males
   400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
-    0.071     0.0001    9.0         4       0    0.0    999.0         # molt_cv males
+    0.074     0.0001    9.0         5       0    0.0    999.0         # molt_cv males
     0.1       0.0001    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
 ## ——————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -207,17 +207,17 @@
 ## Sex-specific? (0=no, 1=yes)
 1
 ## Type
-3
+0
 ## Phase of estimation
-3
+-3
 ## STDEV in m_dev for Random walk
-0.2
+0.25
 ## Number of nodes for cubic spline or number of step-changes for option 3
 2
 4
 ## Year position of the knots (vector must be equal to the number of nodes)
-1976 1980 1985 1994
 1980 1985
+1976 1980 1985 1994
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

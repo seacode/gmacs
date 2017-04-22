@@ -744,14 +744,36 @@ Both the **Gmacs match** and **Gmacs base** scenarios provide adequate matches b
 
 Looking at the plot of mature male biomass (Figure \ref{fig:mmb}), the **Gmacs force** scenario stands out as being quite different to the other models (including the 2015 model). This scenario results in a lower MMB from the mid-1908s through to the late-1990s, and is again lower in the most recent 5 years. This scenario upweights both the trawl survey and the pot survey abundance indices (it upweights the pot survey more than the trawl survey) and represents a model run that places greater trust in the abundance indices, particularly the pot survey, than other data sources.
 
-Although the **Gmacs M** scenario presents a worse fit to the data, particularly the NMFS trawl-survey time series, this model does not simply allow a better fit to by estimating an unconstrained pulse in natural mortality. Although doing so produces a better fit to the model, it reduces predictive power and support for such a phenomena, anecdotal or otherwise, seems to be limited. It also raises concerns about what the implications would be for an “average” true natural mortality which can affect the management measures. Despite these concerns, more work is needed in the future to explore more parsimonious alternatives that provide better fits to the data.
+Although the **Gmacs M** scenario presents a worse fit to the data,
+particularly the NMFS trawl-survey time series, this model does not simply
+allow a better fit to by estimating an unconstrained pulse in natural
+mortality. Although doing so produces a better fit to the model, it reduces
+predictive power and support for such a phenomena, anecdotal or otherwise,
+seems to be limited. It also raises concerns about what the implications would
+be for an “average” true natural mortality which can affect the management
+measures. Despite these concerns, more work is needed in the future to explore
+more parsimonious alternatives that provide better fits to the data.
 
-In summary, we recommend the **Gmacs base** scenario for management purposes since it provides the best fit to the data and is most consistent with previous model specifications. Our initial preference was for **Gmacs M** since we had difficulty justifying an abrubt, single-year anomaly in natural mortality.  However, the fact that the residual pattern is worse and until further work can be completed on alternative model specifications (e.g., better accounting of spatial processes affecting the data), the **Gmacs base** model was considered reasonable and should be used for overfishing determination for this stock in 2016.
+In summary, we recommend the **Gmacs base** scenario for management purposes
+since it provides the best fit to the data and is most consistent with
+previous model specifications. Our initial preference was for **Gmacs M**
+since we had difficulty justifying an abrubt, single-year anomaly in natural
+mortality.  However, the fact that the residual pattern is worse and until
+further work can be completed on alternative model specifications (e.g.,
+better accounting of spatial processes affecting the data), the **Gmacs base**
+model was considered reasonable and should be used for overfishing
+determination for this stock in 2016.
 
 
 # F. Calculation of the OFL and ABC
 
-The overfishing level (OFL) is the fishery-related mortality biomass associated with fishing mortality $F_\mathit{OFL}$. The SMBKC stock is currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is presented here. Thus given stock estimates or suitable proxy values of $B_\mathit{MSY}$ and $F_\mathit{MSY}$, along with two additional parameters $\alpha$ and $\beta$, $F_\mathit{OFL}$ is determined by the control rule
+The overfishing level (OFL) is the fishery-related mortality biomass
+associated with fishing mortality $F_\mathit{OFL}$. The SMBKC stock is
+currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is
+presented here. Thus given stock estimates or suitable proxy values of
+$B_\mathit{MSY}$ and $F_\mathit{MSY}$, along with two additional parameters
+$\alpha$ and $\beta$, $F_\mathit{OFL}$ is determined by the control rule
+
 \begin{align}
     F_\mathit{OFL} &= 
     \begin{cases}
@@ -762,7 +784,15 @@ The overfishing level (OFL) is the fishery-related mortality biomass associated 
 \end{align}
 where $B$ is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_\mathit{OFL}$ (therefore numerical approximation of $F_\mathit{OFL}$ is required). As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. $F_\mathit{OFL}$ is taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
-The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, ABC, and MMB in 2016 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC is 80% of the OFL.
+The currently recommended Tier 4 convention is to use the full assessment
+period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a
+$B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ =
+1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in
+setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$
+and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ =
+0.25. The $F_\mathit{OFL}$, OFL, ABC, and MMB in 2016 for all scenarios are
+summarized in Table \ref{tab:management_quants}. ABC is 80% of the OFL.
+
 ```{r management_quants, results = "asis"}
 # df <- NULL
 # for (ii in 2:4)
@@ -800,7 +830,6 @@ With the decline of estimated population biomass during recent years, outlook fo
 
 # J. Acknowledgements
 
-We thank the Crab Plan Team, Doug Pengilly for reviewing the earlier draft of this manuscript. Some materials in the report are from the SAFE report prepared by Bill Gaeuman in 2014. We thank Andre Punt for his input into the Gmacs model and for finding the error in the old SMBKC model code.
 
 # K. References
 
@@ -1287,7 +1316,7 @@ plot_recruitment_size(A, xlab = "Carapace width (mm)")
 plot_numbers(M)
 ```
 
-```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998/99 (i.e. $M_{1998}$). \\label{fig:M_t}"}
+```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1979/80 (i.e. $M_{1980}$). \\label{fig:M_t}"}
 # Natural mortality for males:
 # 2016
 #Mm <- c(0.18, 0.270878, 0.270878, 0.270878, 0.270878, 0.986707, 0.986707, 0.986707, 0.986707, 0.986707, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
@@ -1308,40 +1337,65 @@ plot_natural_mortality(A, knots = NULL, slab = "Model")
 
 ## 1. Introduction
 
-The Gmacs model has been specified to account only for male crab at least 90 mm in carapace length (CL). These are partitioned into three stages (size-classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5 mm in carapace width (CW), whereas 105 mm CL is the management proxy for mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the fishery. The following description of model structure reflects the Gmacs base model configuration.
+The Gmacs model has been specified to account only for male crab at least 90
+mm in carapace length (CL). These are partitioned into three stages (size-
+classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and
+(3) 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC)
+fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5
+mm in carapace width (CW), whereas 105 mm CL is the management proxy for
+mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only
+stage-3 crab are retained in the directed fishery, and stage-2 and stage-3
+crab together comprise the collection of mature males. Some justification for
+the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in
+developing the current regulatory SMBKC harvest strategy. The term “recruit”
+here designates recruits to the model, i.e., annual new stage-1 crab, rather
+than recruits to the fishery. The following description of model structure
+reflects the Gmacs base model configuration.
 
 ## 2. Model Population Dynamics
 
-Within the model, the beginning of the crab year is assumed contemporaneous with the NMFS trawl survey, nominally assigned a date of 1 July. Although the timing of the fishery is different each year, MMB is measured 15 February, which is the reference date for calculation of federal management biomass quantities. To accommodate this, each model year is split into `r M[[2]]$nseason` seasons ($t$) and a proportion of the natural mortality ($\tau_t$) is applied in each of these seasons where $\sum_{t=1}^{t=5} \tau_t = 1$. Each model year consists of the following processes:
-\begin{enumerate}
-    \item Season 1
-    \begin{itemize}
-        \item Beginning of the SMBKC fishing year (1 July)
-        \item $\tau_1 = 0$
-        \item Surveys
-    \end{itemize}
-    \item Season 2
-    \begin{itemize}
-        \item $\tau_2$ ranges from 0.05 to 0.44 depending on the time of year the fishery begins each year (i.e. a higher value indicates the fishery begins later in the year; see Table \ref{tab:smbkc_fishery})
-    \end{itemize}
-    \item Season 3
-    \begin{itemize}
-        \item $\tau_3 = 0$
-        \item Fishing mortality applied
-    \end{itemize}
-    \item Season 4
-    \begin{itemize}
-        \item $\tau_4 = 0.63 - \sum_{i=1}^{i=4} \tau_i$
-        \item Calculate MMB (15 February)
-    \end{itemize}
-    \item Season 5
-    \begin{itemize}
-        \item $\tau_5 = 0.37$
-        \item Growth and molting
-        \item Recruitment (all to stage-1)
-    \end{itemize}
-\end{enumerate}
-The proportion of natural mortality ($\tau_t$) applied during each season in the model is provided in Table \ref{tab:m_prop}. The beginning of the year (1 July) to the date that MMB is measured (15 February) is 63% of the year. Therefore 63% of the natural mortality must be applied before the MMB is calculated. Because the timing of the fishery is different each year $\tau_2$ is different each year and thus $\tau_4$ differs each year.
+Within the model, the beginning of the crab year is assumed contemporaneous
+with the NMFS trawl survey, nominally assigned a date of 1 July. Although the
+timing of the fishery is different each year, MMB is measured 15 February,
+which is the reference date for calculation of federal management biomass
+quantities. To accommodate this, each model year is split into `r
+M[[2]]$nseason` seasons ($t$) and a proportion of the natural mortality
+($\tau_t$) is applied in each of these seasons where $\sum_{t=1}^{t=5} \tau_t
+= 1$. Each model year consists of the following processes: \begin{enumerate}
+\item Season 1     
+\begin{itemize}         
+  \item Beginning of the SMBKC fishing year (1 July)         
+  \item $\tau_1 = 0$         
+  \item Surveys
+\end{itemize}     
+\item Season 2     
+\begin{itemize}         
+  \item $\tau_2$ ranges from 0.05 to 0.44 depending on the time of year the fishery begins each
+  year (i.e. a higher value indicates the fishery begins later in the year; see Table \ref{tab:bbrkc_fishery})     
+\end{itemize}     
+\item Season 3
+\begin{itemize}         
+  \item $\tau_3 = 0$         
+  \item Fishing mortality applied     
+\end{itemize}     
+\item Season 4     
+\begin{itemize}         
+  \item $\tau_4 = 0.63 - \sum_{i=1}^{i=4} \tau_i$         
+  \item Calculate MMB (15 February)     
+\end{itemize}     
+\item Season 5     
+\begin{itemize}
+  \item $\tau_5 = 0.37$         
+  \item Growth and molting         
+  \item Recruitment (all to stage-1)     
+\end{itemize} 
+\end{enumerate} The proportion
+of natural mortality ($\tau_t$) applied during each season in the model is
+provided in Table \ref{tab:m_prop}. The beginning of the year (1 July) to the
+date that MMB is measured (15 February) is 63% of the year. Therefore 63% of
+the natural mortality must be applied before the MMB is calculated. Because
+the timing of the fishery is different each year $\tau_2$ is different each
+year and thus $\tau_4$ differs each year.
 
 ```{r m_prop, results = "asis"}
 # A <- M[[2]]
@@ -1351,7 +1405,8 @@ The proportion of natural mortality ($\tau_t$) applied during each season in the
 # print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
-With boldface lower-case letters indicating vector quantities we designate the vector of stage abundances during season $t$ and year $y$ as
+With boldface lower-case letters indicating vector quantities we designate the
+vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}
     \boldsymbol{n}_{t,y} = n_{l,t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{3,t,y} \right]^\top.
 \end{equation}
