@@ -30,7 +30,7 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("Gmacs","2016 Model")
+mod_names <- c("Gmacs","2017 Model")
 #.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
 .MODELDIR = c("../../examples/bbrkc_2017/model_7/", "../../examples/bbrkc_2017/model_7/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
