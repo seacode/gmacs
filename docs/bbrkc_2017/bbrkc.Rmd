@@ -1238,8 +1238,10 @@ plot_cpue_res(A, "NMFS Trawl")
 \newpage\clearpage
 
 ```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\\label{fig:fit_to_catch}", fig.height = 12}
-A <- M; A[[jj]] <- NULL
-plot_catch(A)
+# predicted retained catch biomass : seq(1968,2008)
+pot_male_ret <- c(23249.9, 28986.4, 31689.2, 39424.4, 49373.6, 60144.3, 15212.9, 1368.26, 0.0312545, 1885.28, 1873.86, 5182.15, 5522.9, 3334.88, 4681.1, 8866.65, 8035.05, 4246.15, 6875.76, 42.0901, 37.8288, 3722.62, 3809.93, 6686.07, 4870.23, 3998.86, 4139.18, 4418.15, 7374.18, 6170.89, 8038.35, 6522.96, 9159.26, 9156.4, 7336.69, 7267.17, 3965.25, 3610.3, 4071.8, 4763.69, 4426.81, 0.0621257)
+M[[1]]$pre_catch_out[1,] <- pot_male_ret[1:(length(pot_male_ret)-1)]
+plot_catch(M)
 ```
 
 ```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}", fig.height = 12}

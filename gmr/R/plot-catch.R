@@ -96,7 +96,7 @@ plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
                 facet_wrap(~fleet + sex + type + units, scales = scales)
         } else {
             p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
-                facet_wrap(~sex + fleet + type + units, scales = scales) +
+                facet_wrap(~fleet + sex + type + units, scales = scales) +
                 labs(col = mlab)
         }
     } else {
