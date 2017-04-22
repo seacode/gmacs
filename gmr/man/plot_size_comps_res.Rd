@@ -20,3 +20,4 @@ Plots of observed and predicted size composition values
 \description{
 Get observed and predicted size composition values
 }
+

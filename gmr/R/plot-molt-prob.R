@@ -51,9 +51,9 @@ plot_molt_prob <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Pro
     if (length(M) == 1 && length(unique(mdf$Sex)) == 1) {
         p <- p + geom_line() + geom_point()
     } else if (length(M) != 1 && length(unique(mdf$Sex)) == 1) {
-        p <- p + geom_line(aes(col = Model, linetype = Year)) + geom_point(aes(col = Model, linetype = Year))
+        p <- p + geom_line(aes(col = Model, linetype = Year)) + geom_point(aes(col = Model, shape = Year))
     } else if (length(M) == 1 && length(unique(mdf$Sex)) != 1) {
-        p <- p + geom_line(aes(linetype = Sex, col = Year)) + geom_point(aes(col = Year, linetype = Sex))
+        p <- p + geom_line(aes(linetype = Sex, col = Year)) + geom_point(aes(col = Year, shape = Sex))
     } else {
         p <- p + geom_line(aes(linetype = Model, col = Year)) + geom_point(aes(linetype = Model, col = Year)) + facet_wrap(~Sex)
     }

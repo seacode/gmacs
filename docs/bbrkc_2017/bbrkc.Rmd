@@ -266,8 +266,7 @@ There were no new changes in management of the fishery.
 This assessment was done using Gmacs. 
 There are several differences between the
 Gmacs assessment model and the previous model. One of the major differences
-being that natural and fishing mortality are continuous within `r
-M[[2]]$nseason` discrete seasons. 
+being that natural and fishing mortality are continuous within `r M[[2]]$nseason` discrete seasons. 
 Season length in Gmacs is controlled by
 changing the proportion of natural mortality that is applied during each
 season. A detailed outline of the Gmacs implementation of the BBRKC model is
@@ -351,7 +350,7 @@ to 1971. The Japanese fleet employed primarily tanglenets with a very small prop
 from trawls and pots. The Russian fleet used only tanglenets. United States trawlers started fishing
 Bristol Bay RKC in 1947, but the effort and catch declined in the 1950s. The domestic RKC fishery
 began to expand in the late 1960s and peaked in 1980 with a catch of 129.95 million lbs (58,943 t),
-worth an estimated \\$115.3 million ex-vessel value. The catch declined dramatically in the early
+worth an estimated $115.3 million ex-vessel value. The catch declined dramatically in the early
 1980s and has remained at low levels during the last two decades (Table 1). After the early 1980s
 stock collapse, the Bristol Bay RKC fishery took place during a short period in the fall (usually
 lasting about a week) with the catch quota based on the stock assessment conducted the previous
@@ -1197,7 +1196,9 @@ plot_selectivity(M, ncol = 4)
 ```
 
 ```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
-plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)")
+A <- M
+#A[[1]]$obs_cpue <- ? as per usual Jie outputs need to be customized
+plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (tons)")
 ```
 
 ```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
@@ -1242,15 +1243,20 @@ plot_catch(A)
 ```
 
 ```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}", fig.height = 12}
-rec_f <- c(17.0707, 25.925, 29.8683, 51.6996, 38.3764, 14.6497, 70.4083, 33.2085, 52.9009, 4.57629, 27.8906, 6.15353, 4.37952, 4.13648, 11.4324, 6.96502, 0.718979, 4.5763, 0.575209, 29.1253, 1.99369, 0.763189, 4.95964, 16.7755, 5.46132, 6.11056, 30.5387, 4.0503, 7.25958, 31.4988, 5.92376, 5.27457, 5.05108, 5.89551, 8.26562, 8.63609, 5.11815, 2.52513, 1.03167, 2.53766, 1.56217)
+# estimated number of recruitments female: seq(1968,2008)
+# 2016
+#rec_f <- c(17.0707, 25.925, 29.8683, 51.6996, 38.3764, 14.6497, 70.4083, 33.2085, 52.9009, 4.57629, 27.8906, 6.15353, 4.37952, 4.13648, 11.4324, 6.96502, 0.718979, 4.5763, 0.575209, 29.1253, 1.99369, 0.763189, 4.95964, 16.7755, 5.46132, 6.11056, 30.5387, 4.0503, 7.25958, 31.4988, 5.92376, 5.27457, 5.05108, 5.89551, 8.26562, 8.63609, 5.11815, 2.52513, 1.03167, 2.53766, 1.56217)
+# 2017
+rec_f <- c(16.6203, 24.8987, 28.6467, 49.4034, 36.5597, 14.0565, 68.6874, 32.5652, 52.1421, 4.56213, 27.6828, 6.11474, 4.35065, 4.10836, 11.3223, 6.87334, 0.736218, 4.50874, 0.594796, 28.8167, 2.00399, 0.774134, 4.90323, 16.59, 5.40813, 6.04792, 30.0304, 3.99239, 7.09898, 30.7368, 5.7649, 5.15361, 4.91422, 5.75793, 8.07117, 8.37412, 5.00154, 2.47013, 1.01736, 2.43727, 1.55705)
 # estimated number of recruitments male: seq(1968,2008)
-rec_m <- c(17.1233, 15.2388, 18.748, 24.6463, 29.9857, 13.3639, 64.4212, 32.6258, 33.2142, 4.03989, 15.6044, 6.4734, 3.24033, 3.73295, 11.7251, 7.40212, 1.2922, 5.87057, 0.914705, 28.1729, 4.53894, 1.90793, 6.73314, 15.415, 5.98756, 3.11696, 24.1102, 4.20828, 8.77771, 22.1832, 12.1232, 6.86644, 4.34433, 4.41878, 8.04963, 7.49265, 5.47651, 4.54582, 1.23435, 2.84266, 1.57952)
-
+# 2016
+#rec_m <- c(17.1233, 15.2388, 18.748, 24.6463, 29.9857, 13.3639, 64.4212, 32.6258, 33.2142, 4.03989, 15.6044, 6.4734, 3.24033, 3.73295, 11.7251, 7.40212, 1.2922, 5.87057, 0.914705, 28.1729, 4.53894, 1.90793, 6.73314, 15.415, 5.98756, 3.11696, 24.1102, 4.20828, 8.77771, 22.1832, 12.1232, 6.86644, 4.34433, 4.41878, 8.04963, 7.49265, 5.47651, 4.54582, 1.23435, 2.84266, 1.57952)
+# 2017
+rec_m <- c(16.8336, 14.7309, 18.1631, 23.9778, 29.2141, 12.9747, 63.1229, 32.1647, 33.0318, 3.99647, 15.5154, 6.42593, 3.20255, 3.68911, 11.5983, 7.32998, 1.27599, 5.80391, 0.899527, 27.912, 4.52506, 1.87739, 6.66915, 15.3099, 5.95461, 3.07542, 23.9416, 4.16347, 8.68231, 21.91, 11.9311, 6.74721, 4.24616, 4.32773, 7.8643, 7.28119, 5.34104, 4.44557, 1.19985, 2.7685, 1.52714)
 A <- M
 ii <- which(A[[2]]$fit$names %in% "sd_log_recruits")#; ii <- ii[length(ii)]
 A[[2]]$fit$est[ii] <- log(c(rec_m, NA, rec_f, NA) * 1e6)
 A[[2]]$fit$std[ii] <- NA
-
 plot_recruitment(A)
 ```
 
@@ -1265,8 +1271,13 @@ plot_ssb(M, ylab = "Mature male biomass (tons) on 15 February")
 A <- M
 A[[3]] <- A[[2]]
 names(A) <- c("Gmacs","Females 2016","Males 2016")
-A[[2]]$rec_sdd <- c( 0.252677, 0.347303, 0.25851, 0.111753, 0.029757, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-A[[3]]$rec_sdd <- c(0.251349, 0.343023, 0.256401, 0.112449, 0.0306581, 0.00545854, 0.000662105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+# estimated proportions of recruitments by length
+# 2016
+#A[[2]]$rec_sdd <- c(0.252677, 0.347303, 0.25851, 0.111753, 0.029757, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+#A[[3]]$rec_sdd <- c(0.251349, 0.343023, 0.256401, 0.112449, 0.0306581, 0.00545854, 0.000662105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+# 2017
+A[[2]]$rec_sdd <- c(0.252692, 0.34716, 0.258476, 0.111844, 0.0298277, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+A[[3]]$rec_sdd <- c(0.251382, 0.342222, 0.256174, 0.112911, 0.0310369, 0.00558752, 0.000687101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 plot_recruitment_size(A, xlab = "Carapace width (mm)")
 ```
 
@@ -1275,9 +1286,13 @@ plot_numbers(M)
 ```
 
 ```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1998/99 (i.e. $M_{1998}$). \\label{fig:M_t}"}
-#Natural mortality for males: 
-Mm <- c(0.18, 0.270878, 0.270878, 0.270878, 0.270878, 0.986707, 0.986707, 0.986707, 0.986707, 0.986707, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
-Mf <- c(0.18, 0.18, 0.18, 0.18, 0.18, 0.64029, 0.64029, 0.64029, 0.64029, 0.64029, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
+# Natural mortality for males:
+# 2016
+#Mm <- c(0.18, 0.270878, 0.270878, 0.270878, 0.270878, 0.986707, 0.986707, 0.986707, 0.986707, 0.986707, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
+#Mf <- c(0.18, 0.18, 0.18, 0.18, 0.18, 0.64029, 0.64029, 0.64029, 0.64029, 0.64029, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
+# 2017
+Mm <- c(0.18, 0.271176, 0.271176, 0.271176, 0.271176, 0.979748, 0.979748, 0.979748, 0.979748, 0.979748, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
+Mf <- c(0.18, 0.18, 0.18, 0.18, 0.18, 0.637793, 0.637793, 0.637793, 0.637793, 0.637793, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
 A <- M
 A[[2]]$M[1:42,] <- Mm
 A[[2]]$M[43:84,] <- Mf

@@ -18,3 +18,4 @@ Read ADMB .rep file and return an R object of type 'list'
 \author{
 Steve Martell, D'Arcy N. Webber
 }
+
