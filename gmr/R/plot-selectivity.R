@@ -74,9 +74,9 @@ plot_selectivity <- function(M,
         } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
             p <- p + facet_wrap(~Model + fleet, nrow = nrow, ncol = ncol)
         } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
-            p <- p + facet_wrap(~sex + fleet, nrow = nrow, ncol = ncol)
+            p <- p + facet_wrap(~fleet + sex, nrow = nrow, ncol = ncol)
         } else {
-            p <- p + facet_wrap(~Model + sex + fleet, nrow = nrow, ncol = ncol)
+            p <- p + facet_wrap(~Model + fleet + sex, nrow = nrow, ncol = ncol)
         }
     } else {
         p <- p + geom_line(aes(variable, value, col = factor(year), linetype = sex), alpha = 0.5)
