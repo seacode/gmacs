@@ -1221,12 +1221,71 @@ M1[[3]]$size_transition_F <- gm_f2
 ```
 
 ```{r selectivity, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:selectivity}", fig.height = 15}
-plot_selectivity(M, ncol = 4)
+A <- M
+# selectivity fishery total males: '67.5-162.5'
+pot_male_total <- c(7.82969e-017, 1.12203e-015, 1.60793e-014, 2.30424e-013, 3.30208e-012, 0.0127727, 0.0309995, 0.0492263, 0.0674533, 0.085682, 0.103935, 0.122543, 0.146199, 0.236219, 0.630676, 0.954637, 0.99598, 0.99972, 0.999982, 1)
+# Proportion difference between total males and retention males: '67.5-162.5'
+pot_male_prop <- c(0, 0, 0, 0, 0, 0.0127727, 0.0309995, 0.0492263, 0.0674531, 0.0856799, 0.103907, 0.122133, 0.14036, 0.158587, 0.083957, 0.00932694, 0, 0, 0, 0)
+# selectivity discard females: '67.5-162.5'
+pot_fem_total <- c(0.0364684, 0.090128, 0.205873, 0.404223, 0.639729, 0.822923, 0.924027, 0.969541, 0.988139, 0.995435, 0.998251, 0.999331, 0.999745, 0.999903, 0.999963, 0.999986, 0.999995, 0.999998, 1, 1)
+# selectivity trawl males+females:'67.5-162.5'
+trawl_agg_total <- c(0.0105021, 0.0141306, 0.0189964, 0.0255085, 0.0342005, 0.0457605, 0.0610621, 0.081189, 0.107445, 0.14133, 0.184456, 0.238386, 0.304357, 0.38292, 0.473541, 0.574304, 0.681872, 0.791824, 0.899337, 1)
+# selectivity fixed males+females:'67.5-162.5'
+fixed_agg_total <- c(0.0617894, 0.0765352, 0.0945233, 0.116325, 0.142542, 0.173773, 0.210561, 0.253327, 0.302287, 0.357361, 0.418106, 0.483667, 0.552787, 0.623884, 0.695184, 0.76489, 0.831365, 0.893271, 0.94966, 1)
+# selectivity survey females (1975-81): '67.5-162.5'
+nmfs_fem_total1 <- c(0.188758, 0.247307, 0.316654, 0.394817, 0.478147, 0.561874, 0.641139, 0.712061, 0.772383, 0.82152, 0.860154, 0.889694, 0.911803, 0.928085, 0.939936, 0.948487, 0.954619, 0.958995, 0.96211, 0.964321)
+# selectivity survey males (1975-81): '67.5-162.5'
+nmfs_male_total1 <- c(0.187717, 0.321867, 0.491244, 0.658409, 0.787738, 0.870208, 0.916501, 0.940643, 0.952752, 0.958707, 0.961606, 0.963011, 0.963691, 0.964019, 0.964177, 0.964254, 0.964291, 0.964308, 0.964317, 0.964321)
+# selectivity survey females (1982-12): '67.5-162.5'
+nmfs_fem_total2 <- c(0.441524, 0.520586, 0.597689, 0.66908, 0.732075, 0.785345, 0.828791, 0.863193, 0.889802, 0.910011, 0.925148, 0.936369, 0.944623, 0.95066, 0.955058, 0.958251, 0.960565, 0.962238, 0.963448, 0.964321)
+# selectivity survey males (1982-12): '67.5-162.5'
+nmfs_male_total2 <- c(0.495835, 0.527824, 0.559916, 0.591889, 0.623521, 0.654602, 0.684935, 0.714343, 0.742673, 0.769795, 0.79561, 0.820041, 0.843041, 0.864585, 0.88467, 0.903313, 0.920549, 0.936423, 0.950992, 0.964321)
+# selectivity of TC bycatch: females: '67.5-162.5'
+tc_fem_total <- c(6.42943e-005, 0.000427308, 0.00283413, 0.0185459, 0.111611, 0.455124, 0.847407, 0.97363, 0.995943, 0.999388, 0.999908, 0.999986, 0.999998, 1, 1, 1, 1, 1, 1, 1)
+# selectivity of TC bycatch: males: '67.5-162.5'
+tc_male_total <- c(0.000813884, 0.00274429, 0.00921114, 0.0304516, 0.0959292, 0.263879, 0.547728, 0.803591, 0.932534, 0.979034, 0.993701, 0.998127, 0.999445, 0.999836, 0.999951, 0.999986, 0.999996, 0.999999, 1, 1)
+
+# Add selectivity data
+# year, sex, fleet, vec
+# Directed pot fisheries male
+ind <- which(A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 1)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- pot_male_total
+for (i in ind) A[[jj]]$slx_retaind[i,4:23] <- pot_male_total * pot_male_prop
+# Directed pot fishery female discards
+ind <- which(A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 1)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- pot_fem_total
+# Trawl bycatch discards
+ind <- which(A[[jj]]$slx_capture[,3] %in% 2)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- trawl_agg_total
+# TC bycatch discards males
+ind <- which(A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 3)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- tc_male_total
+# TC bycatch discards females
+ind <- which(A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 3)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- tc_fem_total
+# Fixed bycatch discards
+ind <- which(A[[jj]]$slx_capture[,3] %in% 4)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- fixed_agg_total
+# NMFS survey male
+ind <- which(A[[jj]]$slx_capture[,1] < 1982  & A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 5)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_male_total1
+ind <- which(A[[jj]]$slx_capture[,1] >= 1982  & A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 5)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_male_total2
+# NMFS survey female
+ind <- which(A[[jj]]$slx_capture[,1] < 1982  & A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 5)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_fem_total1
+ind <- which(A[[jj]]$slx_capture[,1] >= 1982  & A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 5)
+for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_fem_total2
+
+# WHERE IS BSFRF?
+
+plot_selectivity(A, ncol = 4)
 ```
+
 
 ```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
 A <- M
-#A[[1]]$obs_cpue <- ? as per usual Jie outputs need to be customized
+#A[[1]]$obs_cpue <- ? as per usual Jie's outputs need to be customized
 plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (tons)")
 ```
 
