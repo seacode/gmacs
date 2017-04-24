@@ -13,19 +13,21 @@ output:
 \newpage\clearpage
 
 ## The data file:
-
-```{r eval = TRUE, include=TRUE,echo=FALSE }
+\tiny
+```{r eval = TRUE, include=TRUE,echo=FALSE ,tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 library(knitr)
 opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
-ts <- readLines("../../examples/bbrkc/OneSex/bbrkc_ss.dat")
+#ts <- readLines("../../examples/bbrkc/OneSex/bbrkc_ss.dat")
+ts <- readLines("../../examples/bbrkc_2017/model_1/bbrkc.dat")
 for (i in 1:length(ts)) cat(ts[i], "\n")
 ```
 
 ## The match model control file:
 
+\tiny
 ```{r eval = TRUE, include=TRUE,echo=FALSE }
 opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
-ts <- readLines("../../examples/bbrkc/OneSex/bbrkc_ss.ctl")
+ts <- readLines("../../examples/bbrkc_2017/model_1/bbrkc.ctl")
 for (i in 1:length(ts)) cat(ts[i], "\n")
 ```
 
