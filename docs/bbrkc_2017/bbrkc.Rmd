@@ -1372,8 +1372,9 @@ plot_recruitment_size(A, xlab = "Carapace width (mm)")
 ```
 
 ```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2015 model.\\label{fig:init_N}", fig.height = 15}
-plot_numbers(M)
+plot_numbers(M, subsetby = c(1975, 1976, 2015, 2016))
 ```
+
 
 ```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1979/80 (i.e. $M_{1980}$). \\label{fig:M_t}"}
 # Natural mortality for males:

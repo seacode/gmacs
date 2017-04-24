@@ -188,7 +188,6 @@
 ##     pmin is the cumulative proportion used in tail compression                       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #  Pot         Trawl   Tanner  NMFS    BSFRF
-#   1   1   1   1   1   1   1   1  1 1 1  # Type of likelihood
    2   2   2   2   2   2   2  2  2   2  2  2  2 # Type of likelihood
    0   0   0   0   0   0   0  0  0   0  0  0  0 # Auto tail compression (pmin)
    1   1   1   1   1   1   1  1  1   1  1  1  1 # Initial value for effective sample size multiplier
@@ -207,7 +206,7 @@
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Sex-specific? (0=no, 1=yes)
-1
+0
 ## Type
 0
 ## Phase of estimation
