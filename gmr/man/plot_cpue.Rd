@@ -28,4 +28,3 @@ plot of all observed and predicted incices
 \description{
 Plot cpue or other indices
 }
-

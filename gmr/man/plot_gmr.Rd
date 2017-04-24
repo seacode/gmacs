@@ -22,4 +22,3 @@ Do all gmr plots
 \author{
 DN Webber
 }
-
