@@ -1090,7 +1090,7 @@ DATA_SECTION
 	init_ivector m_nodeyear_females(1,m_nNodes_females);
 	LOC_CALCS
 		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear);
-		if (m_females == 1)
+		if ( m_females == 1 )
 		{
 			Mdev_phz_females = Mdev_phz;
 		} else {
