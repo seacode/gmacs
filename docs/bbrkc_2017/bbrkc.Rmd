@@ -1536,7 +1536,7 @@ plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (t)")
 
 \newpage\clearpage
 
-```{r pot_survey_cpue, fig.cap = "Comparisons of area-swept biomass estimates for the BSFRF data for the 2017 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:pot_survey_cpue}"} 
+```{r pot_survey_cpue, fig.cap = "Comparisons of area-swept biomass estimates for the BSFRF data for the 2017 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:pot_survey_cpue}"}
 plot_cpue(M, "BSFRF", ylab = "Survey biomass (t)")
 ```
 
@@ -1563,7 +1563,7 @@ plot_size_comps(M, 3)
 ```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\\label{fig:fit_to_catch}", fig.height = 12}
 # predicted retained catch biomass : seq(1968,2008)
 pot_male_ret <- c(23249.9, 28986.4, 31689.2, 39424.4, 49373.6, 60144.3, 15212.9, 1368.26, 0.0312545, 1885.28, 1873.86, 5182.15, 5522.9, 3334.88, 4681.1, 8866.65, 8035.05, 4246.15, 6875.76, 42.0901, 37.8288, 3722.62, 3809.93, 6686.07, 4870.23, 3998.86, 4139.18, 4418.15, 7374.18, 6170.89, 8038.35, 6522.96, 9159.26, 9156.4, 7336.69, 7267.17, 3965.25, 3610.3, 4071.8, 4763.69, 4426.81, 0.0621257)
-M[[1]]$pre_catch_out[1,] <- pot_male_ret[1:(length(pot_male_ret)-1)]
+M[[jj]]$pre_catch_out[1,] <- pot_male_ret[1:(length(pot_male_ret)-1)]
 plot_catch(M)
 ```
 
@@ -1579,16 +1579,16 @@ rec_f <- c(16.6203, 24.8987, 28.6467, 49.4034, 36.5597, 14.0565, 68.6874, 32.565
 # 2017
 rec_m <- c(16.8336, 14.7309, 18.1631, 23.9778, 29.2141, 12.9747, 63.1229, 32.1647, 33.0318, 3.99647, 15.5154, 6.42593, 3.20255, 3.68911, 11.5983, 7.32998, 1.27599, 5.80391, 0.899527, 27.912, 4.52506, 1.87739, 6.66915, 15.3099, 5.95461, 3.07542, 23.9416, 4.16347, 8.68231, 21.91, 11.9311, 6.74721, 4.24616, 4.32773, 7.8643, 7.28119, 5.34104, 4.44557, 1.19985, 2.7685, 1.52714)
 A <- M
-ii <- which(A[[2]]$fit$names %in% "sd_log_recruits")#; ii <- ii[length(ii)]
-A[[2]]$fit$est[ii] <- log(c(rec_m, NA, rec_f, NA) * 1e6)
-A[[2]]$fit$std[ii] <- NA
+ii <- which(A[[jj]]$fit$names %in% "sd_log_recruits")#; ii <- ii[length(ii)]
+A[[jj]]$fit$est[ii] <- log(c(rec_m, NA, rec_f, NA) * 1e6)
+A[[jj]]$fit$std[ii] <- NA
 plot_recruitment(A)
 ```
 
 ```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2016 for each of the model scenarios.\\label{fig:mmb}"}
-ii <- M[[2]]$fit$names == "sd_log_ssb"
-M[[2]]$fit$est[ii] <- log(c(80955.7, 90716.6, 94074.4, 97136, 82946.7, 24783.7, 8313.41, 8157.77, 8593.47, 6490.84, 10386, 15126.5, 21635.7, 27635.8, 31316.5, 29177.6, 24245.2, 22123.5, 19574, 25045, 27809.1, 25767.2, 23897.7, 26161.7, 30664, 30535.2, 29357.2, 31147.2, 29741.6, 27613.8, 27847.8, 29785.6, 27042, 28194.5, 31980.5, 32224.4, 32349.9, 31140, 30002.1, 28843, 27680.4, 23940))
-M[[2]]$fit$std[ii] <- NA
+ii <- M[[jj]]$fit$names == "sd_log_ssb"
+M[[jj]]$fit$est[ii] <- log(c(80955.7, 90716.6, 94074.4, 97136, 82946.7, 24783.7, 8313.41, 8157.77, 8593.47, 6490.84, 10386, 15126.5, 21635.7, 27635.8, 31316.5, 29177.6, 24245.2, 22123.5, 19574, 25045, 27809.1, 25767.2, 23897.7, 26161.7, 30664, 30535.2, 29357.2, 31147.2, 29741.6, 27613.8, 27847.8, 29785.6, 27042, 28194.5, 31980.5, 32224.4, 32349.9, 31140, 30002.1, 28843, 27680.4, 23940))
+M[[jj]]$fit$std[ii] <- NA
 plot_ssb(M, ylab = "Mature male biomass (tons) on 15 February")
 ```
 
@@ -1620,8 +1620,8 @@ plot_numbers(M, subsetby = c(1975, 1976, 2015, 2016))
 Mm <- c(0.18, 0.271176, 0.271176, 0.271176, 0.271176, 0.979748, 0.979748, 0.979748, 0.979748, 0.979748, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
 Mf <- c(0.18, 0.18, 0.18, 0.18, 0.18, 0.637793, 0.637793, 0.637793, 0.637793, 0.637793, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
 A <- M
-A[[2]]$M[1:42,] <- Mm
-A[[2]]$M[43:84,] <- Mf
+A[[jj]]$M[1:42,] <- Mm
+A[[jj]]$M[43:84,] <- Mf
 plot_natural_mortality(A, knots = NULL, slab = "Model")
 ```
 
