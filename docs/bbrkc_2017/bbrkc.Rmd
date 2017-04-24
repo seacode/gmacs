@@ -864,7 +864,7 @@ Estimated (and fixed) selectivities are compared in Figure \ref{fig:selectivity}
 The various model fits to total male ($>$ 89 mm CL) trawl survey biomass are
 compared in Figures \ref{fig:trawl_survey_biomass} and
 \ref{fig:trawl_survey_biomass_weights}. The fits to pot survey CPUE are
-compared in Figures \ref{fig:pot_survey_cpue} and
+compared in Figures \ref{fig:bsfrf_survey_cpue} and
 \ref{fig:pot_survey_cpue_weights}. Standardized residuals of total male trawl
 survey biomass and pot survey CPUE are plotted in Figures
 \ref{fig:bts_resid_nmfs} and \ref{fig:bts_resid_adfg}.
@@ -890,14 +890,14 @@ natural mortality each year ($M_t$) is presented in Figure \ref{fig:M_t}.
 
 There is little difference between model estimated survey biomass in the gmacs
 scenarios when compared with the 2015 model (Figures
-\ref{fig:trawl_survey_biomass} and \ref{fig:pot_survey_cpue}). Looking at the
+\ref{fig:trawl_survey_biomass} and \ref{fig:bsfrf_survey_cpue}). Looking at the
 model fits to the NMFS trawl survey biomass (Figure
 \ref{fig:trawl_survey_biomass}), the **Gmacs match** scenario is the most
 similar to the 2015 model, and the **Gmacs base** model is very similar as
 well. In all scenarios, Gmacs produces a better fit during the mid-late 1980s.
 However, since about 2010 Gmacs estimates a slighly lower survey biomass than
 the 2015 model in an attempt to better fit the ADF&G pot survey CPUE (Figure
-\ref{fig:pot_survey_cpue}). The three Gmacs scenarios that do not attempt to
+\ref{fig:bsfrf_survey_cpue}). The three Gmacs scenarios that do not attempt to
 estimate natural mortality in 1998/99 (**Gmacs M**, **Gmacs Francis**, and
 **Gmacs force**) predict lower survey biomass from 1992 to 1998 than the other
 scenarios and the 2015 model. These same two runs also predict a lower survey
@@ -908,7 +908,7 @@ NMFS survey biomass and ADF&G pot survey CPUE (**Gmacs force**) provides a
 better fit to the survey biomass during the mid-late 1980s and a much better
 fit to the pot survey CPUE in the most recent two years (Figures
 \ref{fig:trawl_survey_biomass}, \ref{fig:trawl_survey_biomass_weights},
-\ref{fig:pot_survey_cpue}, and \ref{fig:pot_survey_cpue_weights}). Keep in
+\ref{fig:bsfrf_survey_cpue}, and \ref{fig:pot_survey_cpue_weights}). Keep in
 mind that this scenario was only included for exploratory purposes and forcing
 these weights resulted in worse SDNR and MAR values for the two abundance
 indices.
@@ -1519,24 +1519,25 @@ plot_selectivity(A, ncol = 4)
 ```
 
 
-```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
+```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2017 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"} 
 A <- M
 #A[[1]]$obs_cpue <- ? as per usual Jie's outputs need to be customized
-plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (tons)")
+plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (t)") 
 ```
-
-```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
-plot_cpue(M, subsetby = "NMFS Trawl", ylab = "Survey biomass (tons)", ShowEstErr = TRUE)
+```{r }
+#trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept
+#estimates of total male survey biomass (tons) and model predictions for the
+#2015 model and each of the Gmacs model scenarios. The solid black error bars
+#are plus and minus 2 standard deviations derived using the original survey
+#CVs. The dotted error bars are plus and minus 2 standard deviations but
+#represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
+#plot_cpue(M, subsetby = "NMFS Trawl", ylab = "Survey biomass (tons)", ShowEstErr = TRUE) 
 ```
 
 \newpage\clearpage
 
-```{r pot_survey_cpue, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:pot_survey_cpue}"}
-#plot_cpue(M, "BSFRF", ylab = "Pot survey CPUE (crab/potlift)")
-```
-
-```{r pot_survey_cpue_weights, fig.cap = "Comparisons of total male pot survey CPUEs and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:pot_survey_cpue_weights}"}
-#plot_cpue(M, "BSFRF", ylab = "Pot survey CPUE (crab/potlift)", ShowEstErr = TRUE)
+```{r pot_survey_cpue, fig.cap = "Comparisons of area-swept biomass estimates for the BSFRF data for the 2017 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:pot_survey_cpue}"} 
+plot_cpue(M, "BSFRF", ylab = "Survey biomass (t)")
 ```
 
 ```{r bts_resid_nmfs, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass for each of the Gmacs model scenarios. \\label{fig:bts_resid_nmfs}"}
@@ -1546,19 +1547,17 @@ plot_cpue_res(A, "NMFS Trawl")
 
 \newpage\clearpage
 
-```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of SMBKC by year retained in the directed pot fishery for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2015 year.\\label{fig:sc_pot}"}
-#plot_size_comps(M, 1)
+```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of BBRKC by year retained in the directed pot fishery for the 2016 model and each of the Gmacs model scenarios. Note that there is no model estimated size- frequency for the 2016 model during the 2016 year. \\label{fig:sc_pot}"}
+plot_size_comps(M, 1) 
 ```
 
-```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male SMBKC by year in the NMFS trawl survey for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\\label{fig:sc_pot_discarded}"}
-#plot_size_comps(M, 2)
+```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed fishery for the 2017 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\\label{fig:sc_pot_discarded}"} 
+plot_size_comps(M, 2) 
 ```
 
-```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded SMBKC by year in the ADF&G pot survey for the 2015 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\\label{fig:sc_trawl_discarded}"}
-#plot_size_comps(M, 3)
+```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded BBRKC by year in the trawl groundfish fisheries. \\label{fig:sc_trawl_discarded}"}
+plot_size_comps(M, 3)
 ```
-
-
 \newpage\clearpage
 
 ```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\\label{fig:fit_to_catch}", fig.height = 12}
