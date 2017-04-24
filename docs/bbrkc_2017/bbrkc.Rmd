@@ -1207,6 +1207,42 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 ```
 
 
+```{r likelihood_components, results = "asis"}
+df <- NULL
+for (ii in 2:3)
+{
+    x <- M[[ii]]
+    # Catch
+    ll_catch <- x$nloglike[1,]
+    dc <- .get_catch_df(Mbase)
+    names(ll_catch) <- unique(paste0(dc$fleet, " ", dc$type, " ", dc$sex, " Catch"))
+    # Abundance indices
+    ll_cpue <- x$nloglike[2, 1:2]
+    names(ll_cpue) <- c("NMFS Trawl Survey", "ADF\\&G Pot Survey")
+    # Size compositions
+    ll_lf <- x$nloglike[3,1:3]
+    names(ll_lf) <- c("Directed Pot LF", "NMFS Trawl LF", "ADF\\&G Pot LF")
+    # Recruitment deviations
+    ll_rec <- sum(x$nloglike[4,], na.rm = TRUE)
+    names(ll_rec) <- "Recruitment deviations"
+    # Penalties
+    F_pen <- x$nlogPenalty[2]; names(F_pen) <- "F penalty"
+    M_pen <- x$nlogPenalty[3]; names(M_pen) <- "M penalty"
+    # Priors
+    prior <- sum(x$priorDensity); names(prior) <- "Prior"
+    v <- c(ll_catch, ll_cpue, ll_lf, ll_rec, F_pen, M_pen, prior)
+    sv <- sum(v); names(sv) <- "Total"
+    npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
+    v <- c(v, sv, npar)
+    df <- cbind(df, v)
+}
+df <- data.frame(rownames(df), df, row.names = NULL)
+names(df) <- c("Component", names(M)[2:length(M)])
+tab <- xtable(df, caption = "Comparisons of negative log-likelihood values for the Gmacs model scenarios.", label = "tab:likelihood_components")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+```
+
+
 \newpage\clearpage
 
 ```{r molt_prob, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:molt_prob}"}
