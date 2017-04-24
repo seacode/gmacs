@@ -161,13 +161,13 @@ generally been low since 1985. During 1984-2016, in only 6 years
 were estimated recruitments above the historical average for
 1976-2016. Estimated recruitment was low during the last 10 years.
 
-5. **Management performance**: 
-Status and catch specifications (1,000 t) (scenario 2) are given below.
-Total male catch has been estimated as the sum of fishery-reported 
-retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch 
-mortality in the Tanner crab and groundfish fisheries. 
-The stock was above the minimum stock-size threshold (MSST) in 2016/17 and is 
-hence not overfished. Overfishing did not occur in 2016/17 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
+5. **Management performance**:  Status and catch specifications (1,000 t)
+(scenario 2) are given below. Total male catch has been estimated as the sum
+of fishery-reported  retained catch, estimated male discard mortality in the
+directed fishery, and estimated male bycatch  mortality in the Tanner crab and
+groundfish fisheries.  The stock was above the minimum stock-size threshold
+(MSST) in 2016/17 and is  hence not overfished. Overfishing did not occur in
+2016/17 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
   
 \begin{table}[ht]
 \centering
@@ -490,8 +490,9 @@ catch and pot and trawl fishery bycatch of Bristol Bay red king crab.
 \label{tab:sample_size}
 \begin{tabular}{lrrrrrrrrr}
   \hline
-  & \multicolumn{2}{c}{Trawl survey}      & Retained  & \multicolumn{2}{c}{Pot bycatch}     & \multicolumn{2}{c}{trawl bycatch}     & \multicolumn{2}{c}{Tanner bycatch}      \\
+  & \multicolumn{2}{c}{Trawl survey}      & Retained  & \multicolumn{2}{c}{Pot bycatch}     & \multicolumn{2}{c}{Trawl bycatch}     & \multicolumn{2}{c}{Tanner bycatch}      \\
 Year  & Males & Females & Catch & Males & Females & Males & Females & Males & Females \\
+\hline
 1975  & 2,943 & 2,139 & 29,570  &   &   &   &   &   &   \\
 1976  & 4,724 & 2,956 & 26,450  &   &   & 2,327 & 676 &   &   \\
 1977  & 3,636 & 4,178 & 32,596  &   &   & 14,014  & 689 &   &   \\
@@ -576,7 +577,8 @@ International North Pacific Fisheries Commission (Hoopes et al. 1972; Jackson
 1974; Phinney 1975) and from the ADF&G from 1974 to 2015. Bycatch data are
 available starting from 1990 and were obtained from the ADF&G observer
 database and reports (Gaeuman 2013). Sample sizes for catch by length and
-shell condition are summarized in Table 2. Relatively large samples were taken
+shell condition are summarized in Table \ref{tab:sample_size}. 
+Relatively large samples were taken
 from the retained catch each year. Sample sizes for trawl bycatch were the
 annual sums of length frequency samples in the National Marine Fisheries
 Service (NMFS) database.
@@ -658,112 +660,21 @@ male abundance estimates and only the resurvey data, plus the standard survey
 data outside the resurveyed stations, to assess female abundances during these
 resurvey years.
 
-Table \ref{tab:stage_cpue_nmfs}); 
-(Table \ref{tab:stage_cpue}); 
-Table \ref{tab:smbkc_groundfish_bycatch}).
 
+## Other data sources and excluded data sources
 
-\begin{table}[ht]
-\centering
-\caption{Size-class and total CPUE (90+ mm CL) with estimated CV and total number of captured crab (90+ mm CL) from the 96 common stations surveyed during the seven triennial ADF\&G SMBKC pot surveys and the 2015 and 2016 surveys. Source: D. Pengilly and R. Gish, ADF\&G.} 
-\label{tab:stage_cpue}
-\begin{tabular}{lcccrrr}
-  \hline
-       & Stage-1     & Stage-2      & Stage-3   &            &    & \\ 
-  Year & (90-104 mm) & (105-119 mm) & (120+ mm) & Total CPUE & CV & Number of crabs \\ 
-  \hline
-  1995 & 1.919 & 3.198 & 6.922 & 12.042 & 0.13 & 4624 \\ 
-  1998 & 0.964 & 2.763 & 8.804 & 12.531 & 0.06 & 4812 \\ 
-  2001 & 1.266 & 1.737 & 5.487 & 8.477 & 0.08 & 3255 \\ 
-  2004 & 0.112 & 0.414 & 1.141 & 1.667 & 0.15 & 640 \\ 
-  2007 & 1.086 & 2.721 & 4.836 & 8.643 & 0.09 & 3319 \\ 
-  2010 & 1.326 & 3.276 & 5.607 & 10.209 & 0.13 & 3920 \\ 
-  2013 & 0.878 & 1.398 & 3.367 & 5.643 & 0.19 & 2167 \\ 
-  2015 & 0.198 & 0.682 & 1.924 & 2.805 & 0.18 & 1077 \\ 
-  2016 & 0.198 & 0.456 & 1.724 & 2.378 & 0.186 & 777 \\ 
-   \hline
-\end{tabular}
-\end{table}
-\begin{table}[ht]
-\centering
-\caption{NMFS EBS trawl-survey area-swept estimates of male crab abundance ($10^6$ crab) and of mature male biomass ($10^6$ lbs). Total number of captured male crab $\ge$ 90 mm CL is also given. Source: R. Foy, NMFS. The "+" refer to plus group.} 
-\label{tab:stage_cpue_nmfs}
-\begin{tabular}{lccccccccc}
-  \hline
-       & \multicolumn{5}{c}{Abundance}                       & & \multicolumn{2}{c}{Biomass} & \\
-  \cline{2-6}\cline{8-9}
-       & Stage-1     & Stage-2      & Stage-3   &       &    & & Total       &               & Number \\ 
-  Year & (90-104 mm) & (105-119 mm) & (120+ mm) & Total & CV & & (90+ mm CL) & CV            & of crabs \\ 
-  \hline
-  1978 & 2.213 & 1.991 & 1.521 & 5.726 & 0.411 & & 15.064 & 0.394 & 157 \\
-  1979 & 3.061 & 2.281 & 1.808 & 7.150 & 0.472 & & 17.615 & 0.463 & 178 \\
-  1980 & 2.856 & 2.563 & 2.541 & 7.959 & 0.572 & & 22.017 & 0.507 & 185 \\
-  1981 & 0.483 & 1.213 & 2.263 & 3.960 & 0.368 & & 14.443 & 0.402 & 140 \\
-  1982 & 1.669 & 2.431 & 5.884 & 9.984 & 0.401 & & 35.763 & 0.344 & 271 \\
-  1983 & 1.061 & 1.651 & 3.345 & 6.057 & 0.332 & & 21.240 & 0.298 & 231 \\
-  1984 & 0.435 & 0.497 & 1.452 & 2.383 & 0.175 & & 8.976 & 0.179 & 105 \\
-  1985 & 0.379 & 0.376 & 1.117 & 1.872 & 0.216 & & 6.858 & 0.210 & 93 \\
-  1986 & 0.203 & 0.447 & 0.374 & 1.025 & 0.428 & & 3.124 & 0.388 & 46 \\
-  1987 & 0.325 & 0.631 & 0.715 & 1.671 & 0.302 & & 5.024 & 0.291 & 71 \\
-  1988 & 0.410 & 0.816 & 0.957 & 2.183 & 0.285 & & 6.963 & 0.252 & 81 \\
-  1989 & 2.169 & 1.154 & 1.786 & 5.109 & 0.314 & & 13.974 & 0.271 & 208 \\
-  1990 & 1.053 & 1.031 & 2.338 & 4.422 & 0.302 & & 14.837 & 0.274 & 170 \\
-  1991 & 1.147 & 1.665 & 2.233 & 5.046 & 0.259 & & 15.318 & 0.248 & 197 \\
-  1992 & 1.074 & 1.382 & 2.291 & 4.746 & 0.206 & & 15.638 & 0.201 & 220 \\
-  1993 & 1.521 & 1.828 & 3.276 & 6.626 & 0.185 & & 21.051 & 0.169 & 324 \\
-  1994 & 0.883 & 1.298 & 2.257 & 4.438 & 0.187 & & 14.416 & 0.176 & 211 \\
-  1995 & 1.025 & 1.188 & 1.741 & 3.953 & 0.187 & & 12.574 & 0.178 & 178 \\
-  1996 & 1.238 & 1.891 & 3.064 & 6.193 & 0.263 & & 20.746 & 0.241 & 285 \\
-  1997 & 1.165 & 2.228 & 3.789 & 7.182 & 0.367 & & 24.084 & 0.337 & 296 \\
-  1998 & 0.660 & 1.661 & 2.849 & 5.170 & 0.373 & & 17.586 & 0.355 & 243 \\
-  1998 & 0.223 & 0.222 & 0.558 & 1.003 & 0.192 & & 3.515 & 0.182 & 52 \\
-  2000 & 0.282 & 0.285 & 0.740 & 1.307 & 0.303 & & 4.623 & 0.310 & 61 \\
-  2001 & 0.419 & 0.502 & 0.938 & 1.859 & 0.243 & & 6.242 & 0.245 & 91 \\
-  2002 & 0.111 & 0.230 & 0.640 & 0.981 & 0.311 & & 3.820 & 0.320 & 38 \\
-  2003 & 0.449 & 0.280 & 0.465 & 1.194 & 0.399 & & 3.454 & 0.336 & 65 \\
-  2004 & 0.247 & 0.184 & 0.562 & 0.993 & 0.369 & & 3.360 & 0.305 & 48 \\
-  2005 & 0.319 & 0.310 & 0.501 & 1.130 & 0.403 & & 3.620 & 0.371 & 42 \\
-  2006 & 0.917 & 0.642 & 1.240 & 2.798 & 0.339 & & 8.585 & 0.334 & 126 \\
-  2007 & 2.518 & 2.020 & 1.193 & 5.730 & 0.420 & & 14.266 & 0.385 & 250 \\
-  2008 & 1.352 & 0.801 & 1.457 & 3.609 & 0.289 & & 10.261 & 0.284 & 167 \\
-  2009 & 1.573 & 2.161 & 1.410 & 5.144 & 0.263 & & 13.892 & 0.256 & 251 \\
-  2010 & 3.937 & 3.253 & 2.458 & 9.648 & 0.544 & & 24.539 & 0.466 & 388 \\
-  2011 & 1.800 & 3.255 & 3.207 & 8.263 & 0.587 & & 24.099 & 0.558 & 318 \\
-  2012 & 0.705 & 1.970 & 1.808 & 4.483 & 0.361 & & 13.669 & 0.339 & 193 \\
-  2013 & 0.335 & 0.452 & 0.807 & 1.593 & 0.215 & & 5.043 & 0.217 & 74 \\
-  2014 & 0.723 & 1.627 & 1.809 & 4.160 & 0.503 & & 13.292 & 0.449 & 181 \\
-  2015 & 0.992 & 1.269 & 1.979 & 4.240 & 0.774 & & 12.958 & 0.770 & 153 \\
-  2016 & 0.535 & 0.660 & 1.178 & 2.373 & 0.447 & & 7.685 & 0.393 & 108 \\
-  \hline
-\end{tabular}
-\end{table}
-
-XXXFigure \ref{fig:stations} maps stations from which SMBKC trawl-survey and pot-
-survey data were obtained. Further information concerning the NMFS trawl
-survey as it relates to commercial crab species is available in Daly et al.
-(2014); see Gish et al. (2012) for a description of ADF&G SMBKC pot-survey
-methods. It should be noted that the two surveys cover different geographic
-regions and that each has in some years encountered proportionally large
-numbers of male blue king crab in areas where the other is not represented
-(Figure \ref{fig:catch181}). Crab-observer sampling protocols are detailed in
-the crab-observer training manual (ADF&G 2013). Groundfish SMBKC bycatch data
-come from NMFS Bering Sea reporting areas 521 and 524 (Figure
-\ref{fig:reporting_areas}). Note that for this assessment the newly available
-NMFS groundfish observer data reported by ADF&G statistical area was not used.
-
-## Other Data Sources
-
-XXXRecent model configurations developed for SMBKC makes use of a growth
-transition matrix based on Otto and Cummiskey (1990), the same growth
-transition matrix is used in this assessment. Other relevant data sources,
-including assumed population and fishery parameters, are presented in Appendix
-A, which also provides a detailed description of the model configuration used
-for this assessment.
-
-## Excluded Data Sources
-
-Groundfish bycatch size-frequency data are available for selected years. These data were used in model-based assessments prior to 2011. However, they have since been excluded because these data tend to be severely limited: for example, 2012/13 data include a total of just 4 90 mm+ CL male blue king crab from reporting areas 521 and 524.
-
+Catch per unit effort (CPUE) is defined as the number of retained crab per tan
+(a unit fishing effort for tanglenets) for the Japanese and Russian tanglenet
+fisheries and the number of retained crab per potlift for the U.S. fishery. 
+Soak time, while an important factor influencing CPUE, is difficult
+to standardize. Furthermore, complete historical soak time data from the U.S.
+fishery are unavailable. Based on the approach of Balsiger (1974), all
+fishing effort from Japan, Russia, and U.S. were standardized to the Japanese
+tanglenet from 1960 to 1971, and the CPUE was standardized as crab per tan.
+Except for the peak-to-crash years of late 1970s and early 1980s the
+correspondence between U.S. fishery CPUE and area-swept survey abundance is
+poor. Due to the difficulty in estimating commercial fishing
+catchability commercial CPUE data were ommitted used in the model.
 
 \newpage\clearpage
 
@@ -1126,7 +1037,9 @@ We thank the crab Plan Team and SSC for their recommendations for code modificat
 
 # L. References
 
-Alaska Department of Fish and Game (ADF&G). 2012. Commercial king and Tanner crab fishing regulations, 2012-2013. Alaska Department of Fish and Game, Division of Commercial Fisheries, Juneau. 170 pp.
+Alaska Department of Fish and Game (ADF&G). 2012. Commercial king and Tanner
+crab fishing regulations, 2012-2013. Alaska Department of Fish and Game,
+Division of Commercial Fisheries, Juneau. 170 pp.
 
 Balsiger, J.W. 1974. A computer simulation model for the eastern Bering Sea king crab. Ph.D. dissertation, Univ. Washington, Seattle, WA. 198 pp.
 
