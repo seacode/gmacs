@@ -30,10 +30,10 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2017 Model","Gmacs base","M Randwalk")
+mod_names <- c("2017 Model","Gmacs base","Const M","M Randwalk")
 #.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
-.MODELDIR = c("../../examples/bbrkc_2017/model_7/", "../../examples/bbrkc_2017/model_7/")
-.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_3/")
+#.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_3/")
+.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
@@ -742,14 +742,11 @@ provided in Appendix A.
   compositions and were log-normally distributed for biomasses.
 \end{itemize}     
 
-
 The aim when developing this model was to provide a fit to the data that
 best matched the 2017 BBRKC stock assessment model. A detailed description of
 the Gmacs model and its implementation is presented in Appendix A.
 
-
 ## Model Selection and Evaluation
-
 The following elements required for crab stock assessments follow.
 ### Alternative model configurations
 Three different Gmacs model scenarios were considered, in this document results
