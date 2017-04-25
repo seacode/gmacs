@@ -24,7 +24,7 @@ ww <- 6
 hh <- 5
 
 plot_selectivity(M, ncol = 4)
-ggsave(paste0(.FIGS, "selectivity.png"), width = ww*2, height = hh*1.5)
+ggsave(paste0(.FIGS, "selectivity.png"), width = ww*1.5, height = hh*2)
 dev.off()
 
 #priors <- table_priors(M)

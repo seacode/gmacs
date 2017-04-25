@@ -30,10 +30,8 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2017 Model","Gmacs base","M Randwalk","Testing")
-#.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
-#.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_3/")
-.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_3/","../../examples/bbrkc_2017/model_4/")
+mod_names <- c("2017 Model","Gmacs base","Free q","Variable M")
+.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
 .THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male","Female")
@@ -748,6 +746,7 @@ the Gmacs model and its implementation is presented in Appendix A.
 
 ## Model Selection and Evaluation
 The following elements required for crab stock assessments follow.
+
 ### Alternative model configurations
 Three different Gmacs model scenarios were considered, in this document results
 from these models and the 2017 model are compared. The models include:
@@ -769,11 +768,10 @@ $\delta^\text{tcb}_{t,y}$,
 $\delta^\text{fgb}_{t,y}$, 
 $\delta^\text{tgb}_{t,y}$).
 
+2. **Free q**: is similar to the scenario above except that it estimates the BSFRF survey catchability parameter $q$ rather
+than fixing it at $q = 1.0$.
 
-2. **Gmacs M**: is the same as above except that natural mortality ($M$) is
-fixed at 0.18 $\text{yr}^{-1}$ during all years.
-
-3. **Gmacs M**: is similar to the scenario above except that it allows $M$ to change
+3. **Variable M**: is similar to the scenario above except that it allows $M$ to change
 as a random walk with a log-normal distribution penalty with $\sigma_M$ set to 0.25.
 
 

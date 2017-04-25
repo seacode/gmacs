@@ -14,7 +14,7 @@
    14.0       -10        20         -2       0   10.0    20.0         # logR1, to estimate if NOT initialized at unfished
    14.0       -10        20          1       0   10.0    20.0         # logRbar, to estimate if NOT initialized at unfished
    72.5        55       100         -4       1   72.5     7.25        # recruitment expected value
-    0.544       0.1       5         -4       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
+    0.544       0.1       5         -3       0    0.1     5.0         # recruitment scale (variance component) - THIS IS ESTIMATED BY SEX IN JIES MODEL CALLED betar (I FIXED AT MEAN HERE)
    -0.9       -10         0.75      -4       0  -10.0     0.75        # ln(sigma_R)
     0.75        0.20      1.00      -2       3    3.0     2.00        # steepness
     0.01        0.00      1.00      -3       3    1.01    1.01        # recruitment autocorrelation
@@ -44,14 +44,14 @@
 ## ival       lb        ub        phz   prior     p1      p2          # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##    
 ## Period 1
-  142.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
+  144.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
   400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
     0.05      0.0001    1.0         4       0    0.0    999.0         # molt_cv males
     0.1       0.0001    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
 ## Period 2
-  138.5       1.0     195.0         4       0    0.0    999.0         # molt_mu males
+  140.5       1.0     195.0         3       0    0.0    999.0         # molt_mu males
   400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
-    0.074     0.0001    9.0         5       0    0.0    999.0         # molt_cv males
+    0.071     0.0001    9.0         4       0    0.0    999.0         # molt_cv males
     0.1       0.0001    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
 ## ——————————————————————————————————————————————————————————————————————————————————— ##
 
@@ -118,8 +118,8 @@
 ## index index par sex  ival  lb    ub     prior   p1   p2     phz   period period      ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # Gear-1
-  -1     25    1   1    136    1    999    0       1    999   -4     1975   2016
-  -1     26    2   1    137    1    999    0       1    999   -5     1975   2016
+  -1     25    1   1    136    1    999    0       1    999    4     1975   2016
+  -1     26    2   1    137    1    999    0       1    999    5     1975   2016
   -1     27    1   2    591    1    999    0       1    999   -3     1975   2016
   -1     28    2   2     11    1    999    0       1    999   -3     1975   2016
 # Gear-2
@@ -148,7 +148,7 @@
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## ival     lb       ub    phz   prior  p1        p2     Analytic?   LAMBDA
    0.84      0        1     4    1      0.843136  0.03   0           1     # NMFS, 0.896 is the magic number * 0.941 (Jies max selex)
-   1.0       0        5    -4    0      0.001     5.00   0           1     # BSFRF
+   1.0       0        5     4    0      0.001     5.00   0           1     # BSFRF
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -206,11 +206,11 @@
 ##       4 = Time blocks                                                                ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Sex-specific? (0=no, 1=yes)
-0
+1
 ## Type
-0
+3
 ## Phase of estimation
--3
+3
 ## STDEV in m_dev for Random walk
 0.25
 ## Number of nodes for cubic spline or number of step-changes for option 3
