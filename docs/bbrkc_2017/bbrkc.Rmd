@@ -1120,7 +1120,6 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 #tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length_weight", digits = c(0,0,1,1,1))
 #print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
-
 \begin{table}[ht]
 \centering
 \caption{Observed and assumed sample sizes for observer data from the directed pot fishery, the NMFS trawl survey, and the BSFRF survey.} 
@@ -1285,6 +1284,7 @@ tab <- xtable(df, caption = "Comparisons of data weights, SDNR values, and MAR v
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, hline.after = c(-1,0,9,18,nrow(tab)))
 ```
 
+#Figures
 \newpage\clearpage
 
 ```{r molt_prob, fig.cap = "Comparisons of the estimated molting probabilities.\\label{fig:molt_prob}"}
@@ -1630,7 +1630,7 @@ A <- M; A[[jj]] <- NULL
 plot_cpue_res(A, "NMFS Trawl")
 ```
 
-```{r bsfrf_resid, fig.cap = "Standardized residuals for area-swept biomass estimates for males and females (tons) for the NMFS trawl survey showing each of the Gmacs model scenarios. \\label{fig:bsfrf_resid}"}
+```{r bsfrf_resid, fig.cap = "Standardized residuals for area-swept biomass estimates for males and females (tons) for the BSFRF trawl survey showing each of the Gmacs model scenarios. \\label{fig:bsfrf_resid}"}
 A <- M; A[[jj]] <- NULL
 plot_cpue_res(A, "BSFRF")
 ```
