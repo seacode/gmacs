@@ -845,8 +845,7 @@ the extent that these models strike an appropriate balance between realism and s
 not evaluated. Convergence status/criteria was based on the ADMB default convergence criteria 
 (minimum gradients and positive definite Hessian matrix).
 
-Sample sizes for length composition data observed sample sizes are summarized
-in Table xx. Estimated implied sample sizes and effective sample sizes are available via 
+Estimated implied sample sizes and effective sample sizes are available via 
 Francis weight
 computations (Francis 2011). Residual patterns are evaluated graphically.
 
@@ -859,40 +858,48 @@ is most consistent with previous model specifications.
 ### a. Effective sample sizes and weighting factors
 Observed and estimated effective sample sizes are compared in Table
 \ref{tab:effn}. Effective sample sizes are also shown on size-composition
-plots (Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and
-\ref{fig:sc_trawl_discarded}).
+plots (Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded_male}, 
+\ref{fig:sc_pot_discarded_female}, 
+\ref{fig:sc_trawl_bycatch_male}),
+\ref{fig:sc_trawl_bycatch_female}),
+\ref{fig:sc_tc_bycatch_male}),
+\ref{fig:sc_tc_bycatch_female}),
+\ref{fig:sc_fixed_bycatch_male}), and 
+\ref{fig:sc_fixed_bycatch_female}).
+The survey size composition effective sample sizes are shown in the model fit
+Figures 
+\ref{fig:sc_nmfs_male}), 
+\ref{fig:sc_nmfs_female}), 
+\ref{fig:sc_bsfrf_male}), and
+\ref{fig:sc_bsfrf_female}). 
 
 Data weighting factors, SDNRs, and MARs are presented in Table
 \ref{tab:data_weighting}.
 
 ### b. Tables of estimates
-
 Model parameter estimates for each of the Gmacs scenarios are summarized in
-Tables \ref{tab:est_pars_match}, \ref{tab:est_pars_base},
-\ref{tab:est_pars_Francis}, \ref{tab:est_pars_M}, and
-\ref{tab:est_pars_force}. These parameter estimates are compared in Table
+Tables \ref{tab:est_pars_base}, \ref{tab:est_pars_freeq}, and \ref{tab:est_pars_M}.
+These parameter estimates are compared in Table
 \ref{tab:est_pars_all}. Negative log-likelihood values and management measures
 for each of the Gmacs scenarios are compared in Tables
 \ref{tab:likelihood_components} and \ref{tab:management_quants}.
 
 There is little difference in the parameter estimates within 
-the **Gmacs match** and **Gmacs base** scenarios. This is reflected in the 
+the different scenarios as reflected in the 
 log-likelihood components and the management quantities. The parameter estimates in the
-**Gmacs M** scenario are a little different to the previous scenarios (see
+**Variable M** scenario are a little different to the previous scenarios (see
 Table \ref{tab:est_pars_all}).
 
 ### c. Graphs of estimates.
-
 Estimated (and fixed) selectivities are compared in Figures \ref{fig:selectivity} 
 and \ref{fig:selectivity2}.
 
 The various model fits to total male ($>$ 89 mm CL) trawl survey biomass are
 compared in Figures \ref{fig:trawl_survey_biomass} and
-\ref{fig:trawl_survey_biomass_weights}. The fits to pot survey CPUE are
-compared in Figures \ref{fig:bsfrf_survey_cpue} and
-\ref{fig:pot_survey_cpue_weights}. Standardized residuals of total male trawl
+\ref{fig:bsfrf_survey_biomass}. 
+Standardized residuals of total male trawl
 survey biomass and pot survey CPUE are plotted in Figures
-\ref{fig:bts_resid_nmfs} and \ref{fig:bts_resid_adfg}.
+\ref{fig:bts_resid_nmfs} and \ref{fig:bsfrf_resid}.
 
 Fits to stage compositions for trawl survey, pot survey, and commercial
 observer data are shown in Figures \ref{fig:sc_pot},
@@ -912,10 +919,9 @@ abundances by stage and mature male biomasses for all scenarios (including the
 natural mortality each year ($M_t$) is presented in Figure \ref{fig:M_t}.
 
 ### d. Graphic evaluation of the fit to the data.
-
 There is little difference between model estimated survey biomass in the gmacs
 scenarios when compared with the 2015 model (Figures
-\ref{fig:trawl_survey_biomass} and \ref{fig:bsfrf_survey_cpue}). Looking at the
+\ref{fig:trawl_survey_biomass} and \ref{fig:bsfrf_survey_biomass}). Looking at the
 model fits to the NMFS trawl survey biomass (Figure
 \ref{fig:trawl_survey_biomass}), the **Base** scenario is the most
 similar to the 2017 model, as are the other model configuratios. 
@@ -941,7 +947,6 @@ for the five Gmacs scenarios are summarized in Tables
 male biomass and OFL in 2016 are shown in Section F.
 
 ### g. Comparison of alternative model scenarios.
-
 All model scenarios gave qualitatively similare results in terms of stock
 trends and values of mature male biomass (Figure \ref{fig:mmb}).
 For management purposes a more complete analysis or some ensemble approach
@@ -1168,8 +1173,7 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
   \hline
 \end{tabular}
 \end{table}
-
-```{r est_pars_2, results = "asis"}
+```{r est_pars_base, results = "asis"}
  x <- M[[2]]$fit
  i <- c(grep("m_dev", x$names)[1],
         grep("theta", x$names),
@@ -1194,6 +1198,34 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
   "$F_\\text{OFL}$","OFL")
  df <- data.frame(Parameter, Estimate, SD)
  tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 3)
+ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+```
+```{r est_pars_freeq, results = "asis"}
+ x <- M[[3]]$fit
+ i <- c(grep("m_dev", x$names)[1],
+        grep("theta", x$names),
+        grep("survey_q", x$names), # 
+        grep("log_fbar", x$names),
+        grep("sd_fofl", x$names),
+        grep("sd_ofl", x$names)
+        )
+  Parameter <- x$names[i]
+  Estimate <- x$est[i]
+  SD <- x$std[i]
+  j <- grep("survey_q", Parameter)
+  Estimate[j] <- Estimate[j] 
+  SD[j] <- SD[j] 
+ Parameter<-c("M deviation($\\delta^M_{1980})$",
+  "$\\log(\\bar{R})$",
+  "$\\log(\\hat{q_{NMFS}})$",
+  "$\\log(\\hat{q_{BSFRF}})$",
+  "$\\log(\\bar{F}^\\text{df})$",
+  "$\\log(\\bar{F}^\\text{tgb})$",
+  "$\\log(\\bar{F}^\\text{fgb})$",
+  "$\\log(\\bar{F}^\\text{tcb})$",
+  "$F_\\text{OFL}$","OFL")
+ df <- data.frame(Parameter, Estimate, SD)
+ tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_freeq", digits = 3)
  print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -1570,7 +1602,7 @@ plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (t)")
 
 \newpage\clearpage
 
-```{r pot_survey_cpue, fig.cap = "Comparisons of area-swept biomass estimates (tons) for the BSFRF survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:pot_survey_cpue}"}
+```{r bsfrf_survey_biomass, fig.cap = "Comparisons of area-swept biomass estimates (tons) for the BSFRF survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:bsfrf_survey_biomass}"}
 plot_cpue(M, "BSFRF", ylab = "Survey biomass (t)")
 ```
 
@@ -1578,6 +1610,12 @@ plot_cpue(M, "BSFRF", ylab = "Survey biomass (t)")
 A <- M; A[[jj]] <- NULL
 plot_cpue_res(A, "NMFS Trawl")
 ```
+
+```{r bsfrf_resid, fig.cap = "Standardized residuals for area-swept biomass estimates for males and females (tons) for the NMFS trawl survey showing each of the Gmacs model scenarios. \\label{fig:bsfrf_resid}"}
+A <- M; A[[jj]] <- NULL
+plot_cpue_res(A, "BSFRF")
+```
+
 
 \newpage\clearpage
 
