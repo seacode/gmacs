@@ -5,7 +5,7 @@ author: |
   | $^1$Quantifish, darcy@quantifish.co.nz
   | $^2$Alaska Department of Fish and Game, jie.zheng@alaska.gov
   | $^3$NOAA, jim.ianelli@noaa.gov
-date: "`r format(Sys.time(), '%B %Y')`"
+date: "April 2017"
 output:
   pdf_document:
     includes:
@@ -19,98 +19,9 @@ output:
 bibliography: ../references/Gmacs.bib
 ---
 
-```{r global_options, include=FALSE}
-library(knitr)
-opts_chunk$set(fig.width = 12, fig.height = 7, echo = FALSE, warning = FALSE, message = FALSE)
-```
 
-```{r, load_packages, include=FALSE}
-library(gmr)
-library(xtable)
-options(xtable.comment = FALSE)
 
-# The model specs
-mod_names <- c("2017 Model","Gmacs base","Free q","Variable M")
-.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
-.THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
-.OVERLAY  = TRUE
-.SEX      = c("Aggregate","Male","Female")
-.FLEET    = c("Pot","Trawl bycatch","TC bycatch","Fixed Bycatch","NMFS Trawl","BSFRF")
-.TYPE     = c("Retained & Discarded","Retained","Discarded")
-.SHELL    = c("Aggregate","New Shell","Old Shell")
-.MATURITY = c("Aggregate")
-.MATURITY = c("Aggregate","Immature","Mature")
-.SEAS     = c("1","2","3","4")
 
-# Read report file and create gmacs report object (a list):
-fn       <- paste0(.MODELDIR, "gmacs")
-M        <- lapply(fn, read_admb)
-names(M) <- mod_names
-
-jj <- 1 # The position in the list that Jies model outputs sit
-fn <- "2016_model/rk75162"
-fn <- "Jie_2017/rk75162b"
-JJ <- lapply(fn, read_admb)
-
-nmult_1 <- 1e+06
-nmult_2 <- 0.0004535923 * 1e+6
-
-# Add numbers at length data
-# M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
-# M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
-# M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
-
-# Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tons
-# ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
-# M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
-# M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
-# M[[jj]]$fit$std[ii] <- NA
-
-# Add recruitment data - It looks like Jie has recorded this as millions of individuals
-#din <- JJ[[jj]]$rec
-#ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-#M[[jj]]$fit$est[ii] <- c(log(nmult_1 * c(din, NA)), NA)
-#M[[jj]]$fit$std[ii] <- NA
-
-# Add estimated trawl survey biomass (million of lbs)
-# M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
-# M[[jj]]$obs_cpue[1,] <- c(nmult_2 * JJ[[jj]]$b_ts, NA)
-# M[[jj]]$pre_cpue[2,1:9] <- c(1000 * JJ[[jj]]$X_ps, NA)
-# M[[jj]]$obs_cpue[2,1:9] <- c(1000 * JJ[[jj]]$x_ps, NA)
-# ii <- which(M[[jj]]$dSurveyData[,1] == 2016)
-# M[[jj]]$dSurveyData <- M[[jj]]$dSurveyData[-ii,]
-# M[[jj]]$cpue_cv_add[1,39] <- NA
-# M[[jj]]$cpue_cv_add[2,9] <- NA
-# M[[jj]]$res_cpue[1,39] <- NA
-# M[[jj]]$res_cpue[2,9] <- NA
-
-# Add estimated length compositions
-#M[[jj]]$d3_pre_size_comps_out[1:15,] <- rbind(t(JJ[[jj]]$P_ob), c(NA,NA,NA))
-#M[[jj]]$d3_pre_size_comps_out[16:54,] <- rbind(t(JJ[[jj]]$P_ts), c(NA,NA,NA))
-#M[[jj]]$d3_pre_size_comps_out[55:63,] <- rbind(t(JJ[[jj]]$P_ps), c(NA,NA,NA))
-
-# The .rep files for each of the Gmacs models. Used for making tables of the likelihood components
-#like <- list()
-#like[[1]] <- readLines("../../examples/bbrkc/OneSex/gmacs.rep")
-#like[[2]] <- readLines("../../examples/bbrkc/TwoSex/gmacs.rep")
-
-fn <- paste0(.MODELDIR[2], "gmacs")
-Mmatch <- lapply(fn, read_admb)
-names(Mmatch) <- c("BBRKC")
-
-fn <- paste0(.MODELDIR[2], "gmacs")
-Mbase <- lapply(fn, read_admb)
-names(Mbase) <- c("BBRKC")
-
-rinline <- function(code){
-  html <- '<code  class="r">``` `CODE` ```</code>'
-  sub("CODE", code, html)
-}
-
-rec_mod <- 2 # base
-#rec_mod <- 4 # M
-#rec_mod <- 6 # force
-```
 
 # Executive Summary
 
@@ -247,7 +158,7 @@ This assessment was done using Gmacs.
 There are several differences between the
 Gmacs assessment model and the previous model. One of the major differences
 being that natural and fishing mortality are continuous within 
-`r M[[2]]$nseason` discrete seasons. Season length in Gmacs is controlled by
+4 discrete seasons. Season length in Gmacs is controlled by
 changing the proportion of natural mortality that is applied during each
 season. A detailed outline of the Gmacs implementation of the BBRKC model is
 provided in Appendix A.
@@ -584,14 +495,7 @@ Year  & Males & Females & Catch & Males & Females & Males & Females & Males & Fe
 \end{tabular}
 \end{table}
 
-```{r bbrkc_groundfish_bycatch, results = "asis"}
-#df <- dplyr::filter(data.frame(M[[2]]$dCatchData_out), V2 == 2, V3 %in% c(2,3)) %>%
-#  dplyr::select(V1, V3, V5) %>%
-#  tidyr::spread(key = V3, value = V5)
-#names(df) <- c("Year","Trawl bycatch","Fixed gear bycatch")
-#tab <- xtable(df, caption = "Groundfish BBRKC male bycatch biomass (tons) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:bbrkc_groundfish_bycatch", digits = c(0,0,3,3))
-#print(tab, caption.placement = "top", include.rownames = FALSE)
-```
+
 
 
 # D. Data
@@ -606,9 +510,7 @@ separated into trawl fisheries and fixed gear. Bycatch of BBRKC in the directed 
 also included. Survey and fishery size composition data were also updated and the extent of all different data sources
 is shown in Figure \ref{fig:data_extent}.
 
-```{r data_extent, fig.cap = "Data extent for the BBRKC assessment.\\label{fig:data_extent}"}
-plot_datarange(Mbase)
-```
+![Data extent for the BBRKC assessment.\label{fig:data_extent}](figure/data_extent-1.png)
 
 ## Major Data Sources
 
@@ -956,7 +858,7 @@ $\alpha$ and $\beta$, $F_\mathit{OFL}$ is determined by the control rule
 where $B$ is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_\mathit{OFL}$ (therefore numerical approximation of $F_\mathit{OFL}$ is required). As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. $F_\mathit{OFL}$ is taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
 The currently recommended Tier 3 convention is to use the full assessment
-period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a
+period, currently 1984-2016, to define a
 $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ =
 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in
 setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$
@@ -964,24 +866,22 @@ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ =
 0.25. The $F_\mathit{OFL}$, OFL, ABC, and MMB in 2016 for all scenarios are
 summarized in Table \ref{tab:management_quants}. ABC is 80\% of the OFL.
 
-```{r management_quants, results = "asis"}
- df <- NULL
- for (ii in 2:4)
- {
-     x <- M[[ii]]
-     mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-     fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
-     OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-     Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
-     ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-     v <- c(mmb, Bmsy, fofl, OFL, ABC)
-     df <- cbind(df, v)
- }
-df <- data.frame(rownames(df), df, row.names = NULL)
- names(df) <- c("Component","Base","Free q","Time-varying M")
- tab <- xtable(df, caption = "Comparisons of management measures for the three Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
- print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
+\begin{table}[ht]
+\centering
+\caption{Comparisons of management measures for the three Gmacs model scenarios. Biomass and OFL are in tons.} 
+\label{tab:management_quants}
+\begin{tabular}{lrrr}
+  \hline
+Component & Base & Free q & Time-varying M \\ 
+  \hline
+$\text{MMB}_{2016}$ & 29292.290 & 29533.240 & 24664.064 \\ 
+  $B_\text{MSY}$ & 26169.725 & 26822.289 & 26023.066 \\ 
+  $F_\text{OFL}$ & 0.178 & 0.174 & 0.147 \\ 
+  $\text{OFL}_{2016}$ & 1571.003 & 1539.223 & 999.345 \\ 
+  $\text{ABC}_{2016}$ & 1256.802 & 1231.378 & 799.476 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 
 # G. Rebuilding Analysis
@@ -1096,13 +996,7 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997b. Alternative rebuilding strategies
 \newpage\clearpage
 
 #Tables
-```{r length_weight, results = "asis"}
-df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt[,3:18] * 1000)
-#xxxx
-names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
-#tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length_weight", digits = c(0,0,1,1,1))
-#print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
+
 \begin{table}[ht]
 \centering
 \caption{Observed and assumed sample sizes for observer data from the directed pot fishery, the NMFS trawl survey, and the BSFRF survey.} 
@@ -1156,593 +1050,193 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 \end{tabular}
 \end{table}
 
-```{r est_pars_base, results = "asis"}
- x <- M[[2]]$fit
- i <- c(grep("m_dev", x$names)[1],
-        grep("theta", x$names),
-        grep("survey_q", x$names),
-        grep("log_fbar", x$names),
-        grep("sd_fofl", x$names),
-        grep("sd_ofl", x$names)
-        )
-  Parameter <- x$names[i]
-  Estimate <- x$est[i]
-  SD <- x$std[i]
-  j <- grep("survey_q", Parameter)
-  Estimate[j] <- Estimate[j] 
-  SD[j] <- SD[j] 
- Parameter<-c("M deviation($\\delta^M_{1980})$",
-  "$\\log(\\bar{R})$",
-  "$\\log(\\mathit{q_{nmfs}})$",
-  "$\\log(\\mathit{F}^\\text{df})$",
-  "$\\log(\\bar{F}^\\text{tgb})$",
-  "$\\log(\\bar{F}^\\text{fgb})$",
-  "$\\log(\\bar{F}^\\text{tcb})$",
-  "$F_\\text{OFL}$","OFL")
- df <- data.frame(Parameter, Estimate, SD)
- tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 3)
- print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
+\begin{table}[ht]
+\centering
+\caption{Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\bf Gmacs base} model.} 
+\label{tab:est_pars_base}
+\begin{tabular}{lrr}
+  \hline
+Parameter & Estimate & SD \\ 
+  \hline
+M deviation($\delta^M_{1980})$ & 1.470 & 0.030 \\ 
+  $\log(\bar{R})$ & 15.854 & 0.065 \\ 
+  $\log(\mathit{q_{nmfs}})$ & 0.968 & 0.021 \\ 
+  $\log(\mathit{F}^\text{df})$ & -1.409 & 0.032 \\ 
+  $\log(\bar{F}^\text{tgb})$ & -4.785 & 0.050 \\ 
+  $\log(\bar{F}^\text{fgb})$ & -6.026 & 0.045 \\ 
+  $\log(\bar{F}^\text{tcb})$ & -7.232 & 0.091 \\ 
+  $F_\text{OFL}$ & 0.178 & 0.009 \\ 
+  OFL & 1571.000 & 151.930 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
-```{r est_pars_freeq, results = "asis"}
- x <- M[[3]]$fit
- i <- c(grep("m_dev", x$names)[1],
-        grep("theta", x$names),
-        grep("survey_q", x$names), # 
-        grep("log_fbar", x$names),
-        grep("sd_fofl", x$names),
-        grep("sd_ofl", x$names)
-        )
-  Parameter <- x$names[i]
-  Estimate <- x$est[i]
-  SD <- x$std[i]
-  j <- grep("survey_q", Parameter)
-  Estimate[j] <- Estimate[j] 
-  SD[j] <- SD[j] 
- Parameter<-c("M deviation($\\delta^M_{1980})$",
-  "$\\log(\\bar{R})$",
-  "$\\log(\\mathit{q_{NMFS}})$",
-  "$\\log(\\mathit{q_{BSFRF}})$",
-  "$\\log(\\bar{F}^\\text{df})$",
-  "$\\log(\\bar{F}^\\text{tgb})$",
-  "$\\log(\\bar{F}^\\text{fgb})$",
-  "$\\log(\\bar{F}^\\text{tcb})$",
-  "$F_\\text{OFL}$","OFL")
- df <- data.frame(Parameter, Estimate, SD)
- tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Free q} model.", label = "tab:est_pars_freeq", digits = 3)
- print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
+\begin{table}[ht]
+\centering
+\caption{Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\bf Free q} model.} 
+\label{tab:est_pars_freeq}
+\begin{tabular}{lrr}
+  \hline
+Parameter & Estimate & SD \\ 
+  \hline
+M deviation($\delta^M_{1980})$ & 1.467 & 0.030 \\ 
+  $\log(\bar{R})$ & 15.865 & 0.065 \\ 
+  $\log(\mathit{q_{NMFS}})$ & 0.962 & 0.021 \\ 
+  $\log(\mathit{q_{BSFRF}})$ & 0.833 & 0.072 \\ 
+  $\log(\bar{F}^\text{df})$ & -1.430 & 0.031 \\ 
+  $\log(\bar{F}^\text{tgb})$ & -4.809 & 0.050 \\ 
+  $\log(\bar{F}^\text{fgb})$ & -6.046 & 0.046 \\ 
+  $\log(\bar{F}^\text{tcb})$ & -7.228 & 0.087 \\ 
+  $F_\text{OFL}$ & 0.174 & 0.009 \\ 
+  OFL & 1539.200 & 150.890 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 
-```{r likelihood_components, results = "asis"}
-df <- NULL
-for (ii in 2:length(M))
-{
-    x <- M[[ii]]
-    # Catch
-    ll_catch <- x$nloglike[1,]
-    dc <- .get_catch_df(Mbase)
-    names(ll_catch) <- unique(paste0(dc$fleet, " ", dc$type, " ", dc$sex, " Catch"))
-    # Abundance indices
-    ll_cpue <- x$nloglike[2, 1:2]
-    names(ll_cpue) <- c("NMFS Trawl Survey", "BSFRF Survey")
-    # Size compositions
-    ll_lf <- x$nloglike[3,1:3]
-    names(ll_lf) <- c("Directed Pot LF", "NMFS Trawl LF", "BSFRF LF")
-    # Recruitment deviations
-    ll_rec <- sum(x$nloglike[4,], na.rm = TRUE)
-    names(ll_rec) <- "Recruitment deviations"
-    # Penalties
-    F_pen <- x$nlogPenalty[2]; names(F_pen) <- "F penalty"
-    M_pen <- x$nlogPenalty[3]; names(M_pen) <- "M penalty"
-    # Priors
-    prior <- sum(x$priorDensity); names(prior) <- "Prior"
-    v <- c(ll_catch, ll_cpue, ll_lf, ll_rec, F_pen, M_pen, prior)
-    sv <- sum(v); names(sv) <- "Total"
-    npar <- x$fit$npar; names(npar) <- "Total estimated parameters"
-    v <- c(v, sv, npar)
-    df <- cbind(df, v)
-}
-df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component", names(M)[2:length(M)])
-tab <- xtable(df, caption = "Comparisons of negative log-likelihood values for the Gmacs model scenarios.", label = "tab:likelihood_components")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
+\begin{table}[ht]
+\centering
+\caption{Comparisons of negative log-likelihood values for the Gmacs model scenarios.} 
+\label{tab:likelihood_components}
+\begin{tabular}{lrrr}
+  \hline
+Component & Gmacs base & Free q & Variable M \\ 
+  \hline
+Pot Retained Male Catch & 42.64 & 42.04 & 29.25 \\ 
+  Pot Discarded Male Catch & 184.44 & 183.24 & 184.38 \\ 
+  Pot Discarded Female Catch & -55.21 & -55.20 & -55.20 \\ 
+  Trawl bycatch Discarded Aggregate Catch & -92.00 & -91.99 & -92.01 \\ 
+  TC bycatch Discarded Male Catch & -33.26 & -33.26 & -33.27 \\ 
+  TC bycatch Discarded Female Catch & -33.26 & -33.26 & -33.26 \\ 
+  Fixed Bycatch Discarded Aggregate Catch & -9.70 & -9.70 & -9.70 \\ 
+  NMFS Trawl Survey & -24.70 & -24.87 & -29.90 \\ 
+  BSFRF Survey & -7.93 & -9.03 & -8.02 \\ 
+  Directed Pot LF & -1412.84 & -1412.66 & -1420.95 \\ 
+  NMFS Trawl LF & -879.91 & -889.58 & -891.49 \\ 
+  BSFRF LF & -1775.99 & -1770.71 & -1783.13 \\ 
+  Recruitment deviations & 183.08 & 180.96 & 165.72 \\ 
+  F penalty & 18.95 & 18.95 & 18.95 \\ 
+  M penalty & 63.72 & 63.63 & 13.87 \\ 
+  Prior & 167.07 & 166.19 & 169.04 \\ 
+  Total & -3664.90 & -3675.27 & -3775.72 \\ 
+  Total estimated parameters & 498.00 & 499.00 & 574.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
-```{r data_weighting, results = "asis"}
-df <- NULL
-for (ii in 2:4)
-{
-    x <- M[[ii]]
-    SDNR <- c(x$sdnr_MAR_cpue[,1], x$sdnr_MAR_lf[,1])
-    MAR <- c(x$sdnr_MAR_cpue[,2], x$sdnr_MAR_lf[,2])
-    WT <- c(x$cpue_lambda, x$lf_lambda)
-    names(SDNR) <- c("SDNR NMFS trawl survey","SDNR BSFRF survey","SDNR directed pot LF","SDNR directed pot bycatch LF","SDNR trawl bycatch LF","SDNR tanner bycatch LF","SDNR fixed bycatch LF","SDNR NMFS trawl survey LF","SDNR BSFRF survey LF")
-    names(MAR) <- c("MAR NMFS trawl survey","MAR BSFRF survey","MAR directed pot LF","MAR directed pot bycatch LF","MAR trawl bycatch LF","MAR tanner bycatch LF","MAR fixed bycatch LF","MAR NMFS trawl survey LF","MAR BSFRF survey LF")
-    names(WT) <- c("Weight NMFS trawl survey","Weight BSFRF survey","Weight directed pot LF","Weight directed pot bycatch LF","Weight trawl bycatch LF","Weight tanner bycatch LF","Weight fixed bycatch LF","Weight NMFS trawl survey LF","Weight BSFRF survey LF")
-    v <- c(WT, SDNR, MAR)
-    df <- cbind(df, v)
-}
-df <- data.frame(rownames(df), df, row.names = NULL)
-names(df) <- c("Component","Gmacs base","Free q","Variable M")
-tab <- xtable(df, caption = "Comparisons of data weights, SDNR values, and MAR values for the Gmacs model scenarios.", label = "tab:data_weighting")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, hline.after = c(-1,0,9,18,nrow(tab)))
-```
+\begin{table}[ht]
+\centering
+\caption{Comparisons of data weights, SDNR values, and MAR values for the Gmacs model scenarios.} 
+\label{tab:data_weighting}
+\begin{tabular}{lrrr}
+  \hline
+Component & Gmacs base & Free q & Variable M \\ 
+  \hline
+Weight NMFS trawl survey & 1.00 & 1.00 & 1.00 \\ 
+  Weight BSFRF survey & 1.00 & 1.00 & 1.00 \\ 
+  Weight directed pot LF & 1.00 & 1.00 & 1.00 \\ 
+  Weight directed pot bycatch LF & 1.00 & 1.00 & 1.00 \\ 
+  Weight trawl bycatch LF & 1.00 & 1.00 & 1.00 \\ 
+  Weight tanner bycatch LF & 1.00 & 1.00 & 1.00 \\ 
+  Weight fixed bycatch LF & 1.00 & 1.00 & 1.00 \\ 
+  Weight NMFS trawl survey LF & 1.00 & 1.00 & 1.00 \\ 
+  Weight BSFRF survey LF & 1.00 & 1.00 & 1.00 \\ 
+   \hline
+SDNR NMFS trawl survey & 1.52 & 1.52 & 1.46 \\ 
+  SDNR BSFRF survey & 0.45 & 0.50 & 0.53 \\ 
+  SDNR directed pot LF & 11.04 & 11.18 & 13.94 \\ 
+  SDNR directed pot bycatch LF & 408.99 & 409.31 & 407.96 \\ 
+  SDNR trawl bycatch LF & 228.52 & 232.63 & 237.07 \\ 
+  SDNR tanner bycatch LF & 32.80 & 35.37 & 35.57 \\ 
+  SDNR fixed bycatch LF & 70.31 & 73.64 & 64.15 \\ 
+  SDNR NMFS trawl survey LF & 105.69 & 136.56 & 141.58 \\ 
+  SDNR BSFRF survey LF & 110.95 & 30.89 & 75.92 \\ 
+   \hline
+MAR NMFS trawl survey & 1.05 & 1.04 & 0.97 \\ 
+  MAR BSFRF survey & 0.43 & 0.40 & 0.24 \\ 
+  MAR directed pot LF & 0.05 & 0.05 & 0.05 \\ 
+  MAR directed pot bycatch LF & 0.75 & 0.75 & 0.75 \\ 
+  MAR trawl bycatch LF & 0.64 & 0.63 & 0.61 \\ 
+  MAR tanner bycatch LF & 0.60 & 0.61 & 0.59 \\ 
+  MAR fixed bycatch LF & 0.72 & 0.75 & 0.71 \\ 
+  MAR NMFS trawl survey LF & 0.89 & 0.92 & 0.85 \\ 
+  MAR BSFRF survey LF & 1.07 & 1.10 & 1.03 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 #Figures
 \newpage\clearpage
 
-```{r molt_prob, fig.cap = "Comparisons of the estimated molting probabilities.\\label{fig:molt_prob}"}
-mp1 <- c(0.999966, 0.999934, 0.99987, 0.999746, 0.999504, 0.999031, 0.998109, 0.996311, 0.992816, 0.986056, 0.973108, 0.948763, 0.90454, 0.829026, 0.712748, 0.559415, 0.393843, 0.249522, 0.145401, 0.0800909)
-mp2 <- c(0.999292, 0.998841, 0.998102, 0.996894, 0.994921, 0.991705, 0.986481, 0.978039, 0.964516, 0.943149, 0.910114, 0.86072, 0.790431, 0.697152, 0.584195, 0.461642, 0.343556, 0.242093, 0.163148, 0.106334)
+![Comparisons of the estimated molting probabilities.\label{fig:molt_prob}](figure/molt_prob-1.png)
 
-M[[2]]$molt_probability[1:5,] <- matrix(mp1, nrow = 5, ncol = 20, byrow = TRUE)
-M[[2]]$molt_probability[6:42,] <- matrix(mp2, nrow = 37, ncol = 20, byrow = TRUE)
-M[[2]]$molt_probability[43:84,] <- 1
+![Comparisons of the molting increments.\label{fig:growth_inc}](figure/growth_inc-1.png)
 
-plot_molt_prob(M)
-```
-
-```{r growth_inc, fig.cap = "Comparisons of the molting increments.\\label{fig:growth_inc}"}
-gi1 <- c(13.8, 12.2, 10.5, 8.4, 7.5, 7, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7, 0.4)
-gi2 <- c(15.4, 13.8, 12.2, 10.5, 8.9, 7.9, 7.2, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7)
-gi3 <- c(15.1, 14, 12.9, 11.8, 10.6, 8.7, 7.4, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7)
-gi4 <- c(16.5, 16.5, 16.4, 16.3, 16.3, 16.2, 16.2, 16.1, 16.1, 16, 16, 15.9, 15.8, 15.8, 15.7, 15.7, 15.6, 15.6, 15.5, 15.5)
-
-M1 <- M
-M1[[3]] <- M[[2]]
-M1[[4]] <- M[[2]]
-names(M1) <- c('Gmacs','1975-1982','1983-1993','1994-present')
-
-M1[[2]]$pMoltInc[M1[[2]]$iMoltIncSex == 1] <- gi4
-M1[[2]]$pMoltInc[M1[[2]]$iMoltIncSex == 2] <- gi1
-M1[[3]]$pMoltInc[M1[[3]]$iMoltIncSex == 1] <- gi4
-M1[[3]]$pMoltInc[M1[[3]]$iMoltIncSex == 2] <- gi2
-M1[[4]]$pMoltInc[M1[[4]]$iMoltIncSex == 1] <- gi4
-M1[[4]]$pMoltInc[M1[[4]]$iMoltIncSex == 2] <- gi3
-
-plot_growth_inc(M1)
-```
-
-```{r growth_trans, fig.cap = "Probability of growth transition by stage. Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2017 BBRKC assessment).\\label{fig:growth_trans}", fig.height = 15}
-gm_f1 <- matrix(scan(text = "
- 0 0.0711234 0.398022 0.372157 0.132835 0.0258631 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.145003 0.475426 0.294412 0.0762733 0.0088857 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.2719 0.496055 0.195229 0.0357593 0.00105686 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.0152297 0.486895 0.400566 0.087935 0.0093735 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.0276419 0.580508 0.332256 0.0563255 0.00326825 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0648859 0.613229 0.2845 0.0373848 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0847572 0.640095 0.249846 0.0253018 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.115808 0.663216 0.207271 0.0137048 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.171288 0.66037 0.164023 0.00431962 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.228945 0.647251 0.123804 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.298984 0.615451 0.0855653 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.380675 0.565457 0.0538671 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.471491 0.499965 0.0285444 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.549292 0.440929 0.00977904 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.645044 0.354956 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-gm_f2 <- matrix(scan(text = "
- 0 0.0315365 0.29835 0.415939 0.203388 0.0507866 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.0715876 0.40062 0.374586 0.133701 0.0195053 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.1459 0.478366 0.296233 0.076745 0.0027561 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.00293279 0.2747 0.495812 0.195133 0.0314218 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.0106724 0.435786 0.435296 0.110078 0.00816757 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0342176 0.540301 0.364189 0.0612922 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0569465 0.602618 0.304312 0.0361236 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.0853184 0.644334 0.2515 0.0188471 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.12638 0.660964 0.206567 0.00608825 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.172781 0.666124 0.161095 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.231245 0.653752 0.115003 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.302451 0.622588 0.0749609 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.385785 0.573046 0.041169 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.478849 0.507767 0.0133836 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.560249 0.439751 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-gm_m1 <- matrix(scan(text = "
- 0 0.0370031 0.317399 0.410924 0.1895 0.0451734 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.0650656 0.388977 0.382571 0.142076 0.0213101 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.108856 0.451675 0.335511 0.100072 0.00388567 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.000901521 0.173397 0.493689 0.275204 0.0568086 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.00272488 0.269398 0.503933 0.203784 0.0201606 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0184362 0.463497 0.428655 0.0894116 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0495539 0.587504 0.322594 0.040348 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.0853184 0.644334 0.2515 0.0188471 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.12638 0.660964 0.206567 0.00608825 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.172781 0.666124 0.161095 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.231245 0.653752 0.115003 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.302451 0.622588 0.0749609 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.385785 0.573046 0.041169 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.478849 0.507767 0.0133836 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.560249 0.439751 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-gm_m2 <- matrix(scan(text = "
- 0 0.0374249 0.257557 0.369321 0.236624 0.0941279 0.00494521 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.0374249 0.257557 0.369321 0.236624 0.0941279 0.00494521 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.0390317 0.262221 0.369126 0.233146 0.0916878 0.00478779 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.0406974 0.266902 0.368829 0.229653 0.0892849 0.00463398 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0406974 0.266902 0.368829 0.229653 0.0892849 0.00463398 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0424237 0.271597 0.36843 0.226146 0.0869192 0.00448375 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.0424237 0.271597 0.36843 0.226146 0.0869192 0.00448375 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.0442121 0.276304 0.367927 0.222629 0.084591 0.00433705 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.0442121 0.276304 0.367927 0.222629 0.084591 0.00433705 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.0460642 0.28102 0.367321 0.219101 0.0823004 0.00419385 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.0460642 0.28102 0.367321 0.219101 0.0823004 0.00419385 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.0479817 0.285742 0.36661 0.215565 0.0800475 0.00405411 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0499661 0.290466 0.365796 0.212022 0.0778325 0.0039178 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0499661 0.290466 0.365796 0.212022 0.0778325 0.0039178
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0520191 0.295189 0.364877 0.208474 0.0794404
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0520191 0.295189 0.364877 0.287915
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0541422 0.29991 0.645948
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0541422 0.945858
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-M1 <- M
-M1[[3]] <- M[[2]]
-M1[[4]] <- NULL
-names(M1) <- c('Gmacs','1983-93','1994-present')
-
-M1[[2]]$growth_transition[1:20,] <- gm_m1
-M1[[2]]$growth_transition[21:40,] <- gm_f1
-M1[[3]]$growth_transition[1:20,] <- gm_m2
-M1[[3]]$growth_transition[21:40,] <- gm_f2
-
-plot_growth_transition(M1, xlab = "Carapace width after transition (mm)")
-```
-
-```{r size_trans, fig.cap = "Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2016 BBRKC assessment).\\label{fig:size_trans}", fig.height = 15}
-gm_f1 <- matrix(scan(text = "
- 0 0.0711234 0.398022 0.372157 0.132835 0.0258631 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.145003 0.475426 0.294412 0.0762733 0.0088857 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.2719 0.496055 0.195229 0.0357593 0.00105686 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.0152297 0.486895 0.400566 0.087935 0.0093735 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.0276419 0.580508 0.332256 0.0563255 0.00326825 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0648859 0.613229 0.2845 0.0373848 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0847572 0.640095 0.249846 0.0253018 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.115808 0.663216 0.207271 0.0137048 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.171288 0.66037 0.164023 0.00431962 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.228945 0.647251 0.123804 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.298984 0.615451 0.0855653 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.380675 0.565457 0.0538671 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.471491 0.499965 0.0285444 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.549292 0.440929 0.00977904 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.645044 0.354956 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-gm_f2 <- matrix(scan(text = "
- 0 0.0315365 0.29835 0.415939 0.203388 0.0507866 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.0715876 0.40062 0.374586 0.133701 0.0195053 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.1459 0.478366 0.296233 0.076745 0.0027561 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.00293279 0.2747 0.495812 0.195133 0.0314218 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.0106724 0.435786 0.435296 0.110078 0.00816757 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0342176 0.540301 0.364189 0.0612922 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0569465 0.602618 0.304312 0.0361236 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.0853184 0.644334 0.2515 0.0188471 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.12638 0.660964 0.206567 0.00608825 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.172781 0.666124 0.161095 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.231245 0.653752 0.115003 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.302451 0.622588 0.0749609 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.385785 0.573046 0.041169 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.478849 0.507767 0.0133836 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.560249 0.439751 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-gm_m1 <- matrix(scan(text = "
- 0 0.0370031 0.317399 0.410924 0.1895 0.0451734 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.0650656 0.388977 0.382571 0.142076 0.0213101 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.108856 0.451675 0.335511 0.100072 0.00388567 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.000901521 0.173397 0.493689 0.275204 0.0568086 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.00272488 0.269398 0.503933 0.203784 0.0201606 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0184362 0.463497 0.428655 0.0894116 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0495539 0.587504 0.322594 0.040348 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.0853184 0.644334 0.2515 0.0188471 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.12638 0.660964 0.206567 0.00608825 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.172781 0.666124 0.161095 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.231245 0.653752 0.115003 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.302451 0.622588 0.0749609 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.385785 0.573046 0.041169 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.478849 0.507767 0.0133836 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.560249 0.439751 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-gm_m2 <- matrix(scan(text = "
- 0 0.0374249 0.257557 0.369321 0.236624 0.0941279 0.00494521 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0.0374249 0.257557 0.369321 0.236624 0.0941279 0.00494521 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0.0390317 0.262221 0.369126 0.233146 0.0916878 0.00478779 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0.0406974 0.266902 0.368829 0.229653 0.0892849 0.00463398 0 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0.0406974 0.266902 0.368829 0.229653 0.0892849 0.00463398 0 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0.0424237 0.271597 0.36843 0.226146 0.0869192 0.00448375 0 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0.0424237 0.271597 0.36843 0.226146 0.0869192 0.00448375 0 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0.0442121 0.276304 0.367927 0.222629 0.084591 0.00433705 0 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0.0442121 0.276304 0.367927 0.222629 0.084591 0.00433705 0 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0.0460642 0.28102 0.367321 0.219101 0.0823004 0.00419385 0 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0.0460642 0.28102 0.367321 0.219101 0.0823004 0.00419385 0 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0.0479817 0.285742 0.36661 0.215565 0.0800475 0.00405411 0 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0499661 0.290466 0.365796 0.212022 0.0778325 0.0039178 0
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0499661 0.290466 0.365796 0.212022 0.0778325 0.0039178
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0520191 0.295189 0.364877 0.208474 0.0794404
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0520191 0.295189 0.364877 0.287915
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0541422 0.29991 0.645948
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0541422 0.945858
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
- 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
-"), nrow = 20, ncol = 20, byrow = TRUE)
-
-M1 <- M
-M1[[3]] <- M[[2]]
-names(M1) <- c('Gmacs','1983-93','1994-present')
-
-#M1[[2]]$growth_transition[1:20,] <- gm_m1
-#M1[[2]]$growth_transition[21:40,] <- gm_f1
-#M1[[3]]$growth_transition[1:20,] <- gm_m2
-#M1[[3]]$growth_transition[21:40,] <- gm_f2
-
-M1[[2]]$size_transition_M <- gm_m1
-M1[[2]]$size_transition_F <- gm_f1
-M1[[3]]$size_transition_M <- gm_m2
-M1[[3]]$size_transition_F <- gm_f2
-
-#plot_size_transition(M1, xlab = "Carapace width after transition (mm)")
-```
+![Probability of growth transition by stage. Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2017 BBRKC assessment).\label{fig:growth_trans}](figure/growth_trans-1.png)
 
 
-```{r selectivity, fig.cap = "Comparisons of the estimated selectivities for each of the different model scenarios. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the tanner crab bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the BSFRF survey. Two selectivity periods are estimated in the NMFS trawl survey, from 1975-1981 and 1982-2016.\\label{fig:selectivity}", fig.height = 15}
-A <- M
-# selectivity fishery total males: '67.5-162.5'
-pot_male_total <- c(7.82969e-017, 1.12203e-015, 1.60793e-014, 2.30424e-013, 3.30208e-012, 0.0127727, 0.0309995, 0.0492263, 0.0674533, 0.085682, 0.103935, 0.122543, 0.146199, 0.236219, 0.630676, 0.954637, 0.99598, 0.99972, 0.999982, 1)
-# Proportion difference between total males and retention males: '67.5-162.5'
-pot_male_prop <- c(0, 0, 0, 0, 0, 0.0127727, 0.0309995, 0.0492263, 0.0674531, 0.0856799, 0.103907, 0.122133, 0.14036, 0.158587, 0.083957, 0.00932694, 0, 0, 0, 0)
-# selectivity discard females: '67.5-162.5'
-pot_fem_total <- c(0.0364684, 0.090128, 0.205873, 0.404223, 0.639729, 0.822923, 0.924027, 0.969541, 0.988139, 0.995435, 0.998251, 0.999331, 0.999745, 0.999903, 0.999963, 0.999986, 0.999995, 0.999998, 1, 1)
-# selectivity trawl males+females:'67.5-162.5'
-trawl_agg_total <- c(0.0105021, 0.0141306, 0.0189964, 0.0255085, 0.0342005, 0.0457605, 0.0610621, 0.081189, 0.107445, 0.14133, 0.184456, 0.238386, 0.304357, 0.38292, 0.473541, 0.574304, 0.681872, 0.791824, 0.899337, 1)
-# selectivity fixed males+females:'67.5-162.5'
-fixed_agg_total <- c(0.0617894, 0.0765352, 0.0945233, 0.116325, 0.142542, 0.173773, 0.210561, 0.253327, 0.302287, 0.357361, 0.418106, 0.483667, 0.552787, 0.623884, 0.695184, 0.76489, 0.831365, 0.893271, 0.94966, 1)
-# selectivity survey females (1975-81): '67.5-162.5'
-nmfs_fem_total1 <- c(0.188758, 0.247307, 0.316654, 0.394817, 0.478147, 0.561874, 0.641139, 0.712061, 0.772383, 0.82152, 0.860154, 0.889694, 0.911803, 0.928085, 0.939936, 0.948487, 0.954619, 0.958995, 0.96211, 0.964321)
-# selectivity survey males (1975-81): '67.5-162.5'
-nmfs_male_total1 <- c(0.187717, 0.321867, 0.491244, 0.658409, 0.787738, 0.870208, 0.916501, 0.940643, 0.952752, 0.958707, 0.961606, 0.963011, 0.963691, 0.964019, 0.964177, 0.964254, 0.964291, 0.964308, 0.964317, 0.964321)
-# selectivity survey females (1982-12): '67.5-162.5'
-nmfs_fem_total2 <- c(0.441524, 0.520586, 0.597689, 0.66908, 0.732075, 0.785345, 0.828791, 0.863193, 0.889802, 0.910011, 0.925148, 0.936369, 0.944623, 0.95066, 0.955058, 0.958251, 0.960565, 0.962238, 0.963448, 0.964321)
-# selectivity survey males (1982-12): '67.5-162.5'
-nmfs_male_total2 <- c(0.495835, 0.527824, 0.559916, 0.591889, 0.623521, 0.654602, 0.684935, 0.714343, 0.742673, 0.769795, 0.79561, 0.820041, 0.843041, 0.864585, 0.88467, 0.903313, 0.920549, 0.936423, 0.950992, 0.964321)
-# selectivity of TC bycatch: females: '67.5-162.5'
-tc_fem_total <- c(6.42943e-005, 0.000427308, 0.00283413, 0.0185459, 0.111611, 0.455124, 0.847407, 0.97363, 0.995943, 0.999388, 0.999908, 0.999986, 0.999998, 1, 1, 1, 1, 1, 1, 1)
-# selectivity of TC bycatch: males: '67.5-162.5'
-tc_male_total <- c(0.000813884, 0.00274429, 0.00921114, 0.0304516, 0.0959292, 0.263879, 0.547728, 0.803591, 0.932534, 0.979034, 0.993701, 0.998127, 0.999445, 0.999836, 0.999951, 0.999986, 0.999996, 0.999999, 1, 1)
-
-# Add selectivity data
-# year, sex, fleet, vec
-# Directed pot fisheries male
-ind <- which(A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 1)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- pot_male_total
-for (i in ind) A[[jj]]$slx_retaind[i,4:23] <- pot_male_total * pot_male_prop
-# Directed pot fishery female discards
-ind <- which(A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 1)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- pot_fem_total
-# Trawl bycatch discards
-ind <- which(A[[jj]]$slx_capture[,3] %in% 2)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- trawl_agg_total
-# TC bycatch discards males
-ind <- which(A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 3)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- tc_male_total
-# TC bycatch discards females
-ind <- which(A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 3)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- tc_fem_total
-# Fixed bycatch discards
-ind <- which(A[[jj]]$slx_capture[,3] %in% 4)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- fixed_agg_total
-# NMFS survey male
-ind <- which(A[[jj]]$slx_capture[,1] < 1982  & A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 5)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_male_total1
-ind <- which(A[[jj]]$slx_capture[,1] >= 1982  & A[[jj]]$slx_capture[,2] %in% 1 & A[[jj]]$slx_capture[,3] %in% 5)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_male_total2
-# NMFS survey female
-ind <- which(A[[jj]]$slx_capture[,1] < 1982  & A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 5)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_fem_total1
-ind <- which(A[[jj]]$slx_capture[,1] >= 1982  & A[[jj]]$slx_capture[,2] %in% 2 & A[[jj]]$slx_capture[,3] %in% 5)
-for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_fem_total2
-
-# WHERE IS BSFRF?
-
-B <- A
-B[[4]] <- NULL
-B[[3]] <- NULL
-
-plot_selectivity(B, ncol = 4)
-```
 
 
-```{r selectivity2, fig.cap = "Comparisons of the estimated selectivities for each of the different model scenarios. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the tanner crab bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the BSFRF survey. Two selectivity periods are estimated in the NMFS trawl survey, from 1975-1981 and 1982-2016.\\label{fig:selectivity2}", fig.height = 15}
-B <- A
-B[[1]] <- B[[3]]
-B[[2]] <- B[[4]]
-B[[4]] <- NULL
-B[[3]] <- NULL
-plot_selectivity(B, ncol = 4)
-```
+![Comparisons of the estimated selectivities for each of the different model scenarios. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the tanner crab bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the BSFRF survey. Two selectivity periods are estimated in the NMFS trawl survey, from 1975-1981 and 1982-2016.\label{fig:selectivity}](figure/selectivity-1.png)
 
 
-```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept biomass estimates for males and females (tons) and model predictions for the NMFS trawl survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"} 
-A <- M
-#A[[1]]$obs_cpue <- ? as per usual Jie's outputs need to be customized
-plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (t)") 
-```
+![Comparisons of the estimated selectivities for each of the different model scenarios. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the tanner crab bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the BSFRF survey. Two selectivity periods are estimated in the NMFS trawl survey, from 1975-1981 and 1982-2016.\label{fig:selectivity2}](figure/selectivity2-1.png)
+
+
+![Comparisons of area-swept biomass estimates for males and females (tons) and model predictions for the NMFS trawl survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png)
 
 \newpage\clearpage
 
-```{r bsfrf_survey_biomass, fig.cap = "Comparisons of area-swept biomass estimates (tons) for the BSFRF survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:bsfrf_survey_biomass}"}
-plot_cpue(M, "BSFRF", ylab = "Survey biomass (t)")
-```
+![Comparisons of area-swept biomass estimates (tons) for the BSFRF survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations derived using the original survey CVs. \label{fig:bsfrf_survey_biomass}](figure/bsfrf_survey_biomass-1.png)
 
-```{r bts_resid_nmfs, fig.cap = "Standardized residuals for area-swept biomass estimates for males and females (tons) for the NMFS trawl survey showing each of the Gmacs model scenarios. \\label{fig:bts_resid_nmfs}"}
-A <- M; A[[jj]] <- NULL
-plot_cpue_res(A, "NMFS Trawl")
-```
+![Standardized residuals for area-swept biomass estimates for males and females (tons) for the NMFS trawl survey showing each of the Gmacs model scenarios. \label{fig:bts_resid_nmfs}](figure/bts_resid_nmfs-1.png)
 
-```{r bsfrf_resid, fig.cap = "Standardized residuals for area-swept biomass estimates for males and females (tons) for the BSFRF trawl survey showing each of the Gmacs model scenarios. \\label{fig:bsfrf_resid}"}
-A <- M; A[[jj]] <- NULL
-plot_cpue_res(A, "BSFRF")
-```
+![Standardized residuals for area-swept biomass estimates for males and females (tons) for the BSFRF trawl survey showing each of the Gmacs model scenarios. \label{fig:bsfrf_resid}](figure/bsfrf_resid-1.png)
 
 
 \newpage\clearpage
 
-```{r sc_pot_retained_male, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios. \\label{fig:sc_pot_retained_male}"}
-plot_size_comps(M, 1) 
-```
+![Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios. \label{fig:sc_pot_retained_male}](figure/sc_pot_retained_male-1.png)
 
-```{r sc_pot_discarded_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_male}"} 
-plot_size_comps(M, 2) 
-```
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_pot_discarded_male}](figure/sc_pot_discarded_male-1.png)
 
-```{r sc_pot_discarded_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_female}"}
-plot_size_comps(M, 3)
-```
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_pot_discarded_female}](figure/sc_pot_discarded_female-1.png)
 
-```{r sc_trawl_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_male}"}
-plot_size_comps(M, 4)
-```
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_trawl_bycatch_male}](figure/sc_trawl_bycatch_male-1.png)
 
-```{r sc_trawl_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_female}"}
-plot_size_comps(M, 5)
-```
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_trawl_bycatch_female}](figure/sc_trawl_bycatch_female-1.png)
 
-```{r sc_tc_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_male}"}
-plot_size_comps(M, 6)
-```
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_tc_bycatch_male}](figure/sc_tc_bycatch_male-1.png)
 
-```{r sc_tc_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_female}"}
-plot_size_comps(M, 7)
-```
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_tc_bycatch_female}](figure/sc_tc_bycatch_female-1.png)
 
-```{r sc_fixed_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_male}"}
-plot_size_comps(M, 8)
-```
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_fixed_bycatch_male}](figure/sc_fixed_bycatch_male-1.png)
 
-```{r sc_fixed_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_female}"}
-plot_size_comps(M, 9)
-```
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_fixed_bycatch_female}](figure/sc_fixed_bycatch_female-1.png)
 
-```{r sc_nmfs_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_male}"}
-plot_size_comps(M, 10)
-```
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_nmfs_male}](figure/sc_nmfs_male-1.png)
 
-```{r sc_nmfs_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_female}"}
-plot_size_comps(M, 11)
-```
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_nmfs_female}](figure/sc_nmfs_female-1.png)
 
-```{r sc_bsfrf_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_male}"}
-plot_size_comps(M, 12)
-```
+![Observed and model estimated size-frequencies of discarded male BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_bsfrf_male}](figure/sc_bsfrf_male-1.png)
 
-```{r sc_bsfrf_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_female}"}
-plot_size_comps(M, 13)
-```
+![Observed and model estimated size-frequencies of discarded female BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\label{fig:sc_bsfrf_female}](figure/sc_bsfrf_female-1.png)
 
 \newpage\clearpage
 
-```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\\label{fig:fit_to_catch}", fig.height = 12}
-# predicted retained catch biomass : seq(1968,2008)
-pot_male_ret <- c(23249.9, 28986.4, 31689.2, 39424.4, 49373.6, 60144.3, 15212.9, 1368.26, 0.0312545, 1885.28, 1873.86, 5182.15, 5522.9, 3334.88, 4681.1, 8866.65, 8035.05, 4246.15, 6875.76, 42.0901, 37.8288, 3722.62, 3809.93, 6686.07, 4870.23, 3998.86, 4139.18, 4418.15, 7374.18, 6170.89, 8038.35, 6522.96, 9159.26, 9156.4, 7336.69, 7267.17, 3965.25, 3610.3, 4071.8, 4763.69, 4426.81, 0.0621257)
-M[[jj]]$pre_catch_out[1,] <- pot_male_ret[1:(length(pot_male_ret)-1)]
-plot_catch(M)
-```
+![Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\label{fig:fit_to_catch}](figure/fit_to_catch-1.png)
 
-```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1975-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}", fig.height = 12}
-# estimated number of recruitments female: seq(1968,2008)
-# 2016
-#rec_f <- c(17.0707, 25.925, 29.8683, 51.6996, 38.3764, 14.6497, 70.4083, 33.2085, 52.9009, 4.57629, 27.8906, 6.15353, 4.37952, 4.13648, 11.4324, 6.96502, 0.718979, 4.5763, 0.575209, 29.1253, 1.99369, 0.763189, 4.95964, 16.7755, 5.46132, 6.11056, 30.5387, 4.0503, 7.25958, 31.4988, 5.92376, 5.27457, 5.05108, 5.89551, 8.26562, 8.63609, 5.11815, 2.52513, 1.03167, 2.53766, 1.56217)
-# 2017
-rec_f <- c(16.6203, 24.8987, 28.6467, 49.4034, 36.5597, 14.0565, 68.6874, 32.5652, 52.1421, 4.56213, 27.6828, 6.11474, 4.35065, 4.10836, 11.3223, 6.87334, 0.736218, 4.50874, 0.594796, 28.8167, 2.00399, 0.774134, 4.90323, 16.59, 5.40813, 6.04792, 30.0304, 3.99239, 7.09898, 30.7368, 5.7649, 5.15361, 4.91422, 5.75793, 8.07117, 8.37412, 5.00154, 2.47013, 1.01736, 2.43727, 1.55705)
-# estimated number of recruitments male: seq(1968,2008)
-# 2016
-#rec_m <- c(17.1233, 15.2388, 18.748, 24.6463, 29.9857, 13.3639, 64.4212, 32.6258, 33.2142, 4.03989, 15.6044, 6.4734, 3.24033, 3.73295, 11.7251, 7.40212, 1.2922, 5.87057, 0.914705, 28.1729, 4.53894, 1.90793, 6.73314, 15.415, 5.98756, 3.11696, 24.1102, 4.20828, 8.77771, 22.1832, 12.1232, 6.86644, 4.34433, 4.41878, 8.04963, 7.49265, 5.47651, 4.54582, 1.23435, 2.84266, 1.57952)
-# 2017
-rec_m <- c(16.8336, 14.7309, 18.1631, 23.9778, 29.2141, 12.9747, 63.1229, 32.1647, 33.0318, 3.99647, 15.5154, 6.42593, 3.20255, 3.68911, 11.5983, 7.32998, 1.27599, 5.80391, 0.899527, 27.912, 4.52506, 1.87739, 6.66915, 15.3099, 5.95461, 3.07542, 23.9416, 4.16347, 8.68231, 21.91, 11.9311, 6.74721, 4.24616, 4.32773, 7.8643, 7.28119, 5.34104, 4.44557, 1.19985, 2.7685, 1.52714)
-A <- M
-ii <- which(A[[jj]]$fit$names %in% "sd_log_recruits")#; ii <- ii[length(ii)]
-A[[jj]]$fit$est[ii] <- log(c(rec_m, NA, rec_f, NA) * 1e6)
-A[[jj]]$fit$std[ii] <- NA
-plot_recruitment(A)
-```
+![Comparisons of estimated recruitment time series during 1975-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\bar{R}$) in each model scenario.\label{fig:recruitment}](figure/recruitment-1.png)
 
-```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1975-2016 for each of the model scenarios.\\label{fig:mmb}"}
-ii <- M[[jj]]$fit$names == "sd_log_ssb"
-M[[jj]]$fit$est[ii] <- log(c(80955.7, 90716.6, 94074.4, 97136, 82946.7, 24783.7, 8313.41, 8157.77, 8593.47, 6490.84, 10386, 15126.5, 21635.7, 27635.8, 31316.5, 29177.6, 24245.2, 22123.5, 19574, 25045, 27809.1, 25767.2, 23897.7, 26161.7, 30664, 30535.2, 29357.2, 31147.2, 29741.6, 27613.8, 27847.8, 29785.6, 27042, 28194.5, 31980.5, 32224.4, 32349.9, 31140, 30002.1, 28843, 27680.4, 23940))
-M[[jj]]$fit$std[ii] <- NA
-plot_ssb(M, ylab = "Mature male biomass (tons) on 15 February")
-```
+![Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1975-2016 for each of the model scenarios.\label{fig:mmb}](figure/mature_male_biomass-1.png)
 
-```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
-A <- M
-A[[4]] <- NULL
-A[[3]] <- A[[2]]
-names(A) <- c("Gmacs","Females 2016","Males 2016")
-# estimated proportions of recruitments by length
-# 2016
-#A[[2]]$rec_sdd <- c(0.252677, 0.347303, 0.25851, 0.111753, 0.029757, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-#A[[3]]$rec_sdd <- c(0.251349, 0.343023, 0.256401, 0.112449, 0.0306581, 0.00545854, 0.000662105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-# 2017
-A[[2]]$rec_sdd <- c(0.252692, 0.34716, 0.258476, 0.111844, 0.0298277, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-A[[3]]$rec_sdd <- c(0.251382, 0.342222, 0.256174, 0.112911, 0.0310369, 0.00558752, 0.000687101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-plot_recruitment_size(A, xlab = "Carapace width (mm)")
-```
+![Distribution of carapace width (mm) at recruitment.\label{fig:init_rec}](figure/init_rec-1.png)
 
 
-```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2017 model.\\label{fig:init_N}", fig.height = 15}
-plot_numbers(M, subsetby = c(1975, 1976, 2015, 2016), nrow = NULL, ncol = 8)
-```
+![Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2017 model.\label{fig:init_N}](figure/init_N-1.png)
 
 
-```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). \\label{fig:M_t}"}
-# Natural mortality for males:
-# 2016
-#Mm <- c(0.18, 0.270878, 0.270878, 0.270878, 0.270878, 0.986707, 0.986707, 0.986707, 0.986707, 0.986707, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
-#Mf <- c(0.18, 0.18, 0.18, 0.18, 0.18, 0.64029, 0.64029, 0.64029, 0.64029, 0.64029, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
-# 2017
-Mm <- c(0.18, 0.271176, 0.271176, 0.271176, 0.271176, 0.979748, 0.979748, 0.979748, 0.979748, 0.979748, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.271176, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
-Mf <- c(0.18, 0.18, 0.18, 0.18, 0.18, 0.637793, 0.637793, 0.637793, 0.637793, 0.637793, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
-A <- M
-A[[jj]]$M[1:42,] <- Mm
-A[[jj]]$M[43:84,] <- Mf
-plot_natural_mortality(A, knots = NULL, slab = "Model")
-```
+![Time-varying natural mortality ($M_t$). \label{fig:M_t}](figure/natural_mortality-1.png)
 
 
 \newpage\clearpage
@@ -1765,7 +1259,7 @@ with the NMFS trawl survey, nominally assigned a date of 1 July. Although the
 timing of the fishery is different each year, MMB is measured 15 February,
 which is the reference date for calculation of federal management biomass
 quantities. To accommodate this, each model year is split into 
-`r M[[2]]$nseason` seasons ($t$) and a proportion of the natural mortality
+4 seasons ($t$) and a proportion of the natural mortality
 ($\tau_t$) is applied in each of these seasons where $\sum_{t=1}^{t=4} \tau_t
 = 1$. Each model year consists of the following processes: \begin{enumerate}
 \item Season 1
@@ -1799,13 +1293,59 @@ the natural mortality must be applied before the MMB is calculated. Because
 the timing of the fishery is different each year $\tau_2$ is different each
 year and thus $\tau_3$ differs each year.
 
-```{r m_prop, results = "asis"}
-A <- M[[2]]
-df <- data.frame(A$mod_yrs, A$m_prop)
-names(df) <- c("Year","Season 1","Season 2","Season 3","Season 4")
-tab <- xtable(df, digits = c(0,0,2,2,2,2), caption = "Proportion of the natural mortality ($\\tau_t$) that is applied during each season ($t$) in the model.", label = "tab:m_prop")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
-```
+\begin{table}[ht]
+\centering
+\caption{Proportion of the natural mortality ($\tau_t$) that is applied during each season ($t$) in the model.} 
+\label{tab:m_prop}
+\begin{tabular}{rrrrr}
+  \hline
+Year & Season 1 & Season 2 & Season 3 & Season 4 \\ 
+  \hline
+1975 & 0.01 & 0.23 & 0.45 & 0.31 \\ 
+  1976 & 0.01 & 0.28 & 0.40 & 0.31 \\ 
+  1977 & 0.01 & 0.32 & 0.36 & 0.31 \\ 
+  1978 & 0.01 & 0.25 & 0.43 & 0.31 \\ 
+  1979 & 0.01 & 0.25 & 0.43 & 0.31 \\ 
+  1980 & 0.01 & 0.25 & 0.43 & 0.31 \\ 
+  1981 & 0.01 & 0.25 & 0.43 & 0.31 \\ 
+  1982 & 0.01 & 0.24 & 0.45 & 0.31 \\ 
+  1983 & 0.01 & 0.24 & 0.44 & 0.31 \\ 
+  1984 & 0.01 & 0.27 & 0.41 & 0.31 \\ 
+  1985 & 0.01 & 0.24 & 0.44 & 0.31 \\ 
+  1986 & 0.01 & 0.25 & 0.43 & 0.31 \\ 
+  1987 & 0.01 & 0.25 & 0.43 & 0.31 \\ 
+  1988 & 0.01 & 0.24 & 0.44 & 0.31 \\ 
+  1989 & 0.01 & 0.25 & 0.43 & 0.31 \\ 
+  1990 & 0.01 & 0.35 & 0.33 & 0.31 \\ 
+  1991 & 0.01 & 0.34 & 0.34 & 0.31 \\ 
+  1992 & 0.01 & 0.34 & 0.34 & 0.31 \\ 
+  1993 & 0.01 & 0.35 & 0.34 & 0.31 \\ 
+  1994 & 0.01 & 0.34 & 0.34 & 0.31 \\ 
+  1995 & 0.01 & 0.34 & 0.34 & 0.31 \\ 
+  1996 & 0.01 & 0.34 & 0.34 & 0.31 \\ 
+  1997 & 0.01 & 0.34 & 0.34 & 0.31 \\ 
+  1998 & 0.01 & 0.34 & 0.34 & 0.31 \\ 
+  1999 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2000 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2001 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2002 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2003 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2004 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2005 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2006 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2007 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2008 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2009 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2010 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2011 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2012 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2013 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2014 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2015 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+  2016 & 0.01 & 0.30 & 0.38 & 0.31 \\ 
+   \hline
+\end{tabular}
+\end{table}
 
 With boldface lower-case letters indicating vector quantities we designate the
 vector of stage abundances during season $t$ and year $y$ as
