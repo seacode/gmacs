@@ -3089,8 +3089,6 @@ FUNCTION calc_predicted_composition
 					}
 				}
 			}
-			// This was incompatible with variable numbers of bins
-			// d3_pre_size_comps_in(ii)(jj) = dNtmp;
 			d3_pre_size_comps_in(ii)(jj)        = dNtmp(1,nbins);
 			d3_pre_size_comps_in(ii)(jj)(nbins) = sum(dNtmp(nbins,nclass));
 		}
@@ -3139,11 +3137,11 @@ FUNCTION void get_all_sdnr_MAR()
 			dvar_vector restmp = elem_div(log(elem_div(obs_cpue(k), pre_cpue(k))), stdtmp) + 0.5 * stdtmp;
 			sdnr_MAR_cpue(k) = calc_sdnr_MAR(value(restmp));
 		}
-		//for ( int k = 1; k <= nSizeComps; k++ )
-		//{
-		//	//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
-		//	sdnr_MAR_lf(k) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
-		//}
+		for ( int k = 1; k <= nSizeComps; k++ )
+		{
+			//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
+			sdnr_MAR_lf(k) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
+		}
 		//Francis_weights = calc_Francis_weights();
 	}
 
@@ -3201,8 +3199,8 @@ FUNCTION dvector calc_Francis_weights()
 			{
 				//if ( sum(d3_obs_size_comps(k,i)) > 0 )
 				//{
-	cout << "k= " << k << " i=" << i << endl;
-	cout << d3_obs_size_comps(k,i) << endl;
+					cout << "k= " << k << " i=" << i << endl;
+					cout << d3_obs_size_comps(k,i) << endl;
 					Obs = sum(elem_prod(d3_obs_size_comps(k,i), mid_points));
 					Pre = sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
 					Var = sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
