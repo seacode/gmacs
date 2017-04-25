@@ -53,8 +53,8 @@ plot_numbers <- function(M, subsetby = "", nrow = 2, ncol = NULL)
     {
         p <- p + geom_line(aes(col = Sex, linetype = Shell))
     } else {
-        p <- p + geom_line(aes(col = Model, linetype = Sex))
+        p <- p + geom_line(aes(col = Model, linetype = Shell))
     }
-    p <- p + facet_wrap(Sex ~ Year, nrow = nrow, ncol = ncol)
+    p <- p + facet_wrap(Model + Sex ~ Year, nrow = nrow, ncol = ncol)
     print(p + .THEME)
 }

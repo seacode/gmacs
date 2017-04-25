@@ -93,24 +93,6 @@ nmult_2 <- 0.0004535923 * 1e+6
 #M[[jj]]$d3_pre_size_comps_out[16:54,] <- rbind(t(JJ[[jj]]$P_ts), c(NA,NA,NA))
 #M[[jj]]$d3_pre_size_comps_out[55:63,] <- rbind(t(JJ[[jj]]$P_ps), c(NA,NA,NA))
 
-# Add selectivity data
-# year, sex, fleet, vec
-# ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[1:31]
-# for (i in ind)
-#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[1:2],1) # Directed pot fisheries
-# ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[32:38]
-# for (i in ind)
-#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[3:4],1) # Directed pot fisheries
-# ind <- which(M[[jj]]$slx_capture[,3] %in% 4)
-# for (i in ind)
-#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ts,1) # Trawl survey
-# ind <- which(M[[jj]]$slx_capture[,3] %in% 5)
-# for (i in ind)
-#     M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ps,1) # ADF&G pot survey
-
-# Add recruitment size distribution data - in Jies model all recruit to first size class, in gmacs almost all to first size class.
-#M[[jj]]$rec_sdd <- c(1,0,0)
-
 # The .rep files for each of the Gmacs models. Used for making tables of the likelihood components
 #like <- list()
 #like[[1]] <- readLines("../../examples/bbrkc/OneSex/gmacs.rep")
@@ -154,7 +136,7 @@ in 1985 and mature males being about two times more abundant in 2009 than in 198
 Estimated mature abundance has steadily declined since 2009.
 
 4. **Recruitment**: 
-Estimated recruitment was high during 1970s and early 1980s and has
+Estimated recruitment was high during the 1970s and early 1980s and has
 generally been low since 1985. During 1984-2016, in only 6 years 
 were estimated recruitments above the historical average for
 1976-2016. Estimated recruitment was low during the last 10 years.
@@ -274,9 +256,7 @@ This assessment was done using Gmacs.
 There are several differences between the
 Gmacs assessment model and the previous model. One of the major differences
 being that natural and fishing mortality are continuous within 
-`r M[[2]]$nseason` 
-discrete seasons. 
-Season length in Gmacs is controlled by
+`r M[[2]]$nseason` discrete seasons. Season length in Gmacs is controlled by
 changing the proportion of natural mortality that is applied during each
 season. A detailed outline of the Gmacs implementation of the BBRKC model is
 provided in Appendix A.
@@ -553,14 +533,11 @@ Year  & Males & Females & Catch & Males & Females & Males & Females & Males & Fe
 ## Summary of New Information
 
 Data used in this assessment have been updated to include the most recently
-available fishery and survey numbers. 
-The NMFS and BSFRF trawl survey data were updated to include the survey data
-in 2016.  
-Catch and biomass data were updated to 2016/17. Groundfish fisheries
-bycatch data during 2009-2016 were updated and separated into trawl fisheries
-and fixed gear. Bycatch of BBRKC in the directed Tanner crab pot fishery were also included.
-
-Survey and fishery size composition data were also used updated and the extent
+available fishery and survey numbers. The NMFS and BSFRF trawl survey data were 
+updated to include the survey data in 2016. Catch and biomass data were updated 
+to 2016/17. Groundfish fisheries bycatch data during 2009-2016 were updated and 
+separated into trawl fisheries and fixed gear. Bycatch of BBRKC in the directed Tanner crab pot fishery were 
+also included. Survey and fishery size composition data were also updated and the extent of all different data sources
 is shown in Figure \ref{fig:data_extent}.
 
 ```{r data_extent, fig.cap = "Data extent for the BBRKC assessment.\\label{fig:data_extent}"}
@@ -698,7 +675,7 @@ fit to the data from 1975 to 2016.
 This assessment represents the implementation of a third modeling framework based
 on Gmacs (Anon. 2015).
 
-## Assessment Methodology
+## Model Description
 
 The original LBA model was described in detail by Zheng et al. (1995a, 1995b)
 and Zheng and Kruse (2002). The model combines multiple sources of survey,
@@ -751,29 +728,28 @@ The following elements required for crab stock assessments follow.
 
 ### Alternative model configurations
 Three different Gmacs model scenarios were considered, in this document results
-from these models and the 2017 model are compared. The models include:
+from these models and the 2017 model are compared. The Gmacs models include:
 
-1. **Gmacs base**: directed BBRKC fishery, Tanner crab trawl and fixed gear
-fisheries (separated), NMFS trawl and BSFRF surveys.
-The catchability coefficient ($q$) for the BSFRF survey was estimated as
-well as the average recruitment ($\bar{R}$), the recruitment
-deviations ($\delta^R_y$), the initial numbers in each size category
-($\boldsymbol{n}^0$), sex-specific natural mortality deviations in year $t_m$,
+1. **Gmacs base**: includes removals by the directed BBRKC fishery, Tanner crab trawl and fixed gear
+fisheries (separated). The model uses the NMFS trawl and BSFRF surveys as abudance indces. 
+The BSFRF survey catchability coefficient is fixed at $q = 1.0$ in this model run.
+The estimated parameters include the average recruitment ($\bar{R}$), the recruitment
+deviations ($\delta^R_y$), sex-specific natural mortality deviations in year $t_m$,
 ($\delta^M_{t_m}$), and the fishing mortalities for the directed pot fishery,
-the trawl bycatch fishery, and the fixed-gear bycatch fishery 
+the trawl bycatch fishery, the tanner crab bycatch fishery, and the fixed-gear bycatch fishery 
 ($\bar{F}^\text{df}$,
+$\bar{F}^\text{tb}$, 
 $\bar{F}^\text{tcb}$, 
 $\bar{F}^\text{fgb}$, 
-$\bar{F}^\text{tgb}$, 
 $\delta^\text{df}_{t,y}$,
+$\delta^\text{tb}_{t,y}$, 
 $\delta^\text{tcb}_{t,y}$, 
-$\delta^\text{fgb}_{t,y}$, 
-$\delta^\text{tgb}_{t,y}$).
+$\delta^\text{fgb}_{t,y}$).
 
-2. **Free q**: is similar to the scenario above except that it estimates the BSFRF survey catchability parameter $q$ rather
+2. **Free q**: is similar to the scenario above except that it estimates the BSFRF survey catchability coefficient $q$ rather
 than fixing it at $q = 1.0$.
 
-3. **Variable M**: is similar to the scenario above except that it allows $M$ to change
+3. **Variable M**: is similar to the Gmacs base scenario except that it allows $M$ to change
 as a random walk with a log-normal distribution penalty with $\sigma_M$ set to 0.25.
 
 
@@ -782,13 +758,13 @@ Table \ref{tab:model_runs} outlines the major features of each of the models.
 \centering
 \caption{Outline of the major features of the five different Gmacs scenarios.} 
 \label{tab:model_runs}
-\begin{tabular}{lccc}
+\begin{tabular}{lcc}
   \hline
-  Scenario & Selectivity estimated &  Estimate $M_{1998}$ \\
+  Scenario & Estimate BSFRF $q$ & Random walk natural mortality \\
   \hline
-  Gmacs base    & Yes & No  & Yes \\ 
-  Gmacs M         & Yes & No  & No  \\ 
-  Gmacs $M_{rw}$       & Yes & No  & No  \\ 
+  Gmacs base   & No  & No \\ 
+  Free q       & Yes & No \\ 
+  Variable M   & No  & Yes \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -817,24 +793,7 @@ plots (Figures \ref{fig:sc_pot}, \ref{fig:sc_pot_discarded}, and
 \ref{fig:sc_trawl_discarded}).
 
 Data weighting factors, SDNRs, and MARs are presented in Table
-\ref{tab:data_weighting}. The SDNR for the trawl survey is acceptable at 1.44
-in the **Gmacs match** scenario, and improves to 1.41 in the **Gmacs base**
-scenario. In the **Gmacs M** model the SDNR of the trawl survey is slightly
-worse at 1.59, and is much worse in the exploratory **Gmacs force** scenario
-at 2.16. The SDNRs for the pot surveys show much the same pattern between each
-of the scenarios, but are much higher values (ranging from 3.95 to 5.19).
-These values are very high, and whilst they can be improved by down-weighting
-the pot survey, it is recommended that they be left as they are as the pot
-survey is one of the most important data series in this model. The MAR for the
-trawl and pot surveys shows the same pattern among each of the scenarios as
-the SDNR. The SDNR (and MAR) values for the trawl survey and pot survey size
-compositions were excellent, ranging from 0.78 to 1.30 (except for in the
-**Gmacs force** scenario where the weights were a little high). The SDNRs for
-the directed pot fishery size compositions are a little low, ranging from 0.64
-to 0.79. However, the SDNRs (and MARs) were not used when weighting the size
-composition data sets in those scenarios that used the Francis weighting
-method (i.e. in the **Gmacs Francis**, and **Gmacs Force** scenarios).
-Instead, the Francis size composition weights were used (Francis 2011).
+\ref{tab:data_weighting}.
 
 ### b. Tables of estimates
 
@@ -846,11 +805,10 @@ Tables \ref{tab:est_pars_match}, \ref{tab:est_pars_base},
 for each of the Gmacs scenarios are compared in Tables
 \ref{tab:likelihood_components} and \ref{tab:management_quants}.
 
-There is little difference in the parameter estimates within the **Gmacs
-match** and **Gmacs base** scenarios. This is reflected in the log-likelihood
-components and the management quantities. The parameter estimates in the
-**Gmacs M** scenario are a little different to the previous scenarios,
-particularly the estimate of the ADF&G pot survey catchability ($q$) (see
+There is little difference in the parameter estimates within 
+the **Gmacs match** and **Gmacs base** scenarios. This is reflected in the 
+log-likelihood components and the management quantities. The parameter estimates in the
+**Gmacs M** scenario are a little different to the previous scenarios (see
 Table \ref{tab:est_pars_all}).
 
 ### c. Graphs of estimates.
@@ -1118,13 +1076,13 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 
 \begin{table}[ht]
 \centering
-\caption{Observed and assumed sample sizes for observer data from the directed pot fishery, the NMFS trawl survey, and the ADF\&G pot survey.} 
+\caption{Observed and assumed sample sizes for observer data from the directed pot fishery, the NMFS trawl survey, and the BSFRF survey.} 
 \label{tab:effn}
 \begin{tabular}{lccccccc}
   \hline
   & \multicolumn{3}{c}{Observed sample sizes} & \multicolumn{3}{c}{Assumed sample sizes} \\
   \cline{2-4}\cline{6-8}
-  Year & Observer pot & NMFS trawl & ADF\&G pot & & Observer pot & NMFS trawl & ADF\&G pot \\ 
+  Year & Observer pot & NMFS survey & BSFRF survey & & Observer pot & NMFS survey & BSFRF survey \\ 
   \hline
   1978 &              & 157        &          & &              & 50         & \\
   1979 &              & 178        &          & &              & 50         & \\
@@ -1202,10 +1160,10 @@ for (ii in 2:length(M))
     names(ll_catch) <- unique(paste0(dc$fleet, " ", dc$type, " ", dc$sex, " Catch"))
     # Abundance indices
     ll_cpue <- x$nloglike[2, 1:2]
-    names(ll_cpue) <- c("NMFS Trawl Survey", "ADF\\&G Pot Survey")
+    names(ll_cpue) <- c("NMFS Trawl Survey", "BSFRF Survey")
     # Size compositions
     ll_lf <- x$nloglike[3,1:3]
-    names(ll_lf) <- c("Directed Pot LF", "NMFS Trawl LF", "ADF\\&G Pot LF")
+    names(ll_lf) <- c("Directed Pot LF", "NMFS Trawl LF", "BSFRF LF")
     # Recruitment deviations
     ll_rec <- sum(x$nloglike[4,], na.rm = TRUE)
     names(ll_rec) <- "Recruitment deviations"
@@ -1229,7 +1187,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 \newpage\clearpage
 
-```{r molt_prob, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:molt_prob}"}
+```{r molt_prob, fig.cap = "Comparisons of the estimated molting probabilities.\\label{fig:molt_prob}"}
 mp1 <- c(0.999966, 0.999934, 0.99987, 0.999746, 0.999504, 0.999031, 0.998109, 0.996311, 0.992816, 0.986056, 0.973108, 0.948763, 0.90454, 0.829026, 0.712748, 0.559415, 0.393843, 0.249522, 0.145401, 0.0800909)
 mp2 <- c(0.999292, 0.998841, 0.998102, 0.996894, 0.994921, 0.991705, 0.986481, 0.978039, 0.964516, 0.943149, 0.910114, 0.86072, 0.790431, 0.697152, 0.584195, 0.461642, 0.343556, 0.242093, 0.163148, 0.106334)
 
@@ -1240,7 +1198,7 @@ M[[2]]$molt_probability[43:84,] <- 1
 plot_molt_prob(M)
 ```
 
-```{r growth_inc, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:growth_inc}"}
+```{r growth_inc, fig.cap = "Comparisons of the molting increments.\\label{fig:growth_inc}"}
 gi1 <- c(13.8, 12.2, 10.5, 8.4, 7.5, 7, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7, 0.4)
 gi2 <- c(15.4, 13.8, 12.2, 10.5, 8.9, 7.9, 7.2, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7)
 gi3 <- c(15.1, 14, 12.9, 11.8, 10.6, 8.7, 7.4, 6.6, 6.1, 5.6, 5.1, 4.6, 4.1, 3.6, 3.2, 2.7, 2.2, 1.7, 1.2, 0.7)
@@ -1356,6 +1314,7 @@ gm_m2 <- matrix(scan(text = "
 
 M1 <- M
 M1[[3]] <- M[[2]]
+M1[[4]] <- NULL
 names(M1) <- c('Gmacs','1983-93','1994-present')
 
 M1[[2]]$growth_transition[1:20,] <- gm_m1
@@ -1476,7 +1435,8 @@ M1[[3]]$size_transition_F <- gm_f2
 #plot_size_transition(M1, xlab = "Carapace width after transition (mm)")
 ```
 
-```{r selectivity, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:selectivity}", fig.height = 15}
+
+```{r selectivity, fig.cap = "Comparisons of the estimated selectivities for each of the different model scenarios. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the tanner crab bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the BSFRF survey. Two selectivity periods are estimated in the NMFS trawl survey, from 1975-1981 and 1982-2016.\\label{fig:selectivity}", fig.height = 15}
 A <- M
 # selectivity fishery total males: '67.5-162.5'
 pot_male_total <- c(7.82969e-017, 1.12203e-015, 1.60793e-014, 2.30424e-013, 3.30208e-012, 0.0127727, 0.0309995, 0.0492263, 0.0674533, 0.085682, 0.103935, 0.122543, 0.146199, 0.236219, 0.630676, 0.954637, 0.99598, 0.99972, 0.999982, 1)
@@ -1535,49 +1495,95 @@ for (i in ind) A[[jj]]$slx_capture[i,4:23] <- nmfs_fem_total2
 
 # WHERE IS BSFRF?
 
-plot_selectivity(A, ncol = 4)
+B <- A
+B[[4]] <- NULL
+B[[3]] <- NULL
+
+plot_selectivity(B, ncol = 4)
 ```
 
 
-```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2017 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"} 
+```{r selectivity2, fig.cap = "Comparisons of the estimated selectivities for each of the different model scenarios. Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the tanner crab bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the BSFRF survey. Two selectivity periods are estimated in the NMFS trawl survey, from 1975-1981 and 1982-2016.\\label{fig:selectivity2}", fig.height = 15}
+B <- A
+B[[1]] <- B[[3]]
+B[[2]] <- B[[4]]
+B[[4]] <- NULL
+B[[3]] <- NULL
+plot_selectivity(B, ncol = 4)
+```
+
+
+```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept biomass estimates for males and females (tons) and model predictions for the NMFS trawl survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"} 
 A <- M
 #A[[1]]$obs_cpue <- ? as per usual Jie's outputs need to be customized
 plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (t)") 
 ```
-```{r }
-#trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept
-#estimates of total male survey biomass (tons) and model predictions for the
-#2015 model and each of the Gmacs model scenarios. The solid black error bars
-#are plus and minus 2 standard deviations derived using the original survey
-#CVs. The dotted error bars are plus and minus 2 standard deviations but
-#represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
-#plot_cpue(M, subsetby = "NMFS Trawl", ylab = "Survey biomass (tons)", ShowEstErr = TRUE) 
-```
 
 \newpage\clearpage
 
-```{r pot_survey_cpue, fig.cap = "Comparisons of area-swept biomass estimates for the BSFRF data for the 2017 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:pot_survey_cpue}"}
+```{r pot_survey_cpue, fig.cap = "Comparisons of area-swept biomass estimates (tons) for the BSFRF survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:pot_survey_cpue}"}
 plot_cpue(M, "BSFRF", ylab = "Survey biomass (t)")
 ```
 
-```{r bts_resid_nmfs, fig.cap = "Standardized residuals for area-swept estimates of total male survey biomass for each of the Gmacs model scenarios. \\label{fig:bts_resid_nmfs}"}
+```{r bts_resid_nmfs, fig.cap = "Standardized residuals for area-swept biomass estimates for males and females (tons) for the NMFS trawl survey showing each of the Gmacs model scenarios. \\label{fig:bts_resid_nmfs}"}
 A <- M; A[[jj]] <- NULL
 plot_cpue_res(A, "NMFS Trawl")
 ```
 
 \newpage\clearpage
 
-```{r sc_pot, fig.cap = "Observed and model estimated size-frequencies of BBRKC by year retained in the directed pot fishery for the 2016 model and each of the Gmacs model scenarios. Note that there is no model estimated size- frequency for the 2016 model during the 2016 year. \\label{fig:sc_pot}"}
+```{r sc_pot_retained_male, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios. \\label{fig:sc_pot}"}
 plot_size_comps(M, 1) 
 ```
 
-```{r sc_pot_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed fishery for the 2017 model and each of the Gmacs model scenarios. Note that there is no model estimated size-frequency for the 2015 model during the 2016 year.\\label{fig:sc_pot_discarded}"} 
+```{r sc_pot_discarded_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_male}"} 
 plot_size_comps(M, 2) 
 ```
 
-```{r sc_trawl_discarded, fig.cap = "Observed and model estimated size-frequencies of discarded BBRKC by year in the trawl groundfish fisheries. \\label{fig:sc_trawl_discarded}"}
+```{r sc_pot_discarded_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_female}"}
 plot_size_comps(M, 3)
 ```
+
+```{r sc_trawl_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_male}"}
+plot_size_comps(M, 4)
+```
+
+```{r sc_trawl_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_female}"}
+plot_size_comps(M, 5)
+```
+
+```{r sc_tc_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_male}"}
+plot_size_comps(M, 6)
+```
+
+```{r sc_tc_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_female}"}
+plot_size_comps(M, 7)
+```
+
+```{r sc_fixed_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_male}"}
+plot_size_comps(M, 8)
+```
+
+```{r sc_fixed_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_female}"}
+plot_size_comps(M, 9)
+```
+
+```{r sc_nmfs_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_male}"}
+plot_size_comps(M, 10)
+```
+
+```{r sc_nmfs_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_female}"}
+plot_size_comps(M, 11)
+```
+
+```{r sc_bsfrf_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_male}"}
+plot_size_comps(M, 12)
+```
+
+```{r sc_bsfrf_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_female}"}
+plot_size_comps(M, 13)
+```
+
 \newpage\clearpage
 
 ```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\\label{fig:fit_to_catch}", fig.height = 12}
@@ -1587,7 +1593,7 @@ M[[jj]]$pre_catch_out[1,] <- pot_male_ret[1:(length(pot_male_ret)-1)]
 plot_catch(M)
 ```
 
-```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}", fig.height = 12}
+```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1975-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}", fig.height = 12}
 # estimated number of recruitments female: seq(1968,2008)
 # 2016
 #rec_f <- c(17.0707, 25.925, 29.8683, 51.6996, 38.3764, 14.6497, 70.4083, 33.2085, 52.9009, 4.57629, 27.8906, 6.15353, 4.37952, 4.13648, 11.4324, 6.96502, 0.718979, 4.5763, 0.575209, 29.1253, 1.99369, 0.763189, 4.95964, 16.7755, 5.46132, 6.11056, 30.5387, 4.0503, 7.25958, 31.4988, 5.92376, 5.27457, 5.05108, 5.89551, 8.26562, 8.63609, 5.11815, 2.52513, 1.03167, 2.53766, 1.56217)
@@ -1605,7 +1611,7 @@ A[[jj]]$fit$std[ii] <- NA
 plot_recruitment(A)
 ```
 
-```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2016 for each of the model scenarios.\\label{fig:mmb}"}
+```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1975-2016 for each of the model scenarios.\\label{fig:mmb}"}
 ii <- M[[jj]]$fit$names == "sd_log_ssb"
 M[[jj]]$fit$est[ii] <- log(c(80955.7, 90716.6, 94074.4, 97136, 82946.7, 24783.7, 8313.41, 8157.77, 8593.47, 6490.84, 10386, 15126.5, 21635.7, 27635.8, 31316.5, 29177.6, 24245.2, 22123.5, 19574, 25045, 27809.1, 25767.2, 23897.7, 26161.7, 30664, 30535.2, 29357.2, 31147.2, 29741.6, 27613.8, 27847.8, 29785.6, 27042, 28194.5, 31980.5, 32224.4, 32349.9, 31140, 30002.1, 28843, 27680.4, 23940))
 M[[jj]]$fit$std[ii] <- NA
@@ -1614,6 +1620,7 @@ plot_ssb(M, ylab = "Mature male biomass (tons) on 15 February")
 
 ```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
 A <- M
+A[[4]] <- NULL
 A[[3]] <- A[[2]]
 names(A) <- c("Gmacs","Females 2016","Males 2016")
 # estimated proportions of recruitments by length
@@ -1626,12 +1633,13 @@ A[[3]]$rec_sdd <- c(0.251382, 0.342222, 0.256174, 0.112911, 0.0310369, 0.0055875
 plot_recruitment_size(A, xlab = "Carapace width (mm)")
 ```
 
-```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2015 model.\\label{fig:init_N}", fig.height = 15}
-plot_numbers(M, subsetby = c(1975, 1976, 2015, 2016))
+
+```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2017 model.\\label{fig:init_N}", fig.height = 15}
+plot_numbers(M, subsetby = c(1975, 1976, 2015, 2016), nrow = NULL, ncol = 8)
 ```
 
 
-```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). Estimated pulse period occurs in 1979/80 (i.e. $M_{1980}$). \\label{fig:M_t}"}
+```{r natural_mortality, fig.cap = "Time-varying natural mortality ($M_t$). \\label{fig:M_t}"}
 # Natural mortality for males:
 # 2016
 #Mm <- c(0.18, 0.270878, 0.270878, 0.270878, 0.270878, 0.986707, 0.986707, 0.986707, 0.986707, 0.986707, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.270878, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18)
@@ -1652,22 +1660,12 @@ plot_natural_mortality(A, knots = NULL, slab = "Model")
 
 ## 1. Introduction
 
-The Gmacs model has been specified to account for male and female crab in 
-newshell and oldshell categories. These are partitioned into 20 stages (size-classes) 
+The Gmacs model has been specified to account for newshell and oldshell, 
+male and female crab. These are partitioned into 20 stages (size-classes) 
 determined by carapace length (CL) measurements from 65-70 mm through to 
 160-165 mm. 
 
-For management of the Britol Bay red king crab (BBRKC)
-fishery, 120 mm CL is used as the proxy value for the legal measurement of 5.5
-mm in carapace width (CW), whereas 105 mm CL is the management proxy for
-mature-male size (5 AAC 34.917 (d)). Accordingly, within the model only
-stage-3 crab are retained in the directed fishery, and stage-2 and stage-3
-crab together comprise the collection of mature males. Some justification for
-the 105 mm value is presented in Pengilly and Schmidt (1995), who used it in
-developing the current regulatory SMBKC harvest strategy. The term “recruit”
-here designates recruits to the model, i.e., annual new stage-1 crab, rather
-than recruits to the fishery. The following description of model structure
-reflects the Gmacs base model configuration.
+The following description of model structure reflects the Gmacs base model configuration.
 
 ## 2. Model Population Dynamics
 
@@ -1675,9 +1673,9 @@ Within the model, the beginning of the crab year is assumed contemporaneous
 with the NMFS trawl survey, nominally assigned a date of 1 July. Although the
 timing of the fishery is different each year, MMB is measured 15 February,
 which is the reference date for calculation of federal management biomass
-quantities. To accommodate this, each model year is split into `r
-M[[2]]$nseason` seasons ($t$) and a proportion of the natural mortality
-($\tau_t$) is applied in each of these seasons where $\sum_{t=1}^{t=5} \tau_t
+quantities. To accommodate this, each model year is split into 
+`r M[[2]]$nseason` seasons ($t$) and a proportion of the natural mortality
+($\tau_t$) is applied in each of these seasons where $\sum_{t=1}^{t=4} \tau_t
 = 1$. Each model year consists of the following processes: \begin{enumerate}
 \item Season 1
 \begin{itemize}
@@ -1721,23 +1719,22 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 With boldface lower-case letters indicating vector quantities we designate the
 vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}
-    \boldsymbol{n}_{t,y} = n_{l,t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{...,t,y} \right]^\top.
+    \boldsymbol{n}_{t,y} = n_{l,t,y} = \left[ n_{1,t,y}, n_{2,t,y}, \cdots, n_{L,t,y} \right]^\top.
 \end{equation}
 
 The number of new crab, or recruits, of each stage entering the model each
 season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$.
-The BBRKC formulation of Gmacs specifies recruitment to stage-1 only during
-season $t=5$, thus the recruitment size distribution is
-
+The BBRKC formulation of Gmacs specifies recruitment to several stages during
+season $t=4$, thus the recruitment size distribution is
 \begin{equation}
-    \phi_l = \left[ 1, 0, \dots, 0 \right]^\top,
+    \phi_l = \Gamma (\alpha, \beta),
 \end{equation}
 and the recruitment is
 \begin{equation}
   \boldsymbol{r}_{t,y} = 
   \begin{cases}
-    0 &\text{for} \quad t<5\\
-    \bar{R} \phi_l \delta^R_y &\text{for} \quad t=5.
+    0 &\text{for} \quad t<4\\
+    \bar{R} \phi_l \delta^R_y &\text{for} \quad t=4.
   \end{cases}
 \end{equation}
 where $\bar{R}$ is the average annual recruitment and $\delta^R_y$ are the recruitment deviations each year $y$
@@ -1760,32 +1757,33 @@ The natural mortality each season $t$ and year $y$ is
 \end{equation}
 Fishing mortality by year $y$ and season $t$ is denoted $F_{t,y}$ and calculated as
 \begin{equation}
-    F_{t,y} = F_{t,y}^\text{df} + F_{t,y}^\text{tb} + F_{t,y}^\text{fb}
+    F_{t,y} = F_{t,y}^\text{df} + F_{t,y}^\text{tb} + F_{t,y}^\text{tcb} + F_{t,y}^\text{fgb}
 \end{equation}
-where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed fishery, $F_{t,y}^\text{tb}$ is the fishing mortality associated with the trawl bycatch fishery, $F_{t,y}^\text{fb}$ is the fishing mortality associated with the fixed bycatch fishery. Each of these are derived as
+where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed fishery, $F_{t,y}^\text{tb}$ is the fishing mortality associated with the trawl bycatch fishery, $F_{t,y}^\text{tc}$ is the fishing mortality associated with the tanner crab bycatch fishery, and $F_{t,y}^\text{fgb}$ is the fishing mortality associated with the fixed gear bycatch fishery. Each of these are derived as
 \begin{align}
     F_{t,y}^\text{df} &= \bar{F}^\text{df} + \delta^\text{df}_{t,y} \quad \text{where} \quad \delta^\text{df}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{df} \right), \notag\\
-    F_{t,y}^\text{tgb} &= \bar{F}^\text{tgb} + \delta^\text{tgb}_{t,y} \quad \text{where} \quad \delta^\text{tgb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tgb} \right), \notag\\
-    F_{t,y}^\text{fgb} &= \bar{F}^\text{fgb} + \delta^\text{fgb}_{t,y} \quad \text{where} \quad \delta^\text{fgb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{fgb} \right),\notag\\
-    F_{t,y}^\text{tcb} &= \bar{F}^\text{tcb} + \delta^\text{tcb}_{t,y} \quad \text{where} \quad \delta^\text{tcb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tcb} \right), 
+    F_{t,y}^\text{tb} &= \bar{F}^\text{tb} + \delta^\text{tb}_{t,y} \quad \text{where} \quad \delta^\text{tb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tb} \right), \notag\\
+    F_{t,y}^\text{tcb} &= \bar{F}^\text{tcb} + \delta^\text{tcb}_{t,y} \quad \text{where} \quad \delta^\text{tcb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tcb} \right),\notag\\
+    F_{t,y}^\text{fgb} &= \bar{F}^\text{fgb} + \delta^\text{fgb}_{t,y} \quad \text{where} \quad \delta^\text{fgb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{fgb} \right), 
 \end{align}
-where $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, and $\delta^\text{fb}_{t,y}$ are the fishing mortality deviations for each of the fisheries, each season $t$ during each year $y$, $\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, and $\bar{F}^\text{fb}$ are the average fishing mortalities for each fishery. The total mortality $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$
+where $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, $\delta^\text{tcb}_{t,y}$, and $\delta^\text{fgb}_{t,y}$ are the fishing mortality deviations for each of the fisheries, each season $t$ during each year $y$, $\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, $\bar{F}^\text{tcb}$, and $\bar{F}^\text{fgb}$ are the average fishing mortalities for each fishery. The total mortality $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$
 \begin{equation}
     \boldsymbol{Z}_{t,y} = Z_{l,t,y} = M_{t,y} + F_{t,y}.
 \end{equation}
-[needs updating]
 The survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
 \begin{equation}
-  \boldsymbol{S}_{t,y} = \left[ \begin{array}{ccc}
-    1-e^{-Z_{1,t,y}} & 0 & 0 \\
-    0 & 1-e^{-Z_{2,t,y}} & 0 \\
-    0 & 0 & 1-e^{-Z_{3,t,y}} \end{array} \right].
+  \boldsymbol{S}_{t,y} = \left[ \begin{array}{ccccc}
+    1-e^{-Z_{1,t,y}} & 0 & 0 & \cdots & 0 \\
+    0 & 1-e^{-Z_{2,t,y}} & 0 & \cdots & 0 \\
+    0 & 0 & 1-e^{-Z_{3,t,y}} & \cdots & 0 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & \cdots & 0 & 0 & 1-e^{-Z_{L,t,y}} \end{array} \right].
 \end{equation}
 
 The basic population dynamics underlying Gmacs can thus be described as
 \begin{align}
-    \boldsymbol{n}_{t+1,y} &= \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y}, &\text{ if } t<5 \notag\\
-    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y} &\text{ if } t=5.
+    \boldsymbol{n}_{t+1,y} &= \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y}, &\text{ if } t<4 \notag\\
+    \boldsymbol{n}_{t,y+1} &= \boldsymbol{G} \boldsymbol{S}_{t,y} \boldsymbol{n}_{t,y} + \boldsymbol{r}_{t,y} &\text{ if } t=4.
 \end{align}
 
 
