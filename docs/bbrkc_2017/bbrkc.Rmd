@@ -151,13 +151,7 @@ groundfish fisheries.  The stock was above the minimum stock-size threshold
   
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (1000 tons) (scenario {\bf Gmacs base}). 
-Notes: A - calculated from the assessment reviewed by the Crab Plan Team in
-September 2013, B - calculated from the assessment reviewed by the Crab Plan
-Team in September 2014, C - calculated from the assessment reviewed by the
-Crab Plan Team in September 2015, D - calculated from the assessment reviewed
-by the Crab Plan Team in September 2016.}
-
+\caption{Status and catch specifications (1000 tons) (scenario {\bf Gmacs base}).}
 \label{tab:status}
 \begin{tabular}{lccccccc}
 \hline
@@ -381,15 +375,16 @@ The current harvest strategy is illustrated in Figure \ref{fig:HarvestPolicy}).
 
 \begin{table}[ht]
 \centering
-\caption{ Bristol Bay red king crab annual catch and bycatch mortality biomass (t) from
+\caption{Bristol Bay red king crab annual catch and bycatch mortality biomass (t) from
 June 1 to May 31. A handling mortality rate of 20\% for the directed pot, 25\%
 for the Tanner fishery, and 80\% for trawl was assumed to estimate bycatch
-mortality biomass. }
+mortality biomass.}
 \label{tab:bbrkc_fishery}
 \footnotesize
-\begin{tabular}{lrrrrrrrrr}
+\begin{tabular}{@{\extracolsep{4pt}}lrrrrrrrrr@{}}
 \hline
-Year & \multicolumn{4}{c}{Retained Catch}                 & \multicolumn{2}{c}{Pot Bycatch}Trawl         & Tanner Fshry  & Total      \\
+Year & \multicolumn{4}{c}{Retained Catch}                 & \multicolumn{2}{c}{Pot Bycatch} & Trawl         & Tanner Fishery  & Total      \\
+\cline{2-5}\cline{6-7}
      & U.S.           & Cost-Recovery & Foreign & Total   & Males       & Females & Bycatch       & Bycatch        & Catch      \\
 \hline
 1953 & 1331.3         &               & 4705.6  & 6036.9  &             &         &               &                & 6036.9     \\
@@ -459,17 +454,88 @@ Year & \multicolumn{4}{c}{Retained Catch}                 & \multicolumn{2}{c}{P
 \end{tabular}
 \end{table}
 
+
 \begin{table}[ht]
 \centering
-\caption{
-Annual sample sizes (>64 mm CL) in numbers of crab for trawl surveys, retained
-catch and pot and trawl fishery bycatch of Bristol Bay red king crab.
-}
+\caption{Annual retained catch (millions of crab) and catch per unit effort of the Bristol Bay red king crab fishery.}
+\label{tab:bbrkc_catch_cpue}
+\footnotesize
+\begin{tabular}{@{\extracolsep{4pt}}lrrrrrrr@{}}
+\hline
+Year & \multicolumn{2}{c}{Japanese Tanglenet} & \multicolumn{2}{c}{Russian Tanglenet} & \multicolumn{2}{c}{U.S. Pot/Trawl}  & Standardized \\
+\cline{2-3}\cline{4-5}\cline{6-7}
+     & Catch & Crab/tan                       & Catch & Crab/tan                      & Catch & Crab/Potlift                & Crab/tan \\
+\hline
+1960 & 1.949 & 15.2                           & 1.995 & 10.4                          & 0.088  &                             & 15.8 \\
+1961 & 3.031 & 11.8                           & 3.441 & 8.9                           & 0.062  &                             & 12.9 \\
+1962 & 4.951 & 11.3                           & 3.019 & 7.2                           & 0.010  &                             & 11.3 \\
+1963 & 5.476 & 8.5                            & 3.019 & 5.6                           & 0.101  &                             & 8.6  \\
+1964 & 5.895 & 9.2                            & 2.800 & 4.6                           & 0.123  &                             & 8.5  \\
+1965 & 4.216 & 9.3                            & 2.226 & 3.6                           & 0.223  &                             & 7.7  \\
+1966 & 4.206 & 9.4                            & 2.560 & 4.1                           & 0.140  & 52                          & 8.1  \\
+1967 & 3.764 & 8.3                            & 1.592 & 2.4                           & 0.397  & 37                          & 6.3  \\
+1968 & 3.853 & 7.5                            & 0.549 & 2.3                           & 1.278  & 27                          & 7.8  \\
+1969 & 2.073 & 7.2                            & 0.369 & 1.5                           & 1.749  & 18                          & 5.6  \\
+1970 & 2.080 & 7.3                            & 0.320 & 1.4                           & 1.683  & 17                          & 5.6  \\
+1971 & 0.886 & 6.7                            & 0.265 & 1.3                           & 2.405  & 20                          & 5.8  \\
+1972 & 0.874 & 6.7                            &       &                               & 2.405  & 20                          &      \\
+1973 & 0.228 &                                &       &                               & 4.826  & 25                          &      \\
+1974 & 0.476 &                                &       &                               & 7.710  & 36                          &      \\
+1975 &       &                                &       &                               & 8.745  & 43                          &      \\
+1976 &       &                                &       &                               & 10.603 & 33                          &      \\
+1977 &       &                                &       &                               & 11.733 & 26                          &      \\
+1978 &       &                                &       &                               & 14.746 & 36                          &      \\
+1979 &       &                                &       &                               & 16.809 & 53                          &      \\
+1980 &       &                                &       &                               & 20.845 & 37                          &      \\
+1981 &       &                                &       &                               & 5.308  & 10                          &      \\
+1982 &       &                                &       &                               & 0.541  & 4                           &      \\
+1983 &       &                                &       &                               & 0.000  &                             &      \\
+1984 &       &                                &       &                               & 0.794  & 7                           &      \\
+1985 &       &                                &       &                               & 0.796  & 9                           &      \\
+1986 &       &                                &       &                               & 2.100  & 12                          &      \\
+1987 &       &                                &       &                               & 2.122  & 10                          &      \\
+1988 &       &                                &       &                               & 1.236  & 8                           &      \\
+1989 &       &                                &       &                               & 1.685  & 8                           &      \\
+1990 &       &                                &       &                               & 3.130  & 12                          &      \\
+1991 &       &                                &       &                               & 2.661  & 12                          &      \\
+1992 &       &                                &       &                               & 1.208  & 6                           &      \\
+1993 &       &                                &       &                               & 2.270  & 9                           &      \\
+1994 &       &                                &       &                               & 0.015  &                             &      \\
+1995 &       &                                &       &                               & 0.014  &                             &      \\
+1996 &       &                                &       &                               & 1.264  & 16                          &      \\
+1997 &       &                                &       &                               & 1.338  & 15                          &      \\
+1998 &       &                                &       &                               & 2.238  & 15                          &      \\
+1999 &       &                                &       &                               & 1.923  & 12                          &      \\
+2000 &       &                                &       &                               & 1.272  & 12                          &      \\
+2001 &       &                                &       &                               & 1.287  & 19                          &      \\
+2002 &       &                                &       &                               & 1.484  & 20                          &      \\
+2003 &       &                                &       &                               & 2.510  & 18                          &      \\
+2004 &       &                                &       &                               & 2.272  & 23                          &      \\
+2005 &       &                                &       &                               & 2.763  & 30                          &      \\
+2006 &       &                                &       &                               & 2.477  & 31                          &      \\
+2007 &       &                                &       &                               & 3.154  & 28                          &      \\
+2008 &       &                                &       &                               & 3.064  & 22                          &      \\
+2009 &       &                                &       &                               & 2.553  & 21                          &      \\
+2010 &       &                                &       &                               & 2.410  & 18                          &      \\
+2011 &       &                                &       &                               & 1.298  & 28                          &      \\
+2012 &       &                                &       &                               & 1.176  & 30                          &      \\
+2013 &       &                                &       &                               & 1.272  & 27                          &      \\
+2014 &       &                                &       &                               & 1.501  & 26                          &      \\
+2015 &       &                                &       &                               & 1.527  & 31                          &      \\
+\hline
+\end{tabular}
+\end{table}
 
+
+\begin{table}[ht]
+\centering
+\caption{Annual sample sizes (>64 mm CL) in numbers of crab for trawl surveys, retained
+catch and pot and trawl fishery bycatch of Bristol Bay red king crab.}
 \label{tab:sample_size}
-\begin{tabular}{lrrrrrrrrr}
+\begin{tabular}{@{\extracolsep{4pt}}lrrrrrrrrr@{}}
   \hline
   & \multicolumn{2}{c}{Trawl survey}      & Retained  & \multicolumn{2}{c}{Pot bycatch}     & \multicolumn{2}{c}{Trawl bycatch}     & \multicolumn{2}{c}{Tanner bycatch}      \\
+\cline{2-3}\cline{5-6}\cline{7-8}\cline{9-10}
 Year  & Males & Females & Catch & Males & Females & Males & Females & Males & Females \\
 \hline
 1975  & 2,943 & 2,139 & 29,570  &   &   &   &   &   &   \\
