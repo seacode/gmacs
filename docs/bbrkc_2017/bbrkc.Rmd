@@ -395,10 +395,7 @@ males was changed from 60\% to 50\%. A threshold of 14.5 million lbs of ESB was 
 the fishery and maintaining fishery manageability when the stock abundance is low. The Board
 modified the current harvest strategy by adding a mature harvest rate of 12.5\% when the ESB is
 between 34.75 and 55.0 million lbs in 2003 and eliminated the minimum GHL threshold in 2012.
-The current harvest strategy is illustrated in Figure 1.
-
-
-\ref{tab:bbrkc_fishery}).
+The current harvest strategy is illustrated in Figure \ref{tab:HarvestPolicy}).
 
 \begin{table}[ht]
 \centering
