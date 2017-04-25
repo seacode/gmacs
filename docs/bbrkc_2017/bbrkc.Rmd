@@ -265,30 +265,31 @@ There were no new changes in management of the fishery.
 
 ## Changes to the Input Data
   a. The new 2016 NMFS trawl survey data and BSFRF side-by-side trawl survey data during 2013-2016 were used.     
-  b. Catch and biomass data were updated to include the 2016/17 information.     
-  c. The Tanner crab fishery was split out from the directed fishery bycatch data
-  d. The groundfish "fixed-gear" fishery was split from the trawl-gear bycatch dataa
+  b. Catch and biomass data were updated to include the 2016/17 information.
+  c. The Tanner crab fishery was split out from the directed fishery bycatch data.
+  d. The groundfish "fixed-gear" fishery was split from the trawl-gear bycatch data.
 
 ## Changes in Assessment Methodology
-
 This assessment was done using Gmacs. 
 There are several differences between the
 Gmacs assessment model and the previous model. One of the major differences
-being that natural and fishing mortality are continuous within `r M[[2]]$nseason` discrete seasons. 
+being that natural and fishing mortality are continuous within 
+`r M[[2]]$nseason` 
+discrete seasons. 
 Season length in Gmacs is controlled by
 changing the proportion of natural mortality that is applied during each
 season. A detailed outline of the Gmacs implementation of the BBRKC model is
 provided in Appendix A.
 
 ## Changes in Assessment Results
-
+Results from the alternative models are qualitatively very similar to those conducted using 
+the current assessment approach.
   
 # B. Responses to SSC and CPT Comments
 
 ## CPT and SSC Comments on Assessments in General
 
 Comment: 
-*To come*
 
 Response: 
 
@@ -299,10 +300,11 @@ Comment: * [to come ]
 The SSC and CPT requested the following models for review at the spring 2017 meeting:*
 
   1. *Base: try to match 2016 model *
-  2. *Evaluate M*
+  2. *Free q*
+  3. *Evaluate M*
 
 Response:  Models 1, 2, and 3 are all included and evaluated in
-this document as the **Gmacs base**, **Gmacs M**, and **Gmacs Mvary**
+this document as the **Gmacs base**, **Free q**, and **Variable M**
 scenarios. 
 
 # C. Introduction
@@ -886,31 +888,18 @@ There is little difference between model estimated survey biomass in the gmacs
 scenarios when compared with the 2015 model (Figures
 \ref{fig:trawl_survey_biomass} and \ref{fig:bsfrf_survey_cpue}). Looking at the
 model fits to the NMFS trawl survey biomass (Figure
-\ref{fig:trawl_survey_biomass}), the **Gmacs match** scenario is the most
-similar to the 2015 model, and the **Gmacs base** model is very similar as
-well. In all scenarios, Gmacs produces a better fit during the mid-late 1980s.
-However, since about 2010 Gmacs estimates a slighly lower survey biomass than
-the 2015 model in an attempt to better fit the ADF&G pot survey CPUE (Figure
-\ref{fig:bsfrf_survey_cpue}). The three Gmacs scenarios that do not attempt to
-estimate natural mortality in 1998/99 (**Gmacs M**, **Gmacs Francis**, and
-**Gmacs force**) predict lower survey biomass from 1992 to 1998 than the other
-scenarios and the 2015 model. These same two runs also predict a lower survey
-biomass in recent years (since about 2010). While these two models may result
-in slightly worse fits to the data, they do not risk over-fitting the data in
-the same way the other scenarios do. As exptected the model that upweights the
-NMFS survey biomass and ADF&G pot survey CPUE (**Gmacs force**) provides a
-better fit to the survey biomass during the mid-late 1980s and a much better
-fit to the pot survey CPUE in the most recent two years (Figures
-\ref{fig:trawl_survey_biomass}, \ref{fig:trawl_survey_biomass_weights},
-\ref{fig:bsfrf_survey_cpue}, and \ref{fig:pot_survey_cpue_weights}). Keep in
-mind that this scenario was only included for exploratory purposes and forcing
-these weights resulted in worse SDNR and MAR values for the two abundance
-indices.
+\ref{fig:trawl_survey_biomass}), the **Base** scenario is the most
+similar to the 2017 model, as are the other model configuratios. 
+the **variable M** model was constructed for contrast and to evaluate 
+an intentionally overparameterized model. Interestingly, the pattern conforms to the 
+general pattern of the pre-specified M-varying blocks.
 
-Estimated recruitment to the model is variable over time (Figure
-\ref{fig:recruitment}). Estimated recruitment during recent years is generally
+Estimated recruitment to the model is variable over time and generally consistent
+among model configuraitons (Figure \ref{fig:recruitment}). 
+Estimated recruitment during recent years is 
 low in all scenarios. Estimated mature male biomass on 15 February also
-fluctuates strongly over time (Figure \ref{fig:mmb}).
+varies a bit in recent years and is consistent over model configurations
+ (Figure \ref{fig:mmb}).
 
 ### e. Retrospective and historic analyses.
 
@@ -964,11 +953,12 @@ determination for this stock in 2016.
 # F. Calculation of the OFL and ABC
 
 The overfishing level (OFL) is the fishery-related mortality biomass
-associated with fishing mortality $F_\mathit{OFL}$. The SMBKC stock is
-currently managed as Tier 4 (2013 SAFE), and only a Tier 4 analysis is
+associated with fishing mortality $F_\mathit{OFL}$. The BBRKC stock is
+currently managed as Tier 3 (2016 SAFE), and only a Tier 3 analysis is
 presented here. Thus given stock estimates or suitable proxy values of
 $B_\mathit{MSY}$ and $F_\mathit{MSY}$, along with two additional parameters
 $\alpha$ and $\beta$, $F_\mathit{OFL}$ is determined by the control rule
+[needs checking]
 
 \begin{align}
     F_\mathit{OFL} &= 
@@ -980,7 +970,7 @@ $\alpha$ and $\beta$, $F_\mathit{OFL}$ is determined by the control rule
 \end{align}
 where $B$ is quantified as mature-male biomass (MMB) at mating with time of mating assigned a nominal date of 15 February. Note that as $B$ itself is a function of the fishing mortality $F_\mathit{OFL}$ (therefore numerical approximation of $F_\mathit{OFL}$ is required). As implemented for this assessment, all calculations proceed according to the model equations given in Appendix A. $F_\mathit{OFL}$ is taken to be full-selection fishing mortality in the directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set at their model geometric mean values over years for which there are data-based estimates of bycatch-mortality biomass.
 
-The currently recommended Tier 4 convention is to use the full assessment
+The currently recommended Tier 3 convention is to use the full assessment
 period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a
 $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ =
 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in
@@ -1271,7 +1261,7 @@ M1[[4]]$pMoltInc[M1[[4]]$iMoltIncSex == 2] <- gi3
 plot_growth_inc(M1)
 ```
 
-```{r growth_trans, fig.cap = "Probability of growth transition by stage. Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2015 SMBKC assessment).\\label{fig:growth_trans}", fig.height = 15}
+```{r growth_trans, fig.cap = "Probability of growth transition by stage. Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2017 BBRKC assessment).\\label{fig:growth_trans}", fig.height = 15}
 gm_f1 <- matrix(scan(text = "
  0 0.0711234 0.398022 0.372157 0.132835 0.0258631 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0.145003 0.475426 0.294412 0.0762733 0.0088857 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -1376,7 +1366,7 @@ M1[[3]]$growth_transition[21:40,] <- gm_f2
 plot_growth_transition(M1, xlab = "Carapace width after transition (mm)")
 ```
 
-```{r size_trans, fig.cap = "Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2015 SMBKC assessment).\\label{fig:size_trans}", fig.height = 15}
+```{r size_trans, fig.cap = "Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2016 BBRKC assessment).\\label{fig:size_trans}", fig.height = 15}
 gm_f1 <- matrix(scan(text = "
  0 0.0711234 0.398022 0.372157 0.132835 0.0258631 0 0 0 0 0 0 0 0 0 0 0 0 0 0
  0 0 0.145003 0.475426 0.294412 0.0762733 0.0088857 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -1731,11 +1721,16 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 With boldface lower-case letters indicating vector quantities we designate the
 vector of stage abundances during season $t$ and year $y$ as
 \begin{equation}
-    \boldsymbol{n}_{t,y} = n_{l,t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{3,t,y} \right]^\top.
+    \boldsymbol{n}_{t,y} = n_{l,t,y} = \left[ n_{1,t,y}, n_{2,t,y}, n_{...,t,y} \right]^\top.
 \end{equation}
-The number of new crab, or recruits, of each stage entering the model each season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$. The SMBKC formulation of Gmacs specifies recruitment to stage-1 only during season $t=5$, thus the recruitment size distribution is
+
+The number of new crab, or recruits, of each stage entering the model each
+season $t$ and year $y$ is represented as the vector $\boldsymbol{r}_{t,y}$.
+The BBRKC formulation of Gmacs specifies recruitment to stage-1 only during
+season $t=5$, thus the recruitment size distribution is
+
 \begin{equation}
-    \phi_l = \left[ 1, 0, 0 \right]^\top,
+    \phi_l = \left[ 1, 0, \dots, 0 \right]^\top,
 \end{equation}
 and the recruitment is
 \begin{equation}
@@ -1752,9 +1747,10 @@ where $\bar{R}$ is the average annual recruitment and $\delta^R_y$ are the recru
 Using boldface upper-case letters to indicate a matrix, we describe the size transition matrix $\boldsymbol{G}$ as
 \begin{equation}
   \boldsymbol{G} = \left[ \begin{array}{ccc}
-    1 - \pi_{12} - \pi_{13} & \pi_{12} & \pi_{13} \\
-    0 & 1 - \pi_{23} & \pi_{23} \\
-    0 & 0 & 1 \end{array} \right],
+    1 - \pi_{12} - \pi_{13} & \pi_{12}     & \pi_{1\dots} \\
+    0                       & 1 - \pi_{23} & \pi_{2\dots} \\
+    0                       & \ddots       & \pi_{\dots\dots} \\
+    0                       & 0            & 1 \end{array} \right],
 \end{equation}
 with $\pi_{jk}$ equal to the proportion of stage-$j$ crab that molt and grow into stage-$k$ within a season or year. 
 
@@ -1769,13 +1765,15 @@ Fishing mortality by year $y$ and season $t$ is denoted $F_{t,y}$ and calculated
 where $F_{t,y}^\text{df}$ is the fishing mortality associated with the directed fishery, $F_{t,y}^\text{tb}$ is the fishing mortality associated with the trawl bycatch fishery, $F_{t,y}^\text{fb}$ is the fishing mortality associated with the fixed bycatch fishery. Each of these are derived as
 \begin{align}
     F_{t,y}^\text{df} &= \bar{F}^\text{df} + \delta^\text{df}_{t,y} \quad \text{where} \quad \delta^\text{df}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{df} \right), \notag\\
-    F_{t,y}^\text{tb} &= \bar{F}^\text{tb} + \delta^\text{tb}_{t,y} \quad \text{where} \quad \delta^\text{df}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tb} \right), \notag\\
-    F_{t,y}^\text{fb} &= \bar{F}^\text{fb} + \delta^\text{fb}_{t,y} \quad \text{where} \quad \delta^\text{df}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{fb} \right),
+    F_{t,y}^\text{tgb} &= \bar{F}^\text{tgb} + \delta^\text{tgb}_{t,y} \quad \text{where} \quad \delta^\text{tgb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tgb} \right), \notag\\
+    F_{t,y}^\text{fgb} &= \bar{F}^\text{fgb} + \delta^\text{fgb}_{t,y} \quad \text{where} \quad \delta^\text{fgb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{fgb} \right),\notag\\
+    F_{t,y}^\text{tcb} &= \bar{F}^\text{tcb} + \delta^\text{tcb}_{t,y} \quad \text{where} \quad \delta^\text{tcb}_{t,y} \sim \mathcal{N} \left( 0, \sigma^2_\text{tcb} \right), 
 \end{align}
 where $\delta^\text{df}_{t,y}$, $\delta^\text{tb}_{t,y}$, and $\delta^\text{fb}_{t,y}$ are the fishing mortality deviations for each of the fisheries, each season $t$ during each year $y$, $\bar{F}^\text{df}$, $\bar{F}^\text{tb}$, and $\bar{F}^\text{fb}$ are the average fishing mortalities for each fishery. The total mortality $Z_{l,t,y}$ represents the combination of natural mortality $M_{t,y}$ and fishing mortality $F_{t,y}$ during season $t$ and year $y$
 \begin{equation}
     \boldsymbol{Z}_{t,y} = Z_{l,t,y} = M_{t,y} + F_{t,y}.
 \end{equation}
+[needs updating]
 The survival matrix $\boldsymbol{S}_{t,y}$ during season $t$ and year $y$ is
 \begin{equation}
   \boldsymbol{S}_{t,y} = \left[ \begin{array}{ccc}
@@ -1812,14 +1810,14 @@ Data inputs used in model estimation are listed in Table \ref{tab:model_data}.
   NMFS trawl-survey biomass index & & \\
   (area-swept estimate) and CV & 1978-2016 & NMFS EBS trawl survey \\
   \hline
-  ADF\&G pot-survey abundance index & & \\
-  (CPUE) and CV & Triennial 1995-2016 & ADF\&G SMBKC pot survey \\
+  BSFRF survey biomass abundance index & & \\
+  (CPUE) and CV & Triennial 1995-2016 & BSFRF survey biomass \\
   \hline
   NMFS trawl-survey stage proportions & & \\
   and total number of measured crab & 1978-2016 & NMFS EBS trawl survey \\
   \hline
-  ADF\&G pot-survey stage proportions & & \\
-  and total number of measured crab & Triennial 1995-2016 & ADF\&G SMBKC pot survey \\
+  BSFRF survey stage proportions & & \\
+  and total number of measured crab & Triennial 1995-2016 & BSFRF survey \\
   \hline
   Directed pot-fishery stage proportions & 1990/91 - 1998/99 & ADF\&G crab observer program \\
   and total number of measured crab & 2009/10 - 2015/16 & (fishery closed 1999/00 - 2008/09) \\
@@ -1868,7 +1866,7 @@ Estimated parameters are listed in Table \ref{tab:bounds_pars} and include an es
   Parameter & LB & Initial value & UB & Prior & Phase \\ 
   \hline
   Average recruitment $\log (\bar{R})$ & -10 & 14.0 & 20 & Uniform(-10,20) & 1 \\ 
-  ADF\&G pot survey catchability $q$ & 0 & 4.0 & 5 & Uniform(0,5) & 1 \\ 
+  BSFRF trawl survey catchability $q$ & 0 & 4.0 & 5 & Uniform(0,5) & 1 \\ 
   Stage-1 directed fishery selectivity 1978-2008 & 0 & 0.4 & 1 & Uniform(0,1) & 3 \\ 
   Stage-2 directed fishery selectivity 1978-2008 & 0 & 0.7 & 1 & Uniform(0,1) & 3 \\ 
   Stage-1 directed fishery selectivity 2009-2015 & 0 & 0.4 & 1 & Uniform(0,1) & 3 \\ 
