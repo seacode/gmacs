@@ -1182,14 +1182,11 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
   Estimate <- x$est[i]
   SD <- x$std[i]
   j <- grep("survey_q", Parameter)
-  Estimate[j] <- Estimate[j] * 1000
-  SD[j] <- SD[j] * 1000
- Parameter<-c("Naturalmortalitydeviation($\\delta^M_{1980})$",
+  Estimate[j] <- Estimate[j] 
+  SD[j] <- SD[j] 
+ Parameter<-c("M deviation($\\delta^M_{1980})$",
   "$\\log(\\bar{R})$",
   "$\\log(\\hat{q_{nmfs}})$",
-  "$\\log(n^0_1)$",
-  "$\\log(n^0_2)$",
-  "$\\log(n^0_3)$",
   "$\\log(\\bar{F}^\\text{df})$",
   "$\\log(\\bar{F}^\\text{tgb})$",
   "$\\log(\\bar{F}^\\text{fgb})$",
