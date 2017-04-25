@@ -1265,6 +1265,25 @@ tab <- xtable(df, caption = "Comparisons of negative log-likelihood values for t
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
+```{r data_weighting, results = "asis"}
+df <- NULL
+for (ii in 2:4)
+{
+    x <- M[[ii]]
+    SDNR <- c(x$sdnr_MAR_cpue[,1], x$sdnr_MAR_lf[,1])
+    MAR <- c(x$sdnr_MAR_cpue[,2], x$sdnr_MAR_lf[,2])
+    WT <- c(x$cpue_lambda, x$lf_lambda)
+    names(SDNR) <- c("SDNR NMFS trawl survey","SDNR BSFRF survey","SDNR directed pot LF","SDNR directed pot bycatch LF","SDNR trawl bycatch LF","SDNR tanner bycatch LF","SDNR fixed bycatch LF","SDNR NMFS trawl survey LF","SDNR BSFRF survey LF")
+    names(MAR) <- c("MAR NMFS trawl survey","MAR BSFRF survey","MAR directed pot LF","MAR directed pot bycatch LF","MAR trawl bycatch LF","MAR tanner bycatch LF","MAR fixed bycatch LF","MAR NMFS trawl survey LF","MAR BSFRF survey LF")
+    names(WT) <- c("Weight NMFS trawl survey","Weight BSFRF survey","Weight directed pot LF","Weight directed pot bycatch LF","Weight trawl bycatch LF","Weight tanner bycatch LF","Weight fixed bycatch LF","Weight NMFS trawl survey LF","Weight BSFRF survey LF")
+    v <- c(WT, SDNR, MAR)
+    df <- cbind(df, v)
+}
+df <- data.frame(rownames(df), df, row.names = NULL)
+names(df) <- c("Component","Gmacs base","Free q","Variable M")
+tab <- xtable(df, caption = "Comparisons of data weights, SDNR values, and MAR values for the Gmacs model scenarios.", label = "tab:data_weighting")
+print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, hline.after = c(-1,0,9,18,nrow(tab)))
+```
 
 \newpage\clearpage
 
