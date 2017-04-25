@@ -240,7 +240,8 @@ Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{M
 There were no new changes in management of the fishery.
 
 ## Changes to the Input Data
-  a. The new 2016 NMFS trawl survey data and BSFRF side-by-side trawl survey data during 2013-2016 were used.     
+  a. The new 2016 NMFS trawl survey data and BSFRF side-by-side trawl survey data
+   during 2013-2016 were used.
   b. Catch and biomass data were updated to include the 2016/17 information.
   c. The Tanner crab fishery was split out from the directed fishery bycatch data.
   d. The groundfish "fixed-gear" fishery was split from the trawl-gear bycatch data.
@@ -270,16 +271,19 @@ Response:
 
 ## CPT and SSC Comments Specific to the BBRKC Stock Assessment
 
-Comment: * [to come ] 
-The SSC and CPT requested the following models for review at the spring 2017 meeting:*
+Comment: 
+*The SSC and CPT requested the following models for review at the spring 2017 meeting:*
 
   1. *Base: try to match 2016 model *
   2. *Free q*
   3. *Evaluate M*
 
-Response:  Models 1, 2, and 3 are all included and evaluated in
+Response:  
+
+Models 1, 2, and 3 are all included and evaluated in
 this document as the **Gmacs base**, **Free q**, and **Variable M**
 scenarios. 
+\newpage\clearpage
 
 # C. Introduction
 
@@ -842,15 +846,15 @@ not evaluated. Convergence status/criteria was based on the ADMB default converg
 (minimum gradients and positive definite Hessian matrix).
 
 Sample sizes for length composition data observed sample sizes are summarized
-in Table xx. Estimated implied sample sizes and effective sample sizes are available via Francis weight
+in Table xx. Estimated implied sample sizes and effective sample sizes are available via 
+Francis weight
 computations (Francis 2011). Residual patterns are evaluated graphically.
 
 ## Results
 
-Results for all Gmacs scenarios are provided with comparisons to the 2016
-model. We recommend the **Gmacs base** scenario for management purposes since
-it provides the best fit to the data and is most consistent with previous
-model specifications.
+Results for all Gmacs scenarios are provided with comparisons to the 2016/17
+model. The **Gmacs base** scenario provides the best fit to the data and 
+is most consistent with previous model specifications.
 
 ### a. Effective sample sizes and weighting factors
 Observed and estimated effective sample sizes are compared in Table
@@ -879,7 +883,8 @@ Table \ref{tab:est_pars_all}).
 
 ### c. Graphs of estimates.
 
-Estimated (and fixed) selectivities are compared in Figure \ref{fig:selectivity}.
+Estimated (and fixed) selectivities are compared in Figures \ref{fig:selectivity} 
+and \ref{fig:selectivity2}.
 
 The various model fits to total male ($>$ 89 mm CL) trawl survey biomass are
 compared in Figures \ref{fig:trawl_survey_biomass} and
@@ -925,57 +930,25 @@ low in all scenarios. Estimated mature male biomass on 15 February also
 varies a bit in recent years and is consistent over model configurations
  (Figure \ref{fig:mmb}).
 
-### e. Retrospective and historic analyses.
-
-Retrospective analyses under development.
+### e. Retrospective and comparisons with past analyses.
+[placeholder]
 
 ### f. Uncertainty and sensitivity analyses.
-
 Estimated standard deviations of parameters and selected management measures
 for the five Gmacs scenarios are summarized in Tables
-\ref{tab:est_pars_match}, \ref{tab:est_pars_base}, \ref{tab:est_pars_Francis},
-\ref{tab:est_pars_M}, and \ref{tab:est_pars_force}. Probabilities for mature
-male biomass and OFL in 2016 are illustrated in Section F.
+\ref{tab:est_pars_base}, \ref{tab:est_pars_base}, and 
+\ref{tab:est_pars_M}. Probabilities for mature
+male biomass and OFL in 2016 are shown in Section F.
 
 ### g. Comparison of alternative model scenarios.
 
-Both the **Gmacs match** and **Gmacs base** scenarios provide adequate matches
-between the 2015 model and its Gmacs equivalent. In fact, despite a few minor
-differences, estimates produced by the 2015 model are generally encompassed
-the in the uncertainty bounds of the **Gmacs match** model.
-
-Looking at the plot of mature male biomass (Figure \ref{fig:mmb}), the **Gmacs
-force** scenario stands out as being quite different to the other models
-(including the 2015 model). This scenario results in a lower MMB from the mid-
-1908s through to the late-1990s, and is again lower in the most recent 5
-years. This scenario upweights both the trawl survey and the pot survey
-abundance indices (it upweights the pot survey more than the trawl survey) and
-represents a model run that places greater trust in the abundance indices,
-particularly the pot survey, than other data sources.
-
-Although the **Gmacs M** scenario presents a worse fit to the data,
-particularly the NMFS trawl-survey time series, this model does not simply
-allow a better fit to by estimating an unconstrained pulse in natural
-mortality. Although doing so produces a better fit to the model, it reduces
-predictive power and support for such a phenomena, anecdotal or otherwise,
-seems to be limited. It also raises concerns about what the implications would
-be for an “average” true natural mortality which can affect the management
-measures. Despite these concerns, more work is needed in the future to explore
-more parsimonious alternatives that provide better fits to the data.
-
-In summary, we recommend the **Gmacs base** scenario for management purposes
-since it provides the best fit to the data and is most consistent with
-previous model specifications. Our initial preference was for **Gmacs M**
-since we had difficulty justifying an abrubt, single-year anomaly in natural
-mortality.  However, the fact that the residual pattern is worse and until
-further work can be completed on alternative model specifications (e.g.,
-better accounting of spatial processes affecting the data), the **Gmacs base**
-model was considered reasonable and should be used for overfishing
-determination for this stock in 2016.
+All model scenarios gave qualitatively similare results in terms of stock
+trends and values of mature male biomass (Figure \ref{fig:mmb}).
+For management purposes a more complete analysis or some ensemble approach
+might be considered.
 
 
 # F. Calculation of the OFL and ABC
-
 The overfishing level (OFL) is the fishery-related mortality biomass
 associated with fishing mortality $F_\mathit{OFL}$. The BBRKC stock is
 currently managed as Tier 3 (2016 SAFE), and only a Tier 3 analysis is
@@ -1004,22 +977,22 @@ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ =
 summarized in Table \ref{tab:management_quants}. ABC is 80\% of the OFL.
 
 ```{r management_quants, results = "asis"}
-# df <- NULL
-# for (ii in 2:4)
-# {
-#     x <- M[[ii]]
-#     mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-#     fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
-#     OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-#     Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
-#     ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
-#     v <- c(mmb, Bmsy, fofl, OFL, ABC)
-#     df <- cbind(df, v)
-# }
-# df <- data.frame(rownames(df), df, row.names = NULL)
-# names(df) <- c("Component","Gmacs base","Const M","Time-varying M")
-# tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
-# print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+ df <- NULL
+ for (ii in 2:4)
+ {
+     x <- M[[ii]]
+     mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+     fofl <- x$spr_fofl; names(fofl) <- "$F_\\text{OFL}$"
+     OFL <- x$spr_cofl; names(OFL) <- paste0("$\\text{OFL}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+     Bmsy <- x$spr_bspr; names(Bmsy) <- "$B_\\text{MSY}$"
+     ABC <- OFL * 0.8; names(ABC) <- paste0("$\\text{ABC}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
+     v <- c(mmb, Bmsy, fofl, OFL, ABC)
+     df <- cbind(df, v)
+ }
+df <- data.frame(rownames(df), df, row.names = NULL)
+ names(df) <- c("Component","Base","Free q","Time-varying M")
+ tab <- xtable(df, caption = "Comparisons of management measures for the three Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
+ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 
@@ -1035,8 +1008,9 @@ This stock is not currently subject to a rebuilding plan.
   4. Natural mortality.
 
 # I. Ecosystem considerations
-# J. Projections and Future Outlook
+[placeholder]
 
+# J. Projections and Future Outlook
 With the recent long-term low levels of recruitment, the expectation of average or above average 
 levels for stock improvements seems unlikely. 
 
@@ -1044,6 +1018,8 @@ levels for stock improvements seems unlikely.
 We thank the crab Plan Team and SSC for their recommendations for code modifications.
 
 # L. References
+
+Anon. 2016. Implementation of the GMACS model... 
 
 Alaska Department of Fish and Game (ADF&G). 2012. Commercial king and Tanner
 crab fishing regulations, 2012-2013. Alaska Department of Fish and Game,
@@ -1194,24 +1170,34 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 \end{table}
 
 ```{r est_pars_2, results = "asis"}
-# x <- M[[2]]$fit
-# i <- c(grep("m_dev", x$names)[1],
-#        grep("theta", x$names),
-#        grep("survey_q", x$names),
-#        grep("log_fbar", x$names),
-#        grep("sd_fofl", x$names),
-#        grep("sd_ofl", x$names)
-#        )
-# Parameter <- x$names[i]
-# Estimate <- x$est[i]
-# SD <- x$std[i]
-# j <- grep("survey_q", Parameter)
-# Estimate[j] <- Estimate[j] * 1000
-# SD[j] <- SD[j] * 1000
-# #Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
-# df <- data.frame(Parameter, Estimate, SD)
-# tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_match", digits = 3)
-# print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
+ x <- M[[2]]$fit
+ i <- c(grep("m_dev", x$names)[1],
+        grep("theta", x$names),
+        grep("survey_q", x$names),
+        grep("log_fbar", x$names),
+        grep("sd_fofl", x$names),
+        grep("sd_ofl", x$names)
+        )
+  Parameter <- x$names[i]
+  Estimate <- x$est[i]
+  SD <- x$std[i]
+  j <- grep("survey_q", Parameter)
+  Estimate[j] <- Estimate[j] * 1000
+  SD[j] <- SD[j] * 1000
+ Parameter<-c("Naturalmortalitydeviation($\\delta^M_{1980})$",
+  "$\\log(\\bar{R})$",
+  "$\\log(\\hat{q_{nmfs}})$",
+  "$\\log(n^0_1)$",
+  "$\\log(n^0_2)$",
+  "$\\log(n^0_3)$",
+  "$\\log(\\bar{F}^\\text{df})$",
+  "$\\log(\\bar{F}^\\text{tgb})$",
+  "$\\log(\\bar{F}^\\text{fgb})$",
+  "$\\log(\\bar{F}^\\text{tcb})$",
+  "$F_\\text{OFL}$","OFL")
+ df <- data.frame(Parameter, Estimate, SD)
+ tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs base} model.", label = "tab:est_pars_base", digits = 3)
+ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
 

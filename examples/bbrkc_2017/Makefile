@@ -1,11 +1,9 @@
-EXEC = gmacs
-ARGS = -nox -iprint 50 
-
-ifeq ($(SAFE),TRUE)
-	DIST = ../../../src/build/debug/
-else
-	DIST = ../../../src/build/release/
-endif
+NMODS:=3
+NUMBERS:=$(shell seq 1 ${NMODS})
+JOBS:=$(addprefix model_,${NUMBERS})
+DEL:=admodel.cov admodel.dep admodel.hes checkfile.rep fmin.log gmacs.b0* gmacs.bar gmacs.cor gmacs.eva gmacs.log gmacs.p0* gmacs.par gmacs.r0* gmacs.rep gmacs.std gmacs_files_in.dat gmacs_in.ctl gmacs_in.dat gradient.* mcout.rep variance
+MODS_DESC=Models to be run
+ARGS:=
 
 ifdef ComSpec
     RM=del /F /Q
@@ -13,28 +11,10 @@ else
     RM=rm -rf
 endif
 
-all: run plot
+.PHONY: all ${JOBS} clean
 
-$(EXEC): $(DIST)$(EXEC).tpl
-	ln -sf $(DIST)$(EXEC) $@
+all: ${JOBS} ; echo "$@ success" ${JOBS} 
+${JOBS}: job%: ; cd $* ; make ${ARGS} ; cd ..;
+EXEC = gmacs
+ARGS = -nox -iprint 50 
 
-$(DIST)$(EXEC).tpl:
-	$(MAKE) --directory=../../../src
-
-run: $(EXEC)
-	./$(EXEC) $(ARGS)
-
-sim: $(EXEC)
-	./$(EXEC) -ainp gmacs.par -sim 123
-
-plot:
-	R CMD BATCH plot.R
-
-clean:
-	@$(RM) -f $(EXEC)
-	@$(RM) -f gradient.[0123456789]
-	@$(RM) -f admodel.*
-	@$(RM) -f $(EXEC)  $(EXEC).[brces]* $(EXEC).*[0123456789] *.rpt *.log variance
-
-clobber: clean
-	@$(RM) -f *.par *_in.* *.rep
