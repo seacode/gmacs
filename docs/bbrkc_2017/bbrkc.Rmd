@@ -66,10 +66,6 @@ nmult_2 <- 0.0004535923 * 1e+6
 # M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
 # M[[jj]]$fit$std[ii] <- NA
 
-# Add natural mortality data
-#ii <- which(M[[jj]]$mod_yrs == 1998)
-#M[[jj]]$M[ii,] <- JJ[[jj]]$M98
-
 # Add recruitment data - It looks like Jie has recorded this as millions of individuals
 #din <- JJ[[jj]]$rec
 #ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")

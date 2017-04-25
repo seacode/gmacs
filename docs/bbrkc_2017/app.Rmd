@@ -1,5 +1,5 @@
 ---
-title: "Appendix B: BBRKC Stock Assessment Input Files"
+title: "Appendix B: BBRKC Stock Assessment Input Files & Size-Frequency Residual Plots"
 output:
   pdf_document:
     highlight: zenburn
@@ -9,6 +9,91 @@ output:
     toc: yes
   word_document: default
 ---
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.width = 12, fig.height = 7, echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+```{r, load_packages, include=FALSE}
+library(gmr)
+library(xtable)
+options(xtable.comment = FALSE)
+
+# The model specs
+mod_names <- c("2017 Model","Gmacs base","Free q","Variable M")
+.MODELDIR = c("../../examples/bbrkc_2017/model_1/", "../../examples/bbrkc_2017/model_1/","../../examples/bbrkc_2017/model_2/","../../examples/bbrkc_2017/model_3/")
+.THEME    = ggplot2::theme_bw(base_size = 12, base_family = "")
+.OVERLAY  = TRUE
+.SEX      = c("Aggregate","Male","Female")
+.FLEET    = c("Pot","Trawl bycatch","TC bycatch","Fixed Bycatch","NMFS Trawl","BSFRF")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
+.SHELL    = c("Aggregate","New Shell","Old Shell")
+.MATURITY = c("Aggregate")
+.MATURITY = c("Aggregate","Immature","Mature")
+.SEAS     = c("1","2","3","4")
+
+# Read report file and create gmacs report object (a list):
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb)
+names(M) <- mod_names
+
+jj <- 1 # The position in the list that Jies model outputs sit
+```
+
+\newpage\clearpage
+
+```{r sc_pot_retained_male, fig.cap = "Size-frequency residuals of male BBRKC by year retained in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios. \\label{fig:sc_pot}"}
+plot_size_comps(M, 1, res = TRUE)
+```
+
+```{r sc_pot_discarded_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_male}"} 
+plot_size_comps(M, 2, res = TRUE) 
+```
+
+```{r sc_pot_discarded_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_female}"}
+plot_size_comps(M, 3, res = TRUE)
+```
+
+```{r sc_trawl_bycatch_male, fig.cap = "Size-frequency residuals discarded male BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_male}"}
+plot_size_comps(M, 4, res = TRUE)
+```
+
+```{r sc_trawl_bycatch_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_female}"}
+plot_size_comps(M, 5, res = TRUE)
+```
+
+```{r sc_tc_bycatch_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_male}"}
+plot_size_comps(M, 6, res = TRUE)
+```
+
+```{r sc_tc_bycatch_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_female}"}
+plot_size_comps(M, 7, res = TRUE)
+```
+
+```{r sc_fixed_bycatch_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_male}"}
+plot_size_comps(M, 8, res = TRUE)
+```
+
+```{r sc_fixed_bycatch_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_female}"}
+plot_size_comps(M, 9, res = TRUE)
+```
+
+```{r sc_nmfs_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_male}"}
+plot_size_comps(M, 10, res = TRUE)
+```
+
+```{r sc_nmfs_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_female}"}
+plot_size_comps(M, 11, res = TRUE)
+```
+
+```{r sc_bsfrf_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_male}"}
+plot_size_comps(M, 12, res = TRUE)
+```
+
+```{r sc_bsfrf_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_female}"}
+plot_size_comps(M, 13, res = TRUE)
+```
 
 \newpage\clearpage
 
@@ -22,7 +107,7 @@ ts <- readLines("../../examples/bbrkc_2017/model_1/bbrkc.dat")
 for (i in 1:length(ts)) cat(ts[i], "\n")
 ```
 
-## The match model control file:
+## The Gmacs base model control file:
 
 \tiny
 ```{r eval = TRUE, include=TRUE,echo=FALSE }
@@ -33,10 +118,18 @@ for (i in 1:length(ts)) cat(ts[i], "\n")
 
 \newpage\clearpage
 
-## The base model control file:
+## The Free q model control file:
 
 ```{r eval = TRUE, include=TRUE,echo=FALSE }
 opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
-ts <- readLines("../../examples/bbrkc/OneSex/bbrkc_ss.ctl")
+ts <- readLines("../../examples/bbrkc_2017/model_2/bbrkc.ctl")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+```
+
+## The Variable M model control file:
+
+```{r eval = TRUE, include=TRUE,echo=FALSE }
+opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("../../examples/bbrkc_2017/model_3/bbrkc.ctl")
 for (i in 1:length(ts)) cat(ts[i], "\n")
 ```
