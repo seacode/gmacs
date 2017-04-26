@@ -1,5 +1,5 @@
 ---
-title: "Bristol Bay Red King Crab Stock Assessment 2017"
+title: "A Gmacs application to the Bristol Bay Red King Crab Stock Assessment 2017"
 author: |
   | D'Arcy Webber$^1$, Jie Zheng$^2$, and James Ianelli$^3$
   | $^1$Quantifish, darcy@quantifish.co.nz
@@ -118,7 +118,7 @@ rec_mod <- 2 # base
 
 2. **Catch**: 
 The domestic RKC fishery began to expand in the late 1960s and peaked in 1980
-with a catch of 129.95 million lbs (58,943 t). The catch declined dramatically in the early
+with a catch of 129.95 million lbs (58,943 t). The catch declined in the early
 1980s and remained at low levels during the last three decades. The retained catch in 2015/16
 was about 10 million lbs (4,500 t), similar to the catch in 2014/15. The magnitude of
 bycatch from groundfish trawl fisheries has been stable and small relative to stock
@@ -268,7 +268,7 @@ Response:
 ## CPT and SSC Comments Specific to the BBRKC Stock Assessment
 
 Comment: 
-*The SSC and CPT requested the following models for review at the spring 2017 meeting:*
+*The SSC and CPT (loosely) requested the following models for review at the spring 2017 meeting:*
 
   1. *Base: try to match 2016 model *
   2. *Free q*
@@ -277,7 +277,7 @@ Comment:
 Response:  
 
 Models 1, 2, and 3 are all included and evaluated in
-this document as the **Gmacs base**, **Free q**, and **Variable M**
+this document as the **Gmacs base** (the same type of blocked changes in time for natural mortality), **Free q** (estimate the catchability of BSFRF survey), and **Variable M** (look at a flexible time-varying natural mortality configuration)
 scenarios. 
 \newpage\clearpage
 
@@ -342,7 +342,7 @@ than the sum of GHL/TAC over that period.
 
 ## Fisheries Management
 King and Tanner crab stocks in the Bering Sea and Aleutian Islands are managed by the State of
-Alaska through a federal king and Tanner crab fishery management plan (FMP). Under the FMP,
+Alaska through a Federal king and Tanner crab fishery management plan (FMP). Under the FMP,
 management measures are divided into three categories: (1) fixed in the FMP, (2) frame worked in
 the FMP, and (3) discretion of the State of Alaska. The State of Alaska is responsible for
 determining and establishing the GHL/TAC under the framework in the FMP.
@@ -369,9 +369,9 @@ males was changed from 60\% to 50\%. A threshold of 14.5 million lbs of ESB was 
 the fishery and maintaining fishery manageability when the stock abundance is low. The Board
 modified the current harvest strategy by adding a mature harvest rate of 12.5\% when the ESB is
 between 34.75 and 55.0 million lbs in 2003 and eliminated the minimum GHL threshold in 2012.
-The current harvest strategy is illustrated in Figure \ref{fig:HarvestPolicy}).
+The current harvest strategy is illustrated in Figure 1.
 
-![Current harvest rate strategy (line) for the Bristol Bay red king crab fishery and annual prohibited species catch (PSC) limits (numbers of crab) of Bristol Bay red king crab in the groundfish fisheries in zone 1 in the eastern Bering Sea. Harvest rates are based on current-year estimates of effective spawning biomass (ESB), whereas PSC limits apply to previous-year ESB. ](figure/HarvestPolicy.png) 
+![Current harvest rate strategy (line) for the Bristol Bay red king crab fishery and annual prohibited species catch (PSC) limits (numbers of crab) of Bristol Bay red king crab in the groundfish fisheries in zone 1 in the eastern Bering Sea. Harvest rates are based on current-year estimates of effective spawning biomass (ESB), whereas PSC limits apply to previous-year ESB. \\labe{fig:HarvestPolicy}](figure/HarvestPolicy.png) 
 
 \begin{table}[ht]
 \centering
@@ -786,7 +786,7 @@ provided in Appendix A.
 \end{itemize}     
 
 The aim when developing this model was to provide a fit to the data that
-best matched the 2017 BBRKC stock assessment model. A detailed description of
+closely matched the 2016/17 BBRKC stock assessment model using the configuration options presently available in GMACS. A detailed description of
 the Gmacs model and its implementation is presented in Appendix A.
 
 ## Model Selection and Evaluation
@@ -904,7 +904,7 @@ natural mortality each year ($M_t$) is presented in Figure \ref{fig:M_t}.
 
 ### d. Graphic evaluation of the fit to the data.
 There is little difference between model estimated survey biomass in the gmacs
-scenarios when compared with the 2015 model (Figures
+scenarios when compared with the 2016/17 model (Figures
 \ref{fig:trawl_survey_biomass} and \ref{fig:bsfrf_survey_biomass}). Looking at the
 model fits to the NMFS trawl survey biomass (Figure
 \ref{fig:trawl_survey_biomass}), the **Base** scenario is the most
@@ -1000,7 +1000,7 @@ This stock is not currently subject to a rebuilding plan.
 
 # J. Projections and Future Outlook
 With the recent long-term low levels of recruitment, the expectation of average or above average 
-levels for stock improvements seems unlikely. 
+levels for stock improvements seems unlikely. A projection module is under development.
 
 # K. Acknowledgements
 We thank the crab Plan Team and SSC for their recommendations for code modifications.

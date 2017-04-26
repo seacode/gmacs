@@ -1,5 +1,5 @@
 ---
-title: "Bristol Bay Red King Crab Stock Assessment 2017"
+title: "A Gmacs application to the Bristol Bay Red King Crab Stock Assessment 2017"
 author: |
   | D'Arcy Webber$^1$, Jie Zheng$^2$, and James Ianelli$^3$
   | $^1$Quantifish, darcy@quantifish.co.nz
@@ -29,7 +29,7 @@ bibliography: ../references/Gmacs.bib
 
 2. **Catch**: 
 The domestic RKC fishery began to expand in the late 1960s and peaked in 1980
-with a catch of 129.95 million lbs (58,943 t). The catch declined dramatically in the early
+with a catch of 129.95 million lbs (58,943 t). The catch declined in the early
 1980s and remained at low levels during the last three decades. The retained catch in 2015/16
 was about 10 million lbs (4,500 t), similar to the catch in 2014/15. The magnitude of
 bycatch from groundfish trawl fisheries has been stable and small relative to stock
@@ -179,7 +179,7 @@ Response:
 ## CPT and SSC Comments Specific to the BBRKC Stock Assessment
 
 Comment: 
-*The SSC and CPT requested the following models for review at the spring 2017 meeting:*
+*The SSC and CPT (loosely) requested the following models for review at the spring 2017 meeting:*
 
   1. *Base: try to match 2016 model *
   2. *Free q*
@@ -188,7 +188,7 @@ Comment:
 Response:  
 
 Models 1, 2, and 3 are all included and evaluated in
-this document as the **Gmacs base**, **Free q**, and **Variable M**
+this document as the **Gmacs base** (the same type of blocked changes in time for natural mortality), **Free q** (estimate the catchability of BSFRF survey), and **Variable M** (look at a flexible time-varying natural mortality configuration)
 scenarios. 
 \newpage\clearpage
 
@@ -253,7 +253,7 @@ than the sum of GHL/TAC over that period.
 
 ## Fisheries Management
 King and Tanner crab stocks in the Bering Sea and Aleutian Islands are managed by the State of
-Alaska through a federal king and Tanner crab fishery management plan (FMP). Under the FMP,
+Alaska through a Federal king and Tanner crab fishery management plan (FMP). Under the FMP,
 management measures are divided into three categories: (1) fixed in the FMP, (2) frame worked in
 the FMP, and (3) discretion of the State of Alaska. The State of Alaska is responsible for
 determining and establishing the GHL/TAC under the framework in the FMP.
@@ -282,7 +282,7 @@ modified the current harvest strategy by adding a mature harvest rate of 12.5\% 
 between 34.75 and 55.0 million lbs in 2003 and eliminated the minimum GHL threshold in 2012.
 The current harvest strategy is illustrated in Figure \ref{fig:HarvestPolicy}).
 
-![Current harvest rate strategy (line) for the Bristol Bay red king crab fishery and annual prohibited species catch (PSC) limits (numbers of crab) of Bristol Bay red king crab in the groundfish fisheries in zone 1 in the eastern Bering Sea. Harvest rates are based on current-year estimates of effective spawning biomass (ESB), whereas PSC limits apply to previous-year ESB. ](figure/HarvestPolicy.png) 
+![Current harvest rate strategy (line) for the Bristol Bay red king crab fishery and annual prohibited species catch (PSC) limits (numbers of crab) of Bristol Bay red king crab in the groundfish fisheries in zone 1 in the eastern Bering Sea. Harvest rates are based on current-year estimates of effective spawning biomass (ESB), whereas PSC limits apply to previous-year ESB. \\labe{fig:HarvestPolicy}](figure/HarvestPolicy.png) 
 
 \begin{table}[ht]
 \centering
@@ -874,11 +874,11 @@ summarized in Table \ref{tab:management_quants}. ABC is 80\% of the OFL.
   \hline
 Component & Base & Free q & Time-varying M \\ 
   \hline
-$\text{MMB}_{2016}$ & 29292.290 & 29533.240 & 24664.064 \\ 
-  $B_\text{MSY}$ & 26169.725 & 26822.289 & 26023.066 \\ 
+$\text{MMB}_{2016}$ & 29296.679 & 29520.541 & 24601.478 \\ 
+  $B_\text{MSY}$ & 26136.307 & 26825.830 & 25988.611 \\ 
   $F_\text{OFL}$ & 0.178 & 0.174 & 0.147 \\ 
-  $\text{OFL}_{2016}$ & 1571.003 & 1539.223 & 999.345 \\ 
-  $\text{ABC}_{2016}$ & 1256.802 & 1231.378 & 799.476 \\ 
+  $\text{OFL}_{2016}$ & 1572.677 & 1537.558 & 997.107 \\ 
+  $\text{ABC}_{2016}$ & 1258.141 & 1230.046 & 797.686 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1058,15 +1058,15 @@ Zheng, J., M.C. Murphy, and G.H. Kruse. 1997b. Alternative rebuilding strategies
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-M deviation($\delta^M_{1980})$ & 1.470 & 0.030 \\ 
-  $\log(\bar{R})$ & 15.854 & 0.065 \\ 
+M deviation($\delta^M_{1980})$ & 1.475 & 0.030 \\ 
+  $\log(\bar{R})$ & 15.858 & 0.065 \\ 
   $\log(\mathit{q_{nmfs}})$ & 0.968 & 0.021 \\ 
-  $\log(\mathit{F}^\text{df})$ & -1.409 & 0.032 \\ 
-  $\log(\bar{F}^\text{tgb})$ & -4.785 & 0.050 \\ 
-  $\log(\bar{F}^\text{fgb})$ & -6.026 & 0.045 \\ 
-  $\log(\bar{F}^\text{tcb})$ & -7.232 & 0.091 \\ 
+  $\log(\mathit{F}^\text{df})$ & -1.408 & 0.031 \\ 
+  $\log(\bar{F}^\text{tgb})$ & -4.783 & 0.050 \\ 
+  $\log(\bar{F}^\text{fgb})$ & -6.033 & 0.046 \\ 
+  $\log(\bar{F}^\text{tcb})$ & -7.231 & 0.092 \\ 
   $F_\text{OFL}$ & 0.178 & 0.009 \\ 
-  OFL & 1571.000 & 151.930 \\ 
+  OFL & 1572.700 & 153.010 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1079,16 +1079,16 @@ M deviation($\delta^M_{1980})$ & 1.470 & 0.030 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-M deviation($\delta^M_{1980})$ & 1.467 & 0.030 \\ 
+M deviation($\delta^M_{1980})$ & 1.468 & 0.030 \\ 
   $\log(\bar{R})$ & 15.865 & 0.065 \\ 
   $\log(\mathit{q_{NMFS}})$ & 0.962 & 0.021 \\ 
-  $\log(\mathit{q_{BSFRF}})$ & 0.833 & 0.072 \\ 
-  $\log(\bar{F}^\text{df})$ & -1.430 & 0.031 \\ 
-  $\log(\bar{F}^\text{tgb})$ & -4.809 & 0.050 \\ 
-  $\log(\bar{F}^\text{fgb})$ & -6.046 & 0.046 \\ 
+  $\log(\mathit{q_{BSFRF}})$ & 0.834 & 0.072 \\ 
+  $\log(\bar{F}^\text{df})$ & -1.429 & 0.032 \\ 
+  $\log(\bar{F}^\text{tgb})$ & -4.810 & 0.050 \\ 
+  $\log(\bar{F}^\text{fgb})$ & -6.045 & 0.045 \\ 
   $\log(\bar{F}^\text{tcb})$ & -7.228 & 0.087 \\ 
   $F_\text{OFL}$ & 0.174 & 0.009 \\ 
-  OFL & 1539.200 & 150.890 \\ 
+  OFL & 1537.600 & 150.840 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1102,23 +1102,23 @@ M deviation($\delta^M_{1980})$ & 1.467 & 0.030 \\
   \hline
 Component & Gmacs base & Free q & Variable M \\ 
   \hline
-Pot Retained Male Catch & 42.64 & 42.04 & 29.25 \\ 
-  Pot Discarded Male Catch & 184.44 & 183.24 & 184.38 \\ 
-  Pot Discarded Female Catch & -55.21 & -55.20 & -55.20 \\ 
-  Trawl bycatch Discarded Aggregate Catch & -92.00 & -91.99 & -92.01 \\ 
+Pot Retained Male Catch & 41.32 & 42.12 & 29.18 \\ 
+  Pot Discarded Male Catch & 182.51 & 183.75 & 184.28 \\ 
+  Pot Discarded Female Catch & -55.20 & -55.21 & -55.20 \\ 
+  Trawl bycatch Discarded Aggregate Catch & -92.00 & -92.00 & -92.01 \\ 
   TC bycatch Discarded Male Catch & -33.26 & -33.26 & -33.27 \\ 
   TC bycatch Discarded Female Catch & -33.26 & -33.26 & -33.26 \\ 
   Fixed Bycatch Discarded Aggregate Catch & -9.70 & -9.70 & -9.70 \\ 
-  NMFS Trawl Survey & -24.70 & -24.87 & -29.90 \\ 
-  BSFRF Survey & -7.93 & -9.03 & -8.02 \\ 
-  Directed Pot LF & -1412.84 & -1412.66 & -1420.95 \\ 
-  NMFS Trawl LF & -879.91 & -889.58 & -891.49 \\ 
-  BSFRF LF & -1775.99 & -1770.71 & -1783.13 \\ 
-  Recruitment deviations & 183.08 & 180.96 & 165.72 \\ 
+  NMFS Trawl Survey & -25.20 & -24.77 & -29.60 \\ 
+  BSFRF Survey & -8.04 & -9.03 & -8.13 \\ 
+  Directed Pot LF & -1413.25 & -1412.66 & -1421.13 \\ 
+  NMFS Trawl LF & -879.14 & -889.94 & -891.47 \\ 
+  BSFRF LF & -1774.75 & -1770.68 & -1781.29 \\ 
+  Recruitment deviations & 182.01 & 180.73 & 165.32 \\ 
   F penalty & 18.95 & 18.95 & 18.95 \\ 
-  M penalty & 63.72 & 63.63 & 13.87 \\ 
-  Prior & 167.07 & 166.19 & 169.04 \\ 
-  Total & -3664.90 & -3675.27 & -3775.72 \\ 
+  M penalty & 63.75 & 63.64 & 13.84 \\ 
+  Prior & 166.98 & 166.19 & 169.28 \\ 
+  Total & -3668.28 & -3675.13 & -3774.22 \\ 
   Total estimated parameters & 498.00 & 499.00 & 574.00 \\ 
    \hline
 \end{tabular}
@@ -1142,25 +1142,25 @@ Weight NMFS trawl survey & 1.00 & 1.00 & 1.00 \\
   Weight NMFS trawl survey LF & 1.00 & 1.00 & 1.00 \\ 
   Weight BSFRF survey LF & 1.00 & 1.00 & 1.00 \\ 
    \hline
-SDNR NMFS trawl survey & 1.52 & 1.52 & 1.46 \\ 
+SDNR NMFS trawl survey & 1.51 & 1.52 & 1.46 \\ 
   SDNR BSFRF survey & 0.45 & 0.50 & 0.53 \\ 
-  SDNR directed pot LF & 11.04 & 11.18 & 13.94 \\ 
-  SDNR directed pot bycatch LF & 408.99 & 409.31 & 407.96 \\ 
-  SDNR trawl bycatch LF & 228.52 & 232.63 & 237.07 \\ 
-  SDNR tanner bycatch LF & 32.80 & 35.37 & 35.57 \\ 
-  SDNR fixed bycatch LF & 70.31 & 73.64 & 64.15 \\ 
-  SDNR NMFS trawl survey LF & 105.69 & 136.56 & 141.58 \\ 
-  SDNR BSFRF survey LF & 110.95 & 30.89 & 75.92 \\ 
+  SDNR directed pot LF & 0.00 & 0.00 & 0.00 \\ 
+  SDNR directed pot bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  SDNR trawl bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  SDNR tanner bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  SDNR fixed bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  SDNR NMFS trawl survey LF & 0.00 & 0.00 & 0.00 \\ 
+  SDNR BSFRF survey LF & 0.00 & 0.00 & 0.00 \\ 
    \hline
-MAR NMFS trawl survey & 1.05 & 1.04 & 0.97 \\ 
-  MAR BSFRF survey & 0.43 & 0.40 & 0.24 \\ 
-  MAR directed pot LF & 0.05 & 0.05 & 0.05 \\ 
-  MAR directed pot bycatch LF & 0.75 & 0.75 & 0.75 \\ 
-  MAR trawl bycatch LF & 0.64 & 0.63 & 0.61 \\ 
-  MAR tanner bycatch LF & 0.60 & 0.61 & 0.59 \\ 
-  MAR fixed bycatch LF & 0.72 & 0.75 & 0.71 \\ 
-  MAR NMFS trawl survey LF & 0.89 & 0.92 & 0.85 \\ 
-  MAR BSFRF survey LF & 1.07 & 1.10 & 1.03 \\ 
+MAR NMFS trawl survey & 1.04 & 1.04 & 0.98 \\ 
+  MAR BSFRF survey & 0.40 & 0.40 & 0.19 \\ 
+  MAR directed pot LF & 0.00 & 0.00 & 0.00 \\ 
+  MAR directed pot bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  MAR trawl bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  MAR tanner bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  MAR fixed bycatch LF & 0.00 & 0.00 & 0.00 \\ 
+  MAR NMFS trawl survey LF & 0.00 & 0.00 & 0.00 \\ 
+  MAR BSFRF survey LF & 0.00 & 0.00 & 0.00 \\ 
    \hline
 \end{tabular}
 \end{table}
