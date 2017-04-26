@@ -44,55 +44,57 @@ jj <- 1 # The position in the list that Jies model outputs sit
 \newpage\clearpage
 
 ```{r sc_pot_retained_male, fig.cap = "Size-frequency residuals of male BBRKC by year retained in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios. \\label{fig:sc_pot}"}
-plot_size_comps(M, 1, res = TRUE)
+A <- M
+A[[jj]] <- NULL
+plot_size_comps(A, 1, res = TRUE)
 ```
 
 ```{r sc_pot_discarded_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_male}"} 
-plot_size_comps(M, 2, res = TRUE) 
+plot_size_comps(A, 2, res = TRUE) 
 ```
 
 ```{r sc_pot_discarded_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_female}"}
-plot_size_comps(M, 3, res = TRUE)
+plot_size_comps(A, 3, res = TRUE)
 ```
 
 ```{r sc_trawl_bycatch_male, fig.cap = "Size-frequency residuals discarded male BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_male}"}
-plot_size_comps(M, 4, res = TRUE)
+plot_size_comps(A, 4, res = TRUE)
 ```
 
 ```{r sc_trawl_bycatch_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_female}"}
-plot_size_comps(M, 5, res = TRUE)
+plot_size_comps(A, 5, res = TRUE)
 ```
 
 ```{r sc_tc_bycatch_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_male}"}
-plot_size_comps(M, 6, res = TRUE)
+plot_size_comps(A, 6, res = TRUE)
 ```
 
 ```{r sc_tc_bycatch_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_female}"}
-plot_size_comps(M, 7, res = TRUE)
+plot_size_comps(A, 7, res = TRUE)
 ```
 
 ```{r sc_fixed_bycatch_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_male}"}
-plot_size_comps(M, 8, res = TRUE)
+plot_size_comps(A, 8, res = TRUE)
 ```
 
 ```{r sc_fixed_bycatch_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_female}"}
-plot_size_comps(M, 9, res = TRUE)
+plot_size_comps(A, 9, res = TRUE)
 ```
 
 ```{r sc_nmfs_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_male}"}
-plot_size_comps(M, 10, res = TRUE)
+plot_size_comps(A, 10, res = TRUE)
 ```
 
 ```{r sc_nmfs_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_female}"}
-plot_size_comps(M, 11, res = TRUE)
+plot_size_comps(A, 11, res = TRUE)
 ```
 
 ```{r sc_bsfrf_male, fig.cap = "Size-frequency residuals of discarded male BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_male}"}
-plot_size_comps(M, 12, res = TRUE)
+plot_size_comps(A, 12, res = TRUE)
 ```
 
 ```{r sc_bsfrf_female, fig.cap = "Size-frequency residuals of discarded female BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_female}"}
-plot_size_comps(M, 13, res = TRUE)
+plot_size_comps(A, 13, res = TRUE)
 ```
 
 \newpage\clearpage

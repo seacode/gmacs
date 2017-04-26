@@ -1103,6 +1103,7 @@ names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
 #tab <- xtable(df, caption = "Mean weight (kg) by stage in used in all of the models (provided as a vector of weights at length each year to Gmacs).", label = "tab:length_weight", digits = c(0,0,1,1,1))
 #print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
+
 \begin{table}[ht]
 \centering
 \caption{Observed and assumed sample sizes for observer data from the directed pot fishery, the NMFS trawl survey, and the BSFRF survey.} 
@@ -1600,14 +1601,17 @@ plot_selectivity(B, ncol = 4)
 
 ```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept biomass estimates for males and females (tons) and model predictions for the NMFS trawl survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"} 
 A <- M
-#A[[1]]$obs_cpue <- ? as per usual Jie's outputs need to be customized
+A[[jj]] <- NULL
+#A[[jj]]$obs_cpue <- ? as per usual Jie's outputs need to be customized
 plot_cpue(A, subsetby = "NMFS Trawl", ylab = "Survey biomass (t)") 
 ```
 
 \newpage\clearpage
 
 ```{r bsfrf_survey_biomass, fig.cap = "Comparisons of area-swept biomass estimates (tons) for the BSFRF survey showing the 2017 model and each of the Gmacs model scenarios. The error bars represent plus and minus 2 standard deviations derived using the original survey CVs. \\label{fig:bsfrf_survey_biomass}"}
-plot_cpue(M, "BSFRF", ylab = "Survey biomass (t)")
+A <- M
+A[[jj]] <- NULL
+plot_cpue(A, "BSFRF", ylab = "Survey biomass (t)")
 ```
 
 ```{r bts_resid_nmfs, fig.cap = "Standardized residuals for area-swept biomass estimates for males and females (tons) for the NMFS trawl survey showing each of the Gmacs model scenarios. \\label{fig:bts_resid_nmfs}"}
@@ -1624,55 +1628,57 @@ plot_cpue_res(A, "BSFRF")
 \newpage\clearpage
 
 ```{r sc_pot_retained_male, fig.cap = "Observed and model estimated size-frequencies of male BBRKC by year retained in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios. \\label{fig:sc_pot_retained_male}"}
-plot_size_comps(M, 1) 
+A <- M
+A[[1]] <- NULL
+plot_size_comps(A, 1) 
 ```
 
 ```{r sc_pot_discarded_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_male}"} 
-plot_size_comps(M, 2) 
+plot_size_comps(A, 2) 
 ```
 
 ```{r sc_pot_discarded_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the directed pot fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_pot_discarded_female}"}
-plot_size_comps(M, 3)
+plot_size_comps(A, 3)
 ```
 
 ```{r sc_trawl_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_male}"}
-plot_size_comps(M, 4)
+plot_size_comps(A, 4)
 ```
 
 ```{r sc_trawl_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the trawl bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_trawl_bycatch_female}"}
-plot_size_comps(M, 5)
+plot_size_comps(A, 5)
 ```
 
 ```{r sc_tc_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_male}"}
-plot_size_comps(M, 6)
+plot_size_comps(A, 6)
 ```
 
 ```{r sc_tc_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the tanner crab bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_tc_bycatch_female}"}
-plot_size_comps(M, 7)
+plot_size_comps(A, 7)
 ```
 
 ```{r sc_fixed_bycatch_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_male}"}
-plot_size_comps(M, 8)
+plot_size_comps(A, 8)
 ```
 
 ```{r sc_fixed_bycatch_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the fixed bycatch fishery for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_fixed_bycatch_female}"}
-plot_size_comps(M, 9)
+plot_size_comps(A, 9)
 ```
 
 ```{r sc_nmfs_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_male}"}
-plot_size_comps(M, 10)
+plot_size_comps(A, 10)
 ```
 
 ```{r sc_nmfs_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the NMFS trawl survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_nmfs_female}"}
-plot_size_comps(M, 11)
+plot_size_comps(A, 11)
 ```
 
 ```{r sc_bsfrf_male, fig.cap = "Observed and model estimated size-frequencies of discarded male BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_male}"}
-plot_size_comps(M, 12)
+plot_size_comps(A, 12)
 ```
 
 ```{r sc_bsfrf_female, fig.cap = "Observed and model estimated size-frequencies of discarded female BBRKC by year in the BSFRF survey for the 2017 model and each of the Gmacs model scenarios.\\label{fig:sc_bsfrf_female}"}
-plot_size_comps(M, 13)
+plot_size_comps(A, 13)
 ```
 
 \newpage\clearpage
@@ -1726,7 +1732,9 @@ plot_recruitment_size(A, xlab = "Carapace width (mm)")
 
 
 ```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models including the 2017 model.\\label{fig:init_N}", fig.height = 15}
-plot_numbers(M, subsetby = c(1975, 1976, 2015, 2016), nrow = NULL, ncol = 8)
+A <- M
+A[[jj]] <- NULL
+plot_numbers(A, subsetby = c(1975, 1976, 2015, 2016), nrow = NULL, ncol = 8)
 ```
 
 

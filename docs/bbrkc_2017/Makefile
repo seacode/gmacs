@@ -16,6 +16,11 @@ pdf: bbrkc.Rmd
 	R ${R_OPTS} -e 'library(knitr); knit("bbrkc.Rmd");'
 	pandoc -V geometry:margin=1in bbrkc.md -o bbrkc.pdf --bibliography=../references/Gmacs.bib --latex-engine=xelatex
 
+final: bbrkc.Rmd app.Rmd
+	R ${R_OPTS} -e 'library(knitr); knit("bbrkc.Rmd");'
+	R ${R_OPTS} -e 'library(knitr); knit("app.Rmd")'
+	pandoc -V geometry:margin=1in bbrkc.md app.md -o bbrkc.pdf --bibliography=../references/Gmacs.bib --latex-engine=xelatex
+
 clean:
 	$(RM) bbrkc.md 
 	$(RM) app.md 
