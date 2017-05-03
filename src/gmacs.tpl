@@ -237,7 +237,7 @@ DATA_SECTION
 	// | FECUNDITY FOR MMB CALCULATION |
 	// |-------------------------------|
 	!! cout << " * Maturity and natural mortality" << endl;
-	init_vector fecundity(1,nclass);
+	init_vector fecundity(1,nclass); // THIS IS NO LONGER USED AND COULD BE REMOVED
 	init_matrix maturity(1,nsex,1,nclass);
 	init_int m_prop_type;
 	int m_dim;
@@ -282,7 +282,7 @@ DATA_SECTION
 				exit(1);
 			}
 		}
-		WRITEDAT(fecundity); WRITEDAT(maturity);
+		WRITEDAT(maturity);
 	END_CALCS
 
 	// |-------------|
@@ -2360,6 +2360,7 @@ FUNCTION calc_initial_numbers_at_length
 	}
 
 	//d4_N(ig)(syr)(1) = x(ig);
+
 	// male newshell
     d4_N(1)(syr)(1)(1) = 27987700;
     d4_N(1)(syr)(1)(2) = 28795300;
@@ -2407,8 +2408,54 @@ FUNCTION calc_initial_numbers_at_length
 	// female oldshell
 	d4_N(4)(syr)(1) = 0.0001;
 
-
-
+    /*
+	// male newshell
+    d4_N(1)(syr)(1)(1) = 27162400;
+    d4_N(1)(syr)(1)(2) = 28113900;
+    d4_N(1)(syr)(1)(3) = 14580300;
+    d4_N(1)(syr)(1)(4) = 15833800;
+    d4_N(1)(syr)(1)(5) = 13186000;
+    d4_N(1)(syr)(1)(6) = 10927400;
+    d4_N(1)(syr)(1)(7) = 11024700;
+    d4_N(1)(syr)(1)(8) = 8936730;
+    d4_N(1)(syr)(1)(9) = 9664040;
+    d4_N(1)(syr)(1)(10) = 11022500;
+    d4_N(1)(syr)(1)(11) = 9009240;
+    d4_N(1)(syr)(1)(12) = 9327550;
+    d4_N(1)(syr)(1)(13) = 8537520;
+    d4_N(1)(syr)(1)(14) = 8354120;
+    d4_N(1)(syr)(1)(15) = 7403640;
+    d4_N(1)(syr)(1)(16) = 6428180;
+    d4_N(1)(syr)(1)(17) = 5310070;
+    d4_N(1)(syr)(1)(18) = 3752060;
+    d4_N(1)(syr)(1)(19) = 2157450;
+    d4_N(1)(syr)(1)(20) = 2059100;
+	// male oldshell
+	d4_N(2)(syr)(1) = 0.0001;
+	// females newshell
+    d4_N(3)(syr)(1)(1) = 42928800;
+    d4_N(3)(syr)(1)(2) = 38964600;
+    d4_N(3)(syr)(1)(3) = 37577200;
+    d4_N(3)(syr)(1)(4) = 31883000;
+    d4_N(3)(syr)(1)(5) = 30353900;
+    d4_N(3)(syr)(1)(6) = 19281000;
+    d4_N(3)(syr)(1)(7) = 13370300;
+    d4_N(3)(syr)(1)(8) = 10002700;
+    d4_N(3)(syr)(1)(9) = 8592430;
+    d4_N(3)(syr)(1)(10) = 6807350;
+    d4_N(3)(syr)(1)(11) = 3773530;
+    d4_N(3)(syr)(1)(12) = 3414650;
+    d4_N(3)(syr)(1)(13) = 2561850;
+    d4_N(3)(syr)(1)(14) = 1012200;
+    d4_N(3)(syr)(1)(15) = 982444;
+    d4_N(3)(syr)(1)(16) = 1904020;
+    d4_N(3)(syr)(1)(17) = 0;
+    d4_N(3)(syr)(1)(18) = 0;
+    d4_N(3)(syr)(1)(19) = 0;
+    d4_N(3)(syr)(1)(20) = 0;
+	// female oldshell
+	d4_N(4)(syr)(1) = 0.0001;
+	*/
 
 	
 
@@ -2471,6 +2518,7 @@ FUNCTION update_population_numbers_at_length
 			} else {
 				recruits(h)(i) = mfexp(logRbar);
 			}
+			// This splits recruitment out proportionately into males and females
 			if (h ==1) recruits(h)(i) *= mfexp(rec_dev(i)) * 1 / (1 + mfexp(-logit_rec_prop(i)));
 			if (h ==2) recruits(h)(i) *= mfexp(rec_dev(i)) * (1 - 1 / (1 + mfexp(-logit_rec_prop(i))));
 		}
@@ -4024,7 +4072,7 @@ FUNCTION dvar_vector calc_ssb()
 			o = ishell(ig);
 			m = imature(ig);
 			double lam;
-			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
+			h <= 1 ? lam = spr_lambda : lam = (1.0 - spr_lambda);
 			ssb(i) += lam * d4_N(ig)(i)(season_ssb) * elem_prod(mean_wt(h)(i), maturity(h));
 		}
 	}
