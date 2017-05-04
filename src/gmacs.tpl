@@ -374,26 +374,28 @@ DATA_SECTION
 		{
 			for ( int i = syr; i <= nyr-1; i++ )
 			{
-				dCatchData_out(k,i,1) = i;
+				dCatchData_out(k,i,1) = i; // Year
 				int j = 1;
 				for ( int ii = 1; ii <= nCatchRows(k); ii++ )
 				{
 					if ( i == dCatchData(k,ii,1) ) // year index
 					{
 						j = ii;
-						obs_catch_out(k,i)    = dCatchData(k,ii,5);
-						dCatchData_out(k,i,5) = dCatchData(k,ii,5);
-						dCatchData_out(k,i,6) = dCatchData(k,ii,6);
+						// If there is data then set these variables to values, if not then make zero
+						obs_catch_out(k,i)    = dCatchData(k,ii,5); // Obs
+						dCatchData_out(k,i,5) = dCatchData(k,ii,5); // Obs
+						dCatchData_out(k,i,6) = dCatchData(k,ii,6); // CV
+						dCatchData_out(k,i,9)  = dCatchData(k,j,9); // Mult
+						dCatchData_out(k,i,10) = dCatchData(k,j,10); // Effort
+						dCatchData_out(k,i,11) = dCatchData(k,j,11); // Discard mortality
 					}
 				}
-				dCatchData_out(k,i,2)  = dCatchData(k,j,2);
-				dCatchData_out(k,i,3)  = dCatchData(k,j,3);
-				dCatchData_out(k,i,4)  = dCatchData(k,j,4);
-				dCatchData_out(k,i,7)  = dCatchData(k,j,7);
-				dCatchData_out(k,i,8)  = dCatchData(k,j,8);
-				dCatchData_out(k,i,9)  = dCatchData(k,j,9);
-				dCatchData_out(k,i,10) = dCatchData(k,j,10);
-				dCatchData_out(k,i,11) = dCatchData(k,j,11);
+				// Replicate these variables
+				dCatchData_out(k,i,2) = dCatchData(k,j,2); // Season
+				dCatchData_out(k,i,3) = dCatchData(k,j,3); // Fleet
+				dCatchData_out(k,i,4) = dCatchData(k,j,4); // Sex
+				dCatchData_out(k,i,7) = dCatchData(k,j,7); // Type
+				dCatchData_out(k,i,8) = dCatchData(k,j,8); // Units
 			}
 		}
 	END_CALCS
