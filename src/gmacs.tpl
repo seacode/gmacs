@@ -314,15 +314,15 @@ DATA_SECTION
 			obs_catch(k)  = column(dCatchData(k),5);
 			catch_cv(k)   = column(dCatchData(k),6);
 			catch_dm(k)   = column(dCatchData(k),11);
-			obs_catch(k)  = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
+			obs_catch(k)  = elem_prod(obs_catch(k), catch_mult(k)); // rescale catch by multiplier
 			// If the catch is zero then add a small constant
-			for ( int i = 1; i <= nCatchRows(k); i++ )
-			{
-				if ( obs_catch(k)(i) < 1e-4 )
-				{
-					obs_catch(k)(i) = 1e-4;
-				}
-			}
+			//for ( int i = 1; i <= nCatchRows(k); i++ )
+			//{
+			//	if ( obs_catch(k)(i) < 1e-4 )
+			//	{
+			//		obs_catch(k)(i) = 1e-4;
+			//	}
+			//}
 		}
 		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 		ECHO(obs_catch); ECHO(catch_cv);
@@ -2787,12 +2787,13 @@ FUNCTION calc_predicted_catch
 	int h,i,j,k,ig,type,unit,nhit;
 	double cobs, effort;
 	pre_catch.initialize();
+	res_catch.initialize();
 	log_q_catch.initialize();
 	dvariable tmp_ft;
 	dvar_vector sel(1,nclass);
 	dvar_vector nal(1,nclass); // numbers or biomass at length.
 
-    // First need to calculate a catchability (q) for each catch data frame if there is any catch and effort
+    // First need to calculate a catchability (q) for each catch data frame if there is any catch and effort (must be both)
 	for ( int kk = 1; kk <= nCatchDF; kk++ )
 	{
 		nhit = 0;
@@ -2868,6 +2869,8 @@ FUNCTION calc_predicted_catch
 		}
 		log_q_catch(kk) /= nhit;
 	}
+	if ( verbose == 1 ) COUT(log_q_catch);
+
 
 
 	for ( int kk = 1; kk <= nCatchDF; kk++ )
@@ -2945,8 +2948,8 @@ FUNCTION calc_predicted_catch
 					}
 				}
 			}
+			if ( obs_catch(kk,jj) > 0.0 ) res_catch(kk,jj) = log(obs_catch(kk,jj)) - log(pre_catch(kk,jj)); // Catch residuals
 		}
-		res_catch(kk) = log(obs_catch(kk)) - log(pre_catch(kk)); // Catch residuals
 		if ( verbose == 1 ) COUT(pre_catch(kk)(1));
 	}
 
