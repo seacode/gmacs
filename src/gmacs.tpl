@@ -2948,7 +2948,11 @@ FUNCTION calc_predicted_catch
 					}
 				}
 			}
-			if ( obs_catch(kk,jj) > 0.0 ) res_catch(kk,jj) = log(obs_catch(kk,jj)) - log(pre_catch(kk,jj)); // Catch residuals
+			// Catch residuals
+			// In first case (obs_catch > 0) then if there is only catch data, calculate the residual as per usual; if there is catch and effort data, then still use observed catch to calculate the residual, despite the predicted catch being calculated differently.
+			if ( obs_catch(kk,jj) > 0.0 )                  res_catch(kk,jj) = log(obs_catch(kk,jj)) - log(pre_catch(kk,jj));
+			// In second case, when effort > 0 then the residual is the pred catch using Fs - pred catch using q
+			if ( obs_catch(kk,jj) == 0.0 && effort > 0.0 ) res_catch(kk,jj) = log(nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j))) - log(pre_catch(kk,jj));
 		}
 		if ( verbose == 1 ) COUT(pre_catch(kk)(1));
 	}
@@ -3879,6 +3883,7 @@ REPORT_SECTION
 	REPORT(obs_catch);
 	REPORT(pre_catch);
 	REPORT(res_catch);
+	REPORT(log_q_catch);
 	REPORT(obs_catch_out);
 	REPORT(pre_catch_out);
 	REPORT(res_catch_out);
