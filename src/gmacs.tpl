@@ -1335,6 +1335,7 @@ PARAMETER_SECTION
 	matrix res_catch(1,nCatchDF,1,nCatchRows); ///> catch residuals in log-space
 	matrix pre_catch_out(1,nCatchDF,syr,nyr-1);
 	matrix res_catch_out(1,nCatchDF,syr,nyr-1);
+	vector log_q_catch(1,nCatchDF);
 
 	matrix pre_cpue(1,nSurveys,1,nSurveyRows); ///> predicted relative abundance index
 	matrix res_cpue(1,nSurveys,1,nSurveyRows); ///> relative abundance residuals
@@ -2781,13 +2782,92 @@ FUNCTION calc_stock_recruitment_relationship
 	 *  4) discard is the total number of crab caught and discarded.
 	**/
 FUNCTION calc_predicted_catch
-	int h,i,j,k,ig;
-	int type,unit;
+	int h,i,j,k,ig,type,unit,nhit;
+	double cobs, effort;
 	pre_catch.initialize();
+	log_q_catch.initialize();
 	dvariable tmp_ft;
 	dvar_vector sel(1,nclass);
 	dvar_vector nal(1,nclass); // numbers or biomass at length.
-	
+
+    // First need to calculate a catchability (q) for each catch data frame if there is any catch and effort
+	for ( int kk = 1; kk <= nCatchDF; kk++ )
+	{
+		nhit = 0;
+		for ( int jj = 1; jj <= nCatchRows(kk); jj++ )
+		{
+			cobs =   dCatchData(kk,jj,5);  // catch data
+			effort = dCatchData(kk,jj,10); // Effort data
+
+			if (cobs > 0.0 && effort > 0.0)
+			{
+				i    =     dCatchData(kk,jj,1);  // year index
+				j    =     dCatchData(kk,jj,2);  // season index
+				k    =     dCatchData(kk,jj,3);  // fleet/gear index
+				h    =     dCatchData(kk,jj,4);  // sex index
+				type = int(dCatchData(kk,jj,7)); // Type of catch (retained = 1, discard = 2)
+				unit = int(dCatchData(kk,jj,8)); // Units of catch equation (1 = biomass, 2 = numbers)
+
+				if ( h ) // sex specific
+				{
+					nal.initialize();
+					sel = log_slx_capture(k)(h)(i);
+					switch ( type )
+					{
+						case 1: // retained catch
+							sel = mfexp(sel + log_slx_retaind(k)(h)(i));
+						break;
+						case 2: // discarded catch
+							sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
+						break;
+					}
+					for ( int m = 1; m <= nmature; m++ )
+					{
+						for ( int o = 1; o <= nshell; o++ )
+						{
+							ig = pntr_hmo(h,m,o);
+							nal += d4_N(ig)(i)(j);
+						}
+					}
+					tmp_ft = ft(k)(h)(i)(j);
+					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
+					log_q_catch(kk) += log(cobs / effort) - log(nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)));
+					nhit += 1;
+				} else {
+					// sexes combibed
+					for ( h = 1; h <= nsex; h++ )
+					{
+						nal.initialize();
+						sel = log_slx_capture(k)(h)(i);
+						switch( type )
+						{
+							case 1: // retained catch
+								sel = mfexp(sel + log_slx_retaind(k)(h)(i));
+							break;
+							case 2: // discarded catch
+								sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
+							break;
+						}
+						for ( int m = 1; m <= nmature; m++ )
+						{
+							for ( int o = 1; o <= nshell; o++ )
+							{
+								ig = pntr_hmo(h,m,o);
+								nal += d4_N(ig)(i)(j);
+							}
+						}
+						tmp_ft = ft(k)(h)(i)(j);
+						nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
+						log_q_catch(kk) += log(cobs / effort) - log(nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)));
+						nhit += 1;
+					}
+				}
+			}
+		}
+		log_q_catch(kk) /= nhit;
+	}
+
+
 	for ( int kk = 1; kk <= nCatchDF; kk++ )
 	{
 		for ( int jj = 1; jj <= nCatchRows(kk); jj++ )
@@ -2798,6 +2878,7 @@ FUNCTION calc_predicted_catch
 			h    =     dCatchData(kk,jj,4);  // sex index
 			type = int(dCatchData(kk,jj,7)); // Type of catch (retained = 1, discard = 2)
 			unit = int(dCatchData(kk,jj,8)); // Units of catch equation (1 = biomass, 2 = numbers)
+			effort =   dCatchData(kk,jj,10); // Effort data
 
 			if ( h ) // sex specific
 			{
@@ -2822,7 +2903,13 @@ FUNCTION calc_predicted_catch
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-				pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				if (effort > 0.0)
+				{
+					pre_catch(kk,jj) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)); 
+				} else {
+					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				}
+				// If calculating using effort then do this, if no effort then effort = 1 and q = 1.
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -2848,7 +2935,12 @@ FUNCTION calc_predicted_catch
 					}
 					tmp_ft = ft(k)(h)(i)(j);
 					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+					if (effort > 0.0)
+					{
+						pre_catch(kk,jj) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)); 
+					} else {
+						pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+					}
 				}
 			}
 		}
@@ -2863,8 +2955,8 @@ FUNCTION calc_predicted_catch
    * @details The function uses the Baranov catch equation to predict the retained and discarded catch for all model years (not just those years for which we have observations). This is used for plotting purposes only.
   **/
 FUNCTION calc_predicted_catch_out
-	int h,i,j,k,ig;
-	int type,unit;
+	int h,i,j,k,ig,type,unit;
+	double effort;
 	pre_catch_out.initialize();
 	res_catch_out.initialize();
 	dvariable tmp_ft;
@@ -2880,6 +2972,8 @@ FUNCTION calc_predicted_catch_out
 			h    =     dCatchData_out(kk,i,4);  // sex index
 			type = int(dCatchData_out(kk,i,7)); // Type of catch (retained = 1, discard = 2)
 			unit = int(dCatchData_out(kk,i,8)); // Units of catch equation (1 = biomass, 2 = numbers)
+			effort =   dCatchData_out(kk,i,10); // Effort data
+
 			if ( h ) // sex specific
 			{
 				nal.initialize();
@@ -2903,7 +2997,12 @@ FUNCTION calc_predicted_catch_out
 				}
 				tmp_ft = ft(k)(h)(i)(j);
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-				pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				if (effort > 0.0)
+				{
+					pre_catch_out(kk,i) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)); 
+				} else {
+					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+				}
 			} else {
 				// sexes combibed
 				for ( h = 1; h <= nsex; h++ )
@@ -2929,7 +3028,13 @@ FUNCTION calc_predicted_catch_out
 					}
 					tmp_ft = ft(k)(h)(i)(j);
 					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
-					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+					if (effort > 0.0)
+					{
+						pre_catch_out(kk,i) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)); 
+					} else {
+						pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+					}
+
 				}
 			}
 		}
