@@ -67,6 +67,7 @@
 ##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Gear-1   Gear-2   Gear-3   Gear-4   Gear-5   Gear-6
+## PotFshry TrawlByc TCFshry  FixedGr  NMFS     BSFRF                                                                                  
    1        1        1        1        2        1         # selectivity periods
    1        0        1        0        1        1         # sex specific selectivity
    3        3        3        3        3        3         # male selectivity type
