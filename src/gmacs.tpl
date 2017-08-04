@@ -511,11 +511,15 @@ DATA_SECTION
 	// |-------------------|
 	!! cout << " * Custom data" << endl;
 	init_int bUseCustomGrowthMatrix;
+	!!	WRITEDAT(bUseCustomGrowthMatrix); 
 	//init_matrix CustomGrowthMatrix(1,nsex,1,nclass,1,nclass);
 	init_3darray CustomGrowthMatrix(1,nsex,1,nclass,1,nclass);
+	!!	WRITEDAT(CustomGrowthMatrix); 
 
 	init_int bUseCustomNaturalMortality;
 	init_matrix CustomNaturalMortality(1,nsex,syr,nyr);
+	!!	WRITEDAT(bUseCustomNaturalMortality); 
+	!!	WRITEDAT(CustomNaturalMortality); 
 
 	// |------------------|
 	// | END OF DATA FILE |
