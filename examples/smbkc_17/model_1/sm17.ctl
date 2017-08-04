@@ -1,11 +1,12 @@
-# Set up to do Stock Reduction Analysis using Catch data and informative priors.
+## ———————————————————————————————————————————————————————————————————————————————————— ##
+## LEADING PARAMETER CONTROLS                                                           ##
 # Controls for leading parameter vector theta
 # LEGEND FOR PRIOR:
 #                  0 -> uniform #                  1 -> normal #                  2 -> lognormal
 #                  3 -> beta
 #                  4 -> gamma
 # ntheta
-  9
+  12
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -18,6 +19,9 @@
   0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R)
   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness
   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation
+ 14.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
+ 14.0       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
+ 13.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 #13.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -25,6 +29,8 @@
 ## Two lines for each parameter if split sex, one line if not                           ##
 ## number of molt periods
 1
+## Year(s) molt period changes (blank if no changes)
+
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub         phz  prior     p1      p2         # parameter         #
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -33,7 +39,8 @@
    0.45      0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
  121.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined
    0.060     0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
-
+# 144.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
+#   0.05      0.0001    1.0         4       0    0.0    999.0         # molt_cv males
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
 ##     Each gear must have a selectivity and a retention selectivity. If a uniform      ##
@@ -175,10 +182,10 @@
 10.0
 ## Number of nodes for cubic spline or number of step-changes for option 3
 2
-4
+4 # Females (ignored if single sex...)
 ## Year position of the knots (vector must be equal to the number of nodes)
 1998 1999
-1976 1980 1985 1994
+1976 1980 1985 1994 # Females (ignored if single sex...)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

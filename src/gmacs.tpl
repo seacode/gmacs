@@ -557,6 +557,7 @@ DATA_SECTION
 	!! cout << " * Growth parameter controls" << endl;
 	// | Note that if bUseEmpiricalGrowth data is TRUE, then cannot estimate alpa & beta.
 	init_int nmolt;
+	init_ivector iYrsMoltChanges(1,1-nmolt);
 	int nGrwth;
 	!! nGrwth = (nsex * 3) + (nsex * nmolt * 2);
 	init_matrix Grwth_control(1,nGrwth,1,7);
@@ -1091,7 +1092,12 @@ DATA_SECTION
 	init_ivector m_nodeyear(1,m_nNodes);
 	init_ivector m_nodeyear_females(1,m_nNodes_females);
 	LOC_CALCS
-		WriteCtl(m_type); WriteCtl(Mdev_phz); WriteCtl(m_stdev); WriteCtl(m_nNodes); WriteCtl(m_nodeyear);
+		WriteCtl(m_females);
+		WriteCtl(m_type);
+		WriteCtl(Mdev_phz); 
+		WriteCtl(m_stdev); 
+		WriteCtl(m_nNodes); 
+		WriteCtl(m_nodeyear);
 		if ( m_females == 1 )
 		{
 			Mdev_phz_females = Mdev_phz;
@@ -1540,25 +1546,35 @@ FUNCTION initialize_model_parameters
 
 	// init_bounded_number_vector Grwth(1,nGrwth,Grwth_lb,Grwth_ub,Grwth_phz);
 	// Get Growth & Molting parameters
+	int icnt = 1;
 	for ( int h = 1; h <= nsex; h++ )
 	{
 		// Note that for 2 sexes, the odd numbered rows of "Grwth" are for males, even for females
-		int icnt = h;
 		alpha(h)   = Grwth(icnt);
 		icnt += nsex;
 		beta(h)    = Grwth(icnt);
 		icnt += nsex;
 		gscale(h)  = Grwth(icnt);
+		icnt += nsex;
 	}
-	// molt_mu(h,i)
-	molt_mu(1,1) = Grwth(7);
-	molt_mu(2,1) = Grwth(8);
-	molt_cv(1,1) = Grwth(9);
-	molt_cv(2,1) = Grwth(10);
-	molt_mu(1,2) = Grwth(11);
-	molt_mu(2,2) = Grwth(12);
-	molt_cv(1,2) = Grwth(13);
-	molt_cv(2,2) = Grwth(14);
+	for (int igrow=1;igrow<=nmolt;igrow++)
+	{
+		for ( int h = 1; h <= nsex; h++ )
+		{
+	    molt_mu(h,igrow) = Grwth(icnt);
+		  icnt += nsex;
+	    molt_cv(h,igrow) = Grwth(icnt);
+		  icnt += nsex;
+	  }
+	}
+	// molt_mu(1,1) = Grwth(7);
+	// molt_mu(2,1) = Grwth(8);
+	// molt_cv(1,1) = Grwth(9);
+	// molt_cv(2,1) = Grwth(10);
+	// molt_mu(1,2) = Grwth(11);
+	// molt_mu(2,2) = Grwth(12);
+	// molt_cv(1,2) = Grwth(13);
+	// molt_cv(2,2) = Grwth(14);
 
 	if ( !bUseEmpiricalGrowth )
 	{
@@ -1957,7 +1973,7 @@ FUNCTION calc_natural_mortality
 			//}
 		}
 	}
-	if ( active(m_dev_females) )
+	if ( active(m_dev_females) && nsex > 1)
 	{
 		dvar_vector delta(syr+1,nyr);
 		delta.initialize();
@@ -2101,22 +2117,24 @@ FUNCTION calc_molting_probability
 	molt_probability.initialize();
 	P.initialize();
 	double tiny = 0.000;
-	for ( int h = 1; h <= nsex; h++ )
+	for (int igrow=1;igrow<=nmolt;igrow++)
 	{
-		for ( int i = syr; i <= nyr; i++ )
+		for ( int h = 1; h <= nsex; h++ )
 		{
-			if ( i < 1980 ) {
-				dvariable mu = molt_mu(h,1);
-				dvariable sd = mu * molt_cv(h,1);
-				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
-			} else {
-				dvariable mu = molt_mu(h,2);
-				dvariable sd = mu * molt_cv(h,2);
-				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
-			}
-			for ( int l = 1; l <= nclass; l++ )
+		  dvariable mu = molt_mu(h,igrow);
+		  dvariable sd = mu * molt_cv(h,igrow);
+			for ( int i = syr; i <= nyr; i++ )
 			{
-				P(h)(l,l) = molt_probability(h)(i)(l);
+				if ( igrow>1 && i >= iYrsMoltChanges(igrow-1) ) 
+				{
+					mu = molt_mu(h,igrow);
+					sd = mu * molt_cv(h,igrow);
+				} 
+				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
+				for ( int l = 1; l <= nclass; l++ )
+				{
+					P(h)(l,l) = molt_probability(h)(i)(l);
+				}
 			}
 		}
 	}
@@ -2364,6 +2382,7 @@ FUNCTION calc_initial_numbers_at_length
 
 	//d4_N(ig)(syr)(1) = x(ig);
 
+    /*
 	// male newshell
     d4_N(1)(syr)(1)(1) = 27987700;
     d4_N(1)(syr)(1)(2) = 28795300;
@@ -2411,7 +2430,6 @@ FUNCTION calc_initial_numbers_at_length
 	// female oldshell
 	d4_N(4)(syr)(1) = 0.0001;
 
-    /*
 	// male newshell
     d4_N(1)(syr)(1)(1) = 27162400;
     d4_N(1)(syr)(1)(2) = 28113900;
@@ -4358,24 +4376,32 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 		}
 	}
 
-	// Initial recruitment
-	switch( bInitializeUnfished )
-	{
-		case 0: // Unfished conditions
-			//rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
-			rtt(1) = mfexp(logR0) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
-			rtt(2) = mfexp(logR0) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
-		break;
-		case 1: // Steady-state fished conditions
-			//rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
-			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
-			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
-		break;
-		case 2: // Free parameters
-			rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
-			rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
-		break;
-	}
+// if split sex
+  if (nsex>1)
+  {
+		// Initial recruitment
+		switch( bInitializeUnfished )
+		{
+			case 0: // Unfished conditions
+				//rtt = (1.0/nsex * mfexp(logR0)) * rec_sdd;
+				rtt(1) = mfexp(logR0) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
+				rtt(2) = mfexp(logR0) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
+			break;
+			case 1: // Steady-state fished conditions
+				//rtt = (1.0/nsex * mfexp(logRbar)) * rec_sdd;
+				rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
+				rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
+			break;
+			case 2: // Free parameters
+				rtt(1) = mfexp(logRbar) * 1 / (1 + mfexp(-logit_rec_prop(syr))) * rec_sdd;
+				rtt(2) = mfexp(logRbar) * (1 - 1 / (1 + mfexp(-logit_rec_prop(syr)))) * rec_sdd;
+			break;
+		}
+  }
+  else
+  {
+  	rtt(1) = 1.;
+  }
 
 	//if ( bInitializeUnfished == 0 )
 	//{
