@@ -182,10 +182,10 @@
 10.0
 ## Number of nodes for cubic spline or number of step-changes for option 3
 2
-4 # Females (ignored if single sex...)
+0 # Females (ignored if single sex...)
 ## Year position of the knots (vector must be equal to the number of nodes)
 1998 1999
-1976 1980 1985 1994 # Females (ignored if single sex...)
+# 1976 1980 1985 1994 # Females (ignored if single sex...)
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##

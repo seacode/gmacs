@@ -1102,7 +1102,7 @@ DATA_SECTION
 		{
 			Mdev_phz_females = Mdev_phz;
 		} else {
-			Mdev_phz_females = -Mdev_phz;
+			Mdev_phz_females = -1;
 		}
 		switch ( m_type )
 		{
