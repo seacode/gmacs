@@ -1147,8 +1147,14 @@ DATA_SECTION
 	number spr_lambda;
 	int bUseEmpiricalGrowth;
 	int nSRR_flag; // if nSRR_flag == 1 then use a Beverton-Holt model to compute the recruitment deviations for minimization.
+	int rec_prop_phz
 	LOC_CALCS
 		rdv_phz             = int(model_controls(1));
+		if (nsex==1) 
+			rec_prop_phz = -1;
+		else
+			rec_prop_phz = rdv_phz;
+
 		rec_ini_phz         = int(model_controls(2));
 		verbose             = int(model_controls(3));
 		bInitializeUnfished = int(model_controls(4));
@@ -1291,7 +1297,7 @@ PARAMETER_SECTION
 	init_bounded_dev_vector rec_ini(1,nclass,-14.0,14.0,rec_ini_phz);  ///> initial size devs
 	//init_bounded_dev_vector rec_dev(syr+1,nyr,-7.0,7.0,rdv_phz); ///> recruitment deviations
 	init_bounded_dev_vector rec_dev(syr,nyr,-8.0,8.0,rdv_phz); ///> recruitment deviations
-	init_bounded_dev_vector logit_rec_prop(syr,nyr,-100,100,rdv_phz); ///> recruitment deviations
+	init_bounded_dev_vector logit_rec_prop(syr,nyr,-100,100,rec_prop_phz); ///> recruitment deviations
 
 	// Time-varying natural mortality rate devs.
 	init_bounded_dev_vector m_dev(1,nMdev,-3.0,3.0,Mdev_phz);    ///> natural mortality deviations
