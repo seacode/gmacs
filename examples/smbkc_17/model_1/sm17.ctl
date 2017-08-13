@@ -9,11 +9,10 @@
   12
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub        phz   prior     p1      p2         # parameter         #
-## ———————————————————————————————————————————————————————————————————————————————————— ##
   0.18      0.01         1        -4       2   0.18    0.02          # M
   14.3      -7.0        30        -2       0    -7       30          # log(R0)
   10.0      -7.0        20        -1       1   -10.0     20          # log(Rini)
-  10.0      -7.0        20         1       0    -7       20          # log(Rbar)
+  13.39      -7.0        20         1       0    -7       20          # log(Rbar)
   80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value
   0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component)
   0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R)
@@ -22,9 +21,6 @@
  14.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
  14.0       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
  13.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
-## ———————————————————————————————————————————————————————————————————————————————————— ##
-#13.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length
-## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## GROWTH PARAM CONTROLS                                                                ##
 ## Two lines for each parameter if split sex, one line if not                           ##
 ## number of molt periods
@@ -33,14 +29,12 @@
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 # ival        lb        ub         phz  prior     p1      p2         # parameter         #
-## ———————————————————————————————————————————————————————————————————————————————————— ##
   14.1      10.0      30.0         -3       0    0.0   999.0         # alpha males or combined
    0.0001    0.0       0.01        -3       0    0.0   999.0         # beta males or combined
    0.45      0.01      1.0         -3       0    0.0   999.0         # gscale males or combined
  121.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined
    0.060     0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined
-# 144.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
-#   0.05      0.0001    1.0         4       0    0.0    999.0         # molt_cv males
+
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## SELECTIVITY CONTROLS                                                                 ##
 ##     Each gear must have a selectivity and a retention selectivity. If a uniform      ##
@@ -173,7 +167,7 @@
 ##      4 = Time blocks
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 ## Sex-specific? (0=no, 1=yes)
-1
+0
 ## Type
 3
 ## Phase of estimation
