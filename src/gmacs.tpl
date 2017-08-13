@@ -237,7 +237,7 @@ DATA_SECTION
 	// | FECUNDITY FOR MMB CALCULATION |
 	// |-------------------------------|
 	!! cout << " * Maturity and natural mortality" << endl;
-	init_vector fecundity(1,nclass); // THIS IS NO LONGER USED AND COULD BE REMOVED
+	init_vector fecundity(1,nclass); 
 	init_matrix maturity(1,nsex,1,nclass);
 	init_int m_prop_type;
 	int m_dim;
@@ -314,15 +314,15 @@ DATA_SECTION
 			obs_catch(k)  = column(dCatchData(k),5);
 			catch_cv(k)   = column(dCatchData(k),6);
 			catch_dm(k)   = column(dCatchData(k),11);
-			obs_catch(k)  = elem_prod(obs_catch(k), catch_mult(k)); // rescale catch by multiplier
+			obs_catch(k)  = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
 			// If the catch is zero then add a small constant
-			//for ( int i = 1; i <= nCatchRows(k); i++ )
-			//{
-			//	if ( obs_catch(k)(i) < 1e-4 )
-			//	{
-			//		obs_catch(k)(i) = 1e-4;
-			//	}
-			//}
+			for ( int i = 1; i <= nCatchRows(k); i++ )
+			{
+				if ( obs_catch(k)(i) < 1e-4 )
+				{
+					obs_catch(k)(i) = 1e-4;
+				}
+			}
 		}
 		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 		ECHO(obs_catch); ECHO(catch_cv);
@@ -381,7 +381,6 @@ DATA_SECTION
 					if ( i == dCatchData(k,ii,1) ) // year index
 					{
 						j = ii;
-						// If there is data then set these variables to values, if not then make zero
 						obs_catch_out(k,i)    = dCatchData(k,ii,5); // Obs
 						dCatchData_out(k,i,5) = dCatchData(k,ii,5); // Obs
 						dCatchData_out(k,i,6) = dCatchData(k,ii,6); // CV
@@ -511,7 +510,6 @@ DATA_SECTION
 	// |-------------------|
 	!! cout << " * Custom data" << endl;
 	init_int bUseCustomGrowthMatrix;
-	//init_matrix CustomGrowthMatrix(1,nsex,1,nclass,1,nclass);
 	init_3darray CustomGrowthMatrix(1,nsex,1,nclass,1,nclass);
 
 	init_int bUseCustomNaturalMortality;
