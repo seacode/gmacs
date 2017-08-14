@@ -501,7 +501,8 @@ DATA_SECTION
 				mle_beta(h) = -slp;
 			}
 		}
-		WRITEDAT(nGrowthObs); WRITEDAT(dGrowthData);
+		WRITEDAT(nGrowthObs); 
+		WRITEDAT(dGrowthData);
 		ECHO(dPreMoltSize); ECHO(iMoltIncSex); ECHO(dMoltInc); ECHO(dMoltIncCV);
 	END_CALCS
 
@@ -510,10 +511,14 @@ DATA_SECTION
 	// |-------------------|
 	!! cout << " * Custom data" << endl;
 	init_int bUseCustomGrowthMatrix;
+	!! WRITEDAT(bUseCustomGrowthMatrix);
 	init_3darray CustomGrowthMatrix(1,nsex,1,nclass,1,nclass);
+	!! WRITEDAT( CustomGrowthMatrix);
 
 	init_int bUseCustomNaturalMortality;
+	!! WRITEDAT( bUseCustomNaturalMortality);
 	init_matrix CustomNaturalMortality(1,nsex,syr,nyr);
+	!! WRITEDAT( CustomNaturalMortality);
 
 	// |------------------|
 	// | END OF DATA FILE |
@@ -554,10 +559,12 @@ DATA_SECTION
 	// |----------------------------|
 	!! cout << " * Growth parameter controls" << endl;
 	// | Note that if bUseEmpiricalGrowth data is TRUE, then cannot estimate alpa & beta.
-	init_int nmolt;
-	init_ivector iYrsMoltChanges(1,1-nmolt);
+	init_int nMoltVaries;
+	int nMoltChanges;
+	!!  nMoltChanges = nMoltVaries-1;
+	init_ivector iYrsMoltChanges(1,nMoltChanges);
 	int nGrwth;
-	!! nGrwth = (nsex * 3) + (nsex * nmolt * 2);
+	!! nGrwth = (nsex * 3) + (nsex * nMoltVaries * 2);
 	init_matrix Grwth_control(1,nGrwth,1,7);
 
 	vector Grwth_ival(1,nGrwth);
@@ -569,7 +576,10 @@ DATA_SECTION
 		Grwth_lb   = column(Grwth_control,2);
 		Grwth_ub   = column(Grwth_control,3);
 		Grwth_phz  = ivector(column(Grwth_control,4));
-		WriteCtl(ntheta); WriteCtl(theta_control); WriteCtl(Grwth_control);
+		WriteCtl(ntheta); WriteCtl(theta_control); 
+		WriteCtl(nMoltVaries);
+		WriteCtl(iYrsMoltChanges);
+		WriteCtl(Grwth_control);
 	END_CALCS
 
 	// |--------------------------------|
@@ -1334,8 +1344,8 @@ PARAMETER_SECTION
 	vector   alpha(1,nsex); ///> intercept for linear growth increment model
 	vector    beta(1,nsex); ///> slope for the linear growth increment model
 	vector  gscale(1,nsex); ///> scale parameter for the gamma distribution
-	matrix molt_mu(1,nsex,1,nmolt); ///> 50% probability of molting at length each year
-	matrix molt_cv(1,nsex,1,nmolt); ///> CV in molting probabilility
+	matrix molt_mu(1,nsex,1,nMoltVaries); ///> 50% probability of molting at length each year
+	matrix molt_cv(1,nsex,1,nMoltVaries); ///> CV in molting probabilility
 
 	vector rec_sdd(1,nclass); ///> recruitment size_density_distribution
 
@@ -1555,20 +1565,29 @@ FUNCTION initialize_model_parameters
 	{
 		// Note that for 2 sexes, the odd numbered rows of "Grwth" are for males, even for females
 		alpha(h)   = Grwth(icnt);
-		icnt += nsex;
-		beta(h)    = Grwth(icnt);
-		icnt += nsex;
-		gscale(h)  = Grwth(icnt);
-		icnt += nsex;
+		icnt++;
 	}
-	for (int igrow=1;igrow<=nmolt;igrow++)
+	for ( int h = 1; h <= nsex; h++ )
+	{
+		beta(h)    = Grwth(icnt);
+		icnt++;
+	}
+	for ( int h = 1; h <= nsex; h++ )
+	{
+		gscale(h)  = Grwth(icnt);
+		icnt++;
+	}
+	for (int igrow=1;igrow<=nMoltVaries;igrow++)
 	{
 		for ( int h = 1; h <= nsex; h++ )
 		{
 	    molt_mu(h,igrow) = Grwth(icnt);
-		  icnt += nsex;
+		  icnt++;
+	  }
+		for ( int h = 1; h <= nsex; h++ )
+		{
 	    molt_cv(h,igrow) = Grwth(icnt);
-		  icnt += nsex;
+		  icnt++;
 	  }
 	}
 	// molt_mu(1,1) = Grwth(7);
@@ -2121,7 +2140,7 @@ FUNCTION calc_molting_probability
 	molt_probability.initialize();
 	P.initialize();
 	double tiny = 0.000;
-	for (int igrow=1;igrow<=nmolt;igrow++)
+	for (int igrow=1;igrow<=nMoltVaries;igrow++)
 	{
 		for ( int h = 1; h <= nsex; h++ )
 		{
