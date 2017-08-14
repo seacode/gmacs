@@ -48,73 +48,73 @@ names(M) <- mod_names
 
 jj <- 1 # The position in the list that Jies model outputs sit
 # fn <- "2015_model_fixed/smbkc15100"
-JJ <- lapply(fn, read_admb)
+#JJ <- lapply(fn, read_admb)
 
 nmult_1 <- 1e+06
 nmult_2 <- 0.0004535923 * 1e+6
 
 # Add numbers at length data
-M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
-M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
-M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
+#M[[jj]]$N_len[,1] <- nmult_1 * c(JJ[[jj]]$N1, NA)
+#M[[jj]]$N_len[,2] <- nmult_1 * c(JJ[[jj]]$N2, NA)
+#M[[jj]]$N_len[,3] <- nmult_1 * c(JJ[[jj]]$N3, NA)
 ```
 
 ```{r, second_batch, include=FALSE}
 # Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
 ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
-M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
-M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
-M[[jj]]$fit$std[ii] <- NA
+#M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
+#M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
+#M[[jj]]$fit$std[ii] <- NA
 
 # Add natural mortality data
-ii <- which(M[[jj]]$mod_yrs == 1998)
-M[[jj]]$M[ii,] <- JJ[[jj]]$M98
+#ii <- which(M[[jj]]$mod_yrs == 1998)
+#M[[jj]]$M[ii,] <- JJ[[jj]]$M98
 
 # Add recruitment data - It looks like Jie has recorded this as millions of individuals
-din <- JJ[[jj]]$rec
-ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
-M[[jj]]$fit$est[ii] <- c(log(nmult_1 * c(din, NA)), NA)
-M[[jj]]$fit$std[ii] <- NA
+#din <- JJ[[jj]]$rec
+#ii <- which(M[[jj]]$fit$names %in% "sd_log_recruits")
+#M[[jj]]$fit$est[ii] <- c(log(nmult_1 * c(din, NA)), NA)
+#M[[jj]]$fit$std[ii] <- NA
 
 # Add estimated trawl survey biomass (million of lbs)
-M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
-M[[jj]]$obs_cpue[1,] <- c(nmult_2 * JJ[[jj]]$b_ts, NA)
-M[[jj]]$pre_cpue[2,1:9] <- c(1000 * JJ[[jj]]$X_ps, NA)
-M[[jj]]$obs_cpue[2,1:9] <- c(1000 * JJ[[jj]]$x_ps, NA)
-ii <- which(M[[jj]]$dSurveyData[,1] == 2016)
-M[[jj]]$dSurveyData <- M[[jj]]$dSurveyData[-ii,]
-M[[jj]]$cpue_cv_add[1,39] <- NA
-M[[jj]]$cpue_cv_add[2,9] <- NA
-M[[jj]]$res_cpue[1,39] <- NA
-M[[jj]]$res_cpue[2,9] <- NA
-
+#M[[jj]]$pre_cpue[1,] <- c(nmult_2 * JJ[[jj]]$B_ts, NA)
+#M[[jj]]$obs_cpue[1,] <- c(nmult_2 * JJ[[jj]]$b_ts, NA)
+#M[[jj]]$pre_cpue[2,1:9] <- c(1000 * JJ[[jj]]$X_ps, NA)
+#M[[jj]]$obs_cpue[2,1:9] <- c(1000 * JJ[[jj]]$x_ps, NA)
+#ii <- which(M[[jj]]$dSurveyData[,1] == 2016)
+#M[[jj]]$dSurveyData <- M[[jj]]$dSurveyData[-ii,]
+#M[[jj]]$cpue_cv_add[1,39] <- NA
+#M[[jj]]$cpue_cv_add[2,9] <- NA
+#M[[jj]]$res_cpue[1,39] <- NA
+#M[[jj]]$res_cpue[2,9] <- NA
+#
 # Add estimated length compositions
-M[[jj]]$d3_pre_size_comps_out[1:15,] <- rbind(t(JJ[[jj]]$P_ob), c(NA,NA,NA))
-M[[jj]]$d3_pre_size_comps_out[16:54,] <- rbind(t(JJ[[jj]]$P_ts), c(NA,NA,NA))
-M[[jj]]$d3_pre_size_comps_out[55:63,] <- rbind(t(JJ[[jj]]$P_ps), c(NA,NA,NA))
+#M[[jj]]$d3_pre_size_comps_out[1:15,] <- rbind(t(JJ[[jj]]$P_ob), c(NA,NA,NA))
+#M[[jj]]$d3_pre_size_comps_out[16:54,] <- rbind(t(JJ[[jj]]$P_ts), c(NA,NA,NA))
+#M[[jj]]$d3_pre_size_comps_out[55:63,] <- rbind(t(JJ[[jj]]$P_ps), c(NA,NA,NA))
 ```
 
 ```{r,  third_batch, include=FALSE}
 # Add selectivity data
 # year, sex, fleet, vec
-ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[1:31]
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[1:2],1) # Directed pot fisheries
-ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[32:38]
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[3:4],1) # Directed pot fisheries
-ind <- which(M[[jj]]$slx_capture[,3] %in% 4)
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ts,1) # Trawl survey
-ind <- which(M[[jj]]$slx_capture[,3] %in% 5)
-for (i in ind)
-    M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ps,1) # ADF&G pot survey
+#ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[1:31]
+#for (i in ind)
+    #M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[1:2],1) # Directed pot fisheries
+#ind <- which(M[[jj]]$slx_capture[,3] %in% 1)[32:38]
+#for (i in ind)
+    #M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_pf[3:4],1) # Directed pot fisheries
+#ind <- which(M[[jj]]$slx_capture[,3] %in% 4)
+#for (i in ind)
+    #M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ts,1) # Trawl survey
+#ind <- which(M[[jj]]$slx_capture[,3] %in% 5)
+#for (i in ind)
+    #M[[jj]]$slx_capture[i,4:6] <- c(JJ[[jj]]$sel_ps,1) # ADF&G pot survey
 
 # Add size transition data
-M[[jj]]$size_transition_M <- matrix(c(0.2,0.7,0.1,0,0.4,0.6,0,0,1), nrow = 3, ncol = 3, byrow = TRUE)
+#M[[jj]]$size_transition_M <- matrix(c(0.2,0.7,0.1,0,0.4,0.6,0,0,1), nrow = 3, ncol = 3, byrow = TRUE)
 
 # Add recruitment size distribution data - in Jies model all recruit to first size class, in gmacs almost all to first size class.
-M[[jj]]$rec_sdd <- c(1,0,0)
+#M[[jj]]$rec_sdd <- c(1,0,0)
 
 # The .rep files for each of the Gmacs models. Used for making tables of the likelihood components
 #like <- list()
@@ -424,6 +424,7 @@ Data used in this assessment have been updated to include the most recently avai
 
 ```{r data_extent, fig.cap = "Data extent for the SMBKC assessment.\\label{fig:data_extent}"}
 plot_datarange(Mbase)
+
 ```
 
 ## Major Data Sources
@@ -552,7 +553,7 @@ Five different Gmacs model scenarios were considered, in this document results f
 
 5. **Gmacs Francis**: is similar to the scenario above except that it also uses the Francis iterative re-weighting method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and pot survey weights were left as is (i.e. a weight of 1) because upweighting these series resulted in worse standard deviation of the normalised residual (SDNR) and median of the absolute residual (MAR) values for each of the surveys. Down-weighting the two surveys actually improved the SDNR and MAR values, but it would be unwise to down-weight either of these series. When applying the Francis iterative re-weighting method only once iteration was done (i.e. the model was run once with the size composition likelihood weights set to one, the new Francis weights were calculated, and the model was run once more using these weights). In this scenario the multinomial distribution was used instead as the theory underpinning the Francis weighting method is based on this distribution.
 
-6. **Gmacs force**: is an exploratory scenario that the same as above except the NMFS trawl survey is up-weighted by $\lambda^\text{NMFS}=$ `r M[[6]]$cpue_lambda[1]` and the ADF&G pot survey is up-weighted by $\lambda^\text{ADFG}=$ `r M[[6]]$cpue_lambda[2]`. After this, the Francis weights for each of the size-compostitons were recalculated and applied again in this model. This scenario should not be used for overfishing determination as it upweights the trawl and pot survey abundance indices to force a better fit to each of these data sets and provide some contrast among the Gmacs model runs. This scenario forces a better fit to the trawl and pot surveys at the expense of the SDNR (and MAR) for each of these series.
+6. **Gmacs force**: is an exploratory scenario that the same as above except the NMFS trawl survey is up-weighted by $\lambda^\text{NMFS}=$ `r M[[3]]$cpue_lambda[1]` and the ADF&G pot survey is up-weighted by $\lambda^\text{ADFG}=$ `r M[[3]]$cpue_lambda[2]`. After this, the Francis weights for each of the size-compostitons were recalculated and applied again in this model. This scenario should not be used for overfishing determination as it upweights the trawl and pot survey abundance indices to force a better fit to each of these data sets and provide some contrast among the Gmacs model runs. This scenario forces a better fit to the trawl and pot surveys at the expense of the SDNR (and MAR) for each of these series.
 
 Table \ref{tab:model_runs} outlines the major features of each of the models.
 \begin{table}[ht]
@@ -642,7 +643,7 @@ where $B$ is quantified as mature-male biomass (MMB) at mating with time of mati
 The currently recommended Tier 4 convention is to use the full assessment period, currently `r M[[2]]$spr_syr`-`r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The $F_\mathit{OFL}$, OFL, ABC, and MMB in 2016 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC is 80% of the OFL.
 ```{r management_quants, results = "asis"}
 df <- NULL
-for (ii in 2:6)
+for (ii in 1:3)
 {
     x <- M[[ii]]
     mmb <- x$ssb[length(x$ssb)]; names(mmb) <- paste0("$\\text{MMB}_{", x$mod_yrs[length(x$mod_yrs)], "}$")
@@ -903,7 +904,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 ```
 
 ```{r est_pars_6, results = "asis"}
-x <- M[[6]]$fit
+x <- M[[3]]$fit
 i <- c(grep("theta", x$names),
        grep("survey_q", x$names),
        grep("log_fbar", x$names),
@@ -961,7 +962,7 @@ Parameter <- c(Parameter[c(1:5,7:9)],
 df <- data.frame(Model, Parameter, Estimate)
 df <- tidyr::spread(df, Model, Estimate) %>%
   dplyr::select(Parameter, Match, Base, M, Francis, Force)
-df[1,2:6] <- df[1,2:6] * 1000
+df[1,2:3] <- df[1,2:3] * 1000
 tab <- xtable(df, caption = "Comparisons of model parameter estimates for the five Gmacs model scenarios.", label = "tab:est_pars_all", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
 ```
@@ -1061,7 +1062,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 ```
 
 ```{r pop_abundance_force, results = "asis"}
-A <- M[[6]]
+A <- M[[3]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
 tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs force} model.", label = "tab:pop_abundance_force")
@@ -1133,7 +1134,7 @@ plot_size_comps_res(MM)
 ```
 
 ```{r sc_trawl_discarded_res, fig.cap = "Bubble plots of residuals by stage and year for the ADF&G pot survey size composition data for St. Mathew Island blue king crab (SMBKC) in the **Gmacs force** model.\\label{fig:sc_res_force}"}
-fn <- paste0(.MODELDIR[6], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
+fn <- paste0(.MODELDIR[3], "gmacs"); MM <- lapply(fn, read_admb); names(MM) <- c("SMBKC")
 plot_size_comps_res(MM)
 ```
 
