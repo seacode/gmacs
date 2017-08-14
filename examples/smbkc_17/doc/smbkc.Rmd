@@ -29,9 +29,9 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2015 Model","Gmacs match","Gmacs base") #,"Gmacs M","Gmacs Francis","Gmacs force")
+mod_names <- c("2016 Model","Gmacs match","Gmacs 2017") #,"Gmacs M","Gmacs Francis","Gmacs force")
 #.MODELDIR = c("../../smbkc_2016/model_1/", "../../smbkc_2016/model_1/", "../model_1/", "../../examples/smbkc_2016/model_3/", "../../examples/smbkc_2016/model_4/","../../examples/smbkc_2016/model_5/")
-.MODELDIR = c("../../smbkc_2016/model_1/", "../../smbkc_2016/model_1/", "../model_1/")
+.MODELDIR = c("../../smbkc_2016/model_1/", "../model_1/", "../model_2/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
