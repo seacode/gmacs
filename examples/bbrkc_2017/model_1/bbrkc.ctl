@@ -46,15 +46,15 @@
 ## ival       lb        ub        phz   prior     p1      p2          # parameter       ##
 ## ———————————————————————————————————————————————————————————————————————————————————— ##    
 ## Period 1
-  144.170986  1.0     180.0         3       0    0.0    999.0         # molt_mu males
-  400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
-    0.05      0.0001    1.0         4       0    0.0    999.0         # molt_cv males
-    0.1       0.0001    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
+  144.170986  50.     180.0         3       0    0.0    999.0         # molt_mu males
+  200.0       50.     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
+    0.05      0.01    1.0         4       0    0.0    999.0         # molt_cv males
+    0.1       0.01    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
 ## Period 2
-  140.5       1.0     195.0         3       0    0.0    999.0         # molt_mu males
-  400.0       1.0     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
-    0.071     0.0001    9.0         4       0    0.0    999.0         # molt_cv males
-    0.1       0.0001    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
+  140.5       50.     195.0         3       0    0.0    999.0         # molt_mu males
+  200.0       50.     999.0        -4       0    0.0    999.0         # molt_mu females (molt every year)
+    0.071     0.01    9.0         4       0    0.0    999.0         # molt_cv males
+    0.1       0.01    9.0        -4       0    0.0    999.0         # molt_cv females (molt every year)
 ## ——————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
