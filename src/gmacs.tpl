@@ -300,6 +300,7 @@ DATA_SECTION
 	init_ivector nCatchRows(1,nCatchDF);
 	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11); // array of catch data
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
+	matrix obs_effort(1,nCatchDF,1,nCatchRows);
 	3darray dCatchData_out(1,nCatchDF,syr,nyr-1,1,11);
 	matrix obs_catch_out(1,nCatchDF,syr,nyr-1);
 
@@ -314,7 +315,8 @@ DATA_SECTION
 			obs_catch(k)  = column(dCatchData(k),5);
 			catch_cv(k)   = column(dCatchData(k),6);
 			catch_dm(k)   = column(dCatchData(k),11);
-			obs_catch(k)  = elem_prod(obs_catch(k),catch_mult(k)); // rescale catch by multiplier
+			obs_catch(k)  = elem_prod(obs_catch(k), catch_mult(k)); // rescale catch by multiplier
+			obs_effort(k) = column(dCatchData(k),10);
 			// If the catch is zero then add a small constant
 			for ( int i = 1; i <= nCatchRows(k); i++ )
 			{
@@ -347,9 +349,9 @@ DATA_SECTION
 		{
 			for ( int i = 1; i <= nCatchRows(k); i++ )
 			{
-				int g = dCatchData(k)(i,3); // fleet
 				int y = dCatchData(k)(i,1); // year
 				int j = dCatchData(k)(i,2); // season
+				int g = dCatchData(k)(i,3); // fleet
 				int h = dCatchData(k)(i,4); // sex
 				if ( !fhit(y,j,g) )
 				{
@@ -2908,7 +2910,7 @@ FUNCTION calc_predicted_catch
 				}
 			}
 		}
-		log_q_catch(kk) /= nhit;
+		if ( nhit > 0 ) log_q_catch(kk) /= nhit;
 	}
 	if ( verbose == 1 ) COUT(log_q_catch);
 
@@ -2951,7 +2953,17 @@ FUNCTION calc_predicted_catch
 				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
 				if (effort > 0.0)
 				{
-					pre_catch(kk,jj) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)); 
+					pre_catch(kk,jj) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+					COUT(kk);
+					COUT(jj);
+					COUT(mfexp(log_q_catch(kk)));
+					COUT(effort);
+					COUT(nal);
+					COUT(tmp_ft);
+					COUT(ft(k)(h));
+					COUT(sel);
+					COUT(elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)));
+					COUT(pre_catch(kk,jj));
 				} else {
 					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 				}
@@ -2991,9 +3003,13 @@ FUNCTION calc_predicted_catch
 			}
 			// Catch residuals
 			// In first case (obs_catch > 0) then if there is only catch data, calculate the residual as per usual; if there is catch and effort data, then still use observed catch to calculate the residual, despite the predicted catch being calculated differently.
-			if ( obs_catch(kk,jj) > 0.0 )                  res_catch(kk,jj) = log(obs_catch(kk,jj)) - log(pre_catch(kk,jj));
 			// In second case, when effort > 0 then the residual is the pred catch using Fs - pred catch using q
-			if ( obs_catch(kk,jj) == 0.0 && effort > 0.0 ) res_catch(kk,jj) = log(nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j))) - log(pre_catch(kk,jj));
+			if ( obs_catch(kk,jj) > 0.0 )
+			{
+				res_catch(kk,jj) = log(obs_catch(kk,jj)) - log(pre_catch(kk,jj));
+			} else if (effort > 0.0) {
+				res_catch(kk,jj) = log(nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j))) - log(pre_catch(kk,jj));
+			}
 		}
 		if ( verbose == 1 ) COUT(pre_catch(kk)(1));
 	}
@@ -3922,6 +3938,7 @@ REPORT_SECTION
 
 	REPORT(dCatchData);
 	REPORT(obs_catch);
+	REPORT(obs_effort);
 	REPORT(pre_catch);
 	REPORT(res_catch);
 	REPORT(log_q_catch);
@@ -4338,7 +4355,7 @@ FUNCTION void calc_spr_reference_points_old(const int iyr, const int iseason, co
 	**/
 FUNCTION dvar_matrix calc_brute_equilibrium()
 	int h,i,j,k,l,m,o,ig;
-	int ninit = 250;
+	int ninit = 25;
 
 	dvar_matrix rtt(1,nsex,1,nclass);
 
