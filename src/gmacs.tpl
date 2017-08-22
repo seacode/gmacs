@@ -2954,16 +2954,16 @@ FUNCTION calc_predicted_catch
 				if (effort > 0.0)
 				{
 					pre_catch(kk,jj) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
-					COUT(kk);
-					COUT(jj);
-					COUT(mfexp(log_q_catch(kk)));
-					COUT(effort);
-					COUT(nal);
-					COUT(tmp_ft);
-					COUT(ft(k)(h));
-					COUT(sel);
-					COUT(elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)));
-					COUT(pre_catch(kk,jj));
+					// COUT(kk);
+					// COUT(jj);
+					// COUT(mfexp(log_q_catch(kk)));
+					// COUT(effort);
+					// COUT(nal);
+					// COUT(tmp_ft);
+					// COUT(ft(k)(h));
+					// COUT(sel);
+					// COUT(elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)));
+					// COUT(pre_catch(kk,jj));
 				} else {
 					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 				}
