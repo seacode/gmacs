@@ -27,7 +27,7 @@ debug: $(EXEC)
 	./$(EXEC) $(ARGS)
 
 plot:
-	R CMD BATCH ../plot.R
+	R CMD BATCH plot.R
 
 clean:
 	@$(RM) $(EXEC)
