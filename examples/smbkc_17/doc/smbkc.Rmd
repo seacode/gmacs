@@ -1,4 +1,4 @@
----
+--
 title: "Saint Matthew Island Blue King Crab Stock Assessment 2016"
 author: |
   | Alathea Letaw$^1$, D'Arcy Webber$^2$, Jie Zheng$^3$, and James Ianelli$^4$
@@ -31,7 +31,7 @@ options(xtable.comment = FALSE)
 # The model specs
 mod_names <- c("2016 Model","Gmacs match","Gmacs 2017") #,"Gmacs M","Gmacs Francis","Gmacs force")
 #.MODELDIR = c("../../smbkc_2016/model_1/", "../../smbkc_2016/model_1/", "../model_1/", "../../examples/smbkc_2016/model_3/", "../../examples/smbkc_2016/model_4/","../../examples/smbkc_2016/model_5/")
-.MODELDIR = c("../../smbkc_2016/model_1/", "../model_1/", "../model_2/")
+.MODELDIR = c("../../smbkc_2016/model_1/", "../model_1/","../model_2/","../model_3/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -60,7 +60,7 @@ nmult_2 <- 0.0004535923 * 1e+6
 ```
 
 ```{r, second_batch, include=FALSE}
-# Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tonnes
+# Add MMB data - I think Jie has recorded this in millions of pounds so need to convert to pounds then to tons
 ii <- which(M[[jj]]$fit$names %in% "sd_log_ssb")
 #M[[jj]]$ssb <- nmult_2 * JJ[[jj]]$MMB215
 #M[[jj]]$fit$est[ii] <- c(log(M[[jj]]$ssb),NA) 
@@ -143,16 +143,16 @@ rec_mod <- 3 # base
 
 1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
 
-2. **Catches**: Peak historical harvest was 4288 tonnes (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tonnes (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tonnes (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tonnes (0.309 million pounds). The retained catch in 2015/16 was even lower at 48 tonnes (0.105 million pounds).
+2. **Catches**: Peak historical harvest was 4288 tons (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing year that extends from 1 July 1983 to 30 June 1984.]. The fishery was closed for 10 years after the stock was declared overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 tons (0.461 million pounds), less than half the 529.3 tonne (1.167 million pound) TAC. Following three more years of modest harvests supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed fishery resumed again in 2014/15 with a TAC of 300 tons (0.655 million pounds), but the fishery performance was relatively poor with a retained catch of 140 tons (0.309 million pounds). The retained catch in 2015/16 was even lower at 48 tons (0.105 million pounds).
 
-3. **Stock biomass**: Following a period of low numbers (below 30% of the 1978-2016 mean of 5,865 tonnes) after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased to well above average from 2007-2012. In 2013 the survey biomass estimate was low (~40% of the mean value) but was followed by average biomass estimates in 2014 and 2015 (with sampling CVs of 77% and 45%, respectively). The 2016 survey biomass estimate was 3,500 tonnes (7.7 million lbs with a CV of 39%). This value represents about 60% of the long term mean with the most recent 3-year average surveys at 87% of the mean value. This suggests a general decline in biomass compared to the recent peak survey estimate of nearly twice the average. The assessment model estimates dampen the interannual variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about 45% of the long term model-predicted survey biomass average. The trend from these values suggest a slight decline.
+3. **Stock biomass**: Following a period of low numbers (below 30% of the 1978-2016 mean of 5,865 tons) after the stock was declared overfished in 1999, trawl-survey indices of SMBKC stock abundance and biomass generally increased to well above average from 2007-2012. In 2013 the survey biomass estimate was low (~40% of the mean value) but was followed by average biomass estimates in 2014 and 2015 (with sampling CVs of 77% and 45%, respectively). The 2016 survey biomass estimate was 3,500 tons (7.7 million lbs with a CV of 39%). This value represents about 60% of the long term mean with the most recent 3-year average surveys at 87% of the mean value. This suggests a general decline in biomass compared to the recent peak survey estimate of nearly twice the average. The assessment model estimates dampen the interannual variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about 45% of the long term model-predicted survey biomass average. The trend from these values suggest a slight decline.
 
 4. **Recruitment**: Because little information about the abundance of small crab is available for this stock, recruitment has been assessed in terms of the number of male crab within the 90-104 mm carapace length (CL) size class in each year. The 2013 trawl-survey area-swept estimate of 0.335 million male SMBKC in this size class marked a three-year decline and was the lowest since 2005. That decline did not continue as the 2014 survey estimate was 0.723 million. Survey recruitment was 0.992 million in 2015, but the majority of this survey estimate is from one tow with a great deal of uncertainty. In 2016, survey recruitment declined to 0.535 million.
 
 5. **Management performance**: In recent assessments, estimated total male catch has been determined as the sum of fishery-reported retained catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish fisheries, as these have been the only sources of non-negligible fishing mortality to consider. The stock was above the minimum stock-size threshold (MSST) in 2015/16 and is hence not overfished. Overfishing did not occur in 2015/16 (Tables \ref{tab:status} and \ref{tab:status_pounds}).
 \begin{table}[ht]
 \centering
-\caption{Status and catch specifications (1000 tonnes) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
+\caption{Status and catch specifications (1000 tons) (scenario {\bf Gmacs base}). Notes: A - calculated from the assessment reviewed by the Crab Plan Team in September 2013, B - calculated from the assessment reviewed by the Crab Plan Team in September 2014, C - calculated from the assessment reviewed by the Crab Plan Team in September 2015, D - calculated from the assessment reviewed by the Crab Plan Team in September 2016.} 
 \label{tab:status}
 \begin{tabular}{lccccccc}
   \hline
@@ -188,7 +188,7 @@ rec_mod <- 3 # base
 6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
 \begin{table}[ht]
 \centering
-\caption{Basis for the OFL (1000 tonnes) (scenario {\bf Gmacs base}).} 
+\caption{Basis for the OFL (1000 tons) (scenario {\bf Gmacs base}).} 
 \label{tab:ofl_basis}
 \begin{tabular}{lcccccccc}
   \hline
@@ -328,7 +328,7 @@ Like the red king crab, *Paralithodes camtshaticus*, the blue king crab is consi
 
 ## Management History
 
-The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 545 tonnes (1.202 million pounds) in 1977, and harvests peaked in 1983 when 164 vessels landed 4288 tonnes (9.454 million pounds) (Fitch et al. 2012; Table \ref{tab:smbkc_fishery}). 
+The SMBKC fishery developed subsequent to baseline ecological studies associated with oil exploration (Otto 1990). Ten U.S. vessels harvested 545 tons (1.202 million pounds) in 1977, and harvests peaked in 1983 when 164 vessels landed 4288 tons (9.454 million pounds) (Fitch et al. 2012; Table \ref{tab:smbkc_fishery}). 
 \begin{table}[ht]
 \centering
 \caption{The 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm.} 
@@ -368,14 +368,15 @@ The SMBKC fishery developed subsequent to baseline ecological studies associated
   \multicolumn{2}{l}{2013/14} & \multicolumn{7}{c}{FISHERY CLOSED} \\
   2014/15 & 10/15 - 02/05 & 0.66    &    69,109 &   308,582 &  10,133 &   7 & 4.5 & 132.3 \\
   2015/16 & 10/19 - 11/28 & 0.41    &    24,076 &   105,010 &   5,475 &   4 & 4.4 & 132.6 \\
+  \multicolumn{2}{l}{2016/17} & \multicolumn{7}{c}{FISHERY CLOSED} \\
   \hline
 \end{tabular}
 \end{table}
-The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock-size threshold (MSST) of 4990 tonnes (11.0 million pounds) as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table \ref{tab:stage_cpue_nmfs}). In November 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.
+The fishing seasons were generally short, often lasting only a few days. The fishery was declared overfished and closed in 1999 when the stock biomass estimate was below the minimum stock-size threshold (MSST) of 4990 tons (11.0 million pounds) as defined by the Fishery Management Plan for the Bering Sea/Aleutian Islands King and Tanner crabs (NPFMC 1999). Zheng and Kruse (2002) hypothesized a high level of SMBKC natural mortality from 1998 to 1999 as an explanation for the low catch per unit effort (CPUE) in the 1998/99 commercial fishery and the low numbers across all male crab size groups caught in the annual NMFS eastern Bering Sea trawl survey from 1999 to 2005 (Table \ref{tab:stage_cpue_nmfs}). In November 2000, Amendment 15 to the FMP for Bering Sea/Aleutian Islands king and Tanner crabs was approved to implement a rebuilding plan for the SMBKC stock (NPFMC 2000). The rebuilding plan included a regulatory harvest strategy (5 AAC 34.917), area closures, and gear modifications. In addition, commercial crab fisheries near St. Matthew Island were scheduled in fall and early winter to reduce the potential for bycatch mortality of vulnerable molting and mating crab.
 
-NMFS declared the stock rebuilt on 21 September 2009, and the fishery was reopened after a 10-year closure on 15 October 2009 with a TAC of 529 tonnes (1.167 million pounds), closing again by regulation on 1 February 2010. Seven participating vessels landed a catch of 209 tonnes (460,859 pounds) with a reported effort of 10,697 pot lifts and an estimated CPUE of 9.9 retained individual crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&G to close the fishery again for the 2013/14 season. Due to an abundance above thresholds, the fishery was reopened for the 2014/15 season with a low TAC of 297 tonnes (0.655 million pounds) and in 2015/16 the TAC was further reduced to 186 tonnes (0.411 million pounds).
+NMFS declared the stock rebuilt on 21 September 2009, and the fishery was reopened after a 10-year closure on 15 October 2009 with a TAC of 529 tons (1.167 million pounds), closing again by regulation on 1 February 2010. Seven participating vessels landed a catch of 209 tons (460,859 pounds) with a reported effort of 10,697 pot lifts and an estimated CPUE of 9.9 retained individual crab per pot lift. The fishery remained open the next three years with modest harvests and similar CPUE, but large declines in the NMFS trawl-survey estimate of stock abundance raised concerns about the health of the stock, prompting ADF&G to close the fishery again for the 2013/14 season. Due to an abundance above thresholds, the fishery was reopened for the 2014/15 season with a low TAC of 297 tons (0.655 million pounds) and in 2015/16 the TAC was further reduced to 186 tons (0.411 million pounds).
 
-Though historical observer data are limited due to very limited sampling, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes more than twice as high as the catch of legal crab (Moore et al. 2000; ADF&G Crab Observer Database). Pot-lift sampling by ADF&G crab observers (Gaeuman 2013; ADF&G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table \ref{tab:stage_cpue_1}), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (88 tonnes or 0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality. 
+Though historical observer data are limited due to very limited sampling, bycatch of female and sublegal male crab from the directed blue king crab fishery off St. Matthew Island was relatively high historically, with estimated total bycatch in terms of number of crab captured sometimes more than twice as high as the catch of legal crab (Moore et al. 2000; ADF&G Crab Observer Database). Pot-lift sampling by ADF&G crab observers (Gaeuman 2013; ADF&G Crab Observer Database) indicates similar bycatch rates of discarded male crab since the reopening of the fishery (Table \ref{tab:stage_cpue_1}), with total male discard mortality in the 2012/13 directed fishery estimated at about 12% (88 tons or 0.193 million pounds) of the reported retained catch weight, assuming 20% handling mortality. 
 \begin{table}[ht]
 \centering
 \caption{Observed proportion of crab by size class during the ADF\&G crab observer pot-lift sampling. Source: ADF\&G Crab Observer Database.} 
@@ -411,7 +412,7 @@ df <- dplyr::filter(data.frame(M[[2]]$dCatchData_out), V2 == 2, V3 %in% c(2,3)) 
   tidyr::spread(key = V3, value = V5) #%>%
   #dplyr::mutate(V1 = paste0(V1, "/", as.numeric(sub('.*(?=.{2}$)', '', V1, perl = TRUE)) + 1))
 names(df) <- c("Year","Trawl bycatch","Fixed gear bycatch")
-tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tonnes) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:smbkc_groundfish_bycatch", digits = c(0,0,3,3))
+tab <- xtable(df, caption = "Groundfish SMBKC male bycatch biomass (tons) estimates. Trawl includes pelagic trawl and non-pelagic trawl types. Source: J. Zheng, ADF\\&G, and author estimates based on data from R. Foy, NMFS. AKRO estimates used after 2008/09.", label = "tab:smbkc_groundfish_bycatch", digits = c(0,0,3,3))
 print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
@@ -501,6 +502,7 @@ Major data sources used in this assessment include annual directed-fishery retai
   2014 & 0.723 & 1.627 & 1.809 & 4.160 & 0.503 & & 13.292 & 0.449 & 181 \\
   2015 & 0.992 & 1.269 & 1.979 & 4.240 & 0.774 & & 12.958 & 0.770 & 153 \\
   2016 & 0.535 & 0.660 & 1.178 & 2.373 & 0.447 & & 7.685 & 0.393 & 108 \\
+  2017 & 0.091 & 0.323 & 0.663 & 1.077 & x.447 & & x.685 & x.393 & xxx \\
   \hline
 \end{tabular}
 \end{table}
@@ -656,7 +658,7 @@ for (ii in 1:3)
 }
 df <- data.frame(rownames(df), df, row.names = NULL)
 names(df) <- c("Component","Gmacs match","Gmacs base","Gmacs M","Gmacs Francis","Gmacs force")
-tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tonnes.", label = "tab:management_quants", digits = 3)
+tab <- xtable(df, caption = "Comparisons of management measures for the five Gmacs model scenarios. Biomass and OFL are in tons.", label = "tab:management_quants", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
@@ -1025,7 +1027,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[1]]
 df <- data.frame(as.integer(A$mod_yrs[1:(length(A$mod_yrs)-1)]), A$N_len[1:38,1], A$N_len[1:38,2], A$N_len[1:38,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey and mature male biomass (MMB) in tonnes on 15 February for the {\\bf 2015 model}.", label = "tab:pop_abundance_2015")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey and mature male biomass (MMB) in tons on 15 February for the {\\bf 2015 model}.", label = "tab:pop_abundance_2015")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1033,7 +1035,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[2]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs match} model.", label = "tab:pop_abundance_match")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the {\\bf Gmacs match} model.", label = "tab:pop_abundance_match")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1041,7 +1043,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[3]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs base} model.", label = "tab:pop_abundance_base")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the {\\bf Gmacs base} model.", label = "tab:pop_abundance_base")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1049,7 +1051,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[4]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs M} model.", label = "tab:pop_abundance_Francis")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the {\\bf Gmacs M} model.", label = "tab:pop_abundance_Francis")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1057,7 +1059,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[5]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs Francis} model.", label = "tab:pop_abundance_M")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the {\\bf Gmacs Francis} model.", label = "tab:pop_abundance_M")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1065,7 +1067,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 A <- M[[3]]
 df <- data.frame(as.integer(A$mod_yrs), A$N_len[,1], A$N_len[,2], A$N_len[,3], c(A$ssb))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tonnes on 15 February for the {\\bf Gmacs force} model.", label = "tab:pop_abundance_force")
+tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the {\\bf Gmacs force} model.", label = "tab:pop_abundance_force")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1076,12 +1078,12 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 plot_selectivity(M, ncol = 5)
 ```
 
-```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
-plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)")
+```{r trawl_survey_biomass, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The error bars are plus and minus 2 standard deviations.\\label{fig:trawl_survey_biomass}"}
+plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)")
 ```
 
-```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tonnes) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
-plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tonnes)", ShowEstErr = TRUE)
+```{r trawl_survey_biomass_weights, fig.cap = "Comparisons of area-swept estimates of total male survey biomass (tons) and model predictions for the 2015 model and each of the Gmacs model scenarios. The solid black error bars are plus and minus 2 standard deviations derived using the original survey CVs. The dotted error bars are plus and minus 2 standard deviations but represent the weighted survey CVs.\\label{fig:trawl_survey_biomass_weights}"}
+plot_cpue(M, "NMFS Trawl", ylab = "Survey biomass (tons)", ShowEstErr = TRUE)
 ```
 
 \newpage\clearpage
@@ -1140,7 +1142,7 @@ plot_size_comps_res(MM)
 
 \newpage\clearpage
 
-```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tonnes).\\label{fig:fit_to_catch}", fig.height = 12}
+```{r fit_to_catch, fig.cap = "Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\\label{fig:fit_to_catch}", fig.height = 12}
 A <- M; A[[jj]] <- NULL
 plot_catch(A)
 ```
@@ -1156,7 +1158,7 @@ plot_recruitment(A)
 ```
 
 ```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2016 for each of the model scenarios.\\label{fig:mmb}"}
-plot_ssb(M, ylab = "Mature male biomass (tonnes) on 15 February")
+plot_ssb(M, ylab = "Mature male biomass (tons) on 15 February")
 ```
 
 ```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}

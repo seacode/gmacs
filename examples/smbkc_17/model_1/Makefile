@@ -1,9 +1,9 @@
 EXEC = gmacs
-#ifeq ($(SAFE),TRUE)
+ifeq ($(SAFE),TRUE)
 	DIST = ../../../src/build/debug/
-#else
-	#DIST = ../../../src/build/release/
-#endif
+else
+	DIST = ../../../src/build/release/
+endif
 ARGS = -nox -iprint 50 
 
 ifdef ComSpec
