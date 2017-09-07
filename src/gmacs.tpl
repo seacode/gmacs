@@ -1745,7 +1745,9 @@ FUNCTION calc_fishing_mortality
 				{
 					if ( fhit(i,j,k) )
 					{
-						// Jim notes that this next line results in walking out of an array at log_fdev(k,ik++), seems fine to me - if we start off with k=1 and ik=1, then log_fdev(k,ik++) returns log_fdev(1,1). After returning that value then ik++ iterates ik so that ik=2. In what you produced below you've iterated ik out of bounds then tried to evaluate.
+						// Jim notes that this next line results in walking out of an array at log_fdev(k,ik++), 
+						// seems fine to me - if we start off with k=1 and ik=1, then log_fdev(k,ik++) returns log_fdev(1,1). After returning that value then ik++ iterates ik so that ik=2. 
+						// In what you produced below you've iterated ik out of bounds then tried to evaluate.
 						log_ftmp = log_fbar(k) + log_fdev(k,ik++);
 						// Jim for checking error...
 						//cout << "k=" << k << ", log_fbar(k)=" << log_fbar(k) << ", log_fdev(k,ik-1)=" << log_fdev(k,ik-1) << ", ik=" << ik << ", nFparams(k)=" << nFparams(k) << ", log_fdev(k)=" << log_fdev(k) << endl;

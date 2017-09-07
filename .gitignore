@@ -1,4 +1,6 @@
 *~
+*.swp
+*.swo
 
 # API files
 html/
