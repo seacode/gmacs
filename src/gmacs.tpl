@@ -199,7 +199,7 @@ DATA_SECTION
 				{
 					for ( int i = syr; i <= nyr; i++ )
 					{
-						mean_wt(h)(i) = lw_alfa(h) * pow(mid_points, lw_beta(h));
+						mean_wt(h,i) = lw_alfa(h) * pow(mid_points, lw_beta(h));
 					}
 				}
 			break;
@@ -322,9 +322,9 @@ DATA_SECTION
    /*
 			for ( int i = 1; i <= nCatchRows(k); i++ )
 			{
-				if ( obs_catch(k)(i) < 1e-4 )
+				if ( obs_catch(k,i) < 1e-4 )
 				{
-					obs_catch(k)(i) = 1e-4;
+					obs_catch(k,i) = 1e-4;
 				}
 			}
    */
@@ -1697,11 +1697,11 @@ FUNCTION calc_selectivities
 				if ( slx_gear(k) > 0 )
 				{
 					//log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-					log_slx_capture(kk)(h)(i) = pSLX->logSelectivity(mid_points);
+					log_slx_capture(kk,h,i) = pSLX->logSelectivity(mid_points);
 				} else {
-					//log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-					log_slx_retaind(kk)(h)(i) = pSLX->logSelectivity(mid_points);
-					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)) + TINY);
+					//log_slx_retaind(kk,h,i) = pSLX[j]->logSelectivity(mid_points);
+					log_slx_retaind(kk,h,i) = pSLX->logSelectivity(mid_points);
+					log_slx_discard(kk,h,i) = log(1.0 - exp(log_slx_retaind(kk,h,i)) + TINY);
 				}
 			}
 		}
@@ -1755,10 +1755,10 @@ FUNCTION calc_fishing_mortality
 						{
 							log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
 						}
-						ft(k)(h)(i)(j) = mfexp(log_ftmp);
+						ft(k,h,i,j) = mfexp(log_ftmp);
 						xi  = dmr(i,k);                                      // Discard mortality rate
-						sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
-						ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
+						sel = exp(log_slx_capture(k,h,i));                 // Selectivity
+						ret = exp(log_slx_retaind(k,h,i)) * slx_nret(h,k); // Retension
 						vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
 						/*if(sum(tmp)==0 || min(tmp) < 0)
 						{
@@ -1768,7 +1768,7 @@ FUNCTION calc_fishing_mortality
 							exit(1);
 						}
 						*/
-						F(h)(i)(j) += ft(k,h,i,j) * vul;
+						F(h,i,j) += ft(k,h,i,j) * vul;
 					}
 				}
 			}
@@ -1830,7 +1830,7 @@ FUNCTION calc_growth_increments
 	{
 		for ( l = 1; l <= nclass; l++ )
 		{
-			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
+			molt_increment(h,l) = alpha(h) - beta(h) * mid_points(l);
 		}
 	}
 
@@ -1865,7 +1865,7 @@ FUNCTION calc_growth_transition
 			sbi = size_breaks / gscale(h);
 			for ( l = 1; l <= nclass; l++ )
 			{
-				mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
+				mean_size_after_molt = (mid_points(l) + molt_increment(h,l)) / gscale(h);
 				for ( ll = l; ll <= nclass+1; ll++ )
 				{
 					if ( ll <= nclass+1 )
@@ -1897,7 +1897,7 @@ FUNCTION calc_growth_transition
 			sbi = size_breaks / gscale(h);
 			for ( l = 1; l <= nclass; l++ )
 			{
-				mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
+				mean_size_after_molt = (mid_points(l) + molt_increment(h,l)) / gscale(h);
 				for ( ll = l; ll <= nclass+1; ll++ )
 				{
 					if ( ll <= nclass+1 )
@@ -2102,7 +2102,7 @@ FUNCTION calc_total_mortality
 				Z(h)(i)(j) = (m_prop(i)(j) * M(h)(i)) + F(h)(i)(j);
 				for ( int l = 1; l <= nclass; l++ )
 				{
-					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
+					S(h,i,j)(l,l) = mfexp(-Z(h,i,j)(l));
 				}
 			}
 		}
@@ -2126,10 +2126,10 @@ FUNCTION reset_Z_to_M
 		{
 			for ( int j = 1; j <= nseason; j++ )
 			{
-				Z(h)(i)(j) = m_prop(i)(j) * M(h)(i);
+				Z(h,i,j) = m_prop(i,j) * M(h,i);
 				for ( int l = 1; l <= nclass; l++ )
 				{
-					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
+					S(h,i,j)(l,l) = mfexp(-Z(h)(i)(j)(l));
 				}
 			}
 		}
@@ -2163,7 +2163,7 @@ FUNCTION calc_molting_probability
 				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
 				for ( int l = 1; l <= nclass; l++ )
 				{
-					P(h)(l,l) = molt_probability(h)(i)(l);
+					P(h,l,l) = molt_probability(h,i,l);
 				}
 			}
 		}
