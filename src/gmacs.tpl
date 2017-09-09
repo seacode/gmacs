@@ -143,8 +143,11 @@ DATA_SECTION
 		n_grp = nsex * nshell * nmature;
 		nproj = pyr - nyr;
 		nlikes = 5; // catch, cpue, size comps, recruits, molt increments
-		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
+		WRITEDAT(syr); WRITEDAT(nyr);  WRITEDAT(pyr);
+		WRITEDAT(nseason);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
+		WRITEDAT(season_recruitment); WRITEDAT(season_growth); 
+		WRITEDAT(season_ssb); WRITEDAT(season_N); 
 	END_CALCS
 
 	// Set up index pointers
@@ -240,6 +243,9 @@ DATA_SECTION
 	init_vector fecundity(1,nclass); 
 	init_matrix maturity(1,nsex,1,nclass);
 	init_int m_prop_type;
+	!!	WRITEDAT(fecundity);
+	!!	WRITEDAT(maturity);
+	!!	WRITEDAT(m_prop_type);
 	int m_dim;
 	LOC_CALCS
 		m_dim = 1;
@@ -249,6 +255,7 @@ DATA_SECTION
 		}
 	END_CALCS
 	init_matrix m_prop_in(1,m_dim,1,nseason);
+	!!	WRITEDAT(m_prop_in);
 	matrix m_prop(syr,nyr,1,nseason);
 	LOC_CALCS
 		switch ( m_prop_type )
@@ -282,7 +289,6 @@ DATA_SECTION
 				exit(1);
 			}
 		}
-		WRITEDAT(maturity);
 	END_CALCS
 
 	// |-------------|
@@ -290,7 +296,8 @@ DATA_SECTION
 	// |-------------|
 	init_adstring name_read_flt;
 	init_adstring name_read_srv;
-	!! WRITEDAT(name_read_srv); WRITEDAT(name_read_flt);
+	!! WRITEDAT(name_read_flt);
+	!! WRITEDAT(name_read_srv); 
 
 	// |--------------|
 	// | CATCH SERIES |
@@ -299,6 +306,7 @@ DATA_SECTION
 	init_int nCatchDF;
 	init_ivector nCatchRows(1,nCatchDF);
 	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11); // array of catch data
+	!! WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData); 
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix obs_effort(1,nCatchDF,1,nCatchRows);
 	3darray dCatchData_out(1,nCatchDF,syr,nyr-1,1,11);
@@ -329,7 +337,6 @@ DATA_SECTION
 			}
    */
 		}
-		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 		ECHO(obs_catch); ECHO(catch_cv);
 	END_CALCS
 
@@ -968,6 +975,7 @@ DATA_SECTION
 		WriteCtl(nvn_ival_in);
 		WriteCtl(nvn_phz_in);
 		WriteCtl(iCompAggregator);
+	  WriteCtl(lf_lambda_in);
 		nSizeCompCols.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
@@ -1110,7 +1118,9 @@ DATA_SECTION
 		WriteCtl(Mdev_phz); 
 		WriteCtl(m_stdev); 
 		WriteCtl(m_nNodes); 
+		WriteCtl(m_nNodes_females); 
 		WriteCtl(m_nodeyear);
+	  WriteCtl(m_nodeyear_females);
 		if ( m_females == 1 )
 		{
 			Mdev_phz_females = Mdev_phz;
@@ -1530,7 +1540,8 @@ FUNCTION calc_sdreport
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
-	sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
+	// sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
+	sd_log_dyn_Bzero = (sd_log_ssb(syr+1,nyr)) - (sd_log_dyn_Bzero);
 	F = ftmp;
 	calc_total_mortality();
 	calc_initial_numbers_at_length();

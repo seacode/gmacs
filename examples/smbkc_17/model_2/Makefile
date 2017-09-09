@@ -23,6 +23,9 @@ $(DIST)$(EXEC).tpl:
 mpd: $(EXEC)
 	./$(EXEC) $(ARGS)
 
+jitter:
+	./$(EXEC) $(ARGS) -jitter 100
+
 debug: $(EXEC)
 	./$(EXEC) $(ARGS)
 
