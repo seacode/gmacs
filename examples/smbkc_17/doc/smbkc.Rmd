@@ -1164,6 +1164,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
   2014 &  9906        & 181        &          & & 50           & 50         & \\
   2015 &  3248        & 153        &  1077    & & 50           & 50         & 100 \\
   2016 &              & 108        &   777    & &              & 50         & 100 \\
+  2017 &              & XXX        &   xxx    & &              & XX         & xx \\
   \hline
 \end{tabular}
 \end{table}
@@ -1183,7 +1184,9 @@ SD <- x$std[i]
 j <- grep("survey_q", Parameter)
 Estimate[j] <- Estimate[j] * 1000
 SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$","$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
+Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$",
+               "$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$",
+              "$q_pot$", "$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$","$F_\\text{OFL}$","OFL")
 df <- data.frame(Parameter, Estimate, SD)
 tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the {\\bf Gmacs match} model.", label = "tab:est_pars_match", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
@@ -1209,7 +1212,7 @@ Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998}$)","$\
                "ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
                "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 directed pot selectivity 2009-2017","log Stage-2 directed pot selectivity 2009-2017",
                "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
@@ -1238,7 +1241,7 @@ Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log 
                "ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
                "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 directed pot selectivity 2009-2017","log Stage-2 directed pot selectivity 2009-2017",
                "log Stage-1 NMFS trawl selectivity", "log Stage-2 NMFS trawl selectivity",
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
@@ -1265,7 +1268,7 @@ SD[j] <- SD[j] * 1000
 Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
                "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 directed pot selectivity 2009-2017","log Stage-2 directed pot selectivity 2009-2017",
                "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
@@ -1292,7 +1295,7 @@ SD[j] <- SD[j] * 1000
 Parameter <- c("$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$","ADF\\&G pot survey catchability ($q \\times 1000$)",
                "$\\log(\\bar{F}^\\text{df})$","$\\log(\\bar{F}^\\text{tb})$","$\\log(\\bar{F}^\\text{fb})$",
                "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2016","log Stage-2 directed pot selectivity 2009-2016",
+               "log Stage-1 directed pot selectivity 2009-2017","log Stage-2 directed pot selectivity 2009-2017",
                "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
                "$F_\\text{OFL}$","OFL")
@@ -1443,7 +1446,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
 
 \newpage\clearpage
 
-```{r selectivity, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2016.\\label{fig:selectivity}", fig.height = 15}
+```{r selectivity, fig.cap = "Comparisons of the estimated (and fixed to match the 2015 model selectivities in the Gmacs base scenario) stage-1 and stage-2 selectivities for each of the different model scenarios (the stage-3 selectivities are all fixed at 1). Estimated selectivities are shown for the directed pot fishery, the trawl bycatch fishery, the fixed bycatch fishery, the NMFS trawl survey, and the ADF&G pot survey. Two selectivity periods are estimated in the directed pot fishery, from 1978-2008 and 2009-2017.\\label{fig:selectivity}", fig.height = 15}
 plot_selectivity(M, ncol = 5)
 ```
 
@@ -1516,7 +1519,7 @@ A <- M;
 plot_catch(A)
 ```
 
-```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2016 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}"}
+```{r recruitment, fig.cap = "Comparisons of estimated recruitment time series during 1979-2017 in each of the scenarios. The solid horizontal lines in the background represent the estimate of the average recruitment parameter ($\\bar{R}$) in each model scenario.\\label{fig:recruitment}"}
 A <- M
 for (i in 2:6) {
   ii <- which(A[[i]]$fit$names %in% "sd_log_recruits"); ii <- ii[length(ii)]
@@ -1526,12 +1529,15 @@ for (i in 2:6) {
 plot_recruitment(A)
 ```
 
-```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2016 for each of the model scenarios.\\label{fig:mmb}"}
+```{r mature_male_biomass, fig.cap = "Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2017 for each of the model scenarios.\\label{fig:mmb}"}
 plot_ssb(M, ylab = "Mature male biomass (tons) on 15 February")
 ```
-```{r Dynamic_Bzero, fig.cap = "Comparisons of relative mature male biomass (15 February, 1978-2017) for 
+
+
+```{r Dynamic_Bzero, fig.cap = "Comparisons of mature male biomass relative to the dynamic $B_0$ value, (15 February, 1978-2017) for 
      each of the model scenarios.\\label{fig:dynB0}"}
-plot_dynBzero(M)
+plot_dynB0(M)
+```
 
 ```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
 plot_recruitment_size(M, xlab = "Carapace width (mm)")
