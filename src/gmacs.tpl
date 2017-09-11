@@ -3377,7 +3377,7 @@ FUNCTION void get_all_sdnr_MAR()
 			//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
 			sdnr_MAR_lf(k) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
 		}
-		//Francis_weights = calc_Francis_weights();
+		Francis_weights = calc_Francis_weights();
 	}
 
 
@@ -3434,8 +3434,8 @@ FUNCTION dvector calc_Francis_weights()
 			{
 				//if ( sum(d3_obs_size_comps(k,i)) > 0 )
 				//{
-					cout << "k= " << k << " i=" << i << endl;
-					cout << d3_obs_size_comps(k,i) << endl;
+					//cout << "k= " << k << " i=" << i << endl;
+					//cout << d3_obs_size_comps(k,i) << endl;
 					Obs = sum(elem_prod(d3_obs_size_comps(k,i), mid_points));
 					Pre = sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
 					Var = sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
