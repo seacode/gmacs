@@ -4,12 +4,12 @@
 
 Model         | Description
 ------------- | -------------
-model_1       | - Basecase (last year's model 1)      
-model_2       | - Added 2017 data (temporarily for dimensioning)
-Previous year's config       | 
-model_2       | - Add CV to both surveys
-model_3       | - Use M random walk
-model_4       | - Use M and add CV
+model_1       | - Basecase (last year's selected 1)      
+model_2       | - Add trawl survey for 2017
+model_3       | - Add both 2017 pot and trawl surveys
+model_4       | - Apply VAST series
+model_5       | - Fit surveys (lambda up on those)
+model_6       | - Francis weights
 
 Notice the use of a single .dat file for all of the different model runs. 
 The .dat file sits in assessment root, 
