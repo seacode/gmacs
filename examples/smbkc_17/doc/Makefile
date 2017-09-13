@@ -17,6 +17,7 @@ pdf: smbkc.Rmd
 app: app.Rmd
 	R ${R_OPTS} -e 'library(knitr); knit("app.Rmd")'
 	pandoc -V geometry:margin=1in app.md -o app.pdf 
+	open app.pdf
 
 clean:
 	$(RM) smbkc.md 

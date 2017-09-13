@@ -11,18 +11,18 @@ output:
 bibliography: 
 ---
 
-\newpage\clearpage
+##The data file used for the reference model (16.0) control file:
 
-## The data file:
+\fontsize{8}{10}
 
-```{r eval = TRUE, include=TRUE,echo=FALSE }
+```{r eval = TRUE, include=TRUE,echo=FALSE, comment=NA }
 opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
 ts <- readLines("../data/sm17.dat")
 for (i in 1:length(ts)) cat(ts[i], "\n")
 ```
-## The base model control file:
+## The reference model (16.0) control file:
 
-```{r eval = TRUE, include=TRUE,echo=FALSE }
+```{r eval = TRUE, include=TRUE,echo=FALSE, comment=NA}
 opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
 ts <- readLines("../model_4/sm17.ctl")
 for (i in 1:length(ts)) cat(ts[i], "\n")
