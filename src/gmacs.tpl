@@ -3944,7 +3944,7 @@ REPORT_SECTION
 	REPORT(nlogPenalty);
 	REPORT(priorDensity);
 
-	get_all_sdnr_MAR();
+	//get_all_sdnr_MAR();
 
 	REPORT(sdnr_MAR_cpue);
 	REPORT(cpue_lambda);
@@ -4025,6 +4025,7 @@ REPORT_SECTION
 	{
 		for ( int ii = 1; ii <= nSizeCompRows(kk); ii++ )
 		{
+			/*
 			double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii));
 			effN(kk,ii)        = Eff_N(d3_obs_size_comps(kk,ii), d3_pre_size_comps(kk,ii));
 			effN2(kk,ii)       = Eff_N2(d3_obs_size_comps(kk,ii), d3_pre_size_comps(kk,ii));
@@ -4032,7 +4033,6 @@ REPORT_SECTION
 			obs_mn_size(kk,ii) = mn_length(d3_obs_size_comps(kk,ii));
 			lb_mn_size(kk,ii)  = obs_mn_size(kk,ii) - sdl_tmp * 2.0 / sqrt(size_comp_sample_size(kk,ii));
 			ub_mn_size(kk,ii)  = obs_mn_size(kk,ii) + sdl_tmp * 2.0 / sqrt(size_comp_sample_size(kk,ii));
-			/*
 			*/
 		}
 	}
