@@ -66,7 +66,7 @@ DATA_SECTION
 			cout << "  | Name:                        Organization:               |\n";
 			cout << "  | James Ianelli                NOAA-NMFS                   |\n";
 			cout << "  | D'Arcy Webber                Quantifish                  |\n";
-			cout << "  | Steven Martell               IPHC                        |\n";
+			cout << "  | Steven Martell               SeaState                    |\n";
 			cout << "  | Jack Turnock                 NOAA-NMFS                   |\n";
 			cout << "  | Jie Zheng                    ADF&G                       |\n";
 			cout << "  | Hamachan Hamazaki            ADF&G                       |\n";
