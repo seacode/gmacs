@@ -10,6 +10,7 @@ output:
   word_document: default
 bibliography: 
 ---
+\pagenumbering{gobble}
 
 ##The data file used for the reference model (16.0) control file:
 

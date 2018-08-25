@@ -4,7 +4,8 @@ else
     RM=rm -rf
 endif
 
-all: pdf app clean
+all: pdf 
+# app clean
 
 R_OPTS=--no-save --no-restore --no-init-file --no-site-file
 

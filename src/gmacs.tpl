@@ -143,11 +143,8 @@ DATA_SECTION
 		n_grp = nsex * nshell * nmature;
 		nproj = pyr - nyr;
 		nlikes = 5; // catch, cpue, size comps, recruits, molt increments
-		WRITEDAT(syr); WRITEDAT(nyr);  WRITEDAT(pyr);
-		WRITEDAT(nseason);
+		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
-		WRITEDAT(season_recruitment); WRITEDAT(season_growth); 
-		WRITEDAT(season_ssb); WRITEDAT(season_N); 
 	END_CALCS
 
 	// Set up index pointers
@@ -202,7 +199,7 @@ DATA_SECTION
 				{
 					for ( int i = syr; i <= nyr; i++ )
 					{
-						mean_wt(h,i) = lw_alfa(h) * pow(mid_points, lw_beta(h));
+						mean_wt(h)(i) = lw_alfa(h) * pow(mid_points, lw_beta(h));
 					}
 				}
 			break;
@@ -243,9 +240,6 @@ DATA_SECTION
 	init_vector fecundity(1,nclass); 
 	init_matrix maturity(1,nsex,1,nclass);
 	init_int m_prop_type;
-	!!	WRITEDAT(fecundity);
-	!!	WRITEDAT(maturity);
-	!!	WRITEDAT(m_prop_type);
 	int m_dim;
 	LOC_CALCS
 		m_dim = 1;
@@ -255,7 +249,6 @@ DATA_SECTION
 		}
 	END_CALCS
 	init_matrix m_prop_in(1,m_dim,1,nseason);
-	!!	WRITEDAT(m_prop_in);
 	matrix m_prop(syr,nyr,1,nseason);
 	LOC_CALCS
 		switch ( m_prop_type )
@@ -289,6 +282,7 @@ DATA_SECTION
 				exit(1);
 			}
 		}
+		WRITEDAT(maturity);
 	END_CALCS
 
 	// |-------------|
@@ -296,8 +290,7 @@ DATA_SECTION
 	// |-------------|
 	init_adstring name_read_flt;
 	init_adstring name_read_srv;
-	!! WRITEDAT(name_read_flt);
-	!! WRITEDAT(name_read_srv); 
+	!! WRITEDAT(name_read_srv); WRITEDAT(name_read_flt);
 
 	// |--------------|
 	// | CATCH SERIES |
@@ -306,7 +299,6 @@ DATA_SECTION
 	init_int nCatchDF;
 	init_ivector nCatchRows(1,nCatchDF);
 	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11); // array of catch data
-	!! WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData); 
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix obs_effort(1,nCatchDF,1,nCatchRows);
 	3darray dCatchData_out(1,nCatchDF,syr,nyr-1,1,11);
@@ -326,17 +318,15 @@ DATA_SECTION
 			obs_catch(k)  = elem_prod(obs_catch(k), catch_mult(k)); // rescale catch by multiplier
 			obs_effort(k) = column(dCatchData(k),10);
 			// If the catch is zero then add a small constant
-
-   /*
 			for ( int i = 1; i <= nCatchRows(k); i++ )
 			{
-				if ( obs_catch(k,i) < 1e-4 )
+				if ( obs_catch(k)(i) < 1e-4 )
 				{
-					obs_catch(k,i) = 1e-4;
+					obs_catch(k)(i) = 1e-4;
 				}
 			}
-   */
 		}
+		WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData);
 		ECHO(obs_catch); ECHO(catch_cv);
 	END_CALCS
 
@@ -975,7 +965,6 @@ DATA_SECTION
 		WriteCtl(nvn_ival_in);
 		WriteCtl(nvn_phz_in);
 		WriteCtl(iCompAggregator);
-	  WriteCtl(lf_lambda_in);
 		nSizeCompCols.initialize();
 		for ( int kk = 1; kk <= nSizeComps_in; kk++ )
 		{
@@ -1118,9 +1107,7 @@ DATA_SECTION
 		WriteCtl(Mdev_phz); 
 		WriteCtl(m_stdev); 
 		WriteCtl(m_nNodes); 
-		WriteCtl(m_nNodes_females); 
 		WriteCtl(m_nodeyear);
-	  WriteCtl(m_nodeyear_females);
 		if ( m_females == 1 )
 		{
 			Mdev_phz_females = Mdev_phz;
@@ -1540,8 +1527,7 @@ FUNCTION calc_sdreport
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
-	// sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
-	sd_log_dyn_Bzero = (sd_log_ssb(syr+1,nyr)) - (sd_log_dyn_Bzero);
+	sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
 	F = ftmp;
 	calc_total_mortality();
 	calc_initial_numbers_at_length();
@@ -1708,11 +1694,11 @@ FUNCTION calc_selectivities
 				if ( slx_gear(k) > 0 )
 				{
 					//log_slx_capture(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
-					log_slx_capture(kk,h,i) = pSLX->logSelectivity(mid_points);
+					log_slx_capture(kk)(h)(i) = pSLX->logSelectivity(mid_points);
 				} else {
-					//log_slx_retaind(kk,h,i) = pSLX[j]->logSelectivity(mid_points);
-					log_slx_retaind(kk,h,i) = pSLX->logSelectivity(mid_points);
-					log_slx_discard(kk,h,i) = log(1.0 - exp(log_slx_retaind(kk,h,i)) + TINY);
+					//log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
+					log_slx_retaind(kk)(h)(i) = pSLX->logSelectivity(mid_points);
+					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)) + TINY);
 				}
 			}
 		}
@@ -1756,9 +1742,7 @@ FUNCTION calc_fishing_mortality
 				{
 					if ( fhit(i,j,k) )
 					{
-						// Jim notes that this next line results in walking out of an array at log_fdev(k,ik++), 
-						// seems fine to me - if we start off with k=1 and ik=1, then log_fdev(k,ik++) returns log_fdev(1,1). After returning that value then ik++ iterates ik so that ik=2. 
-						// In what you produced below you've iterated ik out of bounds then tried to evaluate.
+						// Jim notes that this next line results in walking out of an array at log_fdev(k,ik++), seems fine to me - if we start off with k=1 and ik=1, then log_fdev(k,ik++) returns log_fdev(1,1). After returning that value then ik++ iterates ik so that ik=2. In what you produced below you've iterated ik out of bounds then tried to evaluate.
 						log_ftmp = log_fbar(k) + log_fdev(k,ik++);
 						// Jim for checking error...
 						//cout << "k=" << k << ", log_fbar(k)=" << log_fbar(k) << ", log_fdev(k,ik-1)=" << log_fdev(k,ik-1) << ", ik=" << ik << ", nFparams(k)=" << nFparams(k) << ", log_fdev(k)=" << log_fdev(k) << endl;
@@ -1766,10 +1750,10 @@ FUNCTION calc_fishing_mortality
 						{
 							log_ftmp += double(h-1) * (log_foff(k) + log_fdov(k,yk++));
 						}
-						ft(k,h,i,j) = mfexp(log_ftmp);
+						ft(k)(h)(i)(j) = mfexp(log_ftmp);
 						xi  = dmr(i,k);                                      // Discard mortality rate
-						sel = exp(log_slx_capture(k,h,i));                 // Selectivity
-						ret = exp(log_slx_retaind(k,h,i)) * slx_nret(h,k); // Retension
+						sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
+						ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
 						vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
 						/*if(sum(tmp)==0 || min(tmp) < 0)
 						{
@@ -1779,7 +1763,7 @@ FUNCTION calc_fishing_mortality
 							exit(1);
 						}
 						*/
-						F(h,i,j) += ft(k,h,i,j) * vul;
+						F(h)(i)(j) += ft(k,h,i,j) * vul;
 					}
 				}
 			}
@@ -1841,7 +1825,7 @@ FUNCTION calc_growth_increments
 	{
 		for ( l = 1; l <= nclass; l++ )
 		{
-			molt_increment(h,l) = alpha(h) - beta(h) * mid_points(l);
+			molt_increment(h)(l) = alpha(h) - beta(h) * mid_points(l);
 		}
 	}
 
@@ -1876,7 +1860,7 @@ FUNCTION calc_growth_transition
 			sbi = size_breaks / gscale(h);
 			for ( l = 1; l <= nclass; l++ )
 			{
-				mean_size_after_molt = (mid_points(l) + molt_increment(h,l)) / gscale(h);
+				mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
 				for ( ll = l; ll <= nclass+1; ll++ )
 				{
 					if ( ll <= nclass+1 )
@@ -1908,7 +1892,7 @@ FUNCTION calc_growth_transition
 			sbi = size_breaks / gscale(h);
 			for ( l = 1; l <= nclass; l++ )
 			{
-				mean_size_after_molt = (mid_points(l) + molt_increment(h,l)) / gscale(h);
+				mean_size_after_molt = (mid_points(l) + molt_increment(h)(l)) / gscale(h);
 				for ( ll = l; ll <= nclass+1; ll++ )
 				{
 					if ( ll <= nclass+1 )
@@ -2113,7 +2097,7 @@ FUNCTION calc_total_mortality
 				Z(h)(i)(j) = (m_prop(i)(j) * M(h)(i)) + F(h)(i)(j);
 				for ( int l = 1; l <= nclass; l++ )
 				{
-					S(h,i,j)(l,l) = mfexp(-Z(h,i,j)(l));
+					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
 				}
 			}
 		}
@@ -2137,10 +2121,10 @@ FUNCTION reset_Z_to_M
 		{
 			for ( int j = 1; j <= nseason; j++ )
 			{
-				Z(h,i,j) = m_prop(i,j) * M(h,i);
+				Z(h)(i)(j) = m_prop(i)(j) * M(h)(i);
 				for ( int l = 1; l <= nclass; l++ )
 				{
-					S(h,i,j)(l,l) = mfexp(-Z(h)(i)(j)(l));
+					S(h)(i)(j)(l,l) = mfexp(-Z(h)(i)(j)(l));
 				}
 			}
 		}
@@ -2174,7 +2158,7 @@ FUNCTION calc_molting_probability
 				molt_probability(h)(i) = 1.0 - ((1.0 - 2.0 * tiny) * plogis(mid_points, mu, sd) + tiny);
 				for ( int l = 1; l <= nclass; l++ )
 				{
-					P(h,l,l) = molt_probability(h,i,l);
+					P(h)(l,l) = molt_probability(h)(i)(l);
 				}
 			}
 		}
@@ -2970,16 +2954,16 @@ FUNCTION calc_predicted_catch
 				if (effort > 0.0)
 				{
 					pre_catch(kk,jj) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
-					// COUT(kk);
-					// COUT(jj);
-					// COUT(mfexp(log_q_catch(kk)));
-					// COUT(effort);
-					// COUT(nal);
-					// COUT(tmp_ft);
-					// COUT(ft(k)(h));
-					// COUT(sel);
-					// COUT(elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)));
-					// COUT(pre_catch(kk,jj));
+					COUT(kk);
+					COUT(jj);
+					COUT(mfexp(log_q_catch(kk)));
+					COUT(effort);
+					COUT(nal);
+					COUT(tmp_ft);
+					COUT(ft(k)(h));
+					COUT(sel);
+					COUT(elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)));
+					COUT(pre_catch(kk,jj));
 				} else {
 					pre_catch(kk,jj) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
 				}
@@ -3377,7 +3361,7 @@ FUNCTION void get_all_sdnr_MAR()
 			//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
 			sdnr_MAR_lf(k) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
 		}
-		Francis_weights = calc_Francis_weights();
+		//Francis_weights = calc_Francis_weights();
 	}
 
 
@@ -3434,8 +3418,8 @@ FUNCTION dvector calc_Francis_weights()
 			{
 				//if ( sum(d3_obs_size_comps(k,i)) > 0 )
 				//{
-					//cout << "k= " << k << " i=" << i << endl;
-					//cout << d3_obs_size_comps(k,i) << endl;
+					cout << "k= " << k << " i=" << i << endl;
+					cout << d3_obs_size_comps(k,i) << endl;
 					Obs = sum(elem_prod(d3_obs_size_comps(k,i), mid_points));
 					Pre = sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
 					Var = sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
@@ -4025,6 +4009,7 @@ REPORT_SECTION
 	{
 		for ( int ii = 1; ii <= nSizeCompRows(kk); ii++ )
 		{
+			/*
 			double sdl_tmp     = Sd_length(d3_obs_size_comps(kk,ii));
 			effN(kk,ii)        = Eff_N(d3_obs_size_comps(kk,ii), d3_pre_size_comps(kk,ii));
 			effN2(kk,ii)       = Eff_N2(d3_obs_size_comps(kk,ii), d3_pre_size_comps(kk,ii));
@@ -4032,7 +4017,6 @@ REPORT_SECTION
 			obs_mn_size(kk,ii) = mn_length(d3_obs_size_comps(kk,ii));
 			lb_mn_size(kk,ii)  = obs_mn_size(kk,ii) - sdl_tmp * 2.0 / sqrt(size_comp_sample_size(kk,ii));
 			ub_mn_size(kk,ii)  = obs_mn_size(kk,ii) + sdl_tmp * 2.0 / sqrt(size_comp_sample_size(kk,ii));
-			/*
 			*/
 		}
 	}
