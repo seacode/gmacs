@@ -1,0 +1,262 @@
+---
+title: "Appendix C. Test of VAST spatio-temporal analysis of SMBKC from NMFS bottom-trawl survey data"
+output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  html_document:
+    theme: flatly
+    toc: yes
+  word_document: default
+---
+
+\pagenumbering{gobble}
+
+# Overview
+This is an example application of `VAST` for estimating single-species
+abundance indices specifically applied to a subset of NMFS/AFSC bottom trawl
+survey data.  Further details can be found at the [GitHub repo](https://github.com/james- thorson/VAST/#description)
+mainpage, wiki, and glossary.  The R help files, e.g., `?Data_Fn` for explanation of data inputs, or `?Param_Fn` for explanation of parameters.
+VAST has involved many publications for developing individual features (see references section below).  
+
+The following loads in the main libraries.
+
+```{r set_options, echo=FALSE, message=FALSE, warning=FALSE}
+# Width should apply to tidy
+# digits hopefully affects number of digits when using print
+options(width=50, width.cutoff=50, digits = 3) 
+tidy.opts=list(blank=FALSE, width.cutoff=60, size='small')
+library(pander)
+library(knitr)
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = knitr:::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+library(xtable)
+library(tidyverse)
+options(xtable.comment = FALSE)
+```
+
+```{r load_libraries, eval=FALSE, message=FALSE, warning=FALSE}
+library(TMB)               
+library(VAST)
+Version <- "VAST_v2_0_0"
+```
+
+## Spatial settings and model configuration
+
+The following settings define the spatial resolution for the model, and
+whether to use a grid or mesh approximation as well as specific model settings.
+
+
+```{r spatialres, eval=FALSE, tidy=TRUE}
+Method        <- "Mesh"
+grid_size_km  <- 25
+n_x           <- 50      # Number of stations
+Kmeans_Config <- list( "randomseed"=1, "nstart"=100, "iter.max"=1e3 )    
+
+FieldConfig          <- c("Omega1"=1, "Epsilon1"=1, "Omega2"=1, "Epsilon2"=1) 
+RhoConfig            <- c("Beta1"=0, "Beta2"=0, "Epsilon1"=0, "Epsilon2"=0) 
+OverdispersionConfig <- c("Vessel"=0, "VesselYear"=0)
+ObsModel             <- c(2,0)  
+Options              <- c("SD_site_density"=0, "SD_site_logdensity"=0, "Calculate_Range"=1, "Calculate_evenness"=0, 
+                          "Calculate_effective_area"=1, "Calculate_Cov_SE"=0, 'Calculate_Synchrony'=0, 
+                          'Calculate_Coherence'=0)
+strata.limits        <- data.frame('STRATA'="All_areas")
+VesselConfig         <- c("Vessel"=0, "VesselYear"=1)
+```
+
+# Data preparation
+## Data-frame for catch-rate data
+The following extracts a subset of the data file downloaded from AKFIN.
+
+
+```{r dataprep  , eval=FALSE, size='footnotesize', tidy=TRUE}
+# Read in header names
+m.df         <- data.frame(read.csv("male_ge90.csv",header=T,as.is=T)) 
+hnames       <- read.csv("hdr.csv",header=T)
+names(m.df)  <- names(hnames)
+# Get into format for VASt
+p.df         <- transmute(m.df,yr=as.numeric(SURVEY_YEAR), loc = STRATUM_NAME, lat= as.numeric(MID_LATITUDE), 
+                long=as.numeric(MID_LONGITUDE),CrabN=as.numeric(CRAB_NUM),cpueN=as.numeric(CRAB_CPUENUM),
+                cpueKG=as.numeric(CRAB_CPUEWGT_MT)/1e3)
+Data_Geostat <- p.df %>% mutate( "Catch_KG"=cpueKG, "Year"=yr, "Vessel"="missing", "AreaSwept_km2"=1, "Lat"=lat, 
+                "Lon"=long, "Pass"=0)
+
+# Create a coverage of this specific are (St. Matthews Island)
+posLL <- p.df %>% select(Lat=lat,Lon = long)
+# Apply to create the extrapolation grid 
+Extrapolation_List <- SpatialDeltaGLMM::Prepare_Extrapolation_Data_Fn( Region="Other", observations_LL = posLL,
+                      strata.limits=strata.limits )
+
+## Derived objects for spatio-temporal estimation
+Spatial_List <- SpatialDeltaGLMM::Spatial_Information_Fn( grid_size_km=grid_size_km, n_x=n_x, Method=Method, 
+                Lon=Data_Geostat[,'Lon'], Lat=Data_Geostat[,'Lat'], Extrapolation_List=Extrapolation_List, 
+                randomseed=Kmeans_Config[["randomseed"]], nstart=Kmeans_Config[["nstart"]], 
+                iter.max=Kmeans_Config[["iter.max"]], DirPath=DateFile, Save_Results=FALSE )
+
+# Add knots to Data_Geostat
+Data_Geostat <- cbind( Data_Geostat, "knot_i"=Spatial_List$knot_i )
+```
+
+# Build and run model
+
+To estimate parameters, first create a list of data-inputs used for parameter
+estimation.  `Data_Fn` has some simple checks for buggy inputs, but also
+please read the help file `?Data_Fn`.
+
+```{r model, eval=FALSE  , tidy=TRUE}
+library(VAST)
+TmbData <- Data_Fn("Version"=Version, "FieldConfig"=FieldConfig, "OverdispersionConfig"=OverdispersionConfig, 
+           "RhoConfig"=RhoConfig, "ObsModel"=ObsModel, "c_i"=rep(0,nrow(Data_Geostat)), "b_i"=Data_Geostat[,'Catch_KG'], 
+           "a_i"=Data_Geostat[,'AreaSwept_km2'], "v_i"=as.numeric(Data_Geostat[,'Vessel'])-1, "s_i"=Data_Geostat[,
+           'knot_i']-1, "t_i"=Data_Geostat[,'Year'], "a_xl"=Spatial_List$a_xl, "MeshList"=Spatial_List$MeshList, 
+           "GridList"=Spatial_List$GridList, "Method"=Spatial_List$Method, "Options"=Options )
+
+#We then build the TMB object.
+TmbList <- Build_TMB_Fn("TmbData"=TmbData, "RunDir"=DateFile, "Version"=Version, "RhoConfig"=RhoConfig, 
+           "loc_x"=Spatial_List$loc_x, "Method"=Method)
+Obj     <- TmbList[["Obj"]]
+
+## Estimate fixed effects and predict random effects
+#Next, we use a gradient-based nonlinear minimizer to identify maximum likelihood estimates for fixed-effects
+Opt     <- TMBhelper::Optimize( obj=Obj, lower=TmbList[["Lower"]], upper=TmbList[["Upper"]], getsd=TRUE, savedir=DateFile, 
+           bias.correct=FALSE )
+
+#Store output
+Report  <- Obj$report()
+
+```
+
+# Diagnostic plots
+
+```{r plots, eval=FALSE  , tidy=TRUE}
+SpatialDeltaGLMM::Plot_data_and_knots(Extrapolation_List=Extrapolation_List, Spatial_List=Spatial_List, 
+           Data_Geostat=Data_Geostat, PlotDir=DateFile )
+Region="Other"
+MapDetails_List <- SpatialDeltaGLMM::MapDetails_Fn( "Region"=Region, "NN_Extrap"=Spatial_List$PolygonList$NN_Extrap, 
+                   "Extrapolation_List"=Extrapolation_List )
+# Decide which years to plot                                                   
+Year_Set        <- seq(min(Data_Geostat[,'Year']),max(Data_Geostat[,'Year']))
+Years2Include   <- which( Year_Set %in% sort(unique(Data_Geostat[,'Year'])))
+```
+ 
+## Convergence
+Diagnostics generated during parameter estimation can confirm that 
+parameter estimates are away from upper or lower bounds and that the final gradient for
+each fixed-effect is close to zero.  For explanation of parameters, please see
+references (and specifically `?Data_Fn` in R).
+
+```{r converge, echo=FALSE,results = "asis"}
+#pander::pandoc.table( Opt$diagnostics[,c('Param','Lower','MLE','Upper','final_gradient')] ) 
+params <- read.csv("VAST_output_wtge90/params.csv")
+params <- params[,-1]
+tab    <- xtable(params,caption = "SMBKC parameter estimates, bounds, and final gradients as derived from the VAST modeling framework. ", label = "tab:params", digits = c(0,0,1,3,1,5))
+print("\fontsize{7}{8}")
+print(tab, caption.placement = "top", include.rownames = FALSE)
+```
+\fontsize{11}{12}
+
+## Encounter-probability component
+One can check to ensure that observed encounter frequencies for either low or high
+probability samples are within the 95% predictive interval for predicted
+encounter probability (Figure \ref{fig:encounter}. 
+Diagnostics for positive-catch-rate component was evaluated using a standard
+Q-Q plot. Qualitatively, the fits to SMBKC are reasonable but could stand some more evaluation for improvement as only
+one configuration was tested here (Figures \ref{fig:qq1} and \ref{fig:qq2}.
+
+```{r encplots, eval=FALSE  , tidy=TRUE}
+Enc_prob  <- SpatialDeltaGLMM::Check_encounter_prob( Report=Report, Data_Geostat=Data_Geostat, DirName=DateFile)
+Q         <- SpatialDeltaGLMM::QQ_Fn( TmbData=TmbData, Report=Report, FileName_PP=paste0(DateFile,
+             "Posterior_Predictive.jpg"), FileName_Phist=paste0(DateFile,"Posterior_Predictive-Histogram.jpg"), 
+             FileName_QQ=paste0(DateFile,"Q-Q_plot.jpg"), FileName_Qhist=paste0(DateFile,"Q-Q_hist.jpg")) 
+```
+<!-- Einbinden von Bildern in RMarkdown -->
+\begin{figure} \centerline{ \label{fig:encounter}
+\includegraphics[width=0.5\textwidth] {VAST_output_wtge90/Diag--Encounter_prob.png}}
+\caption{ Observed encounter rates and predicted probabilities for SMBKC. }
+\end{figure}
+
+\begin{figure} \centerline{ \label{fig:qq1}
+\includegraphics[width=0.5\textwidth] {VAST_output_wtge90/Q-Q_hist.jpg}}
+\caption{ Plot indicating distribution of quantiles for "positive catch rate" component. }
+\end{figure}
+
+\begin{figure} \centerline{ \label{fig:qq2}
+\includegraphics[width=0.5\textwidth] {VAST_output_wtge90/Q-Q_plot.jpg}}
+\caption{Quantile-quantile plot of residuals for "positive catch rate" component. }
+\end{figure}
+
+
+##Pearson residuals
+Spatially the residual pattern can be evaluated over time. Results for SMBKC shows that
+consistent positive or negative 
+residuals accross or within years is limited for the encounter probability component of the model and 
+for the positive catch rate component (Figures \ref{fig:pearson1} and \ref{fig:pearson2}, respectively).
+Some VAST plots for visualizing results can be seen by examining the
+direction of faster or slower spatial decorrelation (termed "geometric anisotropy"; Figure \ref{fig:aniso}).
+
+```{r pearson, eval=FALSE, tidy=TRUE}
+SpatialDeltaGLMM:::plot_residuals(Lat_i=Data_Geostat[,'Lat'], Lon_i=Data_Geostat[,'Lon'], TmbData=TmbData, 
+          Report=Report, Q=Q, savedir=DateFile, MappingDetails=MapDetails_List[["MappingDetails"]], 
+          PlotDF=MapDetails_List[["PlotDF"]], MapSizeRatio=MapDetails_List[["MapSizeRatio"]], 
+          Xlim=MapDetails_List[["Xlim"]], Ylim=MapDetails_List[["Ylim"]], FileName=DateFile, Year_Set=Year_Set, 
+          Years2Include=Years2Include, Rotate=MapDetails_List[["Rotate"]], Cex=MapDetails_List[["Cex"]], 
+          Legend=MapDetails_List[["Legend"]], zone=MapDetails_List[["Zone"]], mar=c(0,0,2,0), oma=c(3.5,3.5,0,0), cex=1.8)
+```
+
+![Pearson residuals of the encounter probability component at SMBKC stations, 1976-2017. \label{fig:pearson1}](VAST_output_wtge90/maps--encounter_pearson_resid.png)
+
+![Pearson residuals of the positive catch rate component for SMBKC stations, 1976-2017. \label{fig:pearson2}](VAST_output_wtge90/maps--catchrate_pearson_resid.png)
+
+
+```{r aniso, eval=FALSE, tidy=TRUE}
+SpatialDeltaGLMM::PlotAniso_Fn( FileName=paste0(DateFile,"Aniso.png"), Report=Report, TmbData=TmbData )
+```
+![Directional decorrelation for SMBKC stations, 1978-2017. \label{fig:aniso}](VAST_output_wtge90/Aniso.png)
+
+```{r densplots, eval=FALSE , tidy=TRUE }
+SpatialDeltaGLMM::PlotResultsOnMap_Fn(plot_set=c(3), MappingDetails=MapDetails_List[["MappingDetails"]], 
+  Report=Report, Sdreport=Opt$SD, PlotDF=MapDetails_List[["PlotDF"]], MapSizeRatio=MapDetails_List[["MapSizeRatio"]], 
+  Xlim=MapDetails_List[["Xlim"]], Ylim=MapDetails_List[["Ylim"]], FileName=DateFile, Year_Set=Year_Set, 
+  Years2Include=Years2Include, Rotate=MapDetails_List[["Rotate"]], Cex=MapDetails_List[["Cex"]], 
+  Legend=MapDetails_List[["Legend"]], zone=MapDetails_List[["Zone"]], mar=c(0,0,2,0), oma=c(3.5,3.5,0,0), 
+  cex=1.8, plot_legend_fig=FALSE)
+```
+![St. Matthews Island blue king crab (males >89mm) density maps as predicted
+using the VAST model approach, 1976-2017. \label{fig:density}](VAST_output_wtge90/Dens.png)
+
+## Densities and biomass estimates A heatmap of the relative densities over
+time shows a consistent pattern in the relative biomass of males >89mm (Figure \ref{fig:density}).
+ For the application to SMBKC, the biomass index was scaled
+to have the same mean as that from the design-based estimate (5,763 t) of
+abundance is generally most useful for stock assessment models (Table \ref{tab:smbkc_biomass}).
+
+```{r indexplots, echo=FALSE, results="asis"}
+#Opt[["SD"]]
+#Index <- SpatialDeltaGLMM::PlotIndex_Fn( DirName=DateFile, TmbData=TmbData, Sdreport=Opt[["SD"]], Year_Set=Year_Set, Years2Include=Years2Include, use_biascorr=TRUE )
+#pander::pandoc.table( Index$Table[,c("Year","Fleet","Estimate_metric_tons","SD_log","SD_mt")] ) 
+idxOut <- read.csv("VAST_output_wtge90/Table_for_SS3.csv")
+df  <- mutate(idxOut[-1,], CV = SD_mt/Estimate_metric_tons, Estimate=5763*Estimate_metric_tons/mean(Estimate_metric_tons) ) %>%
+      select(Year,Estimate, CV)
+tab <- xtable(df, caption = "SMBKC male >89mm biomass (t) estimates as derived from the VAST modeling framework.", label = "tab:smbkc_biomass", digits = c(0,0,1,3))
+print(tab, caption.placement = "top", include.rownames = FALSE)
+```
+
+![St. Matthews Island blue king crab (males >89mm) relative abundance as predicted
+using the VAST model approach.\label{fig:Index}](VAST_output_wtge90/Index.png)
+
+
+#References
+
+\fontsize{8}{10}
+```{r citation,  tidy=TRUE, width=70, width.cutoff=120, comment=NA, echo=FALSE, results ="asis"}
+citation("VAST")
+```

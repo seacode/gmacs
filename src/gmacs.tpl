@@ -3665,6 +3665,7 @@ FUNCTION calc_objective_function
 		}
 	}
 
+	if ( verbose == 1 ) COUT(nloglike(2));
 	// 3) Likelihood for size composition data.
 	d3_res_size_comps.initialize();
 	for ( int ii = 1; ii <= nSizeComps; ii++ )
@@ -3706,10 +3707,11 @@ FUNCTION calc_objective_function
 		if ( ploglike != NULL )
 		{
 			nloglike(3,ii) += ploglike->nloglike(log_effn, P);
-			delete ploglike;
+			//delete ploglike;
 		}
 	}
 
+	if ( verbose == 1 ) COUT(nloglike(3));
 	// 4) Likelihood for recruitment deviations.
 	if ( active(rec_dev) )
 	{
