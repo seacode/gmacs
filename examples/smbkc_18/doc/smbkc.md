@@ -43,7 +43,7 @@ The most recent 3-year average of the NMFS survey is 41% of the mean value, sugg
 the survey estimates in 2010 and 2011 that were over 6 times the current average. 
 The assessment model estimates dampen the interannual
 variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about
-45% 
+44% 
 of the long term model-predicted survey biomass average. The trend from these values suggests a slight decline.
 
 
@@ -167,23 +167,11 @@ model, Thorson and Barnett 2017) and the other configuration (named "Fit survey"
 
 ## CPT and SSC Comments on Assessments in General
 
-Comment: *Regarding general code development, the CPT had the following requests:*
-
-  1. *specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors*
-
-     This was completed.
-
-  2. *include an option to calculate dynamic $B_\mathit{MSY}$*
-
-     This was completed.
-
-  1. *add the ability to "jitter" initial parameter values*
-
-     The framework for conducting this research has been added but has yet to be fully tested.
+Comment: *Regarding general code development, the SSC and CPT outstanding requests continue to be as follows:*
 
   1. *add the ability to conduct retrospective analyses*
 
-     Incomplete.
+     Progress was limited in implementing this feature.
 
   1. *add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available*
 
@@ -508,11 +496,11 @@ is 80% of the OFL.
   \hline
 Component & Reference & VAST & Fit surveys & Francis weights & NA & NA \\ 
   \hline
-$\text{MMB}_{2018}$ & 2079.874 & 2046.818 & 2179.720 & 2939.645 & 5674.035 & 2085.382 \\ 
-  $B_\text{MSY}$ & 3886.804 & 3862.834 & 3930.576 & 4334.390 & 9828.733 & 3861.300 \\ 
-  $F_\text{OFL}$ & 0.075 & 0.075 & 0.079 & 0.101 & 0.083 & 0.076 \\ 
-  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 123.613 & 0.000 & 367.946 & 117.651 \\ 
-  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 98.891 & 0.000 & 294.357 & 94.121 \\ 
+$\text{MMB}_{2018}$ & 2079.874 & 2046.818 & 2046.818 & 2939.645 & 5674.035 & 2085.382 \\ 
+  $B_\text{MSY}$ & 3886.804 & 3862.834 & 3862.834 & 4334.390 & 9828.733 & 3861.300 \\ 
+  $F_\text{OFL}$ & 0.075 & 0.075 & 0.075 & 0.101 & 0.083 & 0.076 \\ 
+  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 367.946 & 117.651 \\ 
+  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 294.357 & 94.121 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -538,7 +526,7 @@ The following topics have been listed as areas where more research on SMBKC is n
 
 The outlook for recruitment looks relatively pessimistic. The dynamic-$B_0$ analysis, which removes historical fishing and projects
 the population based on estimated recruitments, indicates that the effect of fishing has reduced the stock to about 
-  68%. The other aspects of depletion (ignoring stock-recruit
+  203%. The other aspects of depletion (ignoring stock-recruit
   relationship) may reflect variable  survival rates due to environmental conditions and range shifts. 
 
 # J. Acknowledgements
@@ -941,25 +929,25 @@ Year & Stage-1 & Stage-2 & Stage-3 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.652 & 0.127 \\ 
-  $\log (\bar{R})$ & 14.064 & 0.060 \\ 
-  $\log (n^0_1)$ & 14.922 & 0.171 \\ 
-  $\log (n^0_2)$ & 14.551 & 0.201 \\ 
-  $\log (n^0_3)$ & 14.360 & 0.206 \\ 
-  $q_{pot}$ & 3.644 & 0.280 \\ 
-  $\log (\bar{F}^\text{df})$ & -1.923 & 0.053 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.019 & 0.082 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.217 & 0.082 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.654 & 0.174 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.647 & 0.127 \\ 
+  $\log (\bar{R})$ & 14.037 & 0.058 \\ 
+  $\log (n^0_1)$ & 14.923 & 0.171 \\ 
+  $\log (n^0_2)$ & 14.548 & 0.201 \\ 
+  $\log (n^0_3)$ & 14.358 & 0.206 \\ 
+  $q_{pot}$ & 3.686 & 0.276 \\ 
+  $\log (\bar{F}^\text{df})$ & -1.915 & 0.053 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.388 & 0.080 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.303 & 0.080 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.653 & 0.174 \\ 
   log Stage-2 directed pot selectivity 1978-2008 & -0.315 & 0.126 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.463 & 0.154 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.459 & 0.154 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.243 & 0.066 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.247 & 0.066 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.852 & 0.127 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.855 & 0.127 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.026 & 0.078 \\ 
-  $F_\text{OFL}$ & 0.079 & 0.010 \\ 
-  OFL & 123.610 & 28.638 \\ 
+  $F_\text{OFL}$ & 0.075 & 0.009 \\ 
+  OFL & 0.000 & 0.000 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1111,20 +1099,20 @@ NMFS trawl survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 1.50 & 1.00 \\
   NMFS trawl survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.22 & 0.50 \\ 
   ADF\&G pot survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.10 & 3.72 \\ 
    \hline
-Francis weight for directed pot LF & 0.00 & 0.00 & 1.69 & 0.00 & 1.96 & 1.55 \\ 
-  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.57 & 0.00 & 0.22 & 0.50 \\ 
-  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 2.08 & 0.00 & 0.10 & 4.13 \\ 
+Francis weight for directed pot LF & 0.00 & 0.00 & 0.00 & 0.00 & 1.96 & 1.55 \\ 
+  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.22 & 0.50 \\ 
+  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.10 & 4.13 \\ 
    \hline
 SDNR NMFS trawl survey & 1.45 & 1.45 & 1.45 & 1.88 & 1.83 & 1.36 \\ 
-  SDNR ADF\&G pot survey & 3.78 & 3.76 & 3.78 & 3.88 & 5.45 & 3.72 \\ 
+  SDNR ADF\&G pot survey & 3.78 & 3.76 & 3.76 & 3.88 & 5.45 & 3.72 \\ 
   SDNR directed pot LF & 0.71 & 0.71 & 0.71 & 0.79 & 1.39 & 0.91 \\ 
-  SDNR NMFS trawl survey LF & 1.23 & 1.22 & 1.23 & 1.28 & 1.06 & 0.94 \\ 
+  SDNR NMFS trawl survey LF & 1.23 & 1.22 & 1.22 & 1.28 & 1.06 & 0.94 \\ 
   SDNR ADF\&G pot survey LF & 0.80 & 0.80 & 0.80 & 0.84 & 0.96 & 1.01 \\ 
    \hline
 MAR NMFS trawl survey & 1.18 & 1.18 & 1.18 & 1.15 & 1.52 & 1.12 \\ 
-  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.96 & 2.56 & 4.57 & 2.97 \\ 
+  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.94 & 2.56 & 4.57 & 2.97 \\ 
   MAR directed pot LF & 0.59 & 0.59 & 0.59 & 0.64 & 0.66 & 0.76 \\ 
-  MAR NMFS trawl survey LF & 0.52 & 0.55 & 0.52 & 0.64 & 0.69 & 0.53 \\ 
+  MAR NMFS trawl survey LF & 0.52 & 0.55 & 0.55 & 0.64 & 0.69 & 0.53 \\ 
   MAR ADF\&G pot survey LF & 0.49 & 0.49 & 0.49 & 0.60 & 0.55 & 0.59 \\ 
    \hline
 \end{tabular}
@@ -1138,21 +1126,21 @@ MAR NMFS trawl survey & 1.18 & 1.18 & 1.18 & 1.15 & 1.52 & 1.12 \\
   \hline
 Component & Ref & VAST & FitSurvey & Francis & NA & NA \\ 
   \hline
-Pot Retained Catch & -71.53 & -71.51 & -71.53 & -71.08 & -70.53 & -71.50 \\ 
-  Pot Discarded Catch & 8.98 & 8.86 & 8.98 & 12.65 & 43.00 & 12.74 \\ 
-  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.16 & -7.43 & -7.16 & -7.16 \\ 
-  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.13 & -7.42 & -7.15 & -7.14 \\ 
-  NMFS Trawl Survey & -3.93 & -4.13 & -3.93 & 1.79 & 6.96 & -8.93 \\ 
-  ADF\&G Pot Survey CPUE & 57.07 & 56.32 & 57.07 & 62.59 & 130.07 & 54.50 \\ 
-  Directed Pot LF & -11.31 & -11.29 & -11.31 & -8.84 & 22.78 & 9.96 \\ 
-  NMFS Trawl LF & 18.24 & 17.60 & 18.24 & 27.26 & 92.24 & 55.53 \\ 
-  ADF\&G Pot LF & -7.40 & -7.31 & -7.40 & -6.47 & 32.83 & -6.46 \\ 
-  Recruitment deviations & 54.06 & 54.22 & 52.94 & 52.89 & 59.96 & 53.48 \\ 
+Pot Retained Catch & -71.53 & -71.51 & -71.51 & -71.08 & -70.53 & -71.50 \\ 
+  Pot Discarded Catch & 8.98 & 8.86 & 8.86 & 12.65 & 43.00 & 12.74 \\ 
+  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.43 & -7.43 & -7.16 & -7.16 \\ 
+  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.41 & -7.42 & -7.15 & -7.14 \\ 
+  NMFS Trawl Survey & -3.93 & -4.13 & -4.13 & 1.79 & 6.96 & -8.93 \\ 
+  ADF\&G Pot Survey CPUE & 57.07 & 56.32 & 56.32 & 62.59 & 130.07 & 54.50 \\ 
+  Directed Pot LF & -11.31 & -11.29 & -11.29 & -8.84 & 22.78 & 9.96 \\ 
+  NMFS Trawl LF & 18.24 & 17.60 & 17.60 & 27.26 & 92.24 & 55.53 \\ 
+  ADF\&G Pot LF & -7.40 & -7.31 & -7.31 & -6.47 & 32.83 & -6.46 \\ 
+  Recruitment deviations & 54.06 & 54.22 & 54.22 & 52.89 & 59.96 & 53.48 \\ 
   F penalty & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 \\ 
   M penalty & 6.47 & 6.47 & 6.47 & 6.47 & 6.49 & 6.47 \\ 
   Prior & 12.66 & 12.66 & 12.66 & 12.66 & 13.61 & 12.66 \\ 
-  Total & 63.51 & 61.54 & 62.39 & 89.56 & 337.59 & 118.65 \\ 
-  Total estimated parameters & 139.00 & 141.00 & 138.00 & 141.00 & 138.00 & 138.00 \\ 
+  Total & 63.51 & 61.54 & 61.54 & 89.56 & 337.59 & 118.65 \\ 
+  Total estimated parameters & 139.00 & 141.00 & 141.00 & 141.00 & 138.00 & 138.00 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1218,46 +1206,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3024941 & 2086744 & 1724025 & 4852 \\ 
-  1979 & 4239965 & 2408632 & 2414987 & 6724 \\ 
-  1980 & 3596344 & 3205302 & 3592526 & 10446 \\ 
-  1981 & 1349025 & 3103464 & 4932899 & 10813 \\ 
-  1982 & 1475780 & 1793338 & 4937657 & 7792 \\ 
-  1983 & 781016 & 1431623 & 3544534 & 4882 \\ 
-  1984 & 666738 & 917278 & 2131823 & 3448 \\ 
-  1985 & 933667 & 682228 & 1599710 & 3167 \\ 
-  1986 & 1410067 & 756061 & 1401082 & 3088 \\ 
-  1987 & 1349409 & 1051073 & 1500841 & 3599 \\ 
-  1988 & 1231932 & 1114269 & 1720553 & 3889 \\ 
-  1989 & 2800176 & 1068482 & 1880245 & 4391 \\ 
-  1990 & 1751534 & 1943967 & 2168052 & 5444 \\ 
-  1991 & 1814448 & 1638180 & 2629043 & 5458 \\ 
-  1992 & 1939805 & 1572076 & 2580522 & 5597 \\ 
-  1993 & 2184235 & 1621426 & 2671609 & 5805 \\ 
-  1994 & 1553370 & 1776820 & 2722837 & 5530 \\ 
-  1995 & 1770998 & 1470210 & 2619081 & 5455 \\ 
-  1996 & 1600408 & 1492289 & 2536543 & 5262 \\ 
-  1997 & 912973 & 1402738 & 2466495 & 4667 \\ 
-  1998 & 660074 & 982653 & 2061868 & 3267 \\ 
-  1999 & 394430 & 327571 & 798265 & 1861 \\ 
-  2000 & 442239 & 332277 & 869216 & 1999 \\ 
-  2001 & 405731 & 361052 & 935595 & 2156 \\ 
-  2002 & 144740 & 349823 & 1001982 & 2267 \\ 
-  2003 & 341000 & 197937 & 1026826 & 2142 \\ 
-  2004 & 227177 & 259039 & 989524 & 2142 \\ 
-  2005 & 505715 & 214734 & 978693 & 2071 \\ 
-  2006 & 763531 & 358196 & 973818 & 2222 \\ 
-  2007 & 521970 & 551619 & 1065877 & 2583 \\ 
-  2008 & 935990 & 473156 & 1203369 & 2781 \\ 
-  2009 & 760273 & 687508 & 1331849 & 2875 \\ 
-  2010 & 729826 & 658570 & 1439363 & 2570 \\ 
-  2011 & 600893 & 631520 & 1338699 & 2152 \\ 
-  2012 & 345261 & 550063 & 1105742 & 1768 \\ 
-  2013 & 442426 & 377975 & 898271 & 2009 \\ 
-  2014 & 367920 & 376271 & 982889 & 1999 \\ 
-  2015 & 352930 & 333413 & 985388 & 1999 \\ 
-  2016 & 379414 & 310688 & 1003127 & 2122 \\ 
-  2017 & 186468 & 318041 & 1029878 & 2180 \\ 
+1978 & 3025243 & 2080353 & 1720404 & 4838 \\ 
+  1979 & 4242352 & 2406688 & 2408770 & 6711 \\ 
+  1980 & 3597722 & 3206015 & 3586581 & 10435 \\ 
+  1981 & 1347166 & 3104482 & 4928425 & 10806 \\ 
+  1982 & 1475996 & 1792619 & 4934255 & 7785 \\ 
+  1983 & 778398 & 1431507 & 3541354 & 4875 \\ 
+  1984 & 665616 & 915753 & 2128865 & 3440 \\ 
+  1985 & 934044 & 681086 & 1596361 & 3159 \\ 
+  1986 & 1407050 & 755897 & 1397742 & 3082 \\ 
+  1987 & 1348504 & 1049305 & 1497680 & 3591 \\ 
+  1988 & 1230884 & 1113170 & 1716935 & 3881 \\ 
+  1989 & 2795962 & 1067523 & 1876569 & 4383 \\ 
+  1990 & 1747604 & 1941256 & 2164095 & 5434 \\ 
+  1991 & 1810082 & 1635051 & 2623995 & 5445 \\ 
+  1992 & 1934075 & 1568561 & 2574307 & 5581 \\ 
+  1993 & 2175292 & 1617008 & 2664094 & 5785 \\ 
+  1994 & 1543934 & 1770278 & 2713466 & 5505 \\ 
+  1995 & 1762598 & 1462685 & 2607027 & 5423 \\ 
+  1996 & 1588242 & 1485028 & 2521892 & 5226 \\ 
+  1997 & 901867 & 1393424 & 2449439 & 4621 \\ 
+  1998 & 653842 & 973262 & 2041873 & 3227 \\ 
+  1999 & 391227 & 325951 & 791698 & 1847 \\ 
+  2000 & 438240 & 329922 & 862608 & 1984 \\ 
+  2001 & 402287 & 358001 & 928506 & 2139 \\ 
+  2002 & 143187 & 346857 & 994194 & 2249 \\ 
+  2003 & 337422 & 196073 & 1018676 & 2124 \\ 
+  2004 & 225626 & 256390 & 981435 & 2124 \\ 
+  2005 & 501067 & 212977 & 970452 & 2054 \\ 
+  2006 & 757480 & 354974 & 965604 & 2203 \\ 
+  2007 & 512695 & 547116 & 1056814 & 2561 \\ 
+  2008 & 926232 & 466420 & 1192616 & 2753 \\ 
+  2009 & 749468 & 679736 & 1318538 & 2843 \\ 
+  2010 & 718272 & 649863 & 1423287 & 2534 \\ 
+  2011 & 588182 & 622079 & 1319729 & 2110 \\ 
+  2012 & 336045 & 539811 & 1084062 & 1721 \\ 
+  2013 & 431048 & 369426 & 874308 & 1957 \\ 
+  2014 & 356617 & 367045 & 957646 & 1945 \\ 
+  2015 & 342468 & 323991 & 958724 & 1944 \\ 
+  2016 & 376306 & 301696 & 975326 & 2064 \\ 
+  2017 & 207453 & 313452 & 1002325 & 2123 \\ 
+  2018 & 289767 & 221291 & 1013786 & 2047 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1572,7 +1561,7 @@ for the legal measurement of 5.5in carapace width (CW), whereas 105 mm CL is the
 size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and
 stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is
 presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The
-term <U+FFFD><U+FFFD><U+FFFD>recruit<U+FFFD><U+FFFD><U+FFFD> here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the
+term "recruit" here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the
 fishery. The following description of model structure reflects the Gmacs base model configuration.
 
 ## 2. Model Population Dynamics
