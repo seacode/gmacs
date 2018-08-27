@@ -1,8 +1,8 @@
 R
 # Getting started
 
-#devtools::install_github("james-thorson/VAST") 
-#devtools::install_github("james-thorson/utilities")
+devtools::install_github("james-thorson/VAST") 
+devtools::install_github("james-thorson/utilities")
 ```
 library(TMB)               # Can instead load library(TMBdebug)
 library(VAST)

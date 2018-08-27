@@ -64,6 +64,7 @@ ref_mod <- 2 # base
 rec_mod <- 2 # base
 mod_scen<- 3:6
 mod_scen<- c(1:2,4)
+mod_scen<- 1:6
 ```
 
 \pagenumbering{gobble}
