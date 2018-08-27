@@ -1,7 +1,6 @@
 ---
-title: "Saint Matthew Island Blue King Crab Stock Assessment 2017"
-author: 
-|
+title: "Saint Matthew Island Blue King Crab Stock Assessment 2018"
+author: |
   | Jie Zheng$^1$ and James Ianelli$^2$ 
   | $^1$Alaska Department of Fish and Game, jie.zheng@alaska.gov
   | $^2$NOAA, jim.ianelli@noaa.gov
@@ -35,13 +34,13 @@ supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot li
 2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. The directed
 fishery resumed again in 2014/15 with a TAC of 300 t (0.655 million pounds), but the fishery performance was
 relatively poor with a retained catch of 140 t (0.309 million pounds). The retained catch in 2015/16 was even lower
-at 48 t (0.105 million pounds) and in 2016/2017 the fishery was closed.
+at 48 t (0.105 million pounds) and the fishery has remained closed since 2016/17.
 
-3. **Stock biomass**: The 1978-2017 NMFS trawl survey mean biomass is 5,762 t with the 8th lowest value occurring in 2017 (the 
-fourth lowest since 2000) with a biomass of $\ge$ 90 mm carapace length (CL) and larger male crab of just under 1,800 t (~31% of the long term mean; 
-6.12 million lbs with a CV of 60%).
-The most recent 3-year average of the NMFS survey is 65% of the mean value, suggesting a general decline in biomass compared to
-the survey estimates in 2010 and 2011 that were nearly twice the current average. 
+3. **Stock biomass**: The 1975-2018 NMFS trawl survey mean biomass is 5,664 t with the 8th lowest value occurring in 2018 (the 
+third lowest since 2000) with a biomass of $\ge$ 90 mm carapace length (CL) and larger male crab of just at 1,730 t (~31% of the long term mean; 
+3.814 million lbs with a CV of 28%).
+The most recent 3-year average of the NMFS survey is 41% of the mean value, suggesting a general decline in biomass compared to
+the survey estimates in 2010 and 2011 that were over 6 times the current average. 
 The assessment model estimates dampen the interannual
 variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about
 45% 
@@ -49,10 +48,10 @@ of the long term model-predicted survey biomass average. The trend from these va
 
 
 4. **Recruitment**: Recruitment is based on estimated number of male crab within the 90-104 mm CL size class
-in each year. The 2017 trawl-survey area-swept estimate of 0.073 million male SMBKC in this size class is the lowest in 
-the 40 years since 1978 and caps a six-year (2012 - 2017) average recruitment that is only 54% of this mean. In the pot-survey, 
-the abundance of this size group in 2017 was also the second-lowest in the time series (22% of the mean for the 
-available pot-survey data).
+in each year. The 2018 trawl-survey area-swept estimate of 0.154 million male SMBKC in this size class is the third lowest in 
+the 41 years since 1978 and follows the lowest (as observed in 2017). The recent six-year (2013 - 2018) average recruitment that is only 45% of this mean. 
+In the pot-survey, the abundance of this size group in 2017 was also the second-lowest in the time series (22% of the mean for the 
+available pot-survey data) whereas in 2018 the index...[placeholder].
 
 5. **Management performance**: In this assessment estimated total male catch is the sum of fishery-reported retained
 catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish
@@ -74,12 +73,12 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   & & Biomass & & Retained & Total & & \\ 
   Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
   \hline
-  2012/13 & 1.80$^A$ & 2.85$^A$ & 0.74 & 0.73 & 0.82 & 1.02 & 0.92 \\ 
-  2013/14 & 1.50$^B$ & 3.01$^B$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
-  2014/15 & 1.86$^C$ & 2.48$^C$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
-  2015/16 & 1.84$^D$ & 2.11$^D$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\ 
-  2016/17 & 1.93$^E$ & 2.12$^E$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\
-  2017/18 & & 2.05$^E$ & & & & 0 & 0 \\
+  2013/14 & 1.50$^A$ & 3.01$^A$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
+  2014/15 & 1.86$^B$ & 2.48$^B$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
+  2015/16 & 1.84$^C$ & 2.11$^C$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\ 
+  2016/17 & 1.93$^D$ & 2.12$^D$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\ 
+  2017/18 & 1.93$^E$ & 2.12$^E$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\
+  2018/19 & & 2.05$^E$ & & & & 0 & 0 \\
   \hline
 \end{tabular}
 \end{table}
@@ -92,12 +91,12 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   & & Biomass & & Retained & Total & & \\ 
   Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
   \hline
-  2012/13 & 4.0$^A$ & 6.29$^A$ & 1.630 & 1.616 & 1.81   & 2.24 & 2.02 \\ 
-  2013/14 & 3.4$^B$ & 6.64$^B$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
-  2014/15 & 4.1$^C$ & 5.47$^C$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
-  2015/16 & 4.1$^D$ & 4.65$^D$ & 0.419 & 0.110 & 0.110  & 0.62 & 0.49 \\ 
-  2016/17 & 4.3$^E$ & 4.68$^E$ & 0.41 & 0.000 & 0.000 & 0.62 & 0.49 \\
-  2017/18 & & 4.51$^E$ & & & & 0 & 0 \\
+  2013/14 & 3.4$^A$ & 6.64$^A$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
+  2014/15 & 4.1$^B$ & 5.47$^B$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
+  2015/16 & 4.1$^C$ & 4.65$^C$ & 0.419 & 0.110 & 0.110  & 0.62 & 0.49 \\ 
+  2016/17 & 4.3$^D$ & 4.68$^D$ & 0.410 & 0.000 & 0.000  & 0.62 & 0.49 \\ 
+  2017/18 & 4.3$^E$ & 4.68$^E$ & 0.41 & 0.000 & 0.000 & 0.62 & 0.49 \\
+  2018/19 & & 4.51$^E$ & & & & 0 & 0 \\
   \hline
 \end{tabular}
 \end{table}
@@ -112,12 +111,13 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   & & & Biomass & & & & & Natural \\ 
   Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{MSY}$ & $F_\mathit{OFL}$ & $\gamma$ & Basis for $B_\mathit{MSY}$ & mortality \\ 
   \hline
-  2012/13 & 4a & 3.56 & 5.63 & 1.56 & 0.18 & 1 & 1978-2012 & 0.18 \\ 
   2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
   2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
   2016/17 & 4b & 3.67 & 2.23 & 0.61 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
   2017/18 & 4b & 3.86 & 2.05 & 0.53 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
+  2018/19 & 4b & 3.86 & 2.05 & 0.53 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
+  2019/20 & 4b & 3.86 & 2.05 & 0.53 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -133,34 +133,34 @@ There are no new changes in management of the fishery.
 
 Data used in this assessment have been updated to include the most recently
 available fishery and survey numbers. This assessment makes use of two new
-survey data points including the 2017 NMFS trawl-survey estimate of abudance,
-and the 2017 ADF&G pot survey CPUE. Both of these surveys have associated size
-compositon data. The assessment also uses updated 2010-2016 groundfish and
+survey data points including the 2018 NMFS trawl-survey estimate of abudance,
+and the 2018 ADF&G pot survey CPUE. Both of these surveys have associated size
+compositon data. The assessment also uses updated 2010-2017 groundfish and
 fixed gear bycatch estimates based on NMFS Alaska Regional Office (AKRO) data. 
-There was no directed fishery data due to the 2016/17 closure.
+The directed fishery has been closed since 2016/17 so fishery data in recent years is unavailable.
 
 ## Changes in Assessment Methodology
 
-As with 2016, this assessment is done using the General model for Alasks crab stocks (Gmacs) framework. The
+This assessment uses the General model for Alasks crab stocks (Gmacs) framework. The
 model is configured to track three stages of length categories and was 
 first presented in May 2011 by Bill Gaeuman and accepted by the CPT in May 2012. 
 A difference from the original approach and that used here is  that natural and fishing mortality are
 continuous within 5 discrete seasons (using the appropriate
 catch equation rather than assuming an applied pulse removal). Season length in Gmacs
 is controlled by changing the proportion of natural mortality that is applied
-each season. An added diagnostic output is provided to include estimates of the "dynamic $B_0$." This simply
+each season. Diagnostic output includes estimates of the "dynamic $B_0$" which simply
 computes the ratio of the spawning biomass as estimated relative to the spawning biomass that would have occurred 
 had there been no historical fishing mortality. 
-Details of this implementation are provided in Appendix A.
+Details of this implementation are and other model details are provided in Appendix A.
 
 ## Changes in Assessment Results
 
-Both surveys indicate a decline over the past few years. The "reference" model is that selected for use in 2016.  The
+Both surveys indicate a decline over the past few years. The "reference" model is that which was selected for use in 2017.  The
 addition of new data introduced this year area are presented sequentially. Two alternative models are presented for
 sensitivity. One involves a re-analysis of the NMFS trawl survey data using a spatio-temporal Delta-GLMM approach (VAST
-model, Thorson and Barnett 2017) and the other configuration (named "Fit survey") simply adds emphasis on the survey data
-(assumes a lower input variance). In all cases, the model tends to moderate the declines observed in the surveys.
-
+model, Thorson and Barnett 2017) and the other configuration (named "Fit survey") simply adds emphasis on the design-based survey data
+(assumes a lower input variance). The VAST model suggests a modest increase from the 2017 survey estimate. However,
+ the model tends to moderate the noise in the survey observations and declines 
 
 
 # B. Responses to SSC and CPT Comments
@@ -177,7 +177,7 @@ Comment: *Regarding general code development, the CPT had the following requests
 
      This was completed.
 
-  1. *add the ability to “jitter” initial parameter values*
+  1. *add the ability to <U+FFFD><U+FFFD><U+FFFD>jitter<U+FFFD><U+FFFD><U+FFFD> initial parameter values*
 
      The framework for conducting this research has been added but has yet to be fully tested.
 
@@ -209,7 +209,7 @@ Alaska (Figure \ref{fig:distribution}).  In the eastern Bering Sea small populat
 Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other
 cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2
 (Figure \ref{fig:registration_area}), which is the Northern District of the Bering Sea king crab registration area and
-includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).
+includes the waters north of Cape Newenham (58<U+FFFD><U+FFFD>39<U+FFFD><U+FFFD><U+FFFD> N. lat.) and south of Cape Romanzof (61<U+FFFD><U+FFFD>49<U+FFFD><U+FFFD><U+FFFD> N. lat.).
 
 ## Stock Structure
 
@@ -284,8 +284,8 @@ also occurred in the eastern Bering Sea groundfish fisheries (Table \ref{tab:smb
 ## Summary of New Information
 
 Data used in this assessment were updated to include the most recently available fishery and survey numbers. This
-assessment makes use of two new survey data points including the 2017 NMFS trawl-survey estimate of abudance, and the
-2017 ADF&G pot survey CPUE. Both of these surveys have associated size compositon data. The assessment also uses updated
+assessment makes use of two new survey data points including the 2018 NMFS trawl-survey estimate of abudance, and the
+2018 ADF&G pot survey CPUE. Both of these surveys have associated size compositon data. The assessment also uses updated
 1993-2016 groundfish and fixed gear bycatch estimates based on AKRO data. The fishery was closed in 2016/17 so no
 directed fishery catch data were available. The data used in each of the new models is shown in Figure
 \ref{fig:data_extent}.
@@ -294,8 +294,8 @@ directed fishery catch data were available. The data used in each of the new mod
 
 Major data sources used in this assessment include annual directed-fishery retained-catch statistics from fish tickets
 (1978/79-1998/99, 2009/10-2012/13, and 2014/15-2015/16; Table \ref{tab:smbkc_fishery}); results from the annual NMFS
-eastern Bering Sea trawl survey (1978-2017; Table \ref{tab:stage_cpue_nmfs}); results from the ADF&G SMBKC pot
-survey (every third year during 1995-2013, then 2015-2017; Table \ref{tab:stage_cpue});
+eastern Bering Sea trawl survey (1978-2018; Table \ref{tab:stage_cpue_nmfs}); results from the ADF&G SMBKC pot
+survey (every third year during 1995-2013, then 2015-2018; Table \ref{tab:stage_cpue});
 mean somatic mass given length category by year (Table \ref{tab:length_weight}); 
 size-frequency information from ADF&G crab-observer pot-lift sampling (1990/91-1998/99, 2009/10-2012/13, and
 2014/15-2016/17; Table \ref{tab:stage_cpue_1}); and NMFS groundfish-observer bycatch biomass estimates (1992/93-2016/17;
@@ -359,11 +359,11 @@ survey data more heavily, and a third which weights the size composition data ac
 addition to these sensitivities, we also evaluated the impact of adding new data to the reference model. In summary, the
 following lists the models presented and the naming convention  used:
 
-1. **2016 Model**: the 2016 recommended model without any new data
+1. **2017 Model**: the 2017 recommended model without any new data
 
-2. **BTS**: adds in the 2017 bottom trawl survey (BTS) data
+2. **BTS**: adds in the 2018 bottom trawl survey (BTS) data
 
-3. **BTS and pot**: as with previous but including the 2017 ADFG pot survey data (Model 16.0 or "reference case")
+3. **BTS and pot**: as with previous but including the 2018 ADFG pot survey data (Model 16.0 or "reference case")
 
 3. **VAST**: applies a geo-spatial delta-GLMM model (Thorson and Barnett 2017) to the BTS data which provides a different BTS index. See appendix B for 
   details and diagnostics. This is a preliminary examination as more work is needed to ensure options for the BTS CPUE data
@@ -502,22 +502,22 @@ $F_\mathit{OFL}$, OFL, ABC, and MMB in 2017 for all scenarios are summarized in 
 is 80% of the OFL.
 
 ```
-## Error in names(df) <- c("Component", "Reference", "VAST", "Fit surveys", : 'names' attribute [5] must be the same length as the vector [3]
+## Error in names(df) <- c("Component", "Reference", "VAST", "Fit surveys", : 'names' attribute [5] must be the same length as the vector [4]
 ```
 
 \begin{table}[ht]
 \centering
 \caption{Comparisons of management measures for the four model scenarios. Biomass and OFL are in tons.} 
 \label{tab:management_quants}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrr}
   \hline
-rownames.df. & v & v.1 \\ 
+rownames.df. & v & v.1 & v.2 \\ 
   \hline
-$\text{MMB}_{2018}$ & 2079.874 & 2046.818 \\ 
-  $B_\text{MSY}$ & 3886.804 & 3862.834 \\ 
-  $F_\text{OFL}$ & 0.075 & 0.075 \\ 
-  $\text{OFL}_{2018}$ & 0.000 & 0.000 \\ 
-  $\text{ABC}_{2018}$ & 0.000 & 0.000 \\ 
+$\text{MMB}_{2018}$ & 2079.874 & 2046.818 & 2939.645 \\ 
+  $B_\text{MSY}$ & 3886.804 & 3862.834 & 4334.390 \\ 
+  $F_\text{OFL}$ & 0.075 & 0.075 & 0.101 \\ 
+  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 0.000 \\ 
+  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 0.000 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -562,7 +562,7 @@ Donaldson, W.E., and S.C. Byersdorfer. 2005. Biological field techniques for lit
 
 Fitch, H., M. Deiman, J. Shaishnikoff, and K. Herring. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Bering Sea, 2010/11. Pages 75-1776 [In] Fitch, H., M. Schwenzfeier, B. Baechler, T. Hartill, M. Salmon, M. Deiman, E.
 
-Evans, E. Henry, L. Wald, J. Shaishnikoff, K. Herring, and J. Wilson. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Aleutian Islands, Bering Sea and the Westward Region’s Shellfish Observer Program, 2010/11. Alaska Department of Fish and Game, Fishery Management Report No. 12-22, Anchorage.
+Evans, E. Henry, L. Wald, J. Shaishnikoff, K. Herring, and J. Wilson. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Aleutian Islands, Bering Sea and the Westward Region<U+FFFD><U+FFFD><U+FFFD>s Shellfish Observer Program, 2010/11. Alaska Department of Fish and Game, Fishery Management Report No. 12-22, Anchorage.
 
 Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: using automatic differentiation for statistical inference of highly parameterized complex nonlinear models. Optim. Methods Softw. 27:233-249.
 
@@ -594,9 +594,9 @@ Pengilly, D. and D. Schmidt. 1995. Harvest Strategy for Kodiak and Bristol Bay R
 
 Somerton, D.A., and R.A. MacIntosh. 1983. The size at sexual maturity of blue king crab, Paralithodes platypus, in Alaska. Fishery Bulletin 81: 621-828.
 
-Thorson, J.T., Ianelli, J.N., Larsen, E., Ries, L., Scheuerell, M.D., Szuwalski, C., and Zipkin, E. 2016. Joint dynamic species distribution models: a tool for community ordination and spatiotemporal monitoring. Glob. Ecol. Biogeogr. 25(9): 1144–1158. doi:10.1111/geb.12464. url: http://onlinelibrary.wiley.com/doi/10.1111/geb.12464/abstract.
+Thorson, J.T., Ianelli, J.N., Larsen, E., Ries, L., Scheuerell, M.D., Szuwalski, C., and Zipkin, E. 2016. Joint dynamic species distribution models: a tool for community ordination and spatiotemporal monitoring. Glob. Ecol. Biogeogr. 25(9): 1144<U+FFFD><U+FFFD><U+FFFD>1158. doi:10.1111/geb.12464. url: http://onlinelibrary.wiley.com/doi/10.1111/geb.12464/abstract.
 
-Thorson, J.T., Scheuerell, M.D., Shelton, A.O., See, K.E., Skaug, H.J., and Kristensen, K. 2015. Spatial factor analysis: a new tool for estimating joint species distributions and correlations in species range. Methods Ecol. Evol. 6(6): 627–637. doi:10.1111/2041-210X.12359. url: http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12359/abstract
+Thorson, J.T., Scheuerell, M.D., Shelton, A.O., See, K.E., Skaug, H.J., and Kristensen, K. 2015. Spatial factor analysis: a new tool for estimating joint species distributions and correlations in species range. Methods Ecol. Evol. 6(6): 627<U+FFFD><U+FFFD><U+FFFD>637. doi:10.1111/2041-210X.12359. url: http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12359/abstract
 
 Thorson, J. T., and L. A. K. Barnett. 2017. Comparing estimates of abundance trends and distribution shifts using single- and multispecies models of fishes and biogenic habitat. ICES Journal of Marine Science 75:1311-1321.
 
@@ -976,25 +976,25 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.652 & 0.127 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.710 & 0.108 \\ 
-  $\log (\bar{R})$ & 14.205 & 0.050 \\ 
-  $\log (n^0_1)$ & 14.952 & 0.168 \\ 
-  $\log (n^0_2)$ & 14.592 & 0.193 \\ 
-  $\log (n^0_3)$ & 14.424 & 0.192 \\ 
-  $q_{pot}$ & 2.926 & 0.166 \\ 
-  $\log (\bar{F}^\text{df})$ & -2.037 & 0.042 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.220 & 0.070 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.419 & 0.070 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.701 & 0.171 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.331 & 0.124 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.319 & 0.145 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.711 & 0.106 \\ 
+  $\log (\bar{R})$ & 14.193 & 0.049 \\ 
+  $\log (n^0_1)$ & 14.942 & 0.167 \\ 
+  $\log (n^0_2)$ & 14.578 & 0.192 \\ 
+  $\log (n^0_3)$ & 14.401 & 0.191 \\ 
+  $q_{pot}$ & 2.876 & 0.157 \\ 
+  $\log (\bar{F}^\text{df})$ & -2.037 & 0.039 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.625 & 0.068 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.540 & 0.068 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.718 & 0.171 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.344 & 0.123 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.305 & 0.146 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.241 & 0.062 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.241 & 0.061 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.798 & 0.123 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.810 & 0.127 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.103 & 0.009 \\ 
-  OFL & 220.400 & 32.463 \\ 
+  $F_\text{OFL}$ & 0.101 & 0.008 \\ 
+  OFL & 0.000 & 0.000 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1063,163 +1063,110 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.634 & 0.136 \\
 
 
 ```
-## Error: Duplicate identifiers for rows (7, 45), (9, 47), (8, 46), (2, 40), (3, 41), (4, 42), (5, 43), (18, 56), (6, 44), (16, 54), (10, 48), (12, 50), (14, 52), (17, 55), (11, 49), (13, 51), (15, 53), (1, 39), (19, 57), (26, 64), (28, 66), (27, 65), (21, 59), (22, 60), (23, 61), (24, 62), (37, 75), (25, 63), (35, 73), (29, 67), (31, 69), (33, 71), (36, 74), (30, 68), (32, 70), (34, 72), (20, 58), (38, 76)
+## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 57, 76
+```
+
+```
+## Error: `var` must evaluate to a single number or a column name, not a character vector
 ```
 
 \begin{table}[ht]
 \centering
 \caption{Comparisons of parameter estimates for the four model scenarios.} 
 \label{tab:est_pars_all}
-\begin{tabular}{llr}
+\begin{tabular}{lrr}
   \hline
-Model & Parameter & Estimate \\ 
+Parameter & Estimate & SD \\ 
   \hline
-2016 & Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.652 \\ 
-  2016 & $\log (\bar{R})$ & 14.063 \\ 
-  2016 & $\log (n^0_1)$ & 14.922 \\ 
-  2016 & $\log (n^0_2)$ & 14.551 \\ 
-  2016 & $\log (n^0_3)$ & 14.360 \\ 
-  2016 & $q_{pot}$ & 0.004 \\ 
-  2016 & $\log (\bar{F}^\text{df})$ & -1.923 \\ 
-  2016 & $\log (\bar{F}^\text{tb})$ & -9.019 \\ 
-  2016 & $\log (\bar{F}^\text{fb})$ & -8.217 \\ 
-  2016 & log Stage-1 directed pot selectivity 1978-2008 & -0.654 \\ 
-  2016 & log Stage-2 directed pot selectivity 1978-2008 & -0.315 \\ 
-  2016 & log Stage-1 directed pot selectivity 2009-2017 & -0.463 \\ 
-  2016 & log Stage-2 directed pot selectivity 2009-2017 & -0.000 \\ 
-  2016 & log Stage-1 NMFS trawl selectivity & -0.243 \\ 
-  2016 & log Stage-2 NMFS trawl selectivity & -0.000 \\ 
-  2016 & log Stage-1 ADF\&G pot selectivity & -0.852 \\ 
-  2016 & log Stage-2 ADF\&G pot selectivity & -0.026 \\ 
-  2016 & $F_\text{OFL}$ & 0.076 \\ 
-  2016 & OFL & 0.000 \\ 
-  BTS & Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.647 \\ 
-  BTS & $\log (\bar{R})$ & 14.037 \\ 
-  BTS & $\log (n^0_1)$ & 14.923 \\ 
-  BTS & $\log (n^0_2)$ & 14.548 \\ 
-  BTS & $\log (n^0_3)$ & 14.358 \\ 
-  BTS & $q_{pot}$ & 0.004 \\ 
-  BTS & $\log (\bar{F}^\text{df})$ & -1.915 \\ 
-  BTS & $\log (\bar{F}^\text{tb})$ & -9.388 \\ 
-  BTS & $\log (\bar{F}^\text{fb})$ & -8.303 \\ 
-  BTS & log Stage-1 directed pot selectivity 1978-2008 & -0.653 \\ 
-  BTS & log Stage-2 directed pot selectivity 1978-2008 & -0.315 \\ 
-  BTS & log Stage-1 directed pot selectivity 2009-2017 & -0.459 \\ 
-  BTS & log Stage-2 directed pot selectivity 2009-2017 & -0.000 \\ 
-  BTS & log Stage-1 NMFS trawl selectivity & -0.247 \\ 
-  BTS & log Stage-2 NMFS trawl selectivity & -0.000 \\ 
-  BTS & log Stage-1 ADF\&G pot selectivity & -0.855 \\ 
-  BTS & log Stage-2 ADF\&G pot selectivity & -0.026 \\ 
-  BTS & $F_\text{OFL}$ & 0.075 \\ 
-  BTS & OFL & 0.000 \\ 
-  2016 & Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.652 \\ 
-  2016 & $\log (\bar{R})$ & 14.063 \\ 
-  2016 & $\log (n^0_1)$ & 14.922 \\ 
-  2016 & $\log (n^0_2)$ & 14.551 \\ 
-  2016 & $\log (n^0_3)$ & 14.360 \\ 
-  2016 & $q_{pot}$ & 0.004 \\ 
-  2016 & $\log (\bar{F}^\text{df})$ & -1.923 \\ 
-  2016 & $\log (\bar{F}^\text{tb})$ & -9.019 \\ 
-  2016 & $\log (\bar{F}^\text{fb})$ & -8.217 \\ 
-  2016 & log Stage-1 directed pot selectivity 1978-2008 & -0.654 \\ 
-  2016 & log Stage-2 directed pot selectivity 1978-2008 & -0.315 \\ 
-  2016 & log Stage-1 directed pot selectivity 2009-2017 & -0.463 \\ 
-  2016 & log Stage-2 directed pot selectivity 2009-2017 & -0.000 \\ 
-  2016 & log Stage-1 NMFS trawl selectivity & -0.243 \\ 
-  2016 & log Stage-2 NMFS trawl selectivity & -0.000 \\ 
-  2016 & log Stage-1 ADF\&G pot selectivity & -0.852 \\ 
-  2016 & log Stage-2 ADF\&G pot selectivity & -0.026 \\ 
-  2016 & $F_\text{OFL}$ & 0.076 \\ 
-  2016 & OFL & 0.000 \\ 
-  BTS & Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.647 \\ 
-  BTS & $\log (\bar{R})$ & 14.037 \\ 
-  BTS & $\log (n^0_1)$ & 14.923 \\ 
-  BTS & $\log (n^0_2)$ & 14.548 \\ 
-  BTS & $\log (n^0_3)$ & 14.358 \\ 
-  BTS & $q_{pot}$ & 0.004 \\ 
-  BTS & $\log (\bar{F}^\text{df})$ & -1.915 \\ 
-  BTS & $\log (\bar{F}^\text{tb})$ & -9.388 \\ 
-  BTS & $\log (\bar{F}^\text{fb})$ & -8.303 \\ 
-  BTS & log Stage-1 directed pot selectivity 1978-2008 & -0.653 \\ 
-  BTS & log Stage-2 directed pot selectivity 1978-2008 & -0.315 \\ 
-  BTS & log Stage-1 directed pot selectivity 2009-2017 & -0.459 \\ 
-  BTS & log Stage-2 directed pot selectivity 2009-2017 & -0.000 \\ 
-  BTS & log Stage-1 NMFS trawl selectivity & -0.247 \\ 
-  BTS & log Stage-2 NMFS trawl selectivity & -0.000 \\ 
-  BTS & log Stage-1 ADF\&G pot selectivity & -0.855 \\ 
-  BTS & log Stage-2 ADF\&G pot selectivity & -0.026 \\ 
-  BTS & $F_\text{OFL}$ & 0.075 \\ 
-  BTS & OFL & 0.000 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.634 & 0.136 \\ 
+  $\log (\bar{R})$ & 14.033 & 0.064 \\ 
+  $\log (n^0_1)$ & 14.885 & 0.285 \\ 
+  $\log (n^0_2)$ & 14.561 & 0.318 \\ 
+  $\log (n^0_3)$ & 14.361 & 0.317 \\ 
+  $q_{pot}$ & 3.526 & 0.248 \\ 
+  $\log (\bar{F}^\text{df})$ & -1.884 & 0.060 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.044 & 0.081 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.243 & 0.081 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.514 & 0.157 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.319 & 0.128 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.420 & 0.141 \\ 
+  log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.181 & 0.083 \\ 
+  log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.799 & 0.092 \\ 
+  log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
+  $F_\text{OFL}$ & 0.076 & 0.010 \\ 
+  OFL & 117.650 & 26.963 \\ 
    \hline
 \end{tabular}
 \end{table}
 
 
 ```
-## Error in names(df) <- c("Component", "Reference", "VAST", "Fit survey", : 'names' attribute [5] must be the same length as the vector [3]
+## Error in names(df) <- c("Component", "Reference", "VAST", "Fit survey", : 'names' attribute [5] must be the same length as the vector [4]
 ```
 
 \begin{table}[ht]
 \centering
 \caption{Comparisons of data weights, Francis LF weights (i.e. the new weights that should be applied to the LFs), SDNR values, and MAR values for the four model scenarios.} 
 \label{tab:data_weighting}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrr}
   \hline
-rownames.df. & v & v.1 \\ 
+rownames.df. & v & v.1 & v.2 \\ 
   \hline
-NMFS trawl survey weight & 1.00 & 1.00 \\ 
-  ADF\&G pot survey weight & 1.00 & 1.00 \\ 
-  Directed pot LF weight & 1.00 & 1.00 \\ 
-  NMFS trawl survey LF weight & 1.00 & 1.00 \\ 
-  ADF\&G pot survey LF weight & 1.00 & 1.00 \\ 
+NMFS trawl survey weight & 1.00 & 1.00 & 1.00 \\ 
+  ADF\&G pot survey weight & 1.00 & 1.00 & 1.00 \\ 
+  Directed pot LF weight & 1.00 & 1.00 & 1.00 \\ 
+  NMFS trawl survey LF weight & 1.00 & 1.00 & 1.00 \\ 
+  ADF\&G pot survey LF weight & 1.00 & 1.00 & 1.00 \\ 
    \hline
-Francis weight for directed pot LF & 0.00 & 0.00 \\ 
-  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 \\ 
-  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 \\ 
+Francis weight for directed pot LF & 0.00 & 0.00 & 0.00 \\ 
+  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.00 \\ 
+  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 0.00 \\ 
    \hline
-SDNR NMFS trawl survey & 1.45 & 1.45 \\ 
-  SDNR ADF\&G pot survey & 3.78 & 3.76 \\ 
-  SDNR directed pot LF & 0.71 & 0.71 \\ 
-  SDNR NMFS trawl survey LF & 1.23 & 1.22 \\ 
-  SDNR ADF\&G pot survey LF & 0.80 & 0.80 \\ 
+SDNR NMFS trawl survey & 1.45 & 1.45 & 1.88 \\ 
+  SDNR ADF\&G pot survey & 3.78 & 3.76 & 3.88 \\ 
+  SDNR directed pot LF & 0.71 & 0.71 & 0.79 \\ 
+  SDNR NMFS trawl survey LF & 1.23 & 1.22 & 1.28 \\ 
+  SDNR ADF\&G pot survey LF & 0.80 & 0.80 & 0.84 \\ 
    \hline
-MAR NMFS trawl survey & 1.18 & 1.18 \\ 
-  MAR ADF\&G pot survey & 2.96 & 2.94 \\ 
-  MAR directed pot LF & 0.59 & 0.59 \\ 
-  MAR NMFS trawl survey LF & 0.52 & 0.55 \\ 
-  MAR ADF\&G pot survey LF & 0.49 & 0.49 \\ 
+MAR NMFS trawl survey & 1.18 & 1.18 & 1.15 \\ 
+  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.56 \\ 
+  MAR directed pot LF & 0.59 & 0.59 & 0.64 \\ 
+  MAR NMFS trawl survey LF & 0.52 & 0.55 & 0.64 \\ 
+  MAR ADF\&G pot survey LF & 0.49 & 0.49 & 0.60 \\ 
    \hline
 \end{tabular}
 \end{table}
 
 
 ```
-## Error in names(df) <- c("Component", "Ref", "VAST", "FitSurvey", "Francis"): 'names' attribute [5] must be the same length as the vector [3]
+## Error in names(df) <- c("Component", "Ref", "VAST", "FitSurvey", "Francis"): 'names' attribute [5] must be the same length as the vector [4]
 ```
 
 \begin{table}[ht]
 \centering
 \caption{Comparisons of negative log-likelihood values for the four model scenarios. It is important to note that some of these models cannot be compared since the input sample size (or variances) are modified by re-weighting (e.g., {\bf Francis} model).} 
 \label{tab:likelihood_components}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrr}
   \hline
-rownames.df. & v & v.1 \\ 
+rownames.df. & v & v.1 & v.2 \\ 
   \hline
-Pot Retained Catch & -71.53 & -71.51 \\ 
-  Pot Discarded Catch & 8.98 & 8.86 \\ 
-  Trawl bycatch Discarded Catch & -7.16 & -7.43 \\ 
-  Fixed bycatch Discarded Catch & -7.13 & -7.41 \\ 
-  NMFS Trawl Survey & -3.93 & -4.13 \\ 
-  ADF\&G Pot Survey CPUE & 57.07 & 56.32 \\ 
-  Directed Pot LF & -11.31 & -11.29 \\ 
-  NMFS Trawl LF & 18.24 & 17.60 \\ 
-  ADF\&G Pot LF & -7.40 & -7.31 \\ 
-  Recruitment deviations & 54.06 & 54.22 \\ 
-  F penalty & 14.49 & 14.49 \\ 
-  M penalty & 6.47 & 6.47 \\ 
-  Prior & 12.66 & 12.66 \\ 
-  Total & 63.51 & 61.54 \\ 
-  Total estimated parameters & 139.00 & 141.00 \\ 
+Pot Retained Catch & -71.53 & -71.51 & -71.08 \\ 
+  Pot Discarded Catch & 8.98 & 8.86 & 12.65 \\ 
+  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.43 \\ 
+  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.42 \\ 
+  NMFS Trawl Survey & -3.93 & -4.13 & 1.79 \\ 
+  ADF\&G Pot Survey CPUE & 57.07 & 56.32 & 62.59 \\ 
+  Directed Pot LF & -11.31 & -11.29 & -8.84 \\ 
+  NMFS Trawl LF & 18.24 & 17.60 & 27.26 \\ 
+  ADF\&G Pot LF & -7.40 & -7.31 & -6.47 \\ 
+  Recruitment deviations & 54.06 & 54.22 & 52.89 \\ 
+  F penalty & 14.49 & 14.49 & 14.49 \\ 
+  M penalty & 6.47 & 6.47 & 6.47 \\ 
+  Prior & 12.66 & 12.66 & 12.66 \\ 
+  Total & 63.51 & 61.54 & 89.56 \\ 
+  Total estimated parameters & 139.00 & 141.00 & 141.00 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1389,46 +1336,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3115215 & 2172899 & 1838086 & 5169 \\ 
-  1979 & 4165349 & 2488423 & 2562202 & 7061 \\ 
-  1980 & 3502187 & 3189337 & 3748592 & 10724 \\ 
-  1981 & 1366561 & 3044705 & 5046205 & 10957 \\ 
-  1982 & 1475664 & 1783853 & 5004687 & 7901 \\ 
-  1983 & 742837 & 1428422 & 3591786 & 4964 \\ 
-  1984 & 631179 & 894542 & 2161933 & 3474 \\ 
-  1985 & 858312 & 654510 & 1608409 & 3152 \\ 
-  1986 & 1248013 & 704090 & 1386589 & 3002 \\ 
-  1987 & 1360239 & 941837 & 1447079 & 3373 \\ 
-  1988 & 1246057 & 1084264 & 1621642 & 3675 \\ 
-  1989 & 2985149 & 1066574 & 1783972 & 4201 \\ 
-  1990 & 1870987 & 2048386 & 2104422 & 5447 \\ 
-  1991 & 1939133 & 1740581 & 2640145 & 5596 \\ 
-  1992 & 2122333 & 1676762 & 2653809 & 5854 \\ 
-  1993 & 2412369 & 1759724 & 2803232 & 6218 \\ 
-  1994 & 1718543 & 1952155 & 2924306 & 6104 \\ 
-  1995 & 1977307 & 1622056 & 2891334 & 6157 \\ 
-  1996 & 1908447 & 1659726 & 2859846 & 6069 \\ 
-  1997 & 1131105 & 1633109 & 2850023 & 5704 \\ 
-  1998 & 803062 & 1182797 & 2518291 & 4178 \\ 
-  1999 & 464910 & 375024 & 972746 & 2241 \\ 
-  2000 & 511519 & 388018 & 1045620 & 2392 \\ 
-  2001 & 473002 & 418852 & 1117669 & 2561 \\ 
-  2002 & 165752 & 407162 & 1189639 & 2683 \\ 
-  2003 & 401411 & 228852 & 1214492 & 2527 \\ 
-  2004 & 269011 & 303583 & 1167639 & 2525 \\ 
-  2005 & 715254 & 253240 & 1153927 & 2442 \\ 
-  2006 & 979145 & 489934 & 1159636 & 2718 \\ 
-  2007 & 703674 & 717650 & 1308132 & 3224 \\ 
-  2008 & 1182362 & 631080 & 1507167 & 3527 \\ 
-  2009 & 919542 & 879699 & 1688787 & 3706 \\ 
-  2010 & 874752 & 812665 & 1849739 & 3416 \\ 
-  2011 & 738581 & 764892 & 1772676 & 3022 \\ 
-  2012 & 445923 & 672431 & 1546550 & 2629 \\ 
-  2013 & 551092 & 475675 & 1334636 & 2893 \\ 
-  2014 & 473134 & 470339 & 1407020 & 2842 \\ 
-  2015 & 447580 & 424314 & 1396981 & 2801 \\ 
-  2016 & 547678 & 394543 & 1401765 & 2924 \\ 
-  2017 & 311774 & 441360 & 1421219 & 3011 \\ 
+1978 & 3086180 & 2144492 & 1796061 & 5056 \\ 
+  1979 & 4184994 & 2462530 & 2510058 & 6945 \\ 
+  1980 & 3474109 & 3191923 & 3693858 & 10623 \\ 
+  1981 & 1370283 & 3029615 & 4999108 & 10853 \\ 
+  1982 & 1499107 & 1780973 & 4958594 & 7813 \\ 
+  1983 & 737431 & 1440783 & 3555714 & 4905 \\ 
+  1984 & 619887 & 895561 & 2137521 & 3430 \\ 
+  1985 & 845851 & 648434 & 1587568 & 3102 \\ 
+  1986 & 1199316 & 695002 & 1364827 & 2951 \\ 
+  1987 & 1328705 & 911172 & 1419653 & 3286 \\ 
+  1988 & 1241661 & 1056205 & 1580281 & 3568 \\ 
+  1989 & 3000724 & 1054790 & 1734903 & 4092 \\ 
+  1990 & 1864456 & 2053331 & 2058992 & 5370 \\ 
+  1991 & 1936773 & 1738508 & 2604122 & 5525 \\ 
+  1992 & 2113240 & 1674731 & 2622482 & 5792 \\ 
+  1993 & 2405884 & 1753884 & 2775161 & 6157 \\ 
+  1994 & 1721126 & 1946538 & 2897294 & 6048 \\ 
+  1995 & 2008251 & 1621665 & 2866461 & 6108 \\ 
+  1996 & 1954427 & 1677170 & 2842064 & 6055 \\ 
+  1997 & 1151829 & 1664994 & 2848612 & 5738 \\ 
+  1998 & 820528 & 1205119 & 2535480 & 4228 \\ 
+  1999 & 474540 & 382263 & 983702 & 2269 \\ 
+  2000 & 525310 & 395882 & 1059342 & 2427 \\ 
+  2001 & 486869 & 429286 & 1134414 & 2604 \\ 
+  2002 & 170462 & 418491 & 1210213 & 2734 \\ 
+  2003 & 414502 & 235277 & 1237840 & 2578 \\ 
+  2004 & 278490 & 313143 & 1191632 & 2581 \\ 
+  2005 & 718214 & 261787 & 1179695 & 2500 \\ 
+  2006 & 1004954 & 494446 & 1185751 & 2772 \\ 
+  2007 & 740604 & 733801 & 1334688 & 3292 \\ 
+  2008 & 1227507 & 657322 & 1541106 & 3620 \\ 
+  2009 & 949225 & 914018 & 1734685 & 3823 \\ 
+  2010 & 906181 & 840880 & 1908263 & 3544 \\ 
+  2011 & 759229 & 792082 & 1838908 & 3163 \\ 
+  2012 & 456990 & 693244 & 1617581 & 2770 \\ 
+  2013 & 562703 & 488921 & 1405282 & 3033 \\ 
+  2014 & 487769 & 481377 & 1473992 & 2972 \\ 
+  2015 & 462143 & 436327 & 1460013 & 2922 \\ 
+  2016 & 506682 & 406853 & 1462081 & 3045 \\ 
+  2017 & 274824 & 422315 & 1474381 & 3082 \\ 
+  2018 & 407282 & 295610 & 1469410 & 2940 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1638,7 +1586,7 @@ for the legal measurement of 5.5in carapace width (CW), whereas 105 mm CL is the
 size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and
 stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is
 presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The
-term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the
+term <U+FFFD><U+FFFD><U+FFFD>recruit<U+FFFD><U+FFFD><U+FFFD> here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the
 fishery. The following description of model structure reflects the Gmacs base model configuration.
 
 ## 2. Model Population Dynamics
