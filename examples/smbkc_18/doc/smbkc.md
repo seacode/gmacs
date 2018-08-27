@@ -177,7 +177,7 @@ Comment: *Regarding general code development, the CPT had the following requests
 
      This was completed.
 
-  1. *add the ability to <U+FFFD><U+FFFD><U+FFFD>jitter<U+FFFD><U+FFFD><U+FFFD> initial parameter values*
+  1. *add the ability to "jitter" initial parameter values*
 
      The framework for conducting this research has been added but has yet to be fully tested.
 
@@ -192,8 +192,8 @@ Comment: *Regarding general code development, the CPT had the following requests
   1. *Continued exploration of data weighting (Francis and other approaches) and evaluation of models with and without the 
      1998 natural mortality spike. The authors are encouraged to bring other models forward for CPT and SSC consideration*
 
-    We introduced an alternative time-series estimated from the NMFS trawl survey using the VAST spatio-temporal Delta GLMM model
-    and continued with the iterative re-weighting for composition data.
+      We continued to include an alternative time series estimated from the NMFS trawl survey using the VAST spatiotemporal Delta GLMM model 
+      and continued with the iterative re-weighting for composition data.
 
 
 # C. Introduction
@@ -209,7 +209,7 @@ Alaska (Figure \ref{fig:distribution}).  In the eastern Bering Sea small populat
 Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other
 cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2
 (Figure \ref{fig:registration_area}), which is the Northern District of the Bering Sea king crab registration area and
-includes the waters north of Cape Newenham (58<U+FFFD><U+FFFD>39<U+FFFD><U+FFFD><U+FFFD> N. lat.) and south of Cape Romanzof (61<U+FFFD><U+FFFD>49<U+FFFD><U+FFFD><U+FFFD> N. lat.).
+includes the waters north of Cape Newenham (58&deg;39' N. lat.) and south of Cape Romanzof (61&deg;49' N. lat.).
 
 ## Stock Structure
 
@@ -500,24 +500,19 @@ assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\m
 parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The
 $F_\mathit{OFL}$, OFL, ABC, and MMB in 2017 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC
 is 80% of the OFL.
-
-```
-## Error in names(df) <- c("Component", "Reference", "VAST", "Fit surveys", : 'names' attribute [5] must be the same length as the vector [4]
-```
-
 \begin{table}[ht]
 \centering
 \caption{Comparisons of management measures for the four model scenarios. Biomass and OFL are in tons.} 
 \label{tab:management_quants}
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrrrrr}
   \hline
-rownames.df. & v & v.1 & v.2 \\ 
+Component & Reference & VAST & Fit surveys & Francis weights & NA & NA \\ 
   \hline
-$\text{MMB}_{2018}$ & 2079.874 & 2046.818 & 2939.645 \\ 
-  $B_\text{MSY}$ & 3886.804 & 3862.834 & 4334.390 \\ 
-  $F_\text{OFL}$ & 0.075 & 0.075 & 0.101 \\ 
-  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 0.000 \\ 
-  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 0.000 \\ 
+$\text{MMB}_{2018}$ & 2079.874 & 2046.818 & 2179.720 & 2939.645 & 5674.035 & 2085.382 \\ 
+  $B_\text{MSY}$ & 3886.804 & 3862.834 & 3930.576 & 4334.390 & 9828.733 & 3861.300 \\ 
+  $F_\text{OFL}$ & 0.075 & 0.075 & 0.079 & 0.101 & 0.083 & 0.076 \\ 
+  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 123.613 & 0.000 & 367.946 & 117.651 \\ 
+  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 98.891 & 0.000 & 294.357 & 94.121 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -740,6 +735,7 @@ Year & Trawl bycatch & Fixed gear bycatch \\
   2014/15 & 10/15 - 02/05 & 0.66    &    69,109 &   308,582 &  10,133 &   7 & 4.5 & 132.3 \\
   2015/16 & 10/19 - 11/28 & 0.41    &    24,076 &   105,010 &   5,475 &   4 & 4.4 & 132.6 \\
   \multicolumn{2}{l}{2016/17} & \multicolumn{7}{c}{FISHERY CLOSED} \\
+  \multicolumn{2}{l}{2017/18} & \multicolumn{7}{c}{FISHERY CLOSED} \\
   \hline
 \end{tabular}
 \end{table}
@@ -1063,7 +1059,7 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.634 & 0.136 \\
 
 
 ```
-## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 57, 76
+## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 114, 76
 ```
 
 ```
@@ -1101,72 +1097,62 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.634 & 0.136 \\
 \end{tabular}
 \end{table}
 
-
-```
-## Error in names(df) <- c("Component", "Reference", "VAST", "Fit survey", : 'names' attribute [5] must be the same length as the vector [4]
-```
-
 \begin{table}[ht]
 \centering
 \caption{Comparisons of data weights, Francis LF weights (i.e. the new weights that should be applied to the LFs), SDNR values, and MAR values for the four model scenarios.} 
 \label{tab:data_weighting}
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrrrrr}
   \hline
-rownames.df. & v & v.1 & v.2 \\ 
+Component & Reference & VAST & Fit survey & Francis & NA & NA \\ 
   \hline
-NMFS trawl survey weight & 1.00 & 1.00 & 1.00 \\ 
-  ADF\&G pot survey weight & 1.00 & 1.00 & 1.00 \\ 
-  Directed pot LF weight & 1.00 & 1.00 & 1.00 \\ 
-  NMFS trawl survey LF weight & 1.00 & 1.00 & 1.00 \\ 
-  ADF\&G pot survey LF weight & 1.00 & 1.00 & 1.00 \\ 
+NMFS trawl survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 1.50 & 1.00 \\ 
+  ADF\&G pot survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 2.00 & 1.00 \\ 
+  Directed pot LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 1.95 & 1.61 \\ 
+  NMFS trawl survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.22 & 0.50 \\ 
+  ADF\&G pot survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.10 & 3.72 \\ 
    \hline
-Francis weight for directed pot LF & 0.00 & 0.00 & 0.00 \\ 
-  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.00 \\ 
-  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 0.00 \\ 
+Francis weight for directed pot LF & 0.00 & 0.00 & 1.69 & 0.00 & 1.96 & 1.55 \\ 
+  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.57 & 0.00 & 0.22 & 0.50 \\ 
+  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 2.08 & 0.00 & 0.10 & 4.13 \\ 
    \hline
-SDNR NMFS trawl survey & 1.45 & 1.45 & 1.88 \\ 
-  SDNR ADF\&G pot survey & 3.78 & 3.76 & 3.88 \\ 
-  SDNR directed pot LF & 0.71 & 0.71 & 0.79 \\ 
-  SDNR NMFS trawl survey LF & 1.23 & 1.22 & 1.28 \\ 
-  SDNR ADF\&G pot survey LF & 0.80 & 0.80 & 0.84 \\ 
+SDNR NMFS trawl survey & 1.45 & 1.45 & 1.45 & 1.88 & 1.83 & 1.36 \\ 
+  SDNR ADF\&G pot survey & 3.78 & 3.76 & 3.78 & 3.88 & 5.45 & 3.72 \\ 
+  SDNR directed pot LF & 0.71 & 0.71 & 0.71 & 0.79 & 1.39 & 0.91 \\ 
+  SDNR NMFS trawl survey LF & 1.23 & 1.22 & 1.23 & 1.28 & 1.06 & 0.94 \\ 
+  SDNR ADF\&G pot survey LF & 0.80 & 0.80 & 0.80 & 0.84 & 0.96 & 1.01 \\ 
    \hline
-MAR NMFS trawl survey & 1.18 & 1.18 & 1.15 \\ 
-  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.56 \\ 
-  MAR directed pot LF & 0.59 & 0.59 & 0.64 \\ 
-  MAR NMFS trawl survey LF & 0.52 & 0.55 & 0.64 \\ 
-  MAR ADF\&G pot survey LF & 0.49 & 0.49 & 0.60 \\ 
+MAR NMFS trawl survey & 1.18 & 1.18 & 1.18 & 1.15 & 1.52 & 1.12 \\ 
+  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.96 & 2.56 & 4.57 & 2.97 \\ 
+  MAR directed pot LF & 0.59 & 0.59 & 0.59 & 0.64 & 0.66 & 0.76 \\ 
+  MAR NMFS trawl survey LF & 0.52 & 0.55 & 0.52 & 0.64 & 0.69 & 0.53 \\ 
+  MAR ADF\&G pot survey LF & 0.49 & 0.49 & 0.49 & 0.60 & 0.55 & 0.59 \\ 
    \hline
 \end{tabular}
 \end{table}
-
-
-```
-## Error in names(df) <- c("Component", "Ref", "VAST", "FitSurvey", "Francis"): 'names' attribute [5] must be the same length as the vector [4]
-```
 
 \begin{table}[ht]
 \centering
 \caption{Comparisons of negative log-likelihood values for the four model scenarios. It is important to note that some of these models cannot be compared since the input sample size (or variances) are modified by re-weighting (e.g., {\bf Francis} model).} 
 \label{tab:likelihood_components}
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrrrrr}
   \hline
-rownames.df. & v & v.1 & v.2 \\ 
+Component & Ref & VAST & FitSurvey & Francis & NA & NA \\ 
   \hline
-Pot Retained Catch & -71.53 & -71.51 & -71.08 \\ 
-  Pot Discarded Catch & 8.98 & 8.86 & 12.65 \\ 
-  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.43 \\ 
-  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.42 \\ 
-  NMFS Trawl Survey & -3.93 & -4.13 & 1.79 \\ 
-  ADF\&G Pot Survey CPUE & 57.07 & 56.32 & 62.59 \\ 
-  Directed Pot LF & -11.31 & -11.29 & -8.84 \\ 
-  NMFS Trawl LF & 18.24 & 17.60 & 27.26 \\ 
-  ADF\&G Pot LF & -7.40 & -7.31 & -6.47 \\ 
-  Recruitment deviations & 54.06 & 54.22 & 52.89 \\ 
-  F penalty & 14.49 & 14.49 & 14.49 \\ 
-  M penalty & 6.47 & 6.47 & 6.47 \\ 
-  Prior & 12.66 & 12.66 & 12.66 \\ 
-  Total & 63.51 & 61.54 & 89.56 \\ 
-  Total estimated parameters & 139.00 & 141.00 & 141.00 \\ 
+Pot Retained Catch & -71.53 & -71.51 & -71.53 & -71.08 & -70.53 & -71.50 \\ 
+  Pot Discarded Catch & 8.98 & 8.86 & 8.98 & 12.65 & 43.00 & 12.74 \\ 
+  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.16 & -7.43 & -7.16 & -7.16 \\ 
+  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.13 & -7.42 & -7.15 & -7.14 \\ 
+  NMFS Trawl Survey & -3.93 & -4.13 & -3.93 & 1.79 & 6.96 & -8.93 \\ 
+  ADF\&G Pot Survey CPUE & 57.07 & 56.32 & 57.07 & 62.59 & 130.07 & 54.50 \\ 
+  Directed Pot LF & -11.31 & -11.29 & -11.31 & -8.84 & 22.78 & 9.96 \\ 
+  NMFS Trawl LF & 18.24 & 17.60 & 18.24 & 27.26 & 92.24 & 55.53 \\ 
+  ADF\&G Pot LF & -7.40 & -7.31 & -7.40 & -6.47 & 32.83 & -6.46 \\ 
+  Recruitment deviations & 54.06 & 54.22 & 52.94 & 52.89 & 59.96 & 53.48 \\ 
+  F penalty & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 \\ 
+  M penalty & 6.47 & 6.47 & 6.47 & 6.47 & 6.49 & 6.47 \\ 
+  Prior & 12.66 & 12.66 & 12.66 & 12.66 & 13.61 & 12.66 \\ 
+  Total & 63.51 & 61.54 & 62.39 & 89.56 & 337.59 & 118.65 \\ 
+  Total estimated parameters & 139.00 & 141.00 & 138.00 & 141.00 & 138.00 & 138.00 \\ 
    \hline
 \end{tabular}
 \end{table}

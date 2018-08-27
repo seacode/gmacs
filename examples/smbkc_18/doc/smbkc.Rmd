@@ -239,8 +239,8 @@ Comment: *Regarding general code development, the CPT had the following requests
   1. *Continued exploration of data weighting (Francis and other approaches) and evaluation of models with and without the 
      1998 natural mortality spike. The authors are encouraged to bring other models forward for CPT and SSC consideration*
 
-    We introduced an alternative time-series estimated from the NMFS trawl survey using the VAST spatio-temporal Delta GLMM model
-    and continued with the iterative re-weighting for composition data.
+      We continued to include an alternative time series estimated from the NMFS trawl survey using the VAST spatiotemporal Delta GLMM model 
+      and continued with the iterative re-weighting for composition data.
 
 
 # C. Introduction
