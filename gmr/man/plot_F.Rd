@@ -4,7 +4,8 @@
 \alias{plot_F}
 \title{Plot fishing mortality}
 \usage{
-plot_F(M, scales = "free_y", xlab = "Year", ylab = "F", mlab = "Model")
+plot_F(M, scales = "free_y", xlab = "Year", ylab = "F",
+  mlab = "Model")
 }
 \arguments{
 \item{M}{list object created by read_admb function}

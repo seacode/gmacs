@@ -4,8 +4,8 @@
 \alias{plot_cpue}
 \title{Plot cpue or other indices}
 \usage{
-plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Sex",
-  ShowEstErr = FALSE, logy = FALSE)
+plot_cpue(M, subsetby = "", xlab = "Year", ylab = "CPUE",
+  slab = "Sex", ShowEstErr = FALSE, logy = FALSE)
 }
 \arguments{
 \item{M}{list object created by read_admb function}

@@ -90,7 +90,7 @@ The most recent 3-year average of the NMFS survey is 41% of the mean value, sugg
 the survey estimates in 2010 and 2011 that were over 6 times the current average. 
 The assessment model estimates dampen the interannual
 variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about
-`r .get_cpue_df(Mbase) %>% filter(fleet==.FLEET[4]) %>% transmute(round(100*pred/mean(pred),0)) %>% slice(n())`% 
+`r .get_cpue_df(Mbase) %>% filter(fleet==.FLEET[4]) %>% transmute(round(100*pred/mean(pred),0)) %>% slice(n()) `% 
 of the long term model-predicted survey biomass average. The trend from these values suggests a slight decline.
 
 
@@ -214,23 +214,11 @@ model, Thorson and Barnett 2017) and the other configuration (named "Fit survey"
 
 ## CPT and SSC Comments on Assessments in General
 
-Comment: *Regarding general code development, the CPT had the following requests:*
-
-  1. *specify priors (e.g., gamma) using mean and variance/standard deviation for all parameters to ease specifying priors*
-
-     This was completed.
-
-  2. *include an option to calculate dynamic $B_\mathit{MSY}$*
-
-     This was completed.
-
-  1. *add the ability to “jitter” initial parameter values*
-
-     The framework for conducting this research has been added but has yet to be fully tested.
+Comment: *Regarding general code development, the SSC and CPT outstanding requests continue to be as follows:*
 
   1. *add the ability to conduct retrospective analyses*
 
-     Incomplete.
+     Progress was limited in implementing this feature.
 
   1. *add ability to estimate bycatch fishing mortality rates when observer data are missing but effort data is available*
 
@@ -239,8 +227,8 @@ Comment: *Regarding general code development, the CPT had the following requests
   1. *Continued exploration of data weighting (Francis and other approaches) and evaluation of models with and without the 
      1998 natural mortality spike. The authors are encouraged to bring other models forward for CPT and SSC consideration*
 
-    We introduced an alternative time-series estimated from the NMFS trawl survey using the VAST spatio-temporal Delta GLMM model
-    and continued with the iterative re-weighting for composition data.
+      We continued to include an alternative time series estimated from the NMFS trawl survey using the VAST spatiotemporal Delta GLMM model 
+      and continued with the iterative re-weighting for composition data.
 
 
 # C. Introduction
@@ -256,7 +244,7 @@ Alaska (Figure \ref{fig:distribution}).  In the eastern Bering Sea small populat
 Island, the Pribilof Islands, St. Lawrence Island, and Nunivak Island. Isolated populations also exist in some other
 cold water areas of the Gulf of Alaska (NPFMC 1998). The St. Matthew Island Section for blue king crab is within Area Q2
 (Figure \ref{fig:registration_area}), which is the Northern District of the Bering Sea king crab registration area and
-includes the waters north of Cape Newenham (58°39’ N. lat.) and south of Cape Romanzof (61°49’ N. lat.).
+includes the waters north of Cape Newenham (58&deg;39' N. lat.) and south of Cape Romanzof (61&deg;49' N. lat.).
 
 ## Stock Structure
 
@@ -545,7 +533,7 @@ The currently recommended Tier 4 convention is to use the full assessment period
 `r M[[2]]$spr_nyr`, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with
 assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The
 parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The
-$F_\mathit{OFL}$, OFL, ABC, and MMB in 2017 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC
+$F_\mathit{OFL}$, OFL, ABC, and MMB in 2018 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC
 is 80% of the OFL.
 ```{r management_quants, results = "asis"}
 df <- NULL
@@ -742,6 +730,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
   2014/15 & 10/15 - 02/05 & 0.66    &    69,109 &   308,582 &  10,133 &   7 & 4.5 & 132.3 \\
   2015/16 & 10/19 - 11/28 & 0.41    &    24,076 &   105,010 &   5,475 &   4 & 4.4 & 132.6 \\
   \multicolumn{2}{l}{2016/17} & \multicolumn{7}{c}{FISHERY CLOSED} \\
+  \multicolumn{2}{l}{2017/18} & \multicolumn{7}{c}{FISHERY CLOSED} \\
   \hline
 \end{tabular}
 \end{table}
@@ -1359,7 +1348,7 @@ for the legal measurement of 5.5in carapace width (CW), whereas 105 mm CL is the
 size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and
 stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is
 presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The
-term “recruit” here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the
+term "recruit" here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the
 fishery. The following description of model structure reflects the Gmacs base model configuration.
 
 ## 2. Model Population Dynamics

@@ -4,7 +4,8 @@
 \alias{plot_gmr}
 \title{Do all gmr plots}
 \usage{
-plot_gmr(M, plot_res = FALSE, target_dir = "", gmr_options = .gmr_options)
+plot_gmr(M, plot_res = FALSE, target_dir = "",
+  gmr_options = .gmr_options)
 }
 \arguments{
 \item{M}{a list object created by read_admb function}
