@@ -814,6 +814,7 @@ from the 96 common stations surveyed during the ADF\&G SMBKC pot surveys. Source
   2015 & 0.198 & 0.682 & 1.924 & 2.805 & 0.18 & 1077 \\ 
   2016 & 0.198 & 0.456 & 1.724 & 2.378 & 0.19 & 777 \\ 
   2017 & 0.177 & 0.429 & 1.083 & 1.689 & 0.25 & 643 \\ 
+  2018 & 0.076 & 0.161 & 0.508 & 0.745 & 0.14 &   286\\
    \hline
 \end{tabular}
 \end{table}
