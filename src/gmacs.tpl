@@ -1527,7 +1527,8 @@ FUNCTION calc_sdreport
 	calc_initial_numbers_at_length();
 	update_population_numbers_at_length();
 	sd_log_dyn_Bzero = log(calc_ssb())(syr+1,nyr);
-	sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
+	// sd_log_dyn_Bzero = elem_div(exp(sd_log_ssb(syr+1,nyr)),exp(sd_log_dyn_Bzero));
+	sd_log_dyn_Bzero = (sd_log_ssb(syr+1,nyr)) - (sd_log_dyn_Bzero);
 	F = ftmp;
 	calc_total_mortality();
 	calc_initial_numbers_at_length();
@@ -3361,7 +3362,7 @@ FUNCTION void get_all_sdnr_MAR()
 			//dvector sdtmp = cpue_sd(k) * 1.0 / cpue_lambda(i);
 			sdnr_MAR_lf(k) = calc_sdnr_MAR(value(d3_res_size_comps(k)));
 		}
-		//Francis_weights = calc_Francis_weights();
+		Francis_weights = calc_Francis_weights();
 	}
 
 
@@ -3418,8 +3419,8 @@ FUNCTION dvector calc_Francis_weights()
 			{
 				//if ( sum(d3_obs_size_comps(k,i)) > 0 )
 				//{
-					cout << "k= " << k << " i=" << i << endl;
-					cout << d3_obs_size_comps(k,i) << endl;
+					// cout << "k= " << k << " i=" << i << endl;
+					// cout << d3_obs_size_comps(k,i) << endl;
 					Obs = sum(elem_prod(d3_obs_size_comps(k,i), mid_points));
 					Pre = sum(elem_prod(value(d3_pre_size_comps(k,i)), mid_points));
 					Var = sum(elem_prod(value(d3_pre_size_comps(k,i)), square(mid_points)));
@@ -3707,7 +3708,7 @@ FUNCTION calc_objective_function
 		if ( ploglike != NULL )
 		{
 			nloglike(3,ii) += ploglike->nloglike(log_effn, P);
-			//delete ploglike;
+			delete ploglike;
 		}
 	}
 
@@ -4084,6 +4085,7 @@ REPORT_SECTION
 		REPORT(spr_cofl);
 		REPORT(spr_ssbo);
 
+		cout<<"Her1"<<endl;
 		dvar_matrix mean_size(1,nsex,1,nclass);
 		///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
 		dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
@@ -4099,7 +4101,9 @@ REPORT_SECTION
 				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
 			}
 		}
+		cout<<"Her2"<<endl;
 		REPORT(growth_matrix);
+		cout<<"Her3"<<endl;
 		REPORT(mean_size);
 		for ( int ii = 1; ii <= nSizeComps; ii++ )
 		{
@@ -4107,6 +4111,7 @@ REPORT_SECTION
 			size_comp_sample_size(ii) = value(mfexp(log_vn(ii))) * size_comp_sample_size(ii);
 		}
 		REPORT(size_comp_sample_size);
+		cout<<"Her4"<<endl;
 	}
 
 	// Print total numbers at length
@@ -5090,7 +5095,7 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int ifleet)
 					dvar_vector f = ftmp * vul;
 					dvar_vector z = M(h)(iyr) + f;
 					dvar_vector o = 1.0 - exp(-z);
-					ctmp += elem_prod(numbers_proj_gytl(h)(1)(j), mean_wt(h)(nyr)) * elem_div(elem_prod(f, o), z);
+					ctmp += elem_prod(numbers_proj_gytl(h,1,j), mean_wt(h,nyr)) * elem_div(elem_prod(f, o), z);
 				}
 			}
 		}

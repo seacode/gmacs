@@ -28,8 +28,8 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("2017 Model","2018 BTS","Reference","VAST","Fit surveys","Francis weights") #,"Gmacs M","Gmacs Francis","fit surveys")
-.MODELDIR = c("../model_1/","../model_2/","../model_3/","../model_4/","../model_5/","../model_6/")
+mod_names <- c("2017 Model","2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
+.MODELDIR = c("../model_1/","../model_2/","../model_3/","../model_4/","../model_5/") #,"../model_6/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -64,7 +64,7 @@ ref_mod <- 2 # base
 rec_mod <- 2 # base
 mod_scen<- 3:6
 mod_scen<- c(1:2,4)
-mod_scen<- 1:6
+mod_scen<- 1:5
 ```
 
 \pagenumbering{gobble}
@@ -98,7 +98,8 @@ of the long term model-predicted survey biomass average. The trend from these va
 in each year. The 2018 trawl-survey area-swept estimate of 0.154 million male SMBKC in this size class is the third lowest in 
 the 41 years since 1978 and follows the lowest (as observed in 2017). The recent six-year (2013 - 2018) average recruitment that is only 45% of this mean. 
 In the pot-survey, the abundance of this size group in 2017 was also the second-lowest in the time series (22% of the mean for the 
-available pot-survey data) whereas in 2018 the index...[placeholder].
+available pot-survey data) whereas in 2018 the value was the lowest observed at only 10% of the mean value (the total (all sizes) in the pot-survey index was also the lowest
+and was 12% of the mean).
 
 5. **Management performance**: In this assessment estimated total male catch is the sum of fishery-reported retained
 catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish
@@ -408,11 +409,6 @@ following lists the models presented and the naming convention  used:
    $\lambda^\text{NMFS}=$ `r M[[5]]$cpue_lambda[1]` and the ADF&G pot survey is 
    up-weighted by $\lambda^\text{ADFG}=$ `r M[[5]]$cpue_lambda[2]`. 
 
- 3. **Francis weights**: is similar to the reference model except that it also uses the Francis iterative re-weighting
-    method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and
-    pot survey weights were unchanged. In this scenario the multinomial distribution was used instead as the
-    theory underpinning the Francis weighting method is based on this distribution.
-
 Note that SSC convention would label these (item 3 above) as model 16.0 (the
 model used last year). Since so few models are presented here, for simplicity
 model 16.0 is labeled "reference" and for the others, the naming convention
@@ -449,14 +445,15 @@ The SDNRs for the directed pot fishery and other size compositions were all acce
 
 ### d. Parameter estimates
 Model parameter estimates for each of the Gmacs scenarios are summarized in Tables \ref{tab:est_pars_ref},
-\ref{tab:est_pars_vast}, \ref{tab:est_pars_Francis}, and \ref{tab:est_pars_all}. These parameter
+\ref{tab:est_pars_vast}, and \ref{tab:est_pars_all}. These parameter
 estimates are compared in Table \ref{tab:est_pars_all}. Negative log-likelihood values and management measures for each
 of the model configurations are compared in Tables \ref{tab:management_quants} through \ref{tab:likelihood_components}.
 
 There are some differences in parameter estimates among models as 
 reflected in the log-likelihood components and the management quantities. 
 The parameter estimates in the "fit survey" scenario differ the most, as expected, particularly the estimate of the ADF&G pot survey
-catchability ($q$) (see Table \ref{tab:est_pars_all}).
+catchability ($q$) (see Table \ref{tab:est_pars_all}). Also, the residuals for recruitment in the first size group are large for these
+runs, presumably because higher estimates of recruits in some years are required to match the observed biomass trends. 
 
 ### c. Graphs of estimates.
 Selectivity estimates show some variability between models (Figure \ref{fig:selectivity}). Estimated recruitment is
@@ -491,7 +488,7 @@ The ability to conduct retrospective analyses with this software remains under d
 
 ### f. Uncertainty and sensitivity analyses.
 Estimated standard deviations of parameters and selected management measures for the four models are summarized in
-Tables \ref{tab:est_pars_ref}, \ref{tab:est_pars_vast}, \ref{tab:est_pars_fit_survey}, and \ref{tab:est_pars_Francis}
+Tables \ref{tab:est_pars_ref}, \ref{tab:est_pars_vast}, and \ref{tab:est_pars_fit_survey} 
 (and compiled together in Table \ref{tab:est_pars_all}. Probabilities for mature male biomass and OFL in 2017 are
 presented in Section F.
 
@@ -692,7 +689,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE)
 
 \begin{table}[ht]
 \centering
-\caption{The 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm. Note that management (GHL) units are in pounds, for conserving space, convertion to tons is ommitted.} 
+\caption{Fishery characteristics and update. Columns include the 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm. Note that management (GHL) units are in pounds, for conserving space, conversion to tons is ommitted.} 
 \label{tab:smbkc_fishery}
 \begin{tabular}{lrrrrrrrr}
   \hline
@@ -820,8 +817,6 @@ from the 96 common stations surveyed during the ADF\&G SMBKC pot surveys. Source
 \end{table}
 
 
-<!-- xxxxxxx -->
-
 ```{r length_weight, results = "asis"}
 df <- data.frame(M[[2]]$mod_yrs, M[[2]]$mean_wt * 1000)
 names(df) <- c("Year","Stage-1","Stage-2","Stage-3")
@@ -879,6 +874,7 @@ print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.fu
   2015 &  3248        & 153        &  1077    & & 50           & 50         & 100 \\
   2016 &              & 108        &   777    & &              & 50         & 100 \\
   2017 &              & 42         &   643    & &              & 50         & 100 \\
+  2018 &              & 62         &   286    & &              & 50         & 100 \\
   \hline
 \end{tabular}
 \end{table}
@@ -970,40 +966,11 @@ tab <- xtable(df, caption = "Model parameter estimates, selected derived quantit
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
 ```
 
-```{r est_pars_6, results = "asis"}
-x <- M[[6]]$fit
-i <- c(grep("m_dev", x$names)[1],
-       grep("theta", x$names),
-       grep("survey_q", x$names),
-       grep("log_fbar", x$names),
-       grep("log_slx_pars", x$names),
-       grep("sd_fofl", x$names),
-       grep("sd_ofl", x$names)
-       )
-Parameter <- x$names[i]
-Estimate <- x$est[i]
-SD <- x$std[i]
-j <- grep("survey_q", Parameter)
-Estimate[j] <- Estimate[j] * 1000
-SD[j] <- SD[j] * 1000
-Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$",
-               "$\\log (\\bar{R})$","$\\log (n^0_1)$","$\\log (n^0_2)$","$\\log (n^0_3)$",
-              "$q_{pot}$", "$\\log (\\bar{F}^\\text{df})$","$\\log (\\bar{F}^\\text{tb})$","$\\log (\\bar{F}^\\text{fb})$",
-               "log Stage-1 directed pot selectivity 1978-2008","log Stage-2 directed pot selectivity 1978-2008",
-               "log Stage-1 directed pot selectivity 2009-2017","log Stage-2 directed pot selectivity 2009-2017",
-               "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
-               "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
-              "$F_\\text{OFL}$","OFL")
-df <- data.frame(Parameter, Estimate, SD)
-tab <- xtable(df, caption = "Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the \"Francis weights\" model.", label = "tab:est_pars_Francis", digits = 3)
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x})
-```
-
 ```{r est_pars_all, results = "asis"}
 Parameter <- NULL
 Estimate <- NULL
 Model <- NULL
-Mname <- c("2017","BTS","Ref","VAST","FitSurvey","Francis")
+Mname <- c("2017","BTS","Ref","VAST","FitSurvey")
 for (ii in mod_scen)
 {
     x <- M[[ii]]$fit
@@ -1026,9 +993,9 @@ Parameter <- c("Natural mortality deviation in 1998/99 ($\\delta^M_{1998})$",
                "log Stage-1 NMFS trawl selectivity","log Stage-2 NMFS trawl selectivity",
                "log Stage-1 ADF\\&G pot selectivity","log Stage-2 ADF\\&G pot selectivity",
               "$F_\\text{OFL}$","OFL")
-Parameter <- c(Parameter, Parameter, Parameter, Parameter) 
+Parameter <- c(Parameter, Parameter, Parameter, Parameter,Parameter) 
 df <- data.frame(Model, Parameter, Estimate)
-df <- tidyr::spread(df, Model, Estimate) %>% dplyr::select(Parameter, Ref, VAST, FitSurvey, Francis )
+df <- tidyr::spread(df, Model, Estimate) %>% dplyr::select(Parameter, Ref, VAST, FitSurvey)
 #df[1,2:3] <- df[1,2:3] * 1000
 tab <- xtable(df, caption = "Comparisons of parameter estimates for the four model scenarios.", label = "tab:est_pars_all", digits = 3)
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function = function(x){x}, NA.string = "-")
@@ -1041,7 +1008,7 @@ for (ii in mod_scen)
     x       <- M[[ii]]
     SDNR    <- c(x$sdnr_MAR_cpue[,1], x$sdnr_MAR_lf[,1]); names(SDNR) <- c("SDNR NMFS trawl survey","SDNR ADF\\&G pot survey","SDNR directed pot LF","SDNR NMFS trawl survey LF","SDNR ADF\\&G pot survey LF")
     MAR     <- c(x$sdnr_MAR_cpue[,2], x$sdnr_MAR_lf[,2]); names(MAR) <- c("MAR NMFS trawl survey","MAR ADF\\&G pot survey","MAR directed pot LF","MAR NMFS trawl survey LF","MAR ADF\\&G pot survey LF")
-    Francis <- x$Francis_weights; names(Francis) <- c("Francis weight for directed pot LF","Francis weight for NMFS trawl survey LF","Francis weight for ADF\\&G pot survey LF")
+    Francis <- x$Francis_weights; names(Francis) <- c("Fancis weight for directed pot LF","Francis weight for NMFS trawl survey LF","Francis weight for ADF\\&G pot survey LF")
     wt_cpue <- x$cpue_lambda; names(wt_cpue) <- c("NMFS trawl survey weight","ADF\\&G pot survey weight")
     wt_lf   <- x$lf_lambda; names(wt_lf) <- c("Directed pot LF weight","NMFS trawl survey LF weight","ADF\\&G pot survey LF weight")
     v       <- c(wt_cpue, wt_lf, Francis, SDNR, MAR)
@@ -1103,15 +1070,6 @@ tl <- length(A$mod_yrs)
 df <- data.frame(as.integer(A$mod_yrs[1:tl]), A$N_males[1:tl,1], A$N_males[1:tl,2], A$N_males[1:tl,3], c(A$ssb[1:tl]))
 names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
 tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the reference model.", label = "tab:pop_abundance_base")
-print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
-```
-
-```{r pop_abundance_Francis, results = "asis"}
-A <- M[[6]]
-tl <- length(A$mod_yrs)
-df <- data.frame(as.integer(A$mod_yrs[1:tl]), A$N_males[1:tl,1], A$N_males[1:tl,2], A$N_males[1:tl,3], c(A$ssb[1:tl]))
-names(df) <- c("Year","$n_1$","$n_2$","$n_3$","MMB")
-tab <- xtable(df, digits = 0, caption = "Population abundances ($\\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the Francis weights model.", label = "tab:pop_abundance_Francis")
 print(tab, caption.placement = "top", include.rownames = FALSE, sanitize.text.function=function(x){x})
 ```
 
@@ -1230,7 +1188,7 @@ for (i in mod_scen) {
   A[[i]]$fit$est[ii] <- NA
   A[[i]]$fit$std[ii] <- NA
 }
-plot_recruitment(A[c(3,5,6)])
+plot_recruitment(A[mod_scen])
 ```
 
 <!--  -->
@@ -1317,24 +1275,6 @@ plot_dynB0(M[mod_scen])
 ```
 
 \clearpage
-
-<!--  
-
-```{r init_rec, fig.cap = "Distribution of carapace width (mm) at recruitment.\\label{fig:init_rec}"}
-plot_recruitment_size(M[3], xlab = "Carapace width (mm)")
-```
-\clearpage
-
-```{r size_trans, fig.cap = "Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2015 SMBKC assessment).\\label{fig:size_trans}"}
-plot_size_transition(M, xlab = "Carapace width after transition (mm)")
-```
-
-```{r init_N, fig.cap = "Numbers by stage each year (at the beginning of the model year, i.e. 1 July, season 1) in each of the models.\\label{fig:init_N}", fig.height = 15}
-.get_numbers_df(M[3])
-(M[3],subsetby = c(1978,2015,2016,2017) )
-plot_numbers(M[3],subsetby = c(1978,2015,2016,2017) )
-```
--->
 
 \newpage\clearpage
 

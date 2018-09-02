@@ -4,7 +4,7 @@ author: |
   | Jie Zheng$^1$ and James Ianelli$^2$ 
   | $^1$Alaska Department of Fish and Game, jie.zheng@alaska.gov
   | $^2$NOAA, jim.ianelli@noaa.gov
-date: "August 2018"
+date: "September 2018"
 output:
   pdf_document:
     includes:
@@ -43,7 +43,7 @@ The most recent 3-year average of the NMFS survey is 41% of the mean value, sugg
 the survey estimates in 2010 and 2011 that were over 6 times the current average. 
 The assessment model estimates dampen the interannual
 variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about
-44% 
+27% 
 of the long term model-predicted survey biomass average. The trend from these values suggests a slight decline.
 
 
@@ -51,7 +51,8 @@ of the long term model-predicted survey biomass average. The trend from these va
 in each year. The 2018 trawl-survey area-swept estimate of 0.154 million male SMBKC in this size class is the third lowest in 
 the 41 years since 1978 and follows the lowest (as observed in 2017). The recent six-year (2013 - 2018) average recruitment that is only 45% of this mean. 
 In the pot-survey, the abundance of this size group in 2017 was also the second-lowest in the time series (22% of the mean for the 
-available pot-survey data) whereas in 2018 the index...[placeholder].
+available pot-survey data) whereas in 2018 the value was the lowest observed at only 10% of the mean value (the total (all sizes) in the pot-survey index was also the lowest
+and was 12% of the mean).
 
 5. **Management performance**: In this assessment estimated total male catch is the sum of fishery-reported retained
 catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish
@@ -77,8 +78,8 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   2014/15 & 1.86$^B$ & 2.48$^B$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
   2015/16 & 1.84$^C$ & 2.11$^C$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\ 
   2016/17 & 1.93$^D$ & 2.12$^D$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\ 
-  2017/18 & 1.93$^E$ & 2.12$^E$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\
-  2018/19 & & 2.05$^E$ & & & & 0 & 0 \\
+  2017/18 & 1.93$^E$ & 2.13$^E$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\
+  2018/19 & & 2.09$^E$ & & & & 0 & 0 \\
   \hline
 \end{tabular}
 \end{table}
@@ -95,8 +96,8 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   2014/15 & 4.1$^B$ & 5.47$^B$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
   2015/16 & 4.1$^C$ & 4.65$^C$ & 0.419 & 0.110 & 0.110  & 0.62 & 0.49 \\ 
   2016/17 & 4.3$^D$ & 4.68$^D$ & 0.410 & 0.000 & 0.000  & 0.62 & 0.49 \\ 
-  2017/18 & 4.3$^E$ & 4.68$^E$ & 0.41 & 0.000 & 0.000 & 0.62 & 0.49 \\
-  2018/19 & & 4.51$^E$ & & & & 0 & 0 \\
+  2017/18 & 4.3$^E$ & 4.69$^E$ & 0.41 & 0.000 & 0.000 & 0.62 & 0.49 \\
+  2018/19 & & 4.61$^E$ & & & & 0 & 0 \\
   \hline
 \end{tabular}
 \end{table}
@@ -116,8 +117,8 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
   2016/17 & 4b & 3.67 & 2.23 & 0.61 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
   2017/18 & 4b & 3.86 & 2.05 & 0.53 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
-  2018/19 & 4b & 3.86 & 2.05 & 0.53 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
-  2019/20 & 4b & 3.86 & 2.05 & 0.53 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
+  2018/19 & 4b & 3.86 & 2.09 & 0.54 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
+  2019/20 & 4b & 3.86 & 2.09 & 0.54 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -358,13 +359,8 @@ following lists the models presented and the naming convention  used:
    were specified appropriately.
 
 3. **Fit survey**: an exploratory scenario that's the same as the reference model except the NMFS trawl survey is up-weighted by
-   $\lambda^\text{NMFS}=$ 1.5 and the ADF&G pot survey is 
+   $\lambda^\text{NMFS}=$ 2 and the ADF&G pot survey is 
    up-weighted by $\lambda^\text{ADFG}=$ 2. 
-
- 3. **Francis weights**: is similar to the reference model except that it also uses the Francis iterative re-weighting
-    method (Francis 2011), to re-weight the size-composition data relative to the abundance indices. The trawl survey and
-    pot survey weights were unchanged. In this scenario the multinomial distribution was used instead as the
-    theory underpinning the Francis weighting method is based on this distribution.
 
 Note that SSC convention would label these (item 3 above) as model 16.0 (the
 model used last year). Since so few models are presented here, for simplicity
@@ -402,14 +398,15 @@ The SDNRs for the directed pot fishery and other size compositions were all acce
 
 ### d. Parameter estimates
 Model parameter estimates for each of the Gmacs scenarios are summarized in Tables \ref{tab:est_pars_ref},
-\ref{tab:est_pars_vast}, \ref{tab:est_pars_Francis}, and \ref{tab:est_pars_all}. These parameter
+\ref{tab:est_pars_vast}, and \ref{tab:est_pars_all}. These parameter
 estimates are compared in Table \ref{tab:est_pars_all}. Negative log-likelihood values and management measures for each
 of the model configurations are compared in Tables \ref{tab:management_quants} through \ref{tab:likelihood_components}.
 
 There are some differences in parameter estimates among models as 
 reflected in the log-likelihood components and the management quantities. 
 The parameter estimates in the "fit survey" scenario differ the most, as expected, particularly the estimate of the ADF&G pot survey
-catchability ($q$) (see Table \ref{tab:est_pars_all}).
+catchability ($q$) (see Table \ref{tab:est_pars_all}). Also, the residuals for recruitment in the first size group are large for these
+runs, presumably because higher estimates of recruits in some years are required to match the observed biomass trends. 
 
 ### c. Graphs of estimates.
 Selectivity estimates show some variability between models (Figure \ref{fig:selectivity}). Estimated recruitment is
@@ -444,7 +441,7 @@ The ability to conduct retrospective analyses with this software remains under d
 
 ### f. Uncertainty and sensitivity analyses.
 Estimated standard deviations of parameters and selected management measures for the four models are summarized in
-Tables \ref{tab:est_pars_ref}, \ref{tab:est_pars_vast}, \ref{tab:est_pars_fit_survey}, and \ref{tab:est_pars_Francis}
+Tables \ref{tab:est_pars_ref}, \ref{tab:est_pars_vast}, and \ref{tab:est_pars_fit_survey} 
 (and compiled together in Table \ref{tab:est_pars_all}. Probabilities for mature male biomass and OFL in 2017 are
 presented in Section F.
 
@@ -486,21 +483,21 @@ The currently recommended Tier 4 convention is to use the full assessment period
 2017, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with
 assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The
 parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The
-$F_\mathit{OFL}$, OFL, ABC, and MMB in 2017 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC
+$F_\mathit{OFL}$, OFL, ABC, and MMB in 2018 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC
 is 80% of the OFL.
 \begin{table}[ht]
 \centering
 \caption{Comparisons of management measures for the four model scenarios. Biomass and OFL are in tons.} 
 \label{tab:management_quants}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrrrr}
   \hline
-Component & Reference & VAST & Fit surveys & Francis weights & NA & NA \\ 
+Component & Reference & VAST & Fit surveys & Francis weights & NA \\ 
   \hline
-$\text{MMB}_{2018}$ & 2079.874 & 2046.818 & 2046.818 & 2939.645 & 5674.035 & 2085.382 \\ 
-  $B_\text{MSY}$ & 3886.804 & 3862.834 & 3862.834 & 4334.390 & 9828.733 & 3861.300 \\ 
-  $F_\text{OFL}$ & 0.075 & 0.075 & 0.075 & 0.101 & 0.083 & 0.076 \\ 
-  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 367.946 & 117.651 \\ 
-  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 294.357 & 94.121 \\ 
+$\text{MMB}_{2018}$ & 2141.716 & 2089.749 & 1249.315 & 2282.678 & 4084.014 \\ 
+  $B_\text{MSY}$ & 3888.059 & 3863.373 & 3759.320 & 4334.962 & 9930.858 \\ 
+  $F_\text{OFL}$ & 0.078 & 0.077 & 0.039 & 0.074 & 0.053 \\ 
+  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\ 
+  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -526,7 +523,7 @@ The following topics have been listed as areas where more research on SMBKC is n
 
 The outlook for recruitment looks relatively pessimistic. The dynamic-$B_0$ analysis, which removes historical fishing and projects
 the population based on estimated recruitments, indicates that the effect of fishing has reduced the stock to about 
-  203%. The other aspects of depletion (ignoring stock-recruit
+  181%. The other aspects of depletion (ignoring stock-recruit
   relationship) may reflect variable  survival rates due to environmental conditions and range shifts. 
 
 # J. Acknowledgements
@@ -685,7 +682,7 @@ Year & Trawl bycatch & Fixed gear bycatch \\
 
 \begin{table}[ht]
 \centering
-\caption{The 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm. Note that management (GHL) units are in pounds, for conserving space, convertion to tons is ommitted.} 
+\caption{Fishery characteristics and update. Columns include the 1978/79 to 2015/16 directed St. Matthew Island blue king crab pot fishery. The Guideline Harvest Level (GHL) and Total Allowable Catch (TAC) are in millions of pounds. Harvest includes deadloss. Catch per unit effort (CPUE) in this table is simply the harvest number / pot lifts. The average weight is the harvest weight / harvest number in pounds. The average CL is the average of retained crab in mm from dockside sampling of delivered crab. Source: Fitch et al 2012; ADF\&G Dutch Harbor staff, pers. comm. Note that management (GHL) units are in pounds, for conserving space, conversion to tons is ommitted.} 
 \label{tab:smbkc_fishery}
 \begin{tabular}{lrrrrrrrr}
   \hline
@@ -807,12 +804,11 @@ from the 96 common stations surveyed during the ADF\&G SMBKC pot surveys. Source
   2015 & 0.198 & 0.682 & 1.924 & 2.805 & 0.18 & 1077 \\ 
   2016 & 0.198 & 0.456 & 1.724 & 2.378 & 0.19 & 777 \\ 
   2017 & 0.177 & 0.429 & 1.083 & 1.689 & 0.25 & 643 \\ 
+  2018 & 0.076 & 0.161 & 0.508 & 0.745 & 0.14 &   286\\
    \hline
 \end{tabular}
 \end{table}
 
-
-<!-- xxxxxxx -->
 
 \begin{table}[ht]
 \centering
@@ -917,6 +913,7 @@ Year & Stage-1 & Stage-2 & Stage-3 \\
   2015 &  3248        & 153        &  1077    & & 50           & 50         & 100 \\
   2016 &              & 108        &   777    & &              & 50         & 100 \\
   2017 &              & 42         &   643    & &              & 50         & 100 \\
+  2018 &              & 62         &   286    & &              & 50         & 100 \\
   \hline
 \end{tabular}
 \end{table}
@@ -929,24 +926,24 @@ Year & Stage-1 & Stage-2 & Stage-3 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.647 & 0.127 \\ 
-  $\log (\bar{R})$ & 14.037 & 0.058 \\ 
-  $\log (n^0_1)$ & 14.923 & 0.171 \\ 
-  $\log (n^0_2)$ & 14.548 & 0.201 \\ 
-  $\log (n^0_3)$ & 14.358 & 0.206 \\ 
-  $q_{pot}$ & 3.686 & 0.276 \\ 
-  $\log (\bar{F}^\text{df})$ & -1.915 & 0.053 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.388 & 0.080 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.303 & 0.080 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.653 & 0.174 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.315 & 0.126 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.459 & 0.154 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.628 & 0.127 \\ 
+  $\log (\bar{R})$ & 13.894 & 0.056 \\ 
+  $\log (n^0_1)$ & 14.924 & 0.172 \\ 
+  $\log (n^0_2)$ & 14.574 & 0.200 \\ 
+  $\log (n^0_3)$ & 14.377 & 0.206 \\ 
+  $q_{pot}$ & 3.569 & 0.245 \\ 
+  $\log (\bar{F}^\text{df})$ & -1.852 & 0.052 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.268 & 0.078 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.181 & 0.078 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.636 & 0.174 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.304 & 0.126 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.283 & 0.150 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.247 & 0.066 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.217 & 0.064 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.855 & 0.127 \\ 
-  log Stage-2 ADF\&G pot selectivity & -0.026 & 0.078 \\ 
-  $F_\text{OFL}$ & 0.075 & 0.009 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.665 & 0.115 \\ 
+  log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
+  $F_\text{OFL}$ & 0.039 & 0.006 \\ 
   OFL & 0.000 & 0.000 \\ 
    \hline
 \end{tabular}
@@ -960,24 +957,24 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.647 & 0.127 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.711 & 0.106 \\ 
-  $\log (\bar{R})$ & 14.193 & 0.049 \\ 
-  $\log (n^0_1)$ & 14.942 & 0.167 \\ 
-  $\log (n^0_2)$ & 14.578 & 0.192 \\ 
-  $\log (n^0_3)$ & 14.401 & 0.191 \\ 
-  $q_{pot}$ & 2.876 & 0.157 \\ 
-  $\log (\bar{F}^\text{df})$ & -2.037 & 0.039 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.625 & 0.068 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.540 & 0.068 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.718 & 0.171 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.344 & 0.123 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.305 & 0.146 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.741 & 0.103 \\ 
+  $\log (\bar{R})$ & 14.127 & 0.048 \\ 
+  $\log (n^0_1)$ & 14.944 & 0.167 \\ 
+  $\log (n^0_2)$ & 14.576 & 0.192 \\ 
+  $\log (n^0_3)$ & 14.400 & 0.191 \\ 
+  $q_{pot}$ & 2.501 & 0.134 \\ 
+  $\log (\bar{F}^\text{df})$ & -2.021 & 0.040 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.604 & 0.068 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.519 & 0.068 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.728 & 0.170 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.350 & 0.123 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.085 & 0.149 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.241 & 0.061 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.246 & 0.063 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.810 & 0.127 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.584 & 0.116 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.101 & 0.008 \\ 
+  $F_\text{OFL}$ & 0.074 & 0.006 \\ 
   OFL & 0.000 & 0.000 \\ 
    \hline
 \end{tabular}
@@ -991,96 +988,56 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.711 & 0.106 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 2.160 & 0.107 \\ 
-  $\log (\bar{R})$ & 14.583 & 0.065 \\ 
-  $\log (n^0_1)$ & 15.456 & 0.417 \\ 
-  $\log (n^0_2)$ & 15.288 & 0.438 \\ 
-  $\log (n^0_3)$ & 15.120 & 0.418 \\ 
-  $q_{pot}$ & 1.010 & 0.052 \\ 
-  $\log (\bar{F}^\text{df})$ & -2.901 & 0.045 \\ 
-  $\log (\bar{F}^\text{tb})$ & -10.043 & 0.071 \\ 
-  $\log (\bar{F}^\text{fb})$ & -9.243 & 0.071 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.343 & 0.141 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.082 & 0.119 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 2.242 & 0.085 \\ 
+  $\log (\bar{R})$ & 14.363 & 0.063 \\ 
+  $\log (n^0_1)$ & 15.499 & 0.413 \\ 
+  $\log (n^0_2)$ & 15.332 & 0.434 \\ 
+  $\log (n^0_3)$ & 15.166 & 0.402 \\ 
+  $q_{pot}$ & 0.918 & 0.037 \\ 
+  $\log (\bar{F}^\text{df})$ & -2.895 & 0.036 \\ 
+  $\log (\bar{F}^\text{tb})$ & -10.404 & 0.065 \\ 
+  $\log (\bar{F}^\text{fb})$ & -9.319 & 0.065 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.372 & 0.135 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.114 & 0.116 \\ 
   log Stage-1 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
   log Stage-1 NMFS trawl selectivity & -0.000 & 0.000 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
   log Stage-1 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.083 & 0.006 \\ 
-  OFL & 367.950 & 44.694 \\ 
+  $F_\text{OFL}$ & 0.053 & 0.003 \\ 
+  OFL & 0.000 & 0.000 \\ 
    \hline
 \end{tabular}
 \end{table}
-
-\begin{table}[ht]
-\centering
-\caption{Model parameter estimates, selected derived quantities, and their standard deviations (SD) for the "Francis weights" model.} 
-\label{tab:est_pars_Francis}
-\begin{tabular}{lrr}
-  \hline
-Parameter & Estimate & SD \\ 
-  \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.634 & 0.136 \\ 
-  $\log (\bar{R})$ & 14.033 & 0.064 \\ 
-  $\log (n^0_1)$ & 14.885 & 0.285 \\ 
-  $\log (n^0_2)$ & 14.561 & 0.318 \\ 
-  $\log (n^0_3)$ & 14.361 & 0.317 \\ 
-  $q_{pot}$ & 3.526 & 0.248 \\ 
-  $\log (\bar{F}^\text{df})$ & -1.884 & 0.060 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.044 & 0.081 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.243 & 0.081 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.514 & 0.157 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.319 & 0.128 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.420 & 0.141 \\ 
-  log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.181 & 0.083 \\ 
-  log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.799 & 0.092 \\ 
-  log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.076 & 0.010 \\ 
-  OFL & 117.650 & 26.963 \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-
-```
-## Error in data.frame(Model, Parameter, Estimate): arguments imply differing number of rows: 114, 76
-```
-
-```
-## Error: `var` must evaluate to a single number or a column name, not a character vector
-```
 
 \begin{table}[ht]
 \centering
 \caption{Comparisons of parameter estimates for the four model scenarios.} 
 \label{tab:est_pars_all}
-\begin{tabular}{lrr}
+\begin{tabular}{lrrr}
   \hline
-Parameter & Estimate & SD \\ 
+Parameter & Ref & VAST & FitSurvey \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.634 & 0.136 \\ 
-  $\log (\bar{R})$ & 14.033 & 0.064 \\ 
-  $\log (n^0_1)$ & 14.885 & 0.285 \\ 
-  $\log (n^0_2)$ & 14.561 & 0.318 \\ 
-  $\log (n^0_3)$ & 14.361 & 0.317 \\ 
-  $q_{pot}$ & 3.526 & 0.248 \\ 
-  $\log (\bar{F}^\text{df})$ & -1.884 & 0.060 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.044 & 0.081 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.243 & 0.081 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.514 & 0.157 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.319 & 0.128 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.420 & 0.141 \\ 
-  log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.181 & 0.083 \\ 
-  log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.799 & 0.092 \\ 
-  log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.076 & 0.010 \\ 
-  OFL & 117.650 & 26.963 \\ 
+$F_\text{OFL}$ & 0.039 & 0.074 & 0.053 \\ 
+  $\log (\bar{F}^\text{df})$ & -1.852 & -2.021 & -2.895 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.181 & -8.519 & -9.319 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.268 & -9.604 & -10.404 \\ 
+  $\log (\bar{R})$ & 13.894 & 14.127 & 14.363 \\ 
+  $\log (n^0_1)$ & 14.924 & 14.944 & 15.499 \\ 
+  $\log (n^0_2)$ & 14.574 & 14.576 & 15.332 \\ 
+  $\log (n^0_3)$ & 14.377 & 14.400 & 15.166 \\ 
+  $q_{pot}$ & 0.004 & 0.003 & 0.001 \\ 
+  Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.628 & 1.741 & 2.242 \\ 
+  OFL & 0.000 & 0.000 & 0.000 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.665 & -0.584 & -0.000 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.217 & -0.246 & -0.000 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.636 & -0.728 & -0.372 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.283 & -0.085 & -0.000 \\ 
+  log Stage-2 ADF\&G pot selectivity & -0.000 & -0.000 & -0.000 \\ 
+  log Stage-2 NMFS trawl selectivity & -0.000 & -0.000 & -0.000 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.304 & -0.350 & -0.114 \\ 
+  log Stage-2 directed pot selectivity 2009-2017 & -0.000 & -0.000 & -0.000 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1089,31 +1046,31 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.634 & 0.136 \\
 \centering
 \caption{Comparisons of data weights, Francis LF weights (i.e. the new weights that should be applied to the LFs), SDNR values, and MAR values for the four model scenarios.} 
 \label{tab:data_weighting}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrrrr}
   \hline
-Component & Reference & VAST & Fit survey & Francis & NA & NA \\ 
+Component & Reference & VAST & Fit survey & Francis & NA \\ 
   \hline
-NMFS trawl survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 1.50 & 1.00 \\ 
-  ADF\&G pot survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 2.00 & 1.00 \\ 
-  Directed pot LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 1.95 & 1.61 \\ 
-  NMFS trawl survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.22 & 0.50 \\ 
-  ADF\&G pot survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.10 & 3.72 \\ 
+NMFS trawl survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 2.00 \\ 
+  ADF\&G pot survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 2.00 \\ 
+  Directed pot LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 1.95 \\ 
+  NMFS trawl survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.22 \\ 
+  ADF\&G pot survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.10 \\ 
    \hline
-Francis weight for directed pot LF & 0.00 & 0.00 & 0.00 & 0.00 & 1.96 & 1.55 \\ 
-  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.22 & 0.50 \\ 
-  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.10 & 4.13 \\ 
+Fancis weight for directed pot LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
    \hline
-SDNR NMFS trawl survey & 1.45 & 1.45 & 1.45 & 1.88 & 1.83 & 1.36 \\ 
-  SDNR ADF\&G pot survey & 3.78 & 3.76 & 3.76 & 3.88 & 5.45 & 3.72 \\ 
-  SDNR directed pot LF & 0.71 & 0.71 & 0.71 & 0.79 & 1.39 & 0.91 \\ 
-  SDNR NMFS trawl survey LF & 1.23 & 1.22 & 1.22 & 1.28 & 1.06 & 0.94 \\ 
-  SDNR ADF\&G pot survey LF & 0.80 & 0.80 & 0.80 & 0.84 & 0.96 & 1.01 \\ 
+SDNR NMFS trawl survey & 1.45 & 1.46 & 1.66 & 1.98 & 2.40 \\ 
+  SDNR ADF\&G pot survey & 3.77 & 3.75 & 4.42 & 4.82 & 6.80 \\ 
+  SDNR directed pot LF & 0.71 & 0.71 & 0.76 & 0.88 & 1.63 \\ 
+  SDNR NMFS trawl survey LF & 1.24 & 1.23 & 1.32 & 1.42 & 1.31 \\ 
+  SDNR ADF\&G pot survey LF & 0.89 & 0.88 & 0.97 & 1.11 & 1.36 \\ 
    \hline
-MAR NMFS trawl survey & 1.18 & 1.18 & 1.18 & 1.15 & 1.52 & 1.12 \\ 
-  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.94 & 2.56 & 4.57 & 2.97 \\ 
-  MAR directed pot LF & 0.59 & 0.59 & 0.59 & 0.64 & 0.66 & 0.76 \\ 
-  MAR NMFS trawl survey LF & 0.52 & 0.55 & 0.55 & 0.64 & 0.69 & 0.53 \\ 
-  MAR ADF\&G pot survey LF & 0.49 & 0.49 & 0.49 & 0.60 & 0.55 & 0.59 \\ 
+MAR NMFS trawl survey & 1.18 & 1.16 & 1.24 & 1.07 & 1.65 \\ 
+  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.62 & 2.95 & 3.40 \\ 
+  MAR directed pot LF & 0.60 & 0.60 & 0.60 & 0.61 & 0.91 \\ 
+  MAR NMFS trawl survey LF & 0.53 & 0.53 & 0.55 & 0.69 & 0.86 \\ 
+  MAR ADF\&G pot survey LF & 0.69 & 0.68 & 0.71 & 0.86 & 1.04 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1122,25 +1079,25 @@ MAR NMFS trawl survey & 1.18 & 1.18 & 1.18 & 1.15 & 1.52 & 1.12 \\
 \centering
 \caption{Comparisons of negative log-likelihood values for the four model scenarios. It is important to note that some of these models cannot be compared since the input sample size (or variances) are modified by re-weighting (e.g., {\bf Francis} model).} 
 \label{tab:likelihood_components}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrrrr}
   \hline
-Component & Ref & VAST & FitSurvey & Francis & NA & NA \\ 
+Component & Ref & VAST & FitSurvey & Francis & NA \\ 
   \hline
-Pot Retained Catch & -71.53 & -71.51 & -71.51 & -71.08 & -70.53 & -71.50 \\ 
-  Pot Discarded Catch & 8.98 & 8.86 & 8.86 & 12.65 & 43.00 & 12.74 \\ 
-  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.43 & -7.43 & -7.16 & -7.16 \\ 
-  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.41 & -7.42 & -7.15 & -7.14 \\ 
-  NMFS Trawl Survey & -3.93 & -4.13 & -4.13 & 1.79 & 6.96 & -8.93 \\ 
-  ADF\&G Pot Survey CPUE & 57.07 & 56.32 & 56.32 & 62.59 & 130.07 & 54.50 \\ 
-  Directed Pot LF & -11.31 & -11.29 & -11.29 & -8.84 & 22.78 & 9.96 \\ 
-  NMFS Trawl LF & 18.24 & 17.60 & 17.60 & 27.26 & 92.24 & 55.53 \\ 
-  ADF\&G Pot LF & -7.40 & -7.31 & -7.31 & -6.47 & 32.83 & -6.46 \\ 
-  Recruitment deviations & 54.06 & 54.22 & 54.22 & 52.89 & 59.96 & 53.48 \\ 
-  F penalty & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 \\ 
-  M penalty & 6.47 & 6.47 & 6.47 & 6.47 & 6.49 & 6.47 \\ 
-  Prior & 12.66 & 12.66 & 12.66 & 12.66 & 13.61 & 12.66 \\ 
-  Total & 63.51 & 61.54 & 61.54 & 89.56 & 337.59 & 118.65 \\ 
-  Total estimated parameters & 139.00 & 141.00 & 141.00 & 141.00 & 138.00 & 138.00 \\ 
+Pot Retained Catch & -71.54 & -71.52 & -70.90 & -70.33 & -68.90 \\ 
+  Pot Discarded Catch & 8.71 & 8.63 & 9.58 & 14.86 & 65.13 \\ 
+  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.43 & -7.43 & -7.43 \\ 
+  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.39 & -7.42 & -7.42 \\ 
+  NMFS Trawl Survey & -3.89 & -3.95 & 12.65 & 9.31 & 47.61 \\ 
+  ADF\&G Pot Survey CPUE & 56.94 & 56.02 & 88.60 & 112.37 & 231.05 \\ 
+  Directed Pot LF & -11.17 & -11.15 & -9.87 & -5.87 & 29.74 \\ 
+  NMFS Trawl LF & 18.75 & 17.86 & 25.86 & 39.90 & 107.77 \\ 
+  ADF\&G Pot LF & -5.47 & -5.61 & -3.89 & 0.49 & 33.54 \\ 
+  Recruitment deviations & 53.72 & 54.03 & 57.33 & 54.55 & 69.20 \\ 
+  F penalty & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 \\ 
+  M penalty & 6.47 & 6.47 & 6.47 & 6.47 & 6.49 \\ 
+  Prior & 12.66 & 12.66 & 12.66 & 12.66 & 13.61 \\ 
+  Total & 65.39 & 63.10 & 128.15 & 174.06 & 534.87 \\ 
+  Total estimated parameters & 139.00 & 141.00 & 141.00 & 141.00 & 141.00 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1153,47 +1110,47 @@ Pot Retained Catch & -71.53 & -71.51 & -71.51 & -71.08 & -70.53 & -71.50 \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3024922 & 2086739 & 1724023 & 4852 \\ 
-  1979 & 4240047 & 2408619 & 2414981 & 6724 \\ 
-  1980 & 3596322 & 3205345 & 3592523 & 10446 \\ 
-  1981 & 1349015 & 3103465 & 4932916 & 10813 \\ 
-  1982 & 1475777 & 1793332 & 4937671 & 7792 \\ 
-  1983 & 781015 & 1431619 & 3544542 & 4882 \\ 
-  1984 & 666737 & 917276 & 2131828 & 3448 \\ 
-  1985 & 933666 & 682227 & 1599713 & 3167 \\ 
-  1986 & 1410067 & 756060 & 1401084 & 3088 \\ 
-  1987 & 1349408 & 1051072 & 1500842 & 3599 \\ 
-  1988 & 1231930 & 1114268 & 1720553 & 3889 \\ 
-  1989 & 2800176 & 1068481 & 1880245 & 4391 \\ 
-  1990 & 1751533 & 1943967 & 2168051 & 5444 \\ 
-  1991 & 1814447 & 1638179 & 2629042 & 5458 \\ 
-  1992 & 1939804 & 1572075 & 2580521 & 5597 \\ 
-  1993 & 2184234 & 1621425 & 2671608 & 5805 \\ 
-  1994 & 1553368 & 1776819 & 2722835 & 5530 \\ 
-  1995 & 1770996 & 1470209 & 2619079 & 5455 \\ 
-  1996 & 1600406 & 1492288 & 2536540 & 5262 \\ 
-  1997 & 912971 & 1402736 & 2466491 & 4667 \\ 
-  1998 & 660072 & 982651 & 2061864 & 3267 \\ 
-  1999 & 394429 & 327570 & 798264 & 1861 \\ 
-  2000 & 442238 & 332276 & 869215 & 1999 \\ 
-  2001 & 405730 & 361051 & 935594 & 2156 \\ 
-  2002 & 144739 & 349822 & 1001981 & 2267 \\ 
-  2003 & 341000 & 197936 & 1026825 & 2142 \\ 
-  2004 & 227176 & 259039 & 989522 & 2142 \\ 
-  2005 & 505714 & 214734 & 978691 & 2071 \\ 
-  2006 & 763530 & 358195 & 973816 & 2222 \\ 
-  2007 & 521969 & 551618 & 1065875 & 2583 \\ 
-  2008 & 935989 & 473155 & 1203366 & 2781 \\ 
-  2009 & 760272 & 687507 & 1331847 & 2875 \\ 
-  2010 & 729825 & 658569 & 1439361 & 2570 \\ 
-  2011 & 600891 & 631519 & 1338696 & 2152 \\ 
-  2012 & 345260 & 550062 & 1105739 & 1768 \\ 
-  2013 & 442425 & 377974 & 898268 & 2009 \\ 
-  2014 & 367919 & 376270 & 982886 & 1999 \\ 
-  2015 & 352929 & 333411 & 985384 & 1999 \\ 
-  2016 & 379413 & 310687 & 1003124 & 2122 \\ 
-  2017 & 186467 & 318040 & 1029874 & 2180 \\ 
-  2018 & 634481 & 211182 & 1038420 & 2080 \\ 
+1978 & 3024666 & 2068576 & 1713619 & 4812 \\ 
+  1979 & 4242186 & 2402462 & 2397110 & 6687 \\ 
+  1980 & 3599593 & 3204521 & 3574696 & 10411 \\ 
+  1981 & 1353493 & 3105050 & 4917923 & 10787 \\ 
+  1982 & 1476139 & 1796399 & 4926372 & 7774 \\ 
+  1983 & 777972 & 1432839 & 3536665 & 4867 \\ 
+  1984 & 666841 & 915951 & 2125534 & 3434 \\ 
+  1985 & 938437 & 681847 & 1593775 & 3154 \\ 
+  1986 & 1407597 & 758643 & 1396375 & 3082 \\ 
+  1987 & 1353975 & 1050525 & 1497974 & 3593 \\ 
+  1988 & 1238076 & 1116681 & 1718315 & 3888 \\ 
+  1989 & 2805889 & 1072770 & 1880176 & 4396 \\ 
+  1990 & 1756923 & 1948631 & 2170700 & 5455 \\ 
+  1991 & 1822678 & 1642784 & 2634119 & 5473 \\ 
+  1992 & 1950634 & 1578274 & 2587859 & 5617 \\ 
+  1993 & 2193543 & 1629627 & 2681897 & 5834 \\ 
+  1994 & 1539215 & 1784821 & 2736464 & 5565 \\ 
+  1995 & 1778114 & 1464820 & 2633188 & 5477 \\ 
+  1996 & 1608434 & 1494547 & 2546266 & 5283 \\ 
+  1997 & 903444 & 1408043 & 2476531 & 4693 \\ 
+  1998 & 663921 & 978997 & 2072077 & 3282 \\ 
+  1999 & 398649 & 328936 & 803832 & 1873 \\ 
+  2000 & 441508 & 335125 & 874958 & 2013 \\ 
+  2001 & 409457 & 361580 & 941758 & 2168 \\ 
+  2002 & 145914 & 352113 & 1007753 & 2281 \\ 
+  2003 & 334551 & 199362 & 1032913 & 2155 \\ 
+  2004 & 227560 & 255850 & 994709 & 2148 \\ 
+  2005 & 513233 & 213897 & 981453 & 2076 \\ 
+  2006 & 764071 & 362188 & 976420 & 2232 \\ 
+  2007 & 515032 & 553247 & 1070115 & 2593 \\ 
+  2008 & 942251 & 469811 & 1207057 & 2784 \\ 
+  2009 & 753585 & 689955 & 1333843 & 2881 \\ 
+  2010 & 726500 & 655586 & 1441629 & 2571 \\ 
+  2011 & 600084 & 628647 & 1338753 & 2149 \\ 
+  2012 & 340146 & 548653 & 1104279 & 1764 \\ 
+  2013 & 440819 & 374605 & 895883 & 2001 \\ 
+  2014 & 361877 & 374243 & 979041 & 1990 \\ 
+  2015 & 346131 & 329310 & 980571 & 1987 \\ 
+  2016 & 416427 & 305470 & 996381 & 2105 \\ 
+  2017 & 243561 & 337319 & 1025157 & 2192 \\ 
+  2018 & 653212 & 249989 & 1049658 & 2142 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1206,99 +1163,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3025243 & 2080353 & 1720404 & 4838 \\ 
-  1979 & 4242352 & 2406688 & 2408770 & 6711 \\ 
-  1980 & 3597722 & 3206015 & 3586581 & 10435 \\ 
-  1981 & 1347166 & 3104482 & 4928425 & 10806 \\ 
-  1982 & 1475996 & 1792619 & 4934255 & 7785 \\ 
-  1983 & 778398 & 1431507 & 3541354 & 4875 \\ 
-  1984 & 665616 & 915753 & 2128865 & 3440 \\ 
-  1985 & 934044 & 681086 & 1596361 & 3159 \\ 
-  1986 & 1407050 & 755897 & 1397742 & 3082 \\ 
-  1987 & 1348504 & 1049305 & 1497680 & 3591 \\ 
-  1988 & 1230884 & 1113170 & 1716935 & 3881 \\ 
-  1989 & 2795962 & 1067523 & 1876569 & 4383 \\ 
-  1990 & 1747604 & 1941256 & 2164095 & 5434 \\ 
-  1991 & 1810082 & 1635051 & 2623995 & 5445 \\ 
-  1992 & 1934075 & 1568561 & 2574307 & 5581 \\ 
-  1993 & 2175292 & 1617008 & 2664094 & 5785 \\ 
-  1994 & 1543934 & 1770278 & 2713466 & 5505 \\ 
-  1995 & 1762598 & 1462685 & 2607027 & 5423 \\ 
-  1996 & 1588242 & 1485028 & 2521892 & 5226 \\ 
-  1997 & 901867 & 1393424 & 2449439 & 4621 \\ 
-  1998 & 653842 & 973262 & 2041873 & 3227 \\ 
-  1999 & 391227 & 325951 & 791698 & 1847 \\ 
-  2000 & 438240 & 329922 & 862608 & 1984 \\ 
-  2001 & 402287 & 358001 & 928506 & 2139 \\ 
-  2002 & 143187 & 346857 & 994194 & 2249 \\ 
-  2003 & 337422 & 196073 & 1018676 & 2124 \\ 
-  2004 & 225626 & 256390 & 981435 & 2124 \\ 
-  2005 & 501067 & 212977 & 970452 & 2054 \\ 
-  2006 & 757480 & 354974 & 965604 & 2203 \\ 
-  2007 & 512695 & 547116 & 1056814 & 2561 \\ 
-  2008 & 926232 & 466420 & 1192616 & 2753 \\ 
-  2009 & 749468 & 679736 & 1318538 & 2843 \\ 
-  2010 & 718272 & 649863 & 1423287 & 2534 \\ 
-  2011 & 588182 & 622079 & 1319729 & 2110 \\ 
-  2012 & 336045 & 539811 & 1084062 & 1721 \\ 
-  2013 & 431048 & 369426 & 874308 & 1957 \\ 
-  2014 & 356617 & 367045 & 957646 & 1945 \\ 
-  2015 & 342468 & 323991 & 958724 & 1944 \\ 
-  2016 & 376306 & 301696 & 975326 & 2064 \\ 
-  2017 & 207453 & 313452 & 1002325 & 2123 \\ 
-  2018 & 289767 & 221291 & 1013786 & 2047 \\ 
-   \hline
-\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\centering
-\caption{Population abundances ($\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey (1 July, season 1) and mature male biomass (MMB) in tons on 15 February for the Francis weights model.} 
-\label{tab:pop_abundance_Francis}
-\begin{tabular}{rrrrr}
-  \hline
-Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
-  \hline
-1978 & 2914158 & 2107534 & 1724626 & 4878 \\ 
-  1979 & 4110549 & 2352595 & 2415404 & 6660 \\ 
-  1980 & 3272000 & 3113252 & 3552247 & 10263 \\ 
-  1981 & 1255767 & 2888789 & 4821836 & 10358 \\ 
-  1982 & 1252747 & 1669317 & 4727728 & 7247 \\ 
-  1983 & 752019 & 1263907 & 3284909 & 4156 \\ 
-  1984 & 589896 & 845294 & 1824879 & 2791 \\ 
-  1985 & 797309 & 614749 & 1298973 & 2469 \\ 
-  1986 & 1195843 & 656276 & 1102745 & 2411 \\ 
-  1987 & 1416960 & 896378 & 1180842 & 2818 \\ 
-  1988 & 1481565 & 1101427 & 1381697 & 3256 \\ 
-  1989 & 3404588 & 1206002 & 1614487 & 4029 \\ 
-  1990 & 1438930 & 2332738 & 2073038 & 5713 \\ 
-  1991 & 1815552 & 1589318 & 2715817 & 5567 \\ 
-  1992 & 2022514 & 1556550 & 2627746 & 5667 \\ 
-  1993 & 2472885 & 1663260 & 2710930 & 5929 \\ 
-  1994 & 1478514 & 1954580 & 2804465 & 5885 \\ 
-  1995 & 1775538 & 1486535 & 2770349 & 5768 \\ 
-  1996 & 1693651 & 1500281 & 2671388 & 5530 \\ 
-  1997 & 769965 & 1458341 & 2592267 & 4987 \\ 
-  1998 & 664628 & 919851 & 2182322 & 3417 \\ 
-  1999 & 413378 & 324515 & 845070 & 1945 \\ 
-  2000 & 389302 & 342029 & 908581 & 2084 \\ 
-  2001 & 464065 & 334225 & 968329 & 2187 \\ 
-  2002 & 151330 & 374068 & 1021377 & 2331 \\ 
-  2003 & 403096 & 209704 & 1055881 & 2209 \\ 
-  2004 & 204945 & 298185 & 1025667 & 2254 \\ 
-  2005 & 428497 & 215067 & 1026496 & 2161 \\ 
-  2006 & 847860 & 314466 & 1006528 & 2234 \\ 
-  2007 & 564417 & 585018 & 1079224 & 2646 \\ 
-  2008 & 889231 & 508147 & 1235657 & 2881 \\ 
-  2009 & 860820 & 672564 & 1371981 & 2929 \\ 
-  2010 & 707726 & 710694 & 1475014 & 2687 \\ 
-  2011 & 538185 & 636243 & 1393311 & 2249 \\ 
-  2012 & 344859 & 516030 & 1147911 & 1801 \\ 
-  2013 & 471797 & 366494 & 915902 & 2028 \\ 
-  2014 & 369039 & 389149 & 994635 & 2033 \\ 
-  2015 & 286665 & 338310 & 1001843 & 2033 \\ 
-  2016 & 297822 & 274688 & 1012976 & 2101 \\ 
-  2017 & 175628 & 259829 & 1012138 & 2085 \\ 
+1978 & 3030796 & 2135863 & 1752594 & 4963 \\ 
+  1979 & 4247810 & 2428215 & 2464175 & 6828 \\ 
+  1980 & 3594861 & 3216240 & 3644236 & 10556 \\ 
+  1981 & 1323670 & 3106242 & 4981464 & 10907 \\ 
+  1982 & 1479572 & 1779858 & 4977213 & 7853 \\ 
+  1983 & 785671 & 1429315 & 3571248 & 4934 \\ 
+  1984 & 665382 & 919158 & 2153614 & 3491 \\ 
+  1985 & 922941 & 682080 & 1618842 & 3207 \\ 
+  1986 & 1431374 & 749921 & 1416022 & 3110 \\ 
+  1987 & 1351394 & 1061141 & 1512273 & 3632 \\ 
+  1988 & 1230543 & 1118729 & 1735381 & 3921 \\ 
+  1989 & 2841297 & 1069170 & 1894767 & 4420 \\ 
+  1990 & 1761240 & 1967548 & 2184472 & 5501 \\ 
+  1991 & 1824710 & 1651497 & 2655631 & 5524 \\ 
+  1992 & 1955041 & 1582314 & 2610579 & 5665 \\ 
+  1993 & 2211548 & 1633470 & 2703431 & 5881 \\ 
+  1994 & 1564451 & 1796319 & 2758259 & 5619 \\ 
+  1995 & 1658174 & 1482956 & 2659868 & 5550 \\ 
+  1996 & 1617846 & 1432438 & 2566368 & 5252 \\ 
+  1997 & 903275 & 1392833 & 2463106 & 4650 \\ 
+  1998 & 603860 & 973865 & 2053754 & 3260 \\ 
+  1999 & 387847 & 318433 & 809168 & 1871 \\ 
+  2000 & 431495 & 325518 & 873086 & 1999 \\ 
+  2001 & 393788 & 352714 & 934391 & 2144 \\ 
+  2002 & 139008 & 340282 & 995631 & 2244 \\ 
+  2003 & 328890 & 191525 & 1016162 & 2115 \\ 
+  2004 & 192422 & 250041 & 976224 & 2107 \\ 
+  2005 & 480592 & 192021 & 959724 & 2010 \\ 
+  2006 & 717427 & 336412 & 944118 & 2142 \\ 
+  2007 & 409298 & 518235 & 1025675 & 2469 \\ 
+  2008 & 796028 & 398593 & 1141664 & 2581 \\ 
+  2009 & 616585 & 583384 & 1229316 & 2583 \\ 
+  2010 & 544411 & 542553 & 1287266 & 2190 \\ 
+  2011 & 418954 & 487895 & 1133807 & 1647 \\ 
+  2012 & 219467 & 399293 & 842037 & 1162 \\ 
+  2013 & 266576 & 256703 & 588679 & 1326 \\ 
+  2014 & 209279 & 236325 & 646507 & 1259 \\ 
+  2015 & 190947 & 197045 & 618631 & 1226 \\ 
+  2016 & 215223 & 173625 & 612716 & 1279 \\ 
+  2017 & 132202 & 179583 & 619466 & 1296 \\ 
+  2018 & 132361 & 134239 & 619285 & 1249 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1311,47 +1216,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3086180 & 2144492 & 1796061 & 5056 \\ 
-  1979 & 4184994 & 2462530 & 2510058 & 6945 \\ 
-  1980 & 3474109 & 3191923 & 3693858 & 10623 \\ 
-  1981 & 1370283 & 3029615 & 4999108 & 10853 \\ 
-  1982 & 1499107 & 1780973 & 4958594 & 7813 \\ 
-  1983 & 737431 & 1440783 & 3555714 & 4905 \\ 
-  1984 & 619887 & 895561 & 2137521 & 3430 \\ 
-  1985 & 845851 & 648434 & 1587568 & 3102 \\ 
-  1986 & 1199316 & 695002 & 1364827 & 2951 \\ 
-  1987 & 1328705 & 911172 & 1419653 & 3286 \\ 
-  1988 & 1241661 & 1056205 & 1580281 & 3568 \\ 
-  1989 & 3000724 & 1054790 & 1734903 & 4092 \\ 
-  1990 & 1864456 & 2053331 & 2058992 & 5370 \\ 
-  1991 & 1936773 & 1738508 & 2604122 & 5525 \\ 
-  1992 & 2113240 & 1674731 & 2622482 & 5792 \\ 
-  1993 & 2405884 & 1753884 & 2775161 & 6157 \\ 
-  1994 & 1721126 & 1946538 & 2897294 & 6048 \\ 
-  1995 & 2008251 & 1621665 & 2866461 & 6108 \\ 
-  1996 & 1954427 & 1677170 & 2842064 & 6055 \\ 
-  1997 & 1151829 & 1664994 & 2848612 & 5738 \\ 
-  1998 & 820528 & 1205119 & 2535480 & 4228 \\ 
-  1999 & 474540 & 382263 & 983702 & 2269 \\ 
-  2000 & 525310 & 395882 & 1059342 & 2427 \\ 
-  2001 & 486869 & 429286 & 1134414 & 2604 \\ 
-  2002 & 170462 & 418491 & 1210213 & 2734 \\ 
-  2003 & 414502 & 235277 & 1237840 & 2578 \\ 
-  2004 & 278490 & 313143 & 1191632 & 2581 \\ 
-  2005 & 718214 & 261787 & 1179695 & 2500 \\ 
-  2006 & 1004954 & 494446 & 1185751 & 2772 \\ 
-  2007 & 740604 & 733801 & 1334688 & 3292 \\ 
-  2008 & 1227507 & 657322 & 1541106 & 3620 \\ 
-  2009 & 949225 & 914018 & 1734685 & 3823 \\ 
-  2010 & 906181 & 840880 & 1908263 & 3544 \\ 
-  2011 & 759229 & 792082 & 1838908 & 3163 \\ 
-  2012 & 456990 & 693244 & 1617581 & 2770 \\ 
-  2013 & 562703 & 488921 & 1405282 & 3033 \\ 
-  2014 & 487769 & 481377 & 1473992 & 2972 \\ 
-  2015 & 462143 & 436327 & 1460013 & 2922 \\ 
-  2016 & 506682 & 406853 & 1462081 & 3045 \\ 
-  2017 & 274824 & 422315 & 1474381 & 3082 \\ 
-  2018 & 407282 & 295610 & 1469410 & 2940 \\ 
+1978 & 3089623 & 2139308 & 1793930 & 5046 \\ 
+  1979 & 4190990 & 2462770 & 2505993 & 6938 \\ 
+  1980 & 3476396 & 3195408 & 3691157 & 10621 \\ 
+  1981 & 1365290 & 3032067 & 4998828 & 10855 \\ 
+  1982 & 1500563 & 1778950 & 4959112 & 7811 \\ 
+  1983 & 733757 & 1440941 & 3555254 & 4904 \\ 
+  1984 & 618380 & 893528 & 2136851 & 3426 \\ 
+  1985 & 846366 & 646906 & 1585842 & 3097 \\ 
+  1986 & 1199777 & 694789 & 1362664 & 2946 \\ 
+  1987 & 1331598 & 911364 & 1417784 & 3283 \\ 
+  1988 & 1247272 & 1057911 & 1579094 & 3567 \\ 
+  1989 & 3040671 & 1058541 & 1735309 & 4097 \\ 
+  1990 & 1896925 & 2077260 & 2065041 & 5409 \\ 
+  1991 & 1981784 & 1764869 & 2624353 & 5593 \\ 
+  1992 & 2189134 & 1709016 & 2657026 & 5896 \\ 
+  1993 & 2538882 & 1808330 & 2828620 & 6323 \\ 
+  1994 & 1866393 & 2040088 & 2982268 & 6313 \\ 
+  1995 & 1947502 & 1735130 & 2998821 & 6494 \\ 
+  1996 & 2159153 & 1680233 & 3003897 & 6369 \\ 
+  1997 & 1313733 & 1782282 & 3004970 & 6189 \\ 
+  1998 & 832399 & 1335891 & 2741380 & 4668 \\ 
+  1999 & 512023 & 392506 & 1056651 & 2417 \\ 
+  2000 & 568732 & 420561 & 1129022 & 2585 \\ 
+  2001 & 519008 & 462116 & 1209211 & 2781 \\ 
+  2002 & 178090 & 447610 & 1292316 & 2920 \\ 
+  2003 & 442825 & 249248 & 1321830 & 2751 \\ 
+  2004 & 247674 & 333852 & 1271539 & 2753 \\ 
+  2005 & 760799 & 251145 & 1253935 & 2627 \\ 
+  2006 & 1067807 & 515109 & 1246466 & 2909 \\ 
+  2007 & 607128 & 776332 & 1401831 & 3464 \\ 
+  2008 & 1165152 & 596243 & 1605465 & 3671 \\ 
+  2009 & 843025 & 858429 & 1751670 & 3793 \\ 
+  2010 & 722983 & 762220 & 1884162 & 3417 \\ 
+  2011 & 608710 & 662101 & 1760393 & 2885 \\ 
+  2012 & 371778 & 564748 & 1469158 & 2378 \\ 
+  2013 & 422580 & 397998 & 1205729 & 2579 \\ 
+  2014 & 351765 & 371703 & 1248068 & 2458 \\ 
+  2015 & 317808 & 322786 & 1202812 & 2360 \\ 
+  2016 & 364454 & 287301 & 1176149 & 2407 \\ 
+  2017 & 223878 & 301976 & 1161668 & 2395 \\ 
+  2018 & 213385 & 226843 & 1142651 & 2283 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1364,46 +1269,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 5159537 & 4361084 & 3687283 & 11213 \\ 
-  1979 & 6210267 & 4373769 & 5405672 & 13986 \\ 
-  1980 & 3673747 & 4974775 & 7269812 & 19463 \\ 
-  1981 & 1540288 & 3733146 & 8904090 & 18930 \\ 
-  1982 & 1435675 & 2110417 & 8589692 & 15134 \\ 
-  1983 & 924987 & 1513838 & 6744725 & 11444 \\ 
-  1984 & 759383 & 1026332 & 4845730 & 8627 \\ 
-  1985 & 888512 & 770974 & 3926869 & 8069 \\ 
-  1986 & 1169500 & 759806 & 3384557 & 6842 \\ 
-  1987 & 2073978 & 915706 & 3136254 & 6538 \\ 
-  1988 & 3432758 & 1480998 & 3087326 & 6799 \\ 
-  1989 & 7016427 & 2439826 & 3416727 & 8943 \\ 
-  1990 & 2176388 & 4792406 & 4545548 & 13018 \\ 
-  1991 & 3012152 & 2822327 & 6091388 & 13390 \\ 
-  1992 & 3410492 & 2644416 & 6181631 & 13578 \\ 
-  1993 & 4658345 & 2811786 & 6359402 & 14361 \\ 
-  1994 & 3595317 & 3576027 & 6638067 & 14873 \\ 
-  1995 & 2415186 & 3225465 & 6988280 & 15949 \\ 
-  1996 & 3767773 & 2439220 & 7129303 & 15116 \\ 
-  1997 & 3507563 & 2947152 & 6984231 & 15576 \\ 
-  1998 & 2577269 & 2967449 & 6856068 & 11783 \\ 
-  1999 & 935872 & 614530 & 1723836 & 3915 \\ 
-  2000 & 1680050 & 734770 & 1838776 & 4266 \\ 
-  2001 & 2898966 & 1197252 & 2066729 & 5214 \\ 
-  2002 & 560274 & 2042480 & 2606795 & 7177 \\ 
-  2003 & 183891 & 994184 & 3260530 & 7216 \\ 
-  2004 & 104651 & 433447 & 3241730 & 6549 \\ 
-  2005 & 981856 & 202910 & 2936121 & 5717 \\ 
-  2006 & 1923313 & 624740 & 2648339 & 5653 \\ 
-  2007 & 3575445 & 1298593 & 2709815 & 6506 \\ 
-  2008 & 1607754 & 2450926 & 3247373 & 8834 \\ 
-  2009 & 1497545 & 1723791 & 4100573 & 8829 \\ 
-  2010 & 1772043 & 1420514 & 4344790 & 8209 \\ 
-  2011 & 1093878 & 1475839 & 4248690 & 7957 \\ 
-  2012 & 687238 & 1109613 & 4006465 & 7204 \\ 
-  2013 & 763979 & 757501 & 3630856 & 7292 \\ 
-  2014 & 799080 & 684574 & 3487434 & 6713 \\ 
-  2015 & 589916 & 680368 & 3273389 & 6284 \\ 
-  2016 & 429463 & 560172 & 3111618 & 6152 \\ 
-  2017 & 190561 & 429189 & 2921581 & 5674 \\ 
+1978 & 5385868 & 4554302 & 3860757 & 11766 \\ 
+  1979 & 6531404 & 4566273 & 5669629 & 14649 \\ 
+  1980 & 3612021 & 5220878 & 7618053 & 20407 \\ 
+  1981 & 1406958 & 3779553 & 9313164 & 19745 \\ 
+  1982 & 1266548 & 2050062 & 8942236 & 15735 \\ 
+  1983 & 745777 & 1397817 & 6990560 & 11797 \\ 
+  1984 & 586531 & 886162 & 4969874 & 8695 \\ 
+  1985 & 663630 & 626414 & 3941999 & 7935 \\ 
+  1986 & 830810 & 584239 & 3302488 & 6487 \\ 
+  1987 & 1775067 & 665240 & 2946785 & 5895 \\ 
+  1988 & 3733852 & 1228338 & 2774212 & 5940 \\ 
+  1989 & 7914396 & 2527202 & 3056606 & 8341 \\ 
+  1990 & 2201432 & 5331304 & 4374662 & 13319 \\ 
+  1991 & 3074011 & 3014924 & 6222881 & 13858 \\ 
+  1992 & 3487281 & 2743297 & 6394423 & 14090 \\ 
+  1993 & 4824091 & 2888134 & 6594260 & 14906 \\ 
+  1994 & 3564848 & 3695433 & 6888170 & 15475 \\ 
+  1995 & 2739370 & 3247694 & 7254220 & 16493 \\ 
+  1996 & 4367448 & 2630698 & 7393759 & 15839 \\ 
+  1997 & 3934711 & 3351104 & 7359157 & 16794 \\ 
+  1998 & 2857331 & 3343748 & 7413862 & 12631 \\ 
+  1999 & 854087 & 600424 & 1657853 & 3776 \\ 
+  2000 & 1587996 & 683657 & 1768730 & 4077 \\ 
+  2001 & 3371232 & 1128060 & 1973648 & 4962 \\ 
+  2002 & 634607 & 2287764 & 2539308 & 7328 \\ 
+  2003 & 188693 & 1117583 & 3334952 & 7494 \\ 
+  2004 & 105430 & 477017 & 3366576 & 6831 \\ 
+  2005 & 822159 & 217773 & 3062446 & 5970 \\ 
+  2006 & 1909399 & 538974 & 2746081 & 5739 \\ 
+  2007 & 3944388 & 1262325 & 2746875 & 6535 \\ 
+  2008 & 1217442 & 2647893 & 3295379 & 9145 \\ 
+  2009 & 1354062 & 1567376 & 4202653 & 8838 \\ 
+  2010 & 1612522 & 1287300 & 4337120 & 8050 \\ 
+  2011 & 841330 & 1341193 & 4158057 & 7651 \\ 
+  2012 & 521479 & 921683 & 3834658 & 6706 \\ 
+  2013 & 557660 & 601206 & 3372724 & 6664 \\ 
+  2014 & 595638 & 515702 & 3173470 & 5981 \\ 
+  2015 & 452557 & 508965 & 2906288 & 5472 \\ 
+  2016 & 192334 & 425468 & 2705557 & 5284 \\ 
+  2017 & 75239 & 250024 & 2492335 & 4712 \\ 
+  2018 & 52299 & 125414 & 2213658 & 4084 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1487,7 +1393,10 @@ data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.p
 \clearpage
 <!--  -->
 
-![Comparisons of area-swept estimates of total (90+ mm CL) male survey biomass (tons) and model predictions for the model scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png)
+
+```
+## Error in data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData)): arguments imply differing number of rows: 1, 0
+```
 
 <!--  -->
 
@@ -1531,22 +1440,6 @@ data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.p
 ![Comparisons of mature male biomass relative to the dynamic $B_0$ value, (15 February, 1978-2017) for  each of the model scenarios.\label{fig:dynB0}](figure/Dynamic_Bzero-1.png)
 
 \clearpage
-
-<!--  
-
-![Distribution of carapace width (mm) at recruitment.\label{fig:init_rec}](figure/init_rec-1.png)
-\clearpage
-
-![Probability of size transition by stage (i.e. the combination of the growth matrix and molting probabilities). Each of the panels represent the stage before a transition. The x-axes represent the stage after a transition. The size transition matrix was provided as an input directly to Gmacs (as it was during the 2015 SMBKC assessment).\label{fig:size_trans}](figure/size_trans-1.png)
-
-
-```
-## Error: <text>:2:6: unexpected ','
-## 1: .get_numbers_df(M[3])
-## 2: (M[3],
-##         ^
-```
--->
 
 \newpage\clearpage
 

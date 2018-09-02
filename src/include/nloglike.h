@@ -49,7 +49,8 @@ namespace acl
 			c1 = m_O.colmin();
 			c2 = m_O.colmax();
 		}
-		~negativeLogLikelihood(){}
+		     // ~negativeLogLikelihood(){}
+		virtual ~negativeLogLikelihood() { }
 		
 		dmatrix get_O()     const{ return m_O;    }
 		void    set_O(dmatrix _O){ this->m_O = _O;}
@@ -112,8 +113,9 @@ namespace acl
 		{
 			if ( m_bCompress ) tail_compression();
 		}
+		virtual ~multinomial() { }
 
-		~multinomial();
+		// ~multinomial();
 
 		dvariable get_n()      const { return m_log_vn;    }
 		void      set_n(dvariable _n){ this->m_log_vn = _n;}
@@ -166,7 +168,8 @@ namespace acl
 			if ( m_bCompress ) tail_compression();
 		}
 
-		~robust_multi();
+		// ~robust_multi();
+		virtual ~robust_multi() { }
 
 		dvariable get_n()      const { return m_log_vn;    }
 		void      set_n(dvariable _n){ this->m_log_vn = _n;}
@@ -218,7 +221,8 @@ namespace acl
 			if ( m_bCompress ) tail_compression();
 		}
 
-		~dirichlet();
+		// ~dirichlet();
+		virtual ~dirichlet() { }
 
 		dvariable get_n()      const { return m_log_vn;    }
 		void      set_n(dvariable _n){ this->m_log_vn = _n;}
