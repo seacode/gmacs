@@ -189,7 +189,7 @@
   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func)
   2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters)
   1978    # First year for average recruitment for Bspr calculation
-  2017    # Last year for average recruitment for Bspr calculation
+  2018    # Last year for average recruitment for Bspr calculation
   0.35    # Target SPR ratio for Bmsy proxy
   1       # Gear index for SPR calculations (i.e. directed fishery)
   1       # Lambda (proportion of mature male biomass for SPR reference points)

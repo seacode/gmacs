@@ -36,23 +36,23 @@ fishery resumed again in 2014/15 with a TAC of 300 t (0.655 million pounds), but
 relatively poor with a retained catch of 140 t (0.309 million pounds). The retained catch in 2015/16 was even lower
 at 48 t (0.105 million pounds) and the fishery has remained closed since 2016/17.
 
-3. **Stock biomass**: The 1975-2018 NMFS trawl survey mean biomass is 5,664 t with the 8th lowest value occurring in 2018 (the 
-third lowest since 2000) with a biomass of $\ge$ 90 mm carapace length (CL) and larger male crab of just at 1,730 t (~31% of the long term mean; 
-3.814 million lbs with a CV of 28%).
-The most recent 3-year average of the NMFS survey is 41% of the mean value, suggesting a general decline in biomass compared to
+3. **Stock biomass**: The 1975-2018 NMFS trawl survey mean biomass is 5,664 t with the 2018 value being the
+5th lowest (1,731 t; the third lowest since 2000). This biomass of $\ge$ 90 mm carapace length (CL) male crab is 
+about 31% of the long term mean  at 3.814 million lbs with a CV of 28%.
+The most recent 3-year average of the NMFS survey is 41% of the mean value, further indicating a decline in biomass compared to
 the survey estimates in 2010 and 2011 that were over 6 times the current average. 
-The assessment model estimates dampen the interannual
-variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about
+The ADFG pot survey was again conducted in this region and the relative biomass in this index was the lowest
+in the time series (12% of the mean from the 11 surveys conducted since 1995).
+The assessment model estimates dampen the interannual variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about
 27% 
 of the long term model-predicted survey biomass average. The trend from these values suggests a slight decline.
 
-
 4. **Recruitment**: Recruitment is based on estimated number of male crab within the 90-104 mm CL size class
 in each year. The 2018 trawl-survey area-swept estimate of 0.154 million male SMBKC in this size class is the third lowest in 
-the 41 years since 1978 and follows the lowest (as observed in 2017). The recent six-year (2013 - 2018) average recruitment that is only 45% of this mean. 
+the 41 years since 1978 and follows the lowest (as observed in 2017). The recent six-year (2013 - 2018) average recruitment 
+is only 45% of this mean. 
 In the pot-survey, the abundance of this size group in 2017 was also the second-lowest in the time series (22% of the mean for the 
-available pot-survey data) whereas in 2018 the value was the lowest observed at only 10% of the mean value (the total (all sizes) in the pot-survey index was also the lowest
-and was 12% of the mean).
+available pot-survey data) whereas in 2018 the value was the lowest observed at only 10% of the mean value.
 
 5. **Management performance**: In this assessment estimated total male catch is the sum of fishery-reported retained
 catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish
@@ -78,8 +78,8 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   2014/15 & 1.86$^B$ & 2.48$^B$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
   2015/16 & 1.84$^C$ & 2.11$^C$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\ 
   2016/17 & 1.93$^D$ & 2.12$^D$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\ 
-  2017/18 & 1.93$^E$ & 2.13$^E$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\
-  2018/19 & & 2.09$^E$ & & & & 0 & 0 \\
+  2017/18 & 1.85$^E$ & 1.29$^E$ & 0.00 & 0.00 & 0.05 & 0.28 & 0.22 \\
+  2018/19 & & 1.26$^E$ & & & & 0.04 & 0.03 \\
   \hline
 \end{tabular}
 \end{table}
@@ -96,13 +96,13 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   2014/15 & 4.1$^B$ & 5.47$^B$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
   2015/16 & 4.1$^C$ & 4.65$^C$ & 0.419 & 0.110 & 0.110  & 0.62 & 0.49 \\ 
   2016/17 & 4.3$^D$ & 4.68$^D$ & 0.410 & 0.000 & 0.000  & 0.62 & 0.49 \\ 
-  2017/18 & 4.3$^E$ & 4.69$^E$ & 0.41 & 0.000 & 0.000 & 0.62 & 0.49 \\
-  2018/19 & & 4.61$^E$ & & & & 0 & 0 \\
+  2017/18 & 4.1$^E$ & 2.85$^E$ & 0.41 & 0.000 & 0.000 & 0.62 & 0.49 \\
+  2018/19 & & 2.78$^E$ & & & & 0.09 & 0.07 \\
   \hline
 \end{tabular}
 \end{table}
 
-6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference time period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
+6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of biomass for this Tier 4 stock, with males measuring 105 mm CL or more considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
 \begin{table}[ht]
 \centering
 \caption{Basis for the OFL (1000 t) from the reference model.} 
@@ -117,8 +117,8 @@ E - calculated from the assessment reviewed by the Crab Plan Team in September 2
   2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
   2016/17 & 4b & 3.67 & 2.23 & 0.61 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
   2017/18 & 4b & 3.86 & 2.05 & 0.53 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
-  2018/19 & 4b & 3.86 & 2.09 & 0.54 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
-  2019/20 & 4b & 3.86 & 2.09 & 0.54 & 0.09 & 1 & 1978-2017 & 0.18 \\ 
+  2018/19 & 4b & 3.69 & 1.26 & 0.34 & 0.09 & 1 & 1978-2018 & 0.18 \\ 
+  2019/20 & 4b & 3.69 & 1.26 & 0.34 & 0.09 & 1 & 1978-2018 & 0.18 \\ 
   \hline
 \end{tabular}
 \end{table}
@@ -342,11 +342,11 @@ This assessment model again uses the modeling framework Gmacs and is detailed in
 ## Model Selection and Evaluation
 
 Five models were presented in the previous assessment. This year, four models are presented with the  reference model
-being the same configuration as last year, three sensitivities are considered, one with a  different treatment of NMFS
-bottom trawl survey (BTS) data using a geo-spatial model (VAST; Thorson and Barnett 2017), another which weights the
-survey data more heavily, and a third which weights the size composition data according to Francis' (2011) approach. In
-addition to these sensitivities, we also evaluated the impact of adding new data to the reference model. In summary, the
-following lists the models presented and the naming convention  used:
+being the same configuration as last year (Ianelli et al. 2017), two sensitivities are considered, one with a  different treatment of NMFS
+bottom trawl survey (BTS) data using a geo-spatial model (VAST; Thorson and Barnett 2017, Appendix C). A second 
+sensitivity was constructed which weights the
+survey data more heavily. In addition to these sensitivities, we also evaluated the impact of adding new data 
+to the reference model. In summary, the following lists the models presented and the naming convention  used:
 
 1. **2017 Model**: the 2017 recommended model without any new data
 
@@ -363,19 +363,17 @@ following lists the models presented and the naming convention  used:
    up-weighted by $\lambda^\text{ADFG}=$ 2. 
 
 Note that SSC convention would label these (item 3 above) as model 16.0 (the
-model used last year). Since so few models are presented here, for simplicity
-model 16.0 is labeled "reference" and for the others, the naming convention
-above was used to make it easier to remember the main characteristic of the
-model configuration.
+model first developed in that year). Since only a few models are presented here, for simplicity
+we labeled model 16.0 as "reference" and for the others, we used the  simple naming convention
+presented above.
 
 ## Results
 
 ### a. Sensitivity to new data
-Results for scenarios are provided with comparisons to the 2016 model and sensitivity new data are shown in Figures
+Results for scenarios are provided with comparisons to the 2017 model and sensitivity new data are shown in Figures
 \ref{fig:surv1} and \ref{fig:surv2} with recruitment and spawning biomass shown in Figures \ref{fig:rec1} and \ref{fig:ssb1}, respectively. 
  The fits to survey CPUEs and spawning biomass show that the addition of new data results in more of a decline than
- in the 2016 assessment, especially with the addition of the pot survey. The model with all new data is henceforth 
- referred to as the "reference model."
+ in the 2017 assessment, especially with the addition of the pot survey. 
 
 ### b. Alternative NMFS bottom-trawl survey index
 Results comparing model fits between the "VAST" spatio-temporal index and the reference case show different time-series
@@ -386,15 +384,16 @@ higher since 1990 compared to the reference model (Figure  \ref{fig:ssb2}).
 Observed and estimated effective sample sizes are compared in Table \ref{tab:effn}. 
 Data weighting factors, standard deviation of normalized residuals (SDNRs), and mean absolute residual (MAR) are 
 presented in Table \ref{tab:data_weighting}. The SDNR for the trawl survey
-is acceptable at 1.45 in the reference model, and improves to 1.36 in the **Francis weight** model (since size
-composition data are re-weighted).  The SDNRs for the pot surveys show much the same pattern between each of the
-scenarios, but are much higher values (ranging from 3.72 to 5.45).  These values are very high, and whilst they can be
-improved by down-weighting the pot survey, we chose to retain the values as the pot survey considered
-important to include (down-weighting the data further would effectively exclude the signal from this series). 
+is acceptable at 1.66 in the reference model. In 2017, Francis weighting was applied but given the relatively few size
+bins in this assessment, this application was suspended this year.  
+The SDNRs for the pot surveys show much the same pattern between each of the
+scenarios, but are much higher suggesting an inconsistency between the pot survey data and the model structure and other data
+components. Rather than re-weighting, we chose to retain the values 
+as specified noting that down-weighting these data would effectively exclude the signal from this series. 
 The MAR for the trawl and pot surveys shows the same pattern among each of the
-scenarios as the SDNR. The SDNR (and MAR) values for the trawl survey and pot survey size compositions were excellent,
-ranging from 0.49 to 0.78.
-The SDNRs for the directed pot fishery and other size compositions were all accepatable.
+scenarios as the SDNR. The SDNR (and MAR) values for the trawl survey and pot survey size compositions were relatively good,
+ranging from 0.54 to 0.73 for the reference case.
+The SDNRs for the directed pot fishery and other size compositions were  similar to previous estimates.
 
 ### d. Parameter estimates
 Model parameter estimates for each of the Gmacs scenarios are summarized in Tables \ref{tab:est_pars_ref},
@@ -414,7 +413,6 @@ variable over time for all models and in recent years is well below average (Fig
 mature male biomass on 15 February also fluctuates considerably (Figure \ref{fig:mmb}). Estimated natural mortality each
 year ($M_t$) is presented in Figure \ref{fig:M_t}.
 
-
 ### d. Evaluation of the fit to the data.
 The model fits to total male ($\ge$ 90 mm CL) trawl survey biomass tend to miss the recent peak around 2010 and is
 slightly above the 2017 value for the key sensitivities (Figures \ref{fig:trawl_survey_biomass}).  All of the models fit
@@ -429,15 +427,14 @@ residual  plots of the composition data fits are generally poor (Figures \ref{fi
 The model fits to different types of retained and discarded catch values performed as expected given the assumed levels
 of uncertainty on the input data (Figure  \ref{fig:fit_to_catch} ).
 
-The contrast between the reference model and the "Francis weighted" model show minor differences (Figures
-\ref{fig:trawl_survey_biomass} and \ref{fig:pot_survey_cpue}). 
 Unsurprisingly, the **fit surveys** model configuration fits the 
 the NMFS survey biomass and ADF&G pot survey CPUE  data better but still has a similar residual pattern
-(note that that this scenario was only included
-for exploratory purposes and forcing these weights resulted in worse SDNR and MAR values for the two abundance indices).
+(Figures \ref{fig:trawl_survey_biomass} and \ref{fig:pot_survey_cpue}). 
+It is worth noting that that this scenario (included for exploratory purposes) resulted in worse SDNR and MAR values for the two abundance indices.
 
-### e. Retrospective and historic analyses.
-The ability to conduct retrospective analyses with this software remains under development.
+### e. Retrospective and historical analyses
+This is only the second year a formal assessment model has been developed for this stock. As such, retrospective patterns and 
+historical analyses relative to fisheries impacts would be limited.
 
 ### f. Uncertainty and sensitivity analyses.
 Estimated standard deviations of parameters and selected management measures for the four models are summarized in
@@ -480,24 +477,24 @@ directed pot fishery and groundfish trawl and fixed-gear fishing mortalities set
 over years for which there are data-based estimates of bycatch-mortality biomass.
 
 The currently recommended Tier 4 convention is to use the full assessment period, currently 1978-
-2017, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with
+2018, to define a $B_\mathit{MSY}$ proxy in terms of average estimated MMB and to set $\gamma$ = 1.0 with
 assumed stock natural mortality $M$ = 0.18 $\text{yr}^{-1}$ in setting the $F_\mathit{MSY}$ proxy value $\gamma M$. The
 parameters $\alpha$ and $\beta$ are assigned their default values $\alpha$ = 0.10 and $\beta$ = 0.25. The
 $F_\mathit{OFL}$, OFL, ABC, and MMB in 2018 for all scenarios are summarized in Table \ref{tab:management_quants}. ABC
-is 80% of the OFL.
+is taken as 80% of the OFL.
 \begin{table}[ht]
 \centering
 \caption{Comparisons of management measures for the four model scenarios. Biomass and OFL are in tons.} 
 \label{tab:management_quants}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrr}
   \hline
-Component & Reference & VAST & Fit surveys & Francis weights & NA \\ 
+Component & Reference & VAST & Fit surveys \\ 
   \hline
-$\text{MMB}_{2018}$ & 2141.716 & 2089.749 & 1249.315 & 2282.678 & 4084.014 \\ 
-  $B_\text{MSY}$ & 3888.059 & 3863.373 & 3759.320 & 4334.962 & 9930.858 \\ 
-  $F_\text{OFL}$ & 0.078 & 0.077 & 0.039 & 0.074 & 0.053 \\ 
-  $\text{OFL}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\ 
-  $\text{ABC}_{2018}$ & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\ 
+$\text{MMB}_{2018}$ & 1262.073 & 2320.030 & 4212.421 \\ 
+  $B_\text{MSY}$ & 3690.090 & 4285.030 & 9627.425 \\ 
+  $F_\text{OFL}$ & 0.041 & 0.077 & 0.058 \\ 
+  $\text{OFL}_{2018}$ & 39.287 & 133.599 & 212.672 \\ 
+  $\text{ABC}_{2018}$ & 31.430 & 106.880 & 170.138 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -505,7 +502,8 @@ $\text{MMB}_{2018}$ & 2141.716 & 2089.749 & 1249.315 & 2282.678 & 4084.014 \\
 
 # G. Rebuilding Analysis
 
-This stock is not currently subject to a rebuilding plan.
+This stock is not currently subject to a rebuilding plan. However, interpretation of the point estimate for the reference case
+suggests that the mature male biomass is below 50% of $B_\mathit{MSY}$ but slightly above for the "VAST" model configuration (Table \ref{tab:management_quants} ).
 
 # H. Data Gaps and Research Priorities
 
@@ -519,16 +517,23 @@ The following topics have been listed as areas where more research on SMBKC is n
 
   4. Natural mortality.
 
-# I. Projections and Future Outlook
+# I. Projections and outlook
 
-The outlook for recruitment looks relatively pessimistic. The dynamic-$B_0$ analysis, which removes historical fishing and projects
-the population based on estimated recruitments, indicates that the effect of fishing has reduced the stock to about 
-  181%. The other aspects of depletion (ignoring stock-recruit
-  relationship) may reflect variable  survival rates due to environmental conditions and range shifts. 
+The outlook for recruitment is quite pessimistic and given the abundance relative to the proxy $B_\mathit{MSY}$, 
+further reductions from fishing should be avoided. The NMFS survey results in 2018 noted much warmer conditions than 
+normal with an absence of a "cold pool" in the region. This could have detrimental effects on the SMBKC stocks and
+should be carefully monitored. Relative to the impact of historical fishing, we again conducted a
+ "dynamic-$B_0$" analysis. This procedure simply projects
+the population based on estimated recruitment but removes the effect of fishing. For the reference case,
+this suggests that the impact of fishing has reduced to stock to about
+  60% of what it would have been in the absence of
+  fishing (Figure \ref{fig:dynB0}) . The other non-fishing contributors to the observed depleted stock trend (ignoring stock-recruit
+  relationship) may reflect variable  survival rates due to environmental conditions and also range shifts. 
 
 # J. Acknowledgements
 
-We thank the Crab Plan Team, Doug Pengilly for reviewing the earlier draft of this manuscript. Some materials in the report are from the SAFE report prepared by Bill Gaeuman in 2014. We thank Andre Punt for his input into the Gmacs model and for finding the error in the old SMBKC model code.
+We thank the Crab Plan Team and AFSC staff for reviewing an earlier draft of this report 
+and Andre Punt for his input into refinements to the Gmacs model code.
 
 # K. References
 
@@ -551,6 +556,8 @@ Francis, R.I.C.C. 2011. Data weighting in statistical fisheries stock assessment
 Gaeuman, W.B. 2013. Summary of the 2012/13 mandatory crab observer program database for the Bering Sea/Aleutian Islands commercial crab fisheries. Alaska Department of Fish and Game, Fishery Data Series No. 13-54, Anchorage. 
 
 Gish, R.K., V.A. Vanek, and D. Pengilly. 2012. Results of the 2010 triennial St. Matthew Island blue king crab pot survey and 2010/11 tagging study. Alaska Department of Fish and Game, Fishery Management Report No. 12-24, Anchorage.
+
+Ianelli, J., D. Webber, and J. Zheng, 2017. Stock assessment of Saint Matthews Island Blue King Crab. North Pacific Fishery Managment Council. Anchorage AK.
 
 Jensen, G.C. and D.A. Armstrong. 1989. Biennial reproductive cycle of blue king crab, Paralithodes platypus, at the Pribilof Islands, Alaska and comparison to a congener, P. camtschatica. Can. J. Fish. Aquat. Sci. 46: 932-940.
 
@@ -582,7 +589,6 @@ Thorson, J. T., and L. A. K. Barnett. 2017. Comparing estimates of abundance tre
 
 Webber, D., J. Zheng, and J. Ianelli, 2016. Stock assessment of Saint Matthews Island Blue King Crab. North Pacific Fishery Managment Council. Anchorage AK.
 
-<!-- Wilderbuer, T., D. G. Nichol, and J. Ianelli. 2013. Assessment of the yellowfin sole stock in the Bering Sea and Aleutian Islands. Pages 619-708 in 2013 North Pacific Groundfish Stock Assessment and Fishery Evaluation Reports for 2014. North Pacific Fishery Management Council, Anchorage. -->
 
 Zheng, J. 2005. A review of natural mortality estimation for crab stocks: data-limited for every stock? Pages 595-612 [In] Fisheries Assessment and Management in Data-Limited Situations. University of Alaska Fairbanks, Alaska Sea Grant Program Report 05-02, Fairbanks.
 
@@ -926,25 +932,25 @@ Year & Stage-1 & Stage-2 & Stage-3 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.628 & 0.127 \\ 
-  $\log (\bar{R})$ & 13.894 & 0.056 \\ 
-  $\log (n^0_1)$ & 14.924 & 0.172 \\ 
-  $\log (n^0_2)$ & 14.574 & 0.200 \\ 
-  $\log (n^0_3)$ & 14.377 & 0.206 \\ 
-  $q_{pot}$ & 3.569 & 0.245 \\ 
-  $\log (\bar{F}^\text{df})$ & -1.852 & 0.052 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.268 & 0.078 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.181 & 0.078 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.636 & 0.174 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.304 & 0.126 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.283 & 0.150 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.633 & 0.127 \\ 
+  $\log (\bar{R})$ & 13.898 & 0.056 \\ 
+  $\log (n^0_1)$ & 14.924 & 0.171 \\ 
+  $\log (n^0_2)$ & 14.567 & 0.200 \\ 
+  $\log (n^0_3)$ & 14.371 & 0.206 \\ 
+  $q_{pot}$ & 3.576 & 0.245 \\ 
+  $\log (\bar{F}^\text{df})$ & -2.132 & 0.052 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.266 & 0.078 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.180 & 0.078 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.640 & 0.174 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.306 & 0.126 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.203 & 0.146 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.217 & 0.064 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.226 & 0.064 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.665 & 0.115 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.702 & 0.114 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.039 & 0.006 \\ 
-  OFL & 0.000 & 0.000 \\ 
+  $F_\text{OFL}$ & 0.041 & 0.006 \\ 
+  OFL & 39.287 & 9.118 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -957,25 +963,25 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.628 & 0.127 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.741 & 0.103 \\ 
-  $\log (\bar{R})$ & 14.127 & 0.048 \\ 
-  $\log (n^0_1)$ & 14.944 & 0.167 \\ 
-  $\log (n^0_2)$ & 14.576 & 0.192 \\ 
-  $\log (n^0_3)$ & 14.400 & 0.191 \\ 
-  $q_{pot}$ & 2.501 & 0.134 \\ 
-  $\log (\bar{F}^\text{df})$ & -2.021 & 0.040 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.604 & 0.068 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.519 & 0.068 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.728 & 0.170 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.350 & 0.123 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.085 & 0.149 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.748 & 0.102 \\ 
+  $\log (\bar{R})$ & 14.133 & 0.048 \\ 
+  $\log (n^0_1)$ & 14.945 & 0.166 \\ 
+  $\log (n^0_2)$ & 14.569 & 0.192 \\ 
+  $\log (n^0_3)$ & 14.396 & 0.191 \\ 
+  $q_{pot}$ & 2.499 & 0.133 \\ 
+  $\log (\bar{F}^\text{df})$ & -2.320 & 0.039 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.605 & 0.068 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.520 & 0.068 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.732 & 0.170 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.351 & 0.123 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.246 & 0.063 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.258 & 0.064 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.584 & 0.116 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.621 & 0.114 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.074 & 0.006 \\ 
-  OFL & 0.000 & 0.000 \\ 
+  $F_\text{OFL}$ & 0.077 & 0.006 \\ 
+  OFL & 133.600 & 17.572 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -988,15 +994,15 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.741 & 0.103 \\
   \hline
 Parameter & Estimate & SD \\ 
   \hline
-Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 2.242 & 0.085 \\ 
-  $\log (\bar{R})$ & 14.363 & 0.063 \\ 
+Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 2.243 & 0.085 \\ 
+  $\log (\bar{R})$ & 14.391 & 0.063 \\ 
   $\log (n^0_1)$ & 15.499 & 0.413 \\ 
-  $\log (n^0_2)$ & 15.332 & 0.434 \\ 
+  $\log (n^0_2)$ & 15.331 & 0.434 \\ 
   $\log (n^0_3)$ & 15.166 & 0.402 \\ 
-  $q_{pot}$ & 0.918 & 0.037 \\ 
-  $\log (\bar{F}^\text{df})$ & -2.895 & 0.036 \\ 
-  $\log (\bar{F}^\text{tb})$ & -10.404 & 0.065 \\ 
-  $\log (\bar{F}^\text{fb})$ & -9.319 & 0.065 \\ 
+  $q_{pot}$ & 0.918 & 0.038 \\ 
+  $\log (\bar{F}^\text{df})$ & -3.184 & 0.036 \\ 
+  $\log (\bar{F}^\text{tb})$ & -10.397 & 0.065 \\ 
+  $\log (\bar{F}^\text{fb})$ & -9.312 & 0.065 \\ 
   log Stage-1 directed pot selectivity 1978-2008 & -0.372 & 0.135 \\ 
   log Stage-2 directed pot selectivity 1978-2008 & -0.114 & 0.116 \\ 
   log Stage-1 directed pot selectivity 2009-2017 & -0.000 & 0.000 \\ 
@@ -1005,8 +1011,8 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 2.242 & 0.085 \\
   log Stage-2 NMFS trawl selectivity & -0.000 & 0.000 \\ 
   log Stage-1 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.000 & 0.000 \\ 
-  $F_\text{OFL}$ & 0.053 & 0.003 \\ 
-  OFL & 0.000 & 0.000 \\ 
+  $F_\text{OFL}$ & 0.058 & 0.003 \\ 
+  OFL & 212.670 & 21.144 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1019,24 +1025,24 @@ Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 2.242 & 0.085 \\
   \hline
 Parameter & Ref & VAST & FitSurvey \\ 
   \hline
-$F_\text{OFL}$ & 0.039 & 0.074 & 0.053 \\ 
-  $\log (\bar{F}^\text{df})$ & -1.852 & -2.021 & -2.895 \\ 
-  $\log (\bar{F}^\text{fb})$ & -8.181 & -8.519 & -9.319 \\ 
-  $\log (\bar{F}^\text{tb})$ & -9.268 & -9.604 & -10.404 \\ 
-  $\log (\bar{R})$ & 13.894 & 14.127 & 14.363 \\ 
-  $\log (n^0_1)$ & 14.924 & 14.944 & 15.499 \\ 
-  $\log (n^0_2)$ & 14.574 & 14.576 & 15.332 \\ 
-  $\log (n^0_3)$ & 14.377 & 14.400 & 15.166 \\ 
-  $q_{pot}$ & 0.004 & 0.003 & 0.001 \\ 
-  Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.628 & 1.741 & 2.242 \\ 
-  OFL & 0.000 & 0.000 & 0.000 \\ 
-  log Stage-1 ADF\&G pot selectivity & -0.665 & -0.584 & -0.000 \\ 
-  log Stage-1 NMFS trawl selectivity & -0.217 & -0.246 & -0.000 \\ 
-  log Stage-1 directed pot selectivity 1978-2008 & -0.636 & -0.728 & -0.372 \\ 
-  log Stage-1 directed pot selectivity 2009-2017 & -0.283 & -0.085 & -0.000 \\ 
+$F_\text{OFL}$ & 0.041 & 0.077 & 0.058 \\ 
+  $\log (\bar{F}^\text{df})$ & -2.132 & -2.320 & -3.184 \\ 
+  $\log (\bar{F}^\text{fb})$ & -8.180 & -8.520 & -9.312 \\ 
+  $\log (\bar{F}^\text{tb})$ & -9.266 & -9.605 & -10.397 \\ 
+  $\log (\bar{R})$ & 13.898 & 14.133 & 14.391 \\ 
+  $\log (n^0_1)$ & 14.924 & 14.945 & 15.499 \\ 
+  $\log (n^0_2)$ & 14.567 & 14.569 & 15.331 \\ 
+  $\log (n^0_3)$ & 14.371 & 14.396 & 15.166 \\ 
+  $q_{pot}$ & 0.004 & 0.002 & 0.001 \\ 
+  Natural mortality deviation in 1998/99 ($\delta^M_{1998})$ & 1.633 & 1.748 & 2.243 \\ 
+  OFL & 39.287 & 133.600 & 212.670 \\ 
+  log Stage-1 ADF\&G pot selectivity & -0.702 & -0.621 & -0.000 \\ 
+  log Stage-1 NMFS trawl selectivity & -0.226 & -0.258 & -0.000 \\ 
+  log Stage-1 directed pot selectivity 1978-2008 & -0.640 & -0.732 & -0.372 \\ 
+  log Stage-1 directed pot selectivity 2009-2017 & -0.203 & -0.000 & -0.000 \\ 
   log Stage-2 ADF\&G pot selectivity & -0.000 & -0.000 & -0.000 \\ 
   log Stage-2 NMFS trawl selectivity & -0.000 & -0.000 & -0.000 \\ 
-  log Stage-2 directed pot selectivity 1978-2008 & -0.304 & -0.350 & -0.114 \\ 
+  log Stage-2 directed pot selectivity 1978-2008 & -0.306 & -0.351 & -0.114 \\ 
   log Stage-2 directed pot selectivity 2009-2017 & -0.000 & -0.000 & -0.000 \\ 
    \hline
 \end{tabular}
@@ -1046,111 +1052,111 @@ $F_\text{OFL}$ & 0.039 & 0.074 & 0.053 \\
 \centering
 \caption{Comparisons of data weights, Francis LF weights (i.e. the new weights that should be applied to the LFs), SDNR values, and MAR values for the four model scenarios.} 
 \label{tab:data_weighting}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrr}
   \hline
-Component & Reference & VAST & Fit survey & Francis & NA \\ 
+Component & Reference & VAST & Fit surveys \\ 
   \hline
-NMFS trawl survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 2.00 \\ 
-  ADF\&G pot survey weight & 1.00 & 1.00 & 1.00 & 1.00 & 2.00 \\ 
-  Directed pot LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 1.95 \\ 
-  NMFS trawl survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.22 \\ 
-  ADF\&G pot survey LF weight & 1.00 & 1.00 & 1.00 & 1.00 & 0.10 \\ 
+NMFS trawl survey weight & 1.00 & 1.00 & 2.00 \\ 
+  ADF\&G pot survey weight & 1.00 & 1.00 & 2.00 \\ 
+  Directed pot LF weight & 1.00 & 1.00 & 1.95 \\ 
+  NMFS trawl survey LF weight & 1.00 & 1.00 & 0.22 \\ 
+  ADF\&G pot survey LF weight & 1.00 & 1.00 & 0.10 \\ 
    \hline
-Fancis weight for directed pot LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Francis weight for NMFS trawl survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Francis weight for ADF\&G pot survey LF & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+Fancis weight for directed pot LF & 1.62 & 1.55 & 1.23 \\ 
+  Francis weight for NMFS trawl survey LF & 0.47 & 0.40 & 0.16 \\ 
+  Francis weight for ADF\&G pot survey LF & 1.20 & 0.91 & 0.05 \\ 
    \hline
-SDNR NMFS trawl survey & 1.45 & 1.46 & 1.66 & 1.98 & 2.40 \\ 
-  SDNR ADF\&G pot survey & 3.77 & 3.75 & 4.42 & 4.82 & 6.80 \\ 
-  SDNR directed pot LF & 0.71 & 0.71 & 0.76 & 0.88 & 1.63 \\ 
-  SDNR NMFS trawl survey LF & 1.24 & 1.23 & 1.32 & 1.42 & 1.31 \\ 
-  SDNR ADF\&G pot survey LF & 0.89 & 0.88 & 0.97 & 1.11 & 1.36 \\ 
+SDNR NMFS trawl survey & 1.66 & 1.98 & 2.43 \\ 
+  SDNR ADF\&G pot survey & 4.44 & 4.85 & 7.01 \\ 
+  SDNR directed pot LF & 0.79 & 0.92 & 1.66 \\ 
+  SDNR NMFS trawl survey LF & 1.32 & 1.43 & 1.23 \\ 
+  SDNR ADF\&G pot survey LF & 0.94 & 1.08 & 1.19 \\ 
    \hline
-MAR NMFS trawl survey & 1.18 & 1.16 & 1.24 & 1.07 & 1.65 \\ 
-  MAR ADF\&G pot survey & 2.96 & 2.94 & 2.62 & 2.95 & 3.40 \\ 
-  MAR directed pot LF & 0.60 & 0.60 & 0.60 & 0.61 & 0.91 \\ 
-  MAR NMFS trawl survey LF & 0.53 & 0.53 & 0.55 & 0.69 & 0.86 \\ 
-  MAR ADF\&G pot survey LF & 0.69 & 0.68 & 0.71 & 0.86 & 1.04 \\ 
+MAR NMFS trawl survey & 1.22 & 1.09 & 1.64 \\ 
+  MAR ADF\&G pot survey & 2.71 & 2.92 & 3.80 \\ 
+  MAR directed pot LF & 0.62 & 0.61 & 0.90 \\ 
+  MAR NMFS trawl survey LF & 0.54 & 0.67 & 0.82 \\ 
+  MAR ADF\&G pot survey LF & 0.73 & 0.85 & 1.02 \\ 
    \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\caption{Comparisons of negative log-likelihood values for the four model scenarios. It is important to note that some of these models cannot be compared since the input sample size (or variances) are modified by re-weighting (e.g., {\bf Francis} model).} 
+\caption{Comparisons of negative log-likelihood values for the selected model scenarios. It is important to note that comparisons among models may be limited since the assumed variances are modified (e.g., {\bf Fit surveys} model).} 
 \label{tab:likelihood_components}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrr}
   \hline
-Component & Ref & VAST & FitSurvey & Francis & NA \\ 
+Component & Reference & VAST & Fit surveys \\ 
   \hline
-Pot Retained Catch & -71.54 & -71.52 & -70.90 & -70.33 & -68.90 \\ 
-  Pot Discarded Catch & 8.71 & 8.63 & 9.58 & 14.86 & 65.13 \\ 
-  Trawl bycatch Discarded Catch & -7.16 & -7.43 & -7.43 & -7.43 & -7.43 \\ 
-  Fixed bycatch Discarded Catch & -7.13 & -7.41 & -7.39 & -7.42 & -7.42 \\ 
-  NMFS Trawl Survey & -3.89 & -3.95 & 12.65 & 9.31 & 47.61 \\ 
-  ADF\&G Pot Survey CPUE & 56.94 & 56.02 & 88.60 & 112.37 & 231.05 \\ 
-  Directed Pot LF & -11.17 & -11.15 & -9.87 & -5.87 & 29.74 \\ 
-  NMFS Trawl LF & 18.75 & 17.86 & 25.86 & 39.90 & 107.77 \\ 
-  ADF\&G Pot LF & -5.47 & -5.61 & -3.89 & 0.49 & 33.54 \\ 
-  Recruitment deviations & 53.72 & 54.03 & 57.33 & 54.55 & 69.20 \\ 
-  F penalty & 14.49 & 14.49 & 14.49 & 14.49 & 14.49 \\ 
-  M penalty & 6.47 & 6.47 & 6.47 & 6.47 & 6.49 \\ 
-  Prior & 12.66 & 12.66 & 12.66 & 12.66 & 13.61 \\ 
-  Total & 65.39 & 63.10 & 128.15 & 174.06 & 534.87 \\ 
-  Total estimated parameters & 139.00 & 141.00 & 141.00 & 141.00 & 141.00 \\ 
+Pot Retained Catch & -73.44 & -72.87 & -70.91 \\ 
+  Pot Discarded Catch & 11.06 & 16.54 & 80.66 \\ 
+  Trawl bycatch Discarded Catch & -7.43 & -7.43 & -7.43 \\ 
+  Fixed bycatch Discarded Catch & -7.39 & -7.42 & -7.42 \\ 
+  NMFS Trawl Survey & 12.92 & 9.54 & 50.40 \\ 
+  ADF\&G Pot Survey CPUE & 89.84 & 113.93 & 247.28 \\ 
+  Directed Pot LF & -8.80 & -4.33 & 30.58 \\ 
+  NMFS Trawl LF & 25.96 & 39.94 & 104.67 \\ 
+  ADF\&G Pot LF & -4.53 & -0.46 & 31.71 \\ 
+  Recruitment deviations & 57.19 & 54.39 & 67.52 \\ 
+  F penalty & 14.49 & 14.49 & 14.49 \\ 
+  M penalty & 6.47 & 6.47 & 6.49 \\ 
+  Prior & 12.66 & 12.66 & 13.61 \\ 
+  Total & 129.01 & 175.47 & 561.64 \\ 
+  Total estimated parameters & 142.00 & 142.00 & 142.00 \\ 
    \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\caption{Population abundances ($\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey and mature male biomass (MMB) in tons on 15 February for the {\bf 2016 model}.} 
+\caption{Population abundances ($\boldsymbol{n}$) by crab stage in numbers of crab at the time of the survey and mature male biomass (MMB) in tons on 15 February for the {\bf model configuration used in 2017}.} 
 \label{tab:pop_abundance_2016}
 \begin{tabular}{rrrrr}
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3024666 & 2068576 & 1713619 & 4812 \\ 
-  1979 & 4242186 & 2402462 & 2397110 & 6687 \\ 
-  1980 & 3599593 & 3204521 & 3574696 & 10411 \\ 
-  1981 & 1353493 & 3105050 & 4917923 & 10787 \\ 
-  1982 & 1476139 & 1796399 & 4926372 & 7774 \\ 
-  1983 & 777972 & 1432839 & 3536665 & 4867 \\ 
-  1984 & 666841 & 915951 & 2125534 & 3434 \\ 
-  1985 & 938437 & 681847 & 1593775 & 3154 \\ 
-  1986 & 1407597 & 758643 & 1396375 & 3082 \\ 
-  1987 & 1353975 & 1050525 & 1497974 & 3593 \\ 
-  1988 & 1238076 & 1116681 & 1718315 & 3888 \\ 
-  1989 & 2805889 & 1072770 & 1880176 & 4396 \\ 
-  1990 & 1756923 & 1948631 & 2170700 & 5455 \\ 
-  1991 & 1822678 & 1642784 & 2634119 & 5473 \\ 
-  1992 & 1950634 & 1578274 & 2587859 & 5617 \\ 
-  1993 & 2193543 & 1629627 & 2681897 & 5834 \\ 
-  1994 & 1539215 & 1784821 & 2736464 & 5565 \\ 
-  1995 & 1778114 & 1464820 & 2633188 & 5477 \\ 
-  1996 & 1608434 & 1494547 & 2546266 & 5283 \\ 
-  1997 & 903444 & 1408043 & 2476531 & 4693 \\ 
-  1998 & 663921 & 978997 & 2072077 & 3282 \\ 
-  1999 & 398649 & 328936 & 803832 & 1873 \\ 
-  2000 & 441508 & 335125 & 874958 & 2013 \\ 
-  2001 & 409457 & 361580 & 941758 & 2168 \\ 
-  2002 & 145914 & 352113 & 1007753 & 2281 \\ 
-  2003 & 334551 & 199362 & 1032913 & 2155 \\ 
-  2004 & 227560 & 255850 & 994709 & 2148 \\ 
-  2005 & 513233 & 213897 & 981453 & 2076 \\ 
-  2006 & 764071 & 362188 & 976420 & 2232 \\ 
-  2007 & 515032 & 553247 & 1070115 & 2593 \\ 
-  2008 & 942251 & 469811 & 1207057 & 2784 \\ 
-  2009 & 753585 & 689955 & 1333843 & 2881 \\ 
-  2010 & 726500 & 655586 & 1441629 & 2571 \\ 
-  2011 & 600084 & 628647 & 1338753 & 2149 \\ 
-  2012 & 340146 & 548653 & 1104279 & 1764 \\ 
-  2013 & 440819 & 374605 & 895883 & 2001 \\ 
-  2014 & 361877 & 374243 & 979041 & 1990 \\ 
-  2015 & 346131 & 329310 & 980571 & 1987 \\ 
-  2016 & 416427 & 305470 & 996381 & 2105 \\ 
-  2017 & 243561 & 337319 & 1025157 & 2192 \\ 
-  2018 & 653212 & 249989 & 1049658 & 2142 \\ 
+1978 & 3023781 & 2049075 & 1702338 & 4768 \\ 
+  1979 & 4243623 & 2395504 & 2377772 & 6646 \\ 
+  1980 & 3602053 & 3203035 & 3555172 & 10372 \\ 
+  1981 & 1357467 & 3105955 & 4901100 & 10757 \\ 
+  1982 & 1475563 & 1798956 & 4913154 & 7752 \\ 
+  1983 & 773712 & 1433358 & 3526836 & 4848 \\ 
+  1984 & 665874 & 913703 & 2117136 & 3416 \\ 
+  1985 & 941768 & 680553 & 1585505 & 3136 \\ 
+  1986 & 1400419 & 760107 & 1389117 & 3070 \\ 
+  1987 & 1353705 & 1046932 & 1491960 & 3577 \\ 
+  1988 & 1238729 & 1115338 & 1711452 & 3874 \\ 
+  1989 & 2797116 & 1072696 & 1873823 & 4383 \\ 
+  1990 & 1754660 & 1943624 & 2164515 & 5438 \\ 
+  1991 & 1821352 & 1639841 & 2626200 & 5454 \\ 
+  1992 & 1949025 & 1576546 & 2579597 & 5600 \\ 
+  1993 & 2189645 & 1628140 & 2673947 & 5817 \\ 
+  1994 & 1535697 & 1782114 & 2728665 & 5547 \\ 
+  1995 & 1805851 & 1461927 & 2624902 & 5457 \\ 
+  1996 & 1607645 & 1509341 & 2540504 & 5289 \\ 
+  1997 & 905249 & 1412491 & 2479049 & 4703 \\ 
+  1998 & 678831 & 981495 & 2076444 & 3286 \\ 
+  1999 & 400143 & 330674 & 800288 & 1868 \\ 
+  2000 & 443486 & 336548 & 873018 & 2011 \\ 
+  2001 & 410226 & 363174 & 941043 & 2168 \\ 
+  2002 & 145725 & 353078 & 1008033 & 2282 \\ 
+  2003 & 333277 & 199574 & 1033616 & 2156 \\ 
+  2004 & 235025 & 255197 & 995281 & 2148 \\ 
+  2005 & 512012 & 217920 & 982315 & 2082 \\ 
+  2006 & 768757 & 362826 & 979052 & 2237 \\ 
+  2007 & 525023 & 556119 & 1073083 & 2602 \\ 
+  2008 & 942465 & 476388 & 1211965 & 2800 \\ 
+  2009 & 740685 & 692255 & 1341278 & 2896 \\ 
+  2010 & 721575 & 649030 & 1447778 & 2574 \\ 
+  2011 & 589723 & 623688 & 1340120 & 2146 \\ 
+  2012 & 338049 & 541129 & 1101914 & 1752 \\ 
+  2013 & 443928 & 370924 & 889881 & 1986 \\ 
+  2014 & 349998 & 374790 & 972470 & 1979 \\ 
+  2015 & 342929 & 322745 & 974238 & 1969 \\ 
+  2016 & 468871 & 301480 & 987479 & 2084 \\ 
+  2017 & 289905 & 365759 & 1020732 & 2215 \\ 
+  2018 & 667955 & 285723 & 1064712 & 2207 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1163,47 +1169,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3030796 & 2135863 & 1752594 & 4963 \\ 
-  1979 & 4247810 & 2428215 & 2464175 & 6828 \\ 
-  1980 & 3594861 & 3216240 & 3644236 & 10556 \\ 
-  1981 & 1323670 & 3106242 & 4981464 & 10907 \\ 
-  1982 & 1479572 & 1779858 & 4977213 & 7853 \\ 
-  1983 & 785671 & 1429315 & 3571248 & 4934 \\ 
-  1984 & 665382 & 919158 & 2153614 & 3491 \\ 
-  1985 & 922941 & 682080 & 1618842 & 3207 \\ 
-  1986 & 1431374 & 749921 & 1416022 & 3110 \\ 
-  1987 & 1351394 & 1061141 & 1512273 & 3632 \\ 
-  1988 & 1230543 & 1118729 & 1735381 & 3921 \\ 
-  1989 & 2841297 & 1069170 & 1894767 & 4420 \\ 
-  1990 & 1761240 & 1967548 & 2184472 & 5501 \\ 
-  1991 & 1824710 & 1651497 & 2655631 & 5524 \\ 
-  1992 & 1955041 & 1582314 & 2610579 & 5665 \\ 
-  1993 & 2211548 & 1633470 & 2703431 & 5881 \\ 
-  1994 & 1564451 & 1796319 & 2758259 & 5619 \\ 
-  1995 & 1658174 & 1482956 & 2659868 & 5550 \\ 
-  1996 & 1617846 & 1432438 & 2566368 & 5252 \\ 
-  1997 & 903275 & 1392833 & 2463106 & 4650 \\ 
-  1998 & 603860 & 973865 & 2053754 & 3260 \\ 
-  1999 & 387847 & 318433 & 809168 & 1871 \\ 
-  2000 & 431495 & 325518 & 873086 & 1999 \\ 
-  2001 & 393788 & 352714 & 934391 & 2144 \\ 
-  2002 & 139008 & 340282 & 995631 & 2244 \\ 
-  2003 & 328890 & 191525 & 1016162 & 2115 \\ 
-  2004 & 192422 & 250041 & 976224 & 2107 \\ 
-  2005 & 480592 & 192021 & 959724 & 2010 \\ 
-  2006 & 717427 & 336412 & 944118 & 2142 \\ 
-  2007 & 409298 & 518235 & 1025675 & 2469 \\ 
-  2008 & 796028 & 398593 & 1141664 & 2581 \\ 
-  2009 & 616585 & 583384 & 1229316 & 2583 \\ 
-  2010 & 544411 & 542553 & 1287266 & 2190 \\ 
-  2011 & 418954 & 487895 & 1133807 & 1647 \\ 
-  2012 & 219467 & 399293 & 842037 & 1162 \\ 
-  2013 & 266576 & 256703 & 588679 & 1326 \\ 
-  2014 & 209279 & 236325 & 646507 & 1259 \\ 
-  2015 & 190947 & 197045 & 618631 & 1226 \\ 
-  2016 & 215223 & 173625 & 612716 & 1279 \\ 
-  2017 & 132202 & 179583 & 619466 & 1296 \\ 
-  2018 & 132361 & 134239 & 619285 & 1249 \\ 
+1978 & 3030208 & 2120117 & 1743594 & 4928 \\ 
+  1979 & 4248905 & 2422669 & 2448662 & 6796 \\ 
+  1980 & 3596854 & 3215026 & 3628587 & 10525 \\ 
+  1981 & 1326509 & 3106972 & 4967971 & 10882 \\ 
+  1982 & 1479443 & 1781712 & 4966580 & 7834 \\ 
+  1983 & 782369 & 1429856 & 3563274 & 4918 \\ 
+  1984 & 664789 & 917462 & 2146882 & 3476 \\ 
+  1985 & 925804 & 681182 & 1612285 & 3192 \\ 
+  1986 & 1425111 & 751249 & 1410353 & 3101 \\ 
+  1987 & 1351342 & 1058025 & 1507607 & 3619 \\ 
+  1988 & 1231277 & 1117668 & 1729905 & 3910 \\ 
+  1989 & 2834129 & 1069236 & 1889725 & 4410 \\ 
+  1990 & 1759710 & 1963499 & 2179606 & 5488 \\ 
+  1991 & 1824027 & 1649288 & 2649370 & 5509 \\ 
+  1992 & 1954042 & 1581195 & 2604142 & 5651 \\ 
+  1993 & 2207990 & 1632531 & 2697378 & 5868 \\ 
+  1994 & 1558356 & 1793987 & 2752363 & 5605 \\ 
+  1995 & 1683985 & 1478723 & 2653137 & 5532 \\ 
+  1996 & 1616133 & 1445694 & 2561054 & 5257 \\ 
+  1997 & 902782 & 1396247 & 2465150 & 4658 \\ 
+  1998 & 615911 & 974716 & 2057024 & 3262 \\ 
+  1999 & 389087 & 320164 & 806886 & 1869 \\ 
+  2000 & 432736 & 326794 & 872171 & 1999 \\ 
+  2001 & 396267 & 353841 & 934390 & 2145 \\ 
+  2002 & 139219 & 342063 & 996435 & 2248 \\ 
+  2003 & 327959 & 192234 & 1017752 & 2118 \\ 
+  2004 & 198108 & 249748 & 977821 & 2109 \\ 
+  2005 & 481818 & 195152 & 961453 & 2017 \\ 
+  2006 & 722290 & 338144 & 947259 & 2150 \\ 
+  2007 & 417257 & 521569 & 1029637 & 2480 \\ 
+  2008 & 799246 & 404182 & 1147453 & 2598 \\ 
+  2009 & 601443 & 587062 & 1237276 & 2601 \\ 
+  2010 & 535316 & 535183 & 1294352 & 2193 \\ 
+  2011 & 407828 & 480303 & 1135165 & 1641 \\ 
+  2012 & 215917 & 390464 & 838251 & 1147 \\ 
+  2013 & 266677 & 251765 & 580690 & 1307 \\ 
+  2014 & 197819 & 234747 & 637353 & 1242 \\ 
+  2015 & 185711 & 190015 & 609109 & 1202 \\ 
+  2016 & 240041 & 168325 & 600720 & 1252 \\ 
+  2017 & 148433 & 191914 & 609151 & 1291 \\ 
+  2018 & 133550 & 147512 & 618425 & 1262 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1216,47 +1222,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 3089623 & 2139308 & 1793930 & 5046 \\ 
-  1979 & 4190990 & 2462770 & 2505993 & 6938 \\ 
-  1980 & 3476396 & 3195408 & 3691157 & 10621 \\ 
-  1981 & 1365290 & 3032067 & 4998828 & 10855 \\ 
-  1982 & 1500563 & 1778950 & 4959112 & 7811 \\ 
-  1983 & 733757 & 1440941 & 3555254 & 4904 \\ 
-  1984 & 618380 & 893528 & 2136851 & 3426 \\ 
-  1985 & 846366 & 646906 & 1585842 & 3097 \\ 
-  1986 & 1199777 & 694789 & 1362664 & 2946 \\ 
-  1987 & 1331598 & 911364 & 1417784 & 3283 \\ 
-  1988 & 1247272 & 1057911 & 1579094 & 3567 \\ 
-  1989 & 3040671 & 1058541 & 1735309 & 4097 \\ 
-  1990 & 1896925 & 2077260 & 2065041 & 5409 \\ 
-  1991 & 1981784 & 1764869 & 2624353 & 5593 \\ 
-  1992 & 2189134 & 1709016 & 2657026 & 5896 \\ 
-  1993 & 2538882 & 1808330 & 2828620 & 6323 \\ 
-  1994 & 1866393 & 2040088 & 2982268 & 6313 \\ 
-  1995 & 1947502 & 1735130 & 2998821 & 6494 \\ 
-  1996 & 2159153 & 1680233 & 3003897 & 6369 \\ 
-  1997 & 1313733 & 1782282 & 3004970 & 6189 \\ 
-  1998 & 832399 & 1335891 & 2741380 & 4668 \\ 
-  1999 & 512023 & 392506 & 1056651 & 2417 \\ 
-  2000 & 568732 & 420561 & 1129022 & 2585 \\ 
-  2001 & 519008 & 462116 & 1209211 & 2781 \\ 
-  2002 & 178090 & 447610 & 1292316 & 2920 \\ 
-  2003 & 442825 & 249248 & 1321830 & 2751 \\ 
-  2004 & 247674 & 333852 & 1271539 & 2753 \\ 
-  2005 & 760799 & 251145 & 1253935 & 2627 \\ 
-  2006 & 1067807 & 515109 & 1246466 & 2909 \\ 
-  2007 & 607128 & 776332 & 1401831 & 3464 \\ 
-  2008 & 1165152 & 596243 & 1605465 & 3671 \\ 
-  2009 & 843025 & 858429 & 1751670 & 3793 \\ 
-  2010 & 722983 & 762220 & 1884162 & 3417 \\ 
-  2011 & 608710 & 662101 & 1760393 & 2885 \\ 
-  2012 & 371778 & 564748 & 1469158 & 2378 \\ 
-  2013 & 422580 & 397998 & 1205729 & 2579 \\ 
-  2014 & 351765 & 371703 & 1248068 & 2458 \\ 
-  2015 & 317808 & 322786 & 1202812 & 2360 \\ 
-  2016 & 364454 & 287301 & 1176149 & 2407 \\ 
-  2017 & 223878 & 301976 & 1161668 & 2395 \\ 
-  2018 & 213385 & 226843 & 1142651 & 2283 \\ 
+1978 & 3095122 & 2123400 & 1786861 & 5014 \\ 
+  1979 & 4194570 & 2460628 & 2492591 & 6913 \\ 
+  1980 & 3478254 & 3196732 & 3679224 & 10600 \\ 
+  1981 & 1369504 & 3033561 & 4989705 & 10840 \\ 
+  1982 & 1499178 & 1781838 & 4952615 & 7802 \\ 
+  1983 & 730183 & 1441110 & 3551005 & 4895 \\ 
+  1984 & 617769 & 891554 & 2132838 & 3417 \\ 
+  1985 & 849768 & 645906 & 1581380 & 3086 \\ 
+  1986 & 1198775 & 696389 & 1358736 & 2941 \\ 
+  1987 & 1333641 & 911324 & 1415210 & 3278 \\ 
+  1988 & 1251424 & 1059059 & 1577114 & 3565 \\ 
+  1989 & 3033914 & 1061279 & 1734623 & 4099 \\ 
+  1990 & 1894266 & 2074329 & 2065199 & 5406 \\ 
+  1991 & 1982893 & 1762389 & 2622736 & 5587 \\ 
+  1992 & 2189446 & 1708825 & 2654484 & 5891 \\ 
+  1993 & 2535555 & 1808444 & 2826402 & 6319 \\ 
+  1994 & 1861806 & 2038236 & 2980116 & 6307 \\ 
+  1995 & 1983535 & 1731912 & 2995585 & 6484 \\ 
+  1996 & 2160588 & 1699631 & 3002974 & 6389 \\ 
+  1997 & 1317399 & 1789518 & 3014071 & 6216 \\ 
+  1998 & 852978 & 1340368 & 2752868 & 4684 \\ 
+  1999 & 514916 & 395269 & 1054726 & 2417 \\ 
+  2000 & 571938 & 423118 & 1129084 & 2588 \\ 
+  2001 & 523816 & 464782 & 1210859 & 2787 \\ 
+  2002 & 178661 & 451223 & 1295496 & 2930 \\ 
+  2003 & 441762 & 250769 & 1326363 & 2761 \\ 
+  2004 & 256012 & 333752 & 1275990 & 2762 \\ 
+  2005 & 764903 & 255847 & 1258400 & 2641 \\ 
+  2006 & 1078674 & 518996 & 1252959 & 2926 \\ 
+  2007 & 625423 & 783788 & 1410254 & 3489 \\ 
+  2008 & 1182453 & 609045 & 1618056 & 3709 \\ 
+  2009 & 821917 & 872489 & 1770298 & 3840 \\ 
+  2010 & 705750 & 754897 & 1904837 & 3443 \\ 
+  2011 & 585799 & 649907 & 1772390 & 2892 \\ 
+  2012 & 367711 & 547703 & 1470855 & 2363 \\ 
+  2013 & 425844 & 390049 & 1198091 & 2557 \\ 
+  2014 & 329938 & 370925 & 1237991 & 2439 \\ 
+  2015 & 309139 & 310132 & 1191931 & 2328 \\ 
+  2016 & 408782 & 278191 & 1159853 & 2368 \\ 
+  2017 & 262734 & 324127 & 1147704 & 2394 \\ 
+  2018 & 215360 & 256211 & 1145859 & 2320 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1269,47 +1275,47 @@ Year & $n_1$ & $n_2$ & $n_3$ & MMB \\
   \hline
 Year & $n_1$ & $n_2$ & $n_3$ & MMB \\ 
   \hline
-1978 & 5385868 & 4554302 & 3860757 & 11766 \\ 
-  1979 & 6531404 & 4566273 & 5669629 & 14649 \\ 
-  1980 & 3612021 & 5220878 & 7618053 & 20407 \\ 
-  1981 & 1406958 & 3779553 & 9313164 & 19745 \\ 
-  1982 & 1266548 & 2050062 & 8942236 & 15735 \\ 
-  1983 & 745777 & 1397817 & 6990560 & 11797 \\ 
-  1984 & 586531 & 886162 & 4969874 & 8695 \\ 
-  1985 & 663630 & 626414 & 3941999 & 7935 \\ 
-  1986 & 830810 & 584239 & 3302488 & 6487 \\ 
-  1987 & 1775067 & 665240 & 2946785 & 5895 \\ 
-  1988 & 3733852 & 1228338 & 2774212 & 5940 \\ 
-  1989 & 7914396 & 2527202 & 3056606 & 8341 \\ 
-  1990 & 2201432 & 5331304 & 4374662 & 13319 \\ 
-  1991 & 3074011 & 3014924 & 6222881 & 13858 \\ 
-  1992 & 3487281 & 2743297 & 6394423 & 14090 \\ 
-  1993 & 4824091 & 2888134 & 6594260 & 14906 \\ 
-  1994 & 3564848 & 3695433 & 6888170 & 15475 \\ 
-  1995 & 2739370 & 3247694 & 7254220 & 16493 \\ 
-  1996 & 4367448 & 2630698 & 7393759 & 15839 \\ 
-  1997 & 3934711 & 3351104 & 7359157 & 16794 \\ 
-  1998 & 2857331 & 3343748 & 7413862 & 12631 \\ 
-  1999 & 854087 & 600424 & 1657853 & 3776 \\ 
-  2000 & 1587996 & 683657 & 1768730 & 4077 \\ 
-  2001 & 3371232 & 1128060 & 1973648 & 4962 \\ 
-  2002 & 634607 & 2287764 & 2539308 & 7328 \\ 
-  2003 & 188693 & 1117583 & 3334952 & 7494 \\ 
-  2004 & 105430 & 477017 & 3366576 & 6831 \\ 
-  2005 & 822159 & 217773 & 3062446 & 5970 \\ 
-  2006 & 1909399 & 538974 & 2746081 & 5739 \\ 
-  2007 & 3944388 & 1262325 & 2746875 & 6535 \\ 
-  2008 & 1217442 & 2647893 & 3295379 & 9145 \\ 
-  2009 & 1354062 & 1567376 & 4202653 & 8838 \\ 
-  2010 & 1612522 & 1287300 & 4337120 & 8050 \\ 
-  2011 & 841330 & 1341193 & 4158057 & 7651 \\ 
-  2012 & 521479 & 921683 & 3834658 & 6706 \\ 
-  2013 & 557660 & 601206 & 3372724 & 6664 \\ 
-  2014 & 595638 & 515702 & 3173470 & 5981 \\ 
-  2015 & 452557 & 508965 & 2906288 & 5472 \\ 
-  2016 & 192334 & 425468 & 2705557 & 5284 \\ 
-  2017 & 75239 & 250024 & 2492335 & 4712 \\ 
-  2018 & 52299 & 125414 & 2213658 & 4084 \\ 
+1978 & 5383282 & 4553019 & 3861048 & 11765 \\ 
+  1979 & 6509650 & 4564379 & 5668977 & 14646 \\ 
+  1980 & 3616474 & 5207896 & 7614474 & 20385 \\ 
+  1981 & 1415080 & 3777785 & 9304054 & 19726 \\ 
+  1982 & 1268859 & 2054089 & 8934509 & 15725 \\ 
+  1983 & 748217 & 1400462 & 6986333 & 11792 \\ 
+  1984 & 588443 & 888423 & 4967875 & 8694 \\ 
+  1985 & 665298 & 628248 & 3941645 & 7937 \\ 
+  1986 & 833540 & 585793 & 3303275 & 6491 \\ 
+  1987 & 1776667 & 667305 & 2948486 & 5900 \\ 
+  1988 & 3734632 & 1229930 & 2776826 & 5947 \\ 
+  1989 & 7901612 & 2528172 & 3059667 & 8348 \\ 
+  1990 & 2208258 & 5324365 & 4376485 & 13314 \\ 
+  1991 & 3074871 & 3016504 & 6221556 & 13857 \\ 
+  1992 & 3488178 & 2744308 & 6394194 & 14091 \\ 
+  1993 & 4822799 & 2888978 & 6594664 & 14908 \\ 
+  1994 & 3565210 & 3694978 & 6888807 & 15476 \\ 
+  1995 & 2740542 & 3247749 & 7254554 & 16494 \\ 
+  1996 & 4367233 & 2631382 & 7394176 & 15840 \\ 
+  1997 & 3934659 & 3351208 & 7359827 & 16796 \\ 
+  1998 & 2857928 & 3343753 & 7414465 & 12629 \\ 
+  1999 & 859081 & 599730 & 1655837 & 3771 \\ 
+  2000 & 1590200 & 686263 & 1767174 & 4078 \\ 
+  2001 & 3365414 & 1130174 & 1973872 & 4965 \\ 
+  2002 & 633926 & 2285160 & 2540006 & 7326 \\ 
+  2003 & 188912 & 1116334 & 3334157 & 7491 \\ 
+  2004 & 105728 & 476728 & 3365302 & 6829 \\ 
+  2005 & 805914 & 217845 & 3061265 & 5968 \\ 
+  2006 & 1848762 & 529772 & 2743578 & 5724 \\ 
+  2007 & 3922659 & 1224853 & 2734344 & 6469 \\ 
+  2008 & 1166133 & 2623130 & 3263920 & 9059 \\ 
+  2009 & 1314555 & 1530045 & 4158981 & 8721 \\ 
+  2010 & 1570040 & 1252512 & 4277992 & 7914 \\ 
+  2011 & 804444 & 1305557 & 4086768 & 7491 \\ 
+  2012 & 498545 & 888940 & 3752940 & 6533 \\ 
+  2013 & 533563 & 577343 & 3285153 & 6482 \\ 
+  2014 & 557658 & 494118 & 3085987 & 5805 \\ 
+  2015 & 420462 & 480251 & 2818642 & 5291 \\ 
+  2016 & 448306 & 397740 & 2614780 & 5092 \\ 
+  2017 & 145291 & 386194 & 2427006 & 4742 \\ 
+  2018 & 61107 & 210222 & 2234439 & 4212 \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -1356,11 +1362,11 @@ data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.p
 <!--  -->
 
 
-![Sensitivity of new data in 2017 on estimated recruitment ; 1978-2017. \label{fig:rec1}](figure/rec1-1.png)
+![Sensitivity of new data in 2018 on estimated recruitment ; 1978-2018. \label{fig:rec1}](figure/rec1-1.png)
 
 <!--  -->
 
-![Sensitivity of new data in 2017 on estimated mature male biomass (MMB); 1978-2017. \label{fig:ssb1}](figure/ssb1-1.png)
+![Sensitivity of new data in 2018 on estimated mature male biomass (MMB); 1978-2018. \label{fig:ssb1}](figure/ssb1-1.png)
 
 \clearpage
 <!--  -->
@@ -1369,7 +1375,7 @@ data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.p
 
 <!--  -->
 
-![Sensitivity of new data in 2017 on estimated mature male biomass (MMB); 1978-2017 comparing the reference model with that fitted to the VAST BTS estimates. \label{fig:ssb2}](figure/ssb2-1.png)
+![Sensitivity of new data in 2018 on estimated mature male biomass (MMB); 1978-2018 comparing the reference model with that fitted to the VAST BTS estimates. \label{fig:ssb2}](figure/ssb2-1.png)
 
 \clearpage
 <!--  -->
@@ -1383,7 +1389,7 @@ data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.p
 
 <!--  -->
 
-![Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2017 for each of the model scenarios.\label{fig:mmb}](figure/mature_male_biomass-1.png)
+![Comparisons of estimated mature male biomass (MMB) time series on 15 February during 1978-2018 for each of the model scenarios.\label{fig:mmb}](figure/mature_male_biomass-1.png)
 
 \clearpage
 <!--  -->
@@ -1393,10 +1399,7 @@ data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.p
 \clearpage
 <!--  -->
 
-
-```
-## Error in data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData)): arguments imply differing number of rows: 1, 0
-```
+![Comparisons of area-swept estimates of total (90+ mm CL) male survey biomass (tons) and model predictions for the model scenarios. The error bars are plus and minus 2 standard deviations.\label{fig:trawl_survey_biomass}](figure/trawl_survey_biomass-1.png)
 
 <!--  -->
 
@@ -1437,7 +1440,7 @@ data from reporting areas 524 and 521.\label{fig:reporting_areas}](figure/Fig5.p
 
 \clearpage
 
-![Comparisons of mature male biomass relative to the dynamic $B_0$ value, (15 February, 1978-2017) for  each of the model scenarios.\label{fig:dynB0}](figure/Dynamic_Bzero-1.png)
+![Comparisons of mature male biomass relative to the dynamic $B_0$ value, (15 February, 1978-2018) for  each of the model scenarios.\label{fig:dynB0}](figure/Dynamic_Bzero-1.png)
 
 \clearpage
 
@@ -1635,13 +1638,13 @@ Data inputs used in model estimation are listed in Table \ref{tab:model_data}.
   Groundfish fixed-gear bycatch biomass & 1992/93 - 2016/17 & NMFS groundfish observer program \\
   \hline
   NMFS trawl-survey biomass index & & \\
-  (area-swept estimate) and CV & 1978-2017 & NMFS EBS trawl survey \\
+  (area-swept estimate) and CV & 1978-2018 & NMFS EBS trawl survey \\
   \hline
   ADF\&G pot-survey abundance index & & \\
   (CPUE) and CV & 1995-2017 & ADF\&G SMBKC pot survey \\
   \hline
   NMFS trawl-survey stage proportions & & \\
-  and total number of measured crab & 1978-2017 & NMFS EBS trawl survey \\
+  and total number of measured crab & 1978-2018 & NMFS EBS trawl survey \\
   \hline
   ADF\&G pot-survey stage proportions & & \\
   and total number of measured crab & 1995-2017 & ADF\&G SMBKC pot survey \\
@@ -1772,3 +1775,1173 @@ The model was implemented using the software AD Model Builder (Fournier et al.
 function using automatic differentiation. Parameter estimates and standard
 deviations provided in this document are AD Model Builder reported values
 assuming maximum likelihood theory asymptotics.
+
+
+
+# Appendix B. Data files for the reference model (16.0) 
+## The reference model (16.0) data file
+
+\fontsize{7}{9}
+
+```
+#======================================================================================================== 
+# Gmacs Main  Data  File  Version 1.1:  SM18 with all new data 
+# GEAR_INDEX   DESCRIPTION 
+#    1        : Pot fishery retained catch. 
+#    1        : Pot fishery with discarded catch. 
+#    2        : Trawl bycatch 
+#    3        : Fixed bycatch 
+#    4        : Trawl survey 
+#    5        : Pot survey 
+ 
+# Fisheries:  1 Pot Fishery,  2 Pot Discard,  3 Trawl by-catch, 3 Fixed by-catch 
+# Surveys:    4 NMFS Trawl Survey, 5 Pot Survey 
+#======================================================================================================== 
+1978  # Start year 
+2018  # End year 
+2019  # Projection year 
+5     # Number of seasons 
+5     # Number of distinct data groups (among fishing fleets and surveys) 
+1     # Number of sexes 
+1     # Number of shell condition types 
+1     # Number of maturity types 
+3     # Number of size-classes in the model 
+5     # Season recruitment occurs 
+5     # Season molting and growth occurs 
+4     # Season to calculate SSB 
+1     # Season for N output 
+# size_breaks (a vector giving the break points between size intervals with dimension nclass+1) 
+90  105  120  135 
+# weight-at-length input method (1 = allometry i.e. w_l = a*l^b, 2 = vector by sex, 3 = matrix by sex) 
+3 
+# weight-at-length allometry w_l = a*l^b 
+4.03E-07 
+# b (male, female) 
+3.141334 
+# Male weight-at-length 
+0.000748427     0.001165731     0.001930510 
+0.000748427     0.001165731     0.001688886 
+0.000748427     0.001165731     0.001922246 
+0.000748427     0.001165731     0.001877957 
+0.000748427     0.001165731     0.001938634 
+0.000748427     0.001165731     0.002076413 
+0.000748427     0.001165731     0.001899330 
+0.000748427     0.001165731     0.002116687 
+0.000748427     0.001165731     0.001938784 
+0.000748427     0.001165731     0.001939764 
+0.000748427     0.001165731     0.001871067 
+0.000748427     0.001165731     0.001998295 
+0.000748427     0.001165731     0.001870418 
+0.000748427     0.001165731     0.001969415 
+0.000748427     0.001165731     0.001926859 
+0.000748427     0.001165731     0.002021492 
+0.000748427     0.001165731     0.001931318 
+0.000748427     0.001165731     0.002014407 
+0.000748427     0.001165731     0.001977471 
+0.000748427     0.001165731     0.002099246 
+0.000748427     0.001165731     0.001982478 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001891628 
+0.000748427     0.001165731     0.001795721 
+0.000748427     0.001165731     0.001823113 
+0.000748427     0.001165731     0.001807433 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001894627 
+0.000748427     0.001165731     0.001850611 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+0.000748427     0.001165731     0.001930932 
+# Male mature weight-at-length (weight * proportion  mature) 
+0 0.001165732 0.001945911 
+# Proportion mature by sex 
+0 1 1 
+# Natural mortality per season input type (1 = vector by season, 2 = matrix by season/year) 
+2 
+# Proportion of the total natural mortality to be applied each season (each row must add to 1) 
+#0  0.0025  0  0.6245  0.373 
+   0.0000   0.0700   0.0000   0.5600   0.3700 
+   0.0000   0.0600   0.0000   0.5700   0.3700 
+   0.0000   0.0700   0.0000   0.5600   0.3700 
+   0.0000   0.0500   0.0000   0.5800   0.3700 
+   0.0000   0.0700   0.0000   0.5600   0.3700 
+   0.0000   0.1200   0.0000   0.5100   0.3700 
+   0.0000   0.1000   0.0000   0.5300   0.3700 
+   0.0000   0.1400   0.0000   0.4900   0.3700 
+   0.0000   0.1400   0.0000   0.4900   0.3700 
+   0.0000   0.1400   0.0000   0.4900   0.3700 
+   0.0000   0.1400   0.0000   0.4900   0.3700 
+   0.0000   0.1400   0.0000   0.4900   0.3700 
+   0.0000   0.1400   0.0000   0.4900   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1400   0.0000   0.4900   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.1800   0.0000   0.4500   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+   0.0000   0.4400   0.0000   0.1900   0.3700 
+# Fishing fleet names (delimited with : no spaces in names) 
+Pot_Fishery:Trawl_Bycatch:Fixed_bycatch 
+# Survey names (delimited with : no spaces in names) 
+NMFS_Trawl:ADFG_Pot 
+# Number  of  catch data  frames 
+4 
+# Number  of  rows  in  each  data  frame 
+29  17  27  27 
+##  CATCH DATA 
+##  Type of catch: 1 = retained, 2 = discard 
+##  Units of catch: 1 = biomass, 2 = numbers 
+##  for SMBKC Units are in number of crab for landed & 1000 kg for discards. 
+##  Male Retained 
+# year  seas    fleet   sex     obs     cv      type    units   mult    effort  discard_mortality 
+1978    2       1       1       436126  0.03    1       2       1       0       0 
+1979    2       1       1       52966   0.03    1       2       1       0       0 
+1980    2       1       1       33162   0.03    1       2       1       0       0 
+1981    2       1       1       1045619 0.03    1       2       1       0       0 
+1982    2       1       1       1935886 0.03    1       2       1       0       0 
+1983    2       1       1       1931990 0.03    1       2       1       0       0 
+1984    2       1       1       841017  0.03    1       2       1       0       0 
+1985    2       1       1       436021  0.03    1       2       1       0       0 
+1986    2       1       1       219548  0.03    1       2       1       0       0 
+1987    2       1       1       227447  0.03    1       2       1       0       0 
+1988    2       1       1       280401  0.03    1       2       1       0       0 
+1989    2       1       1       247641  0.03    1       2       1       0       0 
+1990    2       1       1       391405  0.03    1       2       1       0       0 
+1991    2       1       1       726519  0.03    1       2       1       0       0 
+1992    2       1       1       545222  0.03    1       2       1       0       0 
+1993    2       1       1       630353  0.03    1       2       1       0       0 
+1994    2       1       1       827015  0.03    1       2       1       0       0 
+1995    2       1       1       666905  0.03    1       2       1       0       0 
+1996    2       1       1       660665  0.03    1       2       1       0       0 
+1997    2       1       1       939822  0.03    1       2       1       0       0 
+1998    2       1       1       635370  0.03    1       2       1       0       0 
+2009    2       1       1       103376  0.03    1       2       1       0       0 
+2010    2       1       1       298669  0.03    1       2       1       0       0 
+2011    2       1       1       437862  0.03    1       2       1       0       0 
+2012    2       1       1       379386  0.03    1       2       1       0       0 
+2014    2       1       1       69109   0.03    1       2       1       0       0 
+2015    2       1       1       24407   0.03    1       2       1       0       0 
+2016    2       1       1       24.407   0.03    1       2       1       0       0 
+2017    2       1       1       24.407   0.03    1       2       1       0       0 
+# Male  discards  Pot fishery 
+1990    2       1       1     254.9787861     0.6     2       1       1       0       0.2 
+1991    2       1       1     531.4483252     0.6     2       1       1       0       0.2 
+1992    2       1       1     1050.387026     0.6     2       1       1       0       0.2 
+1993    2       1       1     951.4626128     0.6     2       1       1       0       0.2 
+1994    2       1       1     1210.764588     0.6     2       1       1       0       0.2 
+1995    2       1       1     363.112032      0.6     2       1       1       0       0.2 
+1996    2       1       1     528.5244687     0.6     2       1       1       0       0.2 
+1997    2       1       1     1382.825328     0.6     2       1       1       0       0.2 
+1998    2       1       1     781.1032977     0.6     2       1       1       0       0.2 
+2009    2       1       1     123.3712279     0.2     2       1       1       0       0.2 
+2010    2       1       1     304.6562225     0.2     2       1       1       0       0.2 
+2011    2       1       1     481.3572126     0.2     2       1       1       0       0.2 
+2012    2       1       1     437.3360731     0.2     2       1       1       0       0.2 
+2014    2       1       1     45.4839749      0.2     2       1       1       0       0.2 
+2015    2       1       1     21.19378597     0.2     2       1       1       0       0.2 
+2016    2       1       1     0.021193786     0.2     2       1       1       0       0.2 
+2017    2       1       1     0.021193786     0.2     2       1       1       0       0.2 
+#	Trawl	fishery	discards							 
+1991	2	2	1	3.538	0.31	2	1	1	0	0.8 
+1992	2	2	1	1.996	0.31	2	1	1	0	0.8 
+1993	2	2	1	1.542	0.31	2	1	1	0	0.8 
+1994	2	2	1	0.318	0.31	2	1	1	0	0.8 
+1995	2	2	1	0.635	0.31	2	1	1	0	0.8 
+1996	2	2	1	0.5	0.31	2	1	1	0	0.8 
+1997	2	2	1	0.5	0.31	2	1	1	0	0.8 
+1998	2	2	1	0.5	0.31	2	1	1	0	0.8 
+1999	2	2	1	0.5	0.31	2	1	1	0	0.8 
+2000	2	2	1	0.5	0.31	2	1	1	0	0.8 
+2001	2	2	1	0.5	0.31	2	1	1	0	0.8 
+2002	2	2	1	0.726	0.31	2	1	1	0	0.8 
+2003	2	2	1	0.998	0.31	2	1	1	0	0.8 
+2004	2	2	1	0.091	0.31	2	1	1	0	0.8 
+2005	2	2	1	0.5	0.31	2	1	1	0	0.8 
+2006	2	2	1	2.812	0.31	2	1	1	0	0.8 
+2007	2	2	1	0.045	0.31	2	1	1	0	0.8 
+2008	2	2	1	0.272	0.31	2	1	1	0	0.8 
+2009	2	2	1	0.638	0.31	2	1	1	0	0.8 
+2010	2	2	1	0.36	0.31	2	1	1	0	0.8 
+2011	2	2	1	0.17	0.31	2	1	1	0	0.8 
+2012	2	2	1	0.011	0.31	2	1	1	0	0.8 
+2013	2	2	1	0.163	0.31	2	1	1	0	0.8 
+2014	2	2	1	0.01	0.31	2	1	1	0	0.8 
+2015	2	2	1	0.01	0.31	2	1	1	0	0.8 
+2016	2	2	1	0.229	0.31	2	1	1	0	0.8 
+2017	2	2	1	0.052	0.31	2	1	1	0	0.8 
+#	Fixed	fishery	discards							 
+1991	2	3	1	0.045	0.31	2	1	1	0	0.5 
+1992	2	3	1	2.268	0.31	2	1	1	0	0.5 
+1993	2	3	1	0.5	0.31	2	1	1	0	0.5 
+1994	2	3	1	0.091	0.31	2	1	1	0	0.5 
+1995	2	3	1	0.136	0.31	2	1	1	0	0.5 
+1996	2	3	1	0.045	0.31	2	1	1	0	0.5 
+1997	2	3	1	0.181	0.31	2	1	1	0	0.5 
+1998	2	3	1	0.907	0.31	2	1	1	0	0.5 
+1999	2	3	1	1.361	0.31	2	1	1	0	0.5 
+2000	2	3	1	0.5	0.31	2	1	1	0	0.5 
+2001	2	3	1	0.862	0.31	2	1	1	0	0.5 
+2002	2	3	1	0.408	0.31	2	1	1	0	0.5 
+2003	2	3	1	1.134	0.31	2	1	1	0	0.5 
+2004	2	3	1	0.635	0.31	2	1	1	0	0.5 
+2005	2	3	1	0.59	0.31	2	1	1	0	0.5 
+2006	2	3	1	1.451	0.31	2	1	1	0	0.5 
+2007	2	3	1	69.717	0.31	2	1	1	0	0.5 
+2008	2	3	1	6.622	0.31	2	1	1	0	0.5 
+2009	2	3	1	7.522	0.31	2	1	1	0	0.5 
+2010	2	3	1	9.564	0.31	2	1	1	0	0.5 
+2011	2	3	1	0.796	0.31	2	1	1	0	0.5 
+2012	2	3	1	0.739	0.31	2	1	1	0	0.5 
+2013	2	3	1	0.341	0.31	2	1	1	0	0.5 
+2014	2	3	1	0.49	0.31	2	1	1	0	0.5 
+2015	2	3	1	0.711	0.31	2	1	1	0	0.5 
+2016	2	3	1	1.633	0.31	2	1	1	0	0.5 
+2017	2	3	1	6.032	0.31	2	1	1	0	0.5 
+##  RELATIVE  ABUNDANCE DATA 
+##  Units of abundance: 1 = biomass, 2 = numbers 
+##  for SMBKC Units are in  crabs for Abundance. 
+##  Number  of  relative  abundance indicies 
+2 
+##  Number  of  rows  in  each  index 
+41  11 
+# Survey data (abundance indices, units are mt for trawl survey and crab/potlift for pot survey) 
+# Year, Seas, Fleet,  Sex,  Abundance,  CV     units 
+1978  1 4 1 6832.819  0.394 1 
+1979  1 4 1 7989.881  0.463 1 
+1980  1 4 1 9986.830  0.507 1 
+1981  1 4 1 6551.132  0.402 1 
+1982  1 4 1 16221.933 0.344 1 
+1983  1 4 1 9634.250  0.298 1 
+1984  1 4 1 4071.218  0.179 1 
+1985  1 4 1 3110.541  0.210 1 
+1986  1 4 1 1416.849  0.388 1 
+1987  1 4 1 2278.917  0.291 1 
+1988  1 4 1 3158.169  0.252 1 
+1989  1 4 1 6338.622  0.271 1 
+1990  1 4 1 6730.130  0.274 1 
+1991  1 4 1 6948.184  0.248 1 
+1992  1 4 1 7093.272  0.201 1 
+1993  1 4 1 9548.459  0.169 1 
+1994  1 4 1 6539.133  0.176 1 
+1995  1 4 1 5703.591  0.178 1 
+1996  1 4 1 9410.403  0.241 1 
+1997  1 4 1 10924.107 0.337 1 
+1998  1 4 1 7976.839  0.355 1 
+1999  1 4 1 1594.546  0.182 1 
+2000  1 4 1 2096.795  0.310 1 
+2001  1 4 1 2831.440  0.245 1 
+2002  1 4 1 1732.599  0.320 1 
+2003  1 4 1 1566.675  0.336 1 
+2004  1 4 1 1523.869  0.305 1 
+2005  1 4 1 1642.017  0.371 1 
+2006  1 4 1 3893.875  0.334 1 
+2007  1 4 1 6470.773  0.385 1 
+2008  1 4 1 4654.473  0.284 1 
+2009  1 4 1 6301.470  0.256 1 
+2010  1 4 1 11130.898 0.466 1 
+2011  1 4 1 10931.232 0.558 1 
+2012  1 4 1 6200.219  0.339 1 
+2013  1 4 1 2287.557  0.217 1 
+2014  1 4 1 6029.220  0.449 1 
+2015  1 4 1 5877.433  0.770 1 
+2016  1 4 1 3485.909  0.393 1 
+2017  1 4 1 1793.760  0.599 1 
+2018  1 4 1 1730.74   0.281 1 
+1995  1 5 1 12042.000 0.130 2 
+1998  1 5 1 12531.000 0.060 2 
+2001  1 5 1 8477.000  0.080 2 
+2004  1 5 1 1667.000  0.150 2 
+2007  1 5 1 8643.000  0.090 2 
+2010  1 5 1 10209.000 0.130 2 
+2013  1 5 1 5643.000  0.190 2 
+2015  1 5 1 2805.000  0.180 2 
+2016  1 5 1 2378.000  0.186 2 
+2017  1 5 1 1689.000  0.250 2 
+2018  1 5 1  745.000  0.140 2 
+##  Number  of  length  frequency matrices 
+3 
+##  Number  of  rows  in  each  matrix 
+15  41  11 
+##  Number  of  bins  in  each  matrix  (columns  of  size  data) 
+3  3  3 
+##  SIZE  COMPOSITION DATA  FOR ALL FLEETS 
+##  SIZE  COMP  LEGEND 
+##  Sex:  1 = male, 2 = female, 0 = both  sexes combined 
+##  Type  of  composition:  1 = retained, 2 = discard,  0 = total composition 
+##  Maturity  state:  1 = immature, 2 = mature, 0 = both  states  combined 
+##  Shell condition:  1 = new shell,  2 = old shell,  0 = both  shell types combined 
+##length  proportions of  pot discarded males 
+##Year, Seas, Fleet,  Sex,  Type, Shell,  Maturity, Nsamp,  DataVec 
+  1990  2 1 1 0 0 0 15  0.1133  0.3933  0.4933 
+  1991  2 1 1 0 0 0 25  0.1329  0.1768  0.6902 
+  1992  2 1 1 0 0 0 25  0.1905  0.2677  0.5417 
+  1993  2 1 1 0 0 0 25  0.2807  0.2097  0.5096 
+  1994  2 1 1 0 0 0 25  0.2942  0.2714  0.4344 
+  1995  2 1 1 0 0 0 25  0.1478  0.2127  0.6395 
+  1996  2 1 1 0 0 0 25  0.1595  0.2229  0.6176 
+  1997  2 1 1 0 0 0 25  0.1818  0.2053  0.6128 
+  1998  2 1 1 0 0 0 25  0.1927  0.2162  0.5911 
+  2009  2 1 1 0 0 0 50  0.1413  0.3235  0.5352 
+  2010  2 1 1 0 0 0 50  0.1314  0.3152  0.5534 
+  2011  2 1 1 0 0 0 50  0.1314  0.3051  0.5636 
+  2012  2 1 1 0 0 0 50  0.1417  0.3178  0.5406 
+  2014  2 1 1 0 0 0 50  0.0939  0.2275  0.6786 
+  2015  2 1 1 0 0 0 50  0.1148  0.2518  0.6333 
+##length  proportions of  trawl survey  males 
+##Year, Seas, Fleet,  Sex,  Type, Shell,  Maturity, Nsamp,  DataVec 
+  1978  1 4 1 0 0 0 50   0.3865  0.3478  0.2657 
+  1979  1 4 1 0 0 0 50   0.4281  0.3190  0.2529 
+  1980  1 4 1 0 0 0 50   0.3588  0.3220  0.3192 
+  1981  1 4 1 0 0 0 50   0.1219  0.3065  0.5716 
+  1982  1 4 1 0 0 0 50   0.1671  0.2435  0.5893 
+  1983  1 4 1 0 0 0 50   0.1752  0.2726  0.5522 
+  1984  1 4 1 0 0 0 50   0.1823  0.2085  0.6092 
+  1985  1 4 1 0 0 0 46.5 0.2023  0.2010  0.5967 
+  1986  1 4 1 0 0 0 23   0.1984  0.4364  0.3652 
+  1987  1 4 1 0 0 0 35.5 0.1944  0.3779  0.4277 
+  1988  1 4 1 0 0 0 40.5 0.1879  0.3737  0.4384 
+  1989  1 4 1 0 0 0 50   0.4246  0.2259  0.3496 
+  1990  1 4 1 0 0 0 50   0.2380  0.2332  0.5288 
+  1991  1 4 1 0 0 0 50   0.2274  0.3300  0.4426 
+  1992  1 4 1 0 0 0 50   0.2263  0.2911  0.4826 
+  1993  1 4 1 0 0 0 50   0.2296  0.2759  0.4945 
+  1994  1 4 1 0 0 0 50   0.1989  0.2926  0.5085 
+  1995  1 4 1 0 0 0 50   0.2593  0.3005  0.4403 
+  1996  1 4 1 0 0 0 50   0.1998  0.3054  0.4948 
+  1997  1 4 1 0 0 0 50   0.1622  0.3102  0.5275 
+  1998  1 4 1 0 0 0 50   0.1276  0.3212  0.5511 
+  1999  1 4 1 0 0 0 26   0.2224  0.2214  0.5562 
+  2000  1 4 1 0 0 0 30.5 0.2154  0.2180  0.5665 
+  2001  1 4 1 0 0 0 45.5 0.2253  0.2699  0.5048 
+  2002  1 4 1 0 0 0 19   0.1127  0.2346  0.6527 
+  2003  1 4 1 0 0 0 32.5 0.3762  0.2345  0.3893 
+  2004  1 4 1 0 0 0 24   0.2488  0.1848  0.5663 
+  2005  1 4 1 0 0 0 21   0.2825  0.2744  0.4431 
+  2006  1 4 1 0 0 0 50   0.3276  0.2293  0.4431 
+  2007  1 4 1 0 0 0 50   0.4394  0.3525  0.2081 
+  2008  1 4 1 0 0 0 50   0.3745  0.2219  0.4036 
+  2009  1 4 1 0 0 0 50   0.3057  0.4202  0.2741 
+  2010  1 4 1 0 0 0 50   0.4081  0.3371  0.2548 
+  2011  1 4 1 0 0 0 50   0.2179  0.3940  0.3881 
+  2012  1 4 1 0 0 0 50   0.1573  0.4393  0.4034 
+  2013  1 4 1 0 0 0 37   0.2100  0.2834  0.5065 
+  2014  1 4 1 0 0 0 50   0.1738  0.3912  0.4350 
+  2015  1 4 1 0 0 0 50   0.2340  0.2994  0.4666 
+  2016  1 4 1 0 0 0 50   0.2255  0.2780  0.4965 
+  2017  1 4 1 0 0 0 50   0.0849  0.2994  0.6157 
+  2018  1 4 1 0 0 0 50   0.1475  0.2219  0.6306 
+  ##length  proportions of  pot survey 
+  ##Year, Seas, Fleet,  Sex,  Type, Shell,  Maturity, Nsamp,  DataVec 
+  1995  1 5 1 0 0 0 100 0.1594  0.2656  0.5751 
+  1998  1 5 1 0 0 0 100  0.0769  0.2205  0.7026 
+  2001  1 5 1 0 0 0 100  0.1493  0.2049  0.6457 
+  2004  1 5 1 0 0 0 100  0.0672  0.2484  0.6845 
+  2007  1 5 1 0 0 0 100  0.1257  0.3148  0.5595 
+  2010  1 5 1 0 0 0 100  0.1299  0.3209  0.5492 
+  2013  1 5 1 0 0 0 100  0.1556  0.2477  0.5967 
+  2015  1 5 1 0 0 0 100  0.0706  0.2431  0.6859 
+  2016  1 5 1 0 0 0 100  0.0832  0.1917  0.7251 
+  2017  1 5 1 0 0 0 100  0.1048  0.2540  0.6412 
+  2018  1 5 1 0 0 0 100  0.10201	0.21611	0.68188 
+##  Growth data (increment) 
+# nobs_growth 
+3 
+# MidPoint Sex Increment CV 
+ 97.5  1  14.1  0.2197 
+112.5  1  14.1  0.2197 
+127.5  1  14.1  0.2197 
+#  97.5   1 13.8 0.2197 
+#  112.5  1 14.1 0.2197 
+#  127.5  1 14.4 0.2197 
+# Use custom transition matrix (0=no, 1=growth matrix, 2=transition matrix, i.e. growth and molting) 
+0 
+# The custom growth matrix (if not using just fill with zeros) 
+# Alternative TM (loosely) based on Otto and Cummiskey (1990) 
+0.2  0.7  0.1 
+0.0  0.4  0.6 
+0.0  0.0  1.0 
+#  Use  custom  natural  mortality  (0=no,  1=yes,  by  sex  and  year)       
+0 
+0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12 0.12  0.12 .12 .12 
+## eof 
+9999 
+ 
+```
+## The reference model (16.0) control file
+
+```
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## LEADING PARAMETER CONTROLS                                                           ## 
+# Controls for leading parameter vector theta 
+# LEGEND FOR PRIOR: 
+#                  0 -> uniform #                  1 -> normal #                  2 -> lognormal 
+#                  3 -> beta 
+#                  4 -> gamma 
+# ntheta 
+  12 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+# ival        lb        ub        phz   prior     p1      p2         # parameter         # 
+  0.18      0.01         1        -4       2   0.18    0.02          # M 
+  14.3      -7.0        30        -2       0    -7       30          # log(R0) 
+  10.0      -7.0        20        -1       1   -10.0     20          # log(Rini) 
+  13.39     -7.0        20         1       0    -7       20          # log(Rbar) 
+  80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value 
+  0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component) 
+  0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R) 
+  0.75      0.20      1.00        -2       3    3.0    2.00          # steepness 
+  0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation 
+ 14.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length 
+ 14.0       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length 
+ 13.5       5.00     20.00         1       0    5.00  20.00          # logN0 vector of initial numbers at length 
+## GROWTH PARAM CONTROLS                                                                ## 
+## Two lines for each parameter if split sex, one line if not                           ## 
+## number of molt periods 
+1 
+## Year(s) molt period changes (blank if no changes) 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+# ival        lb        ub         phz  prior     p1      p2         # parameter         # 
+  14.1      10.0      30.0         -3       0    0.0   999.0         # alpha males or combined 
+   0.0001    0.0       0.01        -3       0    0.0   999.0         # beta males or combined 
+   0.45      0.01      1.0         -3       0    0.0   999.0         # gscale males or combined 
+ 121.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined 
+   0.060     0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined 
+ 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## SELECTIVITY CONTROLS                                                                 ## 
+##     Each gear must have a selectivity and a retention selectivity. If a uniform      ## 
+##     prior is selected for a parameter then the lb and ub are used (p1 and p2 are     ## 
+##     ignored)                                                                         ## 
+## LEGEND                                                                               ## 
+##     sel type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95,        ## 
+##               4 = double normal (NIY)                                                ## 
+##     gear index: use +ve for selectivity, -ve for retention                           ## 
+##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ## 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ivector for number of year periods or nodes                                          ## 
+## POT       TBycatch FBycatch  NMFS_S   ADFG_pot 
+## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5 
+   2         1        1         1        1         # Selectivity periods 
+   0         0        0         0        0         # sex specific selectivity 
+   0         3        3         0        0         # male selectivity type 
+## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5 
+   1         1        1         1        1         # Retention periods 
+   0         0        0         0        0         # sex specific retention 
+   3         2        2         2        2         # male retention type 
+   1         0        0         0        0         # male retention flag (0 -> no, 1 -> yes) 
+## gear  par   sel                                             phz    start  end        ## 
+## index index par sex  ival  lb    ub     prior p1     p2     mirror period period     ## 
+# Gear-1 
+   1     1     1   0    0.4    0.001 1.0    0       0      1     3     1978   2008 
+   1     2     2   0    0.7    0.001 1.0    0       0      1     3     1978   2008 
+   1     3     3   0    1.0    0.001 2.0    0       0      1    -2     1978   2008 
+   1     1     1   0    0.4    0.001 1.0    0       0      1     3     2009   2018 
+   1     2     2   0    0.4    0.001 1.0    0       0      1     3     2009   2018 
+   1     3     3   0    1.0    0.001 2.0    0       0      1    -2     2009   2018 
+# Gear-2 
+   2     7     1   0    40      10.0  200    0      10    200   -3     1978   2018 
+   2     8     2   0    60      10.0  200    0      10    200   -3     1978   2018 
+# Gear-3 
+   3     9     1   0    40      10.0  200    0      10    200   -3     1978   2018 
+   3    10     2   0    60      10.0  200    0      10    200   -3     1978   2018 
+# Gear-4 
+   4     8     1   0    0.7     0.001 1.0    0       0      1    4     1978   2018 
+   4     9     2   0    0.7     0.001 1.0    0       0      1    4     1978   2018 
+   4     10    3   0    0.9     0.001 1.0    0       0      1   -2     1978   2018 
+# Gear-5 
+   5     11    1   0    0.4     0.001 1.0    0       0      1    4     1978   2018 
+   5     12    2   0    0.7     0.001 1.0    0       0      1    4     1978   2018 
+   5     13    3   0    1.0     0.001 2.0    0       0      1   -2     1978   2018 
+## Retained 
+# Gear-1 
+  -1     14    1   0   120   100   200    0      1    900   -1     1978   2018 
+  -1     15    2   0   123   110   200    0      1    900   -1     1978   2018 
+# Gear-2 
+  -2     16    1   0   595    1    700    0      1    900   -3     1978   2018 
+  -2     17    2   0    10    1    700    0      1    900   -3     1978   2018 
+# Gear-3 
+  -3     18    1   0   590    1    700    0      1    900   -3     1978   2018 
+  -3     19    2   0    10    1    700    0      1    900   -3     1978   2018 
+# Gear-4 
+  -4     20    1   0   580    1    700    0      1    900   -3     1978   2018 
+  -4     21    2   0    20    1    700    0      1    900   -3     1978   2018 
+# Gear-5 
+  -5     22    1   0   580    1    700    0      1    900   -3     1978   2018 
+  -5     23    2   0    20    1    700    0      1    900   -3     1978   2018 
+ 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## PRIORS FOR CATCHABILITY 
+##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
+##     and p2 are ignored). ival must be > 0                                            ## 
+## LEGEND                                                                               ## 
+##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit. 
+## SURVEYS/INDICES ONLY 
+## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
+   1.0     0.5      1.2   -4    0       0        9.0   0           1       # NMFS trawl 
+4.11135867487e-4 0 5       3    0       0        9.0   0           1       # ADF&G pot 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+ 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ## 
+##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
+##     and p2 are ignored). ival must be > 0                                            ## 
+## LEGEND                                                                               ## 
+##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ival        lb        ub        phz   prior     p1      p2 
+   0.0000001      0.00000001   10.0      -4    4         1.0     100   # NMFS 
+   0.0000001      0.00000001   10.0      -4    4         1.0     100   # ADF&G 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+ 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## Mean_F  STD_PHZ1  STD_PHZ2     PHZ 
+   0.2       0.05     50.0       1   # Pot 
+   0.0001     0.05     50.0       1   # Trawl 
+   0.0001     0.05     50.0       1   # Fixed 
+   0.00      2.00     20.00     -1   # NMFS 
+   0.00      2.00     20.00     -1   # ADF&G 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+ 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX) 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## LIKELIHOOD OPTIONS 
+##   -1) Multinomial with estimated/fixed sample size 
+##   -2) Robust approximation to multinomial 
+##   -3) logistic normal (NIY) 
+##   -4) multivariate-t (NIY) 
+##   -5) Dirichlet 
+## AUTOTAIL COMPRESSION 
+##   pmin is the cumulative proportion used in tail compression. 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+#  1   1   1  # Type of likelihood 
+  2   2   2  # Type of likelihood 
+#  5   5   5   # Type of likelihood 
+  0   0   0   # Auto tail compression (pmin) 
+  1   1   1   # Initial value for effective sample size multiplier 
+ -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
+  1   2   3   # Composition aggregator 
+  1   1   1   # LAMBDA 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+ 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## TIME VARYING NATURAL MORTALIIY RATES                                                 ## 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## TYPE:  
+##      0 = constant natural mortality 
+##      1 = Random walk (deviates constrained by variance in M) 
+##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
+##      3 = Blocked changes (deviates constrained by variance at specific knots) 
+##      4 = Time blocks 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## Sex-specific? (0=no, 1=yes) 
+0 
+## Type 
+3 
+## Phase of estimation 
+4 
+## STDEV in m_dev for Random walk 
+10.0 
+## Number of nodes for cubic spline or number of step-changes for option 3 
+2 
+0 # Females (ignored if single sex...) 
+## Year position of the knots (vector must be equal to the number of nodes) 
+1998 1999 
+# 1976 1980 1985 1994 # Females (ignored if single sex...) 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+ 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## OTHER CONTROLS 
+## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+  3       # Estimated rec_dev phase 
+  3       # Estimated rec_ini phase 
+  0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
+  2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters) 
+  1978    # First year for average recruitment for Bspr calculation 
+  2018    # Last year for average recruitment for Bspr calculation 
+  0.35    # Target SPR ratio for Bmsy proxy 
+  1       # Gear index for SPR calculations (i.e. directed fishery) 
+  1       # Lambda (proportion of mature male biomass for SPR reference points) 
+  1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE) 
+  0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt) 
+## EOF 
+9999 
+```
+<!-- 
+## The no $M_{1998}$ model control file:
+
+
+```
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## LEADING PARAMETER CONTROLS                                                           ## 
+## # Controls for leading parameter vector theta 
+## # LEGEND FOR PRIOR: 
+## #                  0 -> uniform #                  1 -> normal #                  2 -> lognormal 
+## #                  3 -> beta 
+## #                  4 -> gamma 
+## # ntheta 
+##   12 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## # ival        lb        ub        phz   prior     p1      p2         # parameter         # 
+##   0.18      0.01         1        -4       2   0.18    0.02          # M 
+##   14.3      -7.0        30        -2       0    -7       30          # log(R0) 
+##   10.0      -7.0        20        -1       1   -10.0     20          # log(Rini) 
+##   14.13979   7.0        16         1       0     7.0     16.         # log(Rbar) 
+##   80.0      30.0       310        -2       1    72.5    7.25         # Recruitment size distribution expected value 
+##   0.25       0.1         7        -4       0    0.1     9.0          # Recruitment size scale (variance component) 
+##   0.2      -10.0      0.75        -4       0  -10.0    0.75          # log(sigma_R) 
+##   0.75      0.20      1.00        -2       3    3.0    2.00          # steepness 
+##   0.01      0.00      1.00        -3       3    1.01   1.01          # recruitment autocorrelation 
+##  14.9      10.00     15.00         3       0    5.00  20.00          # logN0 vector of initial numbers at length 
+##  14.5      10.00     15.00         3       0    5.00  20.00          # logN0 vector of initial numbers at length 
+##  14.3      10.00     15.00         3       0    5.00  20.00          # logN0 vector of initial numbers at length 
+## ## GROWTH PARAM CONTROLS                                                                ## 
+## ## Two lines for each parameter if split sex, one line if not                           ## 
+## ## number of molt periods 
+## 1 
+## ## Year(s) molt period changes (blank if no changes) 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## # ival        lb        ub         phz  prior     p1      p2         # parameter         # 
+##   14.1      10.0      30.0         -3       0    0.0   999.0         # alpha males or combined 
+##    0.0001    0.0       0.01        -3       0    0.0   999.0         # beta males or combined 
+##    0.45      0.01      1.0         -3       0    0.0   999.0         # gscale males or combined 
+##  121.5      65.0     145.0         -4       0    0.0   999.0         # molt_mu males or combined 
+##    0.060     0.0       1.0         -3       0    0.0   999.0         # molt_cv males or combined 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## SELECTIVITY CONTROLS                                                                 ## 
+## ##     Each gear must have a selectivity and a retention selectivity. If a uniform      ## 
+## ##     prior is selected for a parameter then the lb and ub are used (p1 and p2 are     ## 
+## ##     ignored)                                                                         ## 
+## ## LEGEND                                                                               ## 
+## ##     sel type: 0 = parametric, 1 = coefficients, 2 = logistic, 3 = logistic95,        ## 
+## ##               4 = double normal (NIY)                                                ## 
+## ##     gear index: use +ve for selectivity, -ve for retention                           ## 
+## ##     sex dep: 0 for sex-independent, 1 for sex-dependent                              ## 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## ivector for number of year periods or nodes                                          ## 
+## ## POT       TBycatch FBycatch  NMFS_S   ADFG_pot 
+## ## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5 
+##    2         1        1         1        1         # Selectivity periods 
+##    0         0        0         0        0         # sex specific selectivity 
+##    0         3        3         0        0         # male selectivity type 
+## ## Gear-1    Gear-2   Gear-3    Gear-4   Gear-5 
+##    1         1        1         1        1         # Retention periods 
+##    0         0        0         0        0         # sex specific retention 
+##    3         2        2         2        2         # male retention type 
+##    1         0        0         0        0         # male retention flag (0 -> no, 1 -> yes) 
+## ## gear  par   sel                                                      phz    start  end    ## 
+## ## index index par sex  ival           lb    ub  prior     p1     p2  mirror period period   ## 
+## # Gear-1 
+##    1     1     1   0    0.4    0.001 1.0    0       0      1     3     1978   2008 
+##    1     2     2   0    0.7    0.001 1.0    0       0      1     3     1978   2008 
+##    1     3     3   0    1.0    0.001 2.0    0       0      1    -2     1978   2008 
+##    1     1     1   0    0.4    0.001 1.0    0       0      1     3     2009   2017 
+##    1     2     2   0    0.4    0.001 1.0    0       0      1     3     2009   2017 
+##    1     3     3   0    1.0    0.001 2.0    0       0      1    -2     2009   2017 
+## # Gear-2 
+##    2     7     1   0    40      10.0  200    0      10    200   -3     1978   2017 
+##    2     8     2   0    60      10.0  200    0      10    200   -3     1978   2017 
+## # Gear-3 
+##    3     9     1   0    40      10.0  200    0      10    200   -3     1978   2017 
+##    3    10     2   0    60      10.0  200    0      10    200   -3     1978   2017 
+## # Gear-4 
+##    4     8     1   0    0.7     0.001 1.0    0       0      1    4     1978   2017 
+##    4     9     2   0    0.7     0.001 1.0    0       0      1    4     1978   2017 
+##    4     10    3   0    0.9     0.001 1.0    0       0      1   -2     1978   2017 
+## # Gear-5 
+##    5     11    1   0    0.4     0.001 1.0    0       0      1    4     1978   2017 
+##    5     12    2   0    0.7     0.001 1.0    0       0      1    4     1978   2017 
+##    5     13    3   0    1.0     0.001 2.0    0       0      1   -2     1978   2017 
+## ## Retained 
+## # Gear-1 
+##   -1     14    1   0   120   100   200    0      1    900   -1     1978   2017 
+##   -1     15    2   0   123   110   200    0      1    900   -1     1978   2017 
+## # Gear-2 
+##   -2     16    1   0   595    1    700    0      1    900   -3     1978   2017 
+##   -2     17    2   0    10    1    700    0      1    900   -3     1978   2017 
+## # Gear-3 
+##   -3     18    1   0   590    1    700    0      1    900   -3     1978   2017 
+##   -3     19    2   0    10    1    700    0      1    900   -3     1978   2017 
+## # Gear-4 
+##   -4     20    1   0   580    1    700    0      1    900   -3     1978   2017 
+##   -4     21    2   0    20    1    700    0      1    900   -3     1978   2017 
+## # Gear-5 
+##   -5     22    1   0   580    1    700    0      1    900   -3     1978   2017 
+##   -5     23    2   0    20    1    700    0      1    900   -3     1978   2017 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## PRIORS FOR CATCHABILITY 
+## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
+## ## LEGEND                                                                               ## 
+## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ##  LAMBDA: Arbitrary relative weights for each series, 0 = do not fit. 
+## ## SURVEYS/INDICES ONLY 
+## ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA 
+##    1.0     0        2     -1    0       0        9.0   0           1       # NMFS trawl 
+## 0.00411135867487 0 5       1    0       0        9.0   0           1       # ADF&G pot 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## ADDITIONAL CV FOR SURVEYS/INDICES                                                    ## 
+## ##     If a uniform prior is selected for a parameter then the lb and ub are used (p1   ## 
+## ##     and p2 are ignored). ival must be > 0                                            ## 
+## ## LEGEND                                                                               ## 
+## ##     prior: 0 = uniform, 1 = normal, 2 = lognormal, 3 = beta, 4 = gamma               ## 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## ival        lb        ub        phz   prior     p1      p2 
+##    0.0000001      0.00000001   10.0      -4    4         1.0     100   # NMFS 
+##    0.0000001      0.00000001   10.0      -4    4         1.0     100   # ADF&G 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## PENALTIES FOR AVERAGE FISHING MORTALITY RATE FOR EACH GEAR 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## Mean_F  STD_PHZ1  STD_PHZ2     PHZ 
+##    0.2       0.05     50.0       1   # Pot 
+##    0.001     0.05     50.0       1   # Trawl 
+##    0.001     0.05     50.0       1   # Fixed 
+##    0.00      2.00     20.00     -1   # NMFS 
+##    0.00      2.00     20.00     -1   # ADF&G 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## OPTIONS FOR SIZE COMPOSTION DATA (COLUMN FOR EACH MATRIX) 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## LIKELIHOOD OPTIONS 
+## ##   -1) Multinomial with estimated/fixed sample size 
+## ##   -2) Robust approximation to multinomial 
+## ##   -3) logistic normal (NIY) 
+## ##   -4) multivariate-t (NIY) 
+## ##   -5) Dirichlet 
+## ## AUTOTAIL COMPRESSION 
+## ##   pmin is the cumulative proportion used in tail compression. 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## #  1   1   1  # Type of likelihood 
+##   2   2   2  # Type of likelihood 
+## #  5   5   5   # Type of likelihood 
+##   0   0   0   # Auto tail compression (pmin) 
+##   1   1   1   # Initial value for effective sample size multiplier 
+##  -4  -4  -4   # Phz for estimating effective sample size (if appl.) 
+##   1   2   3   # Composition aggregator 
+##   1   1   1   # LAMBDA 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## TIME VARYING NATURAL MORTALIIY RATES                                                 ## 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## TYPE:  
+## ##      0 = constant natural mortality 
+## ##      1 = Random walk (deviates constrained by variance in M) 
+## ##      2 = Cubic Spline (deviates constrained by nodes & node-placement) 
+## ##      3 = Blocked changes (deviates constrained by variance at specific knots) 
+## ##      4 = Time blocks 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## Sex-specific? (0=no, 1=yes) 
+## 0 
+## ## Type 
+## 3 
+## ## Phase of estimation 
+## 4 
+## ## STDEV in m_dev for Random walk 
+## 10.0 
+## ## Number of nodes for cubic spline or number of step-changes for option 3 
+## 2 
+## 0 # Females (ignored if single sex...) 
+## ## Year position of the knots (vector must be equal to the number of nodes) 
+## 1998 1999 
+## # 1976 1980 1985 1994 # Females (ignored if single sex...) 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+##  
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+## ## OTHER CONTROLS 
+## ## <U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD><U+FFFD> ## 
+##   3       # Estimated rec_dev phase 
+##   3       # Estimated rec_ini phase 
+##   0       # VERBOSE FLAG (0 = off, 1 = on, 2 = objective func) 
+##   2       # Initial conditions (0 = Unfished, 1 = Steady-state fished, 2 = Free parameters) 
+##   1978    # First year for average recruitment for Bspr calculation 
+##   2016    # Last year for average recruitment for Bspr calculation 
+##   0.35    # Target SPR ratio for Bmsy proxy 
+##   1       # Gear index for SPR calculations (i.e. directed fishery) 
+##   1       # Lambda (proportion of mature male biomass for SPR reference points) 
+##   1       # Use empirical molt increment data (0 = FALSE, 1 = TRUE) 
+##   0       # Stock-Recruit-Relationship (0 = None, 1 = Beverton-Holt) 
+## ## EOF 
+## 9999
+```
+--> 
+
+
+
+# Appendix C. Spatio-temporal analysis of NMFS bottom-trawl survey SMBKC data
+
+## Overview
+This application of `VAST` was configured to model a subset of NMFS/AFSC bottom trawl
+survey data.  Specifically, the station-specific CPUE (kg per hectare) for male crab great than or equal to 90mm CW 
+were compiled from 1978-2018. Further details can be found at the [GitHub repo](https://github.com/james- thorson/VAST/#description)
+mainpage, wiki, and glossary.  The R help files, e.g., `?Data_Fn` for explanation of data inputs, or `?Param_Fn` for explanation of parameters.
+VAST has involved many publications for developing individual features (see references section below). What follows is intended as 
+a step by step documentation of applying the model to these data.
+
+## Model configuration
+The following loads in the main libraries.
+
+
+
+
+
+### Spatial settings 
+
+The following settings define the spatial resolution for the model, and
+whether to use a grid or mesh approximation as well as specific model settings.
+
+
+
+
+## Data preparation
+### Data-frame for catch-rate data
+The following extracts a subset of the data file downloaded from AKFIN.
+
+
+
+
+## Build and run model
+
+To estimate parameters, first create a list of data-inputs used for parameter
+estimation.  `Data_Fn` has some simple checks for buggy inputs, but also
+please read the help file `?Data_Fn`.
+
+
+
+## Diagnostic plots
+
+
+ 
+### Convergence
+Diagnostics generated during parameter estimation can confirm that 
+parameter estimates are away from upper or lower bounds and that the final gradient for
+each fixed-effect is close to zero.  For explanation of parameters, please see
+references (and specifically `?Data_Fn` in R).
+
+[1] "\fontsize{7}{8}"
+\begin{table}[ht]
+\centering
+\caption{SMBKC parameter estimates, bounds, and final gradients as derived from the VAST modeling framework. } 
+\label{tab:params}
+\begin{tabular}{lrrrr}
+  \hline
+Param & Lower & MLE & Upper & final\_gradient \\ 
+  \hline
+ln\_H\_input & -50.0 & -0.157 & 50.0 & 0.00001 \\ 
+  ln\_H\_input & -50.0 & -0.637 & 50.0 & -0.00006 \\ 
+  beta1\_ct & -50.0 & 1.068 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -1.381 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -2.306 & 50.0 & -0.00002 \\ 
+  beta1\_ct & -50.0 & -0.486 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & 0.556 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -0.774 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -0.643 & 50.0 & -0.00004 \\ 
+  beta1\_ct & -50.0 & -0.616 & 50.0 & 0.00000 \\ 
+  beta1\_ct & -50.0 & -1.786 & 50.0 & 0.00000 \\ 
+  beta1\_ct & -50.0 & -3.240 & 50.0 & -0.00000 \\ 
+  beta1\_ct & -50.0 & -2.464 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -2.955 & 50.0 & 0.00002 \\ 
+  beta1\_ct & -50.0 & -2.080 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -1.924 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -0.402 & 50.0 & -0.00002 \\ 
+  beta1\_ct & -50.0 & -0.534 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -0.867 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -1.032 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & 0.265 & 50.0 & -0.00002 \\ 
+  beta1\_ct & -50.0 & -0.869 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -1.201 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -1.061 & 50.0 & -0.00004 \\ 
+  beta1\_ct & -50.0 & -1.742 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -2.691 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -3.145 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -3.401 & 50.0 & -0.00004 \\ 
+  beta1\_ct & -50.0 & -3.412 & 50.0 & 0.00002 \\ 
+  beta1\_ct & -50.0 & -3.214 & 50.0 & 0.00002 \\ 
+  beta1\_ct & -50.0 & -3.797 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -1.776 & 50.0 & 0.00000 \\ 
+  beta1\_ct & -50.0 & -1.032 & 50.0 & -0.00002 \\ 
+  beta1\_ct & -50.0 & -1.630 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & 0.157 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & 0.141 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -1.206 & 50.0 & -0.00003 \\ 
+  beta1\_ct & -50.0 & 0.143 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -0.956 & 50.0 & 0.00005 \\ 
+  beta1\_ct & -50.0 & -2.236 & 50.0 & 0.00001 \\ 
+  beta1\_ct & -50.0 & -2.546 & 50.0 & -0.00001 \\ 
+  beta1\_ct & -50.0 & -3.100 & 50.0 & -0.00000 \\ 
+  beta1\_ct & -50.0 & -3.756 & 50.0 & 0.00002 \\ 
+  L\_omega1\_z & -50.0 & 2.282 & 50.0 & 0.00007 \\ 
+  L\_epsilon1\_z & -50.0 & 0.683 & 50.0 & -0.00009 \\ 
+  logkappa1 & -4.7 & -3.695 & -1.9 & -0.00003 \\ 
+  beta2\_ct & -50.0 & -8.669 & 50.0 & 0.00004 \\ 
+  beta2\_ct & -50.0 & -7.498 & 50.0 & 0.00008 \\ 
+  beta2\_ct & -50.0 & -7.295 & 50.0 & 0.00011 \\ 
+  beta2\_ct & -50.0 & -7.582 & 50.0 & 0.00008 \\ 
+  beta2\_ct & -50.0 & -7.801 & 50.0 & -0.00014 \\ 
+  beta2\_ct & -50.0 & -6.802 & 50.0 & 0.00000 \\ 
+  beta2\_ct & -50.0 & -7.813 & 50.0 & 0.00013 \\ 
+  beta2\_ct & -50.0 & -8.131 & 50.0 & -0.00000 \\ 
+  beta2\_ct & -50.0 & -8.362 & 50.0 & -0.00010 \\ 
+  beta2\_ct & -50.0 & -8.978 & 50.0 & -0.00006 \\ 
+  beta2\_ct & -50.0 & -8.486 & 50.0 & 0.00001 \\ 
+  beta2\_ct & -50.0 & -8.395 & 50.0 & -0.00005 \\ 
+  beta2\_ct & -50.0 & -7.845 & 50.0 & -0.00005 \\ 
+  beta2\_ct & -50.0 & -7.838 & 50.0 & -0.00014 \\ 
+  beta2\_ct & -50.0 & -7.881 & 50.0 & 0.00016 \\ 
+  beta2\_ct & -50.0 & -7.763 & 50.0 & -0.00004 \\ 
+  beta2\_ct & -50.0 & -7.515 & 50.0 & 0.00018 \\ 
+  beta2\_ct & -50.0 & -7.891 & 50.0 & -0.00008 \\ 
+  beta2\_ct & -50.0 & -8.162 & 50.0 & 0.00001 \\ 
+  beta2\_ct & -50.0 & -7.718 & 50.0 & 0.00002 \\ 
+  beta2\_ct & -50.0 & -7.656 & 50.0 & -0.00026 \\ 
+  beta2\_ct & -50.0 & -7.870 & 50.0 & 0.00002 \\ 
+  beta2\_ct & -50.0 & -8.767 & 50.0 & -0.00001 \\ 
+  beta2\_ct & -50.0 & -8.751 & 50.0 & 0.00005 \\ 
+  beta2\_ct & -50.0 & -8.249 & 50.0 & 0.00009 \\ 
+  beta2\_ct & -50.0 & -8.820 & 50.0 & 0.00008 \\ 
+  beta2\_ct & -50.0 & -8.854 & 50.0 & 0.00005 \\ 
+  beta2\_ct & -50.0 & -9.064 & 50.0 & -0.00025 \\ 
+  beta2\_ct & -50.0 & -8.506 & 50.0 & -0.00015 \\ 
+  beta2\_ct & -50.0 & -8.519 & 50.0 & 0.00009 \\ 
+  beta2\_ct & -50.0 & -8.129 & 50.0 & 0.00005 \\ 
+  beta2\_ct & -50.0 & -8.322 & 50.0 & 0.00001 \\ 
+  beta2\_ct & -50.0 & -8.136 & 50.0 & 0.00001 \\ 
+  beta2\_ct & -50.0 & -8.006 & 50.0 & 0.00004 \\ 
+  beta2\_ct & -50.0 & -7.794 & 50.0 & 0.00002 \\ 
+  beta2\_ct & -50.0 & -8.183 & 50.0 & 0.00002 \\ 
+  beta2\_ct & -50.0 & -8.765 & 50.0 & 0.00005 \\ 
+  beta2\_ct & -50.0 & -8.088 & 50.0 & -0.00013 \\ 
+  beta2\_ct & -50.0 & -8.574 & 50.0 & 0.00004 \\ 
+  beta2\_ct & -50.0 & -8.388 & 50.0 & -0.00000 \\ 
+  beta2\_ct & -50.0 & -8.873 & 50.0 & 0.00017 \\ 
+  L\_omega2\_z & -50.0 & -0.767 & 50.0 & 0.00009 \\ 
+  L\_epsilon2\_z & -50.0 & 0.454 & 50.0 & -0.00038 \\ 
+  logkappa2 & -4.7 & -2.952 & -1.9 & -0.00001 \\ 
+  logSigmaM & -50.0 & -0.352 & 10.0 & -0.00081 \\ 
+   \hline
+\end{tabular}
+\end{table}
+\fontsize{9}{10}
+
+### Encounter-probability component
+One can check to ensure that observed encounter frequencies for either low or high
+probability samples are within the 95% predictive interval for predicted
+encounter probability (Figure \ref{fig:encounter}. 
+Diagnostics for positive-catch-rate component was evaluated using a standard
+Q-Q plot. Qualitatively, the fits to SMBKC are reasonable but could stand some more evaluation for improvement as only
+one configuration was tested here (Figures \ref{fig:qq1} and \ref{fig:qq2}.
+
+
+
+\begin{figure} \centerline{ \label{fig:encounter}
+\includegraphics[width=0.5\textwidth] {map/VAST_output_wtge90/Diag--Encounter_prob.png}}
+\caption{ Observed encounter rates and predicted probabilities for SMBKC. }
+\end{figure}
+
+\begin{figure} \centerline{ \label{fig:qq1}
+\includegraphics[width=0.5\textwidth] {map/VAST_output_wtge90/Q-Q_hist.jpg}}
+\caption{ Plot indicating distribution of quantiles for "positive catch rate" component. }
+\end{figure}
+
+\begin{figure} \centerline{ \label{fig:qq2}
+\includegraphics[width=0.5\textwidth] {map/VAST_output_wtge90/Q-Q_plot.jpg}}
+\caption{Quantile-quantile plot of residuals for "positive catch rate" component. }
+\end{figure}
+
+
+###Pearson residuals
+Spatially the residual pattern can be evaluated over time. Results for SMBKC shows that
+consistent positive or negative 
+residuals accross or within years is limited for the encounter probability component of the model and 
+for the positive catch rate component (Figures \ref{fig:pearson1} and \ref{fig:pearson2}, respectively).
+Some VAST plots for visualizing results can be seen by examining the
+direction of faster or slower spatial decorrelation (termed "geometric anisotropy"; Figure \ref{fig:aniso}).
+
+
+
+![Pearson residuals of the encounter probability component at SMBKC stations, 1976-2018. \label{fig:pearson1}](map/VAST_output_wtge90/maps--encounter_pearson_resid.png)
+
+![Pearson residuals of the positive catch rate component for SMBKC stations, 1976-2018. \label{fig:pearson2}](map/VAST_output_wtge90/maps--catchrate_pearson_resid.png)
+
+
+
+![Directional decorrelation for SMBKC stations, 1978-2018. \label{fig:aniso}](map/VAST_output_wtge90/Aniso.png)
+
+
+![St. Matthews Island blue king crab (males >89mm) density maps as predicted
+using the VAST model approach, 1976-2018. \label{fig:density}](map/VAST_output_wtge90/Dens.png)
+
+### Densities and biomass estimates 
+Relative densities over time suggests that the biomass of males >89mm are generally concentrated within the central part of the
+survey region (Figure \ref{fig:density}). For the application to SMBKC, the biomass index was scaled
+to have the same mean as that from the design-based estimate (5,764 t) of abundance (Table \ref{tab:smbkc_biomass}).
+
+\begin{table}[ht]
+\centering
+\caption{SMBKC male >89mm biomass (t) estimates as derived from the VAST modeling framework.} 
+\label{tab:smbkc_biomass}
+\begin{tabular}{rrr}
+  \hline
+Year & Estimate & CV \\ 
+  \hline
+1977 & 4149.9 & 0.933 \\ 
+  1978 & 8257.2 & 0.204 \\ 
+  1979 & 11852.5 & 0.255 \\ 
+  1980 & 10570.5 & 0.172 \\ 
+  1981 & 8714.3 & 0.168 \\ 
+  1982 & 20910.3 & 0.186 \\ 
+  1983 & 9646.5 & 0.145 \\ 
+  1984 & 4824.5 & 0.154 \\ 
+  1985 & 4017.3 & 0.173 \\ 
+  1986 & 1435.4 & 0.232 \\ 
+  1987 & 2894.2 & 0.203 \\ 
+  1988 & 3131.6 & 0.198 \\ 
+  1989 & 6685.3 & 0.180 \\ 
+  1990 & 6882.2 & 0.178 \\ 
+  1991 & 7448.5 & 0.151 \\ 
+  1992 & 7835.2 & 0.144 \\ 
+  1993 & 10445.3 & 0.145 \\ 
+  1994 & 7084.7 & 0.151 \\ 
+  1995 & 6202.7 & 0.132 \\ 
+  1996 & 9390.2 & 0.150 \\ 
+  1997 & 9335.1 & 0.149 \\ 
+  1998 & 6917.6 & 0.147 \\ 
+  1999 & 2260.9 & 0.181 \\ 
+  2000 & 2237.3 & 0.197 \\ 
+  2001 & 3305.7 & 0.233 \\ 
+  2002 & 1767.8 & 0.239 \\ 
+  2003 & 1714.8 & 0.222 \\ 
+  2004 & 1812.2 & 0.219 \\ 
+  2005 & 1773.7 & 0.273 \\ 
+  2006 & 3862.7 & 0.169 \\ 
+  2007 & 5607.0 & 0.149 \\ 
+  2008 & 4587.6 & 0.165 \\ 
+  2009 & 6419.3 & 0.132 \\ 
+  2010 & 7902.4 & 0.132 \\ 
+  2011 & 7510.2 & 0.154 \\ 
+  2012 & 5958.9 & 0.135 \\ 
+  2013 & 2702.6 & 0.155 \\ 
+  2014 & 4759.7 & 0.175 \\ 
+  2015 & 2719.7 & 0.192 \\ 
+  2016 & 2905.8 & 0.209 \\ 
+  2017 & 1325.5 & 0.259 \\ 
+  2018 & 2281.2 & 0.264 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+![St. Matthews Island blue king crab (males >89mm) relative abundance as predicted
+using the VAST model approach.\label{fig:Index}](map/VAST_output_wtge90/Index.png)
+
+
+##Appendix C references
+
+\fontsize{8}{10}
+
+Please cite 2016 (ICES J. Mar. Sci. J.
+Cons.) if using the package; 2016 (Glob.
+Ecol. Biogeogr) if exploring factor
+decomposition of spatio-temporal variation;
+2015 (ICES J. Mar. Sci. J. Cons.) if
+calculating an index of abundance; 2016
+(Methods Ecol. Evol.) if using the
+center-of-gravity metric; 2016 (Fish. Res.)
+if using the bias-correction feature; 2016
+(Proc R Soc B) if using the
+effective-area-occupied metric.
+
+  Thorson, J.T., and Barnett, L.A.K. In
+  press. Comparing estimates of abundance
+  trends and distribution shifts using
+  single- and multispecies models of fishes
+  and biogenic habitat. ICES J. Mar. Sci. J.
+  Cons
+
+  Thorson, J.T., Ianelli, J.N., Larsen, E.,
+  Ries, L., Scheuerell, M.D., Szuwalski, C.,
+  and Zipkin, E. 2016. Joint dynamic species
+  distribution models: a tool for community
+  ordination and spatiotemporal monitoring.
+  Glob. Ecol. Biogeogr. 25(9): 1144-1158.
+  doi:10.1111/geb.12464. url:
+  http://onlinelibrary.wiley.com/doi/10.1111/geb.12464/abstract
+
+  Thorson, J.T., Shelton, A.O., Ward, E.J.,
+  Skaug, H.J., 2015. Geostatistical
+  delta-generalized linear mixed models
+  improve precision for estimated abundance
+  indices for West Coast groundfishes. ICES
+  J. Mar. Sci. J. Cons. 72(5), 1297-1310.
+  doi:10.1093/icesjms/fsu243. URL:
+  http://icesjms.oxfordjournals.org/content/72/5/1297
+
+  Thorson, J.T., and Kristensen, K. 2016.
+  Implementing a generic method for bias
+  correction in statistical models using
+  random effects, with spatial and
+  population dynamics examples. Fish. Res.
+  175: 66-74.
+  doi:10.1016/j.fishres.2015.11.016. url:
+  http://www.sciencedirect.com/science/article/pii/S0165783615301399
+
+  Thorson, J.T., Pinsky, M.L., Ward, E.J.,
+  2016. Model-based inference for estimating
+  shifts in species distribution, area
+  occupied, and center of gravity. Methods
+  Ecol. Evol. 7(8), 990-1008.
+  doi:10.1111/2041-210X.12567.  URL:
+  http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12567/full
+
+  Thorson, J.T., Rindorf, A., Gao, J.,
+  Hanselman, D.H., and Winker, H. 2016.
+  Density-dependent changes in effective
+  area occupied for sea-bottom-associated
+  marine fishes. Proc R Soc B 283(1840):
+  20161853. doi:10.1098/rspb.2016.1853. URL:
+  http://rspb.royalsocietypublishing.org/content/283/1840/20161853.
+
+To see these entries in BibTeX format, use
+'print(<citation>, bibtex=TRUE)',
+'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.

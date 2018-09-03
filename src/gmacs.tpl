@@ -4039,6 +4039,7 @@ REPORT_SECTION
 			d3_res_size_comps_out(kk,ii) = d3_obs_size_comps_out(kk,ii) - d3_pre_size_comps_out(kk,ii); // WRONG, DARCY 29 jULY 2016
 		}
 	}
+	// cout << "pos 3" << endl;
 
 	REPORT(d3_SizeComps_in);
 	REPORT(d3_obs_size_comps_out);
@@ -4065,6 +4066,7 @@ REPORT_SECTION
 
 	if ( last_phase() )
 	{
+		cout<<"Her1"<<endl;
 		int refyear = nyr-1;
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
 		//calc_spr_reference_points(refyear, refseason, spr_fleet);
@@ -4085,7 +4087,6 @@ REPORT_SECTION
 		REPORT(spr_cofl);
 		REPORT(spr_ssbo);
 
-		cout<<"Her1"<<endl;
 		dvar_matrix mean_size(1,nsex,1,nclass);
 		///>  matrix to get distribution of size at say, nclass "ages" (meaning years since initial recruitment)
 		dvar3_array growth_matrix(1,nsex,1,nclass,1,nclass);
@@ -4179,7 +4180,9 @@ REPORT_SECTION
 	{
 		N_initial(k) = d4_N(k)(syr)(1);
 	}
+	cout << "pos 4" << endl;
 	N_brute = calc_brute_equilibrium();
+	cout << "pos 5" << endl;
 	REPORT(N_initial);
 	REPORT(N_brute);
 	REPORT(N_total);
@@ -4205,6 +4208,7 @@ REPORT_SECTION
 		REPORT(pMoltInc);
 	}
 	REPORT(survey_q);
+	cout << "pos 6" << endl;
 	
 	// Molting probability
 	//dvector molt_prob_M(1,nclass);
