@@ -276,7 +276,7 @@ DATA_SECTION
 		}
 		for ( int i = syr; i <= nyr; i++ )
 		{
-			if ( sum(m_prop(i)) > 1.0000001 || sum(m_prop(i)) < 0.999999 )
+			if ( sum(m_prop(i)) > 1.0010001 || sum(m_prop(i)) < 0.999999 )
 			{
 				cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1! It sums to " << sum(m_prop(i)) << endl;
 				exit(1);
@@ -1488,6 +1488,7 @@ PROCEDURE_SECTION
 		calc_sdreport();
 		if ( verbose == 1 ) cout << "Ok after calc_sdreport ..." << endl;
 	}
+	// if (sd_phase() ) { }
 	nf++;
 	if ( mceval_phase() )
 	{
@@ -1699,7 +1700,7 @@ FUNCTION calc_selectivities
 				} else {
 					//log_slx_retaind(kk)(h)(i) = pSLX[j]->logSelectivity(mid_points);
 					log_slx_retaind(kk)(h)(i) = pSLX->logSelectivity(mid_points);
-					log_slx_discard(kk)(h)(i) = log(1.0 - exp(log_slx_retaind(kk)(h)(i)) + TINY);
+					log_slx_discard(kk)(h)(i) = log(1.0 - mfexp(log_slx_retaind(kk)(h)(i)) + TINY);
 				}
 			}
 		}
@@ -1753,8 +1754,8 @@ FUNCTION calc_fishing_mortality
 						}
 						ft(k)(h)(i)(j) = mfexp(log_ftmp);
 						xi  = dmr(i,k);                                      // Discard mortality rate
-						sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
-						ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
+						sel = mfexp(log_slx_capture(k)(h)(i));                 // Selectivity
+						ret = mfexp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
 						vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
 						/*if(sum(tmp)==0 || min(tmp) < 0)
 						{
@@ -3058,17 +3059,21 @@ FUNCTION calc_predicted_catch_out
 				{
 					for ( int o = 1; o <= nshell; o++ )
 					{
-						ig = pntr_hmo(h,m,o);
-						nal += d4_N(ig)(i)(j);
+						ig   = pntr_hmo(h,m,o);
+						nal += d4_N(ig,i,j);
 					}
 				}
-				tmp_ft = ft(k)(h)(i)(j);
-				nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
+				tmp_ft = ft(k,h,i,j);
+				nal = (unit == 1) ? elem_prod(nal, mean_wt(h,i)) : nal;
 				if (effort > 0.0)
 				{
-					pre_catch_out(kk,i) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)); 
-				} else {
-					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+					pre_catch_out(kk,i) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 
+					                       1.0 - mfexp(-Z(h,i,j))), Z(h,i,j)); 
+				} 
+				else 
+				{
+					pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 
+					                       1.0 - mfexp(-Z(h,i,j))), Z(h,i,j));
 				}
 			} else {
 				// sexes combibed
@@ -3082,24 +3087,24 @@ FUNCTION calc_predicted_catch_out
 							sel = mfexp(sel + log_slx_retaind(k)(h)(i));
 						break;
 						case 2: // discarded catch
-							sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k)(h)(i)));
+							sel = elem_prod(mfexp(sel), 1.0 - mfexp(log_slx_retaind(k,h,i)));
 						break;
 					}
 					for ( int m = 1; m <= nmature; m++ )
 					{
 						for ( int o = 1; o <= nshell; o++ )
 						{
-							ig = pntr_hmo(h,m,o);
-							nal += d4_N(ig)(i)(j);
+							ig   = pntr_hmo(h,m,o);
+							nal += d4_N(ig,i,j);
 						}
 					}
-					tmp_ft = ft(k)(h)(i)(j);
+					tmp_ft = ft(k,h,i,j);
 					nal = (unit == 1) ? elem_prod(nal, mean_wt(h)(i)) : nal;
 					if (effort > 0.0)
 					{
 						pre_catch_out(kk,i) += mfexp(log_q_catch(kk)) * effort * nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j)); 
 					} else {
-						pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h)(i)(j))), Z(h)(i)(j));
+						pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-Z(h,i,j))), Z(h,i,j));
 					}
 
 				}
@@ -3863,7 +3868,7 @@ FUNCTION simulation_model
 			{
 				if ( dCatchData(k,ii,1) == dCatchData_out(k,i,1) ) // year index
 				{
-					obs_catch_out(k,i) = obs_catch(k,ii);
+					obs_catch_out(k,i)    = obs_catch(k,ii);
 					dCatchData_out(k,i,5) = obs_catch(k,ii);
 				}
 			}
@@ -4006,7 +4011,6 @@ REPORT_SECTION
     }
 	}
 	*/
-	cout << "pos 1" << endl;
 	// Compute effective N's
 	for ( int kk = 1; kk <= nSizeComps; kk++ )
 	{
@@ -4023,7 +4027,6 @@ REPORT_SECTION
 			*/
 		}
 	}
-	cout << "pos 2" << endl;
 	REPORT(effN);
 	REPORT(effN2);
 	REPORT(pre_mn_size);
@@ -4039,7 +4042,6 @@ REPORT_SECTION
 			d3_res_size_comps_out(kk,ii) = d3_obs_size_comps_out(kk,ii) - d3_pre_size_comps_out(kk,ii); // WRONG, DARCY 29 jULY 2016
 		}
 	}
-	// cout << "pos 3" << endl;
 
 	REPORT(d3_SizeComps_in);
 	REPORT(d3_obs_size_comps_out);
@@ -4066,7 +4068,6 @@ REPORT_SECTION
 
 	if ( last_phase() )
 	{
-		cout<<"Her1"<<endl;
 		int refyear = nyr-1;
 		int refseason = 1; // I ADDED THIS AS A TEMP FIX, NEEDS TO BE CHANGED
 		//calc_spr_reference_points(refyear, refseason, spr_fleet);
@@ -4102,9 +4103,7 @@ REPORT_SECTION
 				mean_size(isex,iage)     = growth_matrix(isex,iage) * mid_points / sum(growth_matrix(isex,iage));
 			}
 		}
-		cout<<"Her2"<<endl;
 		REPORT(growth_matrix);
-		cout<<"Her3"<<endl;
 		REPORT(mean_size);
 		for ( int ii = 1; ii <= nSizeComps; ii++ )
 		{
@@ -4112,7 +4111,6 @@ REPORT_SECTION
 			size_comp_sample_size(ii) = value(mfexp(log_vn(ii))) * size_comp_sample_size(ii);
 		}
 		REPORT(size_comp_sample_size);
-		cout<<"Her4"<<endl;
 	}
 
 	// Print total numbers at length
@@ -4180,9 +4178,7 @@ REPORT_SECTION
 	{
 		N_initial(k) = d4_N(k)(syr)(1);
 	}
-	cout << "pos 4" << endl;
 	N_brute = calc_brute_equilibrium();
-	cout << "pos 5" << endl;
 	REPORT(N_initial);
 	REPORT(N_brute);
 	REPORT(N_total);
@@ -4208,7 +4204,6 @@ REPORT_SECTION
 		REPORT(pMoltInc);
 	}
 	REPORT(survey_q);
-	cout << "pos 6" << endl;
 	
 	// Molting probability
 	//dvector molt_prob_M(1,nclass);
@@ -4406,8 +4401,8 @@ FUNCTION dvar_matrix calc_brute_equilibrium()
 						log_ftmp += double(h-1);// * log_fini(k);
 					}
 					xi  = dmr(syr,k);                                      // Discard mortality rate
-					sel = exp(log_slx_capture(k)(h)(syr));                 // Selectivity
-					ret = exp(log_slx_retaind(k)(h)(syr)) * slx_nret(h,k); // Retension
+					sel = mfexp(log_slx_capture(k)(h)(syr));                 // Selectivity
+					ret = mfexp(log_slx_retaind(k)(h)(syr)) * slx_nret(h,k); // Retension
 					vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
 					FF(h)(j) += mfexp(log_ftmp) * vul;
 				}
@@ -4869,7 +4864,7 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 	dvar3_array _F(1,nsex,1,nseason,1,nclass);          ///> Fishing mortality
 	dvar3_array _Z(1,nsex,1,nseason,1,nclass);          ///> Total mortality
 	dvar4_array _S(1,nsex,1,nseason,1,nclass,1,nclass); ///> Surival Rate (S=exp(-Z))
-	dvar3_array _ft(1,nfleet,1,nsex,1,nseason);            ///> Fishing mortality by gear
+	dvar3_array _ft(1,nfleet,1,nsex,1,nseason);         ///> Fishing mortality by gear
 
 	_F.initialize();
 	_Z.initialize();
@@ -4888,19 +4883,21 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 					if (k == ifleet)
 					{
 						log_ftmp = log_F;
-					} else {
+					} 
+					else 
+					{
 						log_ftmp = log_fbar(k);
 					}
 					if ( yhit(i,j,k) )
 					{
 						log_ftmp += double(h-1) * log_foff(k);
 					}
-					_ft(k)(h)(j) = mfexp(log_ftmp);
-					double xi = dmr(i,k);                                      // Discard mortality rate
-					dvar_vector sel = exp(log_slx_capture(k)(h)(i));                 // Selectivity
-					dvar_vector ret = exp(log_slx_retaind(k)(h)(i)) * slx_nret(h,k); // Retension
+					_ft(k)(h)(j)    = mfexp(log_ftmp);
+					double xi       = dmr(i,k);                                      // Discard mortality rate
+					dvar_vector sel = mfexp(log_slx_capture(k,h,i));                 // Selectivity
+					dvar_vector ret = mfexp(log_slx_retaind(k,h,i)) * slx_nret(h,k); // Retension
 					dvar_vector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
-					_F(h)(j) += _ft(k,h,j) * vul;
+					_F(h)(j)       += _ft(k,h,j) * vul;
 				}
 			}
 		}
@@ -4910,17 +4907,17 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 	{
 		for ( int j = 1; j <= nseason; j++ )
 		{
-			_Z(h)(j) = (m_prop(nyr)(j) * M(h)(nyr)) + _F(h)(j);
+			_Z(h)(j) = (m_prop(nyr,j) * M(h,nyr)) + _F(h)(j);
 			for ( int l = 1; l <= nclass; l++ )
 			{
-				_S(h)(j)(l,l) = mfexp(-_Z(h)(j)(l));
+				_S(h,j,l,l) = mfexp(-_Z(h,j,l));
 			}
 		}
 	}
 
 	for ( int ig = 1; ig <= n_grp; ig++ )
 	{
-		numbers_proj_gytl(ig)(1)(1) = d4_N(ig)(nyr)(nseason);
+		numbers_proj_gytl(ig,1,1) = d4_N(ig,nyr,nseason);
 	}
 
 	for ( int i = 1; i <= iproj; i++ )
@@ -4938,9 +4935,9 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 
 				if ( nshell == 1 )
 				{
-					x = numbers_proj_gytl(ig)(i)(j);
+					x = numbers_proj_gytl(ig,i,j);
 					// Mortality (natural and fishing)
-					x = x * _S(h)(j);
+					x = x * _S(h,j);
 					// Molting and growth
 					if (j == season_growth)
 					{
@@ -4955,17 +4952,19 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 					{
 						if (i != iproj)
 						{ 
-							numbers_proj_gytl(ig)(i+1)(1) = x;
+							numbers_proj_gytl(ig,i+1,1) = x;
 						}
-					} else {
-						numbers_proj_gytl(ig)(i)(j+1) = x;
+					} 
+					else 
+					{
+						numbers_proj_gytl(ig,i,j+1) = x;
 					}
 				} else {
 					if ( o == 1 ) // newshell
 					{
 						x = numbers_proj_gytl(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = x * _S(h)(j);
+						x = x * _S(h,j);
 						// Molting and growth
 						if (j == season_growth)
 						{
@@ -4992,7 +4991,7 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 						// add oldshell non-terminal molts to newshell
 						x = numbers_proj_gytl(ig)(i)(j);
 						// Mortality (natural and fishing)
-						x = x * _S(h)(j);
+						x = x * _S(h,j);
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
@@ -5004,12 +5003,12 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 						{
 							if (i != iproj)
 							{
-								numbers_proj_gytl(ig-1)(i+1)(1) += z;
-								numbers_proj_gytl(ig)(i+1)(1) = x;
+								numbers_proj_gytl(ig-1,i+1,1) += z;
+								numbers_proj_gytl(ig,i+1,1)    = x;
 							}
 						} else {
-							numbers_proj_gytl(ig-1)(i)(j+1) += z;
-							numbers_proj_gytl(ig)(i)(j+1) = x;
+							numbers_proj_gytl(ig-1,i,j+1) += z;
+							numbers_proj_gytl(ig,i,j+1)    = x;
 						}
 					}
 				}
@@ -5029,9 +5028,11 @@ FUNCTION dvar_vector project_biomass(const int iproj, const int ifleet, const dv
 			int m = imature(ig);
 			double lam;
 			h <= 1 ? lam = spr_lambda: lam = (1.0 - spr_lambda);
-			ssb(i) += lam * numbers_proj_gytl(ig)(i)(season_ssb) * elem_prod(mean_wt(h)(nyr), maturity(h));
+			ssb(i) += lam * numbers_proj_gytl(ig,i,season_ssb) * elem_prod(mean_wt(h,nyr), maturity(h));
 		}
 	}
+	// cout<<"SSB: "<<ssb<<" "<<numbers_proj_gytl<<endl;
+
 	return(ssb);
 
 
@@ -5046,20 +5047,22 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int ifleet)
 	double gamma = 1.0;
 
 	spr_rbar = mean(recruits(1)(spr_syr,spr_nyr));
-	Bmsy = mean(calc_ssb()(spr_syr,spr_nyr)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
+	Bmsy     = mean(calc_ssb()(spr_syr,spr_nyr)); // Jies code: Bmsy = sum(MMB215(1,nyrs-1))/(nyrs-1);
 	spr_bspr = Bmsy;
-	Fmsy = gamma * M0;
-	FF = Fmsy;
-	Bproj = project_biomass(1, ifleet, log(FF), numbers_proj_gytl)(1);
+	Fmsy     = gamma * M0;
+	FF       = Fmsy;
+	Bproj    = project_biomass(1, ifleet, log(FF), numbers_proj_gytl)(1);
 
 	if (Bproj > Bmsy)
 	{
 		FF = Fmsy;
-	} else {
+	} 
+	else 
+	{
 		// Adjust F if below target since it's a function biomass needs to be interated
 		for( int k = 1; k <= 10; k++)
 		{
-			FF = Fmsy * (Bproj / Bmsy - alpha) / (1 - alpha);
+			FF    = Fmsy * (Bproj / Bmsy - alpha) / (1 - alpha);
 			Bproj = project_biomass(1, ifleet, log(FF), numbers_proj_gytl)(1);
 		}
 	}
@@ -5093,12 +5096,12 @@ FUNCTION void calc_spr_reference_points2(const int iyr, const int ifleet)
 					}
 					dvariable ftmp = mfexp(log_ftmp);
 					double xi = dmr(nyr,k);                                      // Discard mortality rate
-					dvar_vector sel = exp(log_slx_capture(k)(h)(nyr));                 // Selectivity
-					dvar_vector ret = exp(log_slx_retaind(k)(h)(nyr)) * slx_nret(h,k); // Retension
+					dvar_vector sel = mfexp(log_slx_capture(k)(h)(nyr));                 // Selectivity
+					dvar_vector ret = mfexp(log_slx_retaind(k)(h)(nyr)) * slx_nret(h,k); // Retension
 					dvar_vector vul = elem_prod(sel, ret + (1.0 - ret) * xi);        // Vulnerability
 					dvar_vector f = ftmp * vul;
 					dvar_vector z = M(h)(iyr) + f;
-					dvar_vector o = 1.0 - exp(-z);
+					dvar_vector o = 1.0 - mfexp(-z);
 					ctmp += elem_prod(numbers_proj_gytl(h,1,j), mean_wt(h,nyr)) * elem_div(elem_prod(f, o), z);
 				}
 			}

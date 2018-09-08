@@ -14,7 +14,7 @@ all: build/debug/gmacs  build/release/gmacs
 build/debug/gmacs: build/debug gmacs.tpl $(LIB) $(INC)
 	@admb -g gmacs.tpl $(LIB)
 	@$(COPY) gmacs build/debug/
-	@$(RM) gmacs
+#	@$(RM) gmacs
 
 build/release/gmacs: build/release gmacs.tpl $(LIB) $(INC)
 	@admb -g gmacs.tpl $(LIB)

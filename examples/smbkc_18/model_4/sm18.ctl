@@ -107,7 +107,7 @@
 ## SURVEYS/INDICES ONLY
 ## ival    lb       ub    phz   prior   p1       p2    Analytic?   LAMBDA
    1.0     0.5      1.2   -4    0       0        9.0   0           1       # NMFS trawl
-4.11135867487e-4 0 5       3    0       0        9.0   0           1       # ADF&G pot
+ 0.003      0        5     3    0       0        9.0   0           1       # ADF&G pot
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
 
 ## ———————————————————————————————————————————————————————————————————————————————————— ##
@@ -170,7 +170,7 @@
 ## Type
 3
 ## Phase of estimation
-4
+3
 ## STDEV in m_dev for Random walk
 10.0
 ## Number of nodes for cubic spline or number of step-changes for option 3

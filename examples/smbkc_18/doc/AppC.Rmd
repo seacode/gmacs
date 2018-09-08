@@ -142,31 +142,35 @@ Years2Include   <- which( Year_Set %in% sort(unique(Data_Geostat[,'Year'])))
 Diagnostics generated during parameter estimation can confirm that 
 parameter estimates are away from upper or lower bounds and that the final gradient for
 each fixed-effect is close to zero.  For explanation of parameters, please see
-references (and specifically `?Data_Fn` in R).
+references (and specifically `Data_Fn` in R).
 
 ```{r converge, echo=FALSE,results = "asis"}
 #pander::pandoc.table( Opt$diagnostics[,c('Param','Lower','MLE','Upper','final_gradient')] ) 
 params <- read.csv("map/VAST_output_wtge90/params.csv")
 params <- params[,-1]
 tab    <- xtable(params,caption = "SMBKC parameter estimates, bounds, and final gradients as derived from the VAST modeling framework. ", label = "tab:params", digits = c(0,0,1,3,1,5))
-print("\fontsize{7}{8}")
 print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
-\fontsize{9}{10}
 
 ### Encounter-probability component
 One can check to ensure that observed encounter frequencies for either low or high
 probability samples are within the 95% predictive interval for predicted
 encounter probability (Figure \ref{fig:encounter}. 
-Diagnostics for positive-catch-rate component was evaluated using a standard
-Q-Q plot. Qualitatively, the fits to SMBKC are reasonable but could stand some more evaluation for improvement as only
-one configuration was tested here (Figures \ref{fig:qq1} and \ref{fig:qq2}.
+Diagnostics for positive-catch-rate component was evaluated using a standard Q-Q plot. 
+Qualitatively, the fits to SMBKC are reasonable but could stand some more evaluation for improvement as only
+one configuration was tested here (Figures \ref{fig:eq1} and \ref{fig:qq2}.
+
+### Pearson residuals
+Spatially the residual pattern can be evaluated over time. Results for SMBKC shows that consistent positive or negative 
+residuals accross or within years is limited for the encounter probability component of the model and 
+for the positive catch rate component (Figures \ref{fig:pearson1} and \ref{fig:pearson2}, respectively).
+Some VAST plots for visualizing results can be seen by examining the
+direction of faster or slower spatial decorrelation (termed "geometric anisotropy"; Figure \ref{fig:aniso}).
+
 
 ```{r encplots, eval=FALSE  , tidy=TRUE}
 Enc_prob  <- SpatialDeltaGLMM::Check_encounter_prob( Report=Report, Data_Geostat=Data_Geostat, DirName=DateFile)
-Q         <- SpatialDeltaGLMM::QQ_Fn( TmbData=TmbData, Report=Report, FileName_PP=paste0(DateFile,
-             "Posterior_Predictive.jpg"), FileName_Phist=paste0(DateFile,"Posterior_Predictive-Histogram.jpg"), 
-             FileName_QQ=paste0(DateFile,"Q-Q_plot.jpg"), FileName_Qhist=paste0(DateFile,"Q-Q_hist.jpg")) 
+Q         <- SpatialDeltaGLMM::QQ_Fn( TmbData=TmbData, Report=Report, FileName_PP=paste0(DateFile,"Posterior_Predictive.jpg"), FileName_Phist=paste0(DateFile,"Posterior_Predictive-Histogram.jpg"), FileName_QQ=paste0(DateFile,"Q-Q_plot.jpg"), FileName_Qhist=paste0(DateFile,"Q-Q_hist.jpg")) 
 ```
 
 \begin{figure} \centerline{ \label{fig:encounter}
@@ -184,14 +188,6 @@ Q         <- SpatialDeltaGLMM::QQ_Fn( TmbData=TmbData, Report=Report, FileName_P
 \caption{Quantile-quantile plot of residuals for "positive catch rate" component. }
 \end{figure}
 
-
-###Pearson residuals
-Spatially the residual pattern can be evaluated over time. Results for SMBKC shows that
-consistent positive or negative 
-residuals accross or within years is limited for the encounter probability component of the model and 
-for the positive catch rate component (Figures \ref{fig:pearson1} and \ref{fig:pearson2}, respectively).
-Some VAST plots for visualizing results can be seen by examining the
-direction of faster or slower spatial decorrelation (termed "geometric anisotropy"; Figure \ref{fig:aniso}).
 
 ```{r pearson, eval=FALSE, tidy=TRUE}
 SpatialDeltaGLMM:::plot_residuals(Lat_i=Data_Geostat[,'Lat'], Lon_i=Data_Geostat[,'Lon'], TmbData=TmbData, 
@@ -236,13 +232,11 @@ tab <- xtable(df, caption = "SMBKC male >89mm biomass (t) estimates as derived f
 print(tab, caption.placement = "top", include.rownames = FALSE)
 ```
 
-![St. Matthews Island blue king crab (males >89mm) relative abundance as predicted
-using the VAST model approach.\label{fig:Index}](map/VAST_output_wtge90/Index.png)
+![St. Matthews Island blue king crab (males >89mm) relative abundance as predicted using the VAST model approach.\label{fig:Index}](map/VAST_output_wtge90/Index.png)
 
 
-##Appendix C references
+## Appendix C references
 
-\fontsize{8}{10}
 ```{r citation,  tidy=TRUE, width=70, width.cutoff=120, comment=NA, echo=FALSE, results ="asis"}
 citation("VAST")
 ```
