@@ -2288,7 +2288,7 @@ FUNCTION calc_initial_numbers_at_length
 					x = calc_brute_equilibrium();
 					for ( int ig = 1; ig <= n_grp; ig++ )
 					{
-						d4_N(ig)(syr)(1) = x(ig);
+						d4_N(ig,syr,1) = x(ig);
 					}
 					// SHOULD I ADD REC_INI TO THIS NOW?
 					//calc_equilibrium(x,A,_S,rt);
@@ -2407,106 +2407,6 @@ FUNCTION calc_initial_numbers_at_length
 		}
 	}
 
-	//d4_N(ig)(syr)(1) = x(ig);
-
-    /*
-	// male newshell
-    d4_N(1)(syr)(1)(1) = 27987700;
-    d4_N(1)(syr)(1)(2) = 28795300;
-    d4_N(1)(syr)(1)(3) = 14848500;
-    d4_N(1)(syr)(1)(4) = 16048300;
-    d4_N(1)(syr)(1)(5) = 13312600;
-    d4_N(1)(syr)(1)(6) = 11007400;
-    d4_N(1)(syr)(1)(7) = 11088900;
-    d4_N(1)(syr)(1)(8) = 8969550;
-    d4_N(1)(syr)(1)(9) = 9684750;
-    d4_N(1)(syr)(1)(10) = 11032400;
-    d4_N(1)(syr)(1)(11) = 9030270;
-    d4_N(1)(syr)(1)(12) = 9403100;
-    d4_N(1)(syr)(1)(13) = 8644670;
-    d4_N(1)(syr)(1)(14) = 8526260;
-    d4_N(1)(syr)(1)(15) = 7705410;
-    d4_N(1)(syr)(1)(16) = 6804960;
-    d4_N(1)(syr)(1)(17) = 5640800;
-    d4_N(1)(syr)(1)(18) = 4001730;
-    d4_N(1)(syr)(1)(19) = 2343550;
-    d4_N(1)(syr)(1)(20) = 2292990;
-	// male oldshell
-	d4_N(2)(syr)(1) = 0.0001;
-	// females newshell
-    d4_N(3)(syr)(1)(1) = 45234000;
-    d4_N(3)(syr)(1)(2) = 40950300;
-    d4_N(3)(syr)(1)(3) = 39428100;
-    d4_N(3)(syr)(1)(4) = 33387700;
-    d4_N(3)(syr)(1)(5) = 31708300;
-    d4_N(3)(syr)(1)(6) = 20033100;
-    d4_N(3)(syr)(1)(7) = 13834700;
-    d4_N(3)(syr)(1)(8) = 10330000;
-    d4_N(3)(syr)(1)(9) = 8845460;
-    d4_N(3)(syr)(1)(10) = 7000700;
-    d4_N(3)(syr)(1)(11) = 3895850;
-    d4_N(3)(syr)(1)(12) = 3524640;
-    d4_N(3)(syr)(1)(13) = 2660370;
-    d4_N(3)(syr)(1)(14) = 1073200;
-    d4_N(3)(syr)(1)(15) = 1053050;
-    d4_N(3)(syr)(1)(16) = 2061060;
-    d4_N(3)(syr)(1)(17) = 0;
-    d4_N(3)(syr)(1)(18) = 0;
-    d4_N(3)(syr)(1)(19) = 0;
-    d4_N(3)(syr)(1)(20) = 0;
-	// female oldshell
-	d4_N(4)(syr)(1) = 0.0001;
-
-	// male newshell
-    d4_N(1)(syr)(1)(1) = 27162400;
-    d4_N(1)(syr)(1)(2) = 28113900;
-    d4_N(1)(syr)(1)(3) = 14580300;
-    d4_N(1)(syr)(1)(4) = 15833800;
-    d4_N(1)(syr)(1)(5) = 13186000;
-    d4_N(1)(syr)(1)(6) = 10927400;
-    d4_N(1)(syr)(1)(7) = 11024700;
-    d4_N(1)(syr)(1)(8) = 8936730;
-    d4_N(1)(syr)(1)(9) = 9664040;
-    d4_N(1)(syr)(1)(10) = 11022500;
-    d4_N(1)(syr)(1)(11) = 9009240;
-    d4_N(1)(syr)(1)(12) = 9327550;
-    d4_N(1)(syr)(1)(13) = 8537520;
-    d4_N(1)(syr)(1)(14) = 8354120;
-    d4_N(1)(syr)(1)(15) = 7403640;
-    d4_N(1)(syr)(1)(16) = 6428180;
-    d4_N(1)(syr)(1)(17) = 5310070;
-    d4_N(1)(syr)(1)(18) = 3752060;
-    d4_N(1)(syr)(1)(19) = 2157450;
-    d4_N(1)(syr)(1)(20) = 2059100;
-	// male oldshell
-	d4_N(2)(syr)(1) = 0.0001;
-	// females newshell
-    d4_N(3)(syr)(1)(1) = 42928800;
-    d4_N(3)(syr)(1)(2) = 38964600;
-    d4_N(3)(syr)(1)(3) = 37577200;
-    d4_N(3)(syr)(1)(4) = 31883000;
-    d4_N(3)(syr)(1)(5) = 30353900;
-    d4_N(3)(syr)(1)(6) = 19281000;
-    d4_N(3)(syr)(1)(7) = 13370300;
-    d4_N(3)(syr)(1)(8) = 10002700;
-    d4_N(3)(syr)(1)(9) = 8592430;
-    d4_N(3)(syr)(1)(10) = 6807350;
-    d4_N(3)(syr)(1)(11) = 3773530;
-    d4_N(3)(syr)(1)(12) = 3414650;
-    d4_N(3)(syr)(1)(13) = 2561850;
-    d4_N(3)(syr)(1)(14) = 1012200;
-    d4_N(3)(syr)(1)(15) = 982444;
-    d4_N(3)(syr)(1)(16) = 1904020;
-    d4_N(3)(syr)(1)(17) = 0;
-    d4_N(3)(syr)(1)(18) = 0;
-    d4_N(3)(syr)(1)(19) = 0;
-    d4_N(3)(syr)(1)(20) = 0;
-	// female oldshell
-	d4_N(4)(syr)(1) = 0.0001;
-	*/
-
-	
-
 	/**
 	 * @brief Update numbers-at-length
 	 * @author Team
@@ -2563,7 +2463,9 @@ FUNCTION update_population_numbers_at_length
 			if ( bInitializeUnfished == 0 )
 			{
 				recruits(h)(i) = mfexp(logR0);
-			} else {
+			} 
+			else 
+			{
 				recruits(h)(i) = mfexp(logRbar);
 			}
 			// This splits recruitment out proportionately into males and females
@@ -2600,9 +2502,9 @@ FUNCTION update_population_numbers_at_length
 				if ( nshell == 1 )
 				{
 					//if ( verbose == 1 ) cout << "Single shell type dynamics" << endl;
-					x = d4_N(ig)(i)(j);
+					x = d4_N(ig,i,j);
 					// Mortality (natural and fishing)
-					x = x * S(h)(i)(j);
+					x = x * S(h,i,j);
 					// Molting and growth
 					if (j == season_growth)
 					{
@@ -2611,7 +2513,7 @@ FUNCTION update_population_numbers_at_length
 					// Recruitment
 					if (j == season_recruitment)
 					{
-						x += recruits(h)(i) * rec_sdd;
+						x += recruits(h,i) * rec_sdd;
 						//if (h == 1) x += recruits(h)(i) * mfexp(rec_dev(i)) * rec_prop(i) * rec_sdd;
 						//if (h == 2) x += recruits(h)(i) * mfexp(rec_dev(i)) * (1 - rec_prop(i)) * rec_sdd;
 					}
@@ -2619,25 +2521,25 @@ FUNCTION update_population_numbers_at_length
 					{
 						if (i != nyr)
 						{
-							d4_N(ig)(i+1)(1) = x;
+							d4_N(ig,i+1,1) = x;
 						}
 					} else {
-						d4_N(ig)(i)(j+1) = x;
+						d4_N(ig,i,j+1) = x;
 					}
 				} else {
 					//if ( verbose == 1 ) cout << "Multiple shell type dynamics" << endl;
 					if ( o == 1 ) // newshell
 					{
-						x = d4_N(ig)(i)(j);
+						x = d4_N(ig,i,j);
 						// Mortality (natural and fishing)
-						x = x * S(h)(i)(j);
+						x = x * S(h,i,j);
 						//cout << x << endl << endl;
 						//cout << sum(x) << endl;
 						// Molting and growth
 						if (j == season_growth)
 						{
-							y = elem_prod(x, 1 - molt_probability(h)(i)); // did not molt, become oldshell
-							x = elem_prod(x, molt_probability(h)(i)) * growth_transition(h); // molted and grew, stay newshell
+							y = elem_prod(x, 1 - molt_probability(h,i)); // did not molt, become oldshell
+							x = elem_prod(x, molt_probability(h,i)) * growth_transition(h); // molted and grew, stay newshell
 						}
 						//cout << diagonal(P(h)) << endl;
 						//cout << 1-diagonal(P(h)) << endl << endl;
@@ -2651,7 +2553,7 @@ FUNCTION update_population_numbers_at_length
 						{
 							//if (h == 1) x += recruits(h)(i) * mfexp(rec_dev(i)) * rec_prop(i) * rec_sdd;
 							//if (h == 2) x += recruits(h)(i) * mfexp(rec_dev(i)) * (1 - rec_prop(i)) * rec_sdd;
-							x += recruits(h)(i) * rec_sdd;
+							x += recruits(h,i) * rec_sdd;
 							//x += recruits(h)(i) * mfexp(rec_dev(h)(i));
 							//if (h==1) x += rt;
 							//if (h==2) x += rtf;
@@ -2660,10 +2562,10 @@ FUNCTION update_population_numbers_at_length
 						{
 							if (i != nyr)
 							{
-								d4_N(ig)(i+1)(1) = x;
+								d4_N(ig,i+1,1) = x;
 							}
 						} else {
-							d4_N(ig)(i)(j+1) = x;
+							d4_N(ig,i,j+1) = x;
 						}
 					}
 					if ( o == 2 ) // oldshell
@@ -2681,9 +2583,9 @@ FUNCTION update_population_numbers_at_length
 						//d3_N(ig)(i+1) = (x+d3_N(ig-1)(i)) * t1;
 
 						// add oldshell non-terminal molts to newshell
-						x = d4_N(ig)(i)(j);
+						x = d4_N(ig,i,j);
 						// Mortality (natural and fishing)
-						x = x * S(h)(i)(j);
+						x = x * S(h,i,j);
 						// Molting and growth
 						z.initialize();
 						if (j == season_growth)
@@ -2695,12 +2597,14 @@ FUNCTION update_population_numbers_at_length
 						{
 							if (i != nyr)
 							{
-								d4_N(ig-1)(i+1)(1) += z;
-								d4_N(ig)(i+1)(1) = x;
+								d4_N(ig-1,i+1,1) += z;
+								d4_N(ig,i+1,1) = x;
 							}
-						} else {
-							d4_N(ig-1)(i)(j+1) += z;
-							d4_N(ig)(i)(j+1) = x;
+						} 
+						else 
+						{
+							d4_N(ig-1,i,j+1) += z;
+							d4_N(ig,i,j+1) = x;
 						}
 						//if (j == nseason && j == season_growth)
 						//{

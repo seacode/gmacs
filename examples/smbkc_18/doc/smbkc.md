@@ -67,6 +67,11 @@ fishing.
 \begin{table}[ht]
 \centering
 \caption{Status and catch specifications (1000 t) for the reference model.
+A - calculated from the assessment reviewed by the Crab Plan Team in September 2014,    
+B - calculated from the assessment reviewed by the Crab Plan Team in September 2015,    
+C - calculated from the assessment reviewed by the Crab Plan Team in September 2016,   
+D - calculated from the assessment reviewed by the Crab Plan Team in September 2017,   
+E - calculated from the assessment reviewed by the Crab Plan Team in September 2018. 
 }
 \label{tab:status}
 \begin{tabular}{lccccccc}
@@ -85,12 +90,6 @@ fishing.
 \end{tabular}
 \end{table}
   <!-- \multicolumn{8}{p{\linewidth}}{l}{ -->
-  \footnotesize{
-A - calculated from the assessment reviewed by the Crab Plan Team in September 2014,    
-B - calculated from the assessment reviewed by the Crab Plan Team in September 2015,    
-C - calculated from the assessment reviewed by the Crab Plan Team in September 2016,   
-D - calculated from the assessment reviewed by the Crab Plan Team in September 2017,   
-E - calculated from the assessment reviewed by the Crab Plan Team in September 2018. }
 \begin{table}[ht]
 \centering
 \caption{Status and catch specifications (million pounds) for the reference model.} 
@@ -538,8 +537,8 @@ The following topics have been listed as areas where more research on SMBKC is n
 
 # I. Projections and outlook
 
-The outlook for recruitment is quite pessimistic and given the abundance relative to the proxy $B_\mathit{MSY}$, 
-further reductions from fishing should be avoided. The NMFS survey results in 2018 noted much warmer conditions than 
+The outlook for recruitment is pessimistic and the abundance relative to the proxy $B_\mathit{MSY}$ is low. 
+The NMFS survey results in 2018 noted ocean conditions warmer than 
 normal with an absence of a "cold pool" in the region. This could have detrimental effects on the SMBKC stocks and
 should be carefully monitored. Relative to the impact of historical fishing, we again conducted a
  "dynamic-$B_0$" analysis. This procedure simply projects
@@ -564,7 +563,7 @@ Daly, B., R. Foy, and C. Armistead. 2014. The 2013 eastern Bering Sea continenta
 
 Donaldson, W.E., and S.C. Byersdorfer. 2005. Biological field techniques for lithodid crabs. University of Alaska Fairbanks, Alaska Sea Grant Report 05-03, Fairbanks.
 
-Fitch, H., M. Deiman, J. Shaishnikoff, and K. Herring. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Bering Sea, 2010/11. Pages 75-1776 [In] Fitch, H., M. Schwenzfeier, B. Baechler, T. Hartill, M. Salmon, M. Deiman, E.
+Fitch, H., M. Deiman, J. Shaishnikoff, and K. Herring. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Bering Sea, 2010/11. Pages 75-1776 [In] Fitch, H., M. Schwenzfeier, B. Baechler, T. Hartill, M. Salmon, and M. Deiman, E.
 
 Evans, E. Henry, L. Wald, J. Shaishnikoff, K. Herring, and J. Wilson. 2012. Annual management report for the commercial and subsistence shellfish fisheries of the Aleutian Islands, Bering Sea and the Westward Region’s Shellfish Observer Program, 2010/11. Alaska Department of Fish and Game, Fishery Management Report No. 12-22, Anchorage.
 
@@ -576,9 +575,9 @@ Gaeuman, W.B. 2013. Summary of the 2012/13 mandatory crab observer program datab
 
 Gish, R.K., V.A. Vanek, and D. Pengilly. 2012. Results of the 2010 triennial St. Matthew Island blue king crab pot survey and 2010/11 tagging study. Alaska Department of Fish and Game, Fishery Management Report No. 12-24, Anchorage.
 
-Ianelli, J., D. Webber, and J. Zheng, 2017. Stock assessment of Saint Matthews Island Blue King Crab. North Pacific Fishery Managment Council. Anchorage AK.
+Ianelli, J., D. Webber, and J. Zheng, 2017. Stock assessment of Saint Matthews Island blue king crab. North Pacific Fishery Management Council. Anchorage AK.
 
-Jensen, G.C. and D.A. Armstrong. 1989. Biennial reproductive cycle of blue king crab, Paralithodes platypus, at the Pribilof Islands, Alaska and comparison to a congener, P. camtschatica. Can. J. Fish. Aquat. Sci. 46: 932-940.
+Jensen, G.C., and D.A. Armstrong. 1989. Biennial reproductive cycle of blue king crab, *Paralithodes platypus*, at the Pribilof Islands, Alaska and comparison to a congener, *P. camtschatica*. Can. J. Fish. Aquat. Sci. 46: 932-940.
 
 Moore, H., L.C. Byrne, and D. Connolly. 2000. Alaska Department of Fish and Game summary of the 1998 mandatory shellfish observer program database. Alaska Dept. Fish and Game, Commercial Fisheries Division, Reg. Inf. Rep. 4J00-21, Kodiak.
 
@@ -592,22 +591,21 @@ North Pacific Fishery Management Council (NPFMC). 2007. Public Review Draft: Env
 
 Otto, R.S. 1990. An overview of eastern Bering Sea king and Tanner crab fisheries. Pages 9-26 [In] Proceedings of the international symposium on king and Tanner crabs. University of Alaska Fairbanks, Alaska Sea Grant Program Report 90-4, Fairbanks.
 
-Otto, R.S., and P.A. Cummiskey. 1990. Growth of adult male blue king crab (Paralithodes platypus). Pages 245-258 [In] Proceedings of the international symposium on king and Tanner crabs. University of Alaska Fairbanks, Alaska Sea Grant Report 90-4, Fairbanks.
+Otto, R.S., and P.A. Cummiskey. 1990. Growth of adult male blue king crab (*Paralithodes platypus*). Pages 245-258 [In] Proceedings of the international symposium on king and Tanner crabs. University of Alaska Fairbanks, Alaska Sea Grant Report 90-4, Fairbanks.
 
-Paul, J.M., A. J. Paul, R.S. Otto, and R.A. MacIntosh. 1991. Spermatophore presence in relation to carapace length for eastern Bering Sea blue king crab (Paralithodes platypus, Brandt, 1850) and red king crab (P. Camtschaticus, Tilesius, 1815). J. Shellfish Res. 10: 157-163.
+Paul, J.M., A. J. Paul, R.S. Otto, and R.A. MacIntosh. 1991. Spermatophore presence in relation to carapace length for eastern Bering Sea blue king crab (*Paralithodes platypus*, Brandt, 1850) and red king crab (*P. camtschaticus*, Tilesius, 1815). J. Shellfish Res. 10: 157-163.
 
-Pengilly, D. and D. Schmidt. 1995. Harvest Strategy for Kodiak and Bristol Bay Red king Crab and St. Matthew Island and Pribilof Blue King Crab. Alaska Department of Fish and Game, Commercial Fisheries Management and Development Division, Special Publication Number 7, Juneau.
+Pengilly, D. and D. Schmidt. 1995. Harvest Strategy for Kodiak and Bristol Bay red king crab and St. Matthew Island and Pribilof blue king crab. Alaska Department of Fish and Game, Commercial Fisheries Management and Development Division, Special Publication Number 7, Juneau.
 
 Somerton, D.A., and R.A. MacIntosh. 1983. The size at sexual maturity of blue king crab, Paralithodes platypus, in Alaska. Fishery Bulletin 81: 621-828.
 
-Thorson, J.T., Ianelli, J.N., Larsen, E., Ries, L., Scheuerell, M.D., Szuwalski, C., and Zipkin, E. 2016. Joint dynamic species distribution models: a tool for community ordination and spatiotemporal monitoring. Glob. Ecol. Biogeogr. 25(9): 1144–1158. doi:10.1111/geb.12464. url: http://onlinelibrary.wiley.com/doi/10.1111/geb.12464/abstract.
+Thorson, J.T., and L.A.K. Barnett. 2017. Comparing estimates of abundance trends and distribution shifts using single- and multispecies models of fishes and biogenic habitat. ICES Journal of Marine Science 75:1311-1321.
 
-Thorson, J.T., Scheuerell, M.D., Shelton, A.O., See, K.E., Skaug, H.J., and Kristensen, K. 2015. Spatial factor analysis: a new tool for estimating joint species distributions and correlations in species range. Methods Ecol. Evol. 6(6): 627–637. doi:10.1111/2041-210X.12359. url: http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12359/abstract
+Thorson, J.T., J.N. Ianelli, E. Larsen, L. Ries, M.D. Scheuerell, C. Szuwalski, and E. Zipkin. 2016. Joint dynamic species distribution models: a tool for community ordination and spatiotemporal monitoring. Glob. Ecol. Biogeogr. 25(9): 1144–1158. geb.12464. 
 
-Thorson, J. T., and L. A. K. Barnett. 2017. Comparing estimates of abundance trends and distribution shifts using single- and multispecies models of fishes and biogenic habitat. ICES Journal of Marine Science 75:1311-1321.
+Thorson, J.T., Scheuerell, M.D., Shelton, A.O., See, K.E., Skaug, H.J., and Kristensen, K. 2015. Spatial factor analysis: a new tool for estimating joint species distributions and correlations in species range. Methods Ecol. Evol. 6(6): 627–637. doi:10.1111/2041-210X.12359. 
 
 Webber, D., J. Zheng, and J. Ianelli, 2016. Stock assessment of Saint Matthews Island Blue King Crab. North Pacific Fishery Managment Council. Anchorage AK.
-
 
 Zheng, J. 2005. A review of natural mortality estimation for crab stocks: data-limited for every stock? Pages 595-612 [In] Fisheries Assessment and Management in Data-Limited Situations. University of Alaska Fairbanks, Alaska Sea Grant Program Report 05-02, Fairbanks.
 
@@ -1359,14 +1357,14 @@ waters (shown in blue).\label{fig:distribution}](figure/Fig1.png)
 
 <!--  -->
 
-![Catches (in numbers) of male blue king crab measuring 90 mm CL from the 2012-2017 NMFS trawl-survey at the 56 stations used
+![Catches (in numbers) of male blue king crab $/ge$ 90 mm CL from the 2012-2017 NMFS trawl-survey at the 56 stations used
 to assess the SMBKC stock. Note that the area north of St. Matthew Island, which often shows large catches of crab
 at station R-24 is not covered in the ADF&G pot-survey data used in the
 assessment.\label{fig:catch181}](../figure/CrabN_Station.png)
 
 <!-- Survey NMFS -->
 
-![Fits to NMFS area-swept trawl estimates of total (>90mm) male survey biomass with the addition of new data (the Reference Model is with all new data while 2018 BTS is just with the 2018 NMFS trawl survey data added). Error bars are plus and minus 2 standard deviations.\label{fig:surv1}](figure/surv1-1.png)
+![Fits to NMFS area-swept trawl estimates of total ($/ge$ 90mm) male survey biomass with the addition of new data (the Reference Model is with all new data while 2018 BTS is just with the 2018 NMFS trawl survey data added). Error bars are plus and minus 2 standard deviations.\label{fig:surv1}](figure/surv1-1.png)
 
 <!--  Survey pot-->
 
@@ -1449,10 +1447,7 @@ assessment.\label{fig:catch181}](../figure/CrabN_Station.png)
 
 <!-- \clearpage -->
 
-
-```
-## Error in `$<-.data.frame`(`*tmp*`, "predicted", value = structure(c(436153.6901, : replacement has 138 rows, data has 160
-```
+![Comparison of observed and model predicted retained catch and bycatches in each of the Gmacs models. Note that difference in units between each of the panels, some panels are expressed in numbers of crab, some as biomass (tons).\label{fig:fit_to_catch}](figure/fit_to_catch-1.png)
 
 \clearpage
 
@@ -1470,7 +1465,7 @@ The Gmacs model has been specified to account only for male crab $\ge$ 90 mm in 
 partitioned into three stages (size- classes) determined by CL measurements of (1) 90-104 mm, (2) 105-119 mm, and (3)
 120+ mm. For management of the St. Matthew Island blue king crab (SMBKC) fishery, 120 mm CL is used as the proxy value
 for the legal measurement of 5.5 inch carapace width (CW), whereas 105 mm CL is the management proxy for mature-male
-size (5 AAC 34.917 (d)). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and
+size (state regulation *5 AAC 34.917 (d)*). Accordingly, within the model only stage-3 crab are retained in the directed fishery, and
 stage-2 and stage-3 crab together comprise the collection of mature males. Some justification for the 105 mm value is
 presented in Pengilly and Schmidt (1995), who used it in developing the current regulatory SMBKC harvest strategy. The
 term "recruit" here designates recruits to the model, i.e., annual new stage-1 crab, rather than recruits to the
@@ -1480,7 +1475,7 @@ fishery. The following description of model structure reflects the Gmacs base mo
 
 Within the model, the beginning of the crab year is assumed contemporaneous
 with the NMFS trawl survey, nominally assigned a date of 1 July. Although the
-timing of the fishery is different each year, MMB is 15 February,
+timing of the fishery is different each year, MMB is estimated at 15 February,
 which is the reference date for calculation of federal management biomass
 quantities. To accommodate this, each model year is split into 5 
 seasons ($t$) and a proportion of the natural mortality
