@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Appendix C. Spatio-temporal analysis of NMFS bottom-trawl survey SMBKC data
 
 ## Overview

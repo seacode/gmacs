@@ -34,9 +34,7 @@ max(p.df$yr)
 # The marmap package is a good resource to get 1 minute data
 # Use the getNOAA.bathy function with the coordinates & resolution.
 # Bathymetry units are in meters (I'm assuming)
-dat <- marmap::getNOAA.bathy(lon1 = -178, lon2 = -152,
-                     lat1 = 54.0, lat2 = 59.0,
-                     resolution = 1, keep = TRUE)
+dat <- marmap::getNOAA.bathy(lon1 = -178, lon2 = -152, lat1 = 54.0, lat2 = 59.0, resolution = 1, keep = TRUE)
 
 # Have a quick look
 plot(dat,image=FALSE, bpal=NULL, land=FALSE,

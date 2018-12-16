@@ -36,7 +36,7 @@
 
 
 DATA_SECTION
-	friend_class gmacs_comm;
+	// friend_class gmacs_comm;
 	// |---------------------|
 	// | SIMULATION CONTROLS |
 	// |---------------------|
@@ -66,7 +66,7 @@ DATA_SECTION
 			cout << "  | Name:                        Organization:               |\n";
 			cout << "  | James Ianelli                NOAA-NMFS                   |\n";
 			cout << "  | D'Arcy Webber                Quantifish                  |\n";
-			cout << "  | Steven Martell               IPHC                        |\n";
+			cout << "  | Steven Martell               SeaState                    |\n";
 			cout << "  | Jack Turnock                 NOAA-NMFS                   |\n";
 			cout << "  | Jie Zheng                    ADF&G                       |\n";
 			cout << "  | Hamachan Hamazaki            ADF&G                       |\n";
@@ -143,8 +143,11 @@ DATA_SECTION
 		n_grp = nsex * nshell * nmature;
 		nproj = pyr - nyr;
 		nlikes = 5; // catch, cpue, size comps, recruits, molt increments
-		WRITEDAT(syr); WRITEDAT(nyr); WRITEDAT(nseason);
+		WRITEDAT(syr); WRITEDAT(nyr);  WRITEDAT(pyr);
+		WRITEDAT(nseason);
 		WRITEDAT(nfleet); WRITEDAT(nsex); WRITEDAT(nshell); WRITEDAT(nmature); WRITEDAT(nclass);
+		WRITEDAT(season_recruitment); WRITEDAT(season_growth); 
+		WRITEDAT(season_ssb); WRITEDAT(season_N); 
 	END_CALCS
 
 	// Set up index pointers
@@ -199,7 +202,7 @@ DATA_SECTION
 				{
 					for ( int i = syr; i <= nyr; i++ )
 					{
-						mean_wt(h)(i) = lw_alfa(h) * pow(mid_points, lw_beta(h));
+						mean_wt(h,i) = lw_alfa(h) * pow(mid_points, lw_beta(h));
 					}
 				}
 			break;
@@ -240,6 +243,9 @@ DATA_SECTION
 	init_vector fecundity(1,nclass); 
 	init_matrix maturity(1,nsex,1,nclass);
 	init_int m_prop_type;
+	!!	WRITEDAT(fecundity);
+	!!	WRITEDAT(maturity);
+	!!	WRITEDAT(m_prop_type);
 	int m_dim;
 	LOC_CALCS
 		m_dim = 1;
@@ -249,6 +255,7 @@ DATA_SECTION
 		}
 	END_CALCS
 	init_matrix m_prop_in(1,m_dim,1,nseason);
+	!!	WRITEDAT(m_prop_in);
 	matrix m_prop(syr,nyr,1,nseason);
 	LOC_CALCS
 		switch ( m_prop_type )
@@ -276,13 +283,12 @@ DATA_SECTION
 		}
 		for ( int i = syr; i <= nyr; i++ )
 		{
-			if ( sum(m_prop(i)) > 1.0010001 || sum(m_prop(i)) < 0.999999 )
+			if ( sum(m_prop(i)) > 1.0000001 || sum(m_prop(i)) < 0.999999 )
 			{
 				cout << "Error: the proportion of natural mortality applied each season (in the .dat file) does not sum to 1! It sums to " << sum(m_prop(i)) << endl;
 				exit(1);
 			}
 		}
-		WRITEDAT(maturity);
 	END_CALCS
 
 	// |-------------|
@@ -290,7 +296,13 @@ DATA_SECTION
 	// |-------------|
 	init_adstring name_read_flt;
 	init_adstring name_read_srv;
-	!! WRITEDAT(name_read_srv); WRITEDAT(name_read_flt);
+	!! WRITEDAT(name_read_flt);
+	!! WRITEDAT(name_read_srv); 
+	
+	// |-------------|
+	// | FLEET TYPES | Andre
+	// |-------------|
+  //       init_ivector fleet_type(1,nfleet);
 
 	// |--------------|
 	// | CATCH SERIES |
@@ -299,6 +311,7 @@ DATA_SECTION
 	init_int nCatchDF;
 	init_ivector nCatchRows(1,nCatchDF);
 	init_3darray dCatchData(1,nCatchDF,1,nCatchRows,1,11); // array of catch data
+	!! WRITEDAT(nCatchDF); WRITEDAT(nCatchRows); WRITEDAT(dCatchData); 
 	matrix obs_catch(1,nCatchDF,1,nCatchRows);
 	matrix obs_effort(1,nCatchDF,1,nCatchRows);
 	3darray dCatchData_out(1,nCatchDF,syr,nyr-1,1,11);
@@ -333,7 +346,6 @@ DATA_SECTION
 	// From the catch series determine the number of fishing mortality rate parameters that need to be estimated. Note that there is a number of combinations which require an F to be estimated.
 	ivector nFparams(1,nfleet); // The number of deviations required for each fleet
 	ivector nYparams(1,nfleet); // The number of deviations for female Fs
-	ivector foff_phz(1,nfleet);
 	3darray fhit(syr,nyr,1,nseason,1,nfleet);
 	3darray yhit(syr,nyr,1,nseason,1,nfleet);
 	matrix dmr(syr,nyr,1,nfleet);
@@ -908,6 +920,7 @@ DATA_SECTION
 	init_matrix f_controls(1,nfleet,1,4);
 
 	ivector f_phz(1,nfleet);
+	ivector foff_phz(1,nfleet);
 	vector pen_fbar(1,nfleet);
 	vector log_pen_fbar(1,nfleet);
 	matrix pen_fstd(1,2,1,nfleet);
@@ -1357,6 +1370,7 @@ PARAMETER_SECTION
 
 	matrix pre_catch(1,nCatchDF,1,nCatchRows); ///> predicted catch (Baranov eq)
 	matrix res_catch(1,nCatchDF,1,nCatchRows); ///> catch residuals in log-space
+	matrix obs_catch_effort(1,nCatchDF,1,nCatchRows); ///> inferred catch if there is not catch but some effort
 	matrix pre_catch_out(1,nCatchDF,syr,nyr-1);
 	matrix res_catch_out(1,nCatchDF,syr,nyr-1);
 	vector log_q_catch(1,nCatchDF);
