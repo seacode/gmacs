@@ -349,6 +349,8 @@ DATA_SECTION
 	3darray fhit(syr,nyr,1,nseason,1,nfleet);
 	3darray yhit(syr,nyr,1,nseason,1,nfleet);
 	matrix dmr(syr,nyr,1,nfleet);
+	ivector f_phz(1,nfleet);
+	ivector foff_phz(1,nfleet);
 
 	LOC_CALCS
 		nFparams.initialize();
@@ -357,6 +359,7 @@ DATA_SECTION
 		yhit.initialize();
 		dmr.initialize();
 		foff_phz = -1;
+
 		for ( int k = 1; k <= nCatchDF; k++ )
 		{
 			for ( int i = 1; i <= nCatchRows(k); i++ )
@@ -919,8 +922,6 @@ DATA_SECTION
 	!! cout << " * Fishing mortality controls" << endl;
 	init_matrix f_controls(1,nfleet,1,4);
 
-	ivector f_phz(1,nfleet);
-	ivector foff_phz(1,nfleet);
 	vector pen_fbar(1,nfleet);
 	vector log_pen_fbar(1,nfleet);
 	matrix pen_fstd(1,2,1,nfleet);
@@ -949,6 +950,7 @@ DATA_SECTION
 			}
 		}
 		ECHO(f_phz);
+		ECHO(foff_phz);
 	END_CALCS
 
 	// |-----------------------------------|
@@ -1313,6 +1315,7 @@ PARAMETER_SECTION
 	//init_number_vector log_fini(1,nfleet,-f_phz);
 	init_number_vector log_fbar(1,nfleet,f_phz);                 ///> Male mean fishing mortality
 	init_vector_vector log_fdev(1,nfleet,1,nFparams,f_phz);      ///> Male f devs
+	// !! cout << foff_phz <<endl;exit(1);
 	init_number_vector log_foff(1,nfleet,foff_phz);              ///> Female F offset to Male F
 	init_vector_vector log_fdov(1,nfleet,1,nYparams,foff_phz);   ///> Female F offset to Male F
 
