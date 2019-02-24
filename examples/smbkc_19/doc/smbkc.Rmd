@@ -13,7 +13,7 @@ output:
     theme: flatly
     toc: yes
   word_document: default
-bibliography: references/Gmacs.bib
+bibliography: 
 ---
 
 ```{r global_options, include=FALSE }
