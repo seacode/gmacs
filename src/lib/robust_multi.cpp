@@ -17,17 +17,17 @@
 
 /**
  * @brief robust multinomial desity function with estimated effective sample size.
- * @details Robustified Multinomia likelihood for composition data following Fournier's approach.	
+ * @details Robustified Multinomia likelihood for composition data following Fournier's approach.
  * @author Dave Fournier & Jim Ianelli
  * @param log_vn log of effective sample size.
  * @param o observed proportions.
  * @param p predicted proportions
  * @return negative loglikelihood.
  */
-const dvariable acl::robust_multi::pdf(const dmatrix& O, 
+const dvariable acl::robust_multi::pdf(const dmatrix& O,
 				       const dvar_matrix& P,
 				       const dvar_vector& lnN) const
- {	
+ {
 	if( lnN.indexmin() != O.rowmin() || lnN.indexmax() != O.rowmax() )
 	{
 		cerr<<"Sample size index do not match row index in\
@@ -47,11 +47,17 @@ const dvariable acl::robust_multi::pdf(const dmatrix& O,
 		o /= sum(o);
 		p /= sum(p);
 
-		dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
-		dvar_vector l  =  elem_div(square(p - o), v );
-		nll -= sum(log(mfexp(-1.* b(i) * l) + .01));  
-		nll += 0.5 * sum(log(v));
+		// Old version
+		//dvar_vector v = a  + 2. * elem_prod(o ,1.  - o );
+		//dvar_vector l  =  elem_div(square(p - o), v );
+		//nll -= sum(log(mfexp(-1.* b(i) * l) + .01));
+		//nll += 0.5 * sum(log(v));
 
+		// AEP use below
+		dvar_vector v = a  + elem_prod(o ,1.  - o );
+		dvar_vector l  =  0.5*elem_div(square(p - o), v );
+		nll -= sum(log(mfexp(-1.* b(i) * l) + .01));
+		nll += 0.5 * sum(log(v/b(i)));
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return nll;
@@ -64,8 +70,8 @@ const dmatrix acl::robust_multi::pearson_residuals(const dmatrix& O,
 {
 	dvector vn = value(mfexp(log_vn));
 	dmatrix res = O - value(P);
-	
-	
+
+
 	for(int i = O.rowmin(); i <= O.rowmax(); i++ )
 	{
 		dvector o   = O(i) + TINY;
