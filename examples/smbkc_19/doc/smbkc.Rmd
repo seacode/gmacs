@@ -29,9 +29,8 @@ options(xtable.comment = FALSE)
 
 # The model specs
 #mod_names <- c("Andre","2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
-mod_names <- c("Andre","andre","Punt","isthe","goat") #,"2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
-#.MODELDIR = c("../m0/","../model_2/","../model_3/","../model_4/","../model_5/") #,"../model_6/")
-.MODELDIR = c("../m0/","../m0/","../m0/","../m0/","../m0/")
+mod_names <- c("Last year","andre","Andre","is_the","goat") #,"2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
+.MODELDIR = c("../../smbkc_18/model_3/","../model_1/","../model_1/","../model_1/","../model_1/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
