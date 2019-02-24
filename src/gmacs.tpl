@@ -1437,7 +1437,7 @@ DATA_SECTION
   !! cout << "+-------------------------+" << endl;
   init_int Calc_MSY;                                        
   !! WRITEPRJ(Calc_MSY);
-  !! if (Calc_MSY != NO & Calc_MSY != YES)  { cout << "Indicate 1=Yes or 0=No for whether MSY should be computed" << endl; exit(1); }
+  !! if (Calc_MSY != NO && Calc_MSY != YES)  { cout << "Indicate 1=Yes or 0=No for whether MSY should be computed" << endl; exit(1); }
   init_ivector Ffixed(1,nfleet);
   !! WRITEPRJ(Ffixed);
   !! for (int k=1;k<=nfleet;k++)
@@ -4570,8 +4570,8 @@ FUNCTION dvar_vector project_biomass(const int YrRef, const int iproj)
      int NeedToTune;
      if (Apply_HCR_prj==1) NeedToTune = YES;
      if (Apply_HCR_prj==0) NeedToTune = NO;
-     if (TACType==1 & catch_pass(2)-1.0e-5 < TargetC) NeedToTune = NO;
-     if (TACType==2 & catch_pass(1)-1.0e-5 < TargetC) NeedToTune = NO;
+     if (TACType==1 && catch_pass(2)-1.0e-5 < TargetC) NeedToTune = NO;
+     if (TACType==2 && catch_pass(1)-1.0e-5 < TargetC) NeedToTune = NO;
      
      // Apply bisection to find the target F for the directed fishery
      if (NeedToTune==YES)
@@ -5181,7 +5181,7 @@ FUNCTION void calc_spr_reference_points2(const int DoProfile)
   spr_cofl = ofltot_pass;
 
   // Continue only calc_MSY is YES
-  if (Calc_MSY == YES & (Stock_rec_prj==RICKER || Stock_rec_prj==BEVHOLT))
+  if (Calc_MSY == YES && (Stock_rec_prj==RICKER || Stock_rec_prj==BEVHOLT))
    {
 
     // Find Steepness and R0
@@ -5549,6 +5549,8 @@ FUNCTION CreateOutput
   cout << "+--------------------------+" << endl;
   OutFile1.close();
   OutFile1.open("Gmacsall.out");
+  OutFile2.close();
+  OutFile2.open("gmacs.rep");
   
   // Likelihood summary
   OutFile1 << "#Likelihoods_by_type (raw and weighted)" << endl;
@@ -6058,6 +6060,7 @@ GLOBALS_SECTION
   double elapsed_time;
 
   ofstream OutFile1;
+  ofstream OutFile2;
 
   // Define objects for report file, echoinput, etc.
   /**
@@ -6066,7 +6069,9 @@ GLOBALS_SECTION
   */
   #undef REPORT
   #define REPORT(object) OutFile1 << #object "\n" << setw(8) \
-  << setprecision(4) << setfixed() << object << endl;
+  << setprecision(4) << setfixed() << object << endl; \
+  OutFile2 << #object "\n" << setw(8) \
+  << setprecision(4) << setfixed() << object << endl; 
 
   /**
    * \def COUT(object)
