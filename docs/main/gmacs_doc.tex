@@ -1,0 +1,633 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={A generalized size-structured assessment model for Crustaceans},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{A generalized size-structured assessment model for Crustaceans}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{12:26 February 25, 2019}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\pagenumbering{gobble}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\begin{centering}
+GMACS Development Team \\
+  Andre Punt, James Ianelli, Steve Martell, Cody Szuwalski  
+  \\
+\fontfamily{cmr}
+\fontsize{10}{12}
+\selectfont
+February 25, 2019 \\
+\end{centering}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\newcounter{saveEq} \def\putEq{\setcounter{saveEq}{\value{equation}}}
+\def\getEq{\setcounter{equation}{\value{saveEq}}}
+\def\tableEq{ % equations in tables
+    \putEq \setcounter{equation}{0}
+    \renewcommand{\theequation}{T\arabic{table}.\arabic{equation}}
+    \vspace{-5mm}
+    } \def\normalEq{ % renew normal equations
+    \getEq
+    \renewcommand{\theequation}{\arabic{section}.\arabic{equation}}}
+
+\def\puthrule{ %thick rule lines for equation tables
+    \hrule \hrule \hrule \hrule \hrule}
+
+\def\puthrule{ %thick rule lines for equation tables
+    \hrule \hrule \hrule \hrule \hrule}
+
+\newcommand{\fspr}{$F_{\textnormal{SPR}}$}
+
+\newcommand{\bspr}{$B_{\textnormal{SPR\%}}$}
+
+\newcommand{\fmsy}{$F_{\textnormal{MSY}}$}
+\newcommand{\bmsy}{$B_{\textnormal{MSY}}$}
+
+\section{Basic population dynamics}\label{basic-population-dynamics}
+
+The basic dynamics account for growth, mortality, maturity state and
+shell condition (although most of the equations omit these indices for
+simplicity):
+
+\begin{align}
+N_{hji} &= \left( \left( \textbf{I}-\textbf{P}_{hji-1} \right) + \textbf{X}_{hji-1} \textbf{P}_{hji-1} \right) \textbf{S}_{hji-1} N_{hji-1} + \widetilde{R}_{hji}   
+\end{align}
+
+where \(N_{hji}\) is the number of animals by size-class of sex \(h\) at
+the start of season \(j\) of year \(i\), \(\textbf{P}_{hji}\) is a
+matrix with diagonals given by vector of molting probabilities for
+animals of sex h at the start of season \(j\) of year \(i\),
+\(\textbf{S}_{hji}\) is a matrix with diagonals given by the vector of
+probabilities of surviving for animals of sex \(h\) during time-step
+\(j\) of year \(i\) (which may be of zero duration):
+
+\begin{align}
+S_{hjill} &= exp\left(-Z_{hjil} \right) \\ 
+S_{hjill} &= 1-\frac{Z_{hjil}}{\widetilde{Z}_{hjil}  } \left(1- exp\left(-Z_{hjil} \right) \right) 
+\end{align}
+
+\(\textbf{X}_{hji}\) is the size-transition matrix (probability of
+growing from one size-class to each of the other size-classes or
+remaining in the same size class) for animals of sex \(h\) during season
+\(j\) of year \(i\), is the recruitment (by size-class) to gear g during
+season \(j\) of year \(i\) (which will be zero except for one season --
+the recruitment season), is the total mortality for animals of sex \(h\)
+in size- class \(l\) during season \(j\) of year \(i\), and is the
+probability of encountering the gear for animals of sex \(h\) in
+size-class \(l\) during season \(j\) of year \(i\). Equation A.2a
+applies when mortality is continuous across a time-step and equation
+A.2b applies when a time-step is instantaneous. Equation A.1a can be
+modified to track old and new shell crab (under the assumption that both
+old and new shell crab molt), i.e.:
+
+\begin{align}
+N^{new}_{hji} &= \textbf{X}_{hji-1}\textbf{P}_{hji-1}  \textbf{S}_{hji-1} \left(  N^{new}_{hji-1} + N^{old}_{hji-1} \right) +  \widetilde{R}_{hji}   \\
+N^{old}_{hji} &= \left( \textbf{I}-\textbf{P}_{hji-1}\right)  \textbf{S}_{hji-1}\textbf{P}_{hji-1}  \left(  N^{new}_{hji-1} + N^{old}_{hji-1} \right) 
+\end{align}
+
+There are several ways to specify the initial conditions for the model
+(i.e., the numbers-at- size at the start of the first year, \(i_{1}\)).
+
+\begin{itemize}
+\item
+  An equilibrium size-structure based on constant recruitment and either
+  no fishing for any of the fleets or (estimated or fixed) fishing
+  mortality by fleet. The average recruitment is an estimated parameter
+  of the model.
+\item
+  An individual parameter for each size- class, i.e.:
+\end{itemize}
+
+\begin{align}
+ N_{hi_{1}1} = exp(\delta_{hi_{1}l})
+\end{align}
+
+\begin{itemize}
+\tightlist
+\item
+  An overall total recruitment multiplied by offsets for each
+  size-class, i.e.:
+\end{itemize}
+
+\begin{align}
+ N_{hi_{1}1} = \frac {R_{init}exp(\delta_{hi_{1}l})} {\sum_{h'} \sum_{l'} {exp(\delta_{hi_{1}l'})}}
+\end{align}
+
+\subsection{B. Recruitment}\label{b.-recruitment}
+
+Recruitment occurs once during each year. Recruitment by sex and
+size-class is the product of total recruitment, the split of the total
+recruitment to sex and the assignment of sex-specific recruitment to
+size-classes, i.e.:
+
+\begin{align}
+ \widetilde{R}_{hjil} =  \bar{R} e^{\epsilon_{i}}
+  \begin{cases}
+    (1 + e^{\theta_{i}})^{-1} p_{hl} & \text{if h = males} \\[2ex]
+    \theta_{i} (1 + e^{\theta_{i}})^{-1} p_{hl} & \text{if h = females} \\
+    \end{cases}
+    \end{align}
+
+where \(\bar{R}\) is median recruitment, \(\theta_{i}\) determines the
+sex ratio of recruitment during year \(i\), and \(p_{hl}\) is the
+proportion of the recruitment (by sex) that recruits to size-class
+\(l\):
+
+\begin{align}
+ p_{hil} = \int_{L_{low}}^{L_{high}} \frac {\frac{le^{-l/\beta_{h}}}{\beta_{h}}^{(\alpha^{h}/\beta^{h})-1}}{\Gamma(\alpha_{h}/\beta{h})} dl
+\end{align}
+
+where \(\alpha_{h}\) and \(\beta_{h}\) are the parameters that define a
+gamma function for the distribution of recruits to size-class \(l\).
+Equation X can be restricted to a subset of size-classes, in which case
+the results from Equation X are normalized to sum to 1 over the selected
+size-classes.
+
+\subsection{C. Total mortality / probability of
+capture}\label{c.-total-mortality-probability-of-capture}
+
+Total mortality is the sum of fishing mortality and natural mortality,
+i.e.:
+
+\begin{align}
+ Z_{hijl} = \rho_{ij}M_{hi}\tilde{M}_{l} + \sum_{f} S_{fhijl}(\lambda_{fhijl} + \Omega_{fhijl}(1-\lambda_{fhijl}))F_{fhijl}
+\end{align}
+
+where \(\rho_{ij}\) is the proportion of natural mortality that occurs
+during season \(j\) for year \(i\), \(M_{hi}\) is the rate of natural
+mortality for year \(i\) for animals of sex \(h\) (applies to animals
+for which \(\tilde{M}_{l} = 1\)), \(\tilde{M}_{l}\) is the relative
+natural mortality for size-class \(l\), \(S_{fhijl}\) is the (capture)
+selectivity for animals of sex \(h\) in size- class \(l\) by fleet \(f\)
+during season \(j\) of year \(i\), \(\lambda_{fhijl}\) is the
+probability of retention for animals of sex \(h\) in size-class \(l\) by
+fleet \(f\) during season \(j\) of year \(i\), \(\Omega_{fhijl}\) is the
+mortality rate for discards of sex \(h\) in size-class \(l\) by fleet
+\(f\) during season \(j\) of year \(i\), and \(F_{fhijl}\) is the
+fully-selected fishing mortality for animals of sex \(h\) by fleet \(f\)
+during season \(j\) of year \(i\).
+
+The probability of capture (occurs instantaneously) is given by:
+
+\begin{align}
+ \widetilde{Z}_{hijl} = \sum_{f} S_{fhijl}F_{fhij}
+\end{align}
+
+Note that Equation C.2 is computed under the premise that fishing is
+instantaneous and hence that there is no natural mortality during season
+\(j\) of year \(i\). The logarithms of the fully-selected fishing
+mortalities by season are modelled as:
+
+\begin{align}
+ ln(F_{fhij}) = ln(F_{fh}) + \epsilon_{fhij}  & \text{  if h = males} \\[2ex]
+ ln(F_{fhij}) = ln(F_{fh}) + \theta_{f} + \epsilon_{fhij}  & \text{  if h = females} 
+\end{align}
+
+where \(F_{fh}\) is the reference fully-selected fishing mortality rate
+for fleet \(f\), \(\theta_{f}\) is the offset between female and male
+fully-selected fishing mortality for fleet \(f\), and
+\(\epsilon_{fhij}\) are the annual deviation of fully-selected fishing
+mortality for fleet \(f\) (by sex). Natural mortality can depend on time
+according to several functional forms:
+
+\begin{itemize}
+\tightlist
+\item
+  Natural mortality changes over time as a random walk, i.e.:
+\end{itemize}
+
+\begin{align}
+ M_{hi} = 
+  \begin{cases}
+    M_{hi_{1}} & \text{if i = $i_{1}$ } \\[2ex]
+    M_{hi-1}e^{\psi_{hi}} & \text{otherwise} \\
+    \end{cases}
+    \end{align}
+
+where \(M_{hi_{1}}\) is the rate of natural mortality for sex \(h\) for
+the first year of the model, and \(\psi_{hi}\) is the annual change in
+natural mortality.
+
+\begin{itemize}
+\tightlist
+\item
+  Natural mortality changes over time as a spline function. This option
+  follows Equation X, except that the number of knots at which
+  \(\psi_{hi}\) is estimated is specified.\\
+\item
+  Blocked changes. This option follows Equation C.5a, except that
+  \(\psi_{hi}\) changes between `blocks' of years, during which
+  \(\psi_{hi}\) is constant.\\
+\item
+  Blocked natural mortality (individual parameters). This option
+  estimates natural mortality as parameters by block, i.e.:
+\end{itemize}
+
+\begin{align}
+          M_{hi} = e^{\psi_{hi}}
+\end{align}
+
+where \(\psi_{hi}\) changes in blocks of years.
+
+\begin{itemize}
+\tightlist
+\item
+  Blocked offsets (relative to reference). This option captures the
+  intent of the previous option, except that the parameters are relative
+  to natural mortality in the first year, i.e.:
+\end{itemize}
+
+\begin{align}
+          M_{hi} = M_{hi_{1}}e^{\psi_{hi}}
+\end{align}
+
+It is possible to `mirror' the values for the \(\psi_{hi}\) parameters
+(between sexs and between blocks), which allows male and female natural
+mortality to be the same, and for natural mortality to be the same for
+discontinuous blocks (based on Equations X and X). The deviations in
+natural mortality can also be penalized to avoid unrealistic changes in
+natural mortality to fit `quirks' in the data.
+
+\subsection{D. Landings, discards, total
+catch}\label{d.-landings-discards-total-catch}
+
+The model keeps track of (and can be fitted to) landings, discards,
+total catch by fleet, whose computation depends on whether the fisheries
+in season t are continuous or instantaneous.
+
+Quantity Continuous mortality Instantaneous mortality Landed catch
+
+(D.1a)
+
+\subsection{Discards}\label{discards}
+
+(D.1b)
+
+\subsection{Total catch}\label{total-catch}
+
+(D.1c)
+
+Landings, discards, and total catches by fleet can be aggregated over
+sex (e.g., when fitting to removals reported as sex-combined). Equations
+D.1a -1c are extended naturally for the case in which the population is
+represented by shell condition and/or maturity status (given the
+assumption that fishing mortality, retention and discard mortality
+depend on sex and time, but not on shell condition nor maturity status).
+Landings, discards, and total catches by fleet can be reported in
+numbers (Equations D.1a -- D.1c) or in terms of weight. For example, the
+landings, discards, and total catches by fleet, season, year, and sex
+for the total (over size-class) removals are computed as:
+
+\begin{align}
+ C^{Land}_{fhij} = \sum_{l}  C^{Land}_{fhijl}w_{hil} \\
+ C^{Disc}_{fhij} = \sum_{l}  C^{Disc}_{fhijl}w_{hil} \\
+ C^{Total}_{fhij} = \sum_{l}  C^{Total}_{fhijl}w_{hil} \\
+\end{align}
+
+where \(C^{Land}_{fhij}\), \(C^{Disc}_{fhij}\), and \(C^{Total}_{fhij}\)
+are respectively the landings, discards, and total catches in weight by
+fleet, season, year, and sex for the total (over size-class) removals,
+and \(w_{hil}\) is the weight of an animal of sex h in size-class l
+during year i.
+
+\subsection{E. Selectivity / retention}\label{e.-selectivity-retention}
+
+Many options exist related to selectivity (the probability of
+encountering the gear) and retention (the probability of being landed
+given being captured). The options for selectivity are:
+
+\begin{itemize}
+\tightlist
+\item
+  Individual parameters for each size-class (in log-space); normalized
+  to a maximum of 1 over all size-classes.
+\item
+  Individual parameters for a subset of the size-classes (in log-space).
+  Selectivity must be specified for a contiguous range of size-classes
+  starting with the first size-class. Selectivity for any size-classes
+  outside of the specified range is set to that for last size-class for
+  which selectivity is treated as estimable.
+\item
+  Logistic selectivity. Two variants are available depending of the
+  parametrization:
+\end{itemize}
+
+\begin{align}
+   S_{l} = \frac {1} {1 + exp(\frac{ln19(\bar{L}_l - S_{50})}{S_{95}-S_{50}})} \\[2ex]
+   S_{l} = \frac {1} {1 + exp(\frac{(\bar{L}_l - S_{50})}{\sigma_{S}})} 
+  \end{align}
+
+where \(S_{50}\) is the size corresponding to 50\% selectivity,
+\(S_{95}\) is the size corresponding to 95\% selectivity, \(\sigma_{S}\)
+is the ``standard deviation'' of the selectivity curve, and
+\(\bar{L}_l\) is the midpoint of size-class l.
+
+\begin{itemize}
+\tightlist
+\item
+  All size-classes are equally selected.
+\item
+  Selectivity is zero for all size-classes.
+\end{itemize}
+
+It is possible to assume that selectivity for one fleet is the product
+of two of the selectivity patterns. This option is used to model cases
+in which one survey is located within the footprint of another survey.
+The options to model retention are the same as those for selectivity,
+except that it is possible to estimate an asymptotic parameter, which
+allows discard of animals that would be ``fully retained'' according to
+the standard options for (capture) selectivity. Selectivity and
+retention can be defined for blocks of contiguous years. The blocks need
+not be the same for selectivity and retention, and can also differ
+between fleets and sexs.
+
+\subsection{F. Growth}\label{f.-growth}
+
+Growth is a key component of any size-structured model. It is modelled
+in terms of molt probability and the size-transition matrix (the
+probability of growing from each size-class to each of the other
+size-classes, constrained to be zero for sizes less than the current
+size). Note that the size-transition matrix has entries on its diagonal,
+which represent animals that molt but do not change size-classes
+
+\subsubsection{F.1 Molt probability}\label{f.1-molt-probability}
+
+There are three options for modelling the probability of molting as a
+function of size:
+
+\begin{itemize}
+\tightlist
+\item
+  Pre-specified probability
+\item
+  Constant probability
+\item
+  Logistic probability, i.e.:
+\end{itemize}
+
+\begin{align}
+  P_{l,l} = \frac {1}{1-(1+exp(\frac{\bar{L}_{l}-P_{50}}{\sigma_{P}}))}
+ \end{align}
+
+where \(P_{50}\) is the size at which the probability of molting is 0.5
+and \(\sigma{P}\) is the ``standard deviation'' of the molt probability
+function. Molt probability is specified by sex and can change in blocks.
+
+\subsubsection{F.2 Size-transition}\label{f.2-size-transition}
+
+The proportion of animals in size-class \(l\) that grow to be in
+size-class \(l'\) (\(X_{l,l'}\)) can either be pre-specified by the user
+or determined using a parametric form (specified for one sex and one
+time-blocks):
+
+\begin{itemize}
+\tightlist
+\item
+  The size-increment is gamma-distributed:
+\end{itemize}
+
+\begin{align}
+
+ X_{l,l'} = \int_{L_{low}}^{L_{high}} \frac {((l-\bar{L}_{l})/\tilde{\beta})^{I_{l}/\tilde{\beta}-1} e^{-(l-\bar{L}_{l})/\tilde{\beta}}}
+                                          {\Gamma( I_{l}/\tilde{\beta})} dl
+
+ \end{align}
+
+where is the `expected' growth increment for an animal in size-class i
+(a linear function of the mid-point of size-class i), determines the
+variation in growth among individuals, and and are respectively the
+lower and upper bounds of size-class j.
+
+\begin{itemize}
+\tightlist
+\item
+  The size after increment is gamma-distributed, i.e.:
+\end{itemize}
+
+\begin{align}
+
+ X_{l,l'} = \int_{L_{low}}^{L_{high}} \frac {(l/\tilde{\beta})^{(\bar{L}_{l} +I_{l})/\tilde{\beta}-1} e^{-(l/\tilde{\beta})}}
+                                          {\Gamma((\bar{L}_{l}+I_{l})/\tilde{\beta})} dl
+
+ \end{align}
+
+\begin{itemize}
+\tightlist
+\item
+  The size-increment is normally-distributed, i.e.:
+\end{itemize}
+
+\begin{align}
+ X_{l,l'} = \int_{L_{low}}^{L_{high}} \frac{e^{-(l-\bar{L}_{l}-I_{l})^{2}/(2\tilde{\beta}^{2})}}
+                                          {\sqrt{2\pi}\tilde{\beta}} dl
+ \end{align}
+
+\begin{itemize}
+\tightlist
+\item
+  There is individual variation in the growth parameters and k
+  (equivalent to the parameters of a linear growth increment equation
+  given the assumption of von Bertlanffy growth), i.e.:
+\end{itemize}
+
+\begin{align}
+  X_{l,l'} = \int_{L_{low}}^{L_{high}} \! \int_{L_{low}}^{L_{high}} \! \int_{0}^{\infty} \! \int_{0}^{\infty}
+            \frac{1}{L_{hi,l}-L_{low_{l}}}
+            \frac{e^{-(ln(L_{\infty})-\bar{L_{\infty}})^{2}/(2\sigma^{2}_{L_{\infty}})}}
+                                          {\sqrt{2\pi}\sigma^{2}_{L_{\infty}}}
+            \frac{e^{-(ln(k)-\bar{k})^{2}/(2\sigma^{2}_{k})}}
+                                          {\sqrt{2\pi}\sigma^{2}_{L_{k}}}  dL_{L_{\infty}} dk dl_{l'} dl_{l}
+                                          
+ \end{align}
+
+\begin{itemize}
+\tightlist
+\item
+  There is individual variation in the growth parameter \(L_{\infty}\):
+\end{itemize}
+
+\begin{align}
+  X_{l,l'} = \int_{L_{low}}^{L_{high}} \! \int_{L_{low}}^{L_{high}} \! \int_{0}^{\infty} 
+            \frac{1}{L_{hi,l}-L_{low_{l}}}
+            \frac{e^{-(ln(L_{\infty})-\bar{L_{\infty}})^{2}/(2\sigma^{2}_{L_{\infty}})}}
+                                          {\sqrt{2\pi}\sigma^{2}_{L_{\infty}}} dL_{L_{\infty}} dl_{l'} dl_{l}
+                                          
+ \end{align}
+
+\begin{itemize}
+\tightlist
+\item
+  There is individual variation in the growth parameters k:
+\end{itemize}
+
+\begin{align}
+  X_{l,l'} = \int_{L_{low}}^{L_{high}} \! \int_{L_{low}}^{L_{high}} \! \int_{0}^{\infty} 
+            \frac{1}{L_{hi,l}-L_{low_{l}}}
+            \frac{e^{-(ln(k)-\bar{k})^{2}/(2\sigma^{2}_{k})}}
+                                          {\sqrt{2\pi}\sigma^{2}_{k}} dk dl_{l'} dl_{l}
+                                          
+ \end{align}
+
+The size-transition matrix is specified by sex and can change in blocks.
+
+Table 1.1. The symbols used to define the population dynamics model
+
+\begin{table}
+  \centering
+  \caption{Mathematical notation, symbols and descriptions.}
+  \label{tab:notation}
+  \begin{tabular}{cl}
+  \hline
+  Symbol  & Description \\
+  \hline
+  \multicolumn{2}{l}{\underline{Index}}\\
+      $g$ & group \\
+      $h$ & sex \\
+      $i$ & year \\
+      $j$ & time step (years) \\
+      $k$ & gear or fleet \\
+      $l$ & index for size class \\
+      $m$ & index for maturity state \\
+      $o$ & index for shell condition. \\
+  \multicolumn{2}{l}{\underline{Leading Model Parameters}}\\
+      $M$         & Instantaneous natural mortality rate\\
+      $\bar{R}$   & Average recruitment\\
+      $\ddot{R}$  & Initial recruitment\\
+      $\alpha_r$  & Mode of size-at-recruitment\\
+      $\beta_r $  & Shape parameter for size-at-recruitment\\
+      $R_0$       & Unfished average recruitment\\
+      $\kappa$    & Recruitment compensation ratio\\
+  \multicolumn{2}{l}{\underline{Size schedule information}}\\
+      $w_{h,l}$   & Mean weight-at-size $l$ \\
+      $m_{h,l}$   & Average proportion mature-at-size $l$ \\
+  \multicolumn{2}{l}{\underline{Per recruit incidence functions}} \\
+      $\phi_B$    & Spawning biomass per recruit \\
+      $\phi_{Q_k}$& Yield per recruit for fishery $k$\\
+      $\phi_{Y_k}$& Retained catch per recruit for fishery $k$ \\
+      $\phi_{D_k}$& Discarded catch per recruit for fishery $k$ \\
+  \multicolumn{2}{l}{\underline{Selectivity parameters}} \\
+      $a_{h,k,l}$ & Size at 50\% selectivity in size interval $l$\\
+      $\sigma_{s_{h,k}}$ & Standard deviation in size-at-selectivity\\
+      $r_{h,k,l}$ & Size at 50\% retention\\
+      $\sigma_{y_{h,k}}$ & Standard deviation in size-at-retention\\
+      $\xi_{h,k}$ & Discard mortality rate for gear $k$ and sex $h$\\
+  \hline
+  \end{tabular}
+\end{table}
+
+\begin{align}
+    & \mbox{\underline{model parameters}} \nonumber \\
+    & \Theta = (M_h,\bar{R},\ddot{R},\alpha_r,\beta_r,R_0,\kappa) \label{T1.1} \\
+    & M_h > 0 , \bar{R} > 0, \ddot{R}>0, \alpha_r > 0, \beta_r > 0, R_0>0,\kappa > 1.0 \label{T1.2} \\
+    & \Phi = (\alpha_h,\beta_h,\varphi_h) \label{T1.3} \\
+    & \mbox{\underline{size-schedule information}} \nonumber \\
+    & \vec{l},\vec{x} \quad \mbox{vector of size intervals and midpoints, respectively} \nonumber\\
+    & a_{h,l} = (\alpha_h + \beta_h l)/\varphi_h \label{T1.4} \\
+    & p({l},{l'})_h =\textbf{G}_h= \int_{l}^{l+\Delta l} \frac{ l^{(a_{h,l}-1)} \exp(l/\varphi_h) } { \Gamma(a_{h,l}) l^{(a_{h,l})} } dl \label{T1.5} \\
+    & \mbox{\underline{recruitment size-distribution}} \nonumber \\
+    & \alpha = \alpha_r / \beta_r  \\
+    & p[\textbf{r}] = \int_{x_l-0.5\Delta x}^{x_l+0.5\Delta x} \frac{x^{(\alpha-1)}\exp(- x / \beta_r)}{\Gamma(\alpha)\beta_r^\alpha}dx \label{T1.7}\\
+    & \textbf{r}_h = 0.5 p[\textbf{r}] \ddot{R} \label{T1.8}\\
+    & \mbox{\underline{growth and survival}} \nonumber \\
+    & \textbf{A}_h = \textbf{G}_h [\exp(-M_h) (\textbf{I}_n)_{l,l'}]\label{T1.10}\\
+    & \textbf{B}_h = \textbf{G}_h [\exp(-M_h - \textbf{f}_{h,l}) (\textbf{I}_n)_{l,l'}] \label{T1.12}\\
+    & \mbox{\underline{survivorship to size}} \nonumber \\
+    & \textbf{u}_h   = -(\textbf{A}_h - (\textbf{I}_n)_{l,l'})^{-1} (p[\textbf{r}]) \label{T1.13a}\\
+    & \textbf{v}_h   = -(\textbf{B}_h - (\textbf{I}_n)_{l,l'})^{-1} (p[\textbf{r}]) \label{T1.13b}\\
+    & \mbox{\underline{steady-state conditions}}\nonumber \\
+    & B_0 = R_0 \sum_h \lambda_h \sum_l \textbf{u}_{h,l} w_{h,l} m_{h,l} \label{T1.14} \\
+    & \tilde{B} = \tilde{R}\sum_h \lambda_h \sum_l \textbf{v}_{h,l} w_{h,l} m_{h,l} \label{T1.16} \\
+    & \mbox{\underline{stock-recruitment parameters}}\nonumber \\
+    & s_o = \kappa R_0 / B_0 \label{T1.17} \\
+    & \beta = (\kappa -1)/B_0 \label{T1.18} \\
+    & \tilde{R} = \frac{s_o \tilde{\phi}_B -1}{\beta \tilde{\phi}_B} \label{T1.19} \\
+\end{align}
+
+
+\end{document}
