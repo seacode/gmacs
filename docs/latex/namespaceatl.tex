@@ -1,0 +1,1752 @@
+\hypertarget{namespaceatl}{\section{atl Namespace Reference}
+\label{namespaceatl}\index{atl@{atl}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structatl_1_1_a_cos}{A\+Cos}
+\item 
+struct \hyperlink{structatl_1_1_add}{Add}
+\item 
+struct \hyperlink{structatl_1_1_a_sin}{A\+Sin}
+\item 
+struct \hyperlink{structatl_1_1_a_tan}{A\+Tan}
+\item 
+class \hyperlink{classatl_1_1_big_float}{Big\+Float}
+\item 
+struct \hyperlink{structatl_1_1_ceil}{Ceil}
+\item 
+struct \hyperlink{structatl_1_1clfallocator}{clfallocator}
+\item 
+struct \hyperlink{structatl_1_1_container_trait}{Container\+Trait}
+\item 
+struct \hyperlink{structatl_1_1_cos}{Cos}
+\item 
+struct \hyperlink{structatl_1_1_cosh}{Cosh}
+\item 
+struct \hyperlink{structatl_1_1_divide}{Divide}
+\item 
+struct \hyperlink{structatl_1_1_exp}{Exp}
+\item 
+struct \hyperlink{structatl_1_1_expression_base}{Expression\+Base}
+\item 
+struct \hyperlink{structatl_1_1_expression_trait}{Expression\+Trait}
+\item 
+struct \hyperlink{structatl_1_1_fabs}{Fabs}
+\item 
+struct \hyperlink{structatl_1_1_fast_variable_matrix}{Fast\+Variable\+Matrix}
+\item 
+struct \hyperlink{structatl_1_1_floor}{Floor}
+\item 
+struct \hyperlink{structatl_1_1_forward_mode_derivative_info}{Forward\+Mode\+Derivative\+Info}
+\item 
+class \hyperlink{classatl_1_1_line_plot}{Line\+Plot}
+\item 
+struct \hyperlink{structatl_1_1_log}{Log}
+\item 
+struct \hyperlink{structatl_1_1_log10}{Log10}
+\item 
+struct \hyperlink{structatl_1_1_matrix_assign}{Matrix\+Assign}
+\item 
+struct \hyperlink{structatl_1_1_min}{Min}
+\item 
+struct \hyperlink{structatl_1_1_multiply}{Multiply}
+\item 
+struct \hyperlink{structatl_1_1_pow}{Pow}
+\item 
+struct \hyperlink{structatl_1_1_real}{Real}
+\item 
+struct \hyperlink{structatl_1_1_real_matrix}{Real\+Matrix}
+\item 
+struct \hyperlink{structatl_1_1_sin}{Sin}
+\item 
+struct \hyperlink{structatl_1_1_sinh}{Sinh}
+\item 
+class \hyperlink{classatl_1_1_spin_lock}{Spin\+Lock}
+\item 
+struct \hyperlink{structatl_1_1_sqrt}{Sqrt}
+\item 
+struct \hyperlink{structatl_1_1_stack_entry}{Stack\+Entry}
+\item 
+class \hyperlink{classatl_1_1_streamed_data_file}{Streamed\+Data\+File}
+\item 
+struct \hyperlink{structatl_1_1_subtract}{Subtract}
+\item 
+struct \hyperlink{structatl_1_1_tan}{Tan}
+\item 
+struct \hyperlink{structatl_1_1_tanh}{Tanh}
+\item 
+class \hyperlink{classatl_1_1_tape}{Tape}
+\item 
+class \hyperlink{classatl_1_1_thread_pool}{Thread\+Pool}
+\item 
+struct \hyperlink{structatl_1_1_type_trait}{Type\+Trait}
+\item 
+struct \hyperlink{structatl_1_1_type_trait_3_01atl_1_1_variable_3_01double_01_4_01_4}{Type\+Trait$<$ atl\+::\+Variable$<$ double $>$ $>$}
+\item 
+struct \hyperlink{structatl_1_1_type_trait_3_01atl_1_1_variable_3_01float_01_4_01_4}{Type\+Trait$<$ atl\+::\+Variable$<$ float $>$ $>$}
+\item 
+struct \hyperlink{structatl_1_1_type_trait_3_01atl_1_1_variable_3_01long_01double_01_4_01_4}{Type\+Trait$<$ atl\+::\+Variable$<$ long double $>$ $>$}
+\item 
+struct \hyperlink{structatl_1_1_variable}{Variable}
+\item 
+class \hyperlink{classatl_1_1_variable_id_generator}{Variable\+Id\+Generator}
+\item 
+struct \hyperlink{structatl_1_1_variable_info}{Variable\+Info}
+\item 
+struct \hyperlink{structatl_1_1_variable_matrix}{Variable\+Matrix}
+\item 
+struct \hyperlink{structatl_1_1_variable_matrix_assign}{Variable\+Matrix\+Assign}
+\item 
+struct \hyperlink{structatl_1_1_variable_vector}{Variable\+Vector}
+\item 
+class \hyperlink{classatl_1_1_wait_variable}{Wait\+Variable}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespaceatl_a9d5ac58a60edcd80977d4b562141d9a3}{enum {\bfseries Expression\+Type} \{ \\*
+{\bfseries E\+T\+\_\+\+B\+A\+S\+E} = 0, 
+{\bfseries R\+E\+A\+L\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries E\+T\+\_\+\+B\+A\+S\+E} = 0, 
+{\bfseries R\+E\+A\+L\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}
+ \}}\label{namespaceatl_a9d5ac58a60edcd80977d4b562141d9a3}
+
+\item 
+\hypertarget{namespaceatl_a9d5ac58a60edcd80977d4b562141d9a3}{enum {\bfseries Expression\+Type} \{ \\*
+{\bfseries E\+T\+\_\+\+B\+A\+S\+E} = 0, 
+{\bfseries R\+E\+A\+L\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries E\+T\+\_\+\+B\+A\+S\+E} = 0, 
+{\bfseries R\+E\+A\+L\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+S\+C\+A\+L\+A\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X}, 
+{\bfseries R\+E\+A\+L\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+M\+A\+T\+R\+I\+X\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+\\*
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R}, 
+{\bfseries R\+E\+A\+L\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}, 
+{\bfseries V\+A\+R\+I\+A\+B\+L\+E\+\_\+\+V\+E\+C\+T\+O\+R\+\_\+\+E\+X\+P\+R\+E\+S\+S\+I\+O\+N}
+ \}}\label{namespaceatl_a9d5ac58a60edcd80977d4b562141d9a3}
+
+\item 
+\hypertarget{namespaceatl_ae927a16f88618ef8b2aa6f4834968d25}{enum {\bfseries Derivative\+Trace\+Level} \{ \\*
+{\bfseries F\+I\+R\+S\+T\+\_\+\+O\+R\+D\+E\+R\+\_\+\+R\+E\+V\+E\+R\+S\+E} = 0, 
+{\bfseries S\+E\+C\+O\+N\+D\+\_\+\+O\+R\+D\+E\+R\+\_\+\+R\+E\+V\+E\+R\+S\+E}, 
+{\bfseries T\+H\+I\+R\+D\+\_\+\+O\+R\+D\+E\+R\+\_\+\+R\+E\+V\+E\+R\+S\+E}, 
+{\bfseries F\+I\+R\+S\+T\+\_\+\+O\+R\+D\+E\+R\+\_\+\+F\+O\+R\+W\+A\+R\+D}, 
+\\*
+{\bfseries S\+E\+C\+O\+N\+D\+\_\+\+O\+R\+D\+E\+R\+\_\+\+F\+O\+R\+W\+A\+R\+D}, 
+{\bfseries T\+H\+I\+R\+D\+\_\+\+O\+R\+D\+E\+R\+\_\+\+F\+O\+R\+W\+A\+R\+D}
+ \}}\label{namespaceatl_ae927a16f88618ef8b2aa6f4834968d25}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_a_cos}{A\+Cos}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_ada7003ca534db5beaf82003907268317}{acos} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_add}{Add}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ \hyperlink{namespaceatl_ae5e3def2b4af7add11836b4dc4d1605e}{operator+} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ }\\const \hyperlink{structatl_1_1_add}{Add}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, \hyperlink{structatl_1_1_real}{Real}\\*
+$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ \hyperlink{namespaceatl_ae056ad3c59c730ffb1a857f74a769e89}{operator+} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, R\+E\+A\+L\+\_\+\+T b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_add}{Add}$<$ R\+E\+A\+L\+\_\+\+T, \hyperlink{structatl_1_1_real}{Real}\\*
+$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ \hyperlink{namespaceatl_ab6356ac7728633992e3c7ea9f55b0566}{operator+} (const R\+E\+A\+L\+\_\+\+T \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_a_sin}{A\+Sin}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a204dcfa24d4e9b9b54b69c0c684cdc41}{asin} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_a_tan}{A\+Tan}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a23b41d1236e98f36c483c81771800f73}{atan} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$typename T $>$ }\\const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \hyperlink{namespaceatl_a04ef3c373ecfd67b6abd81dbbe1ec876}{max} (const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&a, const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&b)
+\item 
+{\footnotesize template$<$typename T $>$ }\\const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \hyperlink{namespaceatl_a8e359db3f98573887309ad2aa39ccedc}{min} (const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&a, const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_ceil}{Ceil}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a3c880f96cf13588a11a0728e30973e97}{ceil} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_cos}{Cos}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_ae2f0a1d943a1ed6752f76db7daebe96d}{cos} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_cosh}{Cosh}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a8c5ea021d776962f7adaca0e974fc321}{cosh} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_divide}{Divide}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ \hyperlink{namespaceatl_a202008228dcaf7271a82563ca98bc247}{operator/} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+\hypertarget{namespaceatl_ac3e1c031674bd9ff5518f1b4f83f834b}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ }\\const \hyperlink{structatl_1_1_divide}{Divide}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, \\*
+\hyperlink{structatl_1_1_real}{Real}$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ {\bfseries operator/} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, R\+E\+A\+L\+\_\+\+T b)}\label{namespaceatl_ac3e1c031674bd9ff5518f1b4f83f834b}
+
+\item 
+\hypertarget{namespaceatl_ade36cd574d2664715ec7281b26f5168c}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_divide}{Divide}$<$ R\+E\+A\+L\+\_\+\+T, \hyperlink{structatl_1_1_real}{Real}\\*
+$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ {\bfseries operator/} (const R\+E\+A\+L\+\_\+\+T \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)}\label{namespaceatl_ade36cd574d2664715ec7281b26f5168c}
+
+\item 
+\hypertarget{namespaceatl_adf955d9d2f3f48ea2a0a72eadde4e43d}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_exp}{Exp}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ {\bfseries exp} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)}\label{namespaceatl_adf955d9d2f3f48ea2a0a72eadde4e43d}
+
+\item 
+\hypertarget{namespaceatl_ad7abf8cbf92afaeafbdf21b7cdc380f0}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_fabs}{Fabs}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ {\bfseries fabs} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)}\label{namespaceatl_ad7abf8cbf92afaeafbdf21b7cdc380f0}
+
+\item 
+\hypertarget{namespaceatl_a68f5173c03f979b4fa01d6c2eb96ac64}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_fabs}{atl\+::\+Fabs}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ {\bfseries abs} (const \hyperlink{structatl_1_1_expression_base}{atl\+::\+Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&expr)}\label{namespaceatl_a68f5173c03f979b4fa01d6c2eb96ac64}
+
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_floor}{Floor}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a47dbcb8c4b773328905f5c95f6d42b79}{floor} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_log}{Log}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a05496ef38c541404f043906f5c19a1ed}{log} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_log10}{Log10}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a0683db8646f2db62cac16810752ae70e}{log10} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+\hypertarget{namespaceatl_a86495456a43f5c9b46512311b8945c29}{{\footnotesize template$<$typename R\+E\+A\+L\+\_\+\+T $>$ }\\std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&out, const \hyperlink{structatl_1_1_variable_matrix}{Variable\+Matrix}$<$ R\+E\+A\+L\+\_\+\+T $>$ \&m)}\label{namespaceatl_a86495456a43f5c9b46512311b8945c29}
+
+\item 
+\hypertarget{namespaceatl_afbb4dbae00f36afdc8286ee17e2e4c3d}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\R\+E\+A\+L\+\_\+\+T {\bfseries Evaluate\+Multiply\+Value\+Case1} (int i, int j, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&lhs, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&rhs)}\label{namespaceatl_afbb4dbae00f36afdc8286ee17e2e4c3d}
+
+\item 
+\hypertarget{namespaceatl_aa93672e899491a9c3cb7becef28a9c4e}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\R\+E\+A\+L\+\_\+\+T {\bfseries Evaluate\+Multiply\+Value\+Case2} (int i, int j, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&lhs, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&rhs)}\label{namespaceatl_aa93672e899491a9c3cb7becef28a9c4e}
+
+\item 
+\hypertarget{namespaceatl_a73390c822a824e670262f1b3feea9e2e}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\R\+E\+A\+L\+\_\+\+T {\bfseries Evaluate\+Multiply\+Value\+Case3} (int i, int j, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&lhs, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&rhs)}\label{namespaceatl_a73390c822a824e670262f1b3feea9e2e}
+
+\item 
+\hypertarget{namespaceatl_a42607fdb24b11d2453fb6e396833d2d4}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\R\+E\+A\+L\+\_\+\+T {\bfseries Evaluate\+Multiply\+Value\+Case4} (int i, int j, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&lhs, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&rhs)}\label{namespaceatl_a42607fdb24b11d2453fb6e396833d2d4}
+
+\item 
+\hypertarget{namespaceatl_a8e22842340af0fb9575502846b8d1107}{{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\R\+E\+A\+L\+\_\+\+T {\bfseries Evaluate\+Multiply\+First\+Derivative\+Case1} (uint32\+\_\+t a, size\+\_\+t i, size\+\_\+t j, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&lhs, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&rhs)}\label{namespaceatl_a8e22842340af0fb9575502846b8d1107}
+
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_multiply}{Multiply}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ \hyperlink{namespaceatl_a6a090f25078201a2e0cfccb2f268d714}{operator$\ast$} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ }\\const \hyperlink{structatl_1_1_multiply}{Multiply}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, \\*
+\hyperlink{structatl_1_1_real}{Real}$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ \hyperlink{namespaceatl_ac91622b33b4bec04c0d565a69cd4f69e}{operator$\ast$} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, R\+E\+A\+L\+\_\+\+T b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_multiply}{Multiply}$<$ R\+E\+A\+L\+\_\+\+T, \hyperlink{structatl_1_1_real}{Real}\\*
+$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ \hyperlink{namespaceatl_a3bee59e3fc9067b5508bf239ed7681fe}{operator$\ast$} (const R\+E\+A\+L\+\_\+\+T \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+\hypertarget{namespaceatl_aebe487b4ea3e990d22b65f5ce9ce9362}{{\footnotesize template$<$int alignment = 16$>$ }\\void $\ast$ {\bfseries Allocate\+Aligned} (std\+::size\+\_\+t size)}\label{namespaceatl_aebe487b4ea3e990d22b65f5ce9ce9362}
+
+\item 
+\hypertarget{namespaceatl_a71b50d58697e828e9846478d44c652ec}{{\footnotesize template$<$int alignment = 16$>$ }\\void {\bfseries Deallocate\+Aligned} (void $\ast$ptr)}\label{namespaceatl_a71b50d58697e828e9846478d44c652ec}
+
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_sin}{Sin}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a44ce38b9b0532d6566c54530dbd72762}{sin} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_sinh}{Sinh}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_ab841e557045547c65bfd1d558185c1cf}{sinh} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_sqrt}{Sqrt}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a7d3b11bf11a6715b1c7ecbb028931d3b}{sqrt} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_subtract}{Subtract}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ \hyperlink{namespaceatl_afc0c607fc379e7cb732e61d69e008acb}{operator-\/} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ }\\const \hyperlink{structatl_1_1_subtract}{Subtract}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, \\*
+\hyperlink{structatl_1_1_real}{Real}$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ \hyperlink{namespaceatl_a01ed5cafe06da2f65343e08a576bdd03}{operator-\/} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, R\+E\+A\+L\+\_\+\+T b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_subtract}{Subtract}$<$ R\+E\+A\+L\+\_\+\+T, \hyperlink{structatl_1_1_real}{Real}\\*
+$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ \hyperlink{namespaceatl_abd3391908236b9e394815845eb2513ef}{operator-\/} (const R\+E\+A\+L\+\_\+\+T \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_tan}{Tan}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a7300a4e56f9b9e8fccbf26ce40568016}{tan} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_tanh}{Tanh}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \hyperlink{namespaceatl_a45a9d5040b0342960165dea5074a52a6}{tanh} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&exp)
+\item 
+\hypertarget{namespaceatl_a86db58f209047340cf00da03561c5cc7}{{\footnotesize template$<$typename T $>$ }\\std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&out, const \hyperlink{structatl_1_1_stack_entry}{Stack\+Entry}$<$ T $>$ \&entry)}\label{namespaceatl_a86db58f209047340cf00da03561c5cc7}
+
+\item 
+\hypertarget{namespaceatl_aafd33b6e930419b55b40f5e07063d3ca}{{\footnotesize template$<$typename R\+E\+A\+L\+\_\+\+T $>$ }\\std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&out, const \hyperlink{structatl_1_1_variable}{Variable}$<$ R\+E\+A\+L\+\_\+\+T $>$ \&v)}\label{namespaceatl_aafd33b6e930419b55b40f5e07063d3ca}
+
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ }\\const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ R\+E\+A\+L\+\_\+\+T $>$ \hyperlink{namespaceatl_a3b7620eadb39267aa49f9ab580bd03e9}{ad\+\_\+fabs} (const \hyperlink{structatl_1_1_expression_base}{atl\+::\+Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&expr, double C=1e-\/50)
+\item 
+{\footnotesize template$<$typename T $>$ }\\const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \hyperlink{namespaceatl_a2c216278ccf731a964a7381ad0828cf4}{max} (const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&a, const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&b, T C=1e-\/50)
+\item 
+{\footnotesize template$<$typename T $>$ }\\const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \hyperlink{namespaceatl_ab8d55db393522162b719652d94d92870}{min} (const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&a, const \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&b, T C=1e-\/50)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_pow}{Pow}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ \hyperlink{namespaceatl_affbabdc0cc02ced60061018a97b84249}{pow} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ }\\const \hyperlink{structatl_1_1_pow}{Pow}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, \hyperlink{structatl_1_1_real}{Real}\\*
+$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ \hyperlink{namespaceatl_a43a9b70712d1c9a7703d7a6bc3611936}{pow} (const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&a, R\+E\+A\+L\+\_\+\+T b)
+\item 
+{\footnotesize template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ }\\const \hyperlink{structatl_1_1_pow}{Pow}$<$ R\+E\+A\+L\+\_\+\+T, \hyperlink{structatl_1_1_real}{Real}\\*
+$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ \hyperlink{namespaceatl_ac127fb6528badb9739e2f060a59903e5}{pow} (const R\+E\+A\+L\+\_\+\+T \&a, const \hyperlink{structatl_1_1_expression_base}{Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&b)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a18435258d4fd2e5a0dfd31620ab4e071}{operator==} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a69933d4e5f16aa201f3abcd223d79d04}{operator!=} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_ac10029698cc6292ffff02df554ee7dcc}{operator$<$} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a26086860f12407db3042c3289e6b1187}{operator$>$} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_ac765ed3b46e917613a106223f087e872}{operator$<$=} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_ace57d4f665a6c1e8161739aa113791a4}{operator$>$=} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+\hypertarget{namespaceatl_adb529a5253f4aab9fbf96c26b5588e74}{{\footnotesize template$<$class T $>$ }\\const long {\bfseries operator\%} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)}\label{namespaceatl_adb529a5253f4aab9fbf96c26b5588e74}
+
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a2d8bf22cbfb80fddb5974aa6d73e38f5}{operator==} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_ae71088e3d54a6da4388b893d5cbdc738}{operator!=} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_aebf9ea7bd2cd4359a7b1921a27f0380b}{operator$<$} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a865ee4ff4fdff0cb6bddc117bbe76612}{operator$>$} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_aa3c2e390f6ebc745e0f9319b53da2c3d}{operator$<$=} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a61390a987bc461c11e825683add148de}{operator$>$=} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+\hypertarget{namespaceatl_a666415df8f7fcb110e1dc544e7221cf1}{{\footnotesize template$<$class T $>$ }\\const long {\bfseries operator\%} (const T \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)}\label{namespaceatl_a666415df8f7fcb110e1dc544e7221cf1}
+
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a8b1db3183dd7b7f64f397c0f30424e4d}{operator==} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a51558a6d0edfc8e2addcdc94e120cf5e}{operator!=} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a6398b2686fe61b948cc72d4dd1a68811}{operator$<$} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_acdb517a04c26adcb7b09196cc9f54a34}{operator$>$} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a642dd36ebe858e744bc5c554fc125458}{operator$<$=} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const int \hyperlink{namespaceatl_a94b98205ca088109b032e3e04e603b67}{operator$>$=} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+\hypertarget{namespaceatl_a8b8ebd5ab10656362ccfdbd4e71e6b76}{{\footnotesize template$<$class T $>$ }\\const int {\bfseries operator\%} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const T \&rhs)}\label{namespaceatl_a8b8ebd5ab10656362ccfdbd4e71e6b76}
+
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_afd5c24f3de322ec3622dec085fb486e9}{operator-\/} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_a1c562132c598e2874708b62460365ee2}{operator+} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_a358aa906d4f7853544d80b68a358d535}{operator/} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_ae2d902c6fc820d14a483f23d81a592fb}{operator$\ast$} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_a25f2b68d0223ce171b3ab57016c625cd}{operator-\/} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_a69c419e607c97be8fd04441ba063ebfa}{operator+} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_ad3f2b87786d532344bce55c77430550f}{operator/} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_acc2601dda4a066a3691d98cefe56fb89}{operator$\ast$} (T lhs, const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_a475fd63a64ad0e35f7275f07fce25d62}{operator-\/} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_a27d58f3f0f5f57ed51b39abadc5892cb}{operator+} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_abc48e15f4df6540234803e630a19221d}{operator/} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \hyperlink{namespaceatl_a9d45c193cace3e9cc28db9d4f8199c2d}{operator$\ast$} (const \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ \&lhs, T rhs)
+\item 
+\hypertarget{namespaceatl_a5491483df00ae8296d2aeeea78071011}{{\footnotesize template$<$class T $>$ }\\std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&out, \hyperlink{classatl_1_1_big_float}{Big\+Float}$<$ T $>$ const \&t)}\label{namespaceatl_a5491483df00ae8296d2aeeea78071011}
+
+\item 
+\hypertarget{namespaceatl_aa72dcbe256e25d7a8d33d886b785914b}{{\footnotesize template$<$typename T $>$ }\\\hyperlink{classatl_1_1_streamed_data_file}{Streamed\+Data\+File} \& {\bfseries operator$>$$>$} (\hyperlink{classatl_1_1_streamed_data_file}{Streamed\+Data\+File} \&in, \hyperlink{structatl_1_1_variable}{atl\+::\+Variable}$<$ T $>$ \&v)}\label{namespaceatl_aa72dcbe256e25d7a8d33d886b785914b}
+
+\item 
+\hypertarget{namespaceatl_aadf5fb10202429c087a8756b0efd95aa}{{\footnotesize template$<$typename T $>$ }\\\hyperlink{classatl_1_1_streamed_data_file}{Streamed\+Data\+File} \& {\bfseries operator$>$$>$} (\hyperlink{classatl_1_1_streamed_data_file}{Streamed\+Data\+File} \&in, atl\+::\+Vector$<$ T $>$ \&v)}\label{namespaceatl_aadf5fb10202429c087a8756b0efd95aa}
+
+\item 
+\hypertarget{namespaceatl_a3483a1a2eae72fecc9e859a2d9e180d4}{{\footnotesize template$<$typename T $>$ }\\\hyperlink{classatl_1_1_streamed_data_file}{Streamed\+Data\+File} \& {\bfseries operator$>$$>$} (\hyperlink{classatl_1_1_streamed_data_file}{Streamed\+Data\+File} \&in, atl\+::\+Matrix$<$ T $>$ \&m)}\label{namespaceatl_a3483a1a2eae72fecc9e859a2d9e180d4}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespaceatl_af67f06c8d6e3a8bf2d039e687ed7bd27}{\hyperlink{classatl_1_1_thread_pool}{atl\+::\+Thread\+Pool} {\bfseries thread\+\_\+pool\+\_\+g}}\label{namespaceatl_af67f06c8d6e3a8bf2d039e687ed7bd27}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Matthew R. Supernaw
+\end{DoxyAuthor}
+Public Domain Notice National Oceanic And Atmospheric Administration
+
+This software is a \char`\"{}\+United States Government Work\char`\"{} under the terms of the United States Copyright Act. It was written as part of the author's official duties as a United States Government employee and thus cannot be copyrighted. This software is freely available to the public for use. The National Oceanic And Atmospheric Administration and the U.\+S. Government have not placed any restriction on its use or reproduction. Although all reasonable efforts have been taken to ensure the accuracy and reliability of the software and data, the National Oceanic And Atmospheric Administration and the U.\+S. Government do not and cannot warrant the performance warrant the performance or results that may be obtained by using this software or data. The National Oceanic And Atmospheric Administration and the U.\+S. Government disclaim all warranties, express or implied, including warranties of performance, merchantability or fitness for any particular purpose.
+
+Please cite the author(s) in any work or product based on this material. 
+
+\subsection{Function Documentation}
+\hypertarget{namespaceatl_ada7003ca534db5beaf82003907268317}{\index{atl@{atl}!acos@{acos}}
+\index{acos@{acos}!atl@{atl}}
+\subsubsection[{acos}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf A\+Cos}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::acos (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ada7003ca534db5beaf82003907268317}
+Returns a expression template representing arccosine.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a3b7620eadb39267aa49f9ab580bd03e9}{\index{atl@{atl}!ad\+\_\+fabs@{ad\+\_\+fabs}}
+\index{ad\+\_\+fabs@{ad\+\_\+fabs}!atl@{atl}}
+\subsubsection[{ad\+\_\+fabs}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf atl\+::\+Variable}$<$R\+E\+A\+L\+\_\+\+T$>$ atl\+::ad\+\_\+fabs (
+\begin{DoxyParamCaption}
+\item[{const {\bf atl\+::\+Expression\+Base}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{expr, }
+\item[{double}]{C = {\ttfamily 1e-\/50}}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a3b7620eadb39267aa49f9ab580bd03e9}
+Used when expr could evaluate to zero, which will result in a Na\+N for derivative values.
+
+Evaluates\+:
+
+$ (expr^2+C)^.5 $
+
+
+\begin{DoxyParams}{Parameters}
+{\em expr} & \\
+\hline
+{\em C} & default = 1e-\/50 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References pow().
+
+
+
+Referenced by max(), and min().
+
+\hypertarget{namespaceatl_a204dcfa24d4e9b9b54b69c0c684cdc41}{\index{atl@{atl}!asin@{asin}}
+\index{asin@{asin}!atl@{atl}}
+\subsubsection[{asin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf A\+Sin}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::asin (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a204dcfa24d4e9b9b54b69c0c684cdc41}
+Returns an expression template representing arcsine.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a23b41d1236e98f36c483c81771800f73}{\index{atl@{atl}!atan@{atan}}
+\index{atan@{atan}!atl@{atl}}
+\subsubsection[{atan}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf A\+Tan}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::atan (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a23b41d1236e98f36c483c81771800f73}
+Returns an expression template representing arctangent.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a3c880f96cf13588a11a0728e30973e97}{\index{atl@{atl}!ceil@{ceil}}
+\index{ceil@{ceil}!atl@{atl}}
+\subsubsection[{ceil}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Ceil}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::ceil (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a3c880f96cf13588a11a0728e30973e97}
+Ceiling of the expression exp. Not Differentiable.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_ae2f0a1d943a1ed6752f76db7daebe96d}{\index{atl@{atl}!cos@{cos}}
+\index{cos@{cos}!atl@{atl}}
+\subsubsection[{cos}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Cos}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::cos (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ae2f0a1d943a1ed6752f76db7daebe96d}
+Returns an expression template representing cosine.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a8c5ea021d776962f7adaca0e974fc321}{\index{atl@{atl}!cosh@{cosh}}
+\index{cosh@{cosh}!atl@{atl}}
+\subsubsection[{cosh}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Cosh}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::cosh (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a8c5ea021d776962f7adaca0e974fc321}
+Returns an expression template representing hyperbolic cosine.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a47dbcb8c4b773328905f5c95f6d42b79}{\index{atl@{atl}!floor@{floor}}
+\index{floor@{floor}!atl@{atl}}
+\subsubsection[{floor}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Floor}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::floor (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a47dbcb8c4b773328905f5c95f6d42b79}
+Returns an expression template representing floor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a05496ef38c541404f043906f5c19a1ed}{\index{atl@{atl}!log@{log}}
+\index{log@{log}!atl@{atl}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Log}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::log (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a05496ef38c541404f043906f5c19a1ed}
+Returns an expression template representing log.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a0683db8646f2db62cac16810752ae70e}{\index{atl@{atl}!log10@{log10}}
+\index{log10@{log10}!atl@{atl}}
+\subsubsection[{log10}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Log10}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::log10 (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a0683db8646f2db62cac16810752ae70e}
+Returns an expression template representing log10.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a04ef3c373ecfd67b6abd81dbbe1ec876}{\index{atl@{atl}!max@{max}}
+\index{max@{max}!atl@{atl}}
+\subsubsection[{max}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ const {\bf atl\+::\+Variable}$<$T$>$ atl\+::max (
+\begin{DoxyParamCaption}
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{a, }
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a04ef3c373ecfd67b6abd81dbbe1ec876}
+Returns the maximum between a and b in a continuous manner using\+:
+
+(a + b + $\vert$a -\/ b$\vert$) / 2.\+0;
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a2c216278ccf731a964a7381ad0828cf4}{\index{atl@{atl}!max@{max}}
+\index{max@{max}!atl@{atl}}
+\subsubsection[{max}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ const {\bf atl\+::\+Variable}$<$T$>$ atl\+::max (
+\begin{DoxyParamCaption}
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{a, }
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{b, }
+\item[{T}]{C = {\ttfamily 1e-\/50}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a2c216278ccf731a964a7381ad0828cf4}
+Returns the maximum between a and b in a continuous manner using\+:
+
+(a + b + \hyperlink{namespaceatl_a3b7620eadb39267aa49f9ab580bd03e9}{atl\+::ad\+\_\+fabs}(a -\/ b)) $\ast$.5;
+
+This is an approximation with minimal error.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+{\em C} & default = 1e-\/50 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References ad\+\_\+fabs().
+
+\hypertarget{namespaceatl_a8e359db3f98573887309ad2aa39ccedc}{\index{atl@{atl}!min@{min}}
+\index{min@{min}!atl@{atl}}
+\subsubsection[{min}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ const {\bf atl\+::\+Variable}$<$T$>$ atl\+::min (
+\begin{DoxyParamCaption}
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{a, }
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a8e359db3f98573887309ad2aa39ccedc}
+Returns the minimum between a and b in a continuous manner using\+:
+
+(a + b -\/ $\vert$a -\/ b$\vert$) / 2.\+0;
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_ab8d55db393522162b719652d94d92870}{\index{atl@{atl}!min@{min}}
+\index{min@{min}!atl@{atl}}
+\subsubsection[{min}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ const {\bf atl\+::\+Variable}$<$T$>$ atl\+::min (
+\begin{DoxyParamCaption}
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{a, }
+\item[{const {\bf atl\+::\+Variable}$<$ T $>$ \&}]{b, }
+\item[{T}]{C = {\ttfamily 1e-\/50}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ab8d55db393522162b719652d94d92870}
+Returns the minimum between a and b in a continuous manner using\+:
+
+(a + b -\/ \hyperlink{namespaceatl_a3b7620eadb39267aa49f9ab580bd03e9}{atl\+::ad\+\_\+fabs}(a -\/ b))$\ast$.5;
+
+This is an approximation with minimal error.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+{\em C} & default = 1e-\/50 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References ad\+\_\+fabs().
+
+\hypertarget{namespaceatl_a69933d4e5f16aa201f3abcd223d79d04}{\index{atl@{atl}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!atl@{atl}}
+\subsubsection[{operator"!=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a69933d4e5f16aa201f3abcd223d79d04}
+Not equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_ae71088e3d54a6da4388b893d5cbdc738}{\index{atl@{atl}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!atl@{atl}}
+\subsubsection[{operator"!=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ae71088e3d54a6da4388b893d5cbdc738}
+Not equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a51558a6d0edfc8e2addcdc94e120cf5e}{\index{atl@{atl}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!atl@{atl}}
+\subsubsection[{operator"!=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a51558a6d0edfc8e2addcdc94e120cf5e}
+Not equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a6a090f25078201a2e0cfccb2f268d714}{\index{atl@{atl}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!atl@{atl}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Multiply}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ atl\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a6a090f25078201a2e0cfccb2f268d714}
+Operator for addition of two expression templates. 
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_ac91622b33b4bec04c0d565a69cd4f69e}{\index{atl@{atl}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!atl@{atl}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ const {\bf Multiply}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, {\bf Real}$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ atl\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{R\+E\+A\+L\+\_\+\+T}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ac91622b33b4bec04c0d565a69cd4f69e}
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a3bee59e3fc9067b5508bf239ed7681fe}{\index{atl@{atl}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!atl@{atl}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Multiply}$<$ R\+E\+A\+L\+\_\+\+T, {\bf Real}$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ atl\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{const R\+E\+A\+L\+\_\+\+T \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a3bee59e3fc9067b5508bf239ed7681fe}
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_ae2d902c6fc820d14a483f23d81a592fb}{\index{atl@{atl}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!atl@{atl}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_ae2d902c6fc820d14a483f23d81a592fb}
+Outside class multiplication operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_acc2601dda4a066a3691d98cefe56fb89}{\index{atl@{atl}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!atl@{atl}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_acc2601dda4a066a3691d98cefe56fb89}
+Outside class multiplication operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a9d45c193cace3e9cc28db9d4f8199c2d}{\index{atl@{atl}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!atl@{atl}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a9d45c193cace3e9cc28db9d4f8199c2d}
+Outside class multiplication operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_ae5e3def2b4af7add11836b4dc4d1605e}{\index{atl@{atl}!operator+@{operator+}}
+\index{operator+@{operator+}!atl@{atl}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Add}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ atl\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ae5e3def2b4af7add11836b4dc4d1605e}
+Operator for addition of two expression templates. 
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_ae056ad3c59c730ffb1a857f74a769e89}{\index{atl@{atl}!operator+@{operator+}}
+\index{operator+@{operator+}!atl@{atl}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ const {\bf Add}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, {\bf Real}$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ atl\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{R\+E\+A\+L\+\_\+\+T}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ae056ad3c59c730ffb1a857f74a769e89}
+Operator for addition of an expression template and a real value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_ab6356ac7728633992e3c7ea9f55b0566}{\index{atl@{atl}!operator+@{operator+}}
+\index{operator+@{operator+}!atl@{atl}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Add}$<$ R\+E\+A\+L\+\_\+\+T, {\bf Real}$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ atl\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{const R\+E\+A\+L\+\_\+\+T \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ab6356ac7728633992e3c7ea9f55b0566}
+Operator for the addition of a real value and an expression template.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a1c562132c598e2874708b62460365ee2}{\index{atl@{atl}!operator+@{operator+}}
+\index{operator+@{operator+}!atl@{atl}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a1c562132c598e2874708b62460365ee2}
+Outside class addition operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a69c419e607c97be8fd04441ba063ebfa}{\index{atl@{atl}!operator+@{operator+}}
+\index{operator+@{operator+}!atl@{atl}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a69c419e607c97be8fd04441ba063ebfa}
+Outside class addition operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a27d58f3f0f5f57ed51b39abadc5892cb}{\index{atl@{atl}!operator+@{operator+}}
+\index{operator+@{operator+}!atl@{atl}}
+\subsubsection[{operator+}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a27d58f3f0f5f57ed51b39abadc5892cb}
+Outside class addition operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_afc0c607fc379e7cb732e61d69e008acb}{\index{atl@{atl}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!atl@{atl}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Subtract}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ atl\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_afc0c607fc379e7cb732e61d69e008acb}
+Operator for subtraction of two expression templates. 
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+Operator for subtraction of a expression template by another expression template.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a01ed5cafe06da2f65343e08a576bdd03}{\index{atl@{atl}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!atl@{atl}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ const {\bf Subtract}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, {\bf Real}$<$ R\+E\+A\+L\+\_\+\+T $>$ $>$ atl\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{R\+E\+A\+L\+\_\+\+T}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a01ed5cafe06da2f65343e08a576bdd03}
+Operator for subtraction of a expression template by a real value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_abd3391908236b9e394815845eb2513ef}{\index{atl@{atl}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!atl@{atl}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Subtract}$<$ R\+E\+A\+L\+\_\+\+T, {\bf Real}$<$ R\+E\+A\+L\+\_\+\+T $>$, R\+H\+S $>$ atl\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const R\+E\+A\+L\+\_\+\+T \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_abd3391908236b9e394815845eb2513ef}
+Operator for subtraction of a real value by an expression template.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_afd5c24f3de322ec3622dec085fb486e9}{\index{atl@{atl}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!atl@{atl}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_afd5c24f3de322ec3622dec085fb486e9}
+Outside class subtraction operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a25f2b68d0223ce171b3ab57016c625cd}{\index{atl@{atl}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!atl@{atl}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a25f2b68d0223ce171b3ab57016c625cd}
+Outside class subtraction operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a475fd63a64ad0e35f7275f07fce25d62}{\index{atl@{atl}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!atl@{atl}}
+\subsubsection[{operator-\/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a475fd63a64ad0e35f7275f07fce25d62}
+Outside class subtraction operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a202008228dcaf7271a82563ca98bc247}{\index{atl@{atl}!operator/@{operator/}}
+\index{operator/@{operator/}!atl@{atl}}
+\subsubsection[{operator/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Divide}$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S $>$ atl\+::operator/ (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a202008228dcaf7271a82563ca98bc247}
+Operator for addition of two expression templates. 
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a358aa906d4f7853544d80b68a358d535}{\index{atl@{atl}!operator/@{operator/}}
+\index{operator/@{operator/}!atl@{atl}}
+\subsubsection[{operator/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator/ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_a358aa906d4f7853544d80b68a358d535}
+Outside class division operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_ad3f2b87786d532344bce55c77430550f}{\index{atl@{atl}!operator/@{operator/}}
+\index{operator/@{operator/}!atl@{atl}}
+\subsubsection[{operator/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator/ (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_ad3f2b87786d532344bce55c77430550f}
+Outside class division operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_abc48e15f4df6540234803e630a19221d}{\index{atl@{atl}!operator/@{operator/}}
+\index{operator/@{operator/}!atl@{atl}}
+\subsubsection[{operator/}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const {\bf Big\+Float}$<$T$>$ atl\+::operator/ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)}}\label{namespaceatl_abc48e15f4df6540234803e630a19221d}
+Outside class division operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_ac10029698cc6292ffff02df554ee7dcc}{\index{atl@{atl}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!atl@{atl}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ac10029698cc6292ffff02df554ee7dcc}
+Less than comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_aebf9ea7bd2cd4359a7b1921a27f0380b}{\index{atl@{atl}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!atl@{atl}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_aebf9ea7bd2cd4359a7b1921a27f0380b}
+Less than comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a6398b2686fe61b948cc72d4dd1a68811}{\index{atl@{atl}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!atl@{atl}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a6398b2686fe61b948cc72d4dd1a68811}
+Less than comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_ac765ed3b46e917613a106223f087e872}{\index{atl@{atl}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!atl@{atl}}
+\subsubsection[{operator$<$=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ac765ed3b46e917613a106223f087e872}
+Less than equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_aa3c2e390f6ebc745e0f9319b53da2c3d}{\index{atl@{atl}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!atl@{atl}}
+\subsubsection[{operator$<$=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_aa3c2e390f6ebc745e0f9319b53da2c3d}
+Less than equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a642dd36ebe858e744bc5c554fc125458}{\index{atl@{atl}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!atl@{atl}}
+\subsubsection[{operator$<$=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a642dd36ebe858e744bc5c554fc125458}
+Less than equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a18435258d4fd2e5a0dfd31620ab4e071}{\index{atl@{atl}!operator==@{operator==}}
+\index{operator==@{operator==}!atl@{atl}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a18435258d4fd2e5a0dfd31620ab4e071}
+Equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a2d8bf22cbfb80fddb5974aa6d73e38f5}{\index{atl@{atl}!operator==@{operator==}}
+\index{operator==@{operator==}!atl@{atl}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator== (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a2d8bf22cbfb80fddb5974aa6d73e38f5}
+Equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a8b1db3183dd7b7f64f397c0f30424e4d}{\index{atl@{atl}!operator==@{operator==}}
+\index{operator==@{operator==}!atl@{atl}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a8b1db3183dd7b7f64f397c0f30424e4d}
+Equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a26086860f12407db3042c3289e6b1187}{\index{atl@{atl}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!atl@{atl}}
+\subsubsection[{operator$>$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a26086860f12407db3042c3289e6b1187}
+Greater than comparison operator. 
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a865ee4ff4fdff0cb6bddc117bbe76612}{\index{atl@{atl}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!atl@{atl}}
+\subsubsection[{operator$>$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a865ee4ff4fdff0cb6bddc117bbe76612}
+Greater than comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_acdb517a04c26adcb7b09196cc9f54a34}{\index{atl@{atl}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!atl@{atl}}
+\subsubsection[{operator$>$}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_acdb517a04c26adcb7b09196cc9f54a34}
+Greater than comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_ace57d4f665a6c1e8161739aa113791a4}{\index{atl@{atl}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!atl@{atl}}
+\subsubsection[{operator$>$=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ace57d4f665a6c1e8161739aa113791a4}
+Greater than equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a61390a987bc461c11e825683add148de}{\index{atl@{atl}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!atl@{atl}}
+\subsubsection[{operator$>$=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{T}]{lhs, }
+\item[{const Big\+Float$<$ T $>$ \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a61390a987bc461c11e825683add148de}
+Greater than equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_a94b98205ca088109b032e3e04e603b67}{\index{atl@{atl}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!atl@{atl}}
+\subsubsection[{operator$>$=}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const int atl\+::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const Big\+Float$<$ T $>$ \&}]{lhs, }
+\item[{T}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a94b98205ca088109b032e3e04e603b67}
+Greater than equal to comparison operator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & \\
+\hline
+{\em rhs} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{namespaceatl_affbabdc0cc02ced60061018a97b84249}{\index{atl@{atl}!pow@{pow}}
+\index{pow@{pow}!atl@{atl}}
+\subsubsection[{pow}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Pow}$<$R\+E\+A\+L\+\_\+\+T, L\+H\+S, R\+H\+S$>$ atl\+::pow (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_affbabdc0cc02ced60061018a97b84249}
+Returns a expression template representing pow.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+
+
+Referenced by ad\+\_\+fabs().
+
+\hypertarget{namespaceatl_a43a9b70712d1c9a7703d7a6bc3611936}{\index{atl@{atl}!pow@{pow}}
+\index{pow@{pow}!atl@{atl}}
+\subsubsection[{pow}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S $>$ const {\bf Pow}$<$R\+E\+A\+L\+\_\+\+T, L\+H\+S, {\bf Real}$<$R\+E\+A\+L\+\_\+\+T$>$ $>$ atl\+::pow (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, L\+H\+S $>$ \&}]{a, }
+\item[{R\+E\+A\+L\+\_\+\+T}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a43a9b70712d1c9a7703d7a6bc3611936}
+Returns a expression template representing pow.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_ac127fb6528badb9739e2f060a59903e5}{\index{atl@{atl}!pow@{pow}}
+\index{pow@{pow}!atl@{atl}}
+\subsubsection[{pow}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class L\+H\+S , class R\+H\+S $>$ const {\bf Pow}$<$R\+E\+A\+L\+\_\+\+T, {\bf Real}$<$R\+E\+A\+L\+\_\+\+T$>$, R\+H\+S$>$ atl\+::pow (
+\begin{DoxyParamCaption}
+\item[{const R\+E\+A\+L\+\_\+\+T \&}]{a, }
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, R\+H\+S $>$ \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ac127fb6528badb9739e2f060a59903e5}
+Returns a expression template representing pow.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+{\em b} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a44ce38b9b0532d6566c54530dbd72762}{\index{atl@{atl}!sin@{sin}}
+\index{sin@{sin}!atl@{atl}}
+\subsubsection[{sin}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Sin}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::sin (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a44ce38b9b0532d6566c54530dbd72762}
+Creates a expression template representing sine.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_ab841e557045547c65bfd1d558185c1cf}{\index{atl@{atl}!sinh@{sinh}}
+\index{sinh@{sinh}!atl@{atl}}
+\subsubsection[{sinh}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Sinh}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::sinh (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_ab841e557045547c65bfd1d558185c1cf}
+Creates a expression template representing hyperbolic sine.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a7d3b11bf11a6715b1c7ecbb028931d3b}{\index{atl@{atl}!sqrt@{sqrt}}
+\index{sqrt@{sqrt}!atl@{atl}}
+\subsubsection[{sqrt}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Sqrt}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::sqrt (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a7d3b11bf11a6715b1c7ecbb028931d3b}
+Returns an expression template representing the square root.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a7300a4e56f9b9e8fccbf26ce40568016}{\index{atl@{atl}!tan@{tan}}
+\index{tan@{tan}!atl@{atl}}
+\subsubsection[{tan}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Tan}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::tan (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a7300a4e56f9b9e8fccbf26ce40568016}
+Creates a expression template representing tangent.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+
+\hypertarget{namespaceatl_a45a9d5040b0342960165dea5074a52a6}{\index{atl@{atl}!tanh@{tanh}}
+\index{tanh@{tanh}!atl@{atl}}
+\subsubsection[{tanh}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class R\+E\+A\+L\+\_\+\+T , class E\+X\+P\+R $>$ const {\bf Tanh}$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ atl\+::tanh (
+\begin{DoxyParamCaption}
+\item[{const Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, E\+X\+P\+R $>$ \&}]{exp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{namespaceatl_a45a9d5040b0342960165dea5074a52a6}
+Creates a expression template representing hyperbolic tangent.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exp} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+References atl\+::\+Expression\+Base$<$ R\+E\+A\+L\+\_\+\+T, A $>$\+::\+Cast().
+

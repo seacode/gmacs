@@ -1,0 +1,146 @@
+\hypertarget{classemlib_1_1_hash_set}{\section{emlib\+:\+:Hash\+Set$<$ Key\+T, Hash\+T, Comp\+T $>$ Class Template Reference}
+\label{classemlib_1_1_hash_set}\index{emlib\+::\+Hash\+Set$<$ Key\+T, Hash\+T, Comp\+T $>$@{emlib\+::\+Hash\+Set$<$ Key\+T, Hash\+T, Comp\+T $>$}}
+}
+
+
+A cache-\/friendly hash set with open addressing, linear probing and power-\/of-\/two capacity.  
+
+
+
+
+{\ttfamily \#include $<$Hash\+Containers.\+hpp$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classemlib_1_1_hash_set_1_1const__iterator}{const\+\_\+iterator}
+\item 
+class \hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classemlib_1_1_hash_set_a9d2bfbc3ccb88135731b0c2e8811e17c}{using {\bfseries size\+\_\+type} = size\+\_\+t}\label{classemlib_1_1_hash_set_a9d2bfbc3ccb88135731b0c2e8811e17c}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a9f885d86029a059a481b7583c6852321}{using {\bfseries value\+\_\+type} = Key\+T}\label{classemlib_1_1_hash_set_a9f885d86029a059a481b7583c6852321}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a6c32f673a8031da047911b77c74529b7}{using {\bfseries reference} = Key\+T \&}\label{classemlib_1_1_hash_set_a6c32f673a8031da047911b77c74529b7}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a90c39184c964a0dcf1e196a89f3698a2}{using {\bfseries const\+\_\+reference} = const Key\+T \&}\label{classemlib_1_1_hash_set_a90c39184c964a0dcf1e196a89f3698a2}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classemlib_1_1_hash_set_a87fa5a0e8c20851419f431914c0ddede}{{\bfseries Hash\+Set} (const \hyperlink{classemlib_1_1_hash_set}{Hash\+Set} \&other)}\label{classemlib_1_1_hash_set_a87fa5a0e8c20851419f431914c0ddede}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a43fa2ae4c3c6a20c79cd08f4f0d8cef7}{{\bfseries Hash\+Set} (\hyperlink{classemlib_1_1_hash_set}{Hash\+Set} \&\&other)}\label{classemlib_1_1_hash_set_a43fa2ae4c3c6a20c79cd08f4f0d8cef7}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_afa121d14a8d0c35502721a5f48facca3}{\hyperlink{classemlib_1_1_hash_set}{Hash\+Set} \& {\bfseries operator=} (const \hyperlink{classemlib_1_1_hash_set}{Hash\+Set} \&other)}\label{classemlib_1_1_hash_set_afa121d14a8d0c35502721a5f48facca3}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a798bb959a0415044c305a9c788f56101}{void {\bfseries operator=} (\hyperlink{classemlib_1_1_hash_set}{Hash\+Set} \&\&other)}\label{classemlib_1_1_hash_set_a798bb959a0415044c305a9c788f56101}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_accda9f7cf30f0273c94a15653875b8df}{void {\bfseries swap} (\hyperlink{classemlib_1_1_hash_set}{Hash\+Set} \&other)}\label{classemlib_1_1_hash_set_accda9f7cf30f0273c94a15653875b8df}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_acc670a2060e9fc6120676187f588ffd2}{\hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator} {\bfseries begin} ()}\label{classemlib_1_1_hash_set_acc670a2060e9fc6120676187f588ffd2}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a1f6903e28b8fe2724903275ab8c455b3}{\hyperlink{classemlib_1_1_hash_set_1_1const__iterator}{const\+\_\+iterator} {\bfseries begin} () const }\label{classemlib_1_1_hash_set_a1f6903e28b8fe2724903275ab8c455b3}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a9e30e5ca74667cc5b8288ec423f7ab59}{\hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator} {\bfseries end} ()}\label{classemlib_1_1_hash_set_a9e30e5ca74667cc5b8288ec423f7ab59}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_ac9e6d81647b36cf48d134136c40f10ab}{\hyperlink{classemlib_1_1_hash_set_1_1const__iterator}{const\+\_\+iterator} {\bfseries end} () const }\label{classemlib_1_1_hash_set_ac9e6d81647b36cf48d134136c40f10ab}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_acc0987ad484b631ed3a1dee189f342ed}{size\+\_\+t {\bfseries size} () const }\label{classemlib_1_1_hash_set_acc0987ad484b631ed3a1dee189f342ed}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a174ba340574d75db9e35a7179c8beb37}{bool {\bfseries empty} () const }\label{classemlib_1_1_hash_set_a174ba340574d75db9e35a7179c8beb37}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a9a5f70682a63bb0835512d523c7f036e}{\hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator} {\bfseries find} (const Key\+T \&key)}\label{classemlib_1_1_hash_set_a9a5f70682a63bb0835512d523c7f036e}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_ad83abd555d61321dd9113bf44170454d}{\hyperlink{classemlib_1_1_hash_set_1_1const__iterator}{const\+\_\+iterator} {\bfseries find} (const Key\+T \&key) const }\label{classemlib_1_1_hash_set_ad83abd555d61321dd9113bf44170454d}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a1845c869121d844431dacce0a1a1b07a}{bool {\bfseries contains} (const Key\+T \&k) const }\label{classemlib_1_1_hash_set_a1845c869121d844431dacce0a1a1b07a}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a24c36a2a6f233316a81f70ad4ea3de87}{size\+\_\+t {\bfseries count} (const Key\+T \&k) const }\label{classemlib_1_1_hash_set_a24c36a2a6f233316a81f70ad4ea3de87}
+
+\item 
+std\+::pair$<$ \hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator}, bool $>$ \hyperlink{classemlib_1_1_hash_set_aeda3330a52e968169d226a1923c2cf31}{insert} (const Key\+T \&key)
+\item 
+std\+::pair$<$ \hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator}, bool $>$ \hyperlink{classemlib_1_1_hash_set_a3f242776bdd81751c9e24c7917d2e773}{insert} (Key\+T \&\&key)
+\item 
+\hypertarget{classemlib_1_1_hash_set_a5b04767cb64cab01bbf28e1c6654346f}{{\footnotesize template$<$class... Args$>$ }\\std\+::pair$<$ \hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator}, bool $>$ {\bfseries emplace} (Args \&\&...args)}\label{classemlib_1_1_hash_set_a5b04767cb64cab01bbf28e1c6654346f}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_a12f1684fe36b5490b72973220e709faf}{void {\bfseries insert} (\hyperlink{classemlib_1_1_hash_set_1_1const__iterator}{const\+\_\+iterator} begin, \hyperlink{classemlib_1_1_hash_set_1_1const__iterator}{const\+\_\+iterator} end)}\label{classemlib_1_1_hash_set_a12f1684fe36b5490b72973220e709faf}
+
+\item 
+\hypertarget{classemlib_1_1_hash_set_adfb2429d65f06e26204135132adf5613}{void \hyperlink{classemlib_1_1_hash_set_adfb2429d65f06e26204135132adf5613}{insert\+\_\+unique} (Key\+T \&\&key)}\label{classemlib_1_1_hash_set_adfb2429d65f06e26204135132adf5613}
+
+\begin{DoxyCompactList}\small\item\em Same as above, but contains(key) M\+U\+S\+T be false. \end{DoxyCompactList}\item 
+bool \hyperlink{classemlib_1_1_hash_set_ae1ad3bfd5f24872029d64a965b60e550}{erase} (const Key\+T \&key)
+\item 
+\hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator} \hyperlink{classemlib_1_1_hash_set_a2dfce788bbbdbabf3b7e3aeae3357fc9}{erase} (\hyperlink{classemlib_1_1_hash_set_1_1iterator}{iterator} it)
+\item 
+\hypertarget{classemlib_1_1_hash_set_a226f08848b957f488bc996670d3ee3b1}{void \hyperlink{classemlib_1_1_hash_set_a226f08848b957f488bc996670d3ee3b1}{clear} ()}\label{classemlib_1_1_hash_set_a226f08848b957f488bc996670d3ee3b1}
+
+\begin{DoxyCompactList}\small\item\em Remove all elements, keeping full capacity. \end{DoxyCompactList}\item 
+\hypertarget{classemlib_1_1_hash_set_a120a1bbfd5e0af28f086f210b76f9b20}{void \hyperlink{classemlib_1_1_hash_set_a120a1bbfd5e0af28f086f210b76f9b20}{reserve} (size\+\_\+t num\+\_\+elems)}\label{classemlib_1_1_hash_set_a120a1bbfd5e0af28f086f210b76f9b20}
+
+\begin{DoxyCompactList}\small\item\em Make room for this many elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Key\+T, typename Hash\+T = std\+::hash$<$\+Key\+T$>$, typename Comp\+T = Hash\+Set\+Equal\+To$<$\+Key\+T$>$$>$class emlib\+::\+Hash\+Set$<$ Key\+T, Hash\+T, Comp\+T $>$}
+
+A cache-\/friendly hash set with open addressing, linear probing and power-\/of-\/two capacity. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classemlib_1_1_hash_set_ae1ad3bfd5f24872029d64a965b60e550}{\index{emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}!erase@{erase}}
+\index{erase@{erase}!emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}}
+\subsubsection[{erase}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Key\+T , typename Hash\+T  = std\+::hash$<$\+Key\+T$>$, typename Comp\+T  = Hash\+Set\+Equal\+To$<$\+Key\+T$>$$>$ bool {\bf emlib\+::\+Hash\+Set}$<$ Key\+T, Hash\+T, Comp\+T $>$\+::erase (
+\begin{DoxyParamCaption}
+\item[{const Key\+T \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classemlib_1_1_hash_set_ae1ad3bfd5f24872029d64a965b60e550}
+Erase an element from the hash set. return false if element was not found. \hypertarget{classemlib_1_1_hash_set_a2dfce788bbbdbabf3b7e3aeae3357fc9}{\index{emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}!erase@{erase}}
+\index{erase@{erase}!emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}}
+\subsubsection[{erase}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Key\+T , typename Hash\+T  = std\+::hash$<$\+Key\+T$>$, typename Comp\+T  = Hash\+Set\+Equal\+To$<$\+Key\+T$>$$>$ {\bf iterator} {\bf emlib\+::\+Hash\+Set}$<$ Key\+T, Hash\+T, Comp\+T $>$\+::erase (
+\begin{DoxyParamCaption}
+\item[{{\bf iterator}}]{it}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classemlib_1_1_hash_set_a2dfce788bbbdbabf3b7e3aeae3357fc9}
+Erase an element using an iterator. Returns an iterator to the next element (or end()). \hypertarget{classemlib_1_1_hash_set_aeda3330a52e968169d226a1923c2cf31}{\index{emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}!insert@{insert}}
+\index{insert@{insert}!emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Key\+T , typename Hash\+T  = std\+::hash$<$\+Key\+T$>$, typename Comp\+T  = Hash\+Set\+Equal\+To$<$\+Key\+T$>$$>$ std\+::pair$<${\bf iterator}, bool$>$ {\bf emlib\+::\+Hash\+Set}$<$ Key\+T, Hash\+T, Comp\+T $>$\+::insert (
+\begin{DoxyParamCaption}
+\item[{const Key\+T \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classemlib_1_1_hash_set_aeda3330a52e968169d226a1923c2cf31}
+Insert an element, unless it already exists. Returns a pair consisting of an iterator to the inserted element (or to the element that prevented the insertion) and a bool denoting whether the insertion took place. \hypertarget{classemlib_1_1_hash_set_a3f242776bdd81751c9e24c7917d2e773}{\index{emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}!insert@{insert}}
+\index{insert@{insert}!emlib\+::\+Hash\+Set@{emlib\+::\+Hash\+Set}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Key\+T , typename Hash\+T  = std\+::hash$<$\+Key\+T$>$, typename Comp\+T  = Hash\+Set\+Equal\+To$<$\+Key\+T$>$$>$ std\+::pair$<${\bf iterator}, bool$>$ {\bf emlib\+::\+Hash\+Set}$<$ Key\+T, Hash\+T, Comp\+T $>$\+::insert (
+\begin{DoxyParamCaption}
+\item[{Key\+T \&\&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classemlib_1_1_hash_set_a3f242776bdd81751c9e24c7917d2e773}
+Insert an element, unless it already exists. Returns a pair consisting of an iterator to the inserted element (or to the element that prevented the insertion) and a bool denoting whether the insertion took place. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/Hash\+Containers.\+hpp\end{DoxyCompactItemize}
