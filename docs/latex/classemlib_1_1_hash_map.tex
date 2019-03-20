@@ -1,0 +1,156 @@
+\hypertarget{classemlib_1_1_hash_map}{\section{emlib\+:\+:Hash\+Map$<$ Key\+T, Value\+T, Hash\+T, Comp\+T $>$ Class Template Reference}
+\label{classemlib_1_1_hash_map}\index{emlib\+::\+Hash\+Map$<$ Key\+T, Value\+T, Hash\+T, Comp\+T $>$@{emlib\+::\+Hash\+Map$<$ Key\+T, Value\+T, Hash\+T, Comp\+T $>$}}
+}
+
+
+A cache-\/friendly hash table with open addressing, linear probing and power-\/of-\/two capacity.  
+
+
+
+
+{\ttfamily \#include $<$Hash\+Containers.\+hpp$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classemlib_1_1_hash_map_1_1const__iterator}{const\+\_\+iterator}
+\item 
+class \hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classemlib_1_1_hash_map_a028d5c5774ddb9a5600950d56d1089be}{using {\bfseries size\+\_\+type} = size\+\_\+t}\label{classemlib_1_1_hash_map_a028d5c5774ddb9a5600950d56d1089be}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_abb024ee717e5eb9beb204290275c0205}{using {\bfseries value\+\_\+type} = Pair\+T}\label{classemlib_1_1_hash_map_abb024ee717e5eb9beb204290275c0205}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_ad5eab3fa3cbd468f81eb2ac45da4fe28}{using {\bfseries reference} = Pair\+T \&}\label{classemlib_1_1_hash_map_ad5eab3fa3cbd468f81eb2ac45da4fe28}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a4bcdc50624a3e8fd7c0d8108da5c0c79}{using {\bfseries const\+\_\+reference} = const Pair\+T \&}\label{classemlib_1_1_hash_map_a4bcdc50624a3e8fd7c0d8108da5c0c79}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classemlib_1_1_hash_map_ac211154bbd80b4b73d70302453ff6649}{{\bfseries Hash\+Map} (const \hyperlink{classemlib_1_1_hash_map}{Hash\+Map} \&other)}\label{classemlib_1_1_hash_map_ac211154bbd80b4b73d70302453ff6649}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_aef1e36013f67cbef152f47f3c2dde144}{{\bfseries Hash\+Map} (\hyperlink{classemlib_1_1_hash_map}{Hash\+Map} \&\&other)}\label{classemlib_1_1_hash_map_aef1e36013f67cbef152f47f3c2dde144}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a4f2ef00514465c3900ee9ddf7a6f62a0}{\hyperlink{classemlib_1_1_hash_map}{Hash\+Map} \& {\bfseries operator=} (const \hyperlink{classemlib_1_1_hash_map}{Hash\+Map} \&other)}\label{classemlib_1_1_hash_map_a4f2ef00514465c3900ee9ddf7a6f62a0}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a5182995ba941bdc286979f931e554b39}{void {\bfseries operator=} (\hyperlink{classemlib_1_1_hash_map}{Hash\+Map} \&\&other)}\label{classemlib_1_1_hash_map_a5182995ba941bdc286979f931e554b39}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a0c9f94a2264662d7a1da61eb479477eb}{void {\bfseries swap} (\hyperlink{classemlib_1_1_hash_map}{Hash\+Map} \&other)}\label{classemlib_1_1_hash_map_a0c9f94a2264662d7a1da61eb479477eb}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a9fb94d714d69752886bd0a7c0f769a96}{\hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator} {\bfseries begin} ()}\label{classemlib_1_1_hash_map_a9fb94d714d69752886bd0a7c0f769a96}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a636f12769b0ef6ed4bdb24abe6b5ccc1}{\hyperlink{classemlib_1_1_hash_map_1_1const__iterator}{const\+\_\+iterator} {\bfseries begin} () const }\label{classemlib_1_1_hash_map_a636f12769b0ef6ed4bdb24abe6b5ccc1}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a64aee42c7cd0db2468ed20e5970fc9b7}{\hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator} {\bfseries end} ()}\label{classemlib_1_1_hash_map_a64aee42c7cd0db2468ed20e5970fc9b7}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a9aa7b0fcb0e5656944bf7d077cff0283}{\hyperlink{classemlib_1_1_hash_map_1_1const__iterator}{const\+\_\+iterator} {\bfseries end} () const }\label{classemlib_1_1_hash_map_a9aa7b0fcb0e5656944bf7d077cff0283}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a996495b56d4c3def071070534c5d3a99}{size\+\_\+t {\bfseries size} () const }\label{classemlib_1_1_hash_map_a996495b56d4c3def071070534c5d3a99}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a6695a957c6e6e92684234bf382186e3e}{bool {\bfseries empty} () const }\label{classemlib_1_1_hash_map_a6695a957c6e6e92684234bf382186e3e}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a9bc7312fa53117da49b46b7d9a06c71b}{\hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator} {\bfseries find} (const Key\+T \&key)}\label{classemlib_1_1_hash_map_a9bc7312fa53117da49b46b7d9a06c71b}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a513c236a79f69deb6c930d0e2775e862}{\hyperlink{classemlib_1_1_hash_map_1_1const__iterator}{const\+\_\+iterator} {\bfseries find} (const Key\+T \&key) const }\label{classemlib_1_1_hash_map_a513c236a79f69deb6c930d0e2775e862}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a86cb2a71cf95f72714e4b06dd292a25f}{bool {\bfseries contains} (const Key\+T \&k) const }\label{classemlib_1_1_hash_map_a86cb2a71cf95f72714e4b06dd292a25f}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_af4d39c93b37e8a94e1d7c07d9b11621e}{size\+\_\+t {\bfseries count} (const Key\+T \&k) const }\label{classemlib_1_1_hash_map_af4d39c93b37e8a94e1d7c07d9b11621e}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a1faf4de0b1baa65cdc3e886adde866ea}{Value\+T $\ast$ \hyperlink{classemlib_1_1_hash_map_a1faf4de0b1baa65cdc3e886adde866ea}{try\+\_\+get} (const Key\+T \&k)}\label{classemlib_1_1_hash_map_a1faf4de0b1baa65cdc3e886adde866ea}
+
+\begin{DoxyCompactList}\small\item\em Returns the matching Value\+T or nullptr if k isn't found. \end{DoxyCompactList}\item 
+\hypertarget{classemlib_1_1_hash_map_a7bd462d0e5b0a7bc6f9b832c052c1549}{const Value\+T $\ast$ \hyperlink{classemlib_1_1_hash_map_a7bd462d0e5b0a7bc6f9b832c052c1549}{try\+\_\+get} (const Key\+T \&k) const }\label{classemlib_1_1_hash_map_a7bd462d0e5b0a7bc6f9b832c052c1549}
+
+\begin{DoxyCompactList}\small\item\em Const version of the above. \end{DoxyCompactList}\item 
+\hypertarget{classemlib_1_1_hash_map_aa07824c2024274ba64fdcb99e5910099}{const Value\+T \hyperlink{classemlib_1_1_hash_map_aa07824c2024274ba64fdcb99e5910099}{get\+\_\+or\+\_\+return\+\_\+default} (const Key\+T \&k) const }\label{classemlib_1_1_hash_map_aa07824c2024274ba64fdcb99e5910099}
+
+\begin{DoxyCompactList}\small\item\em Convenience function. \end{DoxyCompactList}\item 
+std\+::pair$<$ \hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator}, bool $>$ \hyperlink{classemlib_1_1_hash_map_acddefe45fc2faa18df275d409efc0071}{insert} (const Key\+T \&key, const Value\+T \&value)
+\item 
+\hypertarget{classemlib_1_1_hash_map_ac8378f826c1aee34ff8b94e355484700}{std\+::pair$<$ \hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator}, bool $>$ {\bfseries insert} (const std\+::pair$<$ Key\+T, Value\+T $>$ \&p)}\label{classemlib_1_1_hash_map_ac8378f826c1aee34ff8b94e355484700}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_aaedfeda4ec777d4f54cffc7cd5527be3}{void {\bfseries insert} (\hyperlink{classemlib_1_1_hash_map_1_1const__iterator}{const\+\_\+iterator} begin, \hyperlink{classemlib_1_1_hash_map_1_1const__iterator}{const\+\_\+iterator} end)}\label{classemlib_1_1_hash_map_aaedfeda4ec777d4f54cffc7cd5527be3}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a0216dcd2527765f347b50062084c2357}{void \hyperlink{classemlib_1_1_hash_map_a0216dcd2527765f347b50062084c2357}{insert\+\_\+unique} (Key\+T \&\&key, Value\+T \&\&value)}\label{classemlib_1_1_hash_map_a0216dcd2527765f347b50062084c2357}
+
+\begin{DoxyCompactList}\small\item\em Same as above, but contains(key) M\+U\+S\+T be false. \end{DoxyCompactList}\item 
+\hypertarget{classemlib_1_1_hash_map_af4f97ca2d4507227d95e0adde3c71168}{void {\bfseries insert\+\_\+unique} (std\+::pair$<$ Key\+T, Value\+T $>$ \&\&p)}\label{classemlib_1_1_hash_map_af4f97ca2d4507227d95e0adde3c71168}
+
+\item 
+\hypertarget{classemlib_1_1_hash_map_a377a2628b72d1df98bd7ba1e0e6fb073}{Value\+T \hyperlink{classemlib_1_1_hash_map_a377a2628b72d1df98bd7ba1e0e6fb073}{set\+\_\+get} (const Key\+T \&key, const Value\+T \&new\+\_\+value)}\label{classemlib_1_1_hash_map_a377a2628b72d1df98bd7ba1e0e6fb073}
+
+\begin{DoxyCompactList}\small\item\em Return the old value or Value\+T() if it didn't exist. \end{DoxyCompactList}\item 
+\hypertarget{classemlib_1_1_hash_map_a9ac5677d0618b3ecb74badc487d848d3}{Value\+T \& \hyperlink{classemlib_1_1_hash_map_a9ac5677d0618b3ecb74badc487d848d3}{operator\mbox{[}$\,$\mbox{]}} (const Key\+T \&key)}\label{classemlib_1_1_hash_map_a9ac5677d0618b3ecb74badc487d848d3}
+
+\begin{DoxyCompactList}\small\item\em Like std\+::map$<$\+Key\+T,\+Value\+T$>$\+::operator\mbox{[}\mbox{]}. \end{DoxyCompactList}\item 
+bool \hyperlink{classemlib_1_1_hash_map_addffd4127ebfe38c674d77ee5f8e4794}{erase} (const Key\+T \&key)
+\item 
+\hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator} \hyperlink{classemlib_1_1_hash_map_a01155a148f06ba139dfd4eca08eb27d8}{erase} (\hyperlink{classemlib_1_1_hash_map_1_1iterator}{iterator} it)
+\item 
+\hypertarget{classemlib_1_1_hash_map_a3e0fd4bc2e08ee52bced57b9d9d0ae93}{void \hyperlink{classemlib_1_1_hash_map_a3e0fd4bc2e08ee52bced57b9d9d0ae93}{clear} ()}\label{classemlib_1_1_hash_map_a3e0fd4bc2e08ee52bced57b9d9d0ae93}
+
+\begin{DoxyCompactList}\small\item\em Remove all elements, keeping full capacity. \end{DoxyCompactList}\item 
+\hypertarget{classemlib_1_1_hash_map_a4f598f48f408fa352079902f4aa31b01}{void \hyperlink{classemlib_1_1_hash_map_a4f598f48f408fa352079902f4aa31b01}{reserve} (size\+\_\+t num\+\_\+elems)}\label{classemlib_1_1_hash_map_a4f598f48f408fa352079902f4aa31b01}
+
+\begin{DoxyCompactList}\small\item\em Make room for this many elements. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Key\+T, typename Value\+T, typename Hash\+T = std\+::hash$<$\+Key\+T$>$, typename Comp\+T = Hash\+Map\+Equal\+To$<$\+Key\+T$>$$>$class emlib\+::\+Hash\+Map$<$ Key\+T, Value\+T, Hash\+T, Comp\+T $>$}
+
+A cache-\/friendly hash table with open addressing, linear probing and power-\/of-\/two capacity. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classemlib_1_1_hash_map_addffd4127ebfe38c674d77ee5f8e4794}{\index{emlib\+::\+Hash\+Map@{emlib\+::\+Hash\+Map}!erase@{erase}}
+\index{erase@{erase}!emlib\+::\+Hash\+Map@{emlib\+::\+Hash\+Map}}
+\subsubsection[{erase}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Key\+T, typename Value\+T, typename Hash\+T = std\+::hash$<$\+Key\+T$>$, typename Comp\+T  = Hash\+Map\+Equal\+To$<$\+Key\+T$>$$>$ bool {\bf emlib\+::\+Hash\+Map}$<$ Key\+T, Value\+T, Hash\+T, Comp\+T $>$\+::erase (
+\begin{DoxyParamCaption}
+\item[{const Key\+T \&}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classemlib_1_1_hash_map_addffd4127ebfe38c674d77ee5f8e4794}
+Erase an element from the hash table. return false if element was not found \hypertarget{classemlib_1_1_hash_map_a01155a148f06ba139dfd4eca08eb27d8}{\index{emlib\+::\+Hash\+Map@{emlib\+::\+Hash\+Map}!erase@{erase}}
+\index{erase@{erase}!emlib\+::\+Hash\+Map@{emlib\+::\+Hash\+Map}}
+\subsubsection[{erase}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Key\+T, typename Value\+T, typename Hash\+T = std\+::hash$<$\+Key\+T$>$, typename Comp\+T  = Hash\+Map\+Equal\+To$<$\+Key\+T$>$$>$ {\bf iterator} {\bf emlib\+::\+Hash\+Map}$<$ Key\+T, Value\+T, Hash\+T, Comp\+T $>$\+::erase (
+\begin{DoxyParamCaption}
+\item[{{\bf iterator}}]{it}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classemlib_1_1_hash_map_a01155a148f06ba139dfd4eca08eb27d8}
+Erase an element using an iterator. Returns an iterator to the next element (or end()). \hypertarget{classemlib_1_1_hash_map_acddefe45fc2faa18df275d409efc0071}{\index{emlib\+::\+Hash\+Map@{emlib\+::\+Hash\+Map}!insert@{insert}}
+\index{insert@{insert}!emlib\+::\+Hash\+Map@{emlib\+::\+Hash\+Map}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Key\+T, typename Value\+T, typename Hash\+T = std\+::hash$<$\+Key\+T$>$, typename Comp\+T  = Hash\+Map\+Equal\+To$<$\+Key\+T$>$$>$ std\+::pair$<${\bf iterator}, bool$>$ {\bf emlib\+::\+Hash\+Map}$<$ Key\+T, Value\+T, Hash\+T, Comp\+T $>$\+::insert (
+\begin{DoxyParamCaption}
+\item[{const Key\+T \&}]{key, }
+\item[{const Value\+T \&}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classemlib_1_1_hash_map_acddefe45fc2faa18df275d409efc0071}
+Returns a pair consisting of an iterator to the inserted element (or to the element that prevented the insertion) and a bool denoting whether the insertion took place. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/Hash\+Containers.\+hpp\end{DoxyCompactItemize}

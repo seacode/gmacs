@@ -1,0 +1,218 @@
+\hypertarget{classatl_1_1_thread_pool}{\section{atl\+:\+:Thread\+Pool Class Reference}
+\label{classatl_1_1_thread_pool}\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+}
+
+
+{\ttfamily \#include $<$Thread\+Pool.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classatl_1_1_thread_pool_a02ca8a74131b65469a77d09637971865}{{\bfseries Thread\+Pool} (int threads=std\+::thread\+::hardware\+\_\+concurrency())}\label{classatl_1_1_thread_pool_a02ca8a74131b65469a77d09637971865}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a96599097f0e7ac0665b16ea23cd5d014}{void {\bfseries Start} (int threads=std\+::thread\+::hardware\+\_\+concurrency())}\label{classatl_1_1_thread_pool_a96599097f0e7ac0665b16ea23cd5d014}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_afaaedabb66c24d2dffadad1a17ee326e}{size\+\_\+t {\bfseries Size} ()}\label{classatl_1_1_thread_pool_afaaedabb66c24d2dffadad1a17ee326e}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a98a69f6bc963f87dcde08db1f30a24c8}{void {\bfseries Do\+Job} (std\+::function$<$ void(void) $>$ func)}\label{classatl_1_1_thread_pool_a98a69f6bc963f87dcde08db1f30a24c8}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_ab11df304a64fb8d887f4fe2ef7fc66f9}{void {\bfseries Do\+Job} (std\+::function$<$ void(void) $>$ func, \hyperlink{classatl_1_1_wait_variable}{Wait\+Variable} \&wait)}\label{classatl_1_1_thread_pool_ab11df304a64fb8d887f4fe2ef7fc66f9}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a6096504a6d4a74ec14ca8235ab9615b5}{{\footnotesize template$<$class Input\+It , typename Function $>$ }\\void {\bfseries For\+Each} (Input\+It first, const size\+\_\+t \&elements, const Function \&function)}\label{classatl_1_1_thread_pool_a6096504a6d4a74ec14ca8235ab9615b5}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a16ebafa211b0c60aa56fc839a646a758}{{\footnotesize template$<$class Input\+It , typename Function $>$ }\\void {\bfseries For\+Each} (Input\+It first, const size\+\_\+t \&elements, const Function \&function, \hyperlink{classatl_1_1_wait_variable}{Wait\+Variable} \&wait)}\label{classatl_1_1_thread_pool_a16ebafa211b0c60aa56fc839a646a758}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a59f8f9c30945196c845ee26c1d1dfd10}{void {\bfseries Wait} (\hyperlink{classatl_1_1_wait_variable}{Wait\+Variable} \&wait)}\label{classatl_1_1_thread_pool_a59f8f9c30945196c845ee26c1d1dfd10}
+
+\item 
+\hyperlink{classatl_1_1_thread_pool_a02ca8a74131b65469a77d09637971865}{Thread\+Pool} (int threads=std\+::thread\+::hardware\+\_\+concurrency())
+\item 
+\hyperlink{classatl_1_1_thread_pool_a487944b9f55c77a0d74ebc9f129e1ad3}{$\sim$\+Thread\+Pool} ()
+\item 
+\hypertarget{classatl_1_1_thread_pool_a96599097f0e7ac0665b16ea23cd5d014}{void {\bfseries Start} (int threads=std\+::thread\+::hardware\+\_\+concurrency())}\label{classatl_1_1_thread_pool_a96599097f0e7ac0665b16ea23cd5d014}
+
+\item 
+size\+\_\+t \hyperlink{classatl_1_1_thread_pool_afaaedabb66c24d2dffadad1a17ee326e}{Size} ()
+\item 
+void \hyperlink{classatl_1_1_thread_pool_a98a69f6bc963f87dcde08db1f30a24c8}{Do\+Job} (std\+::function$<$ void(void) $>$ func)
+\item 
+void \hyperlink{classatl_1_1_thread_pool_ab11df304a64fb8d887f4fe2ef7fc66f9}{Do\+Job} (std\+::function$<$ void(void) $>$ func, \hyperlink{classatl_1_1_wait_variable}{Wait\+Variable} \&wait)
+\item 
+{\footnotesize template$<$class Input\+It , typename Function $>$ }\\void \hyperlink{classatl_1_1_thread_pool_a6096504a6d4a74ec14ca8235ab9615b5}{For\+Each} (Input\+It first, const size\+\_\+t \&elements, const Function \&function)
+\item 
+{\footnotesize template$<$class Input\+It , typename Function $>$ }\\void \hyperlink{classatl_1_1_thread_pool_a16ebafa211b0c60aa56fc839a646a758}{For\+Each} (Input\+It first, const size\+\_\+t \&elements, const Function \&function, \hyperlink{classatl_1_1_wait_variable}{Wait\+Variable} \&wait)
+\item 
+void \hyperlink{classatl_1_1_thread_pool_a59f8f9c30945196c845ee26c1d1dfd10}{Wait} (\hyperlink{classatl_1_1_wait_variable}{Wait\+Variable} \&wait)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classatl_1_1_thread_pool_ab442364a73d9184b4f0adfd3f47ea2fb}{void {\bfseries thread\+Entry} (int i)}\label{classatl_1_1_thread_pool_ab442364a73d9184b4f0adfd3f47ea2fb}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_ab442364a73d9184b4f0adfd3f47ea2fb}{void {\bfseries thread\+Entry} (int i)}\label{classatl_1_1_thread_pool_ab442364a73d9184b4f0adfd3f47ea2fb}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classatl_1_1_thread_pool_a402283160a126b60093c4304f3007458}{std\+::mutex {\bfseries lock\+\_\+}}\label{classatl_1_1_thread_pool_a402283160a126b60093c4304f3007458}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a4e5d8a799ea40e346a83d5877ae67cbb}{std\+::condition\+\_\+variable {\bfseries cond\+Var\+\_\+}}\label{classatl_1_1_thread_pool_a4e5d8a799ea40e346a83d5877ae67cbb}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a44df4799943e50ea24f1a036ff3db2f6}{bool {\bfseries shutdown\+\_\+}}\label{classatl_1_1_thread_pool_a44df4799943e50ea24f1a036ff3db2f6}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a44aba02e981bdb14f52f8ef364b0cc65}{bool {\bfseries started\+\_\+}}\label{classatl_1_1_thread_pool_a44aba02e981bdb14f52f8ef364b0cc65}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a783028a9da8da6892c76667b163f084e}{size\+\_\+t {\bfseries thread\+\_\+count}}\label{classatl_1_1_thread_pool_a783028a9da8da6892c76667b163f084e}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_af27763f5a3533a7280ffbb929864081e}{std\+::queue$<$ std\+::function\\*
+$<$ void(void) $>$ $>$ {\bfseries jobs\+\_\+}}\label{classatl_1_1_thread_pool_af27763f5a3533a7280ffbb929864081e}
+
+\item 
+\hypertarget{classatl_1_1_thread_pool_a15e4c898954139d882304533e7b245d4}{std\+::vector$<$ std\+::thread $>$ {\bfseries threads\+\_\+}}\label{classatl_1_1_thread_pool_a15e4c898954139d882304533e7b245d4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Thread pool. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classatl_1_1_thread_pool_a02ca8a74131b65469a77d09637971865}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!Thread\+Pool@{Thread\+Pool}}
+\index{Thread\+Pool@{Thread\+Pool}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{Thread\+Pool}]{\setlength{\rightskip}{0pt plus 5cm}atl\+::\+Thread\+Pool\+::\+Thread\+Pool (
+\begin{DoxyParamCaption}
+\item[{int}]{threads = {\ttfamily std\+:\+:thread\+:\+:hardware\+\_\+concurrency()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_a02ca8a74131b65469a77d09637971865}
+Constructor. Sets the number of threads in this thread pool.
+
+
+\begin{DoxyParams}{Parameters}
+{\em threads} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classatl_1_1_thread_pool_a487944b9f55c77a0d74ebc9f129e1ad3}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!````~Thread\+Pool@{$\sim$\+Thread\+Pool}}
+\index{````~Thread\+Pool@{$\sim$\+Thread\+Pool}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{$\sim$\+Thread\+Pool}]{\setlength{\rightskip}{0pt plus 5cm}atl\+::\+Thread\+Pool\+::$\sim$\+Thread\+Pool (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_a487944b9f55c77a0d74ebc9f129e1ad3}
+Destructor. Shuts down all threads. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classatl_1_1_thread_pool_a98a69f6bc963f87dcde08db1f30a24c8}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!Do\+Job@{Do\+Job}}
+\index{Do\+Job@{Do\+Job}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{Do\+Job}]{\setlength{\rightskip}{0pt plus 5cm}void atl\+::\+Thread\+Pool\+::\+Do\+Job (
+\begin{DoxyParamCaption}
+\item[{std\+::function$<$ void(void) $>$}]{func}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_a98a69f6bc963f87dcde08db1f30a24c8}
+Do a job that doesn't require wait.
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classatl_1_1_thread_pool_ab11df304a64fb8d887f4fe2ef7fc66f9}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!Do\+Job@{Do\+Job}}
+\index{Do\+Job@{Do\+Job}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{Do\+Job}]{\setlength{\rightskip}{0pt plus 5cm}void atl\+::\+Thread\+Pool\+::\+Do\+Job (
+\begin{DoxyParamCaption}
+\item[{std\+::function$<$ void(void) $>$}]{func, }
+\item[{{\bf Wait\+Variable} \&}]{wait}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_ab11df304a64fb8d887f4fe2ef7fc66f9}
+Do a job that requires wait. The wait variable is incremented. 
+\begin{DoxyParams}{Parameters}
+{\em func} & \\
+\hline
+{\em wait} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classatl_1_1_thread_pool_a6096504a6d4a74ec14ca8235ab9615b5}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!For\+Each@{For\+Each}}
+\index{For\+Each@{For\+Each}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{For\+Each}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Input\+It , typename Function $>$ void atl\+::\+Thread\+Pool\+::\+For\+Each (
+\begin{DoxyParamCaption}
+\item[{Input\+It}]{first, }
+\item[{const size\+\_\+t \&}]{elements, }
+\item[{const Function \&}]{function}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_a6096504a6d4a74ec14ca8235ab9615b5}
+For each job.
+
+
+\begin{DoxyParams}{Parameters}
+{\em first} & \\
+\hline
+{\em elements} & \\
+\hline
+{\em function} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classatl_1_1_thread_pool_a16ebafa211b0c60aa56fc839a646a758}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!For\+Each@{For\+Each}}
+\index{For\+Each@{For\+Each}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{For\+Each}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Input\+It , typename Function $>$ void atl\+::\+Thread\+Pool\+::\+For\+Each (
+\begin{DoxyParamCaption}
+\item[{Input\+It}]{first, }
+\item[{const size\+\_\+t \&}]{elements, }
+\item[{const Function \&}]{function, }
+\item[{{\bf Wait\+Variable} \&}]{wait}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_a16ebafa211b0c60aa56fc839a646a758}
+For each job with wait.
+
+
+\begin{DoxyParams}{Parameters}
+{\em first} & \\
+\hline
+{\em elements} & \\
+\hline
+{\em function} & \\
+\hline
+{\em wait} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classatl_1_1_thread_pool_afaaedabb66c24d2dffadad1a17ee326e}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!Size@{Size}}
+\index{Size@{Size}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{Size}]{\setlength{\rightskip}{0pt plus 5cm}size\+\_\+t atl\+::\+Thread\+Pool\+::\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_afaaedabb66c24d2dffadad1a17ee326e}
+Returns the number of threads in this thread pool. \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{classatl_1_1_thread_pool_a59f8f9c30945196c845ee26c1d1dfd10}{\index{atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}!Wait@{Wait}}
+\index{Wait@{Wait}!atl\+::\+Thread\+Pool@{atl\+::\+Thread\+Pool}}
+\subsubsection[{Wait}]{\setlength{\rightskip}{0pt plus 5cm}void atl\+::\+Thread\+Pool\+::\+Wait (
+\begin{DoxyParamCaption}
+\item[{{\bf Wait\+Variable} \&}]{wait}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classatl_1_1_thread_pool_a59f8f9c30945196c845ee26c1d1dfd10}
+Wait for this wait variable to signal completion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em wait} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+A\+T\+L2/Thread\+Pool.\+hpp\end{DoxyCompactItemize}

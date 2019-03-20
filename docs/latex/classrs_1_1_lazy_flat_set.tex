@@ -1,0 +1,125 @@
+\hypertarget{classrs_1_1_lazy_flat_set}{\section{rs\+:\+:Lazy\+Flat\+Set$<$ Value, Less, Equal, Sort, Alloc, Is\+Pointer $>$ Class Template Reference}
+\label{classrs_1_1_lazy_flat_set}\index{rs\+::\+Lazy\+Flat\+Set$<$ Value, Less, Equal, Sort, Alloc, Is\+Pointer $>$@{rs\+::\+Lazy\+Flat\+Set$<$ Value, Less, Equal, Sort, Alloc, Is\+Pointer $>$}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structrs_1_1_lazy_flat_set_1_1is__pointer}{is\+\_\+pointer}
+\item 
+struct \hyperlink{structrs_1_1_lazy_flat_set_1_1is__shared__ptr}{is\+\_\+shared\+\_\+ptr}
+\item 
+struct \hyperlink{structrs_1_1_lazy_flat_set_1_1is__shared__ptr_3_01std_1_1shared__ptr_3_01_t_01_4_01_4}{is\+\_\+shared\+\_\+ptr$<$ std\+::shared\+\_\+ptr$<$ T $>$ $>$}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_adf2eab7a354a5d355d59ca7f15133d1d}{using {\bfseries base\+\_\+collection} = typename std\+::vector$<$ Value, Alloc $>$}\label{classrs_1_1_lazy_flat_set_adf2eab7a354a5d355d59ca7f15133d1d}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a6e0778124a9f2727c188c43c129cf34b}{using {\bfseries size\+\_\+type} = typename base\+\_\+collection\+::size\+\_\+type}\label{classrs_1_1_lazy_flat_set_a6e0778124a9f2727c188c43c129cf34b}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a49d91b95a28692e53ab6b0a487862065}{using {\bfseries iterator} = typename base\+\_\+collection\+::iterator}\label{classrs_1_1_lazy_flat_set_a49d91b95a28692e53ab6b0a487862065}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a3060161b3a52f713d086620993093a59}{using {\bfseries const\+\_\+iterator} = typename base\+\_\+collection\+::const\+\_\+iterator}\label{classrs_1_1_lazy_flat_set_a3060161b3a52f713d086620993093a59}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_ab7de742924e7b252dab47f93990785fb}{using {\bfseries value\+\_\+type} = Value}\label{classrs_1_1_lazy_flat_set_ab7de742924e7b252dab47f93990785fb}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a49156f05e1342af92e1499952606c1f1}{using {\bfseries value\+\_\+type\+\_\+ptr} = typename std\+::conditional$<$ \hyperlink{structrs_1_1_lazy_flat_set_1_1is__pointer}{is\+\_\+pointer}$<$ value\+\_\+type $>$\+::value, value\+\_\+type, value\+\_\+type $\ast$ $>$\+::type}\label{classrs_1_1_lazy_flat_set_a49156f05e1342af92e1499952606c1f1}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_aa53ec129bdf69cce6fd44e08bef795d1}{using {\bfseries reference} = typename std\+::conditional$<$ std\+::is\+\_\+fundamental$<$ value\+\_\+type $>$\+::value$\vert$$\vert$std\+::is\+\_\+pointer$<$ value\+\_\+type $>$\+::value, value\+\_\+type, value\+\_\+type \& $>$\+::type}\label{classrs_1_1_lazy_flat_set_aa53ec129bdf69cce6fd44e08bef795d1}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a1eee0250aeecaaa0bc0c52ed44c44103}{using {\bfseries const\+\_\+reference} = typename std\+::conditional$<$ std\+::is\+\_\+fundamental$<$ value\+\_\+type $>$\+::value$\vert$$\vert$std\+::is\+\_\+pointer$<$ value\+\_\+type $>$\+::value, value\+\_\+type, const value\+\_\+type \& $>$\+::type}\label{classrs_1_1_lazy_flat_set_a1eee0250aeecaaa0bc0c52ed44c44103}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_ad62702a8dd24dd6994f6de93a95ac06b}{using {\bfseries less\+\_\+type} = Less}\label{classrs_1_1_lazy_flat_set_ad62702a8dd24dd6994f6de93a95ac06b}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a4ceed88565e4ec459cabaa95d08b7543}{using {\bfseries equal\+\_\+type} = Equal}\label{classrs_1_1_lazy_flat_set_a4ceed88565e4ec459cabaa95d08b7543}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_ad8b2f85dadbdab6708ea958a92efea81}{using {\bfseries sort\+\_\+type} = Sort}\label{classrs_1_1_lazy_flat_set_ad8b2f85dadbdab6708ea958a92efea81}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a3a7384c560080249b45a5f244859e7dd}{using {\bfseries alloc\+\_\+type} = Alloc}\label{classrs_1_1_lazy_flat_set_a3a7384c560080249b45a5f244859e7dd}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a8b0320d955fffb1457c512191b5f0b0b}{using {\bfseries compare\+\_\+type} = typename std\+::function$<$ int(const\+\_\+reference)$>$}\label{classrs_1_1_lazy_flat_set_a8b0320d955fffb1457c512191b5f0b0b}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_add721f9ad9f6a52a08b31cf1f3b773fd}{using {\bfseries erase\+\_\+type} = typename std\+::function$<$ void(reference)$>$}\label{classrs_1_1_lazy_flat_set_add721f9ad9f6a52a08b31cf1f3b773fd}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a9ea0bbd4e1d94533137a9b56ccac7d4c}{{\bfseries Lazy\+Flat\+Set} (unsigned max\+Unsorted\+Entries=16, unsigned max\+Nursery\+Entries=1024)}\label{classrs_1_1_lazy_flat_set_a9ea0bbd4e1d94533137a9b56ccac7d4c}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a4d054f28cda0cc8f121f744ef51ff522}{void {\bfseries insert} (const value\+\_\+type \&k)}\label{classrs_1_1_lazy_flat_set_a4d054f28cda0cc8f121f744ef51ff522}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_af0a6a89258598652bd3427dd30f305d7}{{\footnotesize template$<$typename... Args$>$ }\\void {\bfseries emplace} (Args \&\&...args)}\label{classrs_1_1_lazy_flat_set_af0a6a89258598652bd3427dd30f305d7}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a48f842cd25a139242cd765727c710d74}{bool {\bfseries empty} () const }\label{classrs_1_1_lazy_flat_set_a48f842cd25a139242cd765727c710d74}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_aff614815c0687575e57c2ceb7d8ea404}{void {\bfseries clear} ()}\label{classrs_1_1_lazy_flat_set_aff614815c0687575e57c2ceb7d8ea404}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a41a13387ae1d139cc272a72ab5cf9a6d}{void {\bfseries clear\+\_\+fn} (erase\+\_\+type erase)}\label{classrs_1_1_lazy_flat_set_a41a13387ae1d139cc272a72ab5cf9a6d}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a5520dcf84139948db4a0ac404aa46b5d}{void {\bfseries reserve} (size\+\_\+type n)}\label{classrs_1_1_lazy_flat_set_a5520dcf84139948db4a0ac404aa46b5d}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a87442717551e748854bc2579630fc929}{size\+\_\+type {\bfseries size} () const }\label{classrs_1_1_lazy_flat_set_a87442717551e748854bc2579630fc929}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_abd6bf510bda52919c5cbaaa3f100315b}{void {\bfseries shrink\+\_\+to\+\_\+fit} ()}\label{classrs_1_1_lazy_flat_set_abd6bf510bda52919c5cbaaa3f100315b}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a453db2cb99f2a2460587357d6172f53d}{size\+\_\+type {\bfseries count} (const value\+\_\+type \&k) const }\label{classrs_1_1_lazy_flat_set_a453db2cb99f2a2460587357d6172f53d}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a858b3de5ef175c352b0de597605a4651}{size\+\_\+type {\bfseries count\+\_\+fn} (compare\+\_\+type compare) const }\label{classrs_1_1_lazy_flat_set_a858b3de5ef175c352b0de597605a4651}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_aaaac3c19a0d0ae902fa46528ca0e1951}{bool {\bfseries find} (const value\+\_\+type \&k, value\+\_\+type \&v) const }\label{classrs_1_1_lazy_flat_set_aaaac3c19a0d0ae902fa46528ca0e1951}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a2f67bfa2c404bb3ce9723e5760b9174e}{value\+\_\+type\+\_\+ptr {\bfseries find\+\_\+fn} (compare\+\_\+type compare) const }\label{classrs_1_1_lazy_flat_set_a2f67bfa2c404bb3ce9723e5760b9174e}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a89b957974d573d58f76a893a793f6a2f}{const\+\_\+reference {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+type n) const }\label{classrs_1_1_lazy_flat_set_a89b957974d573d58f76a893a793f6a2f}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a7682d5040699a6e5780a50803b692f40}{const\+\_\+iterator {\bfseries cbegin} () const }\label{classrs_1_1_lazy_flat_set_a7682d5040699a6e5780a50803b692f40}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a7a405e2401d17db44397bced6584fabb}{const\+\_\+iterator {\bfseries cend} () const }\label{classrs_1_1_lazy_flat_set_a7a405e2401d17db44397bced6584fabb}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_ab9eed6a6e5f47a3f06f1b5ad21628043}{const value\+\_\+type $\ast$ {\bfseries data} () const }\label{classrs_1_1_lazy_flat_set_ab9eed6a6e5f47a3f06f1b5ad21628043}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a7cb8ec3c50be5045260bcb9dc631f146}{size\+\_\+type {\bfseries erase} (const value\+\_\+type \&k)}\label{classrs_1_1_lazy_flat_set_a7cb8ec3c50be5045260bcb9dc631f146}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_a9a2b9f5c6ef29071724c5f4e9c060a61}{size\+\_\+type {\bfseries erase\+\_\+fn} (compare\+\_\+type compare, erase\+\_\+type erase=nullptr)}\label{classrs_1_1_lazy_flat_set_a9a2b9f5c6ef29071724c5f4e9c060a61}
+
+\item 
+\hypertarget{classrs_1_1_lazy_flat_set_aad6954260bbb8d00e3f4214edbac8d52}{void {\bfseries copy} (std\+::vector$<$ Value $>$ \&coll, bool sort=true) const }\label{classrs_1_1_lazy_flat_set_aad6954260bbb8d00e3f4214edbac8d52}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Utilities/lazyflatset.\+hpp\end{DoxyCompactItemize}

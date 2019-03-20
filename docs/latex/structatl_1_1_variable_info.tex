@@ -1,0 +1,87 @@
+\hypertarget{structatl_1_1_variable_info}{\section{atl\+:\+:Variable\+Info$<$ R\+E\+A\+L\+\_\+\+T $>$ Struct Template Reference}
+\label{structatl_1_1_variable_info}\index{atl\+::\+Variable\+Info$<$ R\+E\+A\+L\+\_\+\+T $>$@{atl\+::\+Variable\+Info$<$ R\+E\+A\+L\+\_\+\+T $>$}}
+}
+
+
+{\ttfamily \#include $<$Variable\+Info.\+hpp$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classatl_1_1_variable_info_1_1_v_i_spin_lock}{V\+I\+Spin\+Lock}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structatl_1_1_variable_info_a12fa37baf1ab3cf03ac7f3a671d7d592}{{\bfseries Variable\+Info} (R\+E\+A\+L\+\_\+\+T value=static\+\_\+cast$<$ R\+E\+A\+L\+\_\+\+T $>$(0.\+0))}\label{structatl_1_1_variable_info_a12fa37baf1ab3cf03ac7f3a671d7d592}
+
+\item 
+\hyperlink{structatl_1_1_variable_info_a12fa37baf1ab3cf03ac7f3a671d7d592}{Variable\+Info} (R\+E\+A\+L\+\_\+\+T value=static\+\_\+cast$<$ R\+E\+A\+L\+\_\+\+T $>$(0.\+0))
+\item 
+\hyperlink{structatl_1_1_variable_info_a64263191d3bc064ca3ea473b09606ecd}{$\sim$\+Variable\+Info} ()
+\item 
+\hypertarget{structatl_1_1_variable_info_aee605304c83181edf60974dc11647dba}{void {\bfseries Aquire} ()}\label{structatl_1_1_variable_info_aee605304c83181edf60974dc11647dba}
+
+\item 
+\hypertarget{structatl_1_1_variable_info_ad0fc1257b3bfc35cc5286535f37ca746}{void {\bfseries Release} ()}\label{structatl_1_1_variable_info_ad0fc1257b3bfc35cc5286535f37ca746}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structatl_1_1_variable_info_aadade5932657ba248160121ac6095e7b}{uint32\+\_\+t {\bfseries id}}\label{structatl_1_1_variable_info_aadade5932657ba248160121ac6095e7b}
+
+\item 
+\hypertarget{structatl_1_1_variable_info_afd69857ca2e02bed5f072bfc6c2f21d4}{R\+E\+A\+L\+\_\+\+T {\bfseries value}}\label{structatl_1_1_variable_info_afd69857ca2e02bed5f072bfc6c2f21d4}
+
+\item 
+\hypertarget{structatl_1_1_variable_info_abe9f91ea1ecaad3a85d4db73b57785fd}{std\+::atomic$<$ int $>$ {\bfseries count}}\label{structatl_1_1_variable_info_abe9f91ea1ecaad3a85d4db73b57785fd}
+
+\item 
+\hypertarget{structatl_1_1_variable_info_a914fb61e91050d8d1b5a491790fe5279}{bool {\bfseries is\+\_\+nl}}\label{structatl_1_1_variable_info_a914fb61e91050d8d1b5a491790fe5279}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structatl_1_1_variable_info_ac92c477727be618756f034e3581fe8bc}{static \hyperlink{classatl_1_1_variable_info_1_1_v_i_spin_lock}{V\+I\+Spin\+Lock} {\bfseries vinfo\+\_\+mutex\+\_\+g}}\label{structatl_1_1_variable_info_ac92c477727be618756f034e3581fe8bc}
+
+\item 
+\hypertarget{structatl_1_1_variable_info_a9a2a895dd927378c6488e7a1de84d703}{static std\+::vector\\*
+$<$ \hyperlink{structatl_1_1_variable_info}{Variable\+Info}$<$ R\+E\+A\+L\+\_\+\+T $>$ $\ast$ $>$ {\bfseries freed}}\label{structatl_1_1_variable_info_a9a2a895dd927378c6488e7a1de84d703}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename R\+E\+A\+L\+\_\+\+T$>$struct atl\+::\+Variable\+Info$<$ R\+E\+A\+L\+\_\+\+T $>$}
+
+Holds unique info for \hyperlink{structatl_1_1_variable}{Variable} objects. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structatl_1_1_variable_info_a12fa37baf1ab3cf03ac7f3a671d7d592}{\index{atl\+::\+Variable\+Info@{atl\+::\+Variable\+Info}!Variable\+Info@{Variable\+Info}}
+\index{Variable\+Info@{Variable\+Info}!atl\+::\+Variable\+Info@{atl\+::\+Variable\+Info}}
+\subsubsection[{Variable\+Info}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\+E\+A\+L\+\_\+\+T$>$ {\bf atl\+::\+Variable\+Info}$<$ R\+E\+A\+L\+\_\+\+T $>$\+::{\bf Variable\+Info} (
+\begin{DoxyParamCaption}
+\item[{R\+E\+A\+L\+\_\+\+T}]{value = {\ttfamily static\+\_\+cast$<$REAL\+\_\+T$>$~(0.0)}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structatl_1_1_variable_info_a12fa37baf1ab3cf03ac7f3a671d7d592}
+Constructor
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{structatl_1_1_variable_info_a64263191d3bc064ca3ea473b09606ecd}{\index{atl\+::\+Variable\+Info@{atl\+::\+Variable\+Info}!````~Variable\+Info@{$\sim$\+Variable\+Info}}
+\index{````~Variable\+Info@{$\sim$\+Variable\+Info}!atl\+::\+Variable\+Info@{atl\+::\+Variable\+Info}}
+\subsubsection[{$\sim$\+Variable\+Info}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename R\+E\+A\+L\+\_\+\+T$>$ {\bf atl\+::\+Variable\+Info}$<$ R\+E\+A\+L\+\_\+\+T $>$\+::$\sim${\bf Variable\+Info} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{structatl_1_1_variable_info_a64263191d3bc064ca3ea473b09606ecd}
+Destructor. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+A\+T\+L2/Variable\+Info.\+hpp\end{DoxyCompactItemize}

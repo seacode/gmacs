@@ -4,20 +4,20 @@ date: "`r format(Sys.time(), '%H:%M %B %d, %Y')`"
 output:
   pdf_document:
     toc: true
-    highlight: zenburn
-    fig_caption: yes
-    includes:
-      in_header: mystyles.sty
-    keep_tex: yes
-    template: ms.tex
-  html_document:
-    df_print: paged
-fontsize: 11pt
-header-includes:
-  - \usepackage{fontspec}
-geometry: margin=1in
-fontfamily: mathpazo
-bibliography: ~/OneDrive/myref.bib
+#     highlight: zenburn
+#     fig_caption: yes
+#     # includes:
+#     #   in_header: mystyles.sty
+#     keep_tex: yes
+#     # template: ms.tex
+#   html_document:
+#     df_print: paged
+# fontsize: 11pt
+# header-includes:
+#   - \usepackage{fontspec}
+# geometry: margin=1in
+# fontfamily: mathpazo
+# bibliography: ~/OneDrive/myref.bib
 ---
 \pagenumbering{gobble}
 

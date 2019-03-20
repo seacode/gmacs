@@ -5,26 +5,26 @@
  * @namespace gsm
  * @date Feb 10, 2014
  * @title Selectivity functions
- * @details Alternative selectivity functions in the gsm namespace are derived from the gsm::Selex base class. 
- * 
+ * @details Alternative selectivity functions in the gsm namespace are derived from the gsm::Selex base class.
+ *
  * The Selex class is an abstract class that contains 3 virtual methods.
  * - **Selectivity** 	Arithmetic 0-1 values of selectivity values.
  * - **logSelectivity**	Returns selectivity vector in log-space.
  * - **logSelexMeanOne** Returns selectivity in log-space and rescaled to have mean 1
  * in arithmatic space.
- * 
+ *
  * Example of how to use this class to create a selectivity vector.
- * 
+ *
  * 		// Declare a pointer to the abstract base class Selex.
  * 		// Cast the <type> of variable that the class will return.
  * 		gsm::Selex<dvector> *pSLX;
- * 		
+ *
  * 		// Instantiate a new Logistic curve selectivity with parameters p1 & p2
- * 		pSLX = new gsm::LogisticCurve<dvector,double>(p1,p2);	
- * 		
+ * 		pSLX = new gsm::LogisticCurve<dvector,double>(p1,p2);
+ *
  * 		// Call one of the available methods in the abstract class for size bins x
  * 		sex = pSLX -> Selectivity(x);
- * 
+ *
  * Table 1. List of available selectivity functions, function names, and the class
  * object.
  * | Selectivity    | Functions     | Class name              |
@@ -33,6 +33,7 @@
  * | Logistic95     | plogis95      | LogisticCurve95         |
  * | Coefficients   | selcoffs      | SelectivityCoefficients |
  * | Nonparameteric | nonparametric | ParameterPerClass       |
+ * | Uniform        | uniform       | UniformCurve            |
 **/
 
 #ifndef SELEX_HPP
@@ -51,10 +52,10 @@ namespace gsm {
 
 	/**
 	 * @ingroup Selectivities
-	 * @brief An abstract class for Selectivity functions.	
+	 * @brief An abstract class for Selectivity functions.
 	 * @details Classes that derive from this class overload the pure virtual functions:<br><br>
 	 * const T Selectivity(const T &x) const <br>
-	 * 
+	 *
 	 * @tparam x Independent variable (ie. age or size) for calculating selectivity.
 	**/
 
@@ -98,11 +99,11 @@ namespace gsm {
 	/**
 	 * @brief Logistic function
 	 * @details Basic two parameter logistic function with mean and standard deviation
-	 * 
+	 *
 	 * @param  x Independent variable (e.g. age or size)
 	 * @tparam T data vector or dvar vector
 	 * @tparam T2 double or dvariable for mean and standard deviation of the logistic curve
-	 * 
+	 *
 	 * template <typename T, typename T1>
 	 *	inline
 	 *	typename vonBtrait<T>::vonBT vonBertalanffy(const T &lmin, const T &lmax, const T &rho, const T1 &age)
@@ -115,16 +116,17 @@ namespace gsm {
 	{
 		//typedef typename logisticTrait<T>::plogisT plogisT;
 		T selex = T2(1.0)/(T2(1.0)+mfexp(-(x-mean)/sd));
+		//selex /= selex(selex.indexmax());
 		return selex;
 	}
 
-	
+
 	template<class T, class T2>
 	inline
 	const T plogis95(const T &x, const T2 &s50, const T2 &s95)
 	{
 		T selex = T2(1.0)/(T2(1.0)+(exp(-log(19)*((x-s50)/(s95-s50)))));
-		selex /= selex(selex.indexmax());
+		//selex /= selex(selex.indexmax());
 		return selex;
 	}
 
@@ -145,7 +147,7 @@ namespace gsm {
 	/**
 	 * @brief Logistic curve
 	 * @details Uses the logistic curve (plogis) for a two parameter function
-	 * 
+	 *
 	 * @tparam T data vector or dvar vector
 	 * @tparam T2 double or dvariable for mean and standard deviation of the logistic curve
 	**/
@@ -191,7 +193,7 @@ namespace gsm {
 	/**
 	 * @brief Logistic curve parameterised with 5% and 95% selectivity
 	 * @details Uses the logistic curve (plogis95) for a two parameter function
-	 * 
+	 *
 	 * @tparam T data vector or dvar vector
 	 * @tparam T2 double or dvariable for size at 5% and 95% selectivity
 	**/
@@ -237,7 +239,7 @@ namespace gsm {
 	/**
 	 * @brief Double normal curve
 	 * @details Uses the logistic curve (plogis95) for a two parameter function
-	 * 
+	 *
 	 * @tparam T data vector or dvar vector
 	 * @tparam T2 double or dvariable for size at 5% and 95% selectivity
 	**/
@@ -280,17 +282,17 @@ namespace gsm {
 	};
 
 	// =========================================================================================================
-	// Coefficients: Base function for non-parametric selectivity cooefficients 
+	// Coefficients: Base function for non-parametric selectivity cooefficients
 	// =========================================================================================================
 
 	/**
 	 * @brief Nonparametric selectivity coefficients
-	 * @details The length of the vector sel_coeffs must be less than or equal to 
+	 * @details The length of the vector sel_coeffs must be less than or equal to
 	 * length of the independent variabls x.  If it it shorter, then it is assumed that
 	 * the parameters in the last element of sel_coeffs is the same for all elements in
 	 * the terminus of the independent vector.  Also use a logit transformation to ensure
 	 * that selectivities are bounded between 0-1.
-	 * 
+	 *
 	 * @param x Independent variable
 	 * @param sel_coeffs Vector of estimated selectivity coefficients logit transformed.
 	 * @return Selectivity coefficients.
@@ -314,12 +316,12 @@ namespace gsm {
 
 	// =========================================================================================================
 	// SelectivityCoefficients: Age/size-specific selectivity coefficients for n-1 age/size classes
-	// =========================================================================================================	
+	// =========================================================================================================
 
 	/**
 	 * @brief Selectivity coefficients
 	 * @details Age or size-specific selectivity coefficients for n-1 age/size classes
-	 * 
+	 *
 	 * @tparam T vector of coefficients
 	**/
 	template<class T>
@@ -356,7 +358,7 @@ namespace gsm {
 	};
 
 	// =========================================================================================================
-	// nonparametric: Base function for non-parametric selectivity option 
+	// nonparametric: Base function for non-parametric selectivity option
 	// =========================================================================================================
 
 	/**
@@ -385,14 +387,14 @@ namespace gsm {
 
 	// =========================================================================================================
 	// ParameterPerClass: One age/size-specific selectivity parameter for each age/size class
-	// =========================================================================================================	
+	// =========================================================================================================
 
 	/**
 	 * @brief Parametric selectivity function
 	 * @details One age or size-specific selectivity parameter for each age/size class.
-	 * 
+	 *
 	 * Note that the same can be accomplished using the SelectivityCoefficients class but Athol wanted to have this function in CSTAR
-	 * 
+	 *
 	 * @tparam T vector of parameters (initial values)
 	**/
 	template<class T>
@@ -428,6 +430,94 @@ namespace gsm {
 		}
 	};
 
+	// =========================================================================================================
+	// UniformCurve: Uniform over a length
+	// =========================================================================================================
+
+	/**
+	 * @brief Flat selectivity
+	 * @details All values equal 1
+
+	 *
+	 * @tparam T vector of parameters (initial values)
+	**/
+
+	template<class T>
+	class UniformCurve: public Selex<T>
+	{
+
+	public:
+		UniformCurve() {}
+
+		const T Selectivity(const T &x) const
+		{
+			// Call the age/size specific function
+     		int x1 = x.indexmin();
+    		int x2 = x.indexmax();
+  	  	    dvar_vector selex(1,x2-x1+1);
+  	  	    for (int i=1;i<=x2-x1+1;i++) selex(i) = 1;
+			return selex;
+		}
+
+		const T logSelectivity(const T &x) const
+		{
+     		int x1 = x.indexmin();
+    		int x2 = x.indexmax();
+  	  	    dvar_vector selex(1,x2-x1+1);
+  	  	    selex.initialize();
+			return selex;
+		}
+		const T logSelexMeanOne(const T &x) const
+		{
+			// Call the age/size specific function
+     		int x1 = x.indexmin();
+    		int x2 = x.indexmax();
+  	  	    dvar_vector selex(1,x2-x1+1);
+  	  	    for (int i=1;i<=x2-x1+1;i++) selex(i) = 1;
+			return selex;
+		}
+
+	};
+
+	template<class T>
+	class Uniform0Curve: public Selex<T>
+	{
+
+	public:
+		Uniform0Curve() {}
+
+		const T Selectivity(const T &x) const
+		{
+			// Call the age/size specific function
+     		int x1 = x.indexmin();
+    		int x2 = x.indexmax();
+  	  	    dvar_vector selex(1,x2-x1+1);
+  	  	    for (int i=1;i<=x2-x1+1;i++) selex(i) = 0;
+			return selex;
+		}
+
+		const T logSelectivity(const T &x) const
+		{
+     		int x1 = x.indexmin();
+    		int x2 = x.indexmax();
+  	  	    dvar_vector selex(1,x2-x1+1);
+  	  	    for (int i=1;i<=x2-x1+1;i++) selex(i) = -100;
+			return selex;
+		}
+		const T logSelexMeanOne(const T &x) const
+		{
+			// Call the age/size specific function
+     		int x1 = x.indexmin();
+    		int x2 = x.indexmax();
+  	  	    dvar_vector selex(1,x2-x1+1);
+  	  	    for (int i=1;i<=x2-x1+1;i++) selex(i) = 1;
+			return selex;
+		}
+
+	};
+
+
 } //gsm namespace
 
-#endif /* SELEX_HPP */   	
+#endif /* SELEX_HPP */
+
