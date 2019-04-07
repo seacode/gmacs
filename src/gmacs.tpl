@@ -859,10 +859,10 @@ DATA_SECTION
   // Work out the type of each selectivity and place in the ivector slx_type
   int kk = 1;
   for ( int k = 1; k <= nfleet; k++ )
-   for ( int i = 1; i <= slx_nsel_period_in(k); i++ )
-    {
-     int hh = 1 + slx_bsex_in(k);
-     for ( int h = 1; h <= hh; h++ )
+   {
+   int hh = 1 + slx_bsex_in(k);
+   for ( int h = 1; h <= hh; h++ )
+    for ( int i = 1; i <= slx_nsel_period_in(k); i++ )
       {
        slx_type(kk) = slx_type_in(h,k);
        slx_incl(kk) = slx_include_in(k);
@@ -870,10 +870,10 @@ DATA_SECTION
       }
     }
   for ( int k = 1; k <= nfleet; k++ )
-   for ( int i = 1; i <= ret_nret_period_in(k); i++ )
-    {
-     int hh = 1 + ret_bsex_in(k);
-     for ( int h = 1; h <= hh; h++ )
+   {
+    int hh = 1 + ret_bsex_in(k);
+    for ( int h = 1; h <= hh; h++ )
+     for ( int i = 1; i <= ret_nret_period_in(k); i++ )
       {
        slx_type(kk) = ret_type_in(h,k);
        kk ++;
@@ -961,7 +961,7 @@ DATA_SECTION
       slx_lb(jj) = log(slx_control_in(jj,6));
       slx_ub(jj) = log(slx_control_in(jj,7));
       slx_phzm(jj) = slx_control_in(jj,11);
-      if (slx_type(k) == SELEX_UNIFORM1 | slx_type(k) == SELEX_UNIFORM0) slx_phzm(jj) = -1*abs(slx_phzm(jj));
+      if (slx_type(k) == SELEX_UNIFORM1 || slx_type(k) == SELEX_UNIFORM0) slx_phzm(jj) = -1*abs(slx_phzm(jj));
      }
    }
   ECHO(slx_priors);
@@ -1795,6 +1795,17 @@ PARAMETER_SECTION
   sdreport_matrix sd_log_recruits(1,nsex,syr,nyr);
   sdreport_vector sd_log_ssb(syr,nyr);
   sdreport_vector ParsOut(1,NVarPar);
+  //added nine lines by Jie
+  sdreport_number sd_last_ssb;
+  sdreport_vector sdrLnRecMMB(syr,nyr-6);             //these are for spawning per recruits. Six years of recruitment time lag.
+  sdreport_vector sdrLnRec(syr,nyr-6);
+  sdreport_vector sdrRec(syr,nyr-6);
+  sdreport_vector sdrMMB(syr,nyr-6);
+  //sdreport_vector sdrLnRecMMB(syr+1,nyr);          //these are for recruits.
+  //sdreport_vector sdrLnRec(syr+1,nyr);
+  //sdreport_vector sdrRec(syr+1,nyr);
+  //sdreport_vector sdrMMB(syr+1,nyr);
+
   // sdreport_vector sd_fbar(syr,nyr-1);
   // sdreport_vector sd_log_dyn_Bzero(syr+1,nyr);
 
@@ -5403,6 +5414,20 @@ FUNCTION calc_sdreport
   // standard deviations of assessment outcomes
   sd_log_recruits = log(recruits);
   sd_log_ssb = log(calc_ssb());
+  //Added 13 lines by Jie
+  sd_last_ssb = spr_depl * Bmsy;
+  for (int i=syr; i<= nyr-6; i++)
+  // for (int i=syr+1; i<= nyr; i++)
+  {
+    sdrRec(i) = recruits(1,i+6)+recruits(2,i+6);            //These are for spawning per recruits
+    sdrLnRec(i) = log(sdrRec(i));
+    sdrMMB(i) = mfexp(sd_log_ssb(i));
+    sdrLnRecMMB(i) = log(sdrRec(i)/sdrMMB(i));
+   // sdrRec(i) = recruits(1,i)+recruits(2,i);         //These are for recruits
+   // sdrLnRec(i) = log(sdrRec(i));
+   // sdrMMB(i) = mfexp(sd_log_ssb(i));
+   // sdrLnRecMMB(i) = log(sdrRec(i));  
+  }
   for ( int i = syr; i <= nyr-1; i++ )  sd_fbar(i) = mean(F(1,i));
 
   // projection outcomes
