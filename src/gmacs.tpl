@@ -1794,7 +1794,8 @@ PARAMETER_SECTION
   sdreport_number sd_ofl;
   sdreport_matrix sd_log_recruits(1,nsex,syr,nyr);
   sdreport_vector sd_log_ssb(syr,nyr);
-  sdreport_vector ParsOut(1,NVarPar);
+  // sdreport_vector ParsOut(1,NVarPar);
+  vector ParsOut(1,NVarPar);
 
   // sdreport_vector sd_fbar(syr,nyr-1);
   // sdreport_vector sd_log_dyn_Bzero(syr+1,nyr);
@@ -1901,6 +1902,18 @@ PROCEDURE_SECTION
   // sd_report variables
   if ( sd_phase() )
    {
+		// Write_ParsOut();
+    calc_spr_reference_points2(0);
+    if ( verbose >= 3 ) cout << "Ok after calc_spr_reference_points ..." << endl;
+    calc_sdreport();
+    if ( verbose >= 3 ) cout << "Ok after calc_sdreport ..." << endl;
+   }
+  
+  // General outputs
+  if ( mceval_phase() ) write_eval();
+  if ( NfunCall == StopAfterFnCall ) { CreateOutput(); exit(1); } 
+
+FUNCTION Write_ParsOut
   // Save the estimates parameters to ParsOut (used for variance estimation)
   Ipnt = 0;
   for (ii=1;ii<=ntheta;ii++) if (theta_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = theta(ii); }
@@ -1923,16 +1936,6 @@ PROCEDURE_SECTION
   for (ii=1;ii<=nSizeComps; ii++) if (nvn_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = log_vn(ii); }
   for (ii=1;ii<=nSurveys; ii++) if (q_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = survey_q(ii); }
   for (ii=1;ii<=nSurveys; ii++) if (cv_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = log_add_cv(ii); }
-
-    calc_spr_reference_points2(0);
-    if ( verbose >= 3 ) cout << "Ok after calc_spr_reference_points ..." << endl;
-    calc_sdreport();
-    if ( verbose >= 3 ) cout << "Ok after calc_sdreport ..." << endl;
-   }
-  
-  // General outputs
-  if ( mceval_phase() ) write_eval();
-  if ( NfunCall == StopAfterFnCall ) { CreateOutput(); exit(1); } 
 
 
 // =======================================================================================================================================
