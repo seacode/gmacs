@@ -1794,7 +1794,8 @@ PARAMETER_SECTION
   sdreport_number sd_ofl;
   sdreport_matrix sd_log_recruits(1,nsex,syr,nyr);
   sdreport_vector sd_log_ssb(syr,nyr);
-  sdreport_vector ParsOut(1,NVarPar);
+  // sdreport_vector ParsOut(1,NVarPar);
+  vector ParsOut(1,NVarPar);
 
   // sdreport_vector sd_fbar(syr,nyr-1);
   // sdreport_vector sd_log_dyn_Bzero(syr+1,nyr);
@@ -1853,7 +1854,7 @@ PRELIMINARY_CALCS_SECTION
 // ================================================================================================
 
 PROCEDURE_SECTION
-  int Ipnt,ii,jj;
+  int Ipnt,jj;
   
   if ( verbose >= 3 ) cout << "Ok after start of function ..." << endl;
   
@@ -1901,7 +1902,20 @@ PROCEDURE_SECTION
   // sd_report variables
   if ( sd_phase() )
    {
+		// Write_ParsOut();
+    calc_spr_reference_points2(0);
+    if ( verbose >= 3 ) cout << "Ok after calc_spr_reference_points ..." << endl;
+    calc_sdreport();
+    if ( verbose >= 3 ) cout << "Ok after calc_sdreport ..." << endl;
+   }
+  
+  // General outputs
+  if ( mceval_phase() ) write_eval();
+  if ( NfunCall == StopAfterFnCall ) { CreateOutput(); exit(1); } 
+
+FUNCTION Write_ParsOut
   // Save the estimates parameters to ParsOut (used for variance estimation)
+	int ii,jj, Ipnt;
   Ipnt = 0;
   for (ii=1;ii<=ntheta;ii++) if (theta_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = theta(ii); }
   for (ii=1;ii<=nGrwth; ii++) if (Grwth_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = Grwth(ii); }
@@ -1923,16 +1937,6 @@ PROCEDURE_SECTION
   for (ii=1;ii<=nSizeComps; ii++) if (nvn_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = log_vn(ii); }
   for (ii=1;ii<=nSurveys; ii++) if (q_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = survey_q(ii); }
   for (ii=1;ii<=nSurveys; ii++) if (cv_phz(ii) > 0) {Ipnt +=1; ParsOut(Ipnt) = log_add_cv(ii); }
-
-    calc_spr_reference_points2(0);
-    if ( verbose >= 3 ) cout << "Ok after calc_spr_reference_points ..." << endl;
-    calc_sdreport();
-    if ( verbose >= 3 ) cout << "Ok after calc_sdreport ..." << endl;
-   }
-  
-  // General outputs
-  if ( mceval_phase() ) write_eval();
-  if ( NfunCall == StopAfterFnCall ) { CreateOutput(); exit(1); } 
 
 
 // =======================================================================================================================================
@@ -5602,35 +5606,35 @@ FUNCTION CreateOutput
    {
     Npar +=1; 
     OutFile1 << Npar << " : Theta " << Ipar << " : " << theta(Ipar) << " " << theta_phz(Ipar) << " ";
-    if (theta_phz(Ipar) > 0 & theta_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(theta(Ipar),theta_lb(Ipar),theta_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (theta_phz(Ipar) > 0 & theta_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(theta(Ipar),theta_lb(Ipar),theta_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nGrwth;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : Growth " << Ipar << " : " << Grwth(Ipar) << " " << Grwth_phz(Ipar) << " ";
-    if (Grwth_phz(Ipar) > 0 & Grwth_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(Grwth(Ipar),Grwth_lb(Ipar),Grwth_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (Grwth_phz(Ipar) > 0 & Grwth_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(Grwth(Ipar),Grwth_lb(Ipar),Grwth_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nslx_pars;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : nslx_pars " << Ipar << " : " << log_slx_pars(Ipar) << " " << slx_phzm(Ipar) << " ";
-    if (slx_phzm(Ipar) > 0 & slx_phzm(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_slx_pars(Ipar),slx_lb(Ipar),slx_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (slx_phzm(Ipar) > 0 & slx_phzm(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_slx_pars(Ipar),slx_lb(Ipar),slx_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=NumAsympRet;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : NumAsympRet " << Ipar << " : " << Asymret(Ipar) << " " << AsympSel_phz(Ipar) << " ";
-    if (AsympSel_phz(Ipar) > 0 & AsympSel_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(Asymret(Ipar),AsympSel_lb(Ipar),AsympSel_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (AsympSel_phz(Ipar) > 0 & AsympSel_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(Asymret(Ipar),AsympSel_lb(Ipar),AsympSel_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nfleet;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : log_fbar " << Ipar << " : " << log_fbar(Ipar) << " " << f_phz(Ipar) << " ";
-    if (f_phz(Ipar) > 0 & f_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_fbar(Ipar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (f_phz(Ipar) > 0 & f_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_fbar(Ipar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nfleet;Ipar++)
@@ -5638,14 +5642,14 @@ FUNCTION CreateOutput
     {
      Npar +=1; 
      OutFile1 << Npar << " : log_fdev " << Ipar << " : " << log_fdev(Ipar,Jpar) << " " << f_phz(Ipar) << " ";
-     if (f_phz(Ipar) > 0 & f_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_fdev(Ipar,Jpar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+     if (f_phz(Ipar) > 0 & f_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_fdev(Ipar,Jpar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
      OutFile1 << endl;
     }
   for (Ipar=1;Ipar<=nfleet;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : log_foff " << Ipar << " : " << log_foff(Ipar) << " " << foff_phz(Ipar) << " ";
-    if (foff_phz(Ipar) > 0 & foff_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_foff(Ipar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " "<< ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (foff_phz(Ipar) > 0 & foff_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_foff(Ipar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " "<< "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nfleet;Ipar++)
@@ -5653,56 +5657,56 @@ FUNCTION CreateOutput
     {
      Npar +=1; 
      OutFile1 << Npar << " : log_fdov " << Ipar << " : " << log_fdov(Ipar,Jpar) << " " << foff_phz(Ipar) << " ";
-     if (foff_phz(Ipar) > 0 & foff_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_fdov(Ipar,Jpar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+     if (foff_phz(Ipar) > 0 & foff_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_fdov(Ipar,Jpar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
      OutFile1 << endl;
     }
   for (Ipar=1;Ipar<=nclass;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : rec_ini " << Ipar << " : " << rec_ini(Ipar) << " " << rec_ini_phz << " ";
-    if (rec_ini_phz > 0 & rdv_phz <= current_phase()) { NparEst +=1; CheckBounds(rec_ini(Ipar),-14.0,14.0);  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (rec_ini_phz > 0 & rdv_phz <= current_phase()) { NparEst +=1; CheckBounds(rec_ini(Ipar),-14.0,14.0);  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=rdv_syr;Ipar<=rdv_eyr;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : rec_dev_est " << Ipar << " : " << rec_dev_est(Ipar) << " " << rdv_phz << " ";
-    if (rdv_phz > 0 & rdv_phz <= current_phase()) { NparEst +=1; CheckBounds(rec_dev_est(Ipar),-8.0,8.0);  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (rdv_phz > 0 & rdv_phz <= current_phase()) { NparEst +=1; CheckBounds(rec_dev_est(Ipar),-8.0,8.0);  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=rdv_syr;Ipar<=rdv_eyr;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : logit_rec_prop_est " << Ipar << " : " << logit_rec_prop_est(Ipar) << " " << rec_prop_phz << " ";
-    if (rec_prop_phz > 0 & rec_prop_phz <= current_phase()) { NparEst +=1; CheckBounds(logit_rec_prop_est(Ipar),-100.0,100.0);  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (rec_prop_phz > 0 & rec_prop_phz <= current_phase()) { NparEst +=1; CheckBounds(logit_rec_prop_est(Ipar),-100.0,100.0);  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nMdev;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : m_dev_est " << Ipar << " : " << m_dev_est(Ipar) << " " << Mdev_phz(Ipar) << " ";
-    if (Mdev_phz(Ipar) > 0 & Mdev_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(m_dev_est(Ipar),Mdev_lb(Ipar),Mdev_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (Mdev_phz(Ipar) > 0 & Mdev_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(m_dev_est(Ipar),Mdev_lb(Ipar),Mdev_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nSizeComps;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : log_vn " << Ipar << " : " << log_vn(Ipar) << " " << nvn_phz(Ipar) << " ";
-    if (nvn_phz(Ipar) > 0 & nvn_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_vn(Ipar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (nvn_phz(Ipar) > 0 & nvn_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_vn(Ipar),-1000.0,1000.0);  OutFile1 << priorDensity(NparEst) << " " << "ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nSurveys;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : survey_q " << Ipar << " : " << survey_q(Ipar) << " " << q_phz(Ipar) << " ";
-    if (q_phz(Ipar) > 0 & q_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(survey_q(Ipar),q_lb(Ipar),q_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " <<ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (q_phz(Ipar) > 0 & q_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(survey_q(Ipar),q_lb(Ipar),q_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " <<"ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   for (Ipar=1;Ipar<=nSurveys;Ipar++)
    {
     Npar +=1; 
     OutFile1 << Npar << " : log_add_cvt " << Ipar << " : " << log_add_cv(Ipar) << " " << cv_phz(Ipar) << " ";
-    if (cv_phz(Ipar) > 0 & cv_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_add_cv(Ipar),log_add_cv_lb(Ipar),log_add_cv_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " <<ParsOut.sd(NparEst) << " " << NparEst; } 
+    if (cv_phz(Ipar) > 0 & cv_phz(Ipar) <= current_phase()) { NparEst +=1; CheckBounds(log_add_cv(Ipar),log_add_cv_lb(Ipar),log_add_cv_ub(Ipar));  OutFile1 << priorDensity(NparEst) << " " <<"ParsOut.sd(NparEst)" << " " << NparEst; } 
     OutFile1 << endl;
    }
   OutFile1 << endl; 

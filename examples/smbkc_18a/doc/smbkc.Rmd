@@ -29,8 +29,8 @@ options(xtable.comment = FALSE)
 
 # The model specs
 #mod_names <- c("Andre","2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
-mod_names <- c("Last year","andre","Andre","is_the","goat") #,"2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
-.MODELDIR = c("../../smbkc_18/model_3/","../model_1/","../model_1/","../model_1/","../model_1/")
+mod_names <- c("Last year","Andre","VAST","Fit surveys") #,"2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
+.MODELDIR = c("../../smbkc_18/model_3/","../model_1/","../model_4/","../model_5/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Aggregate","Male")
@@ -62,7 +62,7 @@ rinline <- function(code){
 
 ref_mod <- 1 # base
 rec_mod <- 1 # base
-mod_scen<- 3:5
+mod_scen<- 2:4
 ```
 
 \pagenumbering{gobble}
