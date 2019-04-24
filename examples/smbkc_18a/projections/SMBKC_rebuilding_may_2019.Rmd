@@ -1,0 +1,366 @@
+---
+title: "Saint Matthew Island blue king crab stock status and rebuilding projections"
+author: "| Katie Palof$^1$, Jie Zheng$^1$, Jim Ianelli$^2$, and Andre Punt$^3$ \n|
+  $^1$Alaska Department of Fish and Game, katie.palof@alaska.gov and jie.zheng@alaska.gov \n| $^2$NOAA, jim.ianelli@noaa.gov\n|
+  $^3$School of Aquatic and Fishery Science, University of Washington, aepunt@uw.edu\n"
+date: "`r format(Sys.time(), '%B %Y')`"
+output:
+  pdf_document:
+    highlight: zenburn
+    includes: null
+    toc: yes
+ 
+---
+
+```{r global_options, include=FALSE }
+library(knitr)
+opts_chunk$set(fig.width = 12, fig.height = 7, echo = FALSE, warning = FALSE, message = FALSE,  dpi=300)
+#opts_chunk$set(fig.width = 12, fig.height = 7, echo = FALSE, warning = FALSE, message = FALSE,  dpi=72)
+```
+
+```{r, load_packages, include=FALSE}
+library(gmr)
+library(xtable)
+options(xtable.comment = FALSE)
+
+# The model specs
+#mod_names <- c("Andre","2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
+mod_names <- c("base_model_1") #,"2018 BTS","Reference","VAST","Fit surveys") #,"Gmacs M","Gmacs Francis","fit surveys")
+.MODELDIR = c("../smbkc_18a/model_1/")
+.THEME    = theme_bw(base_size = 12, base_family = "")
+.OVERLAY  = TRUE
+.SEX      = c("Aggregate","Male")
+.FLEET    = c("Pot","Trawl bycatch","Fixed bycatch","NMFS Trawl","ADF&G Pot")
+.TYPE     = c("Retained & Discarded","Retained","Discarded")
+.SHELL    = c("Aggregate")
+.MATURITY = c("Aggregate")
+.SEAS     = c("1","2","3","4","5")
+
+# Read report file and create gmacs report object (a list):
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb)
+names(M) <- mod_names
+
+nmult_1 <- 1e+06
+nmult_2 <- 0.0004535923 * 1e+6
+#fn <- paste0(.MODELDIR[1], "gmacs")
+#Mmatch <- lapply(fn, read_admb)
+#names(Mmatch) <- c("SMBKC")
+
+fn <- paste0(.MODELDIR[1], "gmacs")
+Mbase <- lapply(fn, read_admb)
+names(Mbase) <- c("SMBKC")
+
+rinline <- function(code){
+  html <- '<code  class="r">``` `CODE` ```</code>'
+  sub("CODE", code, html)
+}
+
+ref_mod <- 1 # base
+rec_mod <- 1 # base
+mod_scen<- 3:5
+```
+
+
+# 2018 Executive Summary 
+1. **Stock**: Blue king crab, *Paralithodes platypus*, Saint Matthew Island (SMBKC), Alaska.
+
+2. **Catches**: Peak historical harvest was 4,288 t (9.454 million pounds) in 1983/84^[1983/84 refers to a fishing
+year that extends from 1 July 1983 to 30 June 1984.]. 
+The fishery was closed for 10 years after the stock was declared
+overfished in 1999. Fishing resumed in 2009/10 with a fishery-reported retained catch of 209 t (0.461 million
+pounds), less than half the 529.3 t (1.167 million pound) TAC. 
+Following three more years of modest harvests
+supported by a fishery catch per unit effort (CPUE) of around 10 crab per pot lift, the fishery was again closed in
+2013/14 due to declining trawl-survey estimates of abundance and concerns about the health of the stock. 
+The directed
+fishery resumed again in 2014/15 with a TAC of 300 t (0.655 million pounds), but the fishery performance was
+relatively poor with a retained catch of 140 t (0.309 million pounds). 
+The retained catch in 2015/16 was even lower
+at 48 t (0.105 million pounds) and the fishery has remained closed since 2016/17.
+
+3. **Stock biomass**: The 1978-2018 NMFS trawl survey mean biomass is 5,664 t with the 2018 value being the
+5th lowest (1,731 t; the third lowest since 2000). This 2018 biomass of $\ge$ 90 mm carapace length (CL) male crab is 
+31% of the long term mean  at 3.461 million pounds (with a CV of 28%).
+The most recent 3-year average of the NMFS survey is 41% of the mean value, further indicating a decline in biomass compared to
+historical survey estimates, notably  in 2010 and 2011 that were over six times the current average. 
+The ADFG pot survey was repeated in 2018 and the relative biomass in this index was the lowest
+in the time series (12% of the mean from the 11 surveys conducted since 1995).
+The assessment model estimates dampen the interannual variability observed in the survey biomass and suggest that the stock (in survey biomass units) is presently at about
+`r .get_cpue_df(Mbase) %>% filter(fleet==.FLEET[4]) %>% transmute(x = round(100*pred/mean(pred),0)) %>% tail(1) %>% .$x `% 
+of the long term model-predicted survey biomass average. The trend from these values suggests a slight decline.
+
+4. **Recruitment**: Recruitment is based on estimated number of male crab within the 90-104 mm CL size class
+in each year. The 2018 trawl-survey area-swept estimate of 0.154 million male SMBKC in this size class is the third lowest in 
+the 41 years since 1978 and follows the lowest previously observed in 2017. The recent six-year (2013 - 2018) average recruitment 
+is only 45% of this mean. 
+In the pot-survey, the abundance of this size group in 2017 was also the second-lowest in the time series (22% of the mean for the 
+available pot-survey data) whereas in 2018 the value was the lowest observed at only 10% of the mean value.
+
+5. **Management performance**: In this assessment estimated total male catch is the sum of fishery-reported retained
+catch, estimated male discard mortality in the directed fishery, and estimated male bycatch mortality in the groundfish
+fisheries.  Based on the reference model for SMBKC, the estimate for mature male biomass is below the minimum stock-size 
+threshold (MSST) in 2017/18 and is hence is in an "overfished" condition, despite fishery closures in the last two years 
+(and hence overfishing has not occurred) (Tables \ref{tab:status} and \ref{tab:status_pounds}). 
+Computations which indicate the relative impact of fishing 
+(i.e., the "dynamic $B_0$") suggests that the current spawning stock biomass has been reduced to 60%
+<!--- `r #.get_dynB0_df(Mbase) %>% transmute(round(100*ssb,0)) %>% slice(n())`%  -->
+ of what it would have been in the absence of
+fishing, assuming the same level of recruitment as estimated. 
+
+\begin{table}[ht]
+\centering
+\caption{Status and catch specifications (1000 t) for the reference model.
+A - calculated from the assessment reviewed by the Crab Plan Team in September 2014,    
+B - calculated from the assessment reviewed by the Crab Plan Team in September 2015,    
+C - calculated from the assessment reviewed by the Crab Plan Team in September 2016,   
+D - calculated from the assessment reviewed by the Crab Plan Team in September 2017,   
+E - calculated from the 2018 model approved by the Crab Plan Team in September 2018 with GMACS modifications. 
+}
+\label{tab:status}
+\begin{tabular}{lccccccc}
+  \hline
+  & & Biomass & & Retained & Total & & \\ 
+  Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
+  \hline
+  2013/14 & 1.50$^A$ & 3.01$^A$ & 0.00 & 0.00 & 0.00 & 0.56 & 0.45 \\ 
+  2014/15 & 1.86$^B$ & 2.48$^B$ & 0.30 & 0.14 & 0.15 & 0.43 & 0.34 \\ 
+  2015/16 & 1.84$^C$ & 2.11$^C$ & 0.19 & 0.05 & 0.05 & 0.28 & 0.22 \\ 
+  2016/17 & 1.97$^D$ & 2.23$^D$ & 0.00 & 0.00 & 0.05 & 0.14 & 0.11 \\ 
+  2017/18 & `r round(M[[rec_mod]]$spr_bmsy/1000 * 0.5, 2)`$^E$ & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)-1]/1000, 2)`$^E$ & 0.00 & 0.00 & 0.05 & 0.12 & 0.10 \\
+  2018/19 & & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/1000, 2)`$^E$ & & & & `r round(M[[rec_mod]]$spr_cofl/1000, 2)` & `r round(M[[rec_mod]]$spr_cofl/1000*0.8, 2)` \\
+ \\
+  \hline
+\end{tabular}
+\end{table}
+  <!-- \multicolumn{8}{p{\linewidth}}{l}{ -->
+\begin{table}[ht]
+\centering
+\caption{Status and catch specifications (million pounds) for the reference model.} 
+\label{tab:status_pounds}
+\begin{tabular}{lccccccc}
+  \hline
+  & & Biomass & & Retained & Total & & \\ 
+  Year & MSST & ($\mathit{MMB}_\text{mating}$) & TAC & catch & male catch & OFL & ABC \\ 
+  \hline
+  2013/14 & 3.4$^A$ & 6.64$^A$ & 0.000 & 0.000 & 0.0006 & 1.24 & 0.99 \\ 
+  2014/15 & 4.1$^B$ & 5.47$^B$ & 0.655 & 0.309 & 0.329  & 0.94 & 0.75 \\ 
+  2015/16 & 4.1$^C$ & 4.65$^C$ & 0.419 & 0.110 & 0.110  & 0.62 & 0.49 \\ 
+  2016/17 & 4.3$^D$ & 4.91$^D$ & 0.410 & 0.000 & 0.000  & 0.31 & 0.25 \\ 
+  2017/18 & `r sprintf("%.1f", round(M[[rec_mod]]$spr_bmsy * 2204.62/1e6 * 0.5, 1))`$^E$ & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)-1] * 2204.62/1e6, 2)`$^E$ & 0.41 & 0.000 & 0.000 & 0.27 & 0.22 \\
+  2018/19 & & `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)] * 2204.62/1e6, 2)`$^E$ & & & & `r round(M[[rec_mod]]$spr_cofl * 2204.62/1e6, 2)` & `r round(M[[rec_mod]]$spr_cofl * 2204.62/1e6*0.8, 2)` \\
+  \hline
+\end{tabular}
+\end{table}
+
+
+
+6. **Basis for the OFL**: Estimated mature-male biomass (MMB) on 15 February is used as the measure of 
+ biomass for this Tier 4 stock, with males measuring $\ge$ 105 mm CL 
+ considered mature. The $B_\mathit{MSY}$ proxy is obtained by averaging estimated MMB over a specific reference period, and current CPT/SSC guidance recommends using the full assessment time frame as the default reference period (Table \ref{tab:ofl_basis}).
+\begin{table}[ht]
+\centering
+\caption{Basis for the OFL (1000 t) from the reference model.} 
+\label{tab:ofl_basis}
+\begin{tabular}{lcccccccc}
+  \hline
+  & & & Biomass & & & & & Natural \\ 
+  Year & Tier & $B_\mathit{MSY}$ & ($\mathit{MMB}_\text{mating}$) & $B/B_\mathit{MSY}$ & $F_\mathit{OFL}$ & $\gamma$ & Basis for $B_\mathit{MSY}$ & mortality \\ 
+  \hline
+  2013/14 & 4b & 3.06 & 3.01 & 0.98 & 0.18 & 1 & 1978-2013 & 0.18 \\ 
+  2014/15 & 4b & 3.28 & 2.71 & 0.82 & 0.14 & 1 & 1978-2014 & 0.18 \\ 
+  2015/16 & 4b & 3.71 & 2.45 & 0.66 & 0.11 & 1 & 1978-2015 & 0.18 \\ 
+  2016/17 & 4b & 3.67 & 2.23 & 0.61 & 0.09 & 1 & 1978-2016 & 0.18 \\ 
+  2017/18 & 4b & 3.86 & 2.05 & 0.53 & 0.08 & 1 & 1978-2017 & 0.18 \\ 
+  2018/19 & 4b & `r round(M[[rec_mod]]$spr_bmsy/1000, 2)` & 
+  `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/1000, 2)` & 
+  `r round(M[[rec_mod]]$ssb[length(M[[rec_mod]]$ssb)]/M[[rec_mod]]$spr_bmsy, 2)` & 
+  `r round(M[[rec_mod]]$sd_fofl[1], 3) ` & 
+  1 & 1978-2018 & 0.18 \\ 
+  \hline
+\end{tabular}
+\end{table}
+
+ 
+# Introduction
+In 2018 the MMB for SMBKC fell below 50% of the $B_{MSY}$ proxy or the MSST, using average mature male biomass from 1978-2017. The stock was determined to be overfished (but overfishing is not occurring since the fishery has been closes the last two years) and a rebuilding plan is to be implemented. This document summarizes the current stock status, based on the 2018 assessment model, and projections done on rebuilding probabilities for the stock using the projections module developed for GMACS (A.Punt pers Comm). 
+
+## Assessment model - current status
+The 2018 assessment model was model 3 (2018 SAFE document, Zheng and Ianelli 2018), which used the 2017 model with updated data from both the NMFS trawl survey and the ADF&G pot survey. Some graphical output of this model is presented here with updates to the GMACS base code made since fall of 2018 (Figures 1-5). The model output is comparable to that presented in Sept. 2018. This model was used in the rebuilding projections. Variants of this model that will be presented in September include models 4 (VAST model prelim) and 5 (Fit survey) presented in 2018. Changes to the GMACS code have shown to have minor impacts on results, so work presented here focuses on rebuilding alternatives for consideration at the May 2019 meeting.
+
+
+# Rebuilding projections
+The rebuilding projections were performed using the projection module coded into GMACS in early 2019 (A. Punt per Comm). 
+A preliminary analysis of the rebuilding projections performed at the January crab plan team meeting by A.Punt concluded that bycatch mortality in this fishery was minor and that the rebuilding timeline was entirely dependent on assumptions of recruitment for the stock (Figure 6). 
+
+Recruitment possibilities for the projection model include: Ricker, or Beverton-Holt stock recruit relationship and "random" recruitment. Stock-recruitment models (Ricker, Beverton-Holt) typically fit poorly for crab stocks, and this holds true for SMBKC (Figure 7). Projections using these stock recruitment relationships are still provided here for review since they scale recruitment to the current status of the stock. The "random"" recruitment option resamples historical recruitment estimates randomly, from a designated period for each projection iteration, such as the entire time series 1978 to 2017 as one example. This option assumes that recruitment is unrelated to stock size, but also relies on choosing the random draws from a biologically and environmentally representative time frame of past recruitment. 
+
+Projections were performed to look at a range of combinations of recruitment, bycatch mortality, and implementation of the state harvest policy to determine the probability of recovery for each scenario. The SSC recommendations included a weighted combination of the projections based on their plausibility which is based on the life history and biology of the species. One such weighted combination is explored here but the biological plausibility of each projection assumption requires further feedback and discussion.
+
+\begin{table}[ht]
+\centering
+\caption{Projections performed with associated recruitment assumptions.} 
+\label{tab:projections}
+\begin{tabular}{lcccccccc}
+  \hline
+  Projection & recruitment & $B_\mathit{MSY}$ proxy & recruitment years \\ 
+  \hline
+  1 & random recruitment & 1978-2017 & 1978-2017 \\ 
+  2 & Ricker & 1978-2017 &  \\ 
+  3 & Beverton-Holt & 1978-2017 &  \\ 
+  4 & random recruitment & 1978-2017 & 1996-2017 \\ 
+  5 & random recruitment & 1996-2017 & 1996-2017 \\ 
+  6 & random recruitment & 1978-2017 & 1999-2017 \\ 
+  7 & random recruitment & 1978-2017 & 1989-2017 \\ 
+  \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Versions for each of the projections in Table \ref{tab:projections}.} 
+\label{tab:versions}
+\begin{tabular}{lcccccccc}
+  \hline
+  Version & Bycatch mortality & SOA harvest policy \\ 
+  \hline
+  a &  0 & no \\ 
+  b &  present (2013-2017) & no \\  
+  c &  0 & yes \\ 
+  d &  present (2013-2017) & yes \\ 
+  \hline
+\end{tabular}
+\end{table}
+
+
+## Results
+
+#### Bycatch mortality 
+Average values for recent (2013 - 2017) bycatch is insensitive to rebuilding time under any of the projections. Projections 1a and 1b, which use mean recruitment for the entire time series, clearly showed the lack of influence bycatch mortality had on recovery probability (Figure 6). Therefore, projections under version "a" were omitted from this presentation. 
+
+#### State harvest policy
+The implementation of the state harvest policy in the projections (version "d") affected rebuilding times in some projections. 
+In most cases the $T_{min}$ estimates increased. The implementation of the state harvest policy is less pessimistic than the maximum F = .0.18, hence we used version "d" for projection evaluations. 
+
+#### Stock recruit relationship 
+Projections (projections 2 and 3) that used a stock recruit relationship assumed that the future recruitment was related to the current and future mature male biomass even though the fit to the stock recruit relationship was weak (Figure 7). These projections produced an intermediate estimate of $T_{min}$ compared to projections 1 and 4, under a Ricker S-R relationship the $T_{min}$= 16.5 years (F = 0) and under a Beverton-Holt S-R relationship the $T_{min}$= 14.5 years (F = 0) (Figure 8). When the state harvest policy is implemented these increase to 28.5 years and 23.5 years, respectively. 
+
+#### Mean recruitment 
+Projections using "random" recruitment (projection 1) resampled from the entire time series (1978-2017) implied environmental conditions as being equal to this period. Under this hypothesis the probability of recovery produces a $T_{min}$ = 7.5 years under no directed fishery mortality (F = 0), and a $T_{min}$ = 11.5 years when the state harvest policy is implemented (Figure 9). The recruitment breakpoint analysis performed on this stock (Appendix A) suggested that recruitment conditions equal to the full period are unlikely and overly optimistic. 
+
+Projections that use "random" recruitment (projection 4) for the recent period (1996-2017) specified by the recruitment breakpoint analysis (Appendix A) were more pessimistic. These suggested that the probability of recovery is low, even extending the projections out to 100 years, under recent recruitment conditions (Figure 10). The period for "random" recruitment was adjusted in this projection and the $B_{MSY}$ proxy was calculated using the entire time series (1978-2017), meaning that recent recruitment was inconsistent with the $B_{MSY}$ proxy that used the full time series. This projection was deemed as unrealistic, since under the current regime, $B_{MSY}$ would need to be consistent with the recent recruitment.
+
+
+#### Updated $B_{MSY}$ proxy and mean recruitment
+The recruitment breakpoint analysis suggested that a shift occurred in 1996. Both the "random" recruitment time period and the time period to calculate the $B_{MSY}$ proxy should reflect this (Table \ref{tab:B_msy proxy}). Projection 5 matches these two time frames, and shows that the $T_{min}$ for the probability of recovery to this new/current $B_{MSY}$ proxy is slightly more than 10 years, even under the state harvest policy implementation (Figure 11). This is due to the state harvest policy thresholds being based on past periods rather than having adopted to changes in $B_{MSY}$ proxy years.
+
+
+#### Weighted combinations
+When the initial projections were presented at the SSC meeting it was suggested that the Plan Team consider a combination of the projection hypotheses (which would be weighted according to their plausibility). One example of this would be a weighted combination of projection 2d and 4d, with a Ricker S-R relationship and current recruitment time series (1996-2017). This combination, under equal weighting, produces a scaled down version of the projection 2d outcome, with a resulting $T_{min}$ = 24 years (Figure 12). Other possible weighting combinations could be performed after further Plan Team and SSC consultation. 
+
+## Discussion
+The projections considered here produced a range of $T_{min}$ values (Table \ref{tab:t_min}), however, the question remains which option is the most biologically and environmentally plausible. The recruitment breakpoint analysis (Appendix A) suggested that recent recruitment (1996-2017) differed from the early part of the time series. Recruitment success for SMBKC, as with many crab species, is driven by environmental conditions. In the Bering Sea recent environmental conditions appear to be unfavorable for recruitment success for this stock, which may be due to the longer larval duration of blue king crab (reference). 
+
+The most biologically and environmental plausible projection would be projection 4, which suggests that it would be unlikely for the stock to rebuild to the current $B_{MSY}$ proxy under current recruitment conditions. However, adjusting the $B_{MSY}$ time frame (projection 5) would allow the stock to rebuild to a a more representative $B_{MSY}$ that is based on current recruitment conditions. 
+
+Combinations of the projections, weighted based on their plausibility, are possible but more justification and thought is needed to determine why these combinations would be a better representation of the current biology and environment of the stock. Also, reasoning for the weighting of projections in a combination would need to be established. 
+
+\pagebreak 
+
+## Tables 
+
+
+\begin{table}[ht]
+\centering
+\caption{$B_{MSY}$ proxy options for 2018 model 3, all Tier 4b.} 
+\label{tab:B_msy proxy}
+\begin{tabular}{lcccccccc}
+  \hline
+  Year & Basis for $B_\mathit{MSY}$ & $B_\mathit{MSY}$ proxy & MSST & Biomass($MMB_{mating}$) & B/$B_{MSY}$ & $F_{OFL}$ & M \\ 
+  \hline
+  2018/19 & 1978-2017 & 3.48 & 1.74 & 1.09 & 0.31 & 0.041 & 0.18 \\ 
+  2018/19 & 1978-2017 & 2.03 & 1.015 & 1.08 & 0.53 & 0.087 & 0.18 \\ 
+  \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[ht]
+\centering
+\caption{$T_{min}$ for each projection version d with no directed fishing (F=0).} 
+\label{tab:t_min}
+\begin{tabular}{lcccccccc}
+  \hline
+  Projection & recruitment & $B_\mathit{MSY}$ proxy & recruitment yrs & $T_{min}$ \\ 
+  \hline
+  1 & random recruitment & 1978-2017 & 1978-2017 & 7.5 years \\ 
+  2 & ricker & 1979-2017 &  & 16.5 years \\
+  3 & Beverton-Holt & 1979-2017 &  & 14.5 years \\
+  4 & random recruitment & 1978-2017 & 1996-2017 & 100+ years \\
+  5 & random recruitment & 1996-2017 & 1996-2017 & 10.5 years \\
+  6 & random recruitment & 1978-2017 & 1999-2017 & 100+ years \\
+  7 & random recruitment & 1978-2017 & 1989-2017 & 10 years \\
+  \hline
+\end{tabular}
+\end{table}
+
+\pagebreak 
+
+## Figures
+![](../smbkc_18a/model_1/figure/Fig3.png)
+
+Figure 1: Trawl and pot-survey stations used in the SMBKC stock assessment
+
+![](../smbkc_18a/model_1/figure/cpue_trawl.png)
+
+Figure 2: Fits to NMFS area-swept trawl estimates of total (>= 90mm) male survey biomass using the 2018 base model with GMACS updates. Error bars are plus and minus 2 standard deviations.
+
+![](../smbkc_18a/model_1/figure/cpue_pot.png)
+
+Figure 3: Fits to CPUE from the ADF&G pot surveys using the 2018 base model with GMACS updates. Error bars are plus and minus 2 standard deviations.
+
+![](../smbkc_18a/model_1/figure/recruitment_line.png)
+
+Figure 4: Estimated recruitment under the 2018 base model with GMACS updates, solid line is estimated average recruitment from the model; 1978-2018.
+
+![](../smbkc_18a/model_1/figure/ssb.png)
+
+Figure 5: Estimated mature male biomass (MMB) under the 2018 base model with GMACS updates; 1978-2018.
+
+\newpage 
+
+
+![](./figures/bycatch_mort_influence.png)
+
+Figure 6: Comparison on by catch mortality on rebuilding probabilities using F = 0 and F = 0.18 projections under assumptions of average recruitment for the entire time series.
+
+![](./figures/sr_relationship.png)
+
+Figure 7: Ricker stock-recruitment relationship with the associated variability for SMBKC.
+
+![](./figures/proj2_d_rec_prob.png)
+
+Figure 8: Recovery probability for projection 2d, using Ricker stock-recruit relationship, implementing the state harvest policy, and average recent bycatch mortality. 
+
+![](./figures/proj1_d_rec_prob.png)
+
+Figure 9: Recovery probability for projection 1d, using mean recruitment (1978-2017), implementing the state harvest policy, and average recent bycatch mortality. 
+
+![](./figures/proj4_d_rec_prob.png)
+
+Figure 10: Recovery probability for projection 4d, using mean recruitment (1996-2017), implementing the state harvest policy, and average recent bycatch mortality. 
+
+![](./figures/proj5_d_rec_prob.png)
+
+Figure 11: Recovery probability for projection 5d, using an updated $B_{MSY}$ proxy (1996-2017), mean recruitment (1996-2017), implementing the state harvest policy, and average recent bycatch mortality. 
+
+![](./figures/weighted_2d_4d_combo.png)
+
+
+Figure 12: Recovery probability for a weighted combination of projections 2d and 4d using an equal probability of each.
+
+
+
+
+ 
+
