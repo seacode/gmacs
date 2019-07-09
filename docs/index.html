@@ -1,122 +1,157 @@
 <!DOCTYPE html>
-<html><head><title></title>
+<html>
+<head>
+    <title></title>
+   <link type="text/css" rel="stylesheet" href="./static/simple.css" />
 
 
-    
-   <link type="text/css" rel="stylesheet" href="./static/simple.css"></head><body>
+</style>
+</head>
+<body>
     <div class="container">
         <div class="mywrap">
-            <div class="title">
-              
+            <div class ="title">
+              General Model for Assessing Crustacean Stocks
             </div>
+              
+              <div class = "badge"  data-md-tooltip=badge_external_active id = badge_external_active> </div>
 
-              <div class="badge">
+              
+              
+              <div class = "badge" data-md-tooltip="Support Level" id = external_active >
               <!-- &#10039; -->
               </div>
-              <div class="badge" id="check">
-              <!-- &#10004; -->
-              </div>
+              
+
         </div>
         <div class="mywrap">
-              <button class="codelink" id="nolink">
-              Online Application
-              </button>
-              <a href="https://github.com/seacode/gmacs" target="_blank">
-                <button class="codelink">
+              
+                <button class = "codelink" id = "nolink">
+                Online Application
+                </button>
+              
+
+              
+                <button class = "codelink" id = "nolink">
                 Download Application
-                 </button>
+                </button>
+              
+
+              
+              <a href= "https://github.com/seacode/gmacs/wiki" target="_blank" title="link to documentation">
+                <button class = "codelink">
+                Documentation
+                </button>
               </a>
-              <a href="https://github.com/seacode/gmacs/wiki"><button class="codelink">
-              Documentation
+              
+
+              
+              <a href= "https://github.com/seacode/gmacs" target="_blank" title="link to code repository">
+                <button class = "codelink">
+                Code Repository
+                </button>
+              </a>
+              
+              <button class = "IconButton" title="e-mail fisheries.toolbox@noaa.gov" id ="email" onclick='location.href= "mailto:fisheries.toolbox@noaa.gov;"'>
               </button>
-              </a>
-              <a style="color: black;" href="https://github.com/seacode/gmacs/tree/develop/gmr"><button class="codelink" id="nolink">
-              Associated Tools
-              </button></a>
+
         </div>
-      <div class="divider">
+      <div class = "divider">
       </div>
 
 
-      <div class="main">
+      <div class ="main">
         <div class="mywrap">
-              <div class="label">A generalized size-structured stock assessment modelling framework (Gmacs)&nbsp;
+              <div class ="label">
+                General Model for Assessing Crustacean Stocks (GMACs)
+
               </div>
 
-              <a class="pdfIcon" href="./manuscript/GLBAM.pdf" download="">
 
-              </a>
+              
 
-              <a class="githubIcon" href="https://github.com/seacode/gmacs" target="_blank"></a>
+              <!-- <a class = "githubIcon" href="https://github.com/seacode/gmacs" target="_blank"></a> -->
 
-              <button class="versionButton">
-              Version 1.0
+              <button class = "versionButton">
+              Version 
               </button>
         </div>
 
-        <div class="authName">
-         author: James Ianelli
+        <div class ="label">
+            
+              Type:  generalized model
+            
+        </div>
 
+        <div class = "authName">
+         Author: J. Ianelli, A. Punt, D. Webber, S. Martell, and C.Szuwalski
+
+        </div >
+
+        <div class ="mainText">
+          Generalized model originally designed for Alaska crab stocks. GMACs is a generalized modelling framework for developing size-structured stock assessment models. It is an open source program developed using AD Model Builder (ADMB). Source files will therefore build on any computer that can run ADMB. ADMB is free, open source, and available for Windows, Linux, MacOS, and Sun/SPARC.
         </div>
 
         <div class="mainText">
-         Gmacs is a generalized modelling framework for
-        developing size-structured stock assessment models. Gmacs is an open
-        source program developed using AD Model Builder (ADMB). Gmacs source
-        files will therefore build on any computer that can run ADMB. ADMB is
-        free, open source, and available for Windows, Linux, MacOS, and
-        Sun/SPARC.
-
-There are four major components to the gmacs project:
-
-<br>
-<ul>
-  <li>The Gmacs assessment model <br>
-  </li>
-  <li>The<a href="https://github.com/seacode/gmacs/tree/develop/gmr" target="_blank"> <span style="color: rgb(36, 89, 248);">R package gmr </span></a><br>
-  </li>
-  <li>The code repository (https://github.com/seacode/gmacs) <br>
-  </li>
-  <li>Documentation
-API (http://seacode.github.io/gmacs/) <br>
-  </li>
-  <li style="outline-color: navy ! important; outline-style: dashed ! important; outline-width: 2px ! important;">General model description <br>
-  </li>
-  <li>Resources</li>
-  <li>The software manual (this Wiki)
-Model comparisons
-This Wiki is designed as a software manual and developer guide: it
-describes how Gmacs can be used to develop size-based stock assessment
-models and provides details about the source code so that interested
-users can contribute to development. The Analytics Template Library
-(ATL) is a scientific computing library with an emphasis on gradient
-based optimization. ATL leverages the power of template metaprogramming
-for flexibility, extensibility, and speed. This guide is intended to
-give the user a basic understanding of how to develop programs in ATL.
-The information in this document is intended for anyone interested in
-scientific computing in C++ and it is expected that the reader will
-have a basic understanding of the C++ programming language, as well as
-scientific computing.</li>
-  <li><br>
-    <div style="margin-left: 40px;">Wiki: https://github.com/seacode/gmacs/wiki<br>
-API: http://seacode.github.io/gmacs/<br>
-Model Description: https://github.com/seacode/gmacs/blob/develop/docs/developer/ModelDescription.pdf<br>
-Release Notes: https://github.com/seacode/gmacs/blob/develop/CHANGELOG.md</div>
-  </li>
-  <li><br>
-  </li>
-</ul>
-</div>
-        <div class="ref">
+        
+          <div class = "ref">
             References
-        </div>
-        <div class="mainText">
-            <ul><li>Fournier,
-D.A., Skaug, H.J., Ancheta, J., Ianelli, J., Magnuson, A., Maunder,
-M.N., Nielsen, A., and Sibert, J. 2012. AD Model Builder: using
-automatic differentiation for statistical inference of highly
-parameterized complex nonlinear models. Optim. Methods Softw.
-27:233-249. </li></ul></div></div></div>
+          </div>
+            <ul>
+              
+              <li>ADMB reference: Fournier, D.A., Skaug, H.J., Ancheta, J., Ianelli, J., Magnusson, A., Maunder, M.N., Nielsen, A., and Sibert, J. 2012. AD Model Builder: using automatic differentiation for statistical inference of highly parameterized complex nonlinear models. Optim. Methods Softw. 27:233-249.</li>
+              
+            </ul>
+          
 
 
-</body></html>
+          
+          <div class = "ref">
+            Associated Tools
+          </div>
+            <ul id = "assocaited_tools">
+              
+                <li><a href=""><i></i></a></li>
+              
+            </ul>
+              
+
+            
+              <div class = "ref">
+            Code Repository Badges
+          </div>
+             
+
+              
+              <img src="https://www.repostatus.org/badges/latest/active.svg">
+              
+              <img src="https://img.shields.io/github/watchers/seacode/gmacs.svg?style=social">
+              
+              <img src="https://img.shields.io/badge/documentation-in--progress-yellow.svg">
+              
+              <img src="https://img.shields.io/travis/com/seacode/gmacs.svg">
+              
+              
+
+          </div>
+      </div>
+
+      <div class = "divider"></div>
+
+        <footer >
+             <img src="./static/noaa-fisheries-rgb-2line-horizontal-small.png" height="75px">
+         <div class="mywrap_center">
+          <a class ="mylink" id = "line" href="https://www.commerce.gov/">U.S. Department of Commerce</a>
+         <a class ="mylink" id = "line" href="https://www.noaa.gov">National Oceanographic and Atmospheric Administration</a>
+         <a class ="mylink" href="https://www.fisheries.noaa.gov/">NOAA Fisheries</a>
+         </div>
+
+        </footer>
+        <div class ="attribution">Icons by icons8 https://icons8.com/</div>
+
+    </div>
+
+
+</body>
+</html>
+
