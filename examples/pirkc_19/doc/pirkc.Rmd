@@ -26,8 +26,8 @@ library(xtable)
 options(xtable.comment = FALSE)
 
 # The model specs
-mod_names <- c("Last year","Copy")
-.MODELDIR = c("../model_1/","../model_2/")
+mod_names <- c("Last year","Reweight","Chop")
+.MODELDIR = c("../1_orig/","../2_reweight/","../3_chop/")
 .THEME    = theme_bw(base_size = 12, base_family = "")
 .OVERLAY  = TRUE
 .SEX      = c("Male")
@@ -694,7 +694,7 @@ plot_cpue(M[1:length(mod_names)], "NMFS Trawl", ylab = "Survey biomass (t)")
 
 ```{r rec1, fig.cap = "Sensitivity of new data in 2018 on estimated recruitment ; 1978-2018. \\label{fig:rec1}"}
 A <- M
-for (i in c(1,2)) {
+for (i in 1:length(mod_names)) {
   ii <- which(A[[i]]$fit$names %in% "sd_log_recruits"); ii <- ii[length(ii)]
   A[[i]]$fit$est[ii] <- NA
   A[[i]]$fit$std[ii] <- NA
