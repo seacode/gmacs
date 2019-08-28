@@ -20,7 +20,7 @@
         df$residuals <- as.vector(t(A$res_catch_out))
         df$sex       <- .SEX[df$sex+1]
         df$fleet     <- .FLEET[df$fleet]
-        df$type      <- .TYPE[df$type+1]
+        df$type      <- .TYPE[df$type]
         df$sd        <- sqrt(log(1+df$cv^2))
         df$lb        <- exp(log(df$obs)-1.96*df$sd)
         df$ub        <- exp(log(df$obs)+1.96*df$sd)
@@ -32,7 +32,7 @@
     }
     mdf$year <- as.integer(mdf$year)
     mdf$sex <- factor(mdf$sex, levels = .SEX)
-    mdf$type <- factor(mdf$type, levels = .TYPE)
+    mdf$type <- as.factor(mdf$type)
     mdf$fleet <- factor(mdf$fleet, levels = .FLEET)
     return(mdf)
 }
@@ -103,5 +103,5 @@ plot_catch <- function(M, plot_res = FALSE, scales = "free_y",
         p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4)
         p <- p + facet_wrap(~model + sex + fleet + type, scales = scales)
     }
-    print(p + .THEME)
+    print(p + .THEME+ theme(legend.position=c(.7,.9)))
 }

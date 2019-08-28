@@ -99,7 +99,7 @@ plot_cpue <- function(M, subsetby = "", xlab = "Year", ylab = "CPUE", slab = "Se
     }
 
     p  <- p + labs(x = xlab, y = ylab)
-    print(p + .THEME)
+    print(p + .THEME + theme(legend.position=c(.7,.9)))
 }
 
 

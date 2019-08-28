@@ -105,7 +105,7 @@
 #' @export
 #'
 plot_size_comps <- function(M, which_plots = "all", xlab = "Mid-point of size-class (mm)", ylab = "Proportion",
-                            slab = "Sex", mlab = "Model", tlab = "Fleet", res = FALSE)
+                            slab = "Sex", mlab = "Model", tlab = "Fleet", res = FALSE,legend_loc=c(1,1))
 {
     ylab <- paste0(ylab, "\n")
 
@@ -139,11 +139,17 @@ plot_size_comps <- function(M, which_plots = "all", xlab = "Mid-point of size-cl
         p <- p + scale_x_discrete(breaks=M[[1]]$mid_points[ix]) 
         p <- p + labs(x = xlab, y = ylab, col = mlab, fill = slab, linetype = tlab)
         p <- p + ggtitle("title")
-        p <- p + facet_wrap(~year) + .THEME
-        p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
-        p <- p + geom_text(aes(label = paste0("N = ", nsamp)), x = -Inf, y = Inf, hjust = -0.2, vjust = 1.5)
+        p <- p + facet_wrap(~year,dir="v") + .THEME + ylim(0,0.3)
+        p <- p + theme(axis.text.x = element_text(angle = 45, vjust = 0.5, size = 6),
+                       strip.text.x = element_text(margin= margin(1,0,1,0)),
+                       panel.grid.major = element_blank(), 
+                       panel.grid.minor = element_blank(),
+                       legend.position=legend_loc,
+                       panel.border = element_blank(),
+                       strip.background = element_rect(color="white",fill="white"))
+        #p <- p + geom_text(aes(label = paste0("N = ", nsamp)), x = -Inf, y = Inf, hjust = -0.2, vjust = 1.5)
     }
-    
+    #print(p)
     fun <- function(x, p)
     {
         if (length(unique(do.call(rbind.data.frame, mdf)$fleet)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$sex)) == 1 && length(unique(do.call(rbind.data.frame, mdf)$seas)) == 1)

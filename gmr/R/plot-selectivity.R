@@ -13,21 +13,24 @@
     {
         A <- M[[i]]
         # captured
-        df <- data.frame(Model = names(M)[i], type = .TYPE[1], M[[i]]$slx_capture)
+        df <- data.frame(Model = names(M)[i], type = "Capture", M[[i]]$slx_capture)
         # retained
-        dr <- data.frame(Model = names(M)[i], type = .TYPE[2], M[[i]]$slx_retaind)
+        dr <- data.frame(Model = names(M)[i], type = "Retained", M[[i]]$slx_retaind)
         # returned
-        dd <- data.frame(Model = names(M)[i], type = .TYPE[3], M[[i]]$slx_capture)
-        dd[,4:ncol(dd)] <- dd[,4:ncol(dd)] - dr[,4:ncol(dr)]
-        colnames(df) <- colnames(dr) <- colnames(dd) <- c("Model", "type", "year", "sex", "fleet", as.character(A$mid_points))
-        df$sex <- dr$sex <- dd$sex <- .SEX[df$sex + 1]
-        df$fleet <- dr$fleet <- dd$fleet <- .FLEET[df$fleet]
+        #dd <- data.frame(Model = names(M)[i], type = .TYPE[3], M[[i]]$slx_discard)
+        #dd[,4:ncol(dd)] <- df[,4:ncol(dd)] - dr[,4:ncol(dr)]
+        colnames(df) <- colnames(dr)  <- c("Model", "type", "year", "sex", "fleet", as.character(A$mid_points))
+        df$sex <- dr$sex <-  .SEX[df$sex + 1]
+        df$fleet <- dr$fleet  <- .FLEET[df$fleet]
+        #df$sex <- dr$sex <- dd$sex <- .SEX[df$sex + 1]
+        #df$fleet <- dr$fleet <- dd$fleet <- .FLEET[df$fleet]
         Mslx <- M[[i]][["slx_control"]]
         blkyr <- Mslx[Mslx[,1] > 0, 12]
         df <- dplyr::filter(df, year %in% blkyr)
         dr <- dplyr::filter(dr, year %in% blkyr)
-        dd <- dplyr::filter(dd, year %in% blkyr)
-        mdf <- rbind(mdf, reshape2::melt(df, id.var = 1:5), reshape2::melt(dr, id.var = 1:5), reshape2::melt(dd, id.var = 1:5))
+        #dd <- dplyr::filter(dd, year %in% blkyr)
+        #mdf <- rbind(mdf, reshape2::melt(df, id.var = 1:5), reshape2::melt(dr, id.var = 1:5), reshape2::melt(dd, id.var = 1:5))
+        mdf <- rbind(mdf, reshape2::melt(df, id.var = 1:5), reshape2::melt(dr, id.var = 1:5))
         mdf$variable <- as.numeric(as.character(mdf$variable))
     }
     mdf$fleet <- factor(mdf$fleet, levels = .FLEET)
@@ -57,13 +60,14 @@ plot_selectivity <- function(M,
                              xlab = "Mid-point of size class (mm)",
                              ylab = "Selectivity",
                              tlab = "Type", ilab = "Period year",
-                             nrow = NULL, ncol = NULL)
+                             nrow = NULL, ncol = NULL, legend_loc=c(1.05,.05))
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     
     mdf <- .get_selectivity_df(M)
-    
+    ncol <-length(unique(mdf$fleet))
+    nrow <-length(unique(mdf$Model))
     p <- ggplot(mdf) + expand_limits(y = c(0,1))
     if (.OVERLAY)
     {
@@ -83,10 +87,22 @@ plot_selectivity <- function(M,
         p <- p + facet_wrap(~Model + fleet + type, nrow = nrow, ncol = ncol)
     }
     p <- p + labs(y = ylab, x = xlab, col = ilab, linetype = tlab) +
-        scale_linetype_manual(values = c("solid", "dashed", "dotted"))
-    print(p + .THEME)
+        scale_linetype_manual(values = c("solid", "dashed", "dotted")) + 
+      .THEME
+    p <- p + theme(strip.text.x = element_text(margin= margin(1,0,1,0)),
+    panel.grid.major = element_blank(), 
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank(),
+    strip.background = element_rect(color="white",fill="white"))
+    
+    print(p )
 }
 
+
+
+#mdf[mdf$fleet=="Pot" & mdf$type=="Retained",]
+#mdf[mdf$fleet=="Pot" & mdf$type=="Discarded",]
 
 #' Plot selectivity 3D
 #'

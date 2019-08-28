@@ -73,37 +73,37 @@ plot_F <- function(M, scales = "free_y",
     ylab <- paste0(ylab, "\n")
 
     m <- .get_F_df(M)
-    mdf <- m$F
+    mdf<-m$F
     mdf$season <- paste0("Season: ", mdf$season)
     fbar <- m$fbar
 
     p <- ggplot(data = mdf) +
-        geom_hline(data = fbar, aes(yintercept = fbar), color = "red", linetype = "dashed", alpha = 0.5) +
-        geom_line(aes(year, F, group = 1)) +
+        geom_hline(data = fbar, aes(yintercept = fbar, color = Model), linetype = "dashed", alpha = 0.5) +
+        geom_line(aes(year, F,col=model, group = 1)) +
         facet_grid(fleet ~ season, scales = scales) +
         labs(x = xlab, y = ylab)
     
-    if (.OVERLAY)
-    {
-        if (length(M) == 1 && length(unique(mdf$sex)) == 1)
-        {
-            #p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4) +
-            #    facet_wrap(~fleet + type + units, scales = scales)
-        } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
-            #p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
-            #    facet_wrap(~fleet + type + units, scales = scales) +
-            #    labs(col = mlab)
-        } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
-            #p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4) +
-            #    facet_wrap(~sex + fleet + type + units, scales = scales)
-        } else {
-            #p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
-            #    facet_wrap(~sex + fleet + type + units, scales = scales) +
-            #    labs(col = mlab)
-        }
-    } else {
-        #p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4)
-        #p <- p + facet_wrap(~model + sex + fleet + type, scales = scales)
-    }
-    print(p + .THEME)
+    # if (.OVERLAY)
+    # {
+    #     if (length(M) == 1 && length(unique(mdf$sex)) == 1)
+    #     {
+    #         p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4) +
+    #             facet_wrap(~fleet + type + units, scales = scales)
+    #     } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
+    #         p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
+    #             facet_wrap(~fleet + type + units, scales = scales) +
+    #             labs(col = mlab)
+    #     } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
+    #         p <- p + geom_line(aes(x = as.integer(year), y = predicted), alpha = 0.4) +
+    #             facet_wrap(~sex + fleet + type + units, scales = scales)
+    #     } else {
+    #         p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4) +
+    #             facet_wrap(~sex + fleet + type + units, scales = scales) +
+    #             labs(col = mlab)
+    #     }
+    # } else {
+    #     #p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4)
+    #     p <- p + facet_wrap(~model + fleet + type, scales = scales)
+    # }
+    print(p + .THEME+ theme(legend.position=c(.7,.9)))
 }
