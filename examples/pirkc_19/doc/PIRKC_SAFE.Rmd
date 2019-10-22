@@ -1,0 +1,1160 @@
+---
+author: "Cody Szuwalski"
+date: "September 16, 2019"
+output:
+  pdf_document:
+    fig_caption: yes
+    fig_height: 4
+    fig_width: 6
+header-includes:   
+-  \pagenumbering{gobble}
+number_sections: yes
+csl: fish-and-fisheries.csl
+toc: yes
+title: "2019 assessment for Pribilof Islands red king crab"
+---
+
+\newpage
+
+```{r,echo=F,message=FALSE,warning=F, include=F}
+library(knitr)
+library(ggplot2)
+library(PBSmodelling)
+library(pander)
+library(coda)
+library(maps)
+library(lattice)
+library(PBSmapping)
+library(mapdata)    #some additional hires data
+library(maptools)   #useful tools such as reading shapefiles
+library(mapproj)
+library(plotrix)
+library(RColorBrewer)
+library(miceadds)
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+
+#==make it so the big figures are plotted once and then not again (e.g. survey results)
+
+#require(gmr)
+in_path<-"C:/gmacs/gmr/R/"
+source.all( path=in_path, grepstring="\\.R",  print.source=FALSE, file_sep="__"  )
+
+mod_names <- c("19.1","19.2","19.3","19.4","19.5")
+.MODELDIR = c("./4_bio_M_18/","./4_bio_M_18_trawl/","./4_bio_M_18_molt/","./4_bio_M_21/","./4_bio_M_26/")
+.THEME    = theme_bw(base_size = 12, base_family = "") +
+            theme(strip.text.x = element_text(margin= margin(1,0,1,0)),
+                  panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank(),
+                  panel.border = element_blank(),
+                  panel.background = element_blank(),
+                  strip.background = element_rect(color="white",fill="white"))
+.OVERLAY  = TRUE
+.SEX      = c("Aggregate","Male")
+.FLEET    = c("Pot","Trawl bycatch","NMFS Trawl")
+.TYPE     = c("Retained","Discarded","Discarded")
+.SHELL    = c("Aggregate")
+.MATURITY = c("Aggregate")
+.SEAS     = c("Annual")
+.FIGS     =c("./4_bio_M_18/","./4_bio_M_18_trawl/","./4_bio_M_18_molt/","./4_bio_M_21/","./4_bio_M_26/")
+
+fn       <- paste0(.MODELDIR, "gmacs")
+M        <- lapply(fn, read_admb) #need .prj file to run gmacs and need .rep file here
+names(M) <- mod_names
+chosen_ind<-4
+ABC_buff<-0.25
+
+cbind(M[[1]]$mod_yrs, M[[1]]$recruits)
+
+#==random effects model
+re_out<-readList("RE model/rwout.REP")
+run_avg<-rep(0,length(re_out$srv_est))
+srv_var<-(re_out$srv_sd*re_out$srv_sd)^2
+
+for(x in 2:(length(run_avg)-1))
+  run_avg[x]<-sum(re_out$srv_est[(x-1):(x+1)]/srv_var[(x-1):(x+1)]) / sum(1/srv_var[(x-1):(x+1)])
+
+x<-length(run_avg)
+run_avg[x]<-sum(re_out$srv_est[(x-1):(x)]/srv_var[(x-1):(x)]) / sum(1/srv_var[(x-1):(x)])
+
+#==calculate BMSY for both
+RE_BMSY<-mean(re_out$biomA[re_out$yrs>1990])
+RA_BMSY<-mean(run_avg[re_out$yrs>1990])
+
+RE_BMSY_alt<-mean(re_out$biomA[re_out$yrs>2000])*0.35
+RA_BMSY_alt<-mean(run_avg[re_out$yrs>2000])*0.35
+
+RE_MMB<-re_out$biomA[length(re_out$yrs)]*exp(-(4/12)*0.18)
+RA_MMB<-run_avg[length(re_out$yrs)]*exp(-(4/12)*0.18)
+
+
+IA_MMB<-M[[chosen_ind]]$ssb[length(M[[chosen_ind]]$mod_yrs)]*exp(-(4/12)*M[[chosen_ind]]$M[1])
+IA_BMSY<-mean(M[[chosen_ind]]$ssb[which(M[[chosen_ind]]$mod_yrs==1991):length(M[[chosen_ind]]$mod_yrs)],na.rm=T)
+IA_BMSY_alt<-mean(M[[chosen_ind]]$ssb[which(M[[chosen_ind]]$mod_yrs==2000):length(M[[chosen_ind]]$mod_yrs)],na.rm=T)*0.35
+
+beta<-0.25
+alpha<-0.05
+
+RE_status<-RE_MMB/RE_BMSY
+RA_status<-RA_MMB/RA_BMSY
+IA_status<-IA_MMB/IA_BMSY
+
+RE_status_alt<-RE_MMB/RE_BMSY_alt
+RA_status_alt<-RA_MMB/RA_BMSY_alt
+IA_status_alt<-IA_MMB/IA_BMSY_alt
+
+#==calculate OFL for both
+#==final year, decremented by 1 month of natural mortality
+RE_OFL<-0
+if(RE_status>beta)
+{
+  RE_OFL<-RE_MMB*(1-exp(-0.18))
+ if(RE_status<1)
+ {
+  RE_OFL <- RE_MMB*(1-exp(-((0.18*(RE_status-alpha))/(1-alpha))))
+ }
+}
+
+RA_OFL<-0
+if(RA_status>beta)
+{
+  RA_OFL<-RA_MMB*(1-exp(-0.18))
+ if(RA_status<1)
+ {
+  RA_OFL <- RA_MMB*(1-exp(-((0.18*(RA_status-alpha))/(1-alpha))))
+ }
+}
+
+IA_OFL<-0
+if(IA_status>beta)
+{
+  IA_OFL<-IA_MMB*(1-exp(-M[[chosen_ind]]$M[1]))
+ if(IA_status<1)
+ {
+  IA_OFL <- IA_MMB*(1-exp(-((M[[chosen_ind]]$M[1]*(IA_status-alpha))/(1-alpha))))
+ }
+}
+
+
+#===================================
+# OFL with the unfished 35%
+
+RE_OFL_alt<-0
+if(RE_status>beta)
+{
+  RE_OFL_alt<-RE_MMB*(1-exp(-0.18))
+ if(RE_status<1)
+ {
+  RE_OFL_alt <- RE_MMB*(1-exp(-((0.18*(RE_status_alt-alpha))/(1-alpha))))
+ }
+}
+
+RA_OFL_alt<-0
+if(RA_status>beta)
+{
+  RA_OFL_alt<-RA_MMB*(1-exp(-0.18))
+ if(RA_status<1)
+ {
+  RA_OFL_alt <- RA_MMB*(1-exp(-((0.18*(RA_status_alt-alpha))/(1-alpha))))
+ }
+}
+
+IA_OFL_alt<-0
+if(IA_status_alt>beta)
+{
+  IA_OF_altL<-IA_MMB*(1-exp(-M[[chosen_ind]]$M[1]))
+ if(IA_status_alt<1)
+ {
+  IA_OFL_alt <- IA_MMB*(1-exp(-((M[[chosen_ind]]$M[1]*(IA_status_alt-alpha))/(1-alpha))))
+ }
+}
+
+IA_MMB_all<-rep(0,length(M))
+IA_BMSY_all<-rep(0,length(M))
+IA_BMSY_alt_all<-rep(0,length(M))
+IA_OFL_all<-rep(0,length(M))
+IA_OFL_alt_all<-rep(0,length(M))
+IA_status_all<-rep(0,length(M))
+IA_status_alt_all<-rep(0,length(M))
+
+for(x in 1:length(M))
+{
+IA_MMB_all[x]<-M[[x]]$ssb[length(M[[x]]$mod_yrs)]*exp(-(4/12)*M[[x]]$M[1])
+IA_BMSY_all[x]<-mean(M[[x]]$ssb[which(M[[x]]$mod_yrs==1991):length(M[[x]]$mod_yrs)],na.rm=T)
+IA_BMSY_alt_all[x]<-mean(M[[x]]$ssb[which(M[[x]]$mod_yrs==2000):length(M[[x]]$mod_yrs)],na.rm=T)*0.35
+IA_status_all[x]<-IA_MMB_all[x]/IA_BMSY_all[x]
+IA_status_alt_all[x]<-IA_MMB_all[x]/IA_BMSY_alt_all[x]
+
+IA_OFL_all[x]<-0
+if(IA_status_all[x]>beta)
+{
+  IA_OFL_all[x]<-IA_MMB_all[x]*(1-exp(-M[[x]]$M[1]))
+ if(IA_status_all[x]<1)
+ {
+  IA_OFL_all[x] <- IA_MMB_all[x]*(1-exp(-((M[[x]]$M[1]*(IA_status_all[x]-alpha))/(1-alpha))))
+ }
+}
+
+IA_OFL_alt_all[x]<-0
+if(IA_status_alt_all[x]>beta)
+{
+  IA_OFL_alt_all[x]<-IA_MMB_all[x]*(1-exp(-M[[x]]$M[1]))
+ if(IA_status_all[x]<1)
+ {
+  IA_OFL_alt_all[x] <- IA_MMB_all[x]*(1-exp(-((M[[x]]$M[1]*(IA_status_alt_all[x]-alpha))/(1-alpha))))
+ }
+}
+
+}
+
+
+BMSY_in<-round(c(RA_BMSY,RE_BMSY,rep(0,length(mod_names))),0)
+BMSY_alt_in<-round(c(RA_BMSY_alt,RE_BMSY_alt,rep(0,length(mod_names))),0)
+MMB_in<-round(c(RA_MMB,RE_MMB,rep(0,length(mod_names))),0)
+OFL_in<-round(c(RA_OFL,RE_OFL,IA_OFL_all),0)
+OFL_alt<-round(c(RA_OFL_alt,RE_OFL_alt,IA_OFL_alt_all),0)
+
+for(x in 1:length(mod_names))
+{
+ BMSY_in[x+2]<-M[[x]]$spr_bmsy  
+ MMB_in[x+2]<-M[[x]]$pre_cpue[length(M[[x]]$mod_yrs)]
+ BMSY_in[x+2]<-mean(M[[x]]$pre_cpue[which(M[[x]]$mod_yrs==1991):length(M[[x]]$mod_yrs)],na.rm=T)
+ BMSY_alt_in[x+2]<-mean(M[[x]]$pre_cpue[which(M[[x]]$mod_yrs==2000):length(M[[x]]$mod_yrs)],na.rm=T)*0.35
+}
+
+BMSY_in<-round(BMSY_in,0)
+BMSY_alt_in<-round(BMSY_alt_in,0)
+MMB_in<-round(MMB_in,0)
+OFL_in<-round(OFL_in,0)
+OFL_alt<-round(OFL_alt,0)
+
+
+```
+
+# Executive summary
+
+1. Stock: Pribilof islands red king crab (PIRKC), *Paralithodes camtschaticus*
+2. Catches: Retained catches have not occurred since 1998/1999. Bycatch has been periodic since the late 2000s. In general, total bycatch is a small fraction of the OFL.
+3. Stock biomass: In recent years, observed mature male biomass (>120mm carapace width) peaked in 2015 and has steadily declined since then. Using a Tier 4 definition of $B_{MSY}$ based on the mean MMB over a period of time during which the stock is assumed to be fished at $F_{MSY}$ results in several models reporting an overfished stock. Using a modified Tier 4 rule that selects a period of time over which the stock is assumed to be at unfished levels and then specifying the $B_{MSY}$ as 35% of the unfished level results in no models reporting an overfished stock.
+4. Recruitment: Recruitment is only estimated in the integrated model and appears to be episodic. Survey length composition data suggest a new year class has been established recently, but its size is unclear. 
+5. Recent management statistics: PIRKC is now on a biennial assessment cycle and was last assessed in 2017.  The 2017 recommended model was the random effects model. 
+
+```{r,echo=F}
+
+ ManTable <-read.csv("ManagementTable.csv")
+ PlotTab<- data.frame(ManTable)
+ colnames(PlotTab)<-c("Year","MSST","Biomass (MMB)","TAC","Retained catch","Total catch", "OFL","ABC")
+
+ PlotTab[(nrow(PlotTab)-1),2]<-round(BMSY_alt_in[chosen_ind+2]/2,0)
+ PlotTab[(nrow(PlotTab))-1,3]<-round(MMB_in[chosen_ind+2],1)
+ PlotTab[nrow(PlotTab),7]<-round(OFL_alt[chosen_ind+2],1)
+ PlotTab[nrow(PlotTab),8]<-round(OFL_alt[chosen_ind+2],1)*.75
+ PlotTab[nrow(PlotTab),6]<- " "
+ PlotTab[is.na(PlotTab)]<-" "
+ rownames(PlotTab)<- NULL
+ pander(PlotTab,split.cells=10,caption="\\label{managementtable}Historical status and catch specifications for Pribilof Islands red king crab (t).")
+
+```
+
+```{r,echo=F}
+
+PlotTab3<-PlotTab
+for(x in 1:nrow(PlotTab3))
+  for(y in seq(2,8))
+    PlotTab3[x,y]<-round(as.numeric(unlist(PlotTab[x,y]))*0.00220462,2)
+PlotTab3[is.na(PlotTab3)]<-" "
+pander(PlotTab3,split.cells=10,caption="Historical status and catch specifications for Pribilof Islands crab (millions of lbs).")
+
+```
+
+\newpage
+
+6. 2019/2020 OFL projections: 
+
+```{r,echo=F}
+
+# year, Tier, BMSY, MMB, B/BMSY, FOFL, Years to define BMSY, natural mortality
+
+temp_OFL<-data.frame(Year = '2019/2020',
+           Tier = 4,
+           BMSY = round(BMSY_alt_in[chosen_ind+2],0),
+           MMB = round(MMB_in[chosen_ind+2],1),
+           Status = round(MMB_in[chosen_ind+2],1)/round(BMSY_alt_in[chosen_ind+2],0),
+           FOFL = 0.21,
+           Years = "2000-2018",
+           M = c("0.21"))
+           #M = c("Imm = 0.27", "Mat M = 0.26", "Mat F = 0.36"))
+pander(temp_OFL,split.cells=17,caption="Metrics used in designation of status and OFL (t). 'Years' indicate the year range over which recruitment is averaged for use in calculation of B35. 'Status' is the ratio between MMB and BMSY. 'M' is natural mortality. ")
+
+
+# for(x in 1:6)
+#   print(M[[x]]$ssb[length(M[[x]]$ssb)]/M[[x]]$spr_bmsy)
+
+```
+
+
+
+
+```{r,echo=F}
+
+# year, Tier, BMSY, MMB, B/BMSY, FOFL, Years to define BMSY, natural mortality
+
+temp_OFL[3]<-temp_OFL[3]*0.00220462
+temp_OFL[4]<-temp_OFL[4]*0.00220462
+
+pander(temp_OFL,split.cells=17,caption="Metrics used in designation of status and OFL (millions of lb.).")
+
+
+```
+
+7. Probability distributions of the OFL: No distribution of the OFL was calculated for this assessment cycle.  
+8. Basis for ABC: ABCs are calculated using a 25% buffer as recommended by the CPT and SSC in 2017.
+
+\newpage
+
+# A. Summary of major changes:
+1. Management: This is the first assessment since PIRKC shifted to a biennial management cycle in 2017.
+2. Input data: Survey and bycatch data were updated with the most recent data in this draft. Some small adjustments were made to the recent years of bycatch data after a new download from AKFIN.
+3. Assessment methodology: In addition to the 3 year running average and random effects model presented in 2017, results from integrated models developed with GMACS are also presented here. 
+4. Assessment results: Stock status depends upon the definition of $B_{MSY}$. Scenarios in which $B_{MSY}$ is defined as a range of years of biomass when the stock was fished at $F_{MSY}$ are nearly all overfished.  No scenarios in which $B_{MSY}$ is defined as 35% of 'unfished' biomass were overfished.   
+
+# B. CPT and SSC comments/requests from May 2019:
+
+The CPT and SSC had several comments from May 2019, which are listed below followed by the author's response (CSS):
+
+*SSC: The SSC recognizes the assumptions about retained fishery selectivity and bycatch selectivity that must be made in the absence of PIRKC-specific data, resulting in a tradeoff between data and assumptions. The SSC looks forward to a more complete description of these tradeoffs in the September assessment.*
+
+CSS: First, I would note that only in an integrated framework can one actually ask these questions, which is a positive point for the integrated assessment in my opinion. Second, I have included several sensitivity runs to explore the impacts of assumptions about poorly known population processes. In general, I think the improvement in understanding of the stock by incorporating other pieces of information in an integrated assessment overshadows the potential problems introduced by incomplete stock-specific information. I discuss this further below. 
+
+*SSC: The preliminary assessment noted that many of the CVs were exactly equal to one, which suggests a truncation issue. This issue should be investigated for the September assessment.*
+
+CSS: After communication with the Kodiak lab, it was determined that CVs exactly equal to 1 occur when the estimate of abundance for a given size class is determined by observations from a single survey station. This can occur in the early years of the survey data for PIRKC (i.e. pre 1990, before the population expanded) and for size classes that are a subset of all available size classes (e.g. >120mm carapace width).
+
+*SSC: The CPT recommends that the assessment author re-evaluate the assumption that the target biomass is set over a range of years over which the stock is thought to be near $B_{MSY}$. The author should propose alternatives (and justifications) for consideration in September 2019.* 
+
+CSS: I can think of two alternatives for a stock that has been rarely fished over the assessment period: 
+
+1. Identify a period of time at which the stock is at 'unfished' levels and set the $B_{MSY}$ to some fraction (e.g. 35%) of unfished biomass. This is still in the spirit of Tier 4 rules, but adjusts for the special circumstances of PIRKC. 
+2. Use Tier 3 methodologies for the stock so that reference points are a function of life history and recent productivity. This may be somewhat more difficult to justify than option #1, given some parameters determining important population processes are borrowed from another assessment (though the stocks do appear to be genetically indistinct and uncertainty resulting from the Robin Hood approach could be addressed by placing wide priors on these parameters and attempting to use Bayesian methods for assessment).
+
+I present option #1 within this document and look forward to discussion about #2 at the CPT meeting.
+
+*SSC: For September 2019, the assessment author proposed to present three assessment models:*
+
+* Inverse variance weighted 3-year running average of mature male biomass.
+* Random effects model fit to survey male biomass.
+* An integrated assessment model  fit to male abundance and length composition data from the NMFS summer survey.
+
+*The SSC/CPT supports the choice of these models and the additional guidance provided by the CPT: * 
+
+* Attempt to leverage information from the more data-rich BBRKC assessment. 
+* Fit the model to biomass rather than total abundance.
+* Thoroughly evaluate the relative weights given to different data components in the model, in particular the size composition data and survey biomass.
+
+CSS: Given the discussion on natural mortality in the snow crab assessment and past discussions for PIRKC, I have also added two scenarios exploring the impact of different assumptions about M. In total, I present 7 models for consideration here:
+
+* 19.01 : Inverse variance weighted, 3 year running average
+* 19.02 : Random effects model
+* 19.1  : GMACS fit to biomass with assumptions borrowed from BBRKC
+* 19.2  : 19.1 + with more of the population selected in the trawl bycatch
+* 19.3  : 19.1 + molting probability shifted to the left
+* 19.4  : 19.1 + increased M (Hamel)
+* 19.5  : 19.1 + increased M (Then)
+
+The author's preferred model is 19.4 with the modified Tier 4 definition of $B_{MSY}$.  This combination of model and HCR incorporates all available information for the stock, uses a more defensible prior for M, and addresses inconsistencies in the definition of $B_{MSY}$ for PIRKC. 
+
+\newpage
+
+# C. Introduction
+## Distribution
+Red king crabs, *Paralithodes camtschaticus*, (Tilesius, 1815) are anomurans in the family lithodidae and are distributed from the Bering Sea south to the Queen Charlotte Islands and to Japan in the western Pacific (Jensen 1995; \autoref{distribution}). Red king crabs have also been introduced in the Barents Sea (Jorstad et al. 2002). The Pribilof Islands red king crab stock is located in the Pribilof District of the Bering Sea Management Area Q. The Pribilof District is defined as Bering Sea waters south of the latitude of Cape Newenham (58 39 N lat.), west of 168 W long., east of the United States-Russian convention line of 1867 as amended in 1991, north of 54.36 N lat. between 168.00 N and 171.00 W long. and north of 55.30 N lat. between 171 00 W. long and the US-Russian boundary (\autoref{prib_area}). The distribution of red king crab within the Pribilof District is concentrated around the islands (see \autoref{map_m} for distribution in 2019).
+
+## Stock structure
+Populations of red king crab in the eastern Bering Sea (EBS) for which genetic studies have been performed appear to be composed of three stocks: Okhotsk Sea-Aleutian Islands-Norton Sound, Southeast Alaska, and the rest of the EBS (Grant and Cheng 2012).
+
+## Life history
+Red king crabs reproduce annually and mating occurs between hard-shelled males and soft-shelled females. Red king crabs do not have spermathecae and cannot store sperm, therefore a female must mate every year to produce a fertilized clutch of eggs (Powell and Nickerson 1965). A pre-mating embrace is formed 3-7 days prior to female ecdysis, the female molts, and copulation occurs within hours. The male inverts the female so they are abdomen to abdomen and then the male extends his fifth pair of periopods to deposit sperm on the female's gonopores. Eggs are fertilized after copulation as they are extruded through the gonopores located at the ventral surface of the coxopides of the third periopods. The eggs form a spongelike mass, adhering to the setae on the pleopods where they are brooded until hatching (Powell and Nickerson 1965). 
+
+Fecundity estimates are not available for Pribilof Islands red king crab, but range from 42,736 to 497,306 eggs per female for Bristol Bay red king crab (Otto et al. 1990). The estimated size at 50 percent maturity of female Pribilof Islands red king crabs is approximately 102 mm carapace length (CL) which is larger than 89 mm CL reported for Bristol Bay and 71 mm CL for Norton Sound (Otto et al. 1990). Size at maturity has not been determined specifically for Pribilof Islands red king crab males, however, approximately 103 mm CL was reported for eastern Bering Sea male red king crabs (Somerton 1980). In the recent history of the assessment of PIRKC, crab greater than 120 mm carapace width were used as a measure of mature male bioamss. Early studies predicted that red king crab become mature at approximately age 5 (Powell 1967; Weber 1967); however, Stevens (1990) predicted mean age at maturity in Bristol Bay to be 7 to 12 years, and Loher et al. (2001) predicted age at maturity to be approximately 8 to 9 years after settlement. 
+
+Natural mortality of Bering Sea red king crab stocks is poorly known (Bell 2006). Based upon a long-term laboratory study, longevity of red king crab males is approximately 21 years and less for females (Matsuura and Takeshita 1990). Siddeek et al. (2002) reviewed natural mortality estimates from various sources. Natural mortality estimates based upon historical tag-recapture data ranged from 0.001 to 0.93 for crabs 80-169 mm CL with natural mortality increasing with size. Natural mortality estimates based on more recent tag-recovery data for Bristol Bay red king crab males ranged from 0.54 to 0.70, however, the authors noted that these estimates appear high considering the longevity of red king crab. Natural mortality estimates based on trawl survey data vary from 0.08 to 1.21 for the size range 85-169 mm CL, with higher mortality for crabs <125 mm CL. In an earlier analysis that utilized the same data sets, Zheng et al. (1995) concluded that natural mortality is dome shaped over length and varies over time. Natural mortality was set at 0.2 for Bering Sea king crab stocks (NPFMC 1998) and was changed to 0.18 with Amendment 24. Natural mortality based on empirical estimates for a maximum age of 21 from Hoenig (1983), Hamel (2015), and Then et al. (2015) are 0.21, 0.26, and 0.30, respectively. Assuming a maximum age of 25 (following BBRKC) results in natural mortalities of 0.18, 0.22, 0.26 for Hoenig, Hamel, and Then methodologies, respectively.
+
+The reproductive cycle of Pribilof Islands red king crabs has not been established, however, in Bristol Bay, timing of molting and mating of red king crabs is variable and occurs from the end of January through the end of June (Otto et al. 1990). Primiparous (i.e. brooding their first egg clutch) Bristol Bay red king crab females extrude eggs on average 2 months earlier in the reproductive season and brood eggs longer than multiparous (i.e. brooding their second or subsequent egg clutch) females (Stevens and Swiney 2007a, Otto et al. 1990), resulting in incubation periods that are approximately eleven to twelve months in duration (Stevens and Swiney 2007a, Shirley et al. 1990). Larval hatching among red king crabs is relatively synchronous among stocks and in Bristol Bay occurs March through June with peak hatching in May and June (Otto et al. 1990), however larvae of primiparous females hatch earlier than multiparous females (Stevens and Swiney 2007b, Shirley and Shirley 1989). As larvae, red king crabs exhibit four zoeal stages and a glaucothoe stage (Marukawa 1933). 
+
+Growth parameters have not been examined for Pribilof Islands red king crabs; however they have been studied for Bristol Bay red king crab. A review by the Center for Independent Experts (CIE) reported that growth parameters are poorly known for all red king crab stocks (Bell 2006). Growth increments of immature southeastern Bering Sea red king crab are approximately:  23% at 10 mm CL, 27% at 50 mm CL, 20% at 80 mm CL and 16 mm for immature crab over 69 mm CL (Weber 1967). Growth of males and females is similar up to approximately 85 mm CL, thereafter females grow more slowly than males (Weber 1967; Loher et al. 2001). In a laboratory study, growth of female red king crab was reported to vary with age; during their pubertal molt (molt to maturity) females grew on average 18.2%, whereas primiparous females grew 6.3% and multiparous females grew 3.8% (Stevens and Swiney, 2007a).  Similarly, based upon tag-recapture data from 1955-1965 researchers observed that adult female growth per molt decreases with increased size (Weber 1974). Adult male growth increment averages 17.5 mm irrespective of size (Weber 1974).
+
+Molting frequency has been studied for Alaskan red king crabs, but Pribilof Islands specific studies have not been conducted. Powell (1967) reports that the time interval between molts increases from a minimum of approximately three weeks for young juveniles to a maximum of four years for adult males. Molt frequency for juvenile males and females is similar and once mature, females molt annually and males molt annually for a few years and then biennially, triennially and quadrennial (Powell 1967). The periodicity of mature male molting is not well understood and males may not molt synchronously like females who molt prior to mating (Stevens 1990).
+
+## Management history
+Red king crab stocks in the Bering Sea and Aleutian Islands are managed by the State of Alaska through the federal Fishery Management Plan (FMP) for Bering Sea/Aleutian Islands King and Tanner Crabs (NPFMC 1998). The Alaska Department of Fish and Game (ADF&G) has not published harvest regulations for the Pribilof district red king crab fishery. The king crab fishery in the Pribilof District began in 1973 with blue king crab Paralithodes platypus being targeted (\autoref{PIRKC_BKC}). A red king crab fishery in the Pribilof District opened for the first time in September 1993. Beginning in 1995, combined red and blue king crab GHLs were established. Declines in red and blue king crab abundance from 1996 through 1998 resulted in poor fishery performance during those seasons with annual harvests below the fishery GHL. The North Pacific Fishery Management Council (NPFMC) established the Bering Sea Community Development Quota (CDQ) for Bering Sea fisheries including the Pribilof Islands red and blue king crab fisheries which was implemented in 1998. From 1999 to present the Pribilof Islands fishery was not open due to low blue king crab abundance, uncertainty with estimated red king crab abundance, and concerns for blue king crab bycatch associated with a directed red king crab fishery. Pribilof Islands blue king crab was declared overfished in September of 2002 and is still considered overfished (see Bowers et al. 2011 for a more complete management history).
+
+Amendment 21 to the BSAI groundfish FMP established the Pribilof Islands Habitat Conservation Area (\autoref{prib_area})  which prohibits the use of trawl gear in a specified area around the Pribilof Islands year round (NPFMC 1994). The amendment went into effect January 20, 1995 and protects the majority of crab habitat in the Pribilof Islands area from impacts from trawl gear. 
+         
+Pribilof Islands red king crab occur as bycatch in the eastern Bering Sea snow crab (*Chionoecetes  opilio*), eastern Bering Sea Tanner crab (*Chionoecetes bairdi*), Bering Sea hair crab (*Erimacrus isenbeckii*), and Pribilof Islands blue king crab fisheries (when there is one). Limited non-directed catch exists in crab fisheries and groundfish pot and hook and line fisheries (see bycatch and discards section below).  However, bycatch is currently very low compared to historical levels and the OFL.
+
+# D. Data
+The following sources and years of data are available: NMFS trawl survey (1976-present), retained catch (1993-present), trawl bycatch (1991-present), fixed gear bycatch (1991-present), and pot discards (1998 to present).
+
+## Retained catch
+Red king crab were targeted in the Pribilof Islands District from the 1993/1994 season to 1998/1999.  Live and deadloss landings data and effort data are available during that time period (\autoref{obscatch}), but no retained catch has been allowed since 1999.
+
+## Bycatch and discards
+Non-retained (directed and non-directed) pot fishery catches are provided for sub-legal males (<138 mm CL), legal males (>138 mm CL), and females based on data collected by onboard observers. Catch weight was calculated by first determining the mean weight (g) for crabs in each of three categories: legal non-retained, sublegal, and female. Length to weight parameters were available for two time periods: 1973 to 2009 (males: A=0.000361, B=3.16; females: A=0.022863, B=2.23382) and 2010 to 2013 (males: A=0.000403, B=3.141; ovigerous females: A=0.003593, B=2.666; non-ovigerous females: A=0.000408, B=3.128). The average weight for each category was multiplied by the number of crabs at that CL, summed, and then divided by the total number of crabs. 
+
+\begin{equation} 
+ w_{l} = \alpha l^{\beta} 
+ \end{equation}
+\begin{equation} 
+ w_{avg} =  {\frac {\sum_{l} w_{l}N_{l}}{\sum_{l} N_{l}}} 
+ \end{equation}
+
+Finally, weights, discards, and bycatch were the product of average weight, CPUE, and total pot lifts in the fishery. A 20% handling mortality rate was applied to these estimates (assumed the same as Bristol Bay red king crab).
+
+Historical non-retained catch data are available from 1998/1999 to present from the snow crab, golden king crab (*Lithodes aequispina*), and Tanner crab fisheries although data may be incomplete for some of these fisheries. Limited observer data exists prior to 1998 for catcher-processor vessels only so non-retained catch before this date is not included here. In recent years, catch of PIRKC in other crab fisheries has been almost non-existent.
+
+Bycatch from groundfish fisheries from 1989 to present are available in the AKFIN database and included in the integrated assessment as a single fishery with selectivity equal to the trawl fishery estimated in the BBRKC assessment (\autoref{bycatch}). See Calahan et al. 2010 for a description of the methodology used to develop these data. 
+
+## Catch-at-length
+Catch-at-length data are not available for this fishery.
+
+## Survey abundance and length composition
+The most up-to-date NOAA Fisheries EBS bottom trawl survey results are included in this SAFE report (1976-2019; see Lang et al. 2018 for methodology). Data available for estimating the abundance of crab around the Pribilof Islands are relatively sparse.  Male abundance varies widely over the history of the survey time series and uncertainty around area-swept estimates of abundance is large due to relatively low sample sizes (\autoref{obscrab_stations}). Red king crab have been observed at 35 unique stations of the 44 stations in the Pribilof District over the years 1976 to present (22 stations on the 400 $nm^{2}$ grid).  The number of stations at which at least one crab was observed in a given year ranges from 0-14 over the period from 1976-present (\autoref{stations_w_crabs}). Male crabs were observed at 12 stations in the Pribilof District during the 2019 survey. Although estimated numbers at length are variable from year to year, 3 to 4 cohorts can be discerned in the length composition data (\autoref{lenplot_m}).  
+
+The centers of distribution for both males and females have moved within a 40 nm by 40 nm region around St. Paul Island. The center of the red king crab distribution moved to within 20 nm of the northeast side of St. Paul Island as the population abundance increased in the 1980s and remained in that region until the 1990s. Since then, the centers of distribution have generally been located closer to St. Paul Island. Currently, the largest tows were observed north and east of St. Paul Island (\autoref{map_m}). Mature male biomass (>120 mm) at the time of the survey has declined in recent years (\autoref{survey_num}).  However, a potential recruitment event occurred in recently (\autoref{lenplot_m}) and has been observed in the survey data for the past two years. Given the variability in the survey data, more observations will be needed to corroborate this observation.  
+
+# E. Analytical approaches
+## History of modeling
+An inverse-variance weighted 3-year running average of male biomass (>=120mm) based on densities estimated from the NMFS summer trawl survey has been used in past years to set allowable catches.  In 2017, biomass and derived management quantities were also estimated by several iterations of a random effects method, one of which was selected by the CPT as the chosen model. The Tier 4 harvest control rule (HCR) is used in conjunction with estimates of MMB to calculate the OFL. In the Tier 4 HCR, natural mortality is used as a proxy for the fishing mortality at which maximum sustainable yield occurs ($F_{MSY}$) and target biomasses are set by identifying a range of years over which the stock was thought to be near $B_{MSY}$. The Tier 4 $B_{MSY}$ proxy for PIRKC was calculated in 2017 as the average of the 1991/92 to the present year of observed survey data projected forward to February 15, removing the observed catch. Given the fishing history of PIRKC, accommodating this stock with the current Tier 4 rule is challenging, so an alternate version is presented in this assessment (see below). This year, an integrated assessment developed with GMACS is also presented for comparison with the other methods. Below are brief descriptions of each methodology
+
+## Running average
+An inverse variance weighted 3 year running average of mature male biomass at survey time was calculated by:
+
+\begin{equation}
+ RA_{t} = \frac{\sum_{t-1}^{t+1} MMB_{t}/\sigma_{t}^{2}}{\sum_{t-1}^{t+1} 1/\sigma_{t}^{2}}
+ \end{equation}
+ 
+where $MMB_{t}$ is the estimated mature male biomass (>=120 mm carapace width) from the survey data and $\sigma_{t}^{2}$ are the associated variances (\autoref{survey_num}).
+
+## Random effects model
+A random effects model was fit to the survey male biomass (>=120mm) for estimation of current biomass, MMB at mating, OFL, and ABC.  This model was developed for use in NPFMC groundfish assessments and uses the same input data as the running average model. The likelihood equation for the random effects model is:
+
+\begin{equation}
+ \sum_{i=1} 0.5(log(2\pi\sigma^{2}_{i})+\frac{(\hat{B}_{i} - B_{i})^2}{\sigma^{2}_{i}}) + 
+ \sum_{t=2} 0.5(log(2\pi\sigma^{2}_{p})+\frac{(\hat{B}_{t-1} - \hat{B}_{t})^2}{\sigma^{2}_{p}})
+ \end{equation}
+
+where $B_{i}$ is the observed biomass in year i, $\hat{B}_{t}$ is the model estimated biomass in year t, $\sigma^{2}_{i}$ is the variance of observed biomass in year i, $\sigma^{2}_{p}$ is the variance of the deviations in log survey biomass between years (i.e. process error variance). $\sigma^{2}_{p}$ was estimated as $e^{2\lambda}$, where $\lambda$ is a parameter estimated in the random effects model.
+
+Iterations performed to address problems in convergence for the 2017 assessment by adding priors on variance components contained an error in the modified .TPL file used (Turnock et al., 2016 & Turnock, pers. comm.). Turnock suggested trying to fit the original model with updated data to see if it converged; it did. Consequently, the presented random effect model is the 'standard' version of the random effects code used in NPFMC ground fish assessments. The general result of fitting of the running average and random effects model is a smoothing of the time series of biomass estimated from the survey (\autoref{MMB_comp}).
+
+## Integrated assessment model
+
+Results from an integrated assessment framework have been presented since 2014 (Szuwalski, Turnock and Foy, 2015), but this year the integrated assessment was implemented using the general model for assessing crustacean stocks, GMACS (Ianelli, pers. com.). Previous integrated assessments fit to male abundance, but this iteration fit male biomass >120 mm carapace width to facilitate comparison with the other assessment methods. Retained catches and bycatch were fit using assumed selectivities from the BBRKC assessment (Zheng et al., 2018). Growth was estimated and informed by cohorts moving through the population and assumptions about natural mortality and molting probabilities. Molting probabilities and survey catchability were fixed based on the estimates from the 2018 BBRKC assessment. 120 parameters were estimated (\autoref{est_pars}) and 7 parameters were fixed (\autoref{fixpar}). Several different scenarios are presented for the integrated assessment to explore the impact of the assumptions about poorly known population processes on management advice, including sensitivities to trawl selectivity, molting probabilities, and natural mortality. A bin size of 5 mm was selected to model numbes at length in the integrated assessment based on Szuwalski (2015).
+
+## Fits to data and estimated and assumed population processes
+### Survey biomass and length composition data
+Fits to the survey biomass varied by model; models with higher M were able to respond more strongly to interannual changes in biomass (\autoref{survey_num}). The base model (19.1) that informed assumed parameters by estimates from the BBRKC assessment was the only model that did not display an uptick in predicted biomass for the terminal year of biomass. Although a relatively coherent story of 3 to 4 cohorts moving through the population were captured by all models (save 19.5, which identified 4), there were sometimes substantial differences between the fits to the size composition data among models (\autoref{sizecomps}). One of the largest differences comes in the last two years of size composition data. Model 19.1 does not fit what appear to be a newly established cohort, while models 19.2, 19.3, and 19.4 fit them closely.  Differences in fits to the size composition data are likely related to differences in estimated survey selectivity (\autoref{predselect}).  The slope parameter ('growth_cv' in GMACS) for the logistic function varied among models (\autoref{est_pars}). Trajectories of predicted mature male biomass at the time of mating were similar across models, with notable departures in the final year and from model 19.5 (\autoref{predmmb}).  Model 19.4 has the best fits of the models that used parameters estimated in the BBRKC assessment (\autoref{nlogl}).
+
+### Retained catches, bycatches, and estimated fishing mortality
+Retained catches and bycatches were fit essentially identically by all models (\autoref{catchfits}), but the inferred influence of the fishery on the population as seen through the estimated fishing mortality varied by model (\autoref{predfmort}). Model 19.2 has the highest estimated fishing mortality, model 19.1 had the highest bycatch mortality, and model 19.5 had the smallest estimated fishing and bycatch mortality.
+
+### Molting probability and growth
+Growth was estimated within each model and varied considerably among models (\autoref{growth}). Molting probability was fixed according to the estimates from the 2018 BBRKC assessment, except for one model (19.3), which shifted the curve to the left 10 mm (\autoref{molt}). No growth data exist to fit to, so the information to estimate growth comes from the modes of the survey size composition data, natural mortality, and probability of molting by size. Still, the range of growth increments from all models are roughly consistent with studies done for red king crab elsewhere.
+
+### Estimated recruitment
+Three to four large year classes are estimated for each model. Model 19.1 does not fit the recent length comp data and does not estimate any recruitment in the 2010s. Model 19.5 estimates an extra cohort in 2001 that the other models do not.  The size and exact timing of cohorts that all models agree on vary, depending upon the assumptions made about other life history processes (\autoref{recruits}). The second recruitment pulse (around the early 1990s) occurs in different years for different models. This is primarily a result of different fits to somewhat noisy length compositions in 1996-98.
+
+# F. Calculation of reference points
+## Tier 4 OFL and $B_{MSY}$
+Tier 4 control rules use natural mortality as a proxy for $F_{MSY}$ and calculates a proxy for $B_{MSY}$ by averaging the biomass over a period of time when the stock is thought to have been at $B_{MSY}$.  A Tier 4 OFL is calculated by applying a fishing mortality determined by the harvest control rule below to the mature male biomass at the time of fishing. 
+
+\begin{equation}
+ F_{OFL} =
+ \begin{cases}
+ Bycatch only & if \frac{MMB}{MMB_{MSY}} \leq 0.25 \\[3ex]
+ \frac {\lambda M ( \frac {MMB}{MMB_{MSY}} - \alpha)}{1-\alpha}  & if 0.25 < \frac {MMB}{MMB_{MSY}} < 1 \\[3ex]
+ \lambda M & if MMB > MMB_{MSY}
+\end{cases}
+\end{equation}
+
+Where MMB is the mature male biomass projected to the time of mating, $MMB_{MSY}$ is the average mature male biomass over the years 1991-present, M is natural mortality, and $\alpha$ determines the slope of the descending limb of the HCR (here set to 0.05).  Two different versions of $B_{MSY}$ are calculated for the 7 models presented: the status quo and one in which the average MMB from 2000-present is taken as an 'unfished' biomass and $B_{MSY}$ is specified as 35% of that unfished biomass. Selecting a range of years over which the population is unfished is difficult, particularly for a population driven by sporadic recruitment. Here the year 2000 was selected as the beginning of the 'unfished' period because fishing ceased in the 1998/1999 season. The harvest control rule is used to calculate two OFLs for each model using each of these reference points.
+
+A large range of terminal year MMBs were estimated by the presented scenarios (`r paste(range(MMB_in)[1],"-",range(MMB_in)[2],sep='')` t). Similarly, the resulting $B_{MSY}$ varied widely (status quo range: `r paste(range(BMSY_in)[1],"-",range(BMSY_in)[2],sep='')` t; modified range: `r paste(range(BMSY_alt_in)[1],"-",range(BMSY_alt_in)[2],sep='')` t) along with the calculated OFLs (status quo range: `r paste(range(OFL_in)[1],"-",range(OFL_in)[2],sep='') ` t; modified range: `r paste(range(OFL_alt)[1],"-",range(OFL_alt)[2],sep='') ` t). In general, fewer stocks were overfished and OFLs were larger with the modified $B_{MSY}$ (\autoref{man_quant}). 
+
+## Acceptable biological catches
+ABCs are calculated for other crab stocks in the Bering Sea by multiplying the OFL by a buffer determined by the CPT and SSC. Stocks with similar levels of uncertainty use a buffer of 25%.  The ABC for the author's preferred model `r mod_names[chosen_ind]` is `r round(IA_OFL_alt_all[chosen_ind],0) * (1-ABC_buff)`.
+
+## Variables related to scientific uncertainty in the OFL probability distribution 
+Uncertainties in estimates of biomass for Pribilof Islands red king crab were relatively high due to small sample sizes. The coefficient of variation for the estimate of male abundance for 2018 was `r round(re_out$srv_sd[length(re_out$yrs)],2) ` and has ranged between 0.36 and 0.92 since the 1991 peak in biomass (\autoref{survey_num}). Recruitment, growth, and survey selectivity were estimated within the integrated assessment, but maturity, survey catchability, fishery selectivity, and natural mortality were fixed to values from the BBRKC assessment. Fitting to data to inform these processes might increase both the accuracy and uncertainty in estimates of management quantities. $F_{MSY}$ was assumed to be equal to natural mortality, which is poorly known. Sources of mortality from discard in the crab pot fishery and the fixed gear fishery were not included in the integrated assessment because of a lack of length data to apportion removals correctly. Including these sources of mortality may alter the estimated MMB (but probably not much given their small magnitudes). 
+
+# G. Author Recommendation
+
+The author's preferred model is `r mod_names[chosen_ind]` used with the modified definition of $B_{MSY}$ to calculate the OFL for several reasons. First, the modified definition of $B_{MSY}$ is more consistent with the intent of the tier 4 harvest control rule. The objective is to use a period of time within the fishery as a reference for sustainable exploitation; unfortunately, there are only 5 fishing years out of 39 years of the existence of an appreciable population of PIRKC.  Using the unfished state of PIRKC as the 'reference' and defining $B_{MSY}$ as a fraction of that level is a suitable compromise between the intent of the tier rule and the reality of the fishery.
+
+The use of an integrated model is also preferable to either of the smoothing algorithms previously used because it incorporates the clearest signal available to inform PIRKC population dynamics available: the length composition data from the survey. The length composition data clearly show cohorts moving through the population; the survey biomass data are exceptionally noisy.  The estimated biomasses from the integrated models are also more realistic in their dynamics than either of the smoothers. The decreases seen in the random effects model imposed by fitting to the higher observations are inconsistent with information available on natural mortality for red king crab. The time elapsed from the peaks of biomass to the troughs in the running average and random effects models is much shorter than would be expected with a natural mortality of 0.18 (or even the higher Ms considered here).
+
+The integrated model provides a platform to perform sensitivities to model assumptions and expand understanding of PIRKC population dynamics that is not available with the smoothing algorithms. The integrated models did differ in their estimates of terminal year biomass and this is likely related to the way in which each model fits the length composition data and the assumed M, which should be points for future investigation.
+
+# H. Data gaps and research priorities
+The largest data gap is the number of observations from which the population size and biomass is extrapolated and this will not likely change in the future. The small sample sizes (and no expected increases in sample size) support the use of as much of the available data as possible in assessment efforts. Catch-at-length data for the trawl fishery are also currently unavailable, but their inclusion would allow trawl fishery selectivity to be estimated and discard mortality specific to PIRKC to be incorporated into the integrated model. Research on the probability of molting at length for males would allow the use of data specific to PIRKC in specifying molting probability in the assessment.  Research aimed at the catchability and availability of PIRKC in the NMFS survey may also shed some light on divergent changes in abundance in recent years. The Bering Sea Fisheries Research Foundation (BSFRF) selectivity studies sampled crab around the Pribilof Islands in 2017 and 2018, so it is possible some analysis could be performed with those data. Retrospective analyses were not performed because the integrated assessment has not yet been accepted as the base model. Finally, Bayesian methods with diffuse priors for population processes is a potential methodology to better account for the uncertainties. 
+
+# I. Ecosystem Considerations
+The impact of a directed fishery for Pribilof Islands red king crab on the population of Pribilof island blue king crab will likely continue to be the largest ecosystem consideration facing this fishery and preclude the possibility of a directed fishery for red king crab.  Linking changes in productivity as seen in the 1980s with environmental influences is a potential avenue of research useful in selecting management strategies for crab stocks around the Pribilof Islands (e.g. Szuwalski and Punt, 2013a). It is possible that the large year class in the mid-1980s reflected changing environmental conditions, similar to proposed relationships between the Pacific Decadal Oscillation snow crab recruitment in the EBS (Szuwalski and Punt, 2013b; overland et al., 2008).  Ocean acidification also appears to have a large detrimental effect on red king crab (Long et al., 2013), which may impact the productivity of this stock in the future.
+
+
+# J. References
+
+Some references are not cited, but were retained in this list given relevance to PIRKC.
+
+Bell, M. C. 2006. Review of Alaska crab overfishing definitions:  Report to University of Miami Independent System for peer reviews. April 24-28, 2006 Seattle, Washington, 35 p.
+
+Bowers, F., M. Schwenzfeier, K. Herring, M. Salmon, H. Fitch, J. Alas, B. Baechler. 2011. Annual management report for the commercial and subsistence shellfish fisheries of the Aleutian Islands, Bering Sea, and the Westward Regions Shellfish Observer Program, 2009/2010.
+
+Cahalan, J., J. Mondragon, and J. Gasper. 2010. Catch sampling and estimation in the Federal groundfish fisheries off Alaska. U.S. Dep.
+Commer., NOAA Tech. Memo. NMFS-AFSC-205, 42 p. 
+
+Grant, S.G. and Cheng, @. 2012. Incorporating deep and shallow components of genetic structure into the management of Alaskan red king crab. Evol. Appl. 5(8): 820-837.
+
+Hamel, O. 2015. A method for calculating a meta-analytical prior for the natural mortality rate using multiple life history correlates. ICES Journal of Marine Science. 72: 62-69.
+
+Hoenig, J. 1983.  Empirical use of longevity data to estimate mortality rates.  Fish. Bull. 82: 898-903.
+
+Jensen, G.C. 1995. Pacific Coast Crabs and Shrimps. Sea Challengers, Monterey, California, 87p.
+
+Jørstad, K.E., E. Farestveit, H. Rudra, A-L. Agnalt, and S. Olsen. 2002. Studies on red 	king crab (Paralithodes camtschaticus) introduced to the Barents Sea, p. 425-438. In A. J. Paul, E. G. Dawe, R. Elner, 
+G. S. Jamieson, G. H. Kruse, R. S. Otto, B. Sainte-Marie, T. C. Shirley and D. Woodby (editors), Crabs in cold water 	regions:  biology, management, and economics. Alaska Sea Grant College Program Report No. AK-SG-02-01, University of Alaska, Fairbanks, AK.
+
+Lang, C. A., J. I. Richar, and R. J. Foy. 2019. The 2018 eastern Bering Sea continental shelf and northern Bering Sea trawl surveys: Results for commercial crab species. U.S. Dep. Commer., NOAA Tech. Memo. NMFS-AFSC-386, 220 p.
+
+Livingston, P. A., A. Ward, G. M. Lang, and M.S. Yang. 1993. Groundfish food habits and predation on commercially important prey species in the eastern Bering Sea from 1987 to 1989. United States Department of Commerce, NOAA Technical Memorandum. NMFD-AFSC-11, 192 p.
+
+Livingston, P.A. 1989. Interannual trends in Pacific cod, Gadus macrocephalus, predation on three commercially important crab species in the Eastern Bering Sea. Fishery Bulletin 87:807-827.
+
+Loher, T. and D.A. Armstrong. 2005. Historical changes in the abundance and distribution of ovigerous red king crabs (Paralithodes camtschaticus) in Bristol Bay (Alaska), and potential relationship with bottom temperature. Fisheries Oceanography 14:292-306.
+
+Loher, T., D.A. Armstrong, and B. G. Stevens. 2001. Growth of juvenile red king crab (Paralithodes camtschaticus) in Bristol Bay (Alaska) elucidated from field sampling and analysis of trawl-survey data. Fishery Bulletin 99:572-587.
+
+Long, W.C., Swiney, K.M., Harris, C., Page, H.N., Foy, R.J. 2013. Effects of ocean acidification on juvenile red king crab (Paralithodes camtschaticus) and Tanner crab (Chionoecetes bairdi) growth, condition, calcification, and survival. PLoS ONE 8(4): e60959.
+
+Marukawa, H. 1933. Biological and fishery research on Japanese king crab Paralithodes camtschatica (Tilesius). Fish. Exp. Stn, Tokyo 4:1-152.
+
+Matsuura, S. and Takeshita, K. 1990. Longevity of red king crab, Paralithodes camtschatica, revealed by long-term rearing study, p. 65-90. In B. Melteff (editor) International Symposium on King and Tanner crabs. Alaska Sea Grant College Program Report No. 90-04, University of Alaska Fairbanks, AK.
+
+NMFS. 2000. Endangered Species Act Section 7 Consultation Biological Assessment:  Crab fisheries authorized under the Fishery Management Plan for Bering Sea/Aleutian Islands king and Tanner crabs. National Marine Fisheries Service, Alaska Region, 14 p.
+
+NMFS. 2002. Endangered Species Act Section 7 Consultation Biological Assessment:  Crab fisheries authorized under the Fishery Management Plan for Bering Sea/Aleutian Islands king and Tanner crabs. National Marine Fisheries Service, Alaska Region, 59 p.
+
+NMFS. 2004. Final Environmental Impact Statement for Bering Sea and Aleutian Islands Crab Fisheries. National Marine Fisheries Service, Alaska Region 
+
+NPFMC (North Pacific Fishery Management Council). 1994. Environmental Assessment/Regulatory Impact/Review/Initial Regulatory Flexibility analysis for Amendment 21a to the Fishery Management Plan for Bering Sea and Aleutian Islands Groundfish. Anchorage, Alaska.
+
+NPFMC (North Pacific Fishery Management Council). 1998. Fishery Management Plan for the Bering Sea/Aleutian Islands king and Tanner crabs. Anchorage, Alaska 105 p.
+
+NPFMC (North Pacific Fishery Management Council). 2003. Environmental Assessment for Amendment 17 to the Fishery Management Plan for the king and Tanner crab fisheries in the Bering Sea/Aleutian Islands:  A rebuilding plan for the Pribilof Islands blue king crab stock. Anchorage, Alaska 87 p.
+
+NPFMC (North Pacific Fishery Management Council). 2008. Environmental Assessment for Amendment 24 to the Fishery Management Plan for the king and Tanner crab fisheries in the Bering Sea/Aleutian Islands:  to revise overfishing definitions. Anchorage, Alaska 194 p.
+
+Otto R.S., R.A. MacIntosh, and P.A. Cummiskey. 1990. Fecundity and other reproductive parameters of female red king crab (Paralithodes camtschatica) in Bristol Bay and Norton Sound, Alaska, p. 65-90 In B. Melteff (editor) Proceedings of the International Symposium on King and Tanner crabs. Alaska Sea Grant College Program Report No. 90-04, University of Alaska Fairbanks, AK.
+
+Overland, J., Rodionov, S., Minobe, S., and Bond, N. 2008. North Pacific regime shifts: definitions, issues, and recent transitions. Progress in Oceanography, 77: 92-102.
+
+Powell G.C. and R.B. Nickerson. 1965. Reproduction of king crabs, Paralithodes camtschatica (Tilesius). Journal of Fisheries Research Board of Canada 22:101-111.
+
+Powell, G.C. 1967. Growth of king crabs in the vicinity of Kodiak Island, Alaska. Informational Leaflet 92, Alaska Department of Fish and Game, 58 p.
+
+Punt, A.E., Szuwalski, C.S., and Stockhausen, W. 2014. An evaluation of stock-recruitment proxies and environmental change points for implementing the US Sustainable Fisheries Act. Fish. Res., 157: 28-40.
+
+Seeb J.E., Kruse G.H., Seeb L.W., Weck R.G. Proceedings of the International Symposium on King and Tanner Crabs. 1990. Genetic structure of red king crab populations in Alaska facilitates enforcement of fishing regulations; pp. 491–502. Alaska Sea Grant College Program Report, 90-04.
+
+Shirley, S. M. and T. C. Shirley. 1989. Interannual variability in density, timing and survival of Alaskan red king crab Paralithodes camtschatica larvae. Marine Ecology Progress Series 54:51-59.
+
+Shirley, T. C., S. M. Shirley, and S. Korn. 1990. Incubation period, molting and growth of female red king crabs:  effects of temperature, p. 51-63. In  B. Melteff (editor) Proceedings of the International Symposium on King and Tanner Crabs. Alaska Sea Grant College Program Report No. 90-04, University of Alaska Fairbanks, AK.
+
+Siddeek, M.S.M, L. J. Watson, S. F. Blau, and H. Moore. 2002. Estimating natural mortality of king crabs from tag recapture data, p. 51-75. In A. J. Paul, E. G. Dawe, R. Elner, G. 	S. Jamieson, G. H. Kruse, R. S. Otto, 
+B. Sainte-Marie, T. C. Shirley and D. Woodby (editors), Crabs in cold water regions:  biology, management, and economics. Alaska Sea Grant College Program Report No. AK-SG-02-01, University of Alaska, Fairbanks, AK.
+
+Somerton, D. A. 1980. A computer technique for estimating the size of sexual maturity in crabs. Canadian Journal of Fisheries and Aquatic Science 37: 1488-1494.
+
+Stevens, B.B. 1990. Temperature-dependent growth of juvenile red king crab (Paralithodes camtschatica), and its effects on size-at-age and subsequent recruitment in the eastern Bering Sea. Canadian Journal of Fisheries and Aquatic Sciences 47:1307-1317.
+
+Stevens, B.G. and K. M. Swiney. 2007b. Growth of female red king crabs Paralithodes camtshaticus during pubertal, primiparous, and multiparous molts. Alaska Fisheries Research Bulletin 12:263-270.
+
+Stevens, B.G. and K.M. Swiney. 2007a. Hatch timing, incubation period, and reproductive cycle for primiparous and multiparous red king crab Paralithodes camtschaticus. Journal of Crustacean Biology 27:37-48.
+
+Szuwalski, C.S., R. Foy and B.J. Turnock (2015). 2015 Stock assessment and fishery evaluation report for the Pribilof Island red king crab fishery of the Bering Sea and Aleutian Islands regions.  In: Bering Sea and Aleutian Islands Crab Stock Assessment and Fishery Evaluation 2015. North Pacific Fishery Management Council, P. O. Box 103136, Anchorage, Ak 99510.  
+
+Szuwalski, C.S. (2015) Biases in biomass estimates and selecting bind width in size-structured assessment methods.  Fisheries Research.
+
+Szuwalski, C.S. and Punt, A.E. 2013a. Regime shifts and recruitment dynamics of snow crab, Chionoecetes opilio, in the eastern Bering Sea. Fish. Ocean., 22(5): 345-354.
+
+Szuwalski, C. S., and Punt, A. E. 2013b. Fisheries management for regime-based ecosystems: a management strategy evaluation for the snow crab fishery in the eastern Bering Sea. ICES J. Mar. Sci.,70: 955-967.
+
+Then, A. Y., Hoenig, J. M., Hall, N. G., and Hewitt, D. A. 2015. Evaluating the predictive performance of empirical estimators of natural mortality rate using information on over 200 fish species. ICES Journal of Marine Science, 72: 82–92.
+
+Turnock, B.J., C.S. Szuwalski, and R.J. Foy. 2016.  2016 Stock assessment and fishery evaluation report for the Pribilof Island red king crab fishery of the Bering Sea and Aleutian Islands regions.  In: Bering Sea and Aleutian Islands Crab Stock Assessment and Fishery Evaluation 2016. North Pacific Fishery Management Council, P. O. Box 103136, Anchorage, Ak 99510.  
+
+Weber, D. D. 1967. Growth of the immature king crab Paralithodes camtschatica (Tilesius). Bulletin No. 21, North Pacific Commission, 53 p.
+
+Weber, D.D. 1974. Observations on growth of southeastern Bering Sea king crab, Paralithodes camtschatica, from a tag-recovery study, 1955-65. Data Report 86, National Marine Fisheries Service, 122 p.
+
+Zheng, J. and G. H. Kruse. 2000. Recruitment patterns of Alaskan crabs in relation to decadal shifts in climate and physical oceanography. ICES Journal of Marine Science 57:438-451.
+
+Zheng, J. M.C. Murphy, and G.H. Kruse. 1995. A length-based population model and stock-recruitment relationships for red king crab, Paralithodes camtschaticus, in Bristol Bay, Alaska. Canadian Journal of Fisheries and Aquatic Science 52:1229-1246.
+
+Zheng, J. and Siddeek, M.S.M. 2018. Bristol Bay red king crab stock assessment. In: Bering Sea and Aleutian Islands Crab Stock Assessment and Fishery Evaluation 2018. North Pacific Fishery Management Council, P. O. Box 103136, Anchorage, Ak 99510.
+
+
+\newpage
+
+
+# Appendix A. Data file for the reference model
+Some portions of the .DAT and .CTL files do not fit on the page. For complete .DAT files or .CTL files, contact the author.
+
+```{r eval = TRUE, include=TRUE,echo=FALSE, comment=NA }
+
+
+opts_chunk$set(fig.width = 8.5, fig.height = 11, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("4_bio_M_18/PIRKC.DAT")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+
+```
+
+\newpage
+
+# Appendix B. Control file for the reference model
+
+```{r eval = TRUE, include=TRUE,echo=FALSE, comment=NA}
+
+# Appendix C. Control file for the reference model
+opts_chunk$set(fig.width = 8.5, fig.height = 11, echo = FALSE, warning = FALSE, message = FALSE)
+ts <- readLines("4_bio_M_18/PIRKC.CTL")
+for (i in 1:length(ts)) cat(ts[i], "\n")
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F}
+
+
+#==get catch 
+mdf <- .get_catch_df(M)
+mdf<-mdf[mdf$model==mod_names[1],]
+#==massage catch
+
+casted = dcast( mdf , year~fleet )
+
+#==table catch
+kable(round(casted,0),caption="\\label{obscatch}Observed retained catches and bycatch in tonnes") 
+
+
+```
+
+
+\newpage
+
+```{r est_pars,echo=FALSE,warning=FALSE,message=F}
+
+
+Parameter<-NULL
+Estimate<-NULL
+for(z in 1:length(M))
+{
+x <- M[[z]]$fit
+i <- c(grep("theta", x$names),
+       grep("log_fbar", x$names),
+       grep("log_slx_pars", x$names),
+       grep("Grwth",x$names),
+       grep("sd_rbar",x$names)
+       )
+Parameter <- cbind(Parameter,x$names[i])
+Estimate <- cbind(Estimate,x$est[i])
+}
+SD <- x$std[i]
+
+d<-data.frame(Parameter[,1],Estimate)
+colnames(d)<-c("Parameter",mod_names)
+d[,2:ncol(d)]<-round(d[,2:ncol(d)],3)
+
+kable(d,caption="\\label{est_pars}Estimated parameters and selected derived quantities by scenario. 'Theta' parameters are scaling parameters and initial numbers at sizes. Vectors of deviations for fishing mortality and recruitment are not displayed--see their respective figures. ") 
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F}
+
+#==get catch 
+fix_par<-c("Survey catchability",
+           "Size at 50% capture in fishery",
+           "SD of above",
+           "Size at 50% capture in trawl fishery",
+           "SD of above",
+           "Size at 50% molting probability",
+           "SD of above",
+           "Natural mortality")
+
+values<-c(0.925,138,0.1,150,10,139.77,0.093,0.18)
+indat<-data.frame("Fixed parameter" = fix_par, "Value" = values)
+#==table catch
+kable(indat,caption="\\label{fixpar} Parameters fixed in the assessment") 
+
+
+```
+
+
+\newpage
+
+
+```{r,echo=FALSE,warning=FALSE,message=F}
+
+#==get catch 
+mdf <- .get_cpue_df(M)
+mdf<-mdf[mdf$Model==mod_names[1],]
+#==massage catch
+
+casted = round(dcast( mdf , year~fleet+sex  ,value.var="cpue"),0)
+casted2 =round(dcast( mdf , year~fleet+sex  ,value.var="cv"),2)
+input<-merge(casted,casted2,by='year',suffixes = c("_bio","_CV"))
+
+#==table catch
+kable(input,caption="\\label{obscpue}Observed male biomass >120 mm carapace width") 
+
+
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F}
+
+
+#==get catch 
+mdf <- .get_ssb_df(M)
+
+#==massage catch
+casted = dcast( mdf , year~Model ,value.var="ssb")
+
+#==table catch
+kable(round(casted,0),caption="\\label{est_mmb}Estimated mature male biomass by model in tonnes.") 
+
+
+```
+
+
+
+\newpage
+
+```{r,echo=F}
+
+# year, Tier, BMSY, MMB, B/BMSY, FOFL, Years to define BMSY, natural mortality
+
+#==MMB, BMSY, Status, FMSY
+
+Model_in<-c("Running average",
+            "Random effects",
+            mod_names)
+
+colnames<-c("MMB","BMSY","BMSY_alt","Status","Status_alt","OFL","OFL_alt")
+
+panda<-data.frame("MMB"=round(MMB_in,0),
+                  "BMSY"=round(BMSY_in,0),
+                  "BMSY_alt"=round(BMSY_alt_in,0),
+                  "Status"=round(MMB_in/BMSY_in,2),
+                  "Status_alt"=round(MMB_in/BMSY_alt_in,2),
+                  "OFL"=round(OFL_in,0),
+                  "OFL_alt"=round(OFL_alt,0))
+row.names(panda)<-Model_in
+pander(panda,split.cells=20,caption="\\label{man_quant}Tier 4 BMSY and alternative Tier 4 BMSY for all models with resulting status and OFLs. Models with an '_alt' suffix are calculated based on the alternative BMSY.")
+
+
+
+```
+
+
+
+```{r,echo=F}
+
+# year, Tier, BMSY, MMB, B/BMSY, FOFL, Years to define BMSY, natural mortality
+
+#==MMB, BMSY, Status, FMSY
+
+Model_in<-c(mod_names)
+ nlogl<-rep(0,length(mod_names))
+ for(x in 1:length(nlogl))
+   nlogl[x]<-M[[x]]$fit$nlogl
+
+ panda<-data.frame("Model"=Model_in,
+                  "-log(like)" = nlogl)
+ pander(panda,split.cells=20,caption="\\label{nlogl}Negative log likelihood for integrated assessments.")
+
+
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.cap="\\label{distribution}Red king crab distribution in the North Pacific"}
+
+include_graphics("Figures/distribution.png")
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=9,fig.cap="\\label{prib_area}Pribilof Island management area in the Bering Sea"}
+
+include_graphics("Figures/prib_area.png")
+
+```
+
+\newpage
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=9,fig.cap="\\label{map_m}Observed relative male abundance by survey stations in 2019."}
+
+include_graphics("Figures/all_male_density.png")
+
+```
+
+\newpage
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=5,fig.cap="\\label{PIRKC_BKC}Historical directed harvests of blue king crab and red king crab around the Pribilof Islands."}
+
+dat<-read.csv("Data/PIBKC_catches.csv",skip=4)
+dat2<-read.csv("Data/PIRKC_catches.csv")
+plot(as.numeric(gsub(",","",as.character(dat[,5])))~dat$year,type='l',col="blue",lwd=1.5,ylab="Harvest (t)",xlab="Year",las=1,bty='l')
+lines(dat2$Catch_retained*1000~dat2$Year,col="red",lwd=1.5)
+legend('topright',bty='n',legend=c("Blue king crab","Red king crab"),pch=c(15,15),col=c("Blue","Red"))
+
+
+```
+
+\newpage
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=9,fig.cap="\\label{bycatch}Bycatch by fleet by year in metric tonnes of PIRKC."}
+
+include_graphics("Figures/bycatch.png")
+
+```
+
+\newpage
+
+
+
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{obscrab_stations}Total number of observed crab by year."}
+
+data<-read.csv("actual_crab_caught.csv")
+plot(tot_obs~SurvYR,type='l',las=1,ylab='Observed crab',xlab='Year',data=data,bty='l')
+
+```
+
+\newpage
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{stations_w_crabs}The number of stations at which crab were observed."}
+
+data<-read.csv("stations_with_crab.csv")
+plot(X.1~SurvYR,type='l',las=1,xlab="Year",ylab="Stations with crab",data=data,bty='l')
+
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=5,fig.cap="\\label{lenplot_m}Observed male numbers at length by year."}
+
+par(xpd=FALSE)
+include_graphics("Figures/n_at_len_m.png")
+
+```
+
+\newpage
+
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{survey_num}Fits of integrated assesssment scenarios to mature male biomass from the NMFS summer trawl survey."}
+
+plot_cpue(M, ShowEstErr = FALSE, "NMFS Trawl", ylab = "Survey biomass")
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{MMB_comp}Comparison of estimated MMB among running average and random effects models."}
+
+
+re_out<-readList("RE model/rwout.REP")
+plot(re_out$srv_est~re_out$yrs_srv,las=1,ylim=c(0,40000),pch=16,xlab='',ylab='',bty='l')
+for(j in 1:length(re_out$yrs_srv))
+{
+ segments(x0=re_out$yrs_srv[j],x1=re_out$yrs_srv[j],
+		y0=re_out$srv_est[j]  /   exp(1.96*sqrt(log(1+re_out$srv_sd[j]^2))),
+		y1=re_out$srv_est[j] * exp(1.96*sqrt(log(1+re_out$srv_sd[j]^2))))
+}
+
+polygon(y=c(re_out$low90th,rev(re_out$upp90th)),x=c(re_out$yrs_srv,rev(re_out$yrs_srv)),
+     col="#00220033",border=F)
+lines(re_out$biomA~re_out$yrs_srv,type='l')
+
+run_avg<-rep(0,length(re_out$srv_est))
+srv_var<-(re_out$srv_sd*re_out$srv_sd)^2
+
+for(x in 2:(length(run_avg)-1))
+  run_avg[x]<-sum(re_out$srv_est[(x-1):(x+1)]/srv_var[(x-1):(x+1)]) / sum(1/srv_var[(x-1):(x+1)])
+
+x<-length(run_avg)
+run_avg[x]<-sum(re_out$srv_est[(x-1):(x)]/srv_var[(x-1):(x)]) / sum(1/srv_var[(x-1):(x)])
+lines(run_avg~re_out$yrs_srv,type='l',col=2)
+
+#==calculate BMSY for both
+RE_BMSY<-mean(re_out$biomA[re_out$yrs>1990])
+RA_BMSY<-mean(run_avg[re_out$yrs>1990])
+
+abline(h=RE_BMSY,lty=2,col=1)
+abline(h=RA_BMSY,lty=2,col=2)
+
+RE_MMB<-re_out$biomA[length(re_out$yrs)]*exp(-(4/12)*0.18)
+RA_MMB<-run_avg[length(re_out$yrs)]*exp(-(4/12)*0.18)
+
+beta<-0.25
+alpha<-0.05
+
+RE_status<-RE_MMB/RE_BMSY
+RA_status<-RA_MMB/RA_BMSY
+
+#legend("left",bty='n',legend=c("Tier 4 BMSY"),lty=c(2))
+legend("left",bty='n',legend=c("Running average BMSY","Random effects BMSY"),lty=c(2,2),col=c(2,1))
+
+#==calculate OFL for both
+#==final year, decremented by 1 month of natural mortality
+RE_OFL<-0
+if(RE_status>beta)
+{
+  RE_OFL<-RE_MMB*(1-exp(-0.18))
+ if(RE_status<1)
+ {
+  RE_OFL <- RE_MMB*(1-exp(-((0.18*(RE_status-alpha))/(1-alpha))))
+ }
+}
+
+RA_OFL<-0
+if(RA_status>beta)
+{
+  RA_OFL<-RA_MMB*(1-exp(-0.18))
+ if(RA_status<1)
+ {
+  RA_OFL <- RA_MMB*(1-exp(-((0.18*(RA_status-alpha))/(1-alpha))))
+ }
+}
+
+RA_OFL<-0
+if(RA_status>beta)
+{
+  RA_OFL<-RA_MMB*(1-exp(-0.18))
+ if(RA_status<1)
+ {
+  RA_OFL <- RA_MMB*(1-exp(-((0.18*(RA_status-alpha))/(1-alpha))))
+ }
+}
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8.5,fig.height=11,fig.cap="\\label{sizecomps}Model fits to survey size composition data. "}
+
+
+plot_size_comps(M,legend_loc=c(.95,.05))
+
+
+```
+
+\newpage
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{predselect}Estimated survey selectivity, assumed fishery selectivity, assumed trawl selectivity."}
+
+#=========================================================
+# survey selectivities, molting probability, weight at length
+#=======================================================
+plot_selectivity(M)
+
+
+```
+
+\newpage
+
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=5,fig.cap="\\label{predmmb}Model predicted mature male biomass at mating time"}
+
+plot_ssb(M)
+
+```
+
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{catchfits}Model fits to catch data."}
+
+#==cathc fits
+plot_catch(M)
+
+
+```
+
+
+\newpage
+
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{predfmort}Model predicted fishing mortalities"}
+
+
+plot_F(M)
+
+```
+
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{growth}Predicted molt increments"}
+
+
+#==growth 
+ plot_growth_inc(M)
+
+
+```
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{molt}Speified probability of molting by size (mm)"}
+
+
+#==growth 
+
+ plot_molt_prob(M)
+
+
+```
+
+
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{recruits}Estimated recruitment."}
+
+plot_recruitment(M)
+
+# fit of stock recruitment relationship
+#  fitCurve<-1
+#  if(fitCurve==1)
+#  {
+#  Recruits<-list(list())
+#  inMMB<-list(list())
+#  inFMB<-list(list())
+#  
+# for(y in 1:length(Scenarios))
+# {
+# Recruits[[y]]<-snowad.rep[[y]]$"Predicted recruitment"[LagRecs[y]:(length(snowad.rep[[y]]$"Predicted recruitment")-1)]/10000
+# inMMB[[y]]<-snowad.rep[[y]]$"Predicted mating MMB"[1:(SurvYrN[[y]]-LagRecs[y])]
+# }
+#  
+#  plot(Recruits[[1]]~inMMB[[1]],
+#      ylab="",xlab="",
+#      ylim=c(0,max(unlist(lapply(Recruits,max)))),
+#      xlim=c(0,max(unlist(lapply(inMMB,max)))),
+#      las=1,pch=16,col='white')
+# mtext(side=1,"Mature male biomass (1000 t)",line=3)
+# mtext(side=2,"Recruits (10000)",line=3)
+# 
+# for(y in 1:length(Scenarios))
+#    points(Recruits[[y]]~inMMB[[y]],col=mod_col[y],pch=16)
+# 
+# legend("topleft",bty='n',col=mod_col,pch=16,legend=ScenarioNames)
+# 
+# #ccf(Recruits[1,],inFMB[1,])
+# #plot(Recruits[1,]/max(Recruits[1,]),type="l")
+# #lines(inFMB[1,]/max(inFMB[1,],lty=2))
+# 
+# #==fit a stock recruit relationship
+# Ricker<-function(x,SpBio,Rec)
+# {
+#   alpha<-abs(x[1])
+#   beta<-abs(x[2])
+#   sigma<-abs(x[3])
+#   Pred<-SpBio*exp(alpha-beta*SpBio)
+#   loglike<- log(1/(sqrt(2*3.1415*sigma^2))) - ((log(Pred)-log(Rec))^2)/(2*sigma^2)
+#   return(sum(-1*loglike))
+# }
+
+# for(y in 1:length(Scenarios))
+# {
+# x<-c(1,1,0.5)
+# outs<-nlminb(x,Ricker,SpBio=inMMB[[y]],Rec=Recruits[[y]])
+# x<-outs$par
+#   alpha<-abs(x[1])
+#   beta<-abs(x[2])
+#   sigma<-abs(x[3])
+#   plotSpbio<-seq(1,max(unlist(lapply(inMMB,max))),10)
+#   Pred<-plotSpbio*exp(alpha-beta*plotSpbio)
+#   lines(Pred~plotSpbio,lty=y,col=y)
+# }
+
+# for(y in 1:length(Scenarios))
+# {
+#   if(y==1)
+#  {
+#   plot(snowad.rep[[y]]$"distribution of recruits to length bins"~LengthBins[[y]],yaxt='n',type='l',xlab="",ylab='n')
+#   axis(side=2,las=1)
+#   mtext(side=1,"Length (mm)",line=3)
+#   mtext(side=4,line=2.5,"Proportion recruiting")
+#  }
+#  if(y>1)
+#   lines(snowad.rep[[y]]$"distribution of recruits to length bins"~LengthBins[[y]],lty=y)
+# }
+# legend("topright",bty='n',lty=seq(1,length(Scenarios)),legend=ScenarioNames)
+#}
+
+```  
+    
+
+
+\newpage
+
+
+
+```{r eval = TRUE, include=TRUE,echo=FALSE, comment=NA}
+
+# Appendix C. Control file for the reference model
+#opts_chunk$set(fig.width = 12, fig.height = 8, echo = FALSE, warning = FALSE, message = FALSE)
+#ts <- readLines("2_2019_dat_short_comps/PIRKC.CTL")
+#for (i in 1:length(ts)) cat(ts[i], "\n")
+
+```
+
+
+\newpage
+
+```{r,echo=FALSE,warning=FALSE,message=F,fig.width=8,fig.height=6,fig.cap="\\label{MMB_catch}Comparison of estimated MMB among running average and random effects models."}
+
+# 
+# re_out<-readList("RE model/rwout.REP")
+# plot(re_out$srv_est~re_out$yrs_srv,las=1,ylim=c(0,40000),pch=16,xlab='',ylab='',bty='l')
+# for(j in 1:length(re_out$yrs_srv))
+# {
+#  segments(x0=re_out$yrs_srv[j],x1=re_out$yrs_srv[j],
+# 		y0=re_out$srv_est[j]  /   exp(1.96*sqrt(log(1+re_out$srv_sd[j]^2))),
+# 		y1=re_out$srv_est[j] * exp(1.96*sqrt(log(1+re_out$srv_sd[j]^2))))
+# }
+# 
+# dat2<-read.csv("Data/PIRKC_catches.csv")
+# lines(dat2$Catch_retained*1000~dat2$Year,col="red",lwd=1.5)
+
+```

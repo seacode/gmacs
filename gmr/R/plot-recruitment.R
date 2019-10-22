@@ -88,17 +88,21 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
     mdf <- .get_recruitment_df(M)
-    if (length(M) == 1)
-    {
-        p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06)) +
-            geom_bar(stat = "identity", alpha = 0.4, position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec)/1e+6, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
-    } else {
-        p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06, col = Model, group = Model)) +
-            geom_hline(aes(yintercept = rbar/1e+6, col = Model)) +
-            geom_bar(stat = "identity", alpha = 0.4, aes(fill = Model), position = "dodge") +
-            geom_pointrange(aes(year, exp(log_rec)/1e+6, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
-    }
+    p<-ggplot(mdf)
+    # if (length(M) == 1)
+    # {
+    #     p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06)) +
+    #         geom_bar(stat = "identity", alpha = 0.4, position = "dodge") +
+    #         geom_pointrange(aes(year, exp(log_rec)/1e+6, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
+    # } else {
+    #     p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06, col = Model, group = Model)) +
+    #         geom_hline(aes(yintercept = rbar/1e+6, col = Model)) +
+    #         geom_bar(stat = "identity", alpha = 0.4, aes(fill = Model), position = "dodge") +
+    #         geom_pointrange(aes(year, exp(log_rec)/1e+6, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
+    # }
+    # 
+    p <- p + geom_line(aes(x = year, y = exp(log_rec), col = Model)) +
+      geom_ribbon(aes(x = year, ymax = ub, ymin = lb, fill = Model), alpha = alpha)
     p <- p + labs(x = xlab, y = ylab)
     if (!.OVERLAY) p <- p + facet_wrap(~Model)
     if (length(unique(mdf$sex)) > 1) p <- p + facet_wrap(~sex, ncol = 1)

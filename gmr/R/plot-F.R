@@ -78,11 +78,13 @@ plot_F <- function(M, scales = "free_y",
     fbar <- m$fbar
 
     p <- ggplot(data = mdf) +
-        geom_hline(data = fbar, aes(yintercept = fbar, color = Model), linetype = "dashed", alpha = 0.5) +
-        geom_line(aes(year, F,col=model, group = 1)) +
+        #geom_hline(data = fbar, aes(yintercept = fbar, color = Model), linetype = "dashed", alpha = 0.5) +
+        geom_line(aes(year, F,col=model)) +
         facet_grid(fleet ~ season, scales = scales) +
         labs(x = xlab, y = ylab)
-    
+  
+    #dcast( mdf , year~fleet+model  ,value.var="F")
+      
     # if (.OVERLAY)
     # {
     #     if (length(M) == 1 && length(unique(mdf$sex)) == 1)
