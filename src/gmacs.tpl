@@ -1099,16 +1099,19 @@ DATA_SECTION
   // | PENALTIES FOR MEAN FISHING MORTALITY RATE FOR EACH GEAR |
   // |---------------------------------------------------------|
   !! cout << " * Fishing mortality controls" << endl;
-  init_matrix f_controls(1,nfleet,1,6);
-  init_number f_ub;                      //changed by Jie: adding an upper bound value for male directed fishing mortality deviations.
+  init_matrix f_controls(1,nfleet,1,12);
   ivector f_phz(1,nfleet);
   ivector foff_phz(1,nfleet);
   vector pen_fbar(1,nfleet);
   vector log_pen_fbar(1,nfleet);
   vector log_pen_fbar_foff(1,nfleet);
   matrix pen_fstd(1,2,1,nfleet);
- // number add_f_ub;                       //changed by Jie: adding an upper bound value for male directed fishing mortality deviations.
-  vector add_f_ub(1,nfleet);                       //changed by Jie: adding an upper bound value for male directed fishing mortality deviations.
+  vector fbar_lb(1,nfleet)
+  vector fbar_ub(1,nfleet);
+  vector fdev_lb(1,nfleet)
+  vector fdev_ub(1,nfleet);
+  vector foff_lb(1,nfleet)
+  vector foff_ub(1,nfleet);
  LOC_CALCS
    WriteCtl(f_controls);
    pen_fbar = column(f_controls,1);
@@ -1120,8 +1123,18 @@ DATA_SECTION
    foff_phz = ivector(column(f_controls,6));
    ECHO(f_phz);
    ECHO(foff_phz);
-   add_f_ub = 10.0;
-   add_f_ub(1) = f_ub;                     //changed by Jie: adding an upper bound value for male directed fishing mortality deviations.
+   fbar_lb = column(f_controls,7);
+   fbar_ub = column(f_controls,8);
+   ECHO(fbar_lb);
+   ECHO(fbar_ub);
+   fdev_lb = column(f_controls,9);
+   fdev_ub = column(f_controls,10);
+   ECHO(fdev_lb);
+   ECHO(fdev_ub);
+   foff_lb = column(f_controls,11);
+   foff_ub = column(f_controls,12);
+   ECHO(foff_lb);
+   ECHO(foff_ub);
  END_CALCS
 
   // |-----------------------------------|
@@ -1140,7 +1153,6 @@ DATA_SECTION
   init_vector lf_emphasis_in(1,nSizeComps_in);                       ///> Overall lambda
 
   int nSizeComps;         
-  int nnnn;                                                          //changed by Jie: output the size comps used to compute likelihood
   !! nSizeComps = max(iCompAggregator);                              ///> Number of length comps after compression
   ivector nSizeCompRows(1,nSizeComps);
   ivector nSizeCompCols(1,nSizeComps);
@@ -1521,6 +1533,10 @@ DATA_SECTION
   !! if(prj_futRec_nyr < prj_futRec_syr)  { cout << "Last year for generating recruitment must be later than the first year" << endl; exit(1); }
   init_number SigmaR_prj                                   ///> Sigma(R)
   !! WRITEPRJ(SigmaR_prj);
+  init_number Prow_prj                                     ///> Prow(R)
+  !! WRITEPRJ(Prow_prj);
+  init_number Initial_eps                                  ///> First rec_dev(R)
+  !! WRITEPRJ(Initial_eps);
 
   init_int Apply_HCR_prj;                                  ///> State HCR stuff
   !! WRITEPRJ(Apply_HCR_prj);
@@ -1641,14 +1657,13 @@ PARAMETER_SECTION
   !!ECHO(Asymret);
 
   // Fishing mortality rate parameters
-  init_bounded_number_vector log_fbar(1,nfleet,-12,4,f_phz);       ///> Male mean fishing mortality. Jie Changed bounds from -10,2 to -12,4
+  init_bounded_number_vector log_fbar(1,nfleet,fbar_lb,fbar_ub,f_phz);       ///> Male mean fishing mortality. 
   !! ECHO(f_phz);
   !! ECHO(log_fbar);
-  //init_bounded_vector_vector log_fdev(1,nfleet,1,nFparams,-10,10,f_phz);       ///> Male f devs
-  init_bounded_vector_vector log_fdev(1,nfleet,1,nFparams,-10,add_f_ub,f_phz);   ///> Male f devs    //Changed by Jie: reducing upper limit
+  init_bounded_vector_vector log_fdev(1,nfleet,1,nFparams,fdev_lb,fdev_ub,f_phz);   ///> Male f devs    
   !! ECHO(nFparams);
   !! for (int I=1;I<=nfleet;I++) { ECHO(log_fdev(I)); }
-  init_bounded_number_vector log_foff(1,nfleet,-10,10,foff_phz);    ///> Female F offset to Male F. Jie Changed bounds from -10,6 to -10,10
+  init_bounded_number_vector log_foff(1,nfleet,foff_lb,foff_ub,foff_phz);    ///> Female F offset to Male F. 
   !! ECHO(log_foff);
   !! ECHO(foff_phz);
   init_bounded_vector_vector log_fdov(1,nfleet,1,nYparams,-10,10,foff_phz);    ///> Female F offset to Male F
@@ -1809,9 +1824,9 @@ PARAMETER_SECTION
   sdreport_number sd_ofl;
   sdreport_matrix sd_log_recruits(1,nsex,syr,nyr);
   sdreport_vector sd_log_ssb(syr,nyr);
+  sdreport_number sd_last_ssb;                          
   sdreport_vector ParsOut(1,NVarPar);
-  //added nine lines by Jie
-  sdreport_number sd_last_ssb;
+  //added eight lines by Jie
   //sdreport_vector sdrLnRecMMB(syr,nyr-6);             //these are for spawning per recruits. Six years of recruitment time lag.
   //sdreport_vector sdrLnRec(syr,nyr-6);
   //sdreport_vector sdrRec(syr,nyr-6);
@@ -3932,7 +3947,7 @@ FUNCTION calc_objective_function
     else
      {
       dvector stdtmp = cpue_sd(k) * 1.0 / cpue_lambda(k);                                     ///> Use Sigma scalar instead
-   //   dvar_vector restmp = elem_div(log(elem_div(obs_cpue(k), pre_cpue(k))), stdtmp) + 0.5 * stdtmp;
+   //   dvar_vector restmp = elem_div(log(elem_div(obs_cpue(k), pre_cpue(k))), stdtmp) + 0.5 * stdtmp;   //deleted "0.5*stdtmp" by Jie
       dvar_vector restmp = elem_div(log(elem_div(obs_cpue(k), pre_cpue(k))), stdtmp);
       nloglike(2,k) += sum(log(stdtmp)) + sum(0.5 * square(restmp));
      }
@@ -4548,7 +4563,7 @@ FUNCTION dvar_vector project_biomass(const int YrRef, const int iproj)
     if (Stock_rec_prj==BEVHOLT)                      // Beveton-Holt
      {
       ssb_use = ssb_prj(nyr+i-Age_at_rec_prj);
-      TotalRec = SR_alpha_prj*ssb_use/(SR_beta_prj+ssb_use);
+      TotalRec = SR_alpha_prj*ssb_use/(SR_beta_prj+ssb_use)*fut_recruits(1,i);
       if (nsex>1)
        {
         Rec_use(1) = TotalRec * 1 / (1 + mfexp(-logit_rec_prop(YrRef)));
@@ -5353,7 +5368,7 @@ FUNCTION void calc_spr_reference_points2(const int DoProfile)
 
 FUNCTION write_eval
   int index;                                                         ///> Counters
-  dvariable MeanF,NF,Fmult,Bmsy_out;                                 ///> Temp variables
+  dvariable MeanF,NF,Fmult,Bmsy_out,eps1;                            ///> Temp variables
   dvar_vector Bproj(syr,nyr+nproj);                                  ///> Biomass outout
   dvar_vector Fave(1,nfleet);                                        ///> Average F
 
@@ -5398,6 +5413,7 @@ FUNCTION write_eval
   for (int isim=1;isim<=prj_replicates;isim++)
    {
     // generate future recruitment
+    if (Initial_eps < -998) eps1 = randn(rng); else eps1 = Initial_eps;
     for (int iproj=1;iproj<=nproj;iproj++)
      {
       if (Stock_rec_prj==UNIFORMSR)
@@ -5408,7 +5424,8 @@ FUNCTION write_eval
        }
       if (Stock_rec_prj==RICKER || Stock_rec_prj==BEVHOLT)
        {
-        fut_recruits(1,iproj) = mfexp(randn(rng)*SigmaR_prj-SigmaR_prj*SigmaR_prj/2.0);
+        fut_recruits(1,iproj) = mfexp(eps1*SigmaR_prj-SigmaR_prj*SigmaR_prj/2.0);
+        if (iproj != nproj) eps1 = Prow_prj*eps1 + sqrt(1.0-square(Prow_prj))*randn(rng);
         if (nsex==2) fut_recruits(2,iproj) = fut_recruits(1,iproj);
        }
      }
@@ -5440,6 +5457,7 @@ FUNCTION calc_sdreport
   // standard deviations of assessment outcomes
   sd_log_recruits = log(recruits);
   sd_log_ssb = log(calc_ssb());
+  
   //Added 13 lines by Jie
   sd_last_ssb = spr_depl * Bmsy;
  // for (int i=syr; i<= nyr-6; i++)
@@ -5588,6 +5606,7 @@ FUNCTION dvector calc_Francis_weights()
 
 FUNCTION CreateOutput
   int Ipar,Jpar,Npar,NparEst;
+  int nnnn;                                                          //
 
 
   cout << "here" << endl;
@@ -5865,22 +5884,16 @@ FUNCTION CreateOutput
    {
     OutFile1<<"d3_obs_size_comps_"<<kk<<endl;
     OutFile1<<d3_obs_size_comps(kk)<<endl;  
-    OutFile2<<"d3_obs_size_comps_"<<kk<<endl;
-    OutFile2<<d3_obs_size_comps(kk)<<endl;                          
    } 
   for ( int kk = 1; kk <= nnnn; kk++ )          
    {
     OutFile1<<"d3_pre_size_comps_"<<kk<<endl;
     OutFile1<<d3_pre_size_comps(kk)<<endl;  
-    OutFile2<<"d3_pre_size_comps_"<<kk<<endl;
-    OutFile2<<d3_pre_size_comps(kk)<<endl;                                    
    } 
   for ( int kk = 1; kk <= nnnn; kk++ )          
    {
     OutFile1<<"d3_res_size_comps_"<<kk<<endl;
     OutFile1<<d3_res_size_comps(kk)<<endl;  
-    OutFile2<<"d3_res_size_comps_"<<kk<<endl;
-    OutFile2<<d3_res_size_comps(kk)<<endl;                                     
    }    
   for ( int ii = 1; ii <= nSizeComps; ii++ )
    {
@@ -5927,31 +5940,6 @@ FUNCTION CreateOutput
   REPORT(log_fbar);
   OutFile1 << endl;
 
-  dvar_matrix ft_pot(1,nsex,syr,nyr);     //added by Jie: output fishing mortalities, selectivities and retained proportions to report file, next 24 lines
-  dvar_matrix ft_trawl(1,nsex,syr,nyr);   
-  dvar_matrix ft_tanner(1,nsex,syr,nyr);  
-  dvar_matrix ft_fixed(1,nsex,syr,nyr);   
-  for (int h=1;h<=nsex;h++)               
-   for (int i=syr;i<=nyr;i++)             
-    {
-      ft_pot(h,i) = ft(1,h,i,3);
-      ft_trawl(h,i) = ft(2,h,i,5);
-      ft_tanner(h,i) = ft(3,h,i,5);
-      ft_fixed(h,i) = ft(4,h,i,5);               
-    }
-  REPORT(ft_pot);                         
-  REPORT(ft_trawl);                       
-  REPORT(ft_tanner);                      
-  REPORT(ft_fixed);       
-  OutFile2 << "selectivity" << endl; 
-  for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
-    OutFile2 << syr << " " << h << " " << j << " " << mfexp(log_slx_capture(j,h,syr)) << endl; 
-  for ( int h = 1; h <= nsex; h++ ) for ( int j = 1; j <= nfleet; j++ )
-    OutFile2 << nyr << " " << h << " " << j << " " << mfexp(log_slx_capture(j,h,nyr)) << endl; 
-  OutFile2 << "retained" << endl; 
-  OutFile2 << syr << " " << "1" << " " << "1" << " " << mfexp(log_slx_retaind(1,1,syr)) << endl;  
-  OutFile2 << nyr << " " << "1" << " " << "1" << " " << mfexp(log_slx_retaind(1,1,nyr)) << endl;               
- 
   OutFile1 << "#Fully-selected_fishing mortality by fleet" << endl;
   OutFile1 << "# Sex Year Season Fleet" << endl;
   for (int h=1;h<=nsex;h++)
@@ -6086,6 +6074,11 @@ FUNCTION CreateOutput
      OutFile1 << "#growth_matrix for (sex, increment_no) " << h << " " << i << endl;
      OutFile1 << trans(growth_transition(h,i)) << endl;
     }
+
+  // Special output 
+  MyOutput();
+
+
 
   // Projection stuff
   if ( last_phase() )
