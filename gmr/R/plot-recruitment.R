@@ -66,8 +66,9 @@
         }
         df <- data.frame(Model = names(M)[i],
                          mid_points = A$mid_points,
-                         rec_sdd = A$rec_sdd,
-                         rec_ini = A$rec_ini)
+                         rec_sdd = as.vector(t(A$rec_sdd)),
+                         sex =  rep(1:A$nsex, each = length(A$mid_points)))
+
         mdf <- rbind(mdf, df)
     }
     return(mdf)
@@ -89,6 +90,30 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
     ylab <- paste0(ylab, "\n")
     mdf <- .get_recruitment_df(M)
     p<-ggplot(mdf)
+
+    if(length(M) == 1 && length(unique(mdf$sex)) == 1)
+    {
+    p <- p + geom_line(aes(x = year, y = exp(log_rec))) 
+      #geom_ribbon(aes(x = year, ymax = ub, ymin = lb), alpha = alpha)
+    } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) 
+    {
+    p <- p + geom_line(aes(x = year, y = exp(log_rec), col = Model)) 
+        #geom_ribbon(aes(x = year, ymax = ub, ymin = lb, fill = Model), alpha = alpha) 
+    } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) 
+    {
+      p <- p + geom_line(aes(x = year, y = exp(log_rec), col = sex))  #+
+      #geom_ribbon(aes(x = year, ymax = ub, ymin = lb, fill = sex), alpha = alpha) 
+    }  else
+    {
+      
+    }
+    
+    
+    p <- p + labs(x = xlab, y = ylab)
+    if (!.OVERLAY) p <- p + facet_wrap(~Model)
+    if (length(unique(mdf$sex)) > 1) p <- p + facet_wrap(~sex, ncol = 1)
+    
+    
     # if (length(M) == 1)
     # {
     #     p <- ggplot(mdf, aes(x = year, y = exp(log_rec)/1e+06)) +
@@ -101,11 +126,8 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
     #         geom_pointrange(aes(year, exp(log_rec)/1e+6, col = Model, ymax = ub/1e+06, ymin = lb/1e+06), position = position_dodge(width = 0.9))
     # }
     # 
-    p <- p + geom_line(aes(x = year, y = exp(log_rec), col = Model)) +
-      geom_ribbon(aes(x = year, ymax = ub, ymin = lb, fill = Model), alpha = alpha)
-    p <- p + labs(x = xlab, y = ylab)
-    if (!.OVERLAY) p <- p + facet_wrap(~Model)
-    if (length(unique(mdf$sex)) > 1) p <- p + facet_wrap(~sex, ncol = 1)
+    
+    
     print(p + .THEME)
 }
 
@@ -119,7 +141,7 @@ plot_recruitment <- function(M, xlab = "Year", ylab = "Recruitment (millions of 
 #' @author DN Webber
 #' @export
 #' 
-plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Proportion")
+plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab = "Proportion recruiting")
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -127,14 +149,19 @@ plot_recruitment_size <- function(M, xlab = "Mid-point of size class (mm)", ylab
     p <- ggplot(mdf, aes(x = mid_points, y = rec_sdd)) +
         expand_limits(y = c(0,1)) +
         labs(x = xlab, y = ylab)
-    if (length(M) == 1)
+    if (length(M) == 1 )
     {
         p <- p + geom_line() + geom_point()
-    } else {
+    } else
+    {
         p <- p + geom_line(aes(col = Model)) + geom_point(aes(col = Model))
-    }
+    } 
+    
     if (!.OVERLAY) p <- p + facet_wrap(~Model)
+    if (length(unique(mdf$sex)) > 1) p <- p + facet_wrap(~sex, ncol = 1)
     print(p + .THEME)
+    
+    
 }
 
 

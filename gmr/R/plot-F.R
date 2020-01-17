@@ -20,7 +20,10 @@
         df <- data.frame(A$ft, Model = names(M)[i])
         colnames(df) <- c(1:nseason, "model")
         df$year <- rep(A$mod_yrs, by = nfleet)
-        df$fleet <- rep(.FLEET, each = nyear)
+        df$fleet <- rep(.FLEET, each = nyear*A$nsex)
+        df$sex <- rep("Sex",nrow(df))
+        if(A$nsex==2)
+          df$sex <- rep(rep(c("Male","Female"),each = nyear),nfleet)
         del <- NULL
         for ( j in 1:nseason )
         {
@@ -77,12 +80,14 @@ plot_F <- function(M, scales = "free_y",
     mdf$season <- paste0("Season: ", mdf$season)
     fbar <- m$fbar
 
-    p <- ggplot(data = mdf) +
+    p <- ggplot(data = mdf) +         geom_line(aes(year, F,col=model))
         #geom_hline(data = fbar, aes(yintercept = fbar, color = Model), linetype = "dashed", alpha = 0.5) +
-        geom_line(aes(year, F,col=model)) +
-        facet_grid(fleet ~ season, scales = scales) +
-        labs(x = xlab, y = ylab)
+
+        if(length(unique(mdf$sex))==1)
+         p <- p + facet_grid(fleet ~ season, scales = scales) + labs(x = xlab, y = ylab)
   
+        if(length(unique(mdf$sex))>1)
+         p <- p + facet_grid(fleet ~ season + sex, scales = scales) + labs(x = xlab, y = ylab)
     #dcast( mdf , year~fleet+model  ,value.var="F")
       
     # if (.OVERLAY)

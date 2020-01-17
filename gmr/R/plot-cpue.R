@@ -13,7 +13,7 @@
     {
         A        <- M[[i]]
         df       <- data.frame(Model = names(M)[i], as.data.frame(A$dSurveyData))
-        colnames(df) <- c("Model","year","seas","fleet","sex","cpue","cv","units")
+        colnames(df) <- c("Model","Index","year","seas","fleet","sex","mature","cpue","cv","units")
         df$sex   <- .SEX[df$sex+1]
         df$fleet <- .FLEET[df$fleet]
         sd       <- sqrt(log(1 + df$cv^2))

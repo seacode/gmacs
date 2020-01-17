@@ -68,6 +68,7 @@ plot_selectivity <- function(M,
     mdf <- .get_selectivity_df(M)
     ncol <-length(unique(mdf$fleet))
     nrow <-length(unique(mdf$Model))
+    nrow_sex <-length(unique(mdf$sex))
     p <- ggplot(mdf) + expand_limits(y = c(0,1))
     if (.OVERLAY)
     {
@@ -78,9 +79,9 @@ plot_selectivity <- function(M,
         } else if (length(M) != 1 && length(unique(mdf$sex)) == 1) {
             p <- p + facet_wrap(~Model + fleet, nrow = nrow, ncol = ncol)
         } else if (length(M) == 1 && length(unique(mdf$sex)) != 1) {
-            p <- p + facet_wrap(~fleet + sex, nrow = nrow, ncol = ncol)
+            p <- p + facet_wrap(~fleet + sex, ncol = nrow_sex, nrow = ncol)
         } else {
-            p <- p + facet_wrap(~Model + fleet + sex, nrow = nrow, ncol = ncol)
+            p <- p + facet_wrap(~Model + fleet + sex, nrow = nrow_sex, ncol = ncol)
         }
     } else {
         p <- p + geom_line(aes(variable, value, col = factor(year), linetype = sex), alpha = 0.5)
