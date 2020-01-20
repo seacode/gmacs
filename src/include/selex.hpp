@@ -135,10 +135,49 @@ namespace gsm {
 	inline
 	const T pdubnorm(const T &x, const T2 &sL, const T2 &s50, const T2 &sR)
 	{
-		T selex = pow(2,-pow((x-sL)/sL,2)); // if x <= s50
-		//T selex = pow(2,-pow((x-sR)/sL,2); // if x > s50
+            T2 slp  = T2(5.0);//use pretty steep slope for join
+            T selLH = mfexp(-0.5*square((x-s50)/sL));// ascending limb
+            T selRH = mfexp(-0.5*square((x-s50)/sR));//descending limb
+            T join  = 1.0/(1.0+exp(-slp*(x-s50)));//0 for x<s50, 1 for x>s50
+            T selex = elem_prod(elem_prod(1.0-join,selLH) + join,
+                                elem_prod(    join,selRH) + (1.0-join));
+            return selex;
+	}
+
+	template<class T, class T2>
+	inline
+	const T pdubnorm4(const T &x, const T2 &ascWdZ, const T2 &ascPkZ,
+                                      const T2 &dscWdZ, const T2 &dscPkZ)
+	{
+            T2 slp = T2(5.0);
+            T ascS = mfexp(-0.5*square((x-ascPkZ)/ascWdZ));
+            T dscS = mfexp(-0.5*square((x-dscPkZ)/dscWdZ));
+            T ascJ = 1.0/(1.0+mfexp( slp*(x-(ascPkZ))));
+            T dscJ = 1.0/(1.0+mfexp(-slp*(x-(dscPkZ))));
+            T s = elem_prod(elem_prod(ascJ,ascS)+(1.0-ascJ),
+                            elem_prod(dscJ,dscS)+(1.0-dscJ));
+            return s;
+	}
+
+	// =========================================================================================================
+	// DecliningLogisticCurve: Base function for decling logistic selectivity cooefficients
+	// =========================================================================================================
+
+	template<class T, class T1, class T2, class T3>
+	const T declplogis(const T &x, const T1 &mean, const T2 &sd, const T3 &sel_coeffs)
+	{
+		T logisticselex = T2(1.0)/(T2(1.0)+mfexp((x-mean)/sd));
+		int x1 = x.indexmin();
+		int x2 = x.indexmax();
+		int y2 = sel_coeffs.indexmax();
+		T selex(x1,x2);
+		for ( int i = x1; i <= x2; i++ ) selex(i) = logisticselex(i);
+		for ( int i = x1; i <= y2; i++ )
+         selex(i) = mfexp(sel_coeffs(i));
 		return selex;
 	}
+
+
 
 	// =========================================================================================================
 	// LogisticCurve: Logistic-based selectivity function with options
@@ -233,15 +272,65 @@ namespace gsm {
 	};
 
 	// =========================================================================================================
-	// DoubleNormal: Double normal (dome shaped) selectivity
+	// DecliningLogistic: Decling Logistic-based selectivity function with options
 	// =========================================================================================================
 
 	/**
-	 * @brief Double normal curve
-	 * @details Uses the logistic curve (plogis95) for a two parameter function
+	 * @brief Declining Logistic curve
+	 * @details Uses the logistic curve (plogisd) for a two parameter function
+	 *          but overrides the first few size classes
 	 *
 	 * @tparam T data vector or dvar vector
-	 * @tparam T2 double or dvariable for size at 5% and 95% selectivity
+	 * @tparam T2 double or dvariable for mean and standard deviation of the logistic curve
+	**/
+	template<class T, class T1,class T2, class T3>
+	class DeclineLogistic: public Selex<T>
+	{
+	private:
+		T1 m_mean;
+		T2 m_std;
+		T3 m_sel_coeffs;
+
+	public:
+		DeclineLogistic(T1 mean = T2(0), T2 std = T2(1), T3 params = T3(1) )
+		: m_mean(mean), m_std(std),m_sel_coeffs(params) {}
+
+		T1 GetMean() const { return m_mean; }
+		T2 GetStd()  const { return m_std;  }
+		T3 GetSelCoeffs() const { return m_sel_coeffs; }
+
+		void SetMean(T1 mean) { this->m_mean = mean;}
+		void SetStd(T2 std)   { this->m_std  = std; }
+		void SetSelCoeffs(T3 x) { this->m_sel_coeffs = x; }
+
+		const T Selectivity(const T &x) const
+		{
+			return gsm::declplogis(x, this->GetMean(), this->GetStd(), this->GetSelCoeffs() );
+		}
+
+		const T logSelectivity(const T &x) const
+		{
+			return log(gsm::declplogis(x, this->GetMean(), this->GetStd(),this->GetSelCoeffs() ));
+		}
+
+		const T logSelexMeanOne(const T &x) const
+		{
+			T y = log(gsm::declplogis(x, this->GetMean(), this->GetStd(),this->GetSelCoeffs() ));
+			y  -= log(mean(mfexp(y)));
+			return y;
+		}
+	};
+
+	// =========================================================================================================
+	// DoubleNormal: 3-parameter double normal (dome shaped) selectivity
+	// =========================================================================================================
+
+	/**
+	 * @brief 3-parameter double normal curve
+	 * @details Uses gsm::pdubnorm<T> function.
+	 *
+	 * @param T data vector or dvar vector
+	 * @param T2 double or dvariable for left-hand width, size at dome, right-hand width
 	**/
 	template<class T,class T2>
 	class DoubleNormal: public Selex<T>
@@ -252,6 +341,13 @@ namespace gsm {
 		T2 m_sR;
 
 	public:
+            /**
+             * Class constructor.
+             *
+             * @param sL - width of lefthand limb  (default=1)
+             * @param s50 - size at dome           (default=1)
+             * @param sR - width of righthand limb (default=1)
+             */
 		DoubleNormal(T2 sL = T2(1), T2 s50 = T2(1), T2 sR = T2(1))
 		: m_sL(sL), m_s50(s50), m_sR(sR) {}
 
@@ -265,21 +361,82 @@ namespace gsm {
 
 		const T Selectivity(const T &x) const
 		{
-			return gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR());
+                    return gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR());
 		}
 
 		const T logSelectivity(const T &x) const
 		{
-			return log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+                    return log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
 		}
 
 		const T logSelexMeanOne(const T &x) const
 		{
-			T y = log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
-			y  -= log(mean(mfexp(y)));
-			return y;
+                    T y = log(gsm::pdubnorm<T>(x, this->GetSL(), this->GetS50(), this->GetSR()));
+                    y  -= log(mean(mfexp(y)));
+                    return y;
 		}
 	};
+
+	// =========================================================================================================
+	// DoubleNormal4: 4-parameter double normal (dome shaped) selectivity
+	// =========================================================================================================
+
+	/**
+	 * @brief 4-parameter double normal curve
+	 * @details Uses the logistic curve (plogis95) for a two parameter function
+	 *
+	 * @param T data vector or dvar vector
+	 * @param T2 double or dvariable
+	**/
+	template<class T,class T2>
+	class DoubleNormal4: public Selex<T>
+	{
+	private:
+            T2 m_ascWdZ;//ascending limb width
+            T2 m_ascPkZ;//size at which ascending limb reaches 1
+            T2 m_dscWdZ;//descending limb width
+            T2 m_dscPkZ;//size at which descending limb departs from 1
+
+	public:
+            /**
+             *
+             * @param ascWdZ - ascending limb width
+             * @param ascPkZ - size at which ascending limb reaches 1
+             * @param dscWdZ - descending limb width
+             * @param dscPkZ - size at which descending limb departs from 1
+             */
+            DoubleNormal4(T2 ascWdZ = T2(1), T2 ascPkZ = T2(1),
+                          T2 dscWdZ = T2(1), T2 dscPkZ = T2(1))
+            : m_ascWdZ(ascWdZ), m_ascPkZ(ascPkZ), m_dscWdZ(dscWdZ), m_dscPkZ(dscPkZ) {}
+
+            T2 GetAscWdZ()  const { return m_ascWdZ; }
+            T2 GetAscPkZ()  const { return m_ascPkZ; }
+            T2 GetDscWdZ()  const { return m_dscWdZ; }
+            T2 GetDscPkZ()  const { return m_dscPkZ; }
+
+            void SetAscWdZ(T2 ascWdZ){ this->m_ascWdZ = ascWdZ; }
+            void SetAscPkZ(T2 ascPkZ){ this->m_ascPkZ = ascPkZ; }
+            void SetDscWdZ(T2 dscWdZ){ this->m_dscWdZ = dscWdZ; }
+            void SetDscPkZ(T2 dscPkZ){ this->m_dscPkZ = dscPkZ; }
+
+            const T Selectivity(const T &x) const
+            {
+                return gsm::pdubnorm4<T>(x, m_ascWdZ, m_ascPkZ, m_dscWdZ, m_dscPkZ);
+            }
+
+            const T logSelectivity(const T &x) const
+            {
+                return log(gsm::pdubnorm4<T>(x, m_ascWdZ, m_ascPkZ, m_dscWdZ, m_dscPkZ));
+            }
+
+            const T logSelexMeanOne(const T &x) const
+            {
+                T y = log(gsm::pdubnorm4<T>(x, m_ascWdZ, m_ascPkZ, m_dscWdZ, m_dscPkZ));
+                y  -= log(mean(mfexp(y)));
+                return y;
+            }
+	};
+
 
 	// =========================================================================================================
 	// Coefficients: Base function for non-parametric selectivity cooefficients
