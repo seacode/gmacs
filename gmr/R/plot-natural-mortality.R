@@ -25,6 +25,10 @@
             ss <- split(df, df$Sex)
             if (all(ss[[1]]$M == ss[[2]]$M)) df$Sex <- "Male"
         }
+        if(A$nmature==2)
+        {
+         df$maturity<-rep(c("Mature","Immature"),each=nrow(df)/2)  
+        }
         mdf <- rbind(mdf, df)
     }
     return(mdf)
@@ -49,12 +53,22 @@ plot_natural_mortality <- function(M, plt_knots = TRUE, knots = c(1976, 1980, 19
     } else {
         p <- ggplot(mdf, aes(x = Year, y = M, colour = Model))
     }
+    
     if (length(unique(mdf$Sex)) == 1)
     {
         p <- p + geom_line()
     } else {
         p <- p + geom_line(aes(linetype = Sex))
     }
+    
+    if (length(unique(mdf$maturity)) == 1)
+    {
+      p <- p + geom_line()
+    } else {
+      p <- p + facet_wrap(~maturity)
+    }
+    
+    
     if (plt_knots)
     {
         mdf$Knot <- NA

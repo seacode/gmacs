@@ -212,3 +212,4 @@ plot_size_comps_res <- function(M, ncol = 1, xlab = "Year", ylab = "Mid-point of
         .THEME + theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
     print(p)
 }
+

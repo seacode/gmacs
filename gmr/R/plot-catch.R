@@ -20,7 +20,7 @@
         df$residuals <- as.vector(t(A$res_catch_out))
         df$sex       <- .SEX[df$sex+1]
         df$fleet     <- .FLEET[df$fleet]
-        df$type      <- .TYPE[df$type+1]
+        df$type      <- .TYPE[df$type]
         df$sd        <- sqrt(log(1+df$cv^2))
         df$lb        <- exp(log(df$obs)-1.96*df$sd)
         df$ub        <- exp(log(df$obs)+1.96*df$sd)

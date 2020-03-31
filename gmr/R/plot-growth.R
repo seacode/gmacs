@@ -4,8 +4,8 @@
 #' @return Plot natural mortality over time and size
 #' @export
 #' 
-plot_growth <- function(replist){
-  A    <- replist
+plot_growth <- function(M){
+  A    <- M
   df   <- data.frame(A$mean_size)
   nclass<-length(df[1,])
   colnames(df) <- 1:nclass
@@ -31,5 +31,8 @@ plot_growth <- function(replist){
   #p2 <- p2 + facet_wrap(~sex,scale="free")
 #
 #  plot_multiple(p2,p)
+  
+  geom_density_ridges()
+  
   return(p)
 }

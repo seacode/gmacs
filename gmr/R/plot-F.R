@@ -70,7 +70,8 @@
 #' @export
 #' 
 plot_F <- function(M, scales = "free_y",
-                   xlab = "Year", ylab = "F", mlab = "Model")
+                   xlab = "Year", ylab = "F", mlab = "Model",
+                   in_leg_x=.7,in_leg_y=.9)
 {
     xlab <- paste0("\n", xlab)
     ylab <- paste0(ylab, "\n")
@@ -112,5 +113,5 @@ plot_F <- function(M, scales = "free_y",
     #     #p <- p + geom_line(aes(x = as.integer(year), y = predicted, col = model), alpha = 0.4)
     #     p <- p + facet_wrap(~model + fleet + type, scales = scales)
     # }
-    print(p + .THEME+ theme(legend.position=c(.7,.9)))
+    print(p + .THEME+ theme(legend.position=c(in_leg_x,in_leg_y)))
 }
