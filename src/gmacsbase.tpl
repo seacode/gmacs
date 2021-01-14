@@ -998,6 +998,7 @@ DATA_SECTION
  LOC_CALCS
   gmacs_ctl << endl << "## Selectivity parameter controls" << endl;
   gmacs_ctl << "## Selectivity (and retention) types" << endl;
+  gmacs_ctl << "##  <0: Mirror selectivity" << endl;
   gmacs_ctl << "##   0: Nonparameric selectivity (one parameter per class)" << endl;
   gmacs_ctl << "##   1: Nonparameric selectivity (one parameter per class, constant from last specified class)" << endl;
   gmacs_ctl << "##   2: Logistic selectivity (inflection point and slope)" << endl;
@@ -1306,6 +1307,18 @@ DATA_SECTION
       if (slx_type(k) == SELEX_UNIFORM1 || slx_type(k) == SELEX_UNIFORM0) slx_phzm(jj) = -1*abs(slx_phzm(jj));
      }
    }
+   else
+    {
+     int kk = slx_indx(k);
+      cout << "Mirrors" << k << " " << kk << " " << slx_cols(k) << endl;
+     for ( int j = 1; j <= slx_cols(k); j++ )               ///> mirror special
+      {
+       int jj = kk + (j - 1);
+       slx_par(k,j)      = slx_control_in(jj,5);            ///> init
+       slx_lb(jj) = log(slx_control_in(jj,6));
+       slx_ub(jj) = log(slx_control_in(jj,7));
+      }
+    }  
   ECHO(slx_priors);
  END_CALCS
   vector log_slx_pars_init(1,nslx_pars);                   /// > Initial parameters
@@ -7509,4 +7522,4 @@ FINAL_SECTION
 // 2020-01-2x; Added cubic spline selex + retention
 // 2020-01-28; Added SelectivitySpline class to selex.hpp and new file gsm_splines.hpp
 // 2020-01-27; Added mean and CV to recruitment
-
+// 2021-01-14; Bug-fix mirrored parameters
