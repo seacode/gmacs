@@ -1138,7 +1138,7 @@ DATA_SECTION
  END_CALCS
 
   init_matrix slx_control_in(1,nslx_rows_in,1,nslx_cols_in);
-  !! gmacs_ctl  << "# Selectvity parameters" << endl;
+  !! gmacs_ctl  << "# Selectivity parameters" << endl;
   !! gmacs_ctl << "## Fleet: The index of the fleet  (positive for capture selectivity; negative for retention)" << endl;
   !! gmacs_ctl << "## Index: Parameter count (not used)" << endl;
   !! gmacs_ctl << "## Paramter_no: Parameter count within the current pattern (not used)" << endl;
@@ -3098,7 +3098,7 @@ FUNCTION calc_selectivities
       for ( i = slx_styr(k); i <= slx_edyr(k); i++ )
        {
         int kk = abs(slx_gear(k));                                        ///> fleet index (negative for retention)
-        if ( slx_gear(k) > 0 )                                            ///> capture selectvity
+        if ( slx_gear(k) > 0 )                                            ///> capture selectivity
          {
           log_slx_capture(kk,h,i) = pSLX->logSelectivity(dvar_mid_points);
           if (slx_type(k)==SELEX_PARAMETRIC || slx_type(k)==SELEX_COEFFICIENTS || slx_type(k)==SELEX_STANLOGISTIC || slx_type(k)==SELEX_5095LOGISTIC)
@@ -3145,7 +3145,7 @@ FUNCTION calc_selectivities
      int h2 = nsex;
      if ( slx_isex(k) == MALESANDCOMBINED ) { h2 = MALESANDCOMBINED; }     ///> males (or combined sex) only
      if ( slx_isex(k) == FEMALES ) { h1 = FEMALES; }                       ///> females only
-     if ( slx_gear(k) > 0 )                                              ///> capture selectvity
+     if ( slx_gear(k) > 0 )                                              ///> capture selectivity
       {
        for ( i = syr; i <= nyrRetro; i++ )
         for ( h = h1; h <= h2; h++ )
@@ -5163,7 +5163,7 @@ FUNCTION dvar_matrix calc_brute_equilibrium(const int YrRefSexR1, const int YrRe
   dvar_vector hist_ssb(syr,nyr);                                           ///> Historical SSB
   dvar_vector Rec_use(1,nsex);                                             ///> Recruitment
   dvar_vector sel(1,nclass);                                               ///> Capture selectivity
-  dvar_vector selret(1,nclass);                                            ///> Selectvity x retained
+  dvar_vector selret(1,nclass);                                            ///> Selectivity x retained
   dvar_vector ret(1,nclass);                                               ///> Retained probability
   dvar_vector vul(1,nclass);                                               ///> Total vulnerability
   dvar_vector nal(1,nclass);                                               ///> Numbers-at-length
@@ -5616,7 +5616,7 @@ FUNCTION dvar4_array project_one_year(const int i, const int iproj, const int Yr
   dvar3_array _ft(1,nfleet,1,nsex,1,nseason);                              ///> Fishing mortality by gear
   dvar3_array d4_Npass(1,n_grp,1,nseason,1,nclass);                        ///> For passing out
   dvar_vector sel(1,nclass);                                               ///> Capture selectivity
-  dvar_vector selret(1,nclass);                                            ///> Selectvity x retained
+  dvar_vector selret(1,nclass);                                            ///> Selectivity x retained
   dvar_vector ret(1,nclass);                                               ///> Retained probability
   dvar_vector vul(1,nclass);                                               ///> Total vulnerability
   dvar_vector nal(1,nclass);                                               ///> Numbers-at-length
@@ -5768,7 +5768,7 @@ FUNCTION dvar_vector calc_predicted_project(const int YrRef, dvar3_array d4_Npas
   dvar_vector out(1,2+nfleet);                                             ///> Output
   dvariable tmp_ft,out2;                                                   ///> Temp
   dvar_vector sel(1,nclass);                                               ///> Capture selectivity
-  dvar_vector selret(1,nclass);                                            ///> Selectvity x retained
+  dvar_vector selret(1,nclass);                                            ///> Selectivity x retained
   dvar_vector ret(1,nclass);                                               ///> Retained probability
   dvar_vector vul(1,nclass);                                               ///> Total vulnerability
   dvar_vector nal(1,nclass);                                               ///> Numbers-at-length
