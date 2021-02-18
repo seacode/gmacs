@@ -2943,9 +2943,11 @@ FUNCTION init_selectivities
        pSLX = new class gsm::DoubleNormal4<dvar_vector,dvariable>(p1,p2,p3,p4);
        break;
       case SELEX_UNIFORM1:                                  ///> uniform 1
+       j++;
        pSLX = new class gsm::UniformCurve<dvar_vector>;
        break;
       case SELEX_UNIFORM0:                                  ///> uniform 0
+       j++;
        pSLX = new class gsm::Uniform0Curve<dvar_vector>;
        break;
       case SELEX_CUBIC_SPLINE:                             ///> cubic spline
@@ -3068,10 +3070,12 @@ FUNCTION calc_selectivities
        pSLX = ppSLX[k-1];
        break;
       case SELEX_UNIFORM1: // uniform 1
+       j++;
           if (verbose>3) cout<<"SELEX_UNIFORM1"<<endl;
        pSLX = ppSLX[k-1];//gsm::UniformCurve<dvar_vector>
        break;
       case SELEX_UNIFORM0: // uniform 0
+       j++;
           if (verbose>3) cout<<"SELEX_UNIFORM0"<<endl;
        pSLX = ppSLX[k-1];//gsm::Uniform0Curve<dvar_vector>
        break;
@@ -4572,7 +4576,10 @@ FUNCTION calc_stock_recruitment_relationship
   switch ( nSRR_flag )
    {
     case 0: // NO SRR
-     res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * logRbar - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
+     if ( bInitializeUnfished == UNFISHEDEQN )
+      res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * logR0 - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
+     if ( bInitializeUnfished != UNFISHEDEQN )
+      res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * logRbar - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
      break;
     case 1: // SRR model
      res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * log(rhat(byr,nyrRetro)) - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
@@ -6946,6 +6953,7 @@ FUNCTION CreateOutput
   REPORT(rec_dev);
   REPORT(logit_rec_prop);
   REPORT(recruits);
+  REPORT(res_recruit);
   OutFile1 << endl;
 
   OutFile1 << "#--------------------------------------------------------------------------------------------" << endl;
@@ -7033,6 +7041,24 @@ FUNCTION CreateOutput
     {
      OutFile1 << "#growth_matrix for (sex, increment_no) " << h << " " << i << endl;
      OutFile1 << trans(growth_transition(h,i)) << endl;
+    }
+  OutFile1 << "size_transition" << endl;
+  for (int h=1; h <= nsex; h++)
+   for (int i=1;i<=nSizeIncVaries(h);i++)
+    {
+     OutFile1 << "#size_matrix for (sex, increment_no) " << h << " " << i << endl;
+     for (int k1=1;k1<=nclass;k1++)
+      {
+       for (int k2=1;k2<=nclass;k2++) 
+        if (k2<k1)
+         OutFile1 << 0 << " ";
+        else 
+         if (k2==k1)
+          OutFile1 << 1.0-molt_probability(h,syr,k1)+growth_transition(h,i,k1,k2)*molt_probability(h,syr,k1) << " ";
+         else 
+          OutFile1 << growth_transition(h,i,k1,k2)*molt_probability(h,syr,k1) << " ";
+       OutFile1 << endl;
+      }
     }
 
   // Special output
@@ -7523,3 +7549,6 @@ FINAL_SECTION
 // 2020-01-28; Added SelectivitySpline class to selex.hpp and new file gsm_splines.hpp
 // 2020-01-27; Added mean and CV to recruitment
 // 2021-01-14; Bug-fix mirrored parameters
+// 2021-01-14; Fixed parameter count for uniform selex
+// 2021-01-16; Updated penalty for rec_devs when you select the unfished option
+// 2021-02-15; Corrected error when initialized from equilrbium and assessment is single-sex
