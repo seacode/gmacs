@@ -478,17 +478,22 @@ DATA_SECTION
   // |----------------------------|
   !! cout << " * Abundance data" << endl;
   init_int nSurveys;                                                 ///> Number of survey series
+  init_ivector SurveyType(1,nSurveys);                               ///> Type of survey
   init_int nSurveyRows;
-  init_matrix dSurveyData(1,nSurveyRows,0,8);
+  init_matrix dSurveyData(1,nSurveyRows,0,9);
   vector obs_cpue(1,nSurveyRows);
   vector cpue_cv(1,nSurveyRows);
   vector cpue_sd(1,nSurveyRows);
   vector cpue_cv_add(1,nSurveyRows);
+  vector cpue_time(1,nSurveyRows);
  LOC_CALCS
   obs_cpue = column(dSurveyData,6);
   cpue_cv  = column(dSurveyData,7);
   cpue_sd  = sqrt(log(1.0 + square(cpue_cv)));
+  cpue_time  = column(dSurveyData,9);
   WRITEDAT(nSurveys);
+  gmacs_data << "# Type of survey (1=Selectivity; 2=Selectivity+Retention)" << endl;
+  gmacs_data << SurveyType << endl;;
   gmacs_data << "# Number of lines for each index (this is not correct for retrospective analyses)" << endl;
   gmacs_data << nSurveyRows << endl;;
   gmacs_data << "## Index: One q is estimated for each index (the number of index values should match nSurveys" << endl;
@@ -509,7 +514,7 @@ DATA_SECTION
      if (dSurveyData(irow,5)==MATURE)     anystring = anystring +"_mature";
      gmacs_data << anystring << endl;
     }
-  ECHO(obs_cpue); ECHO(cpue_cv); ECHO(cpue_sd);
+  ECHO(obs_cpue); ECHO(cpue_cv); ECHO(cpue_sd); ECHO(cpue_time);
  END_CALCS
 
   // |-----------------------|
@@ -2250,14 +2255,17 @@ PARAMETER_SECTION
 
   // Effective sample size parameter for multinomial
   init_number_vector log_vn(1,nSizeComps,nvn_phz);
+  //!! for (int ipar=1;ipar<=nSizeComps;ipar++) log_vn(ipar) = q_ival(ipar);
   !! ECHO(log_vn);
 
   // Catchability coefficient (q)
   init_bounded_number_vector survey_q(1,nSurveys,q_lb,q_ub,q_phz);
+  //!! for (int ipar=1;ipar<=nSurveys;ipar++) survey_q(ipar) = q_ival(ipar);
   !! ECHO(survey_q);
 
   // Addtional CV for surveys/indices
   init_bounded_number_vector log_add_cv(1,nSurveys,log_add_cv_lb,log_add_cv_ub,cv_phz);
+  //!! for (int ipar=1;ipar<=nSurveys;ipar++) log_add_cv(ipar) = log_add_cv_ival(ipar);
   !! ECHO(log_add_cv);
 
 // --------------------------------------------------------------------------------------------------
@@ -3911,7 +3919,8 @@ FUNCTION update_population_numbers_at_length
      else
       recruits(h,i) = mfexp(logRbar)*float(nsex);
      // This splits recruitment out proportionately into males and females
-     if (h == MALESANDCOMBINED) recruits(h)(i) *= mfexp(rec_dev(i)) * 1.0 / (1.0 + mfexp(-logit_rec_prop(i)));
+     if (nsex == 1) recruits(h)(i) *= mfexp(rec_dev(i));
+     if (nsex == 2 & h == MALESANDCOMBINED) recruits(h)(i) *= mfexp(rec_dev(i)) * 1.0 / (1.0 + mfexp(-logit_rec_prop(i)));
      if (h == FEMALES) recruits(h)(i) *= mfexp(rec_dev(i)) * (1.0 - 1.0 / (1.0 + mfexp(-logit_rec_prop(i))));
     }
 
@@ -4277,7 +4286,7 @@ FUNCTION calc_predicted_catch_out
           nal = (unit == 1) ? elem_prod(nal, mean_wt(h,i)) : nal;
 
           tmp_ft = ft(k,h,i,j);
-          if (season_type(j)==INSTANT_F) tempZ1 = Z2(h,i,j); else tempZ1 = Z(h,i,j);
+          if (season_type(j)==INSTANT_F) tempZ1 = Z2(h,i,j); else tempZ1 = Z(h,i,j)+1.0e-10;
           pre_catch_out(kk,i) += nal * elem_div(elem_prod(tmp_ft * sel, 1.0 - mfexp(-tempZ1)), tempZ1);
           //out2 += calc_predicted_catch_det(i, j, h, k, type, unit);
          } // h
@@ -4304,7 +4313,9 @@ FUNCTION calc_predicted_catch_out
 FUNCTION calc_relative_abundance
   int unit;
   dvar_vector sel(1,nclass);                                         ///> capture selectivity
+  dvar_vector ret(1,nclass);                                         ///> retention
   dvar_vector nal(1,nclass);                                         ///> numbers or biomass at length.
+  dvar_vector tempZ1(1,nclass);                                      ///> total mortality
 
   dvar_vector V(1,nSurveyRows);
   V.initialize();
@@ -4328,16 +4339,19 @@ FUNCTION calc_relative_abundance
            if (m==m1 || m1 == BOTHMATURE)
             {
              sel = mfexp(log_slx_capture(g)(h)(i));
+             ret = mfexp(log_slx_retaind(g)(h)(i));
              for ( int o = 1; o <= nshell; o++ )
               {
                int ig = pntr_hmo(h,m,o);
                nal += ( unit == 1 ) ? elem_prod(d4_N(ig,i,j), mean_wt(h,i)) : d4_N(ig,i,j);
               }
-             V(jj) = nal * sel;
+             if (season_type(j)==INSTANT_F) tempZ1 = Z2(h,i,j)*cpue_time(jj); else tempZ1 = Z(h,i,j)*cpue_time(jj)+1.0e-10;
+             if (SurveyType(k)==1) V(jj) = sum(elem_prod(elem_prod(nal,sel),mfexp(-tempZ1)));
+             if (SurveyType(k)==2) V(jj) = sum(elem_prod(elem_prod(elem_prod(nal,sel), ret),mfexp(-tempZ1)));
             }
         }  // nSurveyRows
 
-    // Do we need an analystical Q
+    // Do we need an analytical Q
     if (q_anal(k) == 1)
      {
       dvariable zt; dvariable npnt; dvariable ztot;
@@ -4577,9 +4591,15 @@ FUNCTION calc_stock_recruitment_relationship
    {
     case 0: // NO SRR
      if ( bInitializeUnfished == UNFISHEDEQN )
-      res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * logR0 - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
+      {
+       res_recruit(syr) = log(recruits(1)(syr)) - 1.0 * logR0 + sig2R;
+       res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * logR0 - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
+      }
      if ( bInitializeUnfished != UNFISHEDEQN )
-      res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * logRbar - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
+      {
+       res_recruit(syr) = log(recruits(1)(syr)) - 1.0 * logR0 + sig2R;
+       res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * logRbar - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
+      }
      break;
     case 1: // SRR model
      res_recruit(byr,nyrRetro) = log(recruits(1)(byr,nyrRetro)) - (1.0-rho) * log(rhat(byr,nyrRetro)) - rho * log(++recruits(1)(byr-1,nyrRetro-1)) + sig2R;
@@ -4811,6 +4831,7 @@ FUNCTION catch_likelihood
 FUNCTION index_likelihood
 
   // 2) Likelihood of the relative abundance data.
+  cout << log_add_cv << endl;
   for ( int k = 1; k <= nSurveys; k++ )
    {
     for ( int jj = 1; jj <= nSurveyRows; jj++ )
@@ -6548,9 +6569,7 @@ FUNCTION CreateOutput
   int nnnn;                                                          //
 
 
-  cout << "here" << endl;
   get_all_sdnr_MAR();                                                ///> Output specific to diagnostics
-  cout << "here" << endl;
 
 
   cout << "+--------------------------+" << endl;
@@ -7551,4 +7570,6 @@ FINAL_SECTION
 // 2021-01-14; Bug-fix mirrored parameters
 // 2021-01-14; Fixed parameter count for uniform selex
 // 2021-01-16; Updated penalty for rec_devs when you select the unfished option
-// 2021-02-15; Corrected error when initialized from equilrbium and assessment is single-sex
+// 2021-01-24; Bug-fix - included first rec_dev in the penalty
+// 2021-03-09; Added SurveyType (1=total selectivity; 2=retention*selectivity)
+// 2021-03-09; Indices can be any time during a time-step
